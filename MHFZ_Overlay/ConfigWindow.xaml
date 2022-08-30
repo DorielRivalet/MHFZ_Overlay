@@ -7,45 +7,68 @@
         xmlns:local="clr-namespace:MHFZ_Overlay"
         mc:Ignorable="d"
         Title="ConfigWindow"
-         Height="840" Width="600" ResizeMode="CanMinimize"
+         Height="600" Width="800" ResizeMode="CanMinimize"
         Foreground="#7FFFFFFF"
-        BorderBrush="Pink">
+        Background="Transparent"
+        BorderBrush="Transparent">
     <Window.Resources>
         <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
     </Window.Resources>
-    <Grid Background="#2C2C2C"  Height="Auto"  Width="Auto">
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="330"/>
-            <RowDefinition Height="410"/>
-            <RowDefinition Height="60"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions >
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="0" x:Name="General" Margin="20,20,20,20" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="6*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="General"  FontSize="18" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="Enable Damage Numbers:" Style="{StaticResource ConfigTextBox}"/>
-            <CheckBox Grid.Column="1" Grid.Row="1" Style="{StaticResource ConfigCheckBox}"
+    <TabControl Margin="10" BorderBrush="Transparent" Background="Transparent">
+        <TabControl.Resources>
+            <Style TargetType="TabItem">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabItem">
+                            <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="2,0">
+                                <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#AA0A0A" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="#FF313131" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </TabControl.Resources>
+        <TabItem Foreground="#7FFFFFFF" Header="General">
+            <Grid Background="#2C2C2C"  Height="Auto"  Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="0" x:Name="General" Margin="20,20,20,20" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show weapon damage numbers when hitting a monster" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="0" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
+                    <CheckBox Grid.Column="1" Grid.Row="0" Style="{StaticResource ConfigCheckBox}"
                       IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="Always Show Monster Info:" Style="{StaticResource ConfigTextBox}"/>
-            <CheckBox Grid.Column="1" Grid.Row="2" Style="{StaticResource ConfigCheckBox}"
+                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="1" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}"/>
+                    <CheckBox Grid.Column="1" Grid.Row="1" Style="{StaticResource ConfigCheckBox}"
                       IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>
-            <TextBlock Grid.Column="0" Grid.Row="3" Text="Road Override:"  Style="{StaticResource ConfigTextBox}" >
+                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="2" Text="Road Override"  Style="{StaticResource ConfigTextBox}" >
                 <ToolTipService.ToolTip>
                    <StackPanel Background="#FF313131"  >
                        <TextBlock Foreground="#7FFFFFFF">
@@ -58,137 +81,197 @@
                    </StackPanel>
                 </ToolTipService.ToolTip>
             </TextBlock>
-            <TextBox Grid.Column="1" Grid.Row="3"   x:Name="RoadOverrideTextBox" Style="{StaticResource ConfigTextField}" 
+                    <TextBox Foreground="#7FFFFFFF" Grid.Column="1" Grid.Row="2"   x:Name="RoadOverrideTextBox" Style="{StaticResource ConfigTextField}" 
                      PreviewTextInput="RoadOverrideTextBox_PreviewTextInput" TextChanged="RoadOverrideTextBox_TextChanged" Text="{Binding Source={StaticResource Settings}, Path=IsRoadOverride}" >
-                <ToolTipService.ToolTip>
-                    <StackPanel Background="#FF313131"  >
-                        <TextBlock Foreground="#7FFFFFFF">
+                        <ToolTipService.ToolTip>
+                            <StackPanel Background="#FF313131"  >
+                                <TextBlock Foreground="#7FFFFFFF">
                            0 = No Override
                            <LineBreak/>
                            1 = Never Road
                            <LineBreak/>
                            2 = Always Road
-                        </TextBlock>
-                    </StackPanel>
-                </ToolTipService.ToolTip>
-            </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="4" Text="Background Color:" Style="{StaticResource ConfigTextBox}"/>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="4" Style="{StaticResource ConfigColorPicker}" 
+                                </TextBlock>
+                            </StackPanel>
+                        </ToolTipService.ToolTip>
+                    </TextBox>
+                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="3" Text="Background Color" Style="{StaticResource ConfigTextBox}"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="3" Style="{StaticResource ConfigColorPicker}" 
                               SelectedColor="{Binding Source={StaticResource Settings},Path=BackGroundColor}"></xctk:ColorPicker>
-            <TextBlock Grid.Column="0" Grid.Row="5" Text="Foreground Color:" Style="{StaticResource ConfigTextBox}"/>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigColorPicker}" 
+                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="4" Text="Foreground Color" Style="{StaticResource ConfigTextBox}"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="4" Style="{StaticResource ConfigColorPicker}" 
                               SelectedColor="{Binding Source={StaticResource Settings},Path=ForeGroundColor}"></xctk:ColorPicker>
-            <TextBlock Grid.Column="0" Grid.Row="6" Text="Text Color:" Style="{StaticResource ConfigTextBox}"/>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigColorPicker}" 
+                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="5" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigColorPicker}" 
                               SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
 
-        </Grid>
-        <Grid Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="1" x:Name="PlayerInfo" Margin="20,20,20,20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="6*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Player Info" FontSize="18"/>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Enable Player Info:"/>
-            <CheckBox Style="{StaticResource ConfigCheckBox}" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerInfoShown}"/>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Player Info X:"/>
-            <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerInfoX}"  PreviewTextInput="ValidateNumber"/>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Player Info Y:"/>
-            <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerInfoY}"  PreviewTextInput="ValidateNumber"/>
-        </Grid>
-        <Grid Style="{StaticResource ConfigSingleGrid}"  Grid.Row="1" Grid.Column="0" x:Name="MonsterBars" Margin="20,20,20,20">
-           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="6*"/>
-            <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Monster HP Bars:" FontSize="18"/>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Enable HP Bars"/>
-            <CheckBox Style="{StaticResource ConfigCheckBox}" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=HealthBarsShown}"/>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="HP Bars X:"/>
-            <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HealthBarsX}"  PreviewTextInput="ValidateNumber"/>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="HP Bars Y:"/>
-            <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HealthBarsY}"  PreviewTextInput="ValidateNumber"/>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0" Text="Monster 1 Bar Color"/>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="4" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarColor}"></xctk:ColorPicker>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0" Text="Monster 2 Bar Color"/>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarColor}"></xctk:ColorPicker>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0" Text="Monster 3 Bar Color"/>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarColor}"></xctk:ColorPicker>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0" Text="Monster 4 Bar Color"/>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="7" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarColor}"></xctk:ColorPicker>
-        </Grid>
-        <Grid Style="{StaticResource ConfigSingleGrid}" Grid.Row="1" Grid.Column="1" x:Name="MonsterStatus" Margin="20,20,20,20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="6*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Monster Status Info" FontSize="18"/>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Enable Monster Info:"/>
-            <CheckBox Style="{StaticResource ConfigCheckBox}" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStatusInfoShown}"/>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Monster Info X:"/>
-            <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoX}"  PreviewTextInput="ValidateNumber"/>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Monster Info Y:"/>
-            <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoY}"  PreviewTextInput="ValidateNumber"/>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0" Text="Poison Bar Color"/>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="4" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonBarColor}"></xctk:ColorPicker>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0" Text="Sleep Bar Color"/>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarColor}"></xctk:ColorPicker>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0" Text="Para Bar Color"/>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}"></xctk:ColorPicker>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0" Text="Blast Bar Color"/>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="7" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarColor}"></xctk:ColorPicker>
-            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0" Text="Stun Bar Color"/>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="8" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}"></xctk:ColorPicker>
-        </Grid>
-        <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="#FF313131">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" x:Name="SaveButton" Content="Save"  Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Width="70"/>
-            <Button Grid.Column="1" x:Name="CancelButton" Content="Cancel"  Style="{StaticResource ConfigBottomButtons}" Click="CancelButton_Click" Width="70" />
-            <Button Grid.Column="2" x:Name="DefaultButton" Content="Default"  Style="{StaticResource ConfigBottomButtons}" Click="DefaultButton_Click" Width="70"/>
-            <Button Grid.Column="3" x:Name="ConfigureButton" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" 
+                </Grid>
+                <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#FF313131">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" x:Name="SaveButton" ToolTip="Save settings" Content="Save"  Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Width="70"/>
+                    <Button Grid.Column="1" x:Name="CancelButton" ToolTip="Cancel current changes" Content="Cancel"  Style="{StaticResource ConfigBottomButtons}" Click="CancelButton_Click" Width="70" />
+                    <Button Grid.Column="2" x:Name="DefaultButton" ToolTip="Restore to default values" Content="Default"  Style="{StaticResource ConfigBottomButtons}" Click="DefaultButton_Click" Width="70"/>
+                    <Button Grid.Column="3" x:Name="ConfigureButton" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" 
                 Style="{StaticResource ConfigBottomButtons}" Height="40" Width="40" ToolTip="Drag and Drop Elements" Click="ConfigureButton_Click"/>
-        </Grid>
-
-    </Grid>
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Foreground="#7FFFFFFF" Header="Player Info">
+            <!--<Label Content="Content goes here..." Background="#FF313131" />-->
+            <Grid Background="#2C2C2C"  Height="Auto"  Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="1" x:Name="PlayerInfo" Margin="20,20,20,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show Player Information" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Player Info"/>
+                    <CheckBox Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerInfoShown}"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Player Info X"/>
+                    <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerInfoX}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Player Info Y"/>
+                    <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerInfoY}"  PreviewTextInput="ValidateNumber"/>
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Foreground="#7FFFFFFF" Header="Monster HP Bars">
+            <!--<Label Content="Content goes here..." Background="#FF313131" />-->
+            <Grid Background="#2C2C2C"  Height="Auto"  Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Style="{StaticResource ConfigSingleGrid}"  Grid.Row="1" Grid.Column="1" x:Name="MonsterBars" Margin="20,20,20,20" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Health Points as Bars" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="HP Bars"/>
+                    <CheckBox Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=HealthBarsShown}"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="HP Bars X"/>
+                    <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HealthBarsX}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="HP Bars Y"/>
+                    <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HealthBarsY}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0" Text="Monster 1 Bar Color"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="3" Style="{StaticResource ConfigColorPicker}" 
+                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0" Text="Monster 2 Bar Color"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="4" Style="{StaticResource ConfigColorPicker}" 
+                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0" Text="Monster 3 Bar Color"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigColorPicker}" 
+                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0" Text="Monster 4 Bar Color"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigColorPicker}" 
+                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarColor}"></xctk:ColorPicker>
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Foreground="#7FFFFFFF" Header="Monster Status Info">
+            <!--<Label Content="Content goes here..." Background="#FF313131" />-->
+            <Grid Background="#2C2C2C"  Height="Auto"  Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Style="{StaticResource ConfigSingleGrid}" x:Name="MonsterStatus" Margin="20,20,20,20" Grid.ColumnSpan="9">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Status Information" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Monster Info"/>
+                    <CheckBox Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStatusInfoShown}"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Monster Info X"/>
+                    <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoX}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Monster Info Y"/>
+                    <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoY}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0" Text="Poison Bar Color"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="3" Style="{StaticResource ConfigColorPicker}" 
+                              SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonBarColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0" Text="Sleep Bar Color"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="4" Style="{StaticResource ConfigColorPicker}" 
+                              SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0" Text="Para Bar Color"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigColorPicker}" 
+                              SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0" Text="Blast Bar Color"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigColorPicker}" 
+                              SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0" Text="Stun Bar Color"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="7" Style="{StaticResource ConfigColorPicker}" 
+                              SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}"></xctk:ColorPicker>
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Foreground="#7FFFFFFF" Header="Discord Rich Presence">
+            <!--<Label Content="Content goes here..." Background="#FF313131" />-->
+            <Grid Background="#2C2C2C"  Height="Auto"  Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Style="{StaticResource ConfigSingleGrid}" x:Name="DiscordRichPresence" Margin="20,20,20,20" Grid.ColumnSpan="9">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="120"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Enable Discord Rich Presence" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Rich Presence"/>
+                    <CheckBox Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStatusInfoShown}"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Client/Application ID"/>
+                    <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoX}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="The server you play on (e.g. https://discord.gg/y8mF6amH)" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Frontier Discord Server Invite Link"/>
+                    <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoY}"  PreviewTextInput="ValidateNumber"/>
+                </Grid>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>

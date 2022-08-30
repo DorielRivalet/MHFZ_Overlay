@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DiscordRichPresence" Version="1.0.175" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.3.0" />
     <PackageReference Include="Memory.dll.x86" Version="1.2.23" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />

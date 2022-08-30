@@ -21,13 +21,13 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="OpenConfigButton" Style="{StaticResource DefaultButton}" Height="25" Width="25"  Grid.Column="0" Click="OpenConfigButton_Click"
+            <Button ToolTip="Settings" x:Name="OpenConfigButton" Style="{StaticResource DefaultButton}" Height="25" Width="25"  Grid.Column="0" Click="OpenConfigButton_Click"
                     Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Settings.xaml'}" >
             </Button>
-            <Button x:Name="ReloadButton" Style="{StaticResource DefaultButton}" Height="25" Width="25" Grid.Column="1" Click="ReloadButton_Click"
+            <Button ToolTip="Restart Overlay" x:Name="ReloadButton" Style="{StaticResource DefaultButton}" Height="25" Width="25" Grid.Column="1" Click="ReloadButton_Click"
                     Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}" >
             </Button>
-            <Button x:Name="CloseButton" Style="{StaticResource DefaultButton}" Height="25" Width="25" Grid.Column="2" Click="CloseButton_Click"
+            <Button ToolTip="Exit" x:Name="CloseButton" Style="{StaticResource DefaultButton}" Height="25" Width="25" Grid.Column="2" Click="CloseButton_Click"
                     Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Close.xaml'}" >
             </Button>
         </Grid>
