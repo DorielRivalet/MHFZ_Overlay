@@ -14,6 +14,19 @@ namespace MHFZ_Overlay
     {
         public DataLoader DataLoader { get; set; } = new();
 
+        private bool isVisible = true;
+
+        private void ToggleVisibility()
+        {
+            if (isVisible)
+            {
+                Window.Hide();
+            } else {
+                Window.Show();
+            }
+            isVisible = !isVisible;
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -25,6 +38,8 @@ namespace MHFZ_Overlay
             timer.Tick += Timer_Tick;
             timer.Start();
             DataContext = DataLoader.model;
+            GlobalHotKey.RegisterHotKey("Shift + Insert", () => ToggleVisibility()); 
+
         }
 
 
@@ -204,6 +219,7 @@ namespace MHFZ_Overlay
         }
 
         ConfigWindow? configWindow;
+
         private void OpenConfigButton_Click(object sender, RoutedEventArgs e)
         {
             if (configWindow == null || !configWindow.IsLoaded)

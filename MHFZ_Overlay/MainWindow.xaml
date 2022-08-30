@@ -32,7 +32,7 @@
             </Button>
         </Grid>
         <Grid x:Name="PlayerInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerInfoX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerInfoY}" Width="300" Height="120" MouseLeftButtonDown="ElementMouseLeftButtonDown"
-              Background="{Binding Source={StaticResource Settings},Path=BackGroundColor}" Visibility="{Binding Source={StaticResource Settings},Path=PlayerInfoShown, Converter={StaticResource BoolToVis}}">
+              Background="{Binding Source={StaticResource Settings},Path=BackGroundColor}" Visibility="{Binding Source={StaticResource Settings},Path=PlayerInfoShown, Converter={StaticResource BoolToVis}}" IsEnabled="False">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="6*" />
                 <ColumnDefinition  Width="3*"/>

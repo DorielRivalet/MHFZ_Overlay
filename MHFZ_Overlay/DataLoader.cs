@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace MHFZ_Overlay
 {
@@ -42,6 +43,8 @@ namespace MHFZ_Overlay
                 App.Current.Shutdown();
             }
         }
+
+
 
         private void CreateCodeCave(int PID)
         {
