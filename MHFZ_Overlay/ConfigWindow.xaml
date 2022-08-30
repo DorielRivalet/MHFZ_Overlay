@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         xmlns:local="clr-namespace:MHFZ_Overlay"
         mc:Ignorable="d"
-        Title="ConfigWindow"
+        Title="Monster Hunter Frontier Z Overlay Version 0.2.0"
          Height="600" Width="800" ResizeMode="CanMinimize"
         Foreground="#7FFFFFFF"
         Background="Transparent"
@@ -61,16 +61,14 @@
                         <RowDefinition Height="40" />
                         <RowDefinition Height="40" />
                         <RowDefinition Height="40" />
-                        <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Monster Hunter Frontier Z Overlay Version 0.2.0"  FontSize="18" HorizontalAlignment="Center"/>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Show weapon damage numbers when hitting a monster" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="1" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
-                    <CheckBox Grid.Column="1" Grid.Row="1" Style="{StaticResource ConfigCheckBox}"
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show weapon damage numbers when hitting a monster" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="0" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
+                    <CheckBox Grid.Column="1" Grid.Row="0" Style="{StaticResource ConfigCheckBox}"
                       IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
-                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="2" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}"/>
-                    <CheckBox Grid.Column="1" Grid.Row="2" Style="{StaticResource ConfigCheckBox}"
+                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="1" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}"/>
+                    <CheckBox Grid.Column="1" Grid.Row="1" Style="{StaticResource ConfigCheckBox}"
                       IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>
-                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="3" Text="Road Override"  Style="{StaticResource ConfigTextBox}" >
+                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="2" Text="Road Override"  Style="{StaticResource ConfigTextBox}" >
                 <ToolTipService.ToolTip>
                    <StackPanel Background="#FF313131"  >
                        <TextBlock Foreground="#7FFFFFFF">
@@ -83,7 +81,7 @@
                    </StackPanel>
                 </ToolTipService.ToolTip>
             </TextBlock>
-                    <TextBox Foreground="#7FFFFFFF" Grid.Column="1" Grid.Row="3"   x:Name="RoadOverrideTextBox" Style="{StaticResource ConfigTextField}" 
+                    <TextBox Foreground="#7FFFFFFF" Grid.Column="1" Grid.Row="2"   x:Name="RoadOverrideTextBox" Style="{StaticResource ConfigTextField}" 
                      PreviewTextInput="RoadOverrideTextBox_PreviewTextInput" TextChanged="RoadOverrideTextBox_TextChanged" Text="{Binding Source={StaticResource Settings}, Path=IsRoadOverride}" >
                         <ToolTipService.ToolTip>
                             <StackPanel Background="#FF313131"  >
@@ -97,13 +95,13 @@
                             </StackPanel>
                         </ToolTipService.ToolTip>
                     </TextBox>
-                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="4" Text="Background Color" Style="{StaticResource ConfigTextBox}"/>
+                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="3" Text="Background Color" Style="{StaticResource ConfigTextBox}"/>
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="3" Style="{StaticResource ConfigColorPicker}" 
                               SelectedColor="{Binding Source={StaticResource Settings},Path=BackGroundColor}"></xctk:ColorPicker>
-                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="5" Text="Foreground Color" Style="{StaticResource ConfigTextBox}"/>
+                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="4" Text="Foreground Color" Style="{StaticResource ConfigTextBox}"/>
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="4" Style="{StaticResource ConfigColorPicker}" 
                               SelectedColor="{Binding Source={StaticResource Settings},Path=ForeGroundColor}"></xctk:ColorPicker>
-                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="6" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
+                    <TextBlock Margin="5,5,5,5" Foreground="#7FFFFFFF" Grid.Column="0" Grid.Row="5" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigColorPicker}" 
                               SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
 
@@ -124,7 +122,6 @@
             </Grid>
         </TabItem>
         <TabItem Foreground="#7FFFFFFF" Header="Player Info">
-            <!--<Label Content="Content goes here..." Background="#FF313131" />-->
             <Grid Background="#2C2C2C"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -145,15 +142,14 @@
                     </Grid.RowDefinitions>
                     <TextBlock Margin="5,5,5,5" ToolTip="Show Player Information" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Player Info"/>
                     <CheckBox Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerInfoShown}"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Player Info X"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Player Info X Coordinate"/>
                     <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerInfoX}"  PreviewTextInput="ValidateNumber"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Player Info Y"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Player Info Y Coordinate"/>
                     <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerInfoY}"  PreviewTextInput="ValidateNumber"/>
                 </Grid>
             </Grid>
         </TabItem>
         <TabItem Foreground="#7FFFFFFF" Header="Monster HP Bars">
-            <!--<Label Content="Content goes here..." Background="#FF313131" />-->
             <Grid Background="#2C2C2C"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -178,9 +174,9 @@
                     </Grid.RowDefinitions>
                     <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Health Points as Bars" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="HP Bars"/>
                     <CheckBox Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=HealthBarsShown}"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="HP Bars X"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="HP Bars X Coordinate"/>
                     <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HealthBarsX}"  PreviewTextInput="ValidateNumber"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="HP Bars Y"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="HP Bars Y Coordinate"/>
                     <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HealthBarsY}"  PreviewTextInput="ValidateNumber"/>
                     <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0" Text="Monster 1 Bar Color"/>
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="3" Style="{StaticResource ConfigColorPicker}" 
@@ -198,7 +194,6 @@
             </Grid>
         </TabItem>
         <TabItem Foreground="#7FFFFFFF" Header="Monster Status Info">
-            <!--<Label Content="Content goes here..." Background="#FF313131" />-->
             <Grid Background="#2C2C2C"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -224,9 +219,9 @@
                     </Grid.RowDefinitions>
                     <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Status Information" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Monster Info"/>
                     <CheckBox Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStatusInfoShown}"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Monster Info X"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Monster Info X Coordinate"/>
                     <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoX}"  PreviewTextInput="ValidateNumber"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Monster Info Y"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Monster Info Y Coordinate"/>
                     <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoY}"  PreviewTextInput="ValidateNumber"/>
                     <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0" Text="Poison Bar Color"/>
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="3" Style="{StaticResource ConfigColorPicker}" 
@@ -247,7 +242,6 @@
             </Grid>
         </TabItem>
         <TabItem Foreground="#7FFFFFFF" Header="Discord Rich Presence">
-            <!--<Label Content="Content goes here..." Background="#FF313131" />-->
             <Grid Background="#2C2C2C"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -268,7 +262,23 @@
                     </Grid.RowDefinitions>
                     <TextBlock Margin="5,5,5,5" ToolTip="Enable Discord Rich Presence" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Rich Presence"/>
                     <CheckBox Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStatusInfoShown}"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="(Mandatory) Client/Application ID"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="(Mandatory) Client/Application ID">
+                        <ToolTipService.ToolTip>
+                           <StackPanel Background="#FF313131"  >
+                               <TextBlock Foreground="#7FFFFFFF">
+                                   1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
+                                   <LineBreak/>
+                                   2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
+                                   <LineBreak/>
+                                   3. Rich Presence -> Art Assets -> Add Image(s) -> Upload the contents of the img folder
+                                   <LineBreak/>
+                                   4. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID
+                                   <LineBreak/>
+                                   The ID also shows up in OAuth2 section as Client ID
+                               </TextBlock>
+                           </StackPanel>
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
                     <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoX}"  PreviewTextInput="ValidateNumber"/>
                     <TextBlock Margin="5,5,5,5" ToolTip="The server you play on (e.g. https://discord.gg/y8mF6amH)" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="(Optional) Frontier Discord Server Invite Link"/>
                     <TextBox Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoY}"  PreviewTextInput="ValidateNumber"/>
@@ -276,7 +286,6 @@
             </Grid>
         </TabItem>
         <TabItem Foreground="#7FFFFFFF" Header="Changelog">
-            <!--<Label Content="Content goes here..." Background="#FF313131" />-->
             <Grid Background="#2C2C2C"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -298,7 +307,6 @@
             </Grid>
         </TabItem>
         <TabItem Foreground="#7FFFFFFF" Header="Credits">
-            <!--<Label Content="Content goes here..." Background="#FF313131" />-->
             <Grid Background="#2C2C2C"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -317,7 +325,7 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="General"  FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Imulion"  FontSize="18" HorizontalAlignment="Center"/>
                 </Grid>
             </Grid>
         </TabItem>

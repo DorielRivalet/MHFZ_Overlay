@@ -20,9 +20,13 @@ namespace MHFZ_Overlay
         {
             if (isVisible)
             {
-                Window.Hide();
+                OpenConfigButton.Visibility = Visibility.Hidden;
+                ReloadButton.Visibility = Visibility.Hidden;
+                CloseButton.Visibility = Visibility.Hidden;
             } else {
-                Window.Show();
+                OpenConfigButton.Visibility = Visibility.Visible;
+                ReloadButton.Visibility = Visibility.Visible;
+                CloseButton.Visibility = Visibility.Visible;
             }
             isVisible = !isVisible;
         }
