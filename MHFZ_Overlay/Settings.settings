@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="mhf_display_new" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MHFZ_Overlay" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="EnableDamageNumbers" Type="System.Boolean" Scope="User">
@@ -12,40 +12,40 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Monster1BarColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#4CD60000</Value>
+      <Value Profile="(Default)">#f38ba8</Value>
     </Setting>
     <Setting Name="Monster2BarColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#4CD60000</Value>
+      <Value Profile="(Default)">#f38ba8</Value>
     </Setting>
     <Setting Name="Monster3BarColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#4CD60000</Value>
+      <Value Profile="(Default)">#f38ba8</Value>
     </Setting>
     <Setting Name="Monster4BarColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#4CD60000</Value>
+      <Value Profile="(Default)">#f38ba8</Value>
     </Setting>
     <Setting Name="MonsterPoisonBarColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#4C9000D6</Value>
+      <Value Profile="(Default)">#cba6f7</Value>
     </Setting>
     <Setting Name="MonsterBlastBarColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#4CD6A500</Value>
+      <Value Profile="(Default)">#fab387</Value>
     </Setting>
     <Setting Name="MonsterSleepBarColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#4C00D1D6</Value>
+      <Value Profile="(Default)">#74c7ec</Value>
     </Setting>
     <Setting Name="MonsterParaBarColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#4CD4D600</Value>
+      <Value Profile="(Default)">#f9e2af</Value>
     </Setting>
     <Setting Name="MonsterStunBarColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#4C777772</Value>
+      <Value Profile="(Default)">#7f849c</Value>
     </Setting>
     <Setting Name="BackGroundColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#7F323232</Value>
+      <Value Profile="(Default)">#7F1e1e2e</Value>
     </Setting>
     <Setting Name="ForeGroundColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#7F323232</Value>
+      <Value Profile="(Default)">#7F1e1e2e</Value>
     </Setting>
     <Setting Name="TextColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#7FFFFFFF</Value>
+      <Value Profile="(Default)">#7Fcdd6f4</Value>
     </Setting>
     <Setting Name="HealthBarsX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1418</Value>
@@ -76,6 +76,21 @@
     </Setting>
     <Setting Name="FontSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">24</Value>
+    </Setting>
+    <Setting Name="EnableDamageNumbersMulticolor" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableTrueHPNumbers" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableRichPresence" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DiscordClientID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">""</Value>
+    </Setting>
+    <Setting Name="DiscordServerInvite" Type="System.String" Scope="User">
+      <Value Profile="(Default)">""</Value>
     </Setting>
   </Settings>
 </SettingsFile>

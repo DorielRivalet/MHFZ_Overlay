@@ -130,6 +130,18 @@ namespace MHFZ_Overlay.addresses
                 return weaponRaw.ToString();// ((int)(GetMultFromWeaponType(weaponType) * weaponRaw)).ToString();
             }
         }
+
+        public float CurrentWeaponMultiplier
+        {
+            get
+            {
+                int weaponRaw = WeaponRaw();
+                int weaponType = WeaponType();
+                //return ((int)(GetMultFromWeaponType(weaponType) * weaponRaw)).ToString();
+                return GetMultFromWeaponType(weaponType);
+            }
+        }
+
         public string Size
         {
             get
@@ -450,31 +462,64 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /* 
+        Multipliers 
+            Sword and Shield 單手劍 片手剣 1.4x
+            Dual Swords 雙劍 双剣 1.4x
+            Great Sword 大劍 大剣 4.8x
+            Long Sword 太刀 太刀 4.8x
+            Hammer 大錘 ハンマー 5.2x
+            Hunting Horn 狩獵笛 狩猟笛 5.2x
+            Lance 長槍 ランス 2.3x
+            Gunlance 銃槍 ガンランス 2.3x
+            Tonfa 穿龍棍 穿龍棍 1.8x
+            Switch Axe F 斬擊斧Ｆ スラッシュアックスF 5.4x
+            Magnet Spike 磁斬鎚 マグネットスパイク 5.4x
+            Heavy Bowgun 重銃 ヘビィボウガン 1.2x
+            Light Bowgun 輕弩 ライトボウガン 1.2x
+            Bow 弓 弓 1.2x
+
+        IDs
+            0    Great Sword
+            1    Heavy Bowgun
+            2    Hammer
+            3    Lance
+            4    Sword and Shield
+            5    Light Bowgun
+            6    Dual Swords
+            7    Long Sword
+            8    Hunting Horn
+            9    Gunlance
+            10    Bow
+            11    Tonfa
+            12    Switch Axe F
+            13    Magnet Spike
+            14    Group
+         */
         public float GetMultFromWeaponType(int weaponType)
         {
             switch (weaponType)
             {
                 case 0:
-                case 1:
-                    return 1.4f;
-                case 2:
-                case 3:
+                case 7:
                     return 4.8f;
                 case 4:
-                case 5:
-                    return 5.2f;
                 case 6:
-                case 7:
-                    return 2.3f;
+                    return 1.4f;
+                case 2:
                 case 8:
-                case 9:
-                case 10:
-                case 22:
-                    return 1.2f;
-                case 34:
-                case 36:
+                    return 5.2f;
+                case 12:
+                case 13:
                     return 5.4f;
-                case 35:
+                case 3:
+                case 9:
+                    return 2.3f;
+                case 1:
+                case 5:
+                case 10:
+                    return 1.2f;
+                case 11:
                     return 1.8f;
                 default:
                     return 1f;

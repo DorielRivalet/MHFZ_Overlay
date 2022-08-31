@@ -42,9 +42,9 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            <TextBlock IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count:"/>
-            <TextBlock IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="1" Text="Remaining Time:"/>
-            <TextBlock IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="2" Text="Player ATK:"/>
+            <TextBlock IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>
+            <TextBlock IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="1" Text="Time Left"/>
+            <TextBlock IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="2" Text="Player Atk."/>
             <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="0" x:Name="hitCountTextBow" Text="{Binding HitCount}"/>
             <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="1" x:Name="timeRemainingTextBox" Text="{Binding Time}"/>
             <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="2" x:Name="playerAtkTextBox" Text="{Binding ATK}"/>
@@ -98,12 +98,12 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            <TextBlock Foreground="#cdd6f4" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Atk Mult:"/>
-            <TextBlock Foreground="#cdd6f4" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="1" Text="Def Mult:"/>
-            <TextBlock Foreground="#cdd6f4" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="2" Text="Size:"/>
+            <TextBlock Foreground="#cdd6f4" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Atk Mult."/>
+            <TextBlock Foreground="#cdd6f4" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="1" Text="Def Mult."/>
+            <TextBlock Foreground="#cdd6f4" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="2" Text="Size"/>
             <TextBlock Foreground="#cdd6f4" IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="0" x:Name="atkMultTextBox" Text="{Binding AtkMult}"/>
             <TextBlock Foreground="#cdd6f4" IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="1" x:Name="defMultTextBox" Text="{Binding DefMult}"/>
-            <TextBlock Foreground="#cdd6f4" IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="2" x:Name="sizeTextBOx" Text="{Binding Size}"/>
+            <TextBlock Foreground="#cdd6f4" IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="2" x:Name="sizeTextBox" Text="{Binding Size}"/>
             <uc:CustomProgressBar  Foreground="#cdd6f4" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" x:Name="MonsterPoisonBar" IsHitTestVisible="False"
                                Description="Poison"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.PoisonCurrent}"
@@ -115,7 +115,7 @@
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.SleepMax}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarColor}" Row1Width="4" Row2Width="3" />
             <uc:CustomProgressBar  Foreground="#cdd6f4" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" x:Name="MonsterParaBar" IsHitTestVisible="False"
-                               Description="Para"
+                               Description="Para."
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.ParaCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.ParaMax}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}" Row1Width="4" Row2Width="3" />

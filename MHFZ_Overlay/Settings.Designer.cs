@@ -12,7 +12,7 @@ namespace MHFZ_Overlay {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.3.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -61,7 +61,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#4CD60000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#f38ba8")]
         public string Monster1BarColor {
             get {
                 return ((string)(this["Monster1BarColor"]));
@@ -73,7 +73,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#4CD60000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#f38ba8")]
         public string Monster2BarColor {
             get {
                 return ((string)(this["Monster2BarColor"]));
@@ -85,7 +85,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#4CD60000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#f38ba8")]
         public string Monster3BarColor {
             get {
                 return ((string)(this["Monster3BarColor"]));
@@ -97,7 +97,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#4CD60000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#f38ba8")]
         public string Monster4BarColor {
             get {
                 return ((string)(this["Monster4BarColor"]));
@@ -109,7 +109,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#4C9000D6")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#cba6f7")]
         public string MonsterPoisonBarColor {
             get {
                 return ((string)(this["MonsterPoisonBarColor"]));
@@ -121,7 +121,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#4CD6A500")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#fab387")]
         public string MonsterBlastBarColor {
             get {
                 return ((string)(this["MonsterBlastBarColor"]));
@@ -133,7 +133,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#4C00D1D6")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#74c7ec")]
         public string MonsterSleepBarColor {
             get {
                 return ((string)(this["MonsterSleepBarColor"]));
@@ -145,7 +145,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#4CD4D600")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#f9e2af")]
         public string MonsterParaBarColor {
             get {
                 return ((string)(this["MonsterParaBarColor"]));
@@ -157,7 +157,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#4C777772")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#7f849c")]
         public string MonsterStunBarColor {
             get {
                 return ((string)(this["MonsterStunBarColor"]));
@@ -169,7 +169,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#7F323232")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#7F1e1e2e")]
         public string BackGroundColor {
             get {
                 return ((string)(this["BackGroundColor"]));
@@ -181,7 +181,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#7F323232")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#7F1e1e2e")]
         public string ForeGroundColor {
             get {
                 return ((string)(this["ForeGroundColor"]));
@@ -193,7 +193,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#7FFFFFFF")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#7Fcdd6f4")]
         public string TextColor {
             get {
                 return ((string)(this["TextColor"]));
@@ -320,6 +320,66 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["FontSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableDamageNumbersMulticolor {
+            get {
+                return ((bool)(this["EnableDamageNumbersMulticolor"]));
+            }
+            set {
+                this["EnableDamageNumbersMulticolor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableTrueHPNumbers {
+            get {
+                return ((bool)(this["EnableTrueHPNumbers"]));
+            }
+            set {
+                this["EnableTrueHPNumbers"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableRichPresence {
+            get {
+                return ((bool)(this["EnableRichPresence"]));
+            }
+            set {
+                this["EnableRichPresence"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"\"")]
+        public string DiscordClientID {
+            get {
+                return ((string)(this["DiscordClientID"]));
+            }
+            set {
+                this["DiscordClientID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"\"")]
+        public string DiscordServerInvite {
+            get {
+                return ((string)(this["DiscordServerInvite"]));
+            }
+            set {
+                this["DiscordServerInvite"] = value;
             }
         }
     }
