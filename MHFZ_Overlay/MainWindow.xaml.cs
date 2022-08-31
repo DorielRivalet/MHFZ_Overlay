@@ -121,7 +121,39 @@ namespace MHFZ_Overlay
             Point newPoint = DamageNumbers.TranslatePoint(new Point(x, y), DamageNumbers);
             Label tb = new();
             tb.Content = damage.ToString();
-            tb.Foreground = Brushes.Orange;
+            switch (damage)
+            {
+                case < 15:
+                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xB4, 0xBE, 0xFE));
+                    break;
+                case < 35:
+                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
+                    break;
+                case < 75:
+                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x74, 0xC7, 0xEC));
+                    break;
+                case < 200:
+                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xDC, 0xEB));
+                    break;
+                case < 250:
+                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x94, 0xE2, 0xD5));
+                    break;
+                case < 300:
+                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xE0, 0xDC));
+                    break;
+                case < 350:
+                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF9, 0xE2, 0xAF));
+                    tb.Content += "!";
+                    break;
+                case < 500:
+                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xCB, 0xA6, 0xF7));
+                    tb.Content += "!!";
+                    break;
+                default:
+                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0x8B, 0xA8));
+                    tb.Content += "!!!";
+                    break;
+            }
             tb.FontSize = 30;
             tb.SetValue(Canvas.TopProperty, newPoint.Y);
             tb.SetValue(Canvas.LeftProperty, newPoint.X);
@@ -268,6 +300,11 @@ namespace MHFZ_Overlay
             DisableDragAndDrop();
         }
         #endregion clickbuttons
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 /// <TODO>

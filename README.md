@@ -29,3 +29,5 @@ In the top left corner are buttons for configuration, restart overlay and exit r
 - Discord Rich Presence
 - Add shortcut for saving
 - Allow lock-on to be used to select monsters
+- Overlay font option
+- Damage graph

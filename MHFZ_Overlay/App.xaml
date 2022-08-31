@@ -22,9 +22,9 @@
             <Setter Property="TextAlignment" Value="Right"/>
         </Style>
         <Style x:Key="DefaultButton" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#FF2F2F2F"  />
+            <Setter Property="Background" Value="#1e1e2e"  />
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="#7FFFFFFF" />
+            <Setter Property="BorderBrush" Value="#cdd6f4" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -64,7 +64,7 @@
         </Style>
         <Style x:Key="ConfigSingleGrid" TargetType="{x:Type Grid}">
             <Setter Property="Margin" Value="20"/>
-            <Setter Property="Background" Value="#FF313131" />
+            <Setter Property="Background" Value="#1e1e2e" />
         </Style>
         <Style x:Key="ConfigTextBox" TargetType="{x:Type TextBlock}">
             <Setter Property="HorizontalAlignment" Value="Left" />
@@ -72,17 +72,17 @@
             <Setter Property="FontSize" Value="14"/>
         </Style>
         <Style x:Key="ConfigTextField" TargetType="{x:Type TextBox}">
-            <Setter Property="BorderBrush" Value="#FF252525"  />
+            <Setter Property="BorderBrush" Value="#1e1e2e"  />
             <Setter Property="BorderThickness" Value="0,0,0,1.5"  />
             <Setter Property="Margin" Value="5,8,5,8"  />
-            <Setter Property="Background" Value="#FF3A3A3A"  />
-            <Setter Property="Foreground" Value="#7FFFFFFF" />
+            <Setter Property="Background" Value="#1e1e2e"  />
+            <Setter Property="Foreground" Value="#cdd6f4" />
         </Style>
         <Style x:Key="ConfigBottomButtons" TargetType="{x:Type Button}">
             <Setter Property="HorizontalAlignment" Value="Left"   />
-            <Setter Property="Foreground" Value="#7FFFFFFF"/>
-            <Setter Property="Background" Value="#FF333333" />
-            <Setter Property="BorderBrush" Value="#FF252525"/>
+            <Setter Property="Foreground" Value="#cdd6f4"/>
+            <Setter Property="Background" Value="#1e1e2e" />
+            <Setter Property="BorderBrush" Value="#1e1e2e"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -123,19 +123,19 @@
         <Style x:Key="ConfigCheckBox" TargetType="{x:Type CheckBox}">
             <Setter Property="HorizontalAlignment" Value="Center"  />
             <Setter Property="VerticalAlignment" Value="Center"  />
-            <Setter Property="Background" Value="#FF3A3A3A" />
+            <Setter Property="Background" Value="#1e1e2e" />
         </Style>
         <Style x:Key="ConfigColorPicker" TargetType="xctk:ColorPicker">
             <Setter Property="Margin" Value="5" />
-            <Setter Property="BorderBrush" Value="#FF252525"  />
+            <Setter Property="BorderBrush" Value="#1e1e2e"  />
             <Setter Property="BorderThickness" Value="0,0,0,1.5"  />
-            <Setter Property="Foreground" Value="#7FFFFFFF" />
-            <Setter Property="HeaderForeground" Value="#7FFFFFFF" />
-            <Setter Property="TabForeground" Value="#7FFFFFFF" />
-            <Setter Property="HeaderBackground" Value="#FF3A3A3A" />
-            <Setter Property="DropDownBackground" Value="#FF3A3A3A" />
-            <Setter Property="TabBackground" Value="#FF3A3A3A" />
-            <Setter Property="Background" Value="#FF3A3A3A" />
+            <Setter Property="Foreground" Value="#cdd6f4" />
+            <Setter Property="HeaderForeground" Value="#cdd6f4" />
+            <Setter Property="TabForeground" Value="#cdd6f4" />
+            <Setter Property="HeaderBackground" Value="#1e1e2e" />
+            <Setter Property="DropDownBackground" Value="#1e1e2e" />
+            <Setter Property="TabBackground" Value="#1e1e2e" />
+            <Setter Property="Background" Value="#1e1e2e" />
             <Setter Property="ColorMode" Value="ColorCanvas"/>
         </Style>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
