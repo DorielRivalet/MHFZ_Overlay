@@ -1,7 +1,10 @@
-﻿using System;
+﻿using MHFZ_Overlay.addresses;
+using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -14,36 +17,49 @@ namespace MHFZ_Overlay
     {
         public DataLoader DataLoader { get; set; } = new();
 
-        private bool isVisible = true;
+        private int originalStyle = 0;
 
-        private void ToggleVisibility()
+        protected override void OnSourceInitialized(EventArgs e)
         {
-            if (isVisible)
+            // Get this window's handle         
+            IntPtr hwnd = new WindowInteropHelper(this).Handle;
+            // Change the extended window style to include WS_EX_TRANSPARENT         
+            int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
+            if (originalStyle == 0)
             {
+                originalStyle = extendedStyle;
+            }
+            SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
+            base.OnSourceInitialized(e);
+        }
+
+        public const int WS_EX_TRANSPARENT = 0x00000020;
+        public const int GWL_EXSTYLE = (-20);
+
+        [DllImport("user32.dll")]
+        public static extern int GetWindowLong(IntPtr hwnd, int index);
+
+        [DllImport("user32.dll")]
+        public static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
+
+        public MainWindow()
+            {
+                InitializeComponent();
+                Left = 0;
+                Top = 0;
+                Topmost = true;
+                DispatcherTimer timer = new();
+                timer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 30);
+                timer.Tick += Timer_Tick;
+                timer.Start();
+                DataContext = DataLoader.model;
+                //GlobalHotKey.RegisterHotKey("Shift + Insert", () => ToggleVisibility());
+                GlobalHotKey.RegisterHotKey("Shift + F1", () => OpenConfigButton_Key());
+                GlobalHotKey.RegisterHotKey("Shift + F5", () => ReloadButton_Key());
+                GlobalHotKey.RegisterHotKey("Shift + F6", () => CloseButton_Key());
                 OpenConfigButton.Visibility = Visibility.Hidden;
                 ReloadButton.Visibility = Visibility.Hidden;
                 CloseButton.Visibility = Visibility.Hidden;
-            } else {
-                OpenConfigButton.Visibility = Visibility.Visible;
-                ReloadButton.Visibility = Visibility.Visible;
-                CloseButton.Visibility = Visibility.Visible;
-            }
-            isVisible = !isVisible;
-        }
-
-        public MainWindow()
-        {
-            InitializeComponent();
-            Left = 0;
-            Top = 0;
-            Topmost = true;
-            DispatcherTimer timer = new();
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 30);
-            timer.Tick += Timer_Tick;
-            timer.Start();
-            DataContext = DataLoader.model;
-            GlobalHotKey.RegisterHotKey("Shift + Insert", () => ToggleVisibility()); 
-
         }
 
 
@@ -121,6 +137,7 @@ namespace MHFZ_Overlay
             Point newPoint = DamageNumbers.TranslatePoint(new Point(x, y), DamageNumbers);
             Label tb = new();
             tb.Content = damage.ToString();
+            
             switch (damage)
             {
                 case < 15:
@@ -268,6 +285,26 @@ namespace MHFZ_Overlay
         {
             Application.Current.Shutdown();
         }
+
+        private void ReloadButton_Key()
+        {
+            Application.Current.Shutdown();
+            System.Windows.Forms.Application.Restart();
+        }
+
+        private void OpenConfigButton_Key()
+        {
+            if (configWindow == null || !configWindow.IsLoaded)
+                configWindow = new(this);
+            configWindow.Show();
+            DataLoader.model.Configuring = true;
+        }
+
+        private void CloseButton_Key()
+        {
+            Application.Current.Shutdown();
+        }
+
         private void MainGrid_MouseMove(object sender, MouseEventArgs e)
         {
             DoDragDrop(MovingObject);
@@ -280,6 +317,35 @@ namespace MHFZ_Overlay
             MainGrid.Background = (Brush?)new BrushConverter().ConvertFrom("#01000000");
             if (configWindow != null)
                 configWindow.Visibility = Visibility.Hidden;
+            ToggleClickThrough();
+
+        }
+
+        private bool ClickThrough = true;
+
+        private void ToggleClickThrough()
+        {
+            if(ClickThrough == false) 
+            {
+                IsHitTestVisible = false;
+                Focusable = false;
+                // Get this window's handle         
+                IntPtr hwnd = new WindowInteropHelper(this).Handle;
+                // Change the extended window style to include WS_EX_TRANSPARENT         
+                int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
+                SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
+
+            } else
+            {
+                IsHitTestVisible = true;
+                Focusable = true;
+                // Get this window's handle         
+                IntPtr hwnd = new WindowInteropHelper(this).Handle;
+                // Change the extended window style to include WS_EX_TRANSPARENT         
+                SetWindowLong(hwnd, GWL_EXSTYLE, originalStyle);
+
+            }
+            ClickThrough = !ClickThrough;
         }
 
         public void DisableDragAndDrop()
@@ -289,6 +355,7 @@ namespace MHFZ_Overlay
             MainGrid.Background = (Brush?)new BrushConverter().ConvertFrom("#00FFFFFF");
             if (configWindow != null)
                 configWindow.Visibility = Visibility.Visible;
+            ToggleClickThrough();
         }
 
         private void ExitDragAndDrop_Click(object sender, RoutedEventArgs e)

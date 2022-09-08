@@ -10,12 +10,11 @@ This project is directly inspired from the overlay created by https://github.com
 3. Make sure windows did not delete the MHFZOverlay.dll file (because it reads the games memory windows might detect it as a trojan so you might have to get it out of quarantine)
 4. Execute the MHFZ_Overlay.exe
 
-In the top left corner are buttons for configuration, restart overlay and exit respectively. You can hide them by pressing `Shift+Insert`.
+In the top left corner are buttons for configuration (`Shift+F1`), restart overlay (`Shift+F5`) and exit (`Shift+F6`) respectively.
 
 ## Bugs
 
 - Monster Infos are sometimes outside of the screen (if they don't show at all even if you open the config menu, this is probably your issue)
-- Sometimes you can be in drag and drop mode without having the settings open
 - Road detection doesn't work all the time (use road override if road in general works for you)
 
 ## TODO
@@ -29,7 +28,7 @@ In the top left corner are buttons for configuration, restart overlay and exit r
 - Discord Rich Presence
 - Add shortcut for saving
 - Allow lock-on to be used to select monsters
-- Overlay font option
+- Overlay font options
 - Damage graph
 - Weapon stats import/export
 - Quest stats import/export

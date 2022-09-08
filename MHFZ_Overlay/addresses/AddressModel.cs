@@ -142,6 +142,16 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string CurrentWeaponName
+        { 
+            get
+            {
+                int weaponType = WeaponType();
+                return GetWeaponNameFromType(weaponType);
+                //return WeaponType().ToString();
+            }
+        }
+
         public string Size
         {
             get
@@ -526,9 +536,44 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-
-
-
+        public string GetWeaponNameFromType(int weaponType)
+        {
+            switch (weaponType)
+            {
+                case 0:
+                    return "Great Sword";
+                case 1:
+                    return "Heavy Bowgun";
+                case 2:
+                    return "Hammer";
+                case 3:
+                    return "Lance";
+                case 4:
+                    return "Sword and Shield";
+                case 5:
+                    return "Light Bowgun";
+                case 6:
+                    return "Dual Swords";
+                case 7:
+                    return "Long Sword";
+                case 8:
+                    return "Hunting Horn";
+                case 9:
+                    return "Gunlance";
+                case 10:
+                    return "Bow";
+                case 11:
+                    return "Tonfa";
+                case 12:
+                    return "Switch Axe F";
+                case 13:
+                    return "Magnet Spike";
+                case 14:
+                    return "Group";
+                default: 
+                    return "";
+            }
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
