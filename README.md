@@ -31,3 +31,7 @@ In the top left corner are buttons for configuration, restart overlay and exit r
 - Allow lock-on to be used to select monsters
 - Overlay font option
 - Damage graph
+- Weapon stats import/export
+- Quest stats import/export
+- Monster stats import/export
+- Halk level address
