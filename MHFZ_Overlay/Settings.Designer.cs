@@ -382,5 +382,17 @@ namespace MHFZ_Overlay {
                 this["DiscordServerInvite"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public string EnableEHPNumbers {
+            get {
+                return ((string)(this["EnableEHPNumbers"]));
+            }
+            set {
+                this["EnableEHPNumbers"] = value;
+            }
+        }
     }
 }

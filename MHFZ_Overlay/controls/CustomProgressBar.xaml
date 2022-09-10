@@ -12,8 +12,8 @@
             <ColumnDefinition Width="{Binding ElementName=window, Path=Width1}"/>
             <ColumnDefinition Width="{Binding ElementName=window, Path=Width2}"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Style="{StaticResource MainTextBox}" x:Name="Descriptor" Grid.Column="0" Text="{Binding ElementName=window, Path=Desc, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock Style="{StaticResource ValueTextBox}" x:Name="BarText" Grid.Column="1" Text="{Binding ElementName=window, Path=ValueText, UpdateSourceTrigger=PropertyChanged}" Panel.ZIndex="1"/>
-        <ProgressBar Style="{StaticResource MyProgressBar}" x:Name="PercentBar" Grid.Column="1" Value="{Binding ElementName=window, Path=Value, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding ElementName=window, Path=BarColor}"/>
+        <TextBlock FontFamily="Source Code Pro" Style="{StaticResource MainTextBox}" x:Name="Descriptor" Grid.Column="0" Text="{Binding ElementName=window, Path=Desc, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock FontFamily="Source Code Pro" Style="{StaticResource ValueTextBox}" x:Name="BarText" Grid.Column="1" Text="{Binding ElementName=window, Path=ValueText, UpdateSourceTrigger=PropertyChanged}" Panel.ZIndex="1"/>
+        <ProgressBar FontFamily="Source Code Pro" Style="{StaticResource MyProgressBar}" x:Name="PercentBar" Grid.Column="1" Value="{Binding ElementName=window, Path=Value, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding ElementName=window, Path=BarColor}" FontSize="16"/>
     </Grid>
 </UserControl>

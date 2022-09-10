@@ -1,6 +1,14 @@
 ﻿using Memory;
+using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
+using System.Runtime.Intrinsics.X86;
+using System.Security.RightsManagement;
+using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
+using System.Xml.Linq;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -86,6 +94,8 @@ namespace MHFZ_Overlay.addresses
 
         public bool _configuring = false;
 
+        public bool ShowMonsterEHP { get; set; } = true;
+
         public bool Configuring { get { return _configuring; } set { _configuring = value; ReloadData(); } }
 
         public bool ShowHPBar(int monsterId, int monsterHp)
@@ -117,10 +127,64 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int time = TimeInt();
-                int timeS = time / 30;
-                return string.Format("{0:D2}:{1:D2}", timeS / 60, timeS % 60);
+                double seconds = time / 30;
+                double minutes = seconds / 60;
+                double centiseconds = seconds / 100;
+
+                if (time > 0)
+                {
+                    if (time / 30 / 60 < 10) 
+                    {
+                        if (time / 30 % 60 < 10)
+                        {
+                            return string.Format("{0:0}:{1:0}.{2}",time / 30 / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3));
+                        } else
+                        {
+                            return string.Format("{0:0}:{1}.{2}", time / 30 / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3));
+                        }
+                    } else
+                    {
+                        if (time / 30 % 60 < 10) 
+                        {
+                            return string.Format("{0}:{1:0}.{2}", time / 30 / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3));
+                        }
+                        else
+                        {
+                            return string.Format("{0}:{1}.{2}", time / 30 / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3));
+                        }
+                    }
+                } else
+                {
+                    return string.Format("{0}:{1}.{2}", time / 30 / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3));
+                }
+        //        if frame > 0 {
+        //            if err == nil {
+        //                sendServerChatMessage(s, fmt.Sprintf("Quest Name : %s.", name))
+
+        //sendServerChatMessage(s, fmt.Sprintf("Target Monster : %s", monster))
+        //             if frame / 30 / 60 < 10 {
+        //                    if frame / 30 % 60 < 10 {
+        //                        sendServerChatMessage(s, fmt.Sprintf("Quest Time : 0%d:0%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
+        //                      }
+        //                    else
+        //                    {
+        //                        sendServerChatMessage(s, fmt.Sprintf("Quest Time : 0%d:%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
+        //        }
+        //                }
+        //                else
+        //                {
+        //                    if frame / 30 % 60 < 10 {
+        //                        sendServerChatMessage(s, fmt.Sprintf("Quest Time : %d:0%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
+        //                      }
+        //                    else
+        //                    {
+        //                        sendServerChatMessage(s, fmt.Sprintf("Quest Time : %d:%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
+        //        }
+        //                }
+        //            }
+                    //return string.Format("{0}:{}.{}0:00.##}", minutes, seconds % 60);
+               }
             }
-        }
         public string ATK
         {
             get
@@ -185,6 +249,23 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public bool isMonsterFocused = false;
+
+        public void showMonsterEHP(bool enabled, float defrate, int monsterhp, string monsterdefrate, bool debounce)
+        {
+            if (enabled && defrate > 0)
+            {
+                if (isMonsterFocused == false && debounce == true)
+                {
+                    isMonsterFocused = true;
+                    SavedMonster1MaxHP = (int)(monsterhp / float.Parse(monsterdefrate, CultureInfo.InvariantCulture.NumberFormat));
+                } else if (isMonsterFocused == true && debounce == false)
+                {
+                    SavedMonster1MaxHP = (int)(monsterhp / float.Parse(monsterdefrate, CultureInfo.InvariantCulture.NumberFormat));
+                }
+            }
+        }
+
         public string DefMult
         {
             get
@@ -192,10 +273,13 @@ namespace MHFZ_Overlay.addresses
                 switch (SelectedMonster)
                 {
                     case 0:
+                        //showMonsterEHP(ShowMonsterEHP, float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult(),true);
                         return Monster1DefMult();
                     case 1:
+                        //showMonsterEHP(ShowMonsterEHP, float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster2HPInt(), Monster2DefMult(),false);
                         return Monster2DefMult();
                     default:
+                        //showMonsterEHP(ShowMonsterEHP, float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult(),false);
                         return Monster1DefMult();
                 }
             }
@@ -393,10 +477,11 @@ namespace MHFZ_Overlay.addresses
             if (id == 0)
                 return "";
             Dictionary.List.MonsterID.TryGetValue(id, out string? monstername);
-            return monstername + ":";
+            return monstername + "";
         }
 
-        public string Monster1HP => !Configuring ? Monster1HPInt().ToString() : "50";
+        public string Monster1HP => Configuring ? "50" : (Monster1HPInt() / float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat)).ToString();
+
 
         public string Monster1MaxHP
         {
@@ -410,9 +495,11 @@ namespace MHFZ_Overlay.addresses
                 {
                     SavedMonster1MaxHP = Monster1HPInt();
                     SavedMonster1ID = LargeMonster1ID();
+
                 }
                 if (SavedMonster1ID > 0)
-                    SavedMonster1ID = LargeMonster1ID();
+         
+                SavedMonster1ID = LargeMonster1ID();
 
                 if (GetNotRoad() || RoadSelectedMonster() == 0)
                 {

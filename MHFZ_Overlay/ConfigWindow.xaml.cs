@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Navigation;
 using System.Windows.Input;
 
 namespace MHFZ_Overlay
@@ -84,13 +87,20 @@ namespace MHFZ_Overlay
                 e.Handled = true;
         }
 
+        private void lnkImg_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
 
-        /* LoadConfig on startup
-         * Load Config on window open to have extra copy
-         * On Save -> Window close -> tell programm to use new copy instead of current -> Save Config File
-         * On Cancel -> Window Close -> Discard copy of config
-         * On Config Change Still show changes immediatly and show windows which are set to show -> Ignore logic that hides windows during this time and force  them on if they are enabled
-         * 
-         */
-    }
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
+            e.Handled = true;
+        }
+    };
+
+
+    /* LoadConfig on startup
+     * Load Config on window open to have extra copy
+     * On Save -> Window close -> tell programm to use new copy instead of current -> Save Config File
+     * On Cancel -> Window Close -> Discard copy of config
+     * On Config Change Still show changes immediatly and show windows which are set to show -> Ignore logic that hides windows during this time and force  them on if they are enabled
+     * 
+     */
 }

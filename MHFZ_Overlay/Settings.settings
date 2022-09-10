@@ -92,5 +92,8 @@
     <Setting Name="DiscordServerInvite" Type="System.String" Scope="User">
       <Value Profile="(Default)">""</Value>
     </Setting>
+    <Setting Name="EnableEHPNumbers" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

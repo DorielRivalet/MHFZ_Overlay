@@ -121,7 +121,7 @@
                     <Button Grid.Column="1" x:Name="CancelButton" ToolTip="Cancel current changes" Content="Cancel"  Style="{StaticResource ConfigBottomButtons}" Click="CancelButton_Click" Width="70" />
                     <Button Grid.Column="2" x:Name="DefaultButton" ToolTip="Restore to default values" Content="Default"  Style="{StaticResource ConfigBottomButtons}" Click="DefaultButton_Click" Width="70"/>
                     <Button Grid.Column="3" x:Name="ConfigureButton" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" 
-                Style="{StaticResource ConfigBottomButtons}" Height="40" Width="40" ToolTip="Drag and Drop Elements" Click="ConfigureButton_Click"/>
+                Style="{StaticResource ConfigBottomButtons}" Height="40" Width="40" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
                 </Grid>
             </Grid>
         </TabItem>
@@ -329,11 +329,38 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="128"/>
+                        <RowDefinition Height="128"/>
+                        <RowDefinition Height="128"/>
+                        <RowDefinition Height="128"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Imulion"  FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock TextAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Imulion"  FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="suzaku01"  FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Text="Doriel Rivalet"  FontSize="18" HorizontalAlignment="Center"/>
+                    <Image Width="128" Height="128" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" x:Name="myImg" Source="https://avatars.githubusercontent.com/u/27354834?v=4" Margin="0"/>
+                    <Image Width="128" Height="128" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" x:Name="myImg3"  Source="https://avatars.githubusercontent.com/u/89909040?v=4" Margin="0"/>
+                    <Image Width="128" Height="128" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" x:Name="myImg2" Source="https://avatars.githubusercontent.com/u/100863878?v=4" Margin="0"/>
+                    <TextBlock Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" Name="txtbFooterRight">
+                        <Hyperlink Name="lnkImg" TextDecorations="None" 
+                            NavigateUri="https://github.com/Imulion" 
+                            ToolTip="Navigate to GitHub profile" RequestNavigate="lnkImg_RequestNavigate">
+                            <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" Name="txtbFooterRight2">
+                        <Hyperlink Name="lnkImg2" TextDecorations="None" 
+                            NavigateUri="https://github.com/suzaku01"
+                            ToolTip="Navigate to GitHub profile" RequestNavigate="lnkImg_RequestNavigate">
+                            <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Name="txtbFooterRight3">
+                        <Hyperlink Name="lnkImg3" TextDecorations="None" 
+                            NavigateUri="https://github.com/DorielRivalet"
+                            ToolTip="Navigate to GitHub profile" RequestNavigate="lnkImg_RequestNavigate">
+                            <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
+                        </Hyperlink>
+                    </TextBlock>
                 </Grid>
             </Grid>
         </TabItem>

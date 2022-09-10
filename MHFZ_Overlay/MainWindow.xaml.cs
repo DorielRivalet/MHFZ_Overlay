@@ -1,5 +1,6 @@
 ﻿using MHFZ_Overlay.addresses;
 using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,6 +8,9 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Brush = System.Windows.Media.Brush;
+using Color = System.Windows.Media.Color;
+using Point = System.Windows.Point;
 
 namespace MHFZ_Overlay
 {
@@ -19,6 +23,9 @@ namespace MHFZ_Overlay
 
         private int originalStyle = 0;
 
+        //https://stackoverflow.com/questions/2798245/click-through-in-c-sharp-form
+        //https://stackoverflow.com/questions/686132/opening-a-form-in-c-sharp-without-focus/10727337#10727337
+        //https://social.msdn.microsoft.com/Forums/en-us/a5e3cbbb-fd07-4343-9b60-6903cdfeca76/click-through-window-with-image-wpf-issues-httransparent-isnt-working?forum=csharplanguage
         protected override void OnSourceInitialized(EventArgs e)
         {
             // Get this window's handle         
@@ -131,47 +138,60 @@ namespace MHFZ_Overlay
 
         private void CreateDamageNumberLabel(int damage)
         {
-            System.Random random = new();
+            Random random = new();
             double x = random.Next(450);
             double y = random.Next(254);
             Point newPoint = DamageNumbers.TranslatePoint(new Point(x, y), DamageNumbers);
-            Label tb = new();
-            tb.Content = damage.ToString();
-            
+            Label tb = new()
+            {
+                Content = damage.ToString()
+            };
+
+            tb.FontFamily = new System.Windows.Media.FontFamily("MS Gothic"); 
+
             switch (damage)
             {
                 case < 15:
                     tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xB4, 0xBE, 0xFE));
+                    tb.FontSize = 16;
                     break;
                 case < 35:
                     tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
+                    tb.FontSize = 16;
                     break;
                 case < 75:
                     tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x74, 0xC7, 0xEC));
+                    tb.FontSize = 16;
                     break;
                 case < 200:
                     tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xDC, 0xEB));
+                    tb.FontSize = 18;
                     break;
                 case < 250:
                     tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x94, 0xE2, 0xD5));
+                    tb.FontSize = 18;
                     break;
                 case < 300:
                     tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xE0, 0xDC));
+                    tb.FontSize = 18;
                     break;
                 case < 350:
                     tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF9, 0xE2, 0xAF));
+                    tb.FontSize = 20;
                     tb.Content += "!";
                     break;
                 case < 500:
                     tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xCB, 0xA6, 0xF7));
+                    tb.FontSize = 24;
                     tb.Content += "!!";
                     break;
                 default:
                     tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0x8B, 0xA8));
+                    tb.FontSize = 32;
                     tb.Content += "!!!";
                     break;
             }
-            tb.FontSize = 30;
+            
             tb.SetValue(Canvas.TopProperty, newPoint.Y);
             tb.SetValue(Canvas.LeftProperty, newPoint.X);
             DamageNumbers.Children.Add(tb);
