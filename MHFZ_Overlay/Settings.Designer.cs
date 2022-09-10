@@ -169,7 +169,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#7F1e1e2e")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Transparent")]
         public string BackGroundColor {
             get {
                 return ((string)(this["BackGroundColor"]));
@@ -181,7 +181,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#7F1e1e2e")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Transparent")]
         public string ForeGroundColor {
             get {
                 return ((string)(this["ForeGroundColor"]));

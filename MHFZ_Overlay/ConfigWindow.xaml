@@ -196,7 +196,7 @@
                     <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0" Text="Monster 4 Bar Color"/>
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigColorPicker}" 
                               SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarColor}"></xctk:ColorPicker>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Health Points as Bars" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="True HP Numbers"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Effective Health Points (True HP / Defrate) as Bars" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Effective HP"/>
                     <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="7" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=HealthBarsShown}"/>
                 </Grid>
             </Grid>

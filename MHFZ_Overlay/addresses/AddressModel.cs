@@ -133,55 +133,59 @@ namespace MHFZ_Overlay.addresses
 
                 if (time > 0)
                 {
-                    if (time / 30 / 60 < 10) 
+                    if ((time / 30) / 60 < 10) 
                     {
-                        if (time / 30 % 60 < 10)
+                        if ((time / 30) % 60 < 10)
                         {
-                            return string.Format("{0:0}:{1:0}.{2}",time / 30 / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3));
+                            return string.Format("{0:00}:{1:00}.{2}",(time / 30) / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3));
                         } else
                         {
-                            return string.Format("{0:0}:{1}.{2}", time / 30 / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3));
+                            return string.Format("{0:00}:{1}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3));
                         }
                     } else
                     {
-                        if (time / 30 % 60 < 10) 
+                        if ((time / 30) % 60 < 10) 
                         {
-                            return string.Format("{0}:{1:0}.{2}", time / 30 / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3));
+                            return string.Format("{0}:{1:00}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3));
                         }
                         else
                         {
-                            return string.Format("{0}:{1}.{2}", time / 30 / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3));
+                            return string.Format("{0}:{1}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3));
                         }
                     }
                 } else
                 {
-                    return string.Format("{0}:{1}.{2}", time / 30 / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3));
+                    return string.Format("{0:00}:{1:00}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3));
                 }
         //        if frame > 0 {
-        //            if err == nil {
-        //                sendServerChatMessage(s, fmt.Sprintf("Quest Name : %s.", name))
+        //            if err == nil
+        //            {
+        //                  sendServerChatMessage(s, fmt.Sprintf("Quest Name : %s.", name))
 
-        //sendServerChatMessage(s, fmt.Sprintf("Target Monster : %s", monster))
-        //             if frame / 30 / 60 < 10 {
-        //                    if frame / 30 % 60 < 10 {
-        //                        sendServerChatMessage(s, fmt.Sprintf("Quest Time : 0%d:0%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
+        //                  sendServerChatMessage(s, fmt.Sprintf("Target Monster : %s", monster))
+        //                  if frame / 30 / 60 < 10
+        //                  {
+        //                      if frame / 30 % 60 < 10
+        //                      {
+        //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : 0%d:0%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
         //                      }
-        //                    else
-        //                    {
-        //                        sendServerChatMessage(s, fmt.Sprintf("Quest Time : 0%d:%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
-        //        }
-        //                }
-        //                else
-        //                {
-        //                    if frame / 30 % 60 < 10 {
-        //                        sendServerChatMessage(s, fmt.Sprintf("Quest Time : %d:0%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
+        //                      else
+        //                      {
+        //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : 0%d:%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
         //                      }
-        //                    else
-        //                    {
-        //                        sendServerChatMessage(s, fmt.Sprintf("Quest Time : %d:%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
-        //        }
-        //                }
-        //            }
+        //                  }
+        //                  else
+        //                  {
+        //                      if frame / 30 % 60 < 10
+        //                      {
+        //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : %d:0%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
+        //                      }
+        //                      else
+        //                      {
+        //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : %d:%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
+        //                      }
+        //                  }
+        //              }
                     //return string.Format("{0}:{}.{}0:00.##}", minutes, seconds % 60);
                }
             }
@@ -290,7 +294,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 if (Configuring)
-                    return 50;
+                    return 100;
                 switch (SelectedMonster)
                 {
                     case 0:
@@ -326,7 +330,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 if (Configuring)
-                    return 50;
+                    return 100;
                 switch (SelectedMonster)
                 {
                     case 0:
@@ -361,7 +365,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 if (Configuring)
-                    return 50;
+                    return 100;
                 switch (SelectedMonster)
                 {
                     case 0:
@@ -399,7 +403,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 if (Configuring)
-                    return 50;
+                    return 100;
                 switch (SelectedMonster)
                 {
                     case 0:
@@ -434,7 +438,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 if (Configuring)
-                    return 50;
+                    return 100;
                 switch (SelectedMonster)
                 {
                     case 0:
@@ -473,14 +477,14 @@ namespace MHFZ_Overlay.addresses
         public string getMonsterName(int id)
         {
             if (Configuring)
-                return "Monster Name";
+                return "Blitzkrieg Bogabadorumu";
             if (id == 0)
                 return "";
             Dictionary.List.MonsterID.TryGetValue(id, out string? monstername);
             return monstername + "";
         }
 
-        public string Monster1HP => Configuring ? "50" : (Monster1HPInt() / float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat)).ToString();
+        public string Monster1HP => Configuring ? "1000000" : (Monster1HPInt() / float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat)).ToString();
 
 
         public string Monster1MaxHP
@@ -488,7 +492,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 if (Configuring)
-                    return "100";
+                    return "1000000";
                 if (TimeDefInt() == TimeInt())
                     SavedMonster1MaxHP = Monster1HPInt();
                 if (LargeMonster1ID() > 0 && SavedMonster1ID == 0)
@@ -511,14 +515,14 @@ namespace MHFZ_Overlay.addresses
                 }
             }
         }
-        public string Monster2HP => !Configuring ? Monster2HPInt().ToString() : "50";
+        public string Monster2HP => !Configuring ? Monster2HPInt().ToString() : "1000000";
 
         public string Monster2MaxHP
         {
             get
             {
                 if (Configuring)
-                    return "100";
+                    return "1000000";
                 if (TimeDefInt() == TimeInt())
                     SavedMonster2MaxHP = Monster2HPInt();
                 if (RoadSelectedMonster() > 0 && SavedMonster2ID == 0)
@@ -532,27 +536,27 @@ namespace MHFZ_Overlay.addresses
                 return SavedMonster2MaxHP.ToString();
             }
         }
-        public string Monster3HP => !Configuring ? Monster3HPInt().ToString() : "50";
+        public string Monster3HP => !Configuring ? Monster3HPInt().ToString() : "1000000";
 
         public string Monster3MaxHP
         {
             get
             {
                 if (Configuring)
-                    return "100";
+                    return "1000000";
                 if (TimeDefInt() == TimeInt())
                     SavedMonster3MaxHP = Monster3HPInt();
                 return SavedMonster3MaxHP.ToString();
             }
         }
-        public string Monster4HP => !Configuring ? Monster4HPInt().ToString() : "50";
+        public string Monster4HP => !Configuring ? Monster4HPInt().ToString() : "1000000";
 
         public string Monster4MaxHP
         {
             get
             {
                 if (Configuring)
-                    return "100";
+                    return "1000000";
                 if (TimeDefInt() == TimeInt())
                     SavedMonster4MaxHP = Monster4HPInt();
                 return SavedMonster4MaxHP.ToString();

@@ -39,10 +39,10 @@
       <Value Profile="(Default)">#7f849c</Value>
     </Setting>
     <Setting Name="BackGroundColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#7F1e1e2e</Value>
+      <Value Profile="(Default)">Transparent</Value>
     </Setting>
     <Setting Name="ForeGroundColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#7F1e1e2e</Value>
+      <Value Profile="(Default)">Transparent</Value>
     </Setting>
     <Setting Name="TextColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#7Fcdd6f4</Value>
