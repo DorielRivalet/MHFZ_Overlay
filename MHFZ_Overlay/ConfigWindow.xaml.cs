@@ -19,6 +19,9 @@ namespace MHFZ_Overlay
             InitializeComponent();
             Topmost = true;
             MainWindow = mainWindow;
+            //GlobalHotKey.RegisterHotKey("Alt+Shift+a", () => SaveKey_Press());
+            //GlobalHotKey.RegisterHotKey("Alt+Shift+b", () => CancelKey_Press());
+            //GlobalHotKey.RegisterHotKey("Alt+Shift+c", () => DefaultKey_Press());
         }
 
         private void RoadOverrideTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -40,10 +43,24 @@ namespace MHFZ_Overlay
             }
         }
 
+        public void SaveKey_Press()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            s.Save();
+            Close();
+        }
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Save();
+            Close();
+        }
+
+        public void CancelKey_Press()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            s.Reload();
             Close();
         }
 
@@ -60,6 +77,12 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Reload();
             MainWindow.DataLoader.model.Configuring = false;
+        }
+
+        public void DefaultKey_Press()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            s.Reset();
         }
 
         private void DefaultButton_Click(object sender, RoutedEventArgs e)

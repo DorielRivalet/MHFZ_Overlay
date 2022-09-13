@@ -2,7 +2,7 @@
   <Rectangle Width="16 " Height="16">
     <Rectangle.Resources>
       <SolidColorBrush x:Key="canvas" Opacity="0" />
-            <SolidColorBrush x:Key="light-defaultgrey" Color="#7FFFFFFF" Opacity="1" />
+            <SolidColorBrush x:Key="light-defaultgrey" Color="#f38ba8" Opacity="1" />
     </Rectangle.Resources>
     <Rectangle.Fill>
       <DrawingBrush Stretch="None">

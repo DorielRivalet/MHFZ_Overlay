@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="icons\Cancel.xaml" />
     <Page Remove="icons\Close.xaml" />
+    <Page Remove="icons\Done.xaml" />
     <Page Remove="icons\DragDropControl.xaml" />
     <Page Remove="icons\Refresh.xaml" />
     <Page Remove="icons\Settings.xaml" />
@@ -34,13 +36,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="icons\Refresh.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="icons\Close.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\DragDropControl.xaml">
+    <Resource Include="icons\Cancel.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\Refresh.xaml">
+    <Resource Include="icons\Done.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="icons\DragDropControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
     <Resource Include="icons\Settings.xaml">

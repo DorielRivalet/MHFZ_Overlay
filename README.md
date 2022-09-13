@@ -2,7 +2,7 @@
 
 ## About
 
-[This project is directly inspired from the overlay created by suzaku01](https://github.com/suzaku01)
+[This project is directly inspired from the overlay created by suzaku01](https://github.com/suzaku01/mhf_displayer)
 
 ## Requirements
 
@@ -17,7 +17,9 @@
 
 ## Hotkeys
 
-In the top left corner are buttons for configuration (`Shift+F1`), restart overlay (`Shift+F5`) and exit (`Shift+F6`) respectively.
+- Open Configuration (`Shift+F1`)
+- Restart Overlay (`Shift+F5`)
+- Exit (`Shift+F6`)
 
 If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/Imulion/MHFZ_Overlay/issues).
 
@@ -28,6 +30,7 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 - Timer
 - Hit Count
 - Monster Status Ailments
+- Monster Body Parts
 - Damage Numbers
 - Discord Rich Presence
 
@@ -41,12 +44,11 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 - Choose which player to load data from
 - Auto detect which player is playing
 - Selecting monsters for body parts and monster status
-- Body parts information
 - Fix max HP for Road
 - Better detection for if the player is in Road so the Road Override is not necessary anymore
-- Add shortcut for saving
 - Allow lock-on to be used to select monsters
 - Overlay font options
+- Add shortcut for saving
 - Damage graph
 - Weapon stats import/export
 - Quest stats import/export

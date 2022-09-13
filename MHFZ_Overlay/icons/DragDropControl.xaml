@@ -2,9 +2,9 @@
   <Rectangle Width="16 " Height="16">
     <Rectangle.Resources>
       <SolidColorBrush x:Key="canvas" Opacity="0" />
-      <SolidColorBrush x:Key="light-defaultgrey" Color="#7FFFFFFF" Opacity="1" />
-            <SolidColorBrush x:Key="light-defaultgrey-10" Color="#7FFFFFFF" Opacity="0.1" />
-            <SolidColorBrush x:Key="light-blue" Color="#7FFFFFFF" Opacity="1" />
+            <SolidColorBrush x:Key="light-defaultgrey" Color="#89b4fa" Opacity="1" />
+            <SolidColorBrush x:Key="light-defaultgrey-10" Color="#89b4fa" Opacity="0.1" />
+            <SolidColorBrush x:Key="light-blue" Color="#89b4fa" Opacity="1" />
       <System:Double x:Key="cls-1">0.75</System:Double>
     </Rectangle.Resources>
     <Rectangle.Fill>
