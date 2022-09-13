@@ -43,12 +43,12 @@
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Time Left" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#cdd6f4"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Hit Count" Grid.Column="0" Grid.Row="1" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#cdd6f4"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Player Atk." Grid.Column="0" Grid.Row="2" FontFamily="MS Gothic" FontSize="20" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#cdd6f4"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#cdd6f4" x:Name="timeRemainingTextBox" Text="{Binding Time}" Margin="4,0,0,0"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#cdd6f4" x:Name="hitCountTextBow" Text="{Binding HitCount}" Margin="4,0,0,0"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#cdd6f4" x:Name="playerAtkTextBox" Text="{Binding ATK}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Time Left" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Hit Count" Grid.Column="0" Grid.Row="1" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Player Atk." Grid.Column="0" Grid.Row="2" FontFamily="MS Gothic" FontSize="20" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="timeRemainingTextBox" Text="{Binding Time}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="hitCountTextBow" Text="{Binding HitCount}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="playerAtkTextBox" Text="{Binding ATK}" Margin="4,0,0,0"/>
         </Grid>
         <Grid Background="Transparent" x:Name="MonsterHpBars" Canvas.Left="{Binding Source={StaticResource Settings},Path=HealthBarsX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=HealthBarsY}" Width="450" Height="160" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterHPBars, Converter={StaticResource BoolToVis}}">
@@ -58,25 +58,25 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            <uc:CustomProgressBar FontFamily="Source Code Pro" Foreground="#cdd6f4" x:Name="Monster1HPBar"  Grid.Row="0" Background="{Binding Source={StaticResource Settings},Path=BackGroundColor}" IsHitTestVisible="False"
+            <uc:CustomProgressBar FontFamily="Source Code Pro" Foreground="#f5e0dc" x:Name="Monster1HPBar"  Grid.Row="0" Background="{Binding Source={StaticResource Settings},Path=BackGroundColor}" IsHitTestVisible="False"
                                Visibility="{Binding ElementName=Window, Path=DataLoader.model.HasMonster1, Converter={StaticResource BoolToVis}}"
                                Description="{Binding ElementName=Window, Path=DataLoader.model.Monster1Name}"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.Monster1HP}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.Monster1MaxHP}"
                                BarColor="{Binding Source={StaticResource Settings},Path=Monster1BarColor}" Row1Width="4" Row2Width="3" />
-            <uc:CustomProgressBar  FontFamily="Source Code Pro" Foreground="#cdd6f4" x:Name="Monster2HPBar" Grid.Row="1"  Background="{Binding Source={StaticResource Settings},Path=BackGroundColor}" IsHitTestVisible="False"
+            <uc:CustomProgressBar  FontFamily="Source Code Pro" Foreground="#f5e0dc" x:Name="Monster2HPBar" Grid.Row="1"  Background="{Binding Source={StaticResource Settings},Path=BackGroundColor}" IsHitTestVisible="False"
                                Visibility="{Binding ElementName=Window, Path=DataLoader.model.HasMonster2, Converter={StaticResource BoolToVis}}"
                                Description="{Binding ElementName=Window, Path=DataLoader.model.Monster2Name}"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.Monster2HP}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.Monster2MaxHP}"
                                BarColor="{Binding Source={StaticResource Settings},Path=Monster2BarColor}" Row1Width="4" Row2Width="3"/>
-            <uc:CustomProgressBar FontFamily="Source Code Pro" Foreground="#cdd6f4" x:Name="Monster3HPBar"  Grid.Row="2" Background="{Binding Source={StaticResource Settings},Path=BackGroundColor}" IsHitTestVisible="False"
+            <uc:CustomProgressBar FontFamily="Source Code Pro" Foreground="#f5e0dc" x:Name="Monster3HPBar"  Grid.Row="2" Background="{Binding Source={StaticResource Settings},Path=BackGroundColor}" IsHitTestVisible="False"
                                Visibility="{Binding ElementName=Window, Path=DataLoader.model.HasMonster3, Converter={StaticResource BoolToVis}}"
                                Description="{Binding ElementName=Window, Path=DataLoader.model.Monster3Name}"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.Monster3HP}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.Monster3MaxHP}"
                                BarColor="{Binding Source={StaticResource Settings},Path=Monster3BarColor}" Row1Width="4" Row2Width="3" />
-            <uc:CustomProgressBar  Foreground="#cdd6f4" x:Name="Monster4HPBar" Grid.Row="3" Background="{Binding Source={StaticResource Settings},Path=BackGroundColor}" IsHitTestVisible="False"
+            <uc:CustomProgressBar  Foreground="#f5e0dc" x:Name="Monster4HPBar" Grid.Row="3" Background="{Binding Source={StaticResource Settings},Path=BackGroundColor}" IsHitTestVisible="False"
                                Visibility="{Binding ElementName=Window, Path=DataLoader.model.HasMonster4, Converter={StaticResource BoolToVis}}"
                                Description="{Binding ElementName=Window, Path=DataLoader.model.Monster4Name}"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.Monster4HP}"
@@ -99,12 +99,12 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Atk. Mult." Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#cdd6f4"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Defrate" Grid.Column="0" Grid.Row="1" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#cdd6f4"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Size" Grid.Column="0" Grid.Row="2" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#cdd6f4"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding AtkMult}" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#cdd6f4" x:Name="atkMultTextBox"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding DefMult}" Grid.Column="1" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#cdd6f4" x:Name="defMultTextBox"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding Size}" Grid.Column="1" Grid.Row="2" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#cdd6f4" x:Name="sizeTextBox"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Atk. Mult." Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Defrate" Grid.Column="0" Grid.Row="1" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Size" Grid.Column="0" Grid.Row="2" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding AtkMult}" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="atkMultTextBox"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding DefMult}" Grid.Column="1" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="defMultTextBox"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding Size}" Grid.Column="1" Grid.Row="2" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="sizeTextBox"/>
             <uc:CustomProgressBar  Foreground="#cba6f7" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" x:Name="MonsterPoisonBar" IsHitTestVisible="False"
                                Description="Poison"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.PoisonCurrent}"

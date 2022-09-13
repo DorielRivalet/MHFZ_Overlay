@@ -45,7 +45,7 @@
       <Value Profile="(Default)">Transparent</Value>
     </Setting>
     <Setting Name="TextColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#7Fcdd6f4</Value>
+      <Value Profile="(Default)">#f5e0dc</Value>
     </Setting>
     <Setting Name="HealthBarsX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1418</Value>

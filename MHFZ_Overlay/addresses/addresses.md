@@ -1127,26 +1127,26 @@ UP/DOWN means +/- here
 |414 |  Duremudira Door|
 |415 | Urgent Tower|
 |416 | 4th District Tower|
-|417 | Berserk Raviente BC Slay 1|
+|417 | 4th District Tower|
 |418 |Berserk Raviente Combat 01|
 |419 | Berserk Raviente Combat 02|
 |420 | Berserk Raviente Combat 03|
 |421 | Berserk Raviente Combat 04|
 |422 |Berserk Raviente Combat 05|
 |423 |Painted Falls Day Base Camp|
-|424 | Painted Falls Night|
+|424 | Painted Falls Night Base Camp|
 |425 | Painted Falls Day Area 1|
-|426 | Painted Falls Nigh|
+|426 | Painted Falls Night Area 1|
 |427 |Painted Falls Day Area 2|
-|428 | Painted Falls Night|
+|428 | Painted Falls Night Area 2|
 |429 |  Painted Falls Day Area 3|
-|430 | Painted Falls Night|
+|430 | Painted Falls Night Area 3|
 |431 | Painted Falls Day Area 4|
-|432 | Painted Falls Night|
+|432 | Painted Falls Night Area 4|
 |433 | Painted Falls Day Area 5|
-|434 | Painted Falls Night|
+|434 | Painted Falls Night Area 5|
 |435 |Painted Falls Day Area 6|
-|436 | Painted Falls Night|
+|436 | Painted Falls Night Area 6|
 |437 |  Guanzorumu Arena 01|
 |438 | Berserk Raviente BC|
 |439 |  Guanzorumu Arena 02|
@@ -1173,7 +1173,7 @@ UP/DOWN means +/- here
 |460 | Historic 1|
 |461 | Historic 2|
 |462 |  MezFes Entrance|
-|463 |  Volpkun T|
+|463 |  Volpkun Together|
 |464 |  Uruki Pachinko|
 |465 |  MezFes Minigame|
 |466 |  Guuku Scoop|

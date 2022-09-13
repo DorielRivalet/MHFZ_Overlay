@@ -4,12 +4,21 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using System.Windows.Threading;
+using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
+using DataFormats = System.Windows.DataFormats;
+using DataObject = System.Windows.DataObject;
+using DragDropEffects = System.Windows.DragDropEffects;
+using DragEventArgs = System.Windows.DragEventArgs;
+using Label = System.Windows.Controls.Label;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
 
 namespace MHFZ_Overlay
@@ -142,60 +151,90 @@ namespace MHFZ_Overlay
             double x = random.Next(450);
             double y = random.Next(254);
             Point newPoint = DamageNumbers.TranslatePoint(new Point(x, y), DamageNumbers);
-            Label tb = new()
+            Label damageLabel = new()
             {
-                Content = damage.ToString()
+                Content = damage.ToString(),
+                FontFamily = new System.Windows.Media.FontFamily("MS Gothic Bold")
+                //BorderBrush = System.Windows.Media.Brushes.Black,
+                //BorderThickness = new Thickness(2.0)
+                
+                //BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
             };
+            //damageLabel.
+            //        void CreateLabel(int damage)
+            //{
+            //    Label namelabel = new Label();
+            //    Random rnd = new Random();
+            //    int x = rnd.Next(centerx, centerx + width);
+            //    int y = rnd.Next(centery, centery + height);
+            //    namelabel.Location = new Point(x, y);
+            //    namelabel.BringToFront();
+            //    namelabel.Text = damage.ToString();
+            //    namelabel.Font = new Font(textfont, damageTextSize);
+            //    namelabel.ForeColor = Color.FromName(textcolor);
+            //    namelabel.BackColor = Color.Transparent;
+            //    namelabel.AutoSize = true;
+            //    this.Controls.Add(namelabel);
+            //    DeleteLabel(namelabel);
+            //}
 
-            tb.FontFamily = new System.Windows.Media.FontFamily("MS Gothic"); 
+            //does not alter actual number displayed, only the text style
+            double damageModifier = damage / (DataLoader.model.CurrentWeaponMultiplier / 2);
 
-            switch (damage)
+            switch (damageModifier)
             {
-                case < 15:
-                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xB4, 0xBE, 0xFE));
-                    tb.FontSize = 16;
+                case < 15.0:
+                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xB4, 0xBE, 0xFE));
+                    damageLabel.FontSize = 22;
                     break;
-                case < 35:
-                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
-                    tb.FontSize = 16;
+                case < 35.0:
+                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
+                    damageLabel.FontSize = 22;
                     break;
-                case < 75:
-                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x74, 0xC7, 0xEC));
-                    tb.FontSize = 16;
+                case < 75.0:
+                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x74, 0xC7, 0xEC));
+                    damageLabel.FontSize = 22;
                     break;
-                case < 200:
-                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xDC, 0xEB));
-                    tb.FontSize = 18;
+                case < 200.0:
+                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xDC, 0xEB));
+                    damageLabel.FontSize = 22;
                     break;
-                case < 250:
-                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x94, 0xE2, 0xD5));
-                    tb.FontSize = 18;
+                case < 250.0:
+                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x94, 0xE2, 0xD5));
+                    damageLabel.FontSize = 24;
                     break;
-                case < 300:
-                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xE0, 0xDC));
-                    tb.FontSize = 18;
+                case < 300.0:
+                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF9, 0xE2, 0xAF));
+                    damageLabel.FontSize = 24;
                     break;
-                case < 350:
-                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF9, 0xE2, 0xAF));
-                    tb.FontSize = 20;
-                    tb.Content += "!";
+                case < 350.0:
+                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x97));
+                    damageLabel.FontSize = 24;
+                    damageLabel.Content += "!";
                     break;
-                case < 500:
-                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xCB, 0xA6, 0xF7));
-                    tb.FontSize = 24;
-                    tb.Content += "!!";
+                case < 500.0:
+                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xEB, 0xA0, 0xAC));
+                    damageLabel.FontSize = 26;
+                    damageLabel.Content += "!!";
                     break;
                 default:
-                    tb.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0x8B, 0xA8));
-                    tb.FontSize = 32;
-                    tb.Content += "!!!";
+                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0x8B, 0xA8));
+                    damageLabel.FontSize = 30;
+                    damageLabel.Content += "!!!";
                     break;
             }
+
+            damageLabel.SetValue(Canvas.TopProperty, newPoint.Y);
+            damageLabel.SetValue(Canvas.LeftProperty, newPoint.X);
+
+            //Point newPoint2 = DamageNumbers.TranslatePoint(new Point(x, newPoint.Y), DamageNumbers);
+            //damageLabelBorder1.SetValue(Canvas.TopProperty, newPoint.Y - 1);
+            //damageLabelBorder1.SetValue(Canvas.LeftProperty, newPoint.X - 1);
+
+            DamageNumbers.Children.Add(damageLabel);
+
+            RemoveDamageNumberLabel(damageLabel);
             
-            tb.SetValue(Canvas.TopProperty, newPoint.Y);
-            tb.SetValue(Canvas.LeftProperty, newPoint.X);
-            DamageNumbers.Children.Add(tb);
-            RemoveDamageNumberLabel(tb);
 
         }
 
@@ -314,6 +353,7 @@ namespace MHFZ_Overlay
 
         private void OpenConfigButton_Key()
         {
+            if (IsDragConfigure) return;
             if (configWindow == null || !configWindow.IsLoaded)
                 configWindow = new(this);
             configWindow.Show();

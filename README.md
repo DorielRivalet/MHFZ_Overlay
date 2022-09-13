@@ -2,7 +2,7 @@
 
 ## About
 
-This project is directly inspired from the overlay created by https://github.com/suzaku01
+[This project is directly inspired from the overlay created by suzaku01](https://github.com/suzaku01)
 
 ## Requirements
 
@@ -15,7 +15,11 @@ This project is directly inspired from the overlay created by https://github.com
 2. Make sure Windows or your antivirus did not delete the `MHFZOverlay.dll` file (because it reads the games memory windows might detect it as a trojan so you might have to get it out of quarantine)
 3. Run `MHFZ_Overlay.exe`
 
+## Hotkeys
+
 In the top left corner are buttons for configuration (`Shift+F1`), restart overlay (`Shift+F5`) and exit (`Shift+F6`) respectively.
+
+If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/Imulion/MHFZ_Overlay/issues).
 
 ## Features
 
@@ -48,3 +52,4 @@ In the top left corner are buttons for configuration (`Shift+F1`), restart overl
 - Quest stats import/export
 - Monster stats import/export
 - Halk level address
+- Damage numbers Label border

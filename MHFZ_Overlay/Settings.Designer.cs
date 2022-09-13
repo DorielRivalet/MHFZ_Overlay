@@ -193,7 +193,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#7Fcdd6f4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#f5e0dc")]
         public string TextColor {
             get {
                 return ((string)(this["TextColor"]));
