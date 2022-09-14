@@ -255,19 +255,22 @@ namespace MHFZ_Overlay.addresses
 
         public bool isMonsterFocused = false;
 
-        public void showMonsterEHP(bool enabled, float defrate, int monsterhp, string monsterdefrate, bool debounce)
+        public int DisplayMonsterEHP(float defrate, int monsterhp, string monsterdefrate)
         {
-            if (enabled && defrate > 0)
+            if (defrate > 0)
             {
-                if (isMonsterFocused == false && debounce == true)
-                {
-                    isMonsterFocused = true;
-                    SavedMonster1MaxHP = (int)(monsterhp / float.Parse(monsterdefrate, CultureInfo.InvariantCulture.NumberFormat));
-                } else if (isMonsterFocused == true && debounce == false)
-                {
-                    SavedMonster1MaxHP = (int)(monsterhp / float.Parse(monsterdefrate, CultureInfo.InvariantCulture.NumberFormat));
-                }
+                //    if (isMonsterFocused == false && debounce == true)
+                //    {
+                //        isMonsterFocused = true;
+                //        return (int)(monsterhp / float.Parse(monsterdefrate, CultureInfo.InvariantCulture.NumberFormat));
+                //    } else if (isMonsterFocused == true && debounce == false)
+                //    {
+                //        return (int)(monsterhp / float.Parse(monsterdefrate, CultureInfo.InvariantCulture.NumberFormat));
+                //    }
+                //}
+                return (int)(monsterhp / float.Parse(monsterdefrate, CultureInfo.InvariantCulture.NumberFormat));
             }
+            return 0;
         }
 
         public string DefMult
@@ -483,8 +486,8 @@ namespace MHFZ_Overlay.addresses
             Dictionary.List.MonsterID.TryGetValue(id, out string? monstername);
             return monstername + "";
         }
-
-        public string Monster1HP => Configuring ? "1000000" : (Monster1HPInt() / float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat)).ToString();
+        //DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult()).ToString()
+        public string Monster1HP => Configuring ? "1000000" : ShowMonsterEHP ? DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult()).ToString() : Monster1HPInt().ToString();
 
 
         public string Monster1MaxHP

@@ -80,7 +80,7 @@
     <Setting Name="EnableDamageNumbersMulticolor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="EnableTrueHPNumbers" Type="System.Boolean" Scope="User">
+    <Setting Name="EnableHPNumbers" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="EnableRichPresence" Type="System.Boolean" Scope="User">
@@ -91,9 +91,6 @@
     </Setting>
     <Setting Name="DiscordServerInvite" Type="System.String" Scope="User">
       <Value Profile="(Default)">""</Value>
-    </Setting>
-    <Setting Name="EnableEHPNumbers" Type="System.String" Scope="User">
-      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>
