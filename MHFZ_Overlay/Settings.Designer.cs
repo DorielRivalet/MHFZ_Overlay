@@ -338,18 +338,18 @@ namespace MHFZ_Overlay {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableHPNumbers {
+        public bool EnableEHPNumbers {
             get {
-                return ((bool)(this["EnableHPNumbers"]));
+                return ((bool)(this["EnableEHPNumbers"]));
             }
             set {
-                this["EnableHPNumbers"] = value;
+                this["EnableEHPNumbers"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool EnableRichPresence {
             get {
                 return ((bool)(this["EnableRichPresence"]));
@@ -380,18 +380,6 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["DiscordServerInvite"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableEHPNumbers {
-            get {
-                return ((bool)(this["EnableEHPNumbers"]));
-            }
-            set {
-                this["EnableEHPNumbers"] = value;
             }
         }
     }

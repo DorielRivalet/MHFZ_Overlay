@@ -63,6 +63,7 @@
 - Weapon Type "mhfo-hd.dll"+DC6B753
 - Diva Skill Uses Left "mhfo-hd.dll"+ED3EB0A
 - Halk Fullness "mhfo-hd.dll"+ED3C123
+- Rank Band "mhfo-hd.dll"+2AFA788
 
 ## Not HGE
 
@@ -128,8 +129,90 @@
 - Weapon Type mhfo.dll+5033B93
 - Diva Skill Uses Left mhfo.dll+610436A
 - Halk Fullness mhfo.dll+6101983
+- Rank Band mhfo.dll+28C2BD8
 
 ## IDs
+
+## Rank Bands
+
+| ID | Rank Band|
+|----|------|
+| 0  ||
+| 1  | Lower    |
+| 2  | Lower    |
+| 3  | Lower    |
+| 4  | Lower    |
+| 5  | Lower     |
+| 6  |  Lower    |
+| 7  |  Lower    |
+| 8  | Lower    |
+| 9  | Lower    |
+|10  | Lower    |
+|11  | Lower/Higher    |
+|12  | Higher    |
+|13  | Higher     |
+|14  |  Higher    |
+|15  |  Higher    |
+|16  | Higher    |
+|17  | Higher    |
+|18  | Higher   |
+|19  | Higher    |
+|20  | Higher    |
+|21  ||
+|22  ||
+|23  ||
+|24  ||
+|25  ||
+|26  |   HR5   |
+|27  ||
+|28  ||
+|29  ||
+|30  ||
+|31  |   HR5   |
+|32  ||
+|33  ||
+|34  ||
+|35  ||
+|36  ||
+|37  ||
+|38  ||
+|39  ||
+|40  ||
+|41  ||
+|42  |   HR5   |
+|43  ||
+|44  ||
+|45  ||
+|46  ||
+|47  ||
+|48  ||
+|49  ||
+|50  ||
+|51  ||
+|52  ||
+|53  | G Rank    |
+|54  | Musou 1    |
+|55  | Musou 2    |
+|56  ||
+|57  ||
+|58  ||
+|59  ||
+|60  ||
+|61  ||
+|62  ||
+|63  ||
+|64  | Z1    |
+|65  | Z2   |
+|66  |  Z3    |
+|67  |  Z4    |
+|68  ||
+|69  ||
+|70  ||
+|71  |  Interception    |
+|72  | Interception    |
+|73  | Interception    |
+|...  |     |
+|255  |     |
 
 ### Armor Skills
 

@@ -175,26 +175,26 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Health Points as Bars" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="HP Bars"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Hit Points as Bars" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="HP Bars"/>
                     <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=HealthBarsShown}"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="HP Bars X Coordinate"/>
-                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HealthBarsX}"  PreviewTextInput="ValidateNumber"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="HP Bars Y Coordinate"/>
-                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HealthBarsY}"  PreviewTextInput="ValidateNumber"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0" Text="Monster 1 Bar Color"/>
-                    <xctk:ColorPicker Grid.Column="1" Grid.Row="3" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarColor}"></xctk:ColorPicker>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0" Text="Monster 2 Bar Color"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Effective Hit Points (True HP / Defrate) as Bars" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Effective HP"/>
+                    <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableEHPNumbers}"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="HP Bars X Coordinate"/>
+                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HealthBarsX}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="HP Bars Y Coordinate"/>
+                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HealthBarsY}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0" Text="Monster 1 Bar Color"/>
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="4" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarColor}"></xctk:ColorPicker>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0" Text="Monster 3 Bar Color"/>
+                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0" Text="Monster 2 Bar Color"/>
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarColor}"></xctk:ColorPicker>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0" Text="Monster 4 Bar Color"/>
+                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0" Text="Monster 3 Bar Color"/>
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigColorPicker}" 
+                              SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0" Text="Monster 4 Bar Color"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="7" Style="{StaticResource ConfigColorPicker}" 
                               SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarColor}"></xctk:ColorPicker>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Effective Health Points (True HP / Defrate) as Bars" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Effective HP"/>
-                    <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="7" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=HealthBarsShown}"/>
                 </Grid>
             </Grid>
         </TabItem>

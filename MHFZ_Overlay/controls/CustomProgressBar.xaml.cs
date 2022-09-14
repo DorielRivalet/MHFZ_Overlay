@@ -82,14 +82,14 @@ namespace MHFZ_Overlay.controls
                 if (NumMax == 0)
                     return NumCurr.ToString();
 
-                if (NumMax < NumCurr)
+                if (NumMax < NumCurr && Description != "Poison" && Description != "Sleep" && Description != "Para." && Description != "Blast" && Description != "Stun")
                 {
                     NumMax = 0;
                     NumMax += NumCurr;
                     return string.Format("{0}/{1}", NumCurr, NumMax);
                 }
 
-                if (NumCurr == 0)
+                if (NumCurr == 0 && Description != "Poison" && Description != "Sleep" && Description != "Para." && Description != "Blast" && Description != "Stun")
                 {
                     NumMax = 1;
                 }
