@@ -1243,7 +1243,7 @@ namespace Dictionary
             {414,"Duremudira Door" },
             {415,"Urgent Tower" },
             {416,"4th District Tower" },
-            {417,"Berserk Raviente BC Slay 1" },
+            {417,"Berserk Raviente Base Camp Slay 1" },
             {418,"Berserk Raviente Combat 01" },
             {419,"Berserk Raviente Combat 02" },
             {420,"Berserk Raviente Combat 03" },

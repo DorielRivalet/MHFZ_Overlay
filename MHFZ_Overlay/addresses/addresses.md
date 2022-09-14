@@ -61,6 +61,7 @@
 - Sharpness Level, zero-indexed "mhfo-hd.dll"+DC6C27F
 - Objective Type, hex "mhfo-hd.dll"+2AFA830
 - Weapon Type "mhfo-hd.dll"+DC6B753
+- Diva Skill Uses Left "mhfo-hd.dll"+ED3EB0A
 
 ## Not HGE
 
@@ -124,6 +125,7 @@
 - Partner Level mhfo.dll+574127E
 - Objective Type, hex mhfo.dll+28C2C80
 - Weapon Type mhfo.dll+5033B93
+- Diva Skill Uses Left mhfo.dll+610436A
 
 ## IDs
 

@@ -14,7 +14,7 @@
     <Window.Resources>
         <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
     </Window.Resources>
-    <TabControl Margin="5" BorderBrush="Transparent" Background="#1e1e2e">
+    <TabControl Margin="5" BorderBrush="Transparent" Background="#181825">
         <TabControl.Resources>
             <Style TargetType="TabItem">
                 <Setter Property="Template">
@@ -29,10 +29,10 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter TargetName="Border" Property="Background" Value="#b4befe" />
+                                    <Setter TargetName="Border" Property="Background" Value="#585b70" />
                                 </Trigger>
                                 <Trigger Property="IsSelected" Value="False">
-                                    <Setter TargetName="Border" Property="Background" Value="#181825" />
+                                    <Setter TargetName="Border" Property="Background" Value="#11111b" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -40,7 +40,7 @@
                 </Setter>
             </Style>
         </TabControl.Resources>
-        <TabItem Background="#1e1e2e" Foreground="#cdd6f4" Header="General">
+        <TabItem ToolTip="General settings" Background="#11111b" Foreground="#cdd6f4" Header="General">
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -117,12 +117,12 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" x:Name="ConfigureButton" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
-                    <Button Grid.Column="1" x:Name="DefaultButton" ToolTip="Restore to default values" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                    <Button Grid.Column="1" x:Name="DefaultButton" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
                     <Button Grid.Column="2" x:Name="SaveButton" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem Background="#1e1e2e" Foreground="#cdd6f4" Header="Player Info">
+        <TabItem ToolTip="Player settings" Background="#11111b" Foreground="#cdd6f4" Header="Player Info">
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -152,7 +152,7 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem Foreground="#cdd6f4" Header="Monster HP Bars">
+        <TabItem ToolTip="Monster HP settings" Background="#11111b" Foreground="#cdd6f4" Header="Monster HP Bars">
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -198,7 +198,7 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem Foreground="#cdd6f4" Header="Monster Status Info">
+        <TabItem ToolTip="Monster status settings" Background="#11111b" Foreground="#cdd6f4" Header="Monster Status Info">
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -246,7 +246,7 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem Foreground="#cdd6f4" Header="Discord Rich Presence">
+        <TabItem ToolTip="Discord settings" Background="#11111b" Foreground="#cdd6f4" Header="Discord Rich Presence">
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -290,7 +290,7 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem Foreground="#cdd6f4" Header="Changelog">
+        <TabItem ToolTip="Information about current and previous versions of the overlay" Background="#11111b" Foreground="#cdd6f4" Header="Changelog">
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -311,7 +311,7 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem Foreground="#cdd6f4" Header="Credits">
+        <TabItem ToolTip="Authors and developers information" Background="#11111b" Foreground="#cdd6f4" Header="Credits">
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
