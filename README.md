@@ -4,6 +4,10 @@
 
 [This project is directly inspired from the overlay created by suzaku01](https://github.com/suzaku01/mhf_displayer)
 
+[The theme and color palette used for the application is Catppuccin Mocha](https://github.com/catppuccin/catppuccin)
+
+[The icons used in this project are part of the Material Design icons](https://fonts.google.com/icons)
+
 ## Requirements
 
 - [.NET Desktop Runtime 6.0 x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.7-windows-x64-installer)
@@ -11,15 +15,17 @@
 
 ## Installation
 
-1. [Download the latest version from the Releases](https://github.com/Imulion/MHFZ_Overlay/releases/latest)
-2. Make sure Windows or your antivirus did not delete the `MHFZOverlay.dll` file (because it reads the games memory windows might detect it as a trojan so you might have to get it out of quarantine)
-3. Run `MHFZ_Overlay.exe`
+1. [Get the requirements](#requirements)
+2. [Download the latest version from the Releases](https://github.com/Imulion/MHFZ_Overlay/releases/latest)
+3. Make sure Windows or your antivirus did not delete the `MHFZOverlay.dll` file (because it reads the games memory windows might detect it as a trojan so you might have to get it out of quarantine)
+4. Run `MHFZ_Overlay.exe`
+5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
 
 ## Hotkeys
 
-- Open Configuration (`Shift+F1`)
-- Restart Overlay (`Shift+F5`)
-- Exit (`Shift+F6`)
+- `Shift+F1` Open Configuration
+- `Shift+F5` Restart Overlay
+- `Shift+F6` Exit
 
 If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/Imulion/MHFZ_Overlay/issues).
 
@@ -56,3 +62,4 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 - Monster stats import/export
 - Halk level address
 - Damage numbers Label border
+- Automatically set default positions according to screen resolution

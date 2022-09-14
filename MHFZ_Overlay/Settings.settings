@@ -48,28 +48,28 @@
       <Value Profile="(Default)">#f5e0dc</Value>
     </Setting>
     <Setting Name="HealthBarsX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1418</Value>
+      <Value Profile="(Default)">896</Value>
     </Setting>
     <Setting Name="HealthBarsY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">42</Value>
+      <Value Profile="(Default)">38</Value>
     </Setting>
     <Setting Name="HealthBarsShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="PlayerInfoX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">38</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="PlayerInfoY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">269</Value>
+      <Value Profile="(Default)">358</Value>
     </Setting>
     <Setting Name="PlayerInfoShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="MonsterStatusInfoX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1589</Value>
+      <Value Profile="(Default)">1087</Value>
     </Setting>
     <Setting Name="MonsterStatusInfoY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">573</Value>
+      <Value Profile="(Default)">207</Value>
     </Setting>
     <Setting Name="MonsterStatusInfoShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -91,6 +91,9 @@
     </Setting>
     <Setting Name="DiscordServerInvite" Type="System.String" Scope="User">
       <Value Profile="(Default)">""</Value>
+    </Setting>
+    <Setting Name="EnableEHPNumbers" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

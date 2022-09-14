@@ -205,7 +205,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1418")]
+        [global::System.Configuration.DefaultSettingValueAttribute("896")]
         public double HealthBarsX {
             get {
                 return ((double)(this["HealthBarsX"]));
@@ -217,7 +217,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("42")]
+        [global::System.Configuration.DefaultSettingValueAttribute("38")]
         public double HealthBarsY {
             get {
                 return ((double)(this["HealthBarsY"]));
@@ -241,7 +241,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("38")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public double PlayerInfoX {
             get {
                 return ((double)(this["PlayerInfoX"]));
@@ -253,7 +253,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("269")]
+        [global::System.Configuration.DefaultSettingValueAttribute("358")]
         public double PlayerInfoY {
             get {
                 return ((double)(this["PlayerInfoY"]));
@@ -277,7 +277,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1589")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1087")]
         public double MonsterStatusInfoX {
             get {
                 return ((double)(this["MonsterStatusInfoX"]));
@@ -289,7 +289,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("573")]
+        [global::System.Configuration.DefaultSettingValueAttribute("207")]
         public double MonsterStatusInfoY {
             get {
                 return ((double)(this["MonsterStatusInfoY"]));
@@ -380,6 +380,18 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["DiscordServerInvite"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableEHPNumbers {
+            get {
+                return ((bool)(this["EnableEHPNumbers"]));
+            }
+            set {
+                this["EnableEHPNumbers"] = value;
             }
         }
     }

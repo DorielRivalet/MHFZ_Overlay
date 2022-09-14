@@ -535,7 +535,7 @@ namespace MHFZ_Overlay.addresses
                 }
             }
         }
-        public string Monster2HP => !Configuring ? Monster2HPInt().ToString() : "1000000";
+        public string Monster2HP => Configuring ? "1000000" : ShowMonsterEHP ? DisplayMonsterEHP(float.Parse(Monster2DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster2HPInt(), Monster2DefMult()).ToString() : Monster2HPInt().ToString();
 
         public string Monster2MaxHP
         {
@@ -556,7 +556,8 @@ namespace MHFZ_Overlay.addresses
                 return SavedMonster2MaxHP.ToString();
             }
         }
-        public string Monster3HP => !Configuring ? Monster3HPInt().ToString() : "1000000";
+        public string Monster3HP => Configuring ? "1000000" : ShowMonsterEHP ? DisplayMonsterEHP(float.Parse("1", CultureInfo.InvariantCulture.NumberFormat), Monster3HPInt(), "1").ToString() : Monster3HPInt().ToString();
+
 
         public string Monster3MaxHP
         {
@@ -569,7 +570,7 @@ namespace MHFZ_Overlay.addresses
                 return SavedMonster3MaxHP.ToString();
             }
         }
-        public string Monster4HP => !Configuring ? Monster4HPInt().ToString() : "1000000";
+        public string Monster4HP => Configuring ? "1000000" : ShowMonsterEHP ? DisplayMonsterEHP(float.Parse("1", CultureInfo.InvariantCulture.NumberFormat), Monster4HPInt(), "1").ToString() : Monster4HPInt().ToString();
 
         public string Monster4MaxHP
         {
