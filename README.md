@@ -38,6 +38,7 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 
 - Monster Infos are sometimes outside of the screen (if they don't show at all even if you open the config menu, this is probably your issue)
 - Road detection doesn't work all the time (use road override if road in general works for you)
+- With Monster EHP enabled, if you cart, the max EHP turns into the current EHP
 
 ## Features not yet implemented
 

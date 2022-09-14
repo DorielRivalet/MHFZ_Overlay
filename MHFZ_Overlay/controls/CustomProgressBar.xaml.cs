@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MHFZ_Overlay.addresses;
 
 namespace MHFZ_Overlay.controls
 {
@@ -80,6 +81,19 @@ namespace MHFZ_Overlay.controls
             {
                 if (NumMax == 0)
                     return NumCurr.ToString();
+
+                if (NumMax < NumCurr)
+                {
+                    NumMax = 0;
+                    NumMax += NumCurr;
+                    return string.Format("{0}/{1}", NumCurr, NumMax);
+                }
+
+                if (NumCurr == 0)
+                {
+                    NumMax = 1;
+                }
+
                 return string.Format("{0}/{1}", NumCurr, NumMax);
             }
         }
