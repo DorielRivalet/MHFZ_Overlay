@@ -268,7 +268,7 @@
                         <RowDefinition Height="120"/>
                     </Grid.RowDefinitions>
                     <TextBlock Margin="5,5,5,5" ToolTip="Enable Discord Rich Presence" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Rich Presence"/>
-                    <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStatusInfoShown}"/>
+                    <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableRichPresence}"/>
                     <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="(Mandatory) Client/Application ID">
                         <ToolTipService.ToolTip>
                            <StackPanel Background="#FF313131"  >
@@ -286,9 +286,9 @@
                            </StackPanel>
                         </ToolTipService.ToolTip>
                     </TextBlock>
-                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoX}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordClientID}"  PreviewTextInput="ValidateNumber"/>
                     <TextBlock Margin="5,5,5,5" ToolTip="The server you play on (e.g. https://discord.gg/y8mF6amH)" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="(Optional) Frontier Discord Server Invite Link"/>
-                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoY}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordServerInvite}"  PreviewTextInput="ValidateNumber"/>
                 </Grid>
             </Grid>
         </TabItem>
