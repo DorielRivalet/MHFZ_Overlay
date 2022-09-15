@@ -38,6 +38,82 @@ namespace MHFZ_Overlay.addresses
         abstract public int HitCountInt();
         abstract public int DamageDealt();
 
+
+
+
+
+        //New addresses
+        abstract public int AreaID();
+        abstract public int GRankNumber();
+        abstract public int GSR();
+        abstract public int RoadFloor();
+        abstract public int WeaponStyle();
+        abstract public int QuestID();
+        abstract public int UrukiPachinkoFish();
+        abstract public int UrukiPachinkoMushroom();
+        abstract public int UrukiPachinkoSeed();
+        abstract public int UrukiPachinkoMeat() ;
+        abstract public int UrukiPachinkoChain() ;
+        abstract public int UrukiPachinkoScore();
+        abstract public int NyanrendoScore() ;
+        abstract public int DokkanBattleCatsScore() ;
+        abstract public int DokkanBattleCatsScale();
+        abstract public int DokkanBattleCatsShell() ;
+        abstract public int DokkanBattleCatsCamp();
+        abstract public int GuukuScoopSmall() ;
+        abstract public int GuukuScoopMedium() ;
+        abstract public int GuukuScoopLarge() ;
+        abstract public int GuukuScoopGolden() ;
+        abstract public int GuukuScoopScore() ;
+        abstract public int PanicHoneyScore() ;
+        abstract public int Sharpness();
+        abstract public int CaravanPoints() ;
+        abstract public int MezeportaFestivalPoints();
+        abstract public int DivaBond() ;
+        abstract public int DivaItemsGiven() ;
+        abstract public int GCP();
+        abstract public int RoadPoints() ;
+        abstract public int ArmorColor() ;
+        abstract public int RaviGg() ;
+        abstract public int Ravig() ;
+        abstract public int GZenny();
+        abstract public int GuildFoodSkill() ;
+        abstract public int GalleryEvaluationScore();
+        abstract public int PoogiePoints() ;
+        abstract public int PoogieItemUseID() ;
+        abstract public int PoogieCostume();
+        //zero-indexed
+        abstract public int CaravenGemLevel() ;
+        abstract public int RoadMaxStagesMultiplayer();
+        abstract public int RoadTotalStagesMultiplayer() ;
+        abstract public int RoadTotalStagesSolo();
+        abstract public int RoadMaxStagesSolo() ;
+        abstract public int RoadFatalisSlain()  ;
+        abstract public int RoadFatalisEncounters() ;
+        abstract public int FirstDistrictDuremudiraEncounters();
+        abstract public int FirstDistrictDuremudiraSlays();
+        abstract public int SecondDistrictDuremudiraEncounters() ;
+        abstract public int SecondDistrictDuremudiraSlays() ;
+        abstract public int DeliveryQuestPoints();
+
+
+        //red is 0
+        abstract public int SharpnessLevel();
+
+
+        abstract public int PartnerLevel();
+        abstract public int ObjectiveType();
+        abstract public int DivaSkillUsesLeft();
+        abstract public int HalkFullness();
+        abstract public int RankBand();
+
+
+
+
+
+
+
+
         abstract public int TimeInt();
         abstract public int TimeDefInt();
 

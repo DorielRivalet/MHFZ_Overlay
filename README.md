@@ -15,7 +15,7 @@
 
 ## Installation
 
-1. [Get *ALL* the requirements](#requirements)
+1. [Get **ALL** of the requirements](#requirements)
 2. [Download the latest version from the Releases](https://github.com/Imulion/MHFZ_Overlay/releases/latest)
 3. Make sure Windows or your antivirus did not delete the `MHFZOverlay.dll` file (because it reads the games memory windows might detect it as a trojan so you might have to get it out of quarantine)
 4. Run `MHFZ_Overlay.exe`
@@ -33,14 +33,14 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 
 ## Features
 
-- Monster Effective HP Bars
-- Sharpness Numbers
-- Timer
-- Hit Count
-- Monster Status Ailments
-- Monster Body Parts
-- Damage Numbers
-- Discord Rich Presence
+- [x] Monster Effective HP Bars
+- [x] Sharpness Numbers
+- [x] Timer
+- [x] Hit Count
+- [x] Monster Status Ailments
+- [x] Monster Body Parts
+- [x] Damage Numbers
+- [x] Discord Rich Presence
 
 ## Bugs
 

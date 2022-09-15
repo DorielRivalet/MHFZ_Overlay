@@ -143,7 +143,9 @@
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
             <!--<ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>-->
+            </ResourceDictionary.MergedDictionaries>
+            https://stackoverflow.com/questions/3425720/xaml-the-property-resources-is-set-more-than-once#3425956
+            -->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

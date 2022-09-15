@@ -139,5 +139,76 @@ namespace MHFZ_Overlay.addresses
         public string Monster2RoadSize() => M.Read2Byte("mhfo-hd.dll+2AFA784").ToString() + "%";
         public override int DamageDealt() => M.Read2Byte("mhfo-hd.dll+E8DCF18");
         public override int RoadSelectedMonster() => M.ReadByte("mhfo-hd.dll+E87FB04");
+
+
+
+        //new addresses
+        public override int AreaID() => M.Read2Byte("mhfo-hd.dll+DC6BF48");
+        public override int GRankNumber() => M.Read2Byte("mhfo-hd.dll+ED784D0");
+        public override int GSR() => M.Read2Byte("mhfo-hd.dll+DC6C562");
+        public override int RoadFloor() => M.Read2Byte("mhfo-hd.dll+E87FAF0");
+        public override int WeaponStyle() => M.ReadByte("mhfo-hd.dll+DC6C492");
+        public override int QuestID() => M.ReadInt("mhfo-hd.dll+EBEE53C");
+        public override int UrukiPachinkoFish() => M.ReadByte("mhfo-hd.dll+EE26916");
+        public override int UrukiPachinkoMushroom() => M.ReadByte("mhfo-hd.dll+EE26918");
+        public override int UrukiPachinkoSeed() => M.ReadByte("mhfo-hd.dll+EE2691A");
+        public override int UrukiPachinkoMeat() => M.ReadByte("mhfo-hd.dll+EE26914");
+        public override int UrukiPachinkoChain() => M.ReadByte("mhfo-hd.dll+EE26900");
+        public override int UrukiPachinkoScore() => M.Read2Byte("mhfo-hd.dll+EE2690C");
+        public override int NyanrendoScore() => M.Read2Byte("mhfo-hd.dll+EE26900");
+        public override int DokkanBattleCatsScore() => M.Read2Byte("mhfo-hd.dll+EE268F8");
+        public override int DokkanBattleCatsScale() => M.ReadByte("mhfo-hd.dll+EE26A8C");
+        public override int DokkanBattleCatsShell() => M.ReadByte("mhfo-hd.dll+EE268F4");
+        public override int DokkanBattleCatsCamp() => M.ReadByte("mhfo-hd.dll+EE26A8A");
+        public override int GuukuScoopSmall() => M.ReadByte("mhfo-hd.dll+EE26930");
+        public override int GuukuScoopMedium() => M.ReadByte("mhfo-hd.dll+EE26934");
+        public override int GuukuScoopLarge() => M.ReadByte("mhfo-hd.dll+EE26938");
+        public override int GuukuScoopGolden() => M.ReadByte("mhfo-hd.dll+EE2693C");
+        public override int GuukuScoopScore() => M.Read2Byte("mhfo-hd.dll+EE26924");
+        public override int PanicHoneyScore() => M.ReadByte("mhfo-hd.dll+EE26908");
+        public override int Sharpness() => M.Read2Byte("mhfo-hd.dll+DC6C276");
+        public override int CaravanPoints() => M.ReadInt("mhfo-hd.dll+ED3C034");
+        public override int MezeportaFestivalPoints() => M.ReadInt("mhfo-hd.dll+EDBA1EC");
+        public override int DivaBond() => M.Read2Byte("mhfo-hd.dll+ED3DB48");
+        public override int DivaItemsGiven() => M.Read2Byte("mhfo-hd.dll+ED3DB4A");
+        public override int GCP() => M.ReadInt("mhfo-hd.dll+E5075D8");
+        public override int RoadPoints() => M.ReadInt("mhfo-hd.dll+ED3EB98");
+        public override int ArmorColor() => M.ReadByte("mhfo-hd.dll+EDE66A8");
+        public override int RaviGg() => M.ReadInt("mhfo-hd.dll+ED3E928");
+        public override int Ravig() => M.ReadInt("mhfo-hd.dll+ED3AB40");
+        public override int GZenny() => M.ReadInt("mhfo-hd.dll+ED3ACB4");
+        public override int GuildFoodSkill() => M.Read2Byte("mhfo-hd.dll+E7FED00");
+        public override int GalleryEvaluationScore() => M.ReadInt("mhfo-hd.dll+ED3D9F0");
+        public override int PoogiePoints() => M.ReadByte("mhfo-hd.dll+ED3AAF0");
+        public override int PoogieItemUseID() => M.ReadInt("mhfo-hd.dll+ED8E898");
+        public override int PoogieCostume() => M.ReadByte("mhfo-hd.dll+1A77AF2");
+
+        //zero-indexed
+        public override int CaravenGemLevel() => M.ReadByte("mhfo-hd.dll+1C747F6");
+
+
+        public override int RoadMaxStagesMultiplayer() => M.Read2Byte("mhfo-hd.dll+E87FB78");
+        public override int RoadTotalStagesMultiplayer() => M.Read2Byte("mhfo-hd.dll+E87FB58");
+        public override int RoadTotalStagesSolo() => M.Read2Byte("mhfo-hd.dll+E87FB5C");
+        public override int RoadMaxStagesSolo() => M.Read2Byte("mhfo-hd.dll+E87FB80");
+        public override int RoadFatalisSlain() => M.Read2Byte("mhfo-hd.dll+E87FB60");
+        public override int RoadFatalisEncounters() => M.Read2Byte("mhfo-hd.dll+ECD71C4");
+        public override int FirstDistrictDuremudiraEncounters() => M.Read2Byte("mhfo-hd.dll+ED3EBB4");
+        public override int FirstDistrictDuremudiraSlays() => M.Read2Byte("mhfo-hd.dll+E87FB64");
+        public override int SecondDistrictDuremudiraEncounters() => M.Read2Byte("mhfo-hd.dll+ED3EBB8");
+        public override int SecondDistrictDuremudiraSlays() => M.Read2Byte("mhfo-hd.dll+E87FB68");
+        public override int DeliveryQuestPoints() => M.Read2Byte("mhfo-hd.dll+ED3B212");
+
+        //red is 0
+        public override int SharpnessLevel() => M.ReadByte("mhfo-hd.dll+DC6C27F");
+        public override int PartnerLevel() => M.Read2Byte("mhfo-hd.dll+E378E3E");
+
+        // as hex
+        public override int ObjectiveType() => M.ReadInt("mhfo-hd.dll+2AFA830");
+
+
+        public override int DivaSkillUsesLeft() => M.ReadByte("mhfo-hd.dll+ED3EB0A");
+        public override int HalkFullness() => M.ReadByte("mhfo-hd.dll+ED3C123");
+        public override int RankBand() => M.ReadByte("mhfo-hd.dll+2AFA7888");
     }
 }

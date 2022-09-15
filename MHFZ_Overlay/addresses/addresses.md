@@ -36,6 +36,7 @@
 - Diva Bond "mhfo-hd.dll"+ED3DB48
 - Diva Items Given "mhfo-hd.dll"+ED3DB4A
 - GCP "mhfo-hd.dll"+E5075D8
+- Road Points "mhfo-hd.dll"+ED3EB98
 - Armour Colour "mhfo-hd.dll"+EDE66A8
 - Evolution Gg "mhfo-hd.dll"+ED3E928
 - Evolution g"mhfo-hd.dll"+ED3AB40
