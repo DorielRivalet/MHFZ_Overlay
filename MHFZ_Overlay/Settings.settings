@@ -38,10 +38,10 @@
     <Setting Name="MonsterStunBarColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#7f849c</Value>
     </Setting>
-    <Setting Name="BackGroundColor" Type="System.String" Scope="User">
+    <Setting Name="HPBackGroundColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">Transparent</Value>
     </Setting>
-    <Setting Name="ForeGroundColor" Type="System.String" Scope="User">
+    <Setting Name="TextBackGroundColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">Transparent</Value>
     </Setting>
     <Setting Name="TextColor" Type="System.String" Scope="User">

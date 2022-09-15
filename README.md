@@ -15,7 +15,7 @@
 
 ## Installation
 
-1. [Get the requirements](#requirements)
+1. [Get *ALL* the requirements](#requirements)
 2. [Download the latest version from the Releases](https://github.com/Imulion/MHFZ_Overlay/releases/latest)
 3. Make sure Windows or your antivirus did not delete the `MHFZOverlay.dll` file (because it reads the games memory windows might detect it as a trojan so you might have to get it out of quarantine)
 4. Run `MHFZ_Overlay.exe`
@@ -27,7 +27,7 @@
 - `Shift+F5` Restart Overlay
 - `Shift+F6` Exit
 
-It's recommended to start the overlay when you are loaded into Mezeporta.
+**It's recommended to start the overlay when you are loaded into Mezeporta.**
 
 If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/Imulion/MHFZ_Overlay/issues).
 
@@ -67,3 +67,4 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 - Automatically set default positions according to screen resolution
 - Global damage number labels
 - Player attack multicolor relative to highest attack obtained per quest
+- Attach UI to game window option

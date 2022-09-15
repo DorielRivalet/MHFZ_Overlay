@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -24,6 +25,27 @@ using Point = System.Windows.Point;
 
 namespace MHFZ_Overlay
 {
+    /// <summary>
+    /// Create a Value Converter to disable the Up & Down Arrow buttons of the scrollbar
+    /// when the Thumb reaches the minimum & maximum position on the scroll track.
+    /// </summary>
+
+    public class ScrollLimitConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (values.Length == 2 && values[0] is double && values[1] is double)
+            {
+                return (double)values[0] == (double)values[1];
+            }
+            return false;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -237,6 +259,7 @@ namespace MHFZ_Overlay
             if (!ShowDamageNumbersMulticolor()) 
             {
                 //damageLabel.Foreground = Brushes.Orange;
+                //https://stackoverflow.com/questions/14601759/convert-color-to-byte-value
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 System.Drawing.Color color = ColorTranslator.FromHtml(s.DamageNumbersColor);
                 damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
