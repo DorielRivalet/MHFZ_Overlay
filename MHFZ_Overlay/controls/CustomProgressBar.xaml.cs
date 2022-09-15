@@ -75,6 +75,30 @@ namespace MHFZ_Overlay.controls
         #region UsedBindings
         public string Width1 { get => Row1Width.ToString() + "*"; }
         public string Width2 { get => Row2Width.ToString() + "*"; }
+        public bool ShowCurrentHPPercentage()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableCurrentHPPercentage == true)
+                return true;
+            else
+                return false;
+        }
+
+        public string CurrentHPPercentNumber
+        { get
+            {
+                if (NumMax < NumCurr)
+                {
+                    return "0";
+                } else
+                {
+                    return string.Format(" ({0:0}%)",(float)NumCurr / NumMax * 100.0);
+                }
+            }
+        }
+
+        public string CurrentHPPercent = "";
+
         public string ValueText
         {
             get
@@ -86,15 +110,29 @@ namespace MHFZ_Overlay.controls
                 {
                     NumMax = 0;
                     NumMax += NumCurr;
-                    return string.Format("{0}/{1}", NumCurr, NumMax);
+                    if (ShowCurrentHPPercentage())
+                    {
+                        CurrentHPPercent = CurrentHPPercentNumber;
+                    } else
+                    {
+                        CurrentHPPercent = "";
+                    }
+                    return string.Format("{0}/{1}", NumCurr, NumMax) + CurrentHPPercent;
                 }
 
                 if (NumCurr == 0 && Description != "Poison" && Description != "Sleep" && Description != "Para." && Description != "Blast" && Description != "Stun")
                 {
                     NumMax = 1;
                 }
-
-                return string.Format("{0}/{1}", NumCurr, NumMax);
+                if (ShowCurrentHPPercentage())
+                {
+                    CurrentHPPercent = CurrentHPPercentNumber;
+                }
+                else
+                {
+                    CurrentHPPercent = "";
+                }
+                return string.Format("{0}/{1}", NumCurr, NumMax) + CurrentHPPercent;
             }
         }
 

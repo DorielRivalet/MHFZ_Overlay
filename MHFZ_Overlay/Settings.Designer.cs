@@ -205,7 +205,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("896")]
+        [global::System.Configuration.DefaultSettingValueAttribute("840")]
         public double HealthBarsX {
             get {
                 return ((double)(this["HealthBarsX"]));
@@ -217,7 +217,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("38")]
+        [global::System.Configuration.DefaultSettingValueAttribute("36")]
         public double HealthBarsY {
             get {
                 return ((double)(this["HealthBarsY"]));
@@ -380,6 +380,18 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["DiscordServerInvite"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableCurrentHPPercentage {
+            get {
+                return ((bool)(this["EnableCurrentHPPercentage"]));
+            }
+            set {
+                this["EnableCurrentHPPercentage"] = value;
             }
         }
     }

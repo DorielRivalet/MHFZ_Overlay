@@ -50,7 +50,7 @@
             <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="hitCountTextBow" Text="{Binding HitCount}" Margin="4,0,0,0"/>
             <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="playerAtkTextBox" Text="{Binding ATK}" Margin="4,0,0,0"/>
         </Grid>
-        <Grid Background="Transparent" x:Name="MonsterHpBars" Canvas.Left="{Binding Source={StaticResource Settings},Path=HealthBarsX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=HealthBarsY}" Width="450" Height="160" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+        <Grid Background="Transparent" x:Name="MonsterHpBars" Canvas.Left="{Binding Source={StaticResource Settings},Path=HealthBarsX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=HealthBarsY}" Width="500" Height="160" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterHPBars, Converter={StaticResource BoolToVis}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>

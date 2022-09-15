@@ -48,10 +48,10 @@
       <Value Profile="(Default)">#f5e0dc</Value>
     </Setting>
     <Setting Name="HealthBarsX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">896</Value>
+      <Value Profile="(Default)">840</Value>
     </Setting>
     <Setting Name="HealthBarsY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">38</Value>
+      <Value Profile="(Default)">36</Value>
     </Setting>
     <Setting Name="HealthBarsShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -91,6 +91,9 @@
     </Setting>
     <Setting Name="DiscordServerInvite" Type="System.String" Scope="User">
       <Value Profile="(Default)">""</Value>
+    </Setting>
+    <Setting Name="EnableCurrentHPPercentage" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>
