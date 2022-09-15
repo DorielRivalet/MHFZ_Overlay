@@ -68,7 +68,7 @@
                       IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
                     <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="1" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
                     <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="1" Style="{StaticResource ConfigCheckBox}"
-                      IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
+                      IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
                     <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="2" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}"/>
                     <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="2" Style="{StaticResource ConfigCheckBox}"
                       IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>

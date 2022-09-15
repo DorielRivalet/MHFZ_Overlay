@@ -12,6 +12,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
+using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 using DataFormats = System.Windows.DataFormats;
 using DataObject = System.Windows.DataObject;
@@ -145,6 +146,15 @@ namespace MHFZ_Overlay
             prevNum = damage;
         }
 
+        public bool ShowDamageNumbersMulticolor()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableDamageNumbersMulticolor == true)
+                return true;
+            else
+                return false;
+        }
+
         private void CreateDamageNumberLabel(int damage)
         {
             Random random = new();
@@ -222,6 +232,11 @@ namespace MHFZ_Overlay
                     damageLabel.FontSize = 30;
                     damageLabel.Content += "!!!";
                     break;
+            }
+
+            if (!ShowDamageNumbersMulticolor()) 
+            {
+                damageLabel.Foreground = Brushes.Orange;
             }
 
             damageLabel.SetValue(Canvas.TopProperty, newPoint.Y);
