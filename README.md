@@ -63,3 +63,5 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 - Halk level address
 - Damage numbers Label border
 - Automatically set default positions according to screen resolution
+- Global damage number labels
+- Player attack multicolor relative to highest attack obtained per quest

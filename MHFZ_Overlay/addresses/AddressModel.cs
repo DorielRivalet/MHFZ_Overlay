@@ -129,6 +129,32 @@ namespace MHFZ_Overlay.addresses
             return IsNotRoad();
         }
 
+        public bool ShowTimeLeftPercentage()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableTimeLeftPercentage == true)
+                return true;
+            else
+                return false;
+        }
+
+        public string TimeLeftPercentNumber
+        {
+            get
+            {
+                if (TimeDefInt() < TimeInt())
+                {
+                    return "0";
+                }
+                else
+                {
+                    return string.Format(" ({0:0}%)", (float)TimeInt() / TimeDefInt() * 100.0);
+                }
+            }
+        }
+
+        public string TimeLeftPercent = "";
+
         public string Time
         {
             get
@@ -140,29 +166,39 @@ namespace MHFZ_Overlay.addresses
 
                 if (time > 0)
                 {
+
+                    if (ShowTimeLeftPercentage())
+                    {
+                        TimeLeftPercent = TimeLeftPercentNumber;
+                    }
+                    else
+                    {
+                        TimeLeftPercent = "";
+                    }
+
                     if ((time / 30) / 60 < 10) 
                     {
                         if ((time / 30) % 60 < 10)
                         {
-                            return string.Format("{0:00}:{1:00}.{2}",(time / 30) / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3));
+                            return string.Format("{0:00}:{1:00}.{2}",(time / 30) / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3)) + TimeLeftPercent;
                         } else
                         {
-                            return string.Format("{0:00}:{1}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3));
+                            return string.Format("{0:00}:{1}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3)) + TimeLeftPercent;
                         }
                     } else
                     {
                         if ((time / 30) % 60 < 10) 
                         {
-                            return string.Format("{0}:{1:00}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3));
+                            return string.Format("{0}:{1:00}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3)) + TimeLeftPercent;
                         }
                         else
                         {
-                            return string.Format("{0}:{1}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3));
+                            return string.Format("{0}:{1}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3)) + TimeLeftPercent;
                         }
                     }
                 } else
                 {
-                    return string.Format("{0:00}:{1:00}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3));
+                    return string.Format("{0:00}:{1:00}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3)) + TimeLeftPercent;
                 }
         //        if frame > 0 {
         //            if err == nil

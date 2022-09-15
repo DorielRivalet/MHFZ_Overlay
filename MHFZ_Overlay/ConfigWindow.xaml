@@ -140,6 +140,7 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <TextBlock Margin="5,5,5,5" ToolTip="Show Player Information" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Player Info"/>
                     <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerInfoShown}"/>
@@ -149,6 +150,8 @@
                     <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerInfoY}"  PreviewTextInput="ValidateNumber"/>
                     <TextBlock Foreground="AntiqueWhite" Margin="5,5,5,5" ToolTip="Currently Equipped Weapon (includes Town Set)" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0" Text="{Binding CurrentWeaponName}"/>
                     <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="3" x:Name="playerWepTextBox" Text="{Binding CurrentWeaponName}"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show Time Left as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Time Left as Percentage"/>
+                    <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="3" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableTimeLeftPercentage}"/>
                 </Grid>
             </Grid>
         </TabItem>

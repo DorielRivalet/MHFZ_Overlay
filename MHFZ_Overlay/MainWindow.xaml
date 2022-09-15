@@ -31,11 +31,11 @@
                     Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Close.xaml'}" >
             </Button>
         </Grid>
-        <Grid x:Name="PlayerInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerInfoX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerInfoY}" Width="200" Height="90" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+        <Grid x:Name="PlayerInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerInfoX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerInfoY}" Width="350" Height="90" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Background="Transparent"  Visibility="{Binding Source={StaticResource Settings},Path=PlayerInfoShown, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
-                <ColumnDefinition  Width="4*" />
-                <ColumnDefinition  Width="3*"/>
+                <ColumnDefinition  Width="2*" />
+                <ColumnDefinition  Width="4*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
@@ -43,12 +43,12 @@
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Time Left" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Hit Count" Grid.Column="0" Grid.Row="1" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Player Atk." Grid.Column="0" Grid.Row="2" FontFamily="MS Gothic" FontSize="20" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="timeRemainingTextBox" Text="{Binding Time}" Margin="4,0,0,0"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="hitCountTextBow" Text="{Binding HitCount}" Margin="4,0,0,0"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="playerAtkTextBox" Text="{Binding ATK}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Text="Time Left" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Text="Hit Count" Grid.Column="0" Grid.Row="1" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Text="Player Atk." Grid.Column="0" Grid.Row="2" FontFamily="MS Gothic" FontSize="20" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="timeRemainingTextBox" Text="{Binding Time}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="hitCountTextBow" Text="{Binding HitCount}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="playerAtkTextBox" Text="{Binding ATK}" Margin="4,0,0,0"/>
         </Grid>
         <Grid Background="Transparent" x:Name="MonsterHpBars" Canvas.Left="{Binding Source={StaticResource Settings},Path=HealthBarsX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=HealthBarsY}" Width="500" Height="160" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterHPBars, Converter={StaticResource BoolToVis}}">

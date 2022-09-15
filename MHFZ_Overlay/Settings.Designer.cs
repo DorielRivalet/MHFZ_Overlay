@@ -394,5 +394,17 @@ namespace MHFZ_Overlay {
                 this["EnableCurrentHPPercentage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableTimeLeftPercentage {
+            get {
+                return ((bool)(this["EnableTimeLeftPercentage"]));
+            }
+            set {
+                this["EnableTimeLeftPercentage"] = value;
+            }
+        }
     }
 }
