@@ -236,7 +236,10 @@ namespace MHFZ_Overlay
 
             if (!ShowDamageNumbersMulticolor()) 
             {
-                damageLabel.Foreground = Brushes.Orange;
+                //damageLabel.Foreground = Brushes.Orange;
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                System.Drawing.Color color = ColorTranslator.FromHtml(s.DamageNumbersColor);
+                damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
             }
 
             damageLabel.SetValue(Canvas.TopProperty, newPoint.Y);

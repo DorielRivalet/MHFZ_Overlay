@@ -62,31 +62,31 @@
                         <RowDefinition Height="40" />
                         <RowDefinition Height="40" />
                         <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Show weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="0" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
-                    <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="0" Style="{StaticResource ConfigCheckBox}"
-                      IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="1" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
-                    <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="1" Style="{StaticResource ConfigCheckBox}"
-                      IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
-                    <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="2" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}"/>
-                    <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="2" Style="{StaticResource ConfigCheckBox}"
-                      IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>
-                    <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="3" Text="Road Override"  Style="{StaticResource ConfigTextBox}" >
-                <ToolTipService.ToolTip>
-                   <StackPanel Background="#1e1e2e"  >
-                       <TextBlock Foreground="#cdd6f4">
-                           0 = No Override
-                           <LineBreak/>
-                           1 = Never Road
-                           <LineBreak/>
-                           2 = Always Road
-                       </TextBlock>
-                   </StackPanel>
-                </ToolTipService.ToolTip>
-            </TextBlock>
-                    <TextBox TextAlignment="Center" Background="#585b70" Foreground="#cdd6f4" Grid.Column="1" Grid.Row="3"   x:Name="RoadOverrideTextBox" Style="{StaticResource ConfigTextField}" 
-                     PreviewTextInput="RoadOverrideTextBox_PreviewTextInput" TextChanged="RoadOverrideTextBox_TextChanged" Text="{Binding Source={StaticResource Settings}, Path=IsRoadOverride}" >
+                    <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="0" Text="Background Color" Style="{StaticResource ConfigTextBox}"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="0" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=BackGroundColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="1" Text="Foreground Color" Style="{StaticResource ConfigTextBox}"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="1" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=ForeGroundColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="2" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="2" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
+                    <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="3" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}"/>
+                    <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="3" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>
+                    <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="4" Text="Road Override"  Style="{StaticResource ConfigTextBox}" >
+                        <ToolTipService.ToolTip>
+                           <StackPanel Background="#1e1e2e"  >
+                               <TextBlock Foreground="#cdd6f4">
+                                   0 = No Override
+                                   <LineBreak/>
+                                   1 = Never Road
+                                   <LineBreak/>
+                                   2 = Always Road
+                               </TextBlock>
+                           </StackPanel>
+                        </ToolTipService.ToolTip>   
+                    </TextBlock>
+                    <TextBox TextAlignment="Center" Background="#585b70" Foreground="#cdd6f4" Grid.Column="1" Grid.Row="4"   x:Name="RoadOverrideTextBox" Style="{StaticResource ConfigTextField}" PreviewTextInput="RoadOverrideTextBox_PreviewTextInput" TextChanged="RoadOverrideTextBox_TextChanged" Text="{Binding Source={StaticResource Settings}, Path=IsRoadOverride}" >
                         <ToolTipService.ToolTip>
                             <StackPanel Background="#1e1e2e"  >
                                 <TextBlock Foreground="#cdd6f4">
@@ -99,16 +99,12 @@
                             </StackPanel>
                         </ToolTipService.ToolTip>
                     </TextBox>
-                    <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="4" Text="Background Color" Style="{StaticResource ConfigTextBox}"/>
-                    <xctk:ColorPicker Grid.Column="1" Grid.Row="4" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=BackGroundColor}"></xctk:ColorPicker>
-                    <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="5" Text="Foreground Color" Style="{StaticResource ConfigTextBox}"/>
-                    <xctk:ColorPicker Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=ForeGroundColor}"></xctk:ColorPicker>
-                    <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="6" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
-                    <xctk:ColorPicker Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigColorPicker}" 
-                              SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
-
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="5" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
+                    <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="6" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
+                    <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
+                    <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="7" Text="Damage Numbers Color" Style="{StaticResource ConfigTextBox}"/>
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="7" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=DamageNumbersColor}"></xctk:ColorPicker>
                 </Grid>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
                     <Grid.ColumnDefinitions>

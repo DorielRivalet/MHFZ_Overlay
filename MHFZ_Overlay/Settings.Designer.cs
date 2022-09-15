@@ -406,5 +406,17 @@ namespace MHFZ_Overlay {
                 this["EnableTimeLeftPercentage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#fffab387")]
+        public string DamageNumbersColor {
+            get {
+                return ((string)(this["DamageNumbersColor"]));
+            }
+            set {
+                this["DamageNumbersColor"] = value;
+            }
+        }
     }
 }

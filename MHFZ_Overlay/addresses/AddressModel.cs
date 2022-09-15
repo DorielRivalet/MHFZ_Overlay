@@ -545,7 +545,7 @@ namespace MHFZ_Overlay.addresses
             return monstername + "";
         }
         //DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult()).ToString()
-        public string Monster1HP => Configuring ? "1000000" : ShowMonsterEHP() ? DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult()).ToString() : Monster1HPInt().ToString();
+        public string Monster1HP => Configuring ? "0" : ShowMonsterEHP() ? DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult()).ToString() : Monster1HPInt().ToString();
 
 
         public string Monster1MaxHP
@@ -553,7 +553,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 if (Configuring)
-                    return "1000000";
+                    return "1";
                 if (TimeDefInt() == TimeInt())
                     SavedMonster1MaxHP = Monster1HPInt();
                 if (LargeMonster1ID() > 0 && SavedMonster1ID == 0)
@@ -576,14 +576,14 @@ namespace MHFZ_Overlay.addresses
                 }
             }
         }
-        public string Monster2HP => Configuring ? "1000000" : ShowMonsterEHP() ? DisplayMonsterEHP(float.Parse(Monster2DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster2HPInt(), Monster2DefMult()).ToString() : Monster2HPInt().ToString();
+        public string Monster2HP => Configuring ? "0" : ShowMonsterEHP() ? DisplayMonsterEHP(float.Parse(Monster2DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster2HPInt(), Monster2DefMult()).ToString() : Monster2HPInt().ToString();
 
         public string Monster2MaxHP
         {
             get
             {
                 if (Configuring)
-                    return "1000000";
+                    return "1";
                 if (TimeDefInt() == TimeInt())
                     SavedMonster2MaxHP = Monster2HPInt();
                 if (RoadSelectedMonster() > 0 && SavedMonster2ID == 0)
@@ -597,7 +597,7 @@ namespace MHFZ_Overlay.addresses
                 return SavedMonster2MaxHP.ToString();
             }
         }
-        public string Monster3HP => Configuring ? "1000000" : ShowMonsterEHP() ? DisplayMonsterEHP(float.Parse("1", CultureInfo.InvariantCulture.NumberFormat), Monster3HPInt(), "1").ToString() : Monster3HPInt().ToString();
+        public string Monster3HP => Configuring ? "0" : ShowMonsterEHP() ? DisplayMonsterEHP(float.Parse("1", CultureInfo.InvariantCulture.NumberFormat), Monster3HPInt(), "1").ToString() : Monster3HPInt().ToString();
 
 
         public string Monster3MaxHP
@@ -605,20 +605,20 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 if (Configuring)
-                    return "1000000";
+                    return "1";
                 if (TimeDefInt() == TimeInt())
                     SavedMonster3MaxHP = Monster3HPInt();
                 return SavedMonster3MaxHP.ToString();
             }
         }
-        public string Monster4HP => Configuring ? "1000000" : ShowMonsterEHP() ? DisplayMonsterEHP(float.Parse("1", CultureInfo.InvariantCulture.NumberFormat), Monster4HPInt(), "1").ToString() : Monster4HPInt().ToString();
+        public string Monster4HP => Configuring ? "0" : ShowMonsterEHP() ? DisplayMonsterEHP(float.Parse("1", CultureInfo.InvariantCulture.NumberFormat), Monster4HPInt(), "1").ToString() : Monster4HPInt().ToString();
 
         public string Monster4MaxHP
         {
             get
             {
                 if (Configuring)
-                    return "1000000";
+                    return "1";
                 if (TimeDefInt() == TimeInt())
                     SavedMonster4MaxHP = Monster4HPInt();
                 return SavedMonster4MaxHP.ToString();
