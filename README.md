@@ -27,7 +27,7 @@
 - `Shift+F5` Restart Overlay
 - `Shift+F6` Exit
 
-**It's recommended to start the overlay when you are loaded into Mezeporta.**
+**It's recommended to start the overlay when you are done loading into Mezeporta.**
 
 If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/Imulion/MHFZ_Overlay/issues).
 
@@ -68,3 +68,4 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 - Global damage number labels
 - Player attack multicolor relative to highest attack obtained per quest
 - Attach UI to game window option
+- Sound effects
