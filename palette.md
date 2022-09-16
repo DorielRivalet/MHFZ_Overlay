@@ -2,16 +2,16 @@
 
 ## Sharpness
 
-| Red|Green|Blue| Label|
-|----|-----|----|------|
-|197  |15  |58|Red|
-|232  |82  |24|Orange|
-|243 |200  |50|Yellow|
-|94 |211   |0|Green|
-| 48 |104 |238|Blue|
-|240 |240 |240|White|
-|222 |122 |255|Purple|
-|134 |244 |244|Cyan|
+| Red|Green|Blue| Hex|Label|
+|----|-----|----|----|-----|
+|197  |15  |58|c50f3a|Red|
+|232  |82  |24|e85218|Orange|
+|243 |200  |50|f3c832|Yellow|
+|94 |211   |0|5ed300|Green|
+| 48 |104 |238|3068ee|Blue|
+|240 |240 |240|f0f0f0|White|
+|222 |122 |255|de7aff|Purple|
+|134 |244 |244|86f4f4|Cyan|
 
 ## Rarity
 

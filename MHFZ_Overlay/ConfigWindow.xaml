@@ -226,6 +226,8 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <TextBlock Margin="5,5,5,5" ToolTip="Show Player Information" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Player Info"/>
                     <ToggleButton Grid.Row="0" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerInfoShown}"/>
@@ -237,7 +239,12 @@
                     <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="3" x:Name="playerWepTextBox" Text="{Binding CurrentWeaponName}"/>
                     <TextBlock Margin="5,5,5,5" ToolTip="Show Time Left as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Time Left as Percentage"/>
                     <ToggleButton Grid.Row="3" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableTimeLeftPercentage}"/>
-                    
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness Values" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Sharpness"/>
+                    <ToggleButton Grid.Row="4" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Sharpness Info X Coordinate"/>
+                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Sharpness Info Y Coordinate"/>
+                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
                 </Grid>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
                     <Grid.ColumnDefinitions>
@@ -459,8 +466,8 @@
                 </Grid.ColumnDefinitions>
                 <Grid Style="{StaticResource ConfigSingleGrid}" x:Name="Credits" Margin="20,20,20,20" Grid.ColumnSpan="9">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -469,27 +476,27 @@
                         <RowDefinition Height="128"/>
                         <RowDefinition Height="128"/>
                     </Grid.RowDefinitions>
-                    <TextBlock TextAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Imulion"  FontSize="18" HorizontalAlignment="Center"/>
-                    <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="suzaku01"  FontSize="18" HorizontalAlignment="Center"/>
-                    <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Text="Doriel Rivalet"  FontSize="18" HorizontalAlignment="Center"/>
-                    <Image Width="128" Height="128" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" x:Name="myImg" Source="https://avatars.githubusercontent.com/u/27354834?v=4" Margin="0"/>
-                    <Image Width="128" Height="128" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" x:Name="myImg3"  Source="https://avatars.githubusercontent.com/u/89909040?v=4" Margin="0"/>
-                    <Image Width="128" Height="128" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" x:Name="myImg2" Source="https://avatars.githubusercontent.com/u/100863878?v=4" Margin="0"/>
-                    <TextBlock Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" Name="txtbFooterRight">
+                    <TextBlock Margin="10,0,0,10" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="Imulion"  FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="suzaku01"  FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="Doriel Rivalet"  FontSize="18" HorizontalAlignment="Center"/>
+                    <Image Width="128" Height="128" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" x:Name="myImg" Source="https://avatars.githubusercontent.com/u/27354834?v=4" Margin="10,0,0,10"/>
+                    <Image Width="128" Height="128" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" x:Name="myImg3"  Source="https://avatars.githubusercontent.com/u/89909040?v=4" Margin="10,0,0,10"/>
+                    <Image Width="128" Height="128" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" x:Name="myImg2" Source="https://avatars.githubusercontent.com/u/100863878?v=4" Margin="10,0,0,10"/>
+                    <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" Name="txtbFooterRight">
                         <Hyperlink Name="lnkImg" TextDecorations="None" 
                             NavigateUri="https://github.com/Imulion" 
                             ToolTip="Navigate to GitHub profile" RequestNavigate="lnkImg_RequestNavigate">
                             <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
                         </Hyperlink>
                     </TextBlock>
-                    <TextBlock Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" Name="txtbFooterRight2">
+                    <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" Name="txtbFooterRight2">
                         <Hyperlink Name="lnkImg2" TextDecorations="None" 
                             NavigateUri="https://github.com/suzaku01"
                             ToolTip="Navigate to GitHub profile" RequestNavigate="lnkImg_RequestNavigate">
                             <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
                         </Hyperlink>
                     </TextBlock>
-                    <TextBlock Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Name="txtbFooterRight3">
+                    <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Name="txtbFooterRight3">
                         <Hyperlink Name="lnkImg3" TextDecorations="None" 
                             NavigateUri="https://github.com/DorielRivalet"
                             ToolTip="Navigate to GitHub profile" RequestNavigate="lnkImg_RequestNavigate">

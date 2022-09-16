@@ -6,7 +6,7 @@
 
 [The theme and color palette used for the application is Catppuccin Mocha](https://github.com/catppuccin/catppuccin)
 
-[The icons used in this project are part of the Material Design icons](https://fonts.google.com/icons)
+[The design and icons used in this project are part of the Material Design Icons and related components(https://fonts.google.com/icons)
 
 ## Requirements
 

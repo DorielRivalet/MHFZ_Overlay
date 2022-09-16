@@ -214,6 +214,15 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
+        public bool ShowSharpness()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableSharpness == true)
+                return true;
+            else
+                return false;
+        }
+
         public string TimeLeftPercentNumber
         {
             get
@@ -315,6 +324,49 @@ namespace MHFZ_Overlay.addresses
                 int weaponRaw = WeaponRaw();
                 int weaponType = WeaponType();
                 return weaponRaw.ToString();// ((int)(GetMultFromWeaponType(weaponType) * weaponRaw)).ToString();
+            }
+        }
+
+        public string SharpnessColor
+        {
+            get
+            {
+                //see palettes.md
+                int currentSharpnessLevel = SharpnessLevel();
+                switch (currentSharpnessLevel)
+                {
+                    case 0:
+                        return "#c50f3a";
+                    case 1:
+                        return "#e85218";
+                    case 2:
+                        return "#f3c832";
+                    case 3:
+                        return "#5ed300";
+                    case 4:
+                        return "#3068ee";
+                    case 5:
+                        return "#f0f0f0";
+                    case 6:
+                        return "#de7aff";
+                    case 7:
+                        return "#86f4f4";
+                    default:
+                        return "#ffffff";
+                }
+            }
+        }
+
+        public string SharpnessNumber
+        {
+            get
+            {
+                int currentSharpness = Sharpness();
+                if (currentSharpness > 0)
+                {
+                    return currentSharpness.ToString();
+                }
+                return "0";
             }
         }
 

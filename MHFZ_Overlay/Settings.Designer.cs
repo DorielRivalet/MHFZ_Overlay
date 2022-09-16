@@ -418,5 +418,41 @@ namespace MHFZ_Overlay {
                 this["DamageNumbersColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableSharpness {
+            get {
+                return ((bool)(this["EnableSharpness"]));
+            }
+            set {
+                this["EnableSharpness"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("140")]
+        public double SharpnessInfoY {
+            get {
+                return ((double)(this["SharpnessInfoY"]));
+            }
+            set {
+                this["SharpnessInfoY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public double SharpnessInfoX {
+            get {
+                return ((double)(this["SharpnessInfoX"]));
+            }
+            set {
+                this["SharpnessInfoX"] = value;
+            }
+        }
     }
 }

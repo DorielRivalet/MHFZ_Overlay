@@ -101,5 +101,14 @@
     <Setting Name="DamageNumbersColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#fffab387</Value>
     </Setting>
+    <Setting Name="EnableSharpness" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SharpnessInfoY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">140</Value>
+    </Setting>
+    <Setting Name="SharpnessInfoX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">60</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
