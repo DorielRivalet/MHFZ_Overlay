@@ -33,6 +33,8 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowMonsterHPBars { get; set; } = true;
 
+        public bool ShowMonsterPartHPBars { get; set; } = true;
+
         abstract public bool IsNotRoad();
 
         abstract public int HitCountInt();
@@ -109,8 +111,27 @@ namespace MHFZ_Overlay.addresses
 
 
 
-
-
+        //parts
+        abstract public int Monster1Part1();
+        abstract public int Monster1Part2();
+        abstract public int Monster1Part3();
+        abstract public int Monster1Part4();
+        abstract public int Monster1Part5();
+        abstract public int Monster1Part6();
+        abstract public int Monster1Part7();
+        abstract public int Monster1Part8();
+        abstract public int Monster1Part9();
+        abstract public int Monster1Part10();
+        abstract public int Monster2Part1();
+        abstract public int Monster2Part2();
+        abstract public int Monster2Part3();
+        abstract public int Monster2Part4();
+        abstract public int Monster2Part5();
+        abstract public int Monster2Part6();
+        abstract public int Monster2Part7();
+        abstract public int Monster2Part8();
+        abstract public int Monster2Part9();
+        abstract public int Monster2Part10();
 
 
 
@@ -205,19 +226,293 @@ namespace MHFZ_Overlay.addresses
             return IsNotRoad();
         }
 
+        //assumption: it follows ferias' monster part order top to bottom, presumably (e.g. head is at the top, so part 0 is head, and so on)
+        public string GetPartName(int number,int monsterID = 0)
+        {
+            string partName = "None";
+
+            if (number == 0)
+                partName = "Head";
+
+            //switch (monsterID)
+            //{
+            //    case 0:
+            //    case 1:
+            //        return "None";
+
+            //}
+
+            return string.Format("{0}: ",partName);
+        }
+
+
+
+        public string Monster1Part1Number
+        {
+            get
+            {
+                int currentPartHP = Monster1Part1();
+                //if (currentPartHP > 0)
+                //{
+                    return GetPartName(0) + currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster1Part2Number
+        {
+            get
+            {
+                int currentPartHP = Monster1Part2();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster1Part3Number
+        {
+            get
+            {
+                int currentPartHP = Monster1Part3();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster1Part4Number
+        {
+            get
+            {
+                int currentPartHP = Monster1Part4();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster1Part5Number
+        {
+            get
+            {
+                int currentPartHP = Monster1Part5();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster1Part6Number
+        {
+            get
+            {
+                int currentPartHP = Monster1Part6();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster1Part7Number
+        {
+            get
+            {
+                int currentPartHP = Monster1Part7();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster1Part8Number
+        {
+            get
+            {
+                int currentPartHP = Monster1Part8();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster1Part9Number
+        {
+            get
+            {
+                int currentPartHP = Monster1Part9();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster1Part10Number
+        {
+            get
+            {
+                int currentPartHP = Monster1Part10();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster2Part1Number
+        {
+            get
+            {
+                int currentPartHP = Monster2Part1();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster2Part2Number
+        {
+            get
+            {
+                int currentPartHP = Monster2Part2();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster2Part3Number
+        {
+            get
+            {
+                int currentPartHP = Monster2Part3();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster2Part4Number
+        {
+            get
+            {
+                int currentPartHP = Monster2Part4();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster2Part5Number
+        {
+            get
+            {
+                int currentPartHP = Monster2Part5();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster2Part6Number
+        {
+            get
+            {
+                int currentPartHP = Monster2Part6();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster2Part7Number
+        {
+            get
+            {
+                int currentPartHP = Monster2Part7();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster2Part8Number
+        {
+            get
+            {
+                int currentPartHP = Monster2Part8();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster2Part9Number
+        {
+            get
+            {
+                int currentPartHP = Monster2Part9();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+        public string Monster2Part10Number
+        {
+            get
+            {
+                int currentPartHP = Monster2Part10();
+                //if (currentPartHP > 0)
+                //{
+                return currentPartHP.ToString();
+                //}
+                //return "0";
+            }
+        }
+
+
+
         public bool ShowTimeLeftPercentage()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableTimeLeftPercentage == true)
-                return true;
-            else
-                return false;
-        }
-
-        public bool ShowSharpness()
-        {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableSharpness == true)
                 return true;
             else
                 return false;

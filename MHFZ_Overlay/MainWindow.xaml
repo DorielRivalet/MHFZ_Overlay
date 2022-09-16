@@ -52,6 +52,30 @@
             <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="hitCountTextBow" Text="{Binding HitCount}" Margin="4,0,0,0"/>
             <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="playerAtkTextBox" Text="{Binding ATK}" Margin="4,0,0,0"/>
         </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="MonsterPartHpBars" Canvas.Left="{Binding Source={StaticResource Settings},Path=PartBarsX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PartBarsY}" Width="500" Height="160" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+              Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterPartHPBars, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <local:OutlinedTextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Monster1Part1Number}" Grid.Column="0" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Monster1Part2Number}" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Monster1Part3Number}" Grid.Column="2" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Monster1Part4Number}" Grid.Column="3" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Monster1Part5Number}" Grid.Column="4" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Monster1Part6Number}" Grid.Column="0" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Monster1Part7Number}" Grid.Column="1" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Monster1Part8Number}" Grid.Column="2" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Monster1Part9Number}" Grid.Column="3" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Monster1Part10Number}" Grid.Column="4" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+        </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="MonsterHpBars" Canvas.Left="{Binding Source={StaticResource Settings},Path=HealthBarsX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=HealthBarsY}" Width="500" Height="160" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterHPBars, Converter={StaticResource BoolToVis}}">
             <Grid.RowDefinitions>
@@ -134,7 +158,7 @@
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}" Row1Width="1" Row2Width="1" />
         </Grid>
         <Canvas x:Name="DamageNumbers" Visibility="{Binding Source={StaticResource Settings},Path=EnableDamageNumbers, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="450" Height="254" Canvas.Left="735" Canvas.Top="413"/>
-        <Button x:Name="ExitDragAndDrop" Visibility="Hidden" HorizontalAlignment="Left"  Foreground="#7FFFFFFF"  Style="{StaticResource DefaultButton}"  Click="ExitDragAndDrop_Click" Canvas.Left="850" Canvas.Top="1">
+        <Button x:Name="ExitDragAndDrop" Visibility="Hidden" HorizontalAlignment="Left"  Foreground="#f5e0dc"  Style="{StaticResource DefaultButton}"  Click="ExitDragAndDrop_Click" Canvas.Left="850" Canvas.Top="1">
             <Button.Content>
                 <TextBlock>
                     Exit Drag and Drop<Bold><Underline>(ESC)</Underline></Bold>

@@ -454,5 +454,41 @@ namespace MHFZ_Overlay {
                 this["SharpnessInfoX"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PartHealthBarsShown {
+            get {
+                return ((bool)(this["PartHealthBarsShown"]));
+            }
+            set {
+                this["PartHealthBarsShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("925")]
+        public double PartBarsX {
+            get {
+                return ((double)(this["PartBarsX"]));
+            }
+            set {
+                this["PartBarsX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("425")]
+        public double PartBarsY {
+            get {
+                return ((double)(this["PartBarsY"]));
+            }
+            set {
+                this["PartBarsY"] = value;
+            }
+        }
     }
 }

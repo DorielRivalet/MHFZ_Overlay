@@ -1,4 +1,6 @@
 ﻿using Memory;
+using System;
+using System.Windows.Media.Animation;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -42,25 +44,68 @@ namespace MHFZ_Overlay.addresses
             return M.ReadByte("mhfo-hd.dll+DCD4498");
         }
         public string Monster1BP1() => M.Read2Byte("mhfo-hd.dll+0E37DD38,348").ToString();
+        public override int Monster1Part1() => M.Read2Byte("mhfo-hd.dll+0E37DD38,348");
         public string Monster1BP2() => M.Read2Byte("mhfo-hd.dll+0E37DD38,350").ToString();
+        public override int Monster1Part2() => M.Read2Byte("mhfo-hd.dll+0E37DD38,350");
+
         public string Monster1BP3() => M.Read2Byte("mhfo-hd.dll+0E37DD38,358").ToString();
+        public override int Monster1Part3() => M.Read2Byte("mhfo-hd.dll+0E37DD38,358");
+
         public string Monster1BP4() => M.Read2Byte("mhfo-hd.dll+0E37DD38,360").ToString();
+        public override int Monster1Part4() => M.Read2Byte("mhfo-hd.dll+0E37DD38,360");
+
         public string Monster1BP5() => M.Read2Byte("mhfo-hd.dll+0E37DD38,368").ToString();
+        public override int Monster1Part5() => M.Read2Byte("mhfo-hd.dll+0E37DD38,368");
+
         public string Monster1BP6() => M.Read2Byte("mhfo-hd.dll+0E37DD38,370").ToString();
+        public override int Monster1Part6() => M.Read2Byte("mhfo-hd.dll+0E37DD38,370");
+
         public string Monster1BP7() => M.Read2Byte("mhfo-hd.dll+0E37DD38,378").ToString();
+        public override int Monster1Part7() => M.Read2Byte("mhfo-hd.dll+0E37DD38,378");
+
         public string Monster1BP8() => M.Read2Byte("mhfo-hd.dll+0E37DD38,380").ToString();
+        public override int Monster1Part8() => M.Read2Byte("mhfo-hd.dll+0E37DD38,380");
+
         public string Monster1BP9() => M.Read2Byte("mhfo-hd.dll+0E37DD38,388").ToString();
+        public override int Monster1Part9() => M.Read2Byte("mhfo-hd.dll+0E37DD38,388");
+
         public string Monster1BP10() => M.Read2Byte("mhfo-hd.dll+0E37DD38,390").ToString();
+        public override int Monster1Part10() => M.Read2Byte("mhfo-hd.dll+0E37DD38,390");
+
         public string Monster2BP1() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1238").ToString();
+        public override int Monster2Part1() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1238");
+
         public string Monster2BP2() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1240").ToString();
+        public override int Monster2Part2() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1240");
+
         public string Monster2BP3() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1248").ToString();
+        public override int Monster2Part3() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1248");
+
         public string Monster2BP4() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1250").ToString();
+        public override int Monster2Part4() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1250");
+
         public string Monster2BP5() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1258").ToString();
+        public override int Monster2Part5() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1258");
+
         public string Monster2BP6() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1260").ToString();
+        public override int Monster2Part6() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1260");
+
         public string Monster2BP7() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1268").ToString();
+        public override int Monster2Part7() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1268");
+
         public string Monster2BP8() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1270").ToString();
+        public override int Monster2Part8() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1270");
+
         public string Monster2BP9() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1278").ToString();
+        public override int Monster2Part9() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1278");
+
         public string Monster2BP10() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1280").ToString();
+        public override int Monster2Part10() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1280");
+
+
+
+
+        //TODO
         public string Monster1RoadBP1() => M.Read2Byte("mhfo-hd.dll+E37DF18,348").ToString();
         public string Monster1RoadBP2() => M.Read2Byte("mhfo-hd.dll+E37DF18,350").ToString();
         public string Monster1RoadBP3() => M.Read2Byte("mhfo-hd.dll+E37DF18,358").ToString();
@@ -81,6 +126,9 @@ namespace MHFZ_Overlay.addresses
         public string Monster2RoadBP8() => M.Read2Byte("mhfo-hd.dll+E37DF18,1270").ToString();
         public string Monster2RoadBP9() => M.Read2Byte("mhfo-hd.dll+E37DF18,1278").ToString();
         public string Monster2RoadBP10() => M.Read2Byte("mhfo-hd.dll+E37DF18,1280").ToString();
+
+
+
         public override int Monster1HPInt() => M.Read2Byte("0043C600");
         public override int Monster2HPInt() => M.Read2Byte("0043C604");
         public override int Monster3HPInt() => M.Read2Byte("0043C608");
