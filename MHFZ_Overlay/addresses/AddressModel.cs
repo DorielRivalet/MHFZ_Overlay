@@ -31,7 +31,11 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowMonsterInfos { get; set; } = true;
 
+        public bool ShowPlayerInfos { get; set; } = true;
+
         public bool ShowMonsterHPBars { get; set; } = true;
+
+        public bool ShowSharpness { get; set; } = true;
 
         public bool ShowMonsterPartHP { get; set; } = true;
 

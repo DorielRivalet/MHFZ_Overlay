@@ -119,5 +119,8 @@
     <Setting Name="Monster1PartY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">422</Value>
     </Setting>
+    <Setting Name="AlwaysShowPlayerInfo" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

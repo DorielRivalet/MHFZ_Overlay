@@ -490,5 +490,17 @@ namespace MHFZ_Overlay {
                 this["Monster1PartY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AlwaysShowPlayerInfo {
+            get {
+                return ((bool)(this["AlwaysShowPlayerInfo"]));
+            }
+            set {
+                this["AlwaysShowPlayerInfo"] = value;
+            }
+        }
     }
 }

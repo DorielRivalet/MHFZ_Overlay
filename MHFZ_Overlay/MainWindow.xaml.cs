@@ -108,6 +108,7 @@ namespace MHFZ_Overlay
         public void Timer_Tick(object? obj, EventArgs e)
         {
             HideMonsterInfoWhenNotInQuest();
+            HidePlayerInfoWhenNotInQuest();
             DataLoader.model.ReloadData();
             Monster1HPBar.ReloadData();
             Monster2HPBar.ReloadData();
@@ -287,6 +288,8 @@ namespace MHFZ_Overlay
             timer.Start();
         }
 
+        //does this sometimes bug?
+        //the UI flashes at least once when loading into quest
         private void HideMonsterInfoWhenNotInQuest()
         {
             int time = DataLoader.model.TimeInt();
@@ -297,9 +300,26 @@ namespace MHFZ_Overlay
             prevTime = time;
             Settings s = (Settings)Application.Current.FindResource("Settings");
             bool v = s.AlwaysShowMonsterInfo || DataLoader.model.Configuring || counter < 60;
+            //DL.m.?.Visibility = v && s.?.IsChecked
             DataLoader.model.ShowMonsterInfos = v && s.MonsterStatusInfoShown;
             DataLoader.model.ShowMonsterHPBars = v && s.HealthBarsShown;
             DataLoader.model.ShowMonsterPartHP = v && s.PartHealthBarsShown;
+        }
+
+        private void HidePlayerInfoWhenNotInQuest()
+        {
+            int time = DataLoader.model.TimeInt();
+            if (prevTime == time)
+                counter++;
+            else
+                counter = 0;
+            prevTime = time;
+            Settings s = (Settings)Application.Current.FindResource("Settings");
+            //what is the counter for?
+            bool v = s.AlwaysShowPlayerInfo || DataLoader.model.Configuring || counter < 60;
+            //DL.m.?.Visibility = v && s.?.IsChecked
+            DataLoader.model.ShowPlayerInfos = v && s.PlayerInfoShown;
+            DataLoader.model.ShowSharpness = v && s.EnableSharpness;
         }
 
 
