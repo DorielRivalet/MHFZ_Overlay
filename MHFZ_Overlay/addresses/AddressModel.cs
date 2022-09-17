@@ -1,4 +1,5 @@
-﻿using Memory;
+﻿using Dictionary;
+using Memory;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -549,7 +550,14 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-
+        public bool ShowSharpnessPercentage()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableSharpnessPercentage == true)
+                return true;
+            else
+                return false;
+        }
 
         public bool ShowTimeLeftPercentage()
         {
@@ -559,6 +567,10 @@ namespace MHFZ_Overlay.addresses
             else
                 return false;
         }
+
+        public int MaxSharpness = 0;
+
+        public string TimeLeftPercent = "";
 
         public string TimeLeftPercentNumber
         {
@@ -575,7 +587,31 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string TimeLeftPercent = "";
+        public string SharpnessPercentNumber
+        {
+            get
+            {
+                if (ShowSharpnessPercentage())
+                {
+                    if (MaxSharpness < Sharpness())
+                    {
+                        MaxSharpness = Sharpness();
+                        return string.Format(" ({0:0}%)", (float)Sharpness() / MaxSharpness * 100.0);
+                    }
+                    else if (Sharpness() <= 0)
+                    {
+                        return " (0%)";
+                    } else // MaxSharpness > CurrentSharpness && CurrentSharpness > 0
+                    {
+                        return string.Format(" ({0:0}%)", (float)Sharpness() / MaxSharpness * 100.0);
+                    }
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
 
         public string Time
         {
@@ -701,9 +737,9 @@ namespace MHFZ_Overlay.addresses
                 int currentSharpness = Sharpness();
                 if (currentSharpness > 0)
                 {
-                    return currentSharpness.ToString();
+                    return currentSharpness.ToString()+SharpnessPercentNumber;
                 }
-                return "0";
+                return "0"+SharpnessPercentNumber;
             }
         }
 

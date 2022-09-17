@@ -433,25 +433,25 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("140")]
-        public double SharpnessInfoY {
-            get {
-                return ((double)(this["SharpnessInfoY"]));
-            }
-            set {
-                this["SharpnessInfoY"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        [global::System.Configuration.DefaultSettingValueAttribute("105")]
         public double SharpnessInfoX {
             get {
                 return ((double)(this["SharpnessInfoX"]));
             }
             set {
                 this["SharpnessInfoX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("62")]
+        public double SharpnessInfoY {
+            get {
+                return ((double)(this["SharpnessInfoY"]));
+            }
+            set {
+                this["SharpnessInfoY"] = value;
             }
         }
         
@@ -500,6 +500,18 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["AlwaysShowPlayerInfo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableSharpnessPercentage {
+            get {
+                return ((bool)(this["EnableSharpnessPercentage"]));
+            }
+            set {
+                this["EnableSharpnessPercentage"] = value;
             }
         }
     }

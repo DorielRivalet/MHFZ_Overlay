@@ -104,11 +104,11 @@
     <Setting Name="EnableSharpness" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="SharpnessInfoY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">140</Value>
-    </Setting>
     <Setting Name="SharpnessInfoX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">60</Value>
+      <Value Profile="(Default)">105</Value>
+    </Setting>
+    <Setting Name="SharpnessInfoY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">62</Value>
     </Setting>
     <Setting Name="PartHealthBarsShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -121,6 +121,9 @@
     </Setting>
     <Setting Name="AlwaysShowPlayerInfo" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="EnableSharpnessPercentage" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

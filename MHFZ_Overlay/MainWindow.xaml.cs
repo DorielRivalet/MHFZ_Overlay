@@ -355,8 +355,8 @@ namespace MHFZ_Overlay
                     s.MonsterStatusInfoY = (double)(pos.Y - YOffset);
                     break;
                 case "SharpnessInfo":
-                    s.SharpnessInfoX = (double)(pos.X - XOffset);
-                    s.SharpnessInfoY = (double)(pos.Y - YOffset);
+                    s.SharpnessInfoY = (double)(pos.X - XOffset);
+                    s.SharpnessInfoX = (double)(pos.Y - YOffset);
                     break;
                 case "MonsterPartHpBars":
                     s.Monster1PartX = (double)(pos.X - XOffset);

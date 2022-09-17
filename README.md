@@ -2,11 +2,11 @@
 
 ## About
 
-[This project is directly inspired from the overlay created by suzaku01](https://github.com/suzaku01/mhf_displayer)
+[This project is directly inspired from the overlay created by *suzaku01*](https://github.com/suzaku01/mhf_displayer)
 
-[The theme and color palette used for the application is Catppuccin Mocha](https://github.com/catppuccin/catppuccin)
+[The theme and color palette used for the application is *Catppuccin Mocha*](https://github.com/catppuccin/catppuccin)
 
-[The design and icons used in this project are part of the Material Design Icons and related components(https://fonts.google.com/icons)
+[The design and icons used in this project are part of the *Material Design Icons* and related components](https://fonts.google.com/icons)
 
 ## Requirements
 
@@ -16,7 +16,7 @@
 ## Installation
 
 1. [Get **ALL** of the requirements](#requirements)
-2. [Download the latest version from the Releases](https://github.com/Imulion/MHFZ_Overlay/releases/latest)
+2. [Download the latest version from the *Releases*](https://github.com/Imulion/MHFZ_Overlay/releases/latest)
 3. Make sure Windows or your antivirus did not delete the `MHFZOverlay.dll` file (because it reads the games memory windows might detect it as a trojan so you might have to get it out of quarantine)
 4. Run `MHFZ_Overlay.exe`
 5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
@@ -33,20 +33,20 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 
 ## Features
 
-- [x] Monster Effective HP Bars
-- [x] Sharpness Numbers
-- [x] Timer
-- [x] Hit Count
-- [x] Monster Status Ailments
-- [x] Monster Body Parts
-- [x] Damage Numbers
-- [x] Discord Rich Presence
+- [x] Monster Effective HP Bars (e.g. Burning Freezing Elzelion 1000000 HP!)
+- [x] Sharpness Numbers (colorized by current sharpness tier!)
+- [x] Timer (down to the centiseconds in accuracy!)
+- [x] Hit Count (counts Reflect, Stylish Up, Heatblade, Fencing+2 and more!)
+- [x] Monster Status Ailments (Poison, Sleep, Paralysis, Blast, Stun!)
+- [x] Monster Body Parts (up to 10 parts!)
+- [x] Damage Numbers (colorized and dynamic size!)
+- [x] Discord Rich Presence (custom monster icons, colored weapons, quest tier, current area and more!)
 
 ## Bugs
 
 - Monster Infos are sometimes outside of the screen (if they don't show at all even if you open the config menu, this is probably your issue)
 - Road detection doesn't work all the time (use road override if road in general works for you)
-- With Monster EHP enabled, if you cart, the max EHP turns into the current EHP
+- With Monster EHP enabled, if you cart, the max EHP turns into the current EHP, along with some other info max values.
 
 ## Features not yet implemented
 
