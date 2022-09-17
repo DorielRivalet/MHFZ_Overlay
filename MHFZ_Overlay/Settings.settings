@@ -113,11 +113,11 @@
     <Setting Name="PartHealthBarsShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="PartBarsX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">925</Value>
+    <Setting Name="Monster1PartX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">883</Value>
     </Setting>
-    <Setting Name="PartBarsY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">425</Value>
+    <Setting Name="Monster1PartY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">422</Value>
     </Setting>
   </Settings>
 </SettingsFile>

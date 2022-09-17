@@ -299,7 +299,7 @@ namespace MHFZ_Overlay
             bool v = s.AlwaysShowMonsterInfo || DataLoader.model.Configuring || counter < 60;
             DataLoader.model.ShowMonsterInfos = v && s.MonsterStatusInfoShown;
             DataLoader.model.ShowMonsterHPBars = v && s.HealthBarsShown;
-            DataLoader.model.ShowMonsterPartHPBars = v && s.PartHealthBarsShown;
+            DataLoader.model.ShowMonsterPartHP = v && s.PartHealthBarsShown;
         }
 
 
@@ -339,8 +339,8 @@ namespace MHFZ_Overlay
                     s.SharpnessInfoY = (double)(pos.Y - YOffset);
                     break;
                 case "MonsterPartHpBars":
-                    s.PartBarsX = (double)(pos.X - XOffset);
-                    s.PartBarsY = (double)(pos.Y - YOffset);
+                    s.Monster1PartX = (double)(pos.X - XOffset);
+                    s.Monster1PartY = (double)(pos.Y - YOffset);
                     break;
             }
 

@@ -131,6 +131,7 @@
 - Diva Skill Uses Left mhfo.dll+610436A
 - Halk Fullness mhfo.dll+6101983
 - Rank Band mhfo.dll+28C2BD8
+- Hit Count mhfo.dll+60792E6
 
 ## IDs
 

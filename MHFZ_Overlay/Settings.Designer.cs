@@ -469,25 +469,25 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("925")]
-        public double PartBarsX {
+        [global::System.Configuration.DefaultSettingValueAttribute("883")]
+        public double Monster1PartX {
             get {
-                return ((double)(this["PartBarsX"]));
+                return ((double)(this["Monster1PartX"]));
             }
             set {
-                this["PartBarsX"] = value;
+                this["Monster1PartX"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("425")]
-        public double PartBarsY {
+        [global::System.Configuration.DefaultSettingValueAttribute("422")]
+        public double Monster1PartY {
             get {
-                return ((double)(this["PartBarsY"]));
+                return ((double)(this["Monster1PartY"]));
             }
             set {
-                this["PartBarsY"] = value;
+                this["Monster1PartY"] = value;
             }
         }
     }

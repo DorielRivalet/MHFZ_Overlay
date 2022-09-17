@@ -11,7 +11,9 @@ namespace MHFZ_Overlay.addresses
 
         }
 
-        public override int HitCountInt() => M.Read2Byte("mhfo.dll+5CA3430");
+        
+        //public override int HitCountInt() => M.Read2Byte("mhfo.dll+5CA3430");
+        public override int HitCountInt() => M.Read2Byte("mhfo.dll+60792E6");
         public override int TimeDefInt() => M.ReadInt("mhfo.dll+1B97780");
         public override int TimeInt() => M.ReadInt("mhfo.dll+5BC6540");
         public override int WeaponRaw() => M.Read2Byte("mhfo.dll+503433A");
@@ -183,7 +185,7 @@ namespace MHFZ_Overlay.addresses
         public override int SharpnessLevel() => M.ReadByte("mhfo.dll+50346BF");
         public override int PartnerLevel() => M.Read2Byte("mhfo.dll+574127E");
 
-        //as hex, consult addresses.md
+        //as hex, consult addresses README.md
         public override int ObjectiveType() => M.ReadInt("mhfo.dll+28C2C80");
         public override int DivaSkillUsesLeft() => M.ReadByte("mhfo.dll+610436A");
         public override int HalkFullness() => M.ReadByte("mhfo.dll+6101983");

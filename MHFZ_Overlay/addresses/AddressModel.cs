@@ -33,7 +33,7 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowMonsterHPBars { get; set; } = true;
 
-        public bool ShowMonsterPartHPBars { get; set; } = true;
+        public bool ShowMonsterPartHP { get; set; } = true;
 
         abstract public bool IsNotRoad();
 
@@ -231,8 +231,46 @@ namespace MHFZ_Overlay.addresses
         {
             string partName = "None";
 
-            if (number == 0)
-                partName = "Head";
+            switch (number)
+            {
+                case 0:
+                    partName = "Head";
+                    break;
+                case 1:
+                    partName = "";
+                    break;
+                case 2:
+                    partName = "";
+                    break;
+                case 3:
+                    partName = "";
+                    break;
+                case 4:
+                    partName = "";
+                    break;
+                case 5:
+                    partName = "";
+                    break;
+                case 6:
+                    partName = "";
+                    break;
+                case 7:
+                    partName = "";
+                    break;
+                case 8:
+                    partName = "";
+                    break;
+                case 9:
+                    partName = "";
+                    break;
+                case 10:
+                    partName = "";
+                    break;
+                default:
+                    partName = "None";
+                    break;
+            }
+                
 
             //switch (monsterID)
             //{

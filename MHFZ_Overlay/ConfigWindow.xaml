@@ -229,7 +229,7 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Show Player Information" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Player Info"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show Player Information (Hit Count doesn't count Ice Age hits)" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Player Info"/>
                     <ToggleButton Grid.Row="0" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerInfoShown}"/>
                     <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Player Info X Coordinate"/>
                     <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerInfoX}"  PreviewTextInput="ValidateNumber"/>
@@ -239,11 +239,11 @@
                     <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="3" x:Name="playerWepTextBox" Text="{Binding CurrentWeaponName}"/>
                     <TextBlock Margin="5,5,5,5" ToolTip="Show Time Left as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Time Left as Percentage"/>
                     <ToggleButton Grid.Row="3" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableTimeLeftPercentage}"/>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness Values" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Sharpness"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show Total Current Sharpness Values" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Total Sharpness"/>
                     <ToggleButton Grid.Row="4" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Sharpness Info X Coordinate"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Total Sharpness Info X Coordinate"/>
                     <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Sharpness Info Y Coordinate"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Total Sharpness Info Y Coordinate"/>
                     <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
                 </Grid>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
@@ -313,9 +313,9 @@
                     <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Part Hit Points" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Monster 1 Part HP"/>
                     <ToggleButton Grid.Row="10" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PartHealthBarsShown}"/>
                     <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Monster 1 Part HP X Coordinate"/>
-                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PartBarsX}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartX}"  PreviewTextInput="ValidateNumber"/>
                     <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Monster 1 Part HP Y Coordinate"/>
-                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PartBarsY}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartY}"  PreviewTextInput="ValidateNumber"/>
                     </Grid>
                 </ScrollViewer>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
