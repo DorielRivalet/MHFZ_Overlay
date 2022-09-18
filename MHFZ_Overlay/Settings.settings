@@ -48,10 +48,10 @@
       <Value Profile="(Default)">#f5e0dc</Value>
     </Setting>
     <Setting Name="HealthBarsX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">840</Value>
+      <Value Profile="(Default)">831</Value>
     </Setting>
     <Setting Name="HealthBarsY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">36</Value>
+      <Value Profile="(Default)">33</Value>
     </Setting>
     <Setting Name="HealthBarsShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -69,7 +69,7 @@
       <Value Profile="(Default)">1087</Value>
     </Setting>
     <Setting Name="MonsterStatusInfoY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">207</Value>
+      <Value Profile="(Default)">188</Value>
     </Setting>
     <Setting Name="MonsterStatusInfoShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -87,10 +87,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="DiscordClientID" Type="System.String" Scope="User">
-      <Value Profile="(Default)">""</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DiscordServerInvite" Type="System.String" Scope="User">
-      <Value Profile="(Default)">""</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="EnableCurrentHPPercentage" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -114,16 +114,22 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Monster1PartX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">883</Value>
+      <Value Profile="(Default)">860</Value>
     </Setting>
     <Setting Name="Monster1PartY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">422</Value>
+      <Value Profile="(Default)">407</Value>
     </Setting>
     <Setting Name="AlwaysShowPlayerInfo" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="EnableSharpnessPercentage" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="HunterName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="GuildName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

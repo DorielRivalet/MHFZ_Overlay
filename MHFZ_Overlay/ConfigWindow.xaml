@@ -1,4 +1,5 @@
-﻿<Window x:Class="MHFZ_Overlay.ConfigWindow"
+﻿<!-- TODO: Modularize the grouping-->
+    <Window x:Class="MHFZ_Overlay.ConfigWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -414,7 +415,9 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
-                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <TextBlock Margin="5,5,5,5" ToolTip="Enable Discord Rich Presence" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Rich Presence"/>
                     <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableRichPresence}"/>
@@ -438,6 +441,10 @@
                     <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordClientID}"  PreviewTextInput="ValidateNumber"/>
                     <TextBlock Margin="5,5,5,5" ToolTip="The server you play on (e.g. https://discord.gg/y8mF6amH)" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="(Optional) Frontier Discord Server Invite Link"/>
                     <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordServerInvite}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Your hunter name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="(Optional) Hunter Name"/>
+                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HunterName}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Your guild (in-game) name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="(Optional) Guild Name"/>
+                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GuildName}"  PreviewTextInput="ValidateNumber"/>
                 </Grid>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
                     <Grid.ColumnDefinitions>

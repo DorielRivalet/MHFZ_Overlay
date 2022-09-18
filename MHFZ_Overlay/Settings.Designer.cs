@@ -205,7 +205,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("840")]
+        [global::System.Configuration.DefaultSettingValueAttribute("831")]
         public double HealthBarsX {
             get {
                 return ((double)(this["HealthBarsX"]));
@@ -217,7 +217,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("36")]
+        [global::System.Configuration.DefaultSettingValueAttribute("33")]
         public double HealthBarsY {
             get {
                 return ((double)(this["HealthBarsY"]));
@@ -289,7 +289,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("207")]
+        [global::System.Configuration.DefaultSettingValueAttribute("188")]
         public double MonsterStatusInfoY {
             get {
                 return ((double)(this["MonsterStatusInfoY"]));
@@ -361,7 +361,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string DiscordClientID {
             get {
                 return ((string)(this["DiscordClientID"]));
@@ -373,7 +373,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string DiscordServerInvite {
             get {
                 return ((string)(this["DiscordServerInvite"]));
@@ -469,7 +469,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("883")]
+        [global::System.Configuration.DefaultSettingValueAttribute("860")]
         public double Monster1PartX {
             get {
                 return ((double)(this["Monster1PartX"]));
@@ -481,7 +481,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("422")]
+        [global::System.Configuration.DefaultSettingValueAttribute("407")]
         public double Monster1PartY {
             get {
                 return ((double)(this["Monster1PartY"]));
@@ -512,6 +512,30 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["EnableSharpnessPercentage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HunterName {
+            get {
+                return ((string)(this["HunterName"]));
+            }
+            set {
+                this["HunterName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GuildName {
+            get {
+                return ((string)(this["GuildName"]));
+            }
+            set {
+                this["GuildName"] = value;
             }
         }
     }

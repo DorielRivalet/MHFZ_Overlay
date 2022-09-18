@@ -135,7 +135,7 @@
 
 ## IDs
 
-## Rank Bands
+### Rank Bands
 
 | ID | Rank Band|
 |----|------|
@@ -760,20 +760,20 @@ UP/DOWN means +/- here
 
 ### Objective Type (hex)
 
-| ID | Objective Type|
-|----|------|
-|0 0x00|  Nothing |
-|1 0x01|   Hunt |
-|257 0x101|  Capture |
-|513 0x201|  Slay |
-|32772 0x8004|  Damage |
-|98308 0x18004| Slay_or_Damage |
-|262144 0x40000|  Slay_All |
-|131072 0x20000|  Slay_Total |
-|2 0x02|   Deliver |
-|16388 0x4004|Break_Part |
-|4098 0x1002| Deliver_Flag |
-|16 0x10| Esoteric_Action |
+| ID | Hex|Objective Type|
+|----|----|--------------|
+|0 |0x00|  Nothing |
+|1 |0x01|   Hunt |
+|257| 0x101|  Capture |
+|513 |0x201|  Slay |
+|32772| 0x8004|  Damage |
+|98308 |0x18004| Slay_or_Damage |
+|262144 |0x40000|  Slay_All |
+|131072 |0x20000|  Slay_Total |
+|2 |0x02|   Deliver |
+|16388 |0x4004|Break_Part |
+|4098 |0x1002| Deliver_Flag |
+|16 |0x10| Esoteric_Action |
 
 ### Weapon Type
 
@@ -978,11 +978,11 @@ UP/DOWN means +/- here
 |176 | Dundorma Fort 03|
 |177 | Dundorma Fort 02|
 |178 | Dundorma Fort 01|
-|179 | Dundorma Fort BC|
+|179 | Dundorma Fort Base Camp|
 |180 | Dundorma Fort 03|
 |181 |  Dundorma Fort 02|
 |182 |  Dundorma Fort 01|
-|183 | Dundorma Fort BC|
+|183 | Dundorma Fort Base Camp|
 |184 | Forest and hill Night base camp|
 |185 | Forest and hill Night Area 6|
 |186 | Forest and hill Night Area 3|
@@ -1141,7 +1141,7 @@ UP/DOWN means +/- here
 |339 | Tidal Island Area 5 (Night)|
 |340 | SR Room|
 |341 |  SR Room|
-|342 |  Large Airship BC Day|
+|342 |  Large Airship Base Camp Day|
 |343 | Large Airship Deck Day|
 |344 | Large Airship Crashed|
 |345 | Polar Sea Basecamp Day|
@@ -1158,7 +1158,7 @@ UP/DOWN means +/- here
 |356 | Polar Sea Night Area 5|
 |357 | Polar Sea Day Area 6|
 |358 |  Polar Sea Night Area 6|
-|359 | World's End BC|
+|359 | World's End Base Camp|
 |360 | World's End Area 1|
 |361 | Flower Field Day Base Camp|
 |362 | Flower Field Night Base Camp|
@@ -1179,7 +1179,7 @@ UP/DOWN means +/- here
 |377 | Bamboo Forest Day Area 1|
 |378 | Bamboo Forest Night Area 1|
 |379 | Diva Hall|
-|380 | Battlefield Entrance, Deep Crater BC|
+|380 | Battlefield Entrance, Deep Crater Base Camp|
 |381 |  Absent|
 |382 |  Absent|
 |383 |  Absent|
@@ -1216,7 +1216,7 @@ UP/DOWN means +/- here
 |414 |  Duremudira Door|
 |415 | Urgent Tower|
 |416 | 4th District Tower|
-|417 | Berserk Raviente BC Slay 1|
+|417 | Berserk Raviente Base Camp Slay 1|
 |418 |Berserk Raviente Combat 01|
 |419 | Berserk Raviente Combat 02|
 |420 | Berserk Raviente Combat 03|
@@ -1237,7 +1237,7 @@ UP/DOWN means +/- here
 |435 |Painted Falls Day Area 6|
 |436 | Painted Falls Night Area 6|
 |437 |  Guanzorumu Arena 01|
-|438 | Berserk Raviente BC|
+|438 | Berserk Raviente Base Camp|
 |439 |  Guanzorumu Arena 02|
 |440 | Berserk Raviente Support 01|
 |441 | Berserk Raviente Support 02|
