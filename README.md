@@ -31,22 +31,27 @@
 
 If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/Imulion/MHFZ_Overlay/issues).
 
+Additionally, if information from the overlay is wrong or inaccurate (e.g. monster parts labels), feel free to send an issue.
+
 ## Features
 
 - [x] Monster Effective HP Bars (*e.g.* Burning Freezing Elzelion 1000000 HP!)
 - [x] Sharpness Numbers (colorized by current sharpness tier!)
-- [x] Timer (down to the centiseconds in accuracy!)
+- [x] Quest Timer (Two modes: elapsed time and time left. Down to the centiseconds in accuracy!)
 - [x] Hit Count (counts *Reflect*, *Stylish Up*, Heatblade, *Fencing+2* and more!)
 - [x] Monster Status Ailments (Poison, Sleep, Paralysis, Blast, Stun!)
 - [x] Monster Body Parts (up to 10 parts!)
 - [x] Damage Numbers (dynamic colors and size!)
-- [x] Discord Rich Presence (custom monster icons, colored weapons, quest tier, current area and more!)
+- [x] [Discord Rich Presence](#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area and more!)
 
 ## Bugs
 
 - Monster Infos are sometimes outside of the screen (if they don't show at all even if you open the config menu, this is probably your issue)
 - Road detection doesn't work all the time (use road override if road in general works for you)
-- With Monster EHP enabled, if you cart, the max EHP turns into the current EHP, along with some other info max values.
+- With Monster EHP enabled, if you cart, the max EHP turns into the current EHP, along with some other info max values
+- Sometimes when exiting Drag and Drop the monster HP information disappears
+- Spawning in the same area as the monster doesn't load the information properly. Fix: re-enter area
+- Duremudira HP not showing
 
 ## Features not yet implemented
 
@@ -70,3 +75,13 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 - Attach UI to game window option
 - Sound effects
 - Sharpness graph
+
+## How to Enable Discord Rich Presence
+
+1. In Discord, My Account -> Activity Privacy -> Check "Display current activity as a status message"
+2. [Discord Developer Portal](https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
+3. In Developer Portal, Rich Presence -> Art Assets -> Add Image(s) -> Upload the contents of the img folder (except monster)
+4. In Developer Portal, General Information -> Copy Application ID
+5. In Overlay Settings, Paste into Overlay Settings Discord Rich Presence Application/Client ID
+
+- The ID also shows up in OAuth2 section as Client ID

@@ -301,7 +301,16 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.FindResource("Settings");
             bool v = s.AlwaysShowMonsterInfo || DataLoader.model.Configuring || counter < 60;
             //DL.m.?.Visibility = v && s.?.IsChecked
-            DataLoader.model.ShowMonsterInfos = v && s.MonsterStatusInfoShown;
+            //DataLoader.model.ShowMonsterInfos = v && s.MonsterStatusInfoShown;
+            DataLoader.model.ShowMonsterAtkMult = v && s.MonsterAtkMultShown;
+            DataLoader.model.ShowMonsterDefrate = v && s.MonsterDefrateShown;
+            DataLoader.model.ShowMonsterSize = v && s.MonsterSizeShown;
+            DataLoader.model.ShowMonsterPoison = v && s.MonsterPoisonShown;
+            DataLoader.model.ShowMonsterSleep = v && s.MonsterSleepShown;
+            DataLoader.model.ShowMonsterPara = v && s.MonsterParaShown;
+            DataLoader.model.ShowMonsterBlast = v && s.MonsterBlastShown;
+            DataLoader.model.ShowMonsterStun = v && s.MonsterStunShown;
+
             DataLoader.model.ShowMonsterHPBars = v && s.HealthBarsShown;
             DataLoader.model.ShowMonsterPartHP = v && s.PartHealthBarsShown;
         }
@@ -318,7 +327,9 @@ namespace MHFZ_Overlay
             //what is the counter for?
             bool v = s.AlwaysShowPlayerInfo || DataLoader.model.Configuring || counter < 60;
             //DL.m.?.Visibility = v && s.?.IsChecked
-            DataLoader.model.ShowPlayerInfos = v && s.PlayerInfoShown;
+            DataLoader.model.ShowTimerInfo = v && s.TimerInfoShown;
+            DataLoader.model.ShowHitCountInfo = v && s.HitCountShown;
+            DataLoader.model.ShowPlayerAtkInfo = v && s.PlayerAtkShown;
             DataLoader.model.ShowSharpness = v && s.EnableSharpness;
         }
 
@@ -342,17 +353,61 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             switch (MovingObject.Name)
             {
-                case "PlayerInfo":
-                    s.PlayerInfoX = (double)(pos.X - XOffset);
-                    s.PlayerInfoY = (double)(pos.Y - YOffset);
+                //case "PlayerInfo":
+                //    s.PlayerInfoX = (double)(pos.X - XOffset);
+                //    s.PlayerInfoY = (double)(pos.Y - YOffset);
+                //    break;
+                case "TimerInfo":
+                    s.TimerX = (double)(pos.X - XOffset);
+                    s.TimerY = (double)(pos.Y - YOffset);
+                    break;
+                case "HitCountInfo":
+                    s.HitCountX = (double)(pos.X - XOffset);
+                    s.HitCountY = (double)(pos.Y - YOffset);
+                    break;
+                case "PlayerAtkInfo":
+                    s.PlayerAtkX = (double)(pos.X - XOffset);
+                    s.PlayerAtkY = (double)(pos.Y - YOffset);
                     break;
                 case "MonsterHpBars":
                     s.HealthBarsX = (double)(pos.X - XOffset);
                     s.HealthBarsY = (double)(pos.Y - YOffset);
                     break;
-                case "MonsterStatusInfo":
-                    s.MonsterStatusInfoX = (double)(pos.X - XOffset);
-                    s.MonsterStatusInfoY = (double)(pos.Y - YOffset);
+                //case "MonsterStatusInfo":
+                //    s.MonsterStatusInfoX = (double)(pos.X - XOffset);
+                //    s.MonsterStatusInfoY = (double)(pos.Y - YOffset);
+                //    break;
+                case "MonsterAtkMultInfo":
+                    s.MonsterAtkMultX = (double)(pos.X - XOffset);
+                    s.MonsterAtkMultY = (double)(pos.Y - YOffset);
+                    break;
+                case "MonsterDefrateInfo":
+                    s.MonsterDefrateX = (double)(pos.X - XOffset);
+                    s.MonsterDefrateY = (double)(pos.Y - YOffset);
+                    break;
+                case "MonsterSizeInfo":
+                    s.MonsterSizeX = (double)(pos.X - XOffset);
+                    s.MonsterSizeY = (double)(pos.Y - YOffset);
+                    break;
+                case "MonsterPoisonInfo":
+                    s.MonsterPoisonX = (double)(pos.X - XOffset);
+                    s.MonsterPoisonY = (double)(pos.Y - YOffset);
+                    break;
+                case "MonsterSleepInfo":
+                    s.MonsterSleepX = (double)(pos.X - XOffset);
+                    s.MonsterSleepY = (double)(pos.Y - YOffset);
+                    break;
+                case "MonsterParaInfo":
+                    s.MonsterParaX = (double)(pos.X - XOffset);
+                    s.MonsterParaY = (double)(pos.Y - YOffset);
+                    break;
+                case "MonsterBlastInfo":
+                    s.MonsterBlastX = (double)(pos.X - XOffset);
+                    s.MonsterBlastY = (double)(pos.Y - YOffset);
+                    break;
+                case "MonsterStunInfo":
+                    s.MonsterStunX = (double)(pos.X - XOffset);
+                    s.MonsterStunY = (double)(pos.Y - YOffset);
                     break;
                 case "SharpnessInfo":
                     s.SharpnessInfoX = (double)(pos.X - XOffset);

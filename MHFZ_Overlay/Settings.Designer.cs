@@ -469,7 +469,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("860")]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
         public double Monster1PartX {
             get {
                 return ((double)(this["Monster1PartX"]));
@@ -481,7 +481,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("407")]
+        [global::System.Configuration.DefaultSettingValueAttribute("685")]
         public double Monster1PartY {
             get {
                 return ((double)(this["Monster1PartY"]));
@@ -536,6 +536,414 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["GuildName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TimerInfoShown {
+            get {
+                return ((bool)(this["TimerInfoShown"]));
+            }
+            set {
+                this["TimerInfoShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public double TimerX {
+            get {
+                return ((double)(this["TimerX"]));
+            }
+            set {
+                this["TimerX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("560")]
+        public double TimerY {
+            get {
+                return ((double)(this["TimerY"]));
+            }
+            set {
+                this["TimerY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool HitCountShown {
+            get {
+                return ((bool)(this["HitCountShown"]));
+            }
+            set {
+                this["HitCountShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public double HitCountX {
+            get {
+                return ((double)(this["HitCountX"]));
+            }
+            set {
+                this["HitCountX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
+        public double HitCountY {
+            get {
+                return ((double)(this["HitCountY"]));
+            }
+            set {
+                this["HitCountY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PlayerAtkShown {
+            get {
+                return ((bool)(this["PlayerAtkShown"]));
+            }
+            set {
+                this["PlayerAtkShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public double PlayerAtkX {
+            get {
+                return ((double)(this["PlayerAtkX"]));
+            }
+            set {
+                this["PlayerAtkX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("640")]
+        public double PlayerAtkY {
+            get {
+                return ((double)(this["PlayerAtkY"]));
+            }
+            set {
+                this["PlayerAtkY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Time Left")]
+        public string TimerMode {
+            get {
+                return ((string)(this["TimerMode"]));
+            }
+            set {
+                this["TimerMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterAtkMultShown {
+            get {
+                return ((bool)(this["MonsterAtkMultShown"]));
+            }
+            set {
+                this["MonsterAtkMultShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1060")]
+        public double MonsterAtkMultX {
+            get {
+                return ((double)(this["MonsterAtkMultX"]));
+            }
+            set {
+                this["MonsterAtkMultX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public double MonsterAtkMultY {
+            get {
+                return ((double)(this["MonsterAtkMultY"]));
+            }
+            set {
+                this["MonsterAtkMultY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterDefrateShown {
+            get {
+                return ((bool)(this["MonsterDefrateShown"]));
+            }
+            set {
+                this["MonsterDefrateShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1060")]
+        public double MonsterDefrateX {
+            get {
+                return ((double)(this["MonsterDefrateX"]));
+            }
+            set {
+                this["MonsterDefrateX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("230")]
+        public double MonsterDefrateY {
+            get {
+                return ((double)(this["MonsterDefrateY"]));
+            }
+            set {
+                this["MonsterDefrateY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterSizeShown {
+            get {
+                return ((bool)(this["MonsterSizeShown"]));
+            }
+            set {
+                this["MonsterSizeShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1060")]
+        public double MonsterSizeX {
+            get {
+                return ((double)(this["MonsterSizeX"]));
+            }
+            set {
+                this["MonsterSizeX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("260")]
+        public double MonsterSizeY {
+            get {
+                return ((double)(this["MonsterSizeY"]));
+            }
+            set {
+                this["MonsterSizeY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterPoisonShown {
+            get {
+                return ((bool)(this["MonsterPoisonShown"]));
+            }
+            set {
+                this["MonsterPoisonShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1060")]
+        public double MonsterPoisonX {
+            get {
+                return ((double)(this["MonsterPoisonX"]));
+            }
+            set {
+                this["MonsterPoisonX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double MonsterPoisonY {
+            get {
+                return ((double)(this["MonsterPoisonY"]));
+            }
+            set {
+                this["MonsterPoisonY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterSleepShown {
+            get {
+                return ((bool)(this["MonsterSleepShown"]));
+            }
+            set {
+                this["MonsterSleepShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1060")]
+        public double MonsterSleepX {
+            get {
+                return ((double)(this["MonsterSleepX"]));
+            }
+            set {
+                this["MonsterSleepX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("330")]
+        public double MonsterSleepY {
+            get {
+                return ((double)(this["MonsterSleepY"]));
+            }
+            set {
+                this["MonsterSleepY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterParaShown {
+            get {
+                return ((bool)(this["MonsterParaShown"]));
+            }
+            set {
+                this["MonsterParaShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1060")]
+        public double MonsterParaX {
+            get {
+                return ((double)(this["MonsterParaX"]));
+            }
+            set {
+                this["MonsterParaX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("360")]
+        public double MonsterParaY {
+            get {
+                return ((double)(this["MonsterParaY"]));
+            }
+            set {
+                this["MonsterParaY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterBlastShown {
+            get {
+                return ((bool)(this["MonsterBlastShown"]));
+            }
+            set {
+                this["MonsterBlastShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1060")]
+        public double MonsterBlastX {
+            get {
+                return ((double)(this["MonsterBlastX"]));
+            }
+            set {
+                this["MonsterBlastX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("390")]
+        public double MonsterBlastY {
+            get {
+                return ((double)(this["MonsterBlastY"]));
+            }
+            set {
+                this["MonsterBlastY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterStunShown {
+            get {
+                return ((bool)(this["MonsterStunShown"]));
+            }
+            set {
+                this["MonsterStunShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1060")]
+        public double MonsterStunX {
+            get {
+                return ((double)(this["MonsterStunX"]));
+            }
+            set {
+                this["MonsterStunX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("420")]
+        public double MonsterStunY {
+            get {
+                return ((double)(this["MonsterStunY"]));
+            }
+            set {
+                this["MonsterStunY"] = value;
             }
         }
     }

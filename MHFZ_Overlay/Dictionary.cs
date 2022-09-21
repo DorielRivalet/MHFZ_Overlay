@@ -108,7 +108,7 @@ namespace Dictionary
             {60, "Rusted Kushala Daora"},//
             {61, "Blango"},//
             {62, "Conga"},//
-            {63, "Remobra"},
+            {63, "Remobra"},//
             {64, "Lunastra"},//
             {65, "Teostra"},//
             {66, "Hermitaur"},//
@@ -202,7 +202,7 @@ namespace Dictionary
             {154, "Guanzorumu"},//
             {155, "Starving Deviljho"},//
             {156, "UNK"},//
-            {157, "Egyurasu"},
+            {157, "Egyurasu"},//
             {158, "Voljang"},//
             {159, "Nargacuga"},//
             {160, "Keoaruboru"},//
@@ -358,10 +358,10 @@ namespace Dictionary
             {51, "Auto Reload"},
             {52, "Recoil Reduction+1"},
             {53, "Recoil Reduction+2"},
-            {54, "NormalORRapid UP"},
-            {55, "PierceORPierce UP"},
-            {56, "PelletORSpread UP"},
-            {57, ""},
+            {54, "Normal/Rapid UP"},
+            {55, "Pierce/Pierce UP"},
+            {56, "Pellet/Spread UP"},
+            {57, "Normal S Lv1 Add"},
             {58, "Normal S All Add"},
             {59, "Pierce S Lv1 Add"},
             {60, "Pierce S Lv1AND2 Add"},
@@ -754,7 +754,7 @@ namespace Dictionary
             {447, "Critical Shot+1"},
             {448, "Critical Shot+2"},
             {449, "Critical Shot+3"},
-            {450, "unk3"},
+            {450, "Evasion+3"},
             {451, "Movement Speed UP+1"},
             {452, "Movement Speed UP+2"},
             {453, "Saving Master"},

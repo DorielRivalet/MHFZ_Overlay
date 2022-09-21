@@ -13,14 +13,13 @@
         <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
         <RoutedUICommand x:Key="ESC" Text="Escape"/>
     </Window.Resources>
-    <Canvas x:Name="MainGrid" Width="1920" Height="1080" Background="Transparent" AllowDrop="True" 
-            Drop="MainGrid_Drop" DragOver="MainGrid_DragOver"  MouseMove="MainGrid_MouseMove">
+    <Canvas x:Name="MainGrid" Width="1920" Height="1080" Background="Transparent" AllowDrop="True" Drop="MainGrid_Drop" DragOver="MainGrid_DragOver"  MouseMove="MainGrid_MouseMove">
         <Grid x:Name="ConfigGrid" Canvas.Top="0" Canvas.Left="0">
-            <Grid.ColumnDefinitions>
+            <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>-->
             <Button Background="#1e1e2e7f" ToolTip="Settings" x:Name="OpenConfigButton" Style="{StaticResource DefaultButton}" Height="25" Width="25"  Grid.Column="0" Click="OpenConfigButton_Click" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Settings.xaml'}" ></Button>
             <Button Background="#1e1e2e7f" ToolTip="Restart Overlay" x:Name="ReloadButton" Style="{StaticResource DefaultButton}" Height="25" Width="25" Grid.Column="1" Click="ReloadButton_Click" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}" ></Button>
             <Button Background="#1e1e2e7f" ToolTip="Exit" x:Name="CloseButton" Style="{StaticResource DefaultButton}" Height="25" Width="25" Grid.Column="2" Click="CloseButton_Click" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Close.xaml'}" ></Button>
@@ -34,25 +33,41 @@
             </Grid.RowDefinitions>
             <local:OutlinedTextBlock HorizontalAlignment="Left" Text="{Binding SharpnessNumber}" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding SharpnessColor}"/>
         </Grid>
-        <Grid x:Name="PlayerInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerInfoX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerInfoY}" Width="350" Height="90" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"  Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPlayerInfos, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="TimerInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=TimerX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=TimerY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowTimerInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Text="Time Left" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Text="Hit Count" Grid.Column="0" Grid.Row="1" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Text="Player Atk." Grid.Column="0" Grid.Row="2" FontFamily="MS Gothic" FontSize="20" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Text="Time Left" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
             <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="timeRemainingTextBox" Text="{Binding Time}" Margin="4,0,0,0"/>
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="hitCountTextBow" Text="{Binding HitCount}" Margin="4,0,0,0"/>
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="playerAtkTextBox" Text="{Binding ATK}" Margin="4,0,0,0"/>
         </Grid>
-        <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="MonsterPartHpBars" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster1PartX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster1PartY}" Width="500" Height="160" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+        <Grid x:Name="HitCountInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=HitCountX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=HitCountY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowHitCountInfo, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="2*" />
+                <ColumnDefinition  Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Text="Hit Count" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="hitCountTextBow" Text="{Binding HitCount}" Margin="4,0,0,0"/>
+        </Grid>
+        <Grid x:Name="PlayerAtkInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerAtkX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerAtkY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPlayerAtkInfo, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="2*" />
+                <ColumnDefinition  Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Text="Player Atk." Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="playerAtkTextBox" Text="{Binding ATK}" Margin="4,0,0,0"/>
+        </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="MonsterPartHpBars" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster1PartX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster1PartY}" Width="800" Height="80" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterPartHP, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="1*" />
@@ -109,48 +124,111 @@
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.Monster4MaxHP}"
                                BarColor="{Binding Source={StaticResource Settings},Path=Monster4BarColor}" Row1Width="4" Row2Width="3" />
         </Grid>
-        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterStatusInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterStatusInfoY}" Width="250" Height="240" MouseLeftButtonDown="ElementMouseLeftButtonDown"
-               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterInfos, Converter={StaticResource BoolToVis}}">
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterAtkMultInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}" Width="250" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterAtkMult, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="1*" />
                 <ColumnDefinition  Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Atk. Mult." Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Defrate" Grid.Column="0" Grid.Row="1" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Size" Grid.Column="0" Grid.Row="2" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
             <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding AtkMult}" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="atkMultTextBox"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding DefMult}" Grid.Column="1" Grid.Row="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="defMultTextBox"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding Size}" Grid.Column="1" Grid.Row="2" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="sizeTextBox"/>
-            <uc:CustomProgressBar  Foreground="#cba6f7" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" x:Name="MonsterPoisonBar" IsHitTestVisible="False"
+        </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterDefrateInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterDefrateX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterDefrateY}" Width="250" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterDefrate, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Defrate" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding DefMult}" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="defMultTextBox"/>
+        </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterSizeInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterSizeX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterSizeY}" Width="250" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterSize, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="Size" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding Size}" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="sizeTextBox"/>
+        </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterPoisonInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterPoisonX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterPoisonY}" Width="250" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterPoison, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <uc:CustomProgressBar  Foreground="#cba6f7" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" x:Name="MonsterPoisonBar" IsHitTestVisible="False"
                                Description="Poison"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.PoisonCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.PoisonMax}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonBarColor}" Row1Width="1" Row2Width="1" FontSize="16" FontFamily="Source Code Pro" />
-            <uc:CustomProgressBar  Foreground="#74c7ec" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" x:Name="MonsterSleepBar" IsHitTestVisible="False"
+        </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterSleepInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterSleepX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterSleepY}" Width="250" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterSleep, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <uc:CustomProgressBar  Foreground="#74c7ec" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" x:Name="MonsterSleepBar" IsHitTestVisible="False"
                                Description="Sleep"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.SleepCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.SleepMax}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarColor}" Row1Width="1" Row2Width="1" />
+        </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterParaInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterParaX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterParaY}" Width="250" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterPara, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
             <uc:CustomProgressBar  Foreground="#f9e2af" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" x:Name="MonsterParaBar" IsHitTestVisible="False"
                                Description="Para."
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.ParaCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.ParaMax}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}" Row1Width="1" Row2Width="1" />
-            <uc:CustomProgressBar  Foreground="#fab387" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" x:Name="MonsterBlastBar" IsHitTestVisible="False"
+        </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterBlastInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterBlastX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterBlastY}" Width="250" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterBlast, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <uc:CustomProgressBar  Foreground="#fab387" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" x:Name="MonsterBlastBar" IsHitTestVisible="False"
                                Description="Blast"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.BlastCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.BlastMax}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarColor}" Row1Width="1" Row2Width="1" />
+        </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterStunInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterStunX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterStunY}" Width="250" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterStun, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
             <uc:CustomProgressBar  Foreground="#7f849c" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" x:Name="MonsterStunBar" IsHitTestVisible="False"
                                Description="Stun"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.StunCurrent}"

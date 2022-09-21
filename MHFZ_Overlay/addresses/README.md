@@ -218,545 +218,543 @@
 
 ### Armor Skills
 
-UP/DOWN means +/- here
-
 | ID | Skill|
 |----|------|
-| 0  |No_Skill|
-| 1  | Para_Halved    |
-| 2  | Negate_Para    |
-| 3  | Para_Doubled    |
-| 4  | Sleep_Halved    |
-| 5  | Negate_Sleep     |
-| 6  |  Sleep_Doubled    |
-| 7  |  Stun_Halved    |
-| 8  | Negate_Stun    |
-| 9  | Stun_Doubled    |
-|10  | Poison_Halved    |
-|11  | Negate_Poison    |
-|12  | Double_Poison    |
+| 0  |No Skill|
+| 1  | Para Halved    |
+| 2  | Negate Para    |
+| 3  | Para Doubled    |
+| 4  | Sleep Halved    |
+| 5  | Negate Sleep     |
+| 6  |  Sleep Doubled    |
+| 7  |  Stun Halved    |
+| 8  | Negate Stun    |
+| 9  | Stun Doubled    |
+|10  | Poison Halved    |
+|11  | Negate Poison    |
+|12  | Double Poison    |
 |13  | Deoderant     |
 |14  |  Deoderant2    |
-|15  |  _0    |
-|16  | Snowball_Res    |
-|17  | Snowball_Res2    |
-|18  | _1   |
+|15  |   0    |
+|16  | Snowball Res    |
+|17  | Snowball Res2    |
+|18  |  1   |
 |19  | Sneak    |
 |20  | Taunt    |
-|21  |   HealthUP10   |
-|22  |   HealthUP20   |
-|23  |   HealthUP30   |
-|24  | HealthDOWN10    |
-|25  | HealthDOWN20    |
-|26  | HealthDOWN30    |
-|27  | Recovery_SpeedUP1    |
-|28  | Recovery_SpeedUP2    |
-|29  |  Recovery_SpeedDOWN1    |
-|30  |  Recovery_SpeedDOWN2    |
-|31  |  Razor_SharpUP1    |
-|32  | Blunt_Edge    |
-|33  | SharpnessUP1    |
-|34  | _2    |
-|35  | Critical_EyeUP1    |
-|36  | Critical_EyeUP2    |
-|37  | Critical_EyeUP3     |
-|38  |  Speed_Sharpening    |
-|39  | Slothful_Sharpening     |
-|40  | GuardUP1    |
-|41  | GuardUP2    |
-|42  | GuardDOWN1    |
-|43  | GuardDOWN2    |
-|44  | Auto_Guard    |
-|45  |  Throwing_Distance_Up    |
-|46  |  Reload_SpeedUP1    |
-|47  |  Reload_SpeedUP2    |
-|48  | Reload_SpeedUP3    |
-|49  | Reload_SpeedDOWN1    |
-|50  | _3    |
-|51  | Auto_Reload    |
-|52  | Recoil_ReductionUP1    |
-|53  |  Recoil_ReductionUP2    |
-|54  |  NormalORRapid_Up    |
-|55  |  PierceORPierce_Up    |
-|56  | PelletORSpread_Up    |
-|57  | _4    |
-|58  | Normal_S_All_Add    |
-|59  | Pierce_S_Lv1_Add    |
-|60  | Pierce_S_Lv1AND2_Add    |
-|61  |  Pierce_S_All_Add    |
-|62  |  Pellet_S_LV1_Add    |
-|63  |  Pellet_S_LV1AND2_Add    |
-|64  | Pellet_Shot_All_Add    |
-|65  | Crag_S_Lv1_Add    |
-|66  | Crag_S_Lv1ANDLv2_Add    |
-|67  | Crag_S_All_Add    |
-|68  | Cluster_S_Lv1_Add    |
-|69  |  Cluster_S_Lv1ANDLv2_Add    |
-|70  | Cluster_S_All_Add     |
-|71  | Status_Attack_Up     |
+|21  |   Health+10   |
+|22  |   Health+20   |
+|23  |   Health+30   |
+|24  | Health-10    |
+|25  | Health-20    |
+|26  | Health-30    |
+|27  | Recovery Speed+1    |
+|28  | Recovery Speed+2    |
+|29  |  Recovery Speed-1    |
+|30  |  Recovery Speed-2    |
+|31  |  Razor Sharp+1    |
+|32  | Blunt Edge    |
+|33  | Sharpness+1    |
+|34  |  2    |
+|35  | Critical Eye+1    |
+|36  | Critical Eye+2    |
+|37  | Critical Eye+3     |
+|38  |  Speed Sharpening    |
+|39  | Slothful Sharpening     |
+|40  | Guard+1    |
+|41  | Guard+2    |
+|42  | Guard-1    |
+|43  | Guard-2    |
+|44  | Auto Guard    |
+|45  |  Throwing Distance Up    |
+|46  |  Reload Speed+1    |
+|47  |  Reload Speed+2    |
+|48  | Reload Speed+3    |
+|49  | Reload Speed-1    |
+|50  |  3    |
+|51  | Auto Reload    |
+|52  | Recoil Reduction+1    |
+|53  |  Recoil Reduction+2    |
+|54  |  NormalORRapid Up    |
+|55  |  PierceORPierce Up    |
+|56  | PelletORSpread Up    |
+|57  | Normal S Lv1 Add    |
+|58  | Normal S All Add    |
+|59  | Pierce S Lv1 Add    |
+|60  | Pierce S Lv1AND2 Add    |
+|61  |  Pierce S All Add    |
+|62  |  Pellet S LV1 Add    |
+|63  |  Pellet S LV1AND2 Add    |
+|64  | Pellet Shot All Add    |
+|65  | Crag S Lv1 Add    |
+|66  | Crag S Lv1ANDLv2 Add    |
+|67  | Crag S All Add    |
+|68  | Cluster S Lv1 Add    |
+|69  |  Cluster S Lv1ANDLv2 Add    |
+|70  | Cluster S All Add     |
+|71  | Status Attack Up     |
 |72  | Bomber    |
-|73  | Hunger_Halved    |
-|74  | Hunger_Negated    |
-|75  | Hunger_Up_Sm    |
-|76  | Hunger_Up_Lg    |
+|73  | Hunger Halved    |
+|74  | Hunger Negated    |
+|75  | Hunger Up Sm    |
+|76  | Hunger Up Lg    |
 |77  | Gourmand     |
 |78  |  Scavenger    |
-|79  |Attack_Up_Small      |
-|80  | Attack_Up_Medium    |
-|81  | Attack_Up_Large    |
-|82  | DefenseUP20   |
-|83  | DefenseUP30    |
-|84  | DefenseUP60    |
-|85  | DefenseDOWN20     |
-|86  | DefenseDOWN30     |
-|87  |  DefenseDOWN40    |
-|88  | Divine_Protection    |
-|89  | Goddess_Embrace    |
-|90  | Demonic_Protection    |
-|91  | Death_Gods_Embrace    |
+|79  |Attack Up Small      |
+|80  | Attack Up Medium    |
+|81  | Attack Up Large    |
+|82  | Defense+20   |
+|83  | Defense+30    |
+|84  | Defense+60    |
+|85  | Defense-20     |
+|86  | Defense-30     |
+|87  |  Defense-40    |
+|88  | Divine Protection    |
+|89  | Goddess Embrace    |
+|90  | Demonic Protection    |
+|91  | Death Gods Embrace    |
 |92  | Earplugs    |
-|93  |  High_Grade_Earplugs    |
-|94  |  Anti_Theft    |
-|95  |  Wide_AreaUP1    |
-|96  | Wide_AreaUP2    |
-|97  | Pro_Transporter    |
-|98  | All_Res_UpUP5    |
-|99  | All_Res_UpUP10    |
-|100 | All_Res_UpUP20   |
-|101 |  All_ResDOWN5    |
-|102 |  All_ResDOWN10    |
-|103 | All_ResDOWN20     |
-|104 | Fire_ResUP10    |
-|105 | Fire_ResUP20    |
-|106 | Fire_ResUP30    |
-|107 | Fire_ResDOWN10    |
-|108 | Fire_ResDOWN20    |
-|109 |   Fire_ResDOWN30   |
-|110 | Water_ResUP10     |
-|111 | Water_ResUP20     |
-|112 | Water_ResUP30    |
-|113 | Water_ResDOWN10    |
-|114 | Water_ResDOWN20    |
-|115 | Water_ResDOWN30   |
-|116 | Ice_ResUP10    |
-|117 | Ice_ResUP20     |
-|118 | Ice_ResUP30     |
-|119 | Ice_ResDOWN10     |
-|120 | Ice_ResDOWN20    |
-|121 | Ice_ResDOWN30   |
-|122 | Thunder_ResUP10    |
-|123 | Thunder_ResUP20    |
-|124 | Thunder_ResUP30    |
-|125 |  Thunder_ResDOWN10    |
-|126 |  Thunder_ResDOWN20    |
-|127 | Thunder_ResDOWN30     |
-|128 | Dragon_ResUP10    |
-|129 | Dragon_ResUP20    |
-|130 | Dragon_ResUP30    |
-|131 | Dragon_ResDOWN10    |
-|132 | Dragon_ResDOWN20    |
-|133 |  Dragon_ResDOWN30    |
-|134 |Heat_Halved      |
-|135 |  Heat_Cancel    |
-|136 | Heat_Cancel2    |
-|137 | Heat_Surge_Small    |
-|138 | Heat_Surge_Large    |
-|139 | Cold_Halved    |
-|140 | Cold_Cancel    |
-|141 | Cold_Cancel2    |
-|142 | Cold_Surge_Small     |
-|143 | Cold_Surge_Large     |
-|144 | Wind_Res_Small    |
-|145 | Wind_Res_Large    |
-|146 | Dragon_Wind_Breaker    |
+|93  |  High Grade Earplugs    |
+|94  |  Anti Theft    |
+|95  |  Wide Area+1    |
+|96  | Wide Area+2    |
+|97  | Pro Transporter    |
+|98  | All Res Up+5    |
+|99  | All Res Up+10    |
+|100 | All Res Up+20   |
+|101 |  All Res-5    |
+|102 |  All Res-10    |
+|103 | All Res-20     |
+|104 | Fire Res+10    |
+|105 | Fire Res+20    |
+|106 | Fire Res+30    |
+|107 | Fire Res-10    |
+|108 | Fire Res-20    |
+|109 |   Fire Res-30   |
+|110 | Water Res+10     |
+|111 | Water Res+20     |
+|112 | Water Res+30    |
+|113 | Water Res-10    |
+|114 | Water Res-20    |
+|115 | Water Res-30   |
+|116 | Ice Res+10    |
+|117 | Ice Res+20     |
+|118 | Ice Res+30     |
+|119 | Ice Res-10     |
+|120 | Ice Res-20    |
+|121 | Ice Res-30   |
+|122 | Thunder Res+10    |
+|123 | Thunder Res+20    |
+|124 | Thunder Res+30    |
+|125 |  Thunder Res-10    |
+|126 |  Thunder Res-20    |
+|127 | Thunder Res-30     |
+|128 | Dragon Res+10    |
+|129 | Dragon Res+20    |
+|130 | Dragon Res+30    |
+|131 | Dragon Res-10    |
+|132 | Dragon Res-20    |
+|133 |  Dragon Res-30    |
+|134 |Heat Halved      |
+|135 |  Heat Cancel    |
+|136 | Heat Cancel2    |
+|137 | Heat Surge Small    |
+|138 | Heat Surge Large    |
+|139 | Cold Halved    |
+|140 | Cold Cancel    |
+|141 | Cold Cancel2    |
+|142 | Cold Surge Small     |
+|143 | Cold Surge Large     |
+|144 | Wind Res Small    |
+|145 | Wind Res Large    |
+|146 | Dragon Wind Breaker    |
 |147 | Map    |
-|148 | _5    |
-|149 |  GatheringUP1    |
-|150 | GatheringUP2     |
-|151 |  GatheringDOWN1    |
-|152 | GatheringDOWN2    |
-|153 | High_Speed_Gathering    |
-|154 | Spirits_Whim    |
-|155 | Divine_Whim    |
-|156 | Spectres_Whim    |
-|157 |  Devils_Whim    |
-|158 | Good_Luck     |
-|159 | Great_Luck     |
-|160 | Bad_Luck    |
-|161 | Horrible_Luck    |
-|162 | Fishing_Expert    |
+|148 |  5    |
+|149 |  Gathering+1    |
+|150 | Gathering+2     |
+|151 |  Gathering-1    |
+|152 | Gathering-2    |
+|153 | High Speed Gathering    |
+|154 | Spirits Whim    |
+|155 | Divine Whim    |
+|156 | Spectres Whim    |
+|157 |  Devils Whim    |
+|158 | Good Luck     |
+|159 | Great Luck     |
+|160 | Bad Luck    |
+|161 | Horrible Luck    |
+|162 | Fishing Expert    |
 |163 | Detect    |
 |164 | Autotracker    |
-|165 | Recovery_Items_Up     |
-|166 |  Recovery_Items_Down    |
-|167 | CombinationUP10PERCENT     |
-|168 | CombinationUP15PERCENT    |
-|169 | CombinationUP30PERCENT    |
-|170 | CombinationDOWN5PERCENT    |
-|171 | CombinationDOWN15PERCENT    |
-|172 | Maximum_Bullets    |
+|165 | Recovery Items Up     |
+|166 |  Recovery Items Down    |
+|167 | Combination+10%     |
+|168 | Combination+15%    |
+|169 | Combination+30%    |
+|170 | Combination-5%    |
+|171 | Combination-15%    |
+|172 | Maximum Bullets    |
 |173 | Alchemy     |
-|174 | _6     |
-|175 |  _7    |
-|176 | _8    |
-|177 | EvasionUP1    |
-|178 | EvasionUP2    |
-|179 | AdrenalineUP1    |
-|180 | AdrenalineUP2    |
+|174 |  6     |
+|175 |   7    |
+|176 |  8    |
+|177 | Evasion+1    |
+|178 | Evasion+2    |
+|179 | Adrenaline+1    |
+|180 | Adrenaline+2    |
 |181 |  Worry    |
-|182 |  Item_Duration_UP    |
-|183 | Item_Duration_DOWN     |
-|184 | Marathon_Runner    |
-|185 | Short_Sprinter    |
-|186 | Load_UP    |
-|187 | Deviation_Down    |
-|188 | Deviation_Up    |
-|189 |  Come_on_Big_Guy    |
-|190 |  Speed_Eating    |
-|191 |  Slow_Eating    |
-|192 | Carving_Expert    |
-|193 | Hazard_Res_Small    |
-|194 | Hazard_Res_Large    |
-|195 | Hazard_Prone_Small    |
-|196 | Hazard_Prone_Large    |
-|197 | Quake_ResUP1     |
-|198 |  Vocal_Chord_Halved    |
-|199 |  Vocal_Chord_Immunity    |
-|200 | BBQ_Expert    |
-|201 | BBQ_Master    |
-|202 | False_BBQ_Expert    |
+|182 |  Item Duration UP    |
+|183 | Item Duration DOWN     |
+|184 | Marathon Runner    |
+|185 | Short Sprinter    |
+|186 | Load UP    |
+|187 | Deviation Down    |
+|188 | Deviation Up    |
+|189 |  Come on Big Guy    |
+|190 |  Speed Eating    |
+|191 |  Slow Eating    |
+|192 | Carving Expert    |
+|193 | Hazard Res Small    |
+|194 | Hazard Res Large    |
+|195 | Hazard Prone Small    |
+|196 | Hazard Prone Large    |
+|197 | Quake Res+1     |
+|198 |  Vocal Chord Halved    |
+|199 |  Vocal Chord Immunity    |
+|200 | BBQ Expert    |
+|201 | BBQ Master    |
+|202 | False BBQ Expert    |
 |203 | Gunnery    |
-|204 | _9    |
-|205 |   _10   |
-|206 |     _11 |
-|207 |     _12 |
-|208 |    _13 |
-|209 | _14    |
-|210 | _15    |
-|211 | _16    |
-|212 | Flute_Expert    |
-|213 |  _17    |
-|214 |  _18    |
-|215 | _19     |
-|216 | _20    |
-|217 | _21    |
+|204 |  9    |
+|205 |    10   |
+|206 |      11 |
+|207 |      12 |
+|208 |     13 |
+|209 |  14    |
+|210 |  15    |
+|211 |  16    |
+|212 | Flute Expert    |
+|213 |   17    |
+|214 |   18    |
+|215 |  19     |
+|216 |  20    |
+|217 |  21    |
 |218 | Breakout    |
-|219 | Martial_Arts    |
-|220 | Strong_ArmUP1    |
-|221 | _22     |
+|219 | Martial Arts    |
+|220 | Strong Arm+1    |
+|221 |  22     |
 |222 | Inspiration     |
 |223 | Passive     |
-|224 | _23   |
-|225 | _24    |
-|226 | _25   |
-|227 | _26    |
+|224 |  23   |
+|225 |  24    |
+|226 |  25   |
+|227 |  26    |
 |228 | Bond    |
-|229 |  _27    |
+|229 |   27    |
 |230 | Guts     |
-|231 | Great_Guts     |
-|232 | True_Guts    |
-|233 | _28    |
-|234 | Pressure_Small    |
-|235 | Capture_Proficiency    |
-|236 | _29   |
-|237 | _30     |
-|238 | Poison_Coatings_Add     |
-|239 | Poison_Coating_Add     |
-|240 | Sleep_Coatings_Add    |
-|241 | Fire_Attack_Small    |
-|242 | Fire_Attack_Large    |
-|243 | Water_Attack_Small    |
-|244 | Water_Attack_Large    |
-|245 |  Thunder_Attack_Small    |
-|246 |Thunder_Attack_Large      |
-|247 |  Ice_Attack_Small    |
-|248 | Ice_Attack_Large    |
-|249 | Dragon_Attack_Small   |
-|250 | Dragon_Attack_Large    |
-|251 | Starving_WolfUP1   |
-|252 | Starving_WolfUP2    |
-|253 |_31      |
-|254 | Bomb_SwordUP1     |
-|255 | Bomb_SwordUP2     |
-|256 | Bomb_SwordUP3    |
-|257 | Assault_SwordUP1   |
-|258 | Assault_SwordUP2    |
-|259 | Assault_SwordUP3    |
-|260 | Poison_SwordUP1    |
-|261 | Poison_SwordUP2     |
-|262 | Poison_SwordUP3     |
-|263 | Para_SwordUP1     |
-|264 | Para_SwordUP2    |
-|265 | Para_SwordUP3    |
-|266 | Sleep_SwordUP1    |
-|267 | Sleep_SwordUP2    |
-|268 | Sleep_SwordUP3    |
-|269 | Fire_SwordUP1     |
-|270 |  Fire_SwordUP2    |
-|271 | Fire_SwordUP3     |
-|272 | Water_SwordUP1    |
-|273 | Water_SwordUP2    |
-|274 | Water_SwordUP3   |
-|275 | Ice_SwordUP1   |
-|276 | Ice_SwordUP2   |
-|277 |  Ice_SwordUP3    |
-|278 | Thunder_SwordUP1     |
-|279 | Thunder_SwordUP2     |
-|280 |Thunder_SwordUP3    |
-|281 | Dragon_SwordUP1    |
-|282 | Dragon_SwordUP2    |
-|283 | Dragon_SwordUP3    |
-|284 | Critical_EyeUP4    |
-|285 | Critical_EyeUP5     |
-|286 | Attack_Up_Very_Large     |
-|287 | Attack_Up_Absolute     |
-|288 | Super_Earplugs    |
+|231 | Great Guts     |
+|232 | True Guts    |
+|233 |  28    |
+|234 | Pressure Small    |
+|235 | Capture Proficiency    |
+|236 |  29   |
+|237 |  30     |
+|238 | Poison Coatings Add     |
+|239 | Poison Coating Add     |
+|240 | Sleep Coatings Add    |
+|241 | Fire Attack Small    |
+|242 | Fire Attack Large    |
+|243 | Water Attack Small    |
+|244 | Water Attack Large    |
+|245 |  Thunder Attack Small    |
+|246 |Thunder Attack Large      |
+|247 |  Ice Attack Small    |
+|248 | Ice Attack Large    |
+|249 | Dragon Attack Small   |
+|250 | Dragon Attack Large    |
+|251 | Starving Wolf+1   |
+|252 | Starving Wolf+2    |
+|253 | 31      |
+|254 | Bomb Sword+1     |
+|255 | Bomb Sword+2     |
+|256 | Bomb Sword+3    |
+|257 | Assault Sword+1   |
+|258 | Assault Sword+2    |
+|259 | Assault Sword+3    |
+|260 | Poison Sword+1    |
+|261 | Poison Sword+2     |
+|262 | Poison Sword+3     |
+|263 | Para Sword+1     |
+|264 | Para Sword+2    |
+|265 | Para Sword+3    |
+|266 | Sleep Sword+1    |
+|267 | Sleep Sword+2    |
+|268 | Sleep Sword+3    |
+|269 | Fire Sword+1     |
+|270 |  Fire Sword+2    |
+|271 | Fire Sword+3     |
+|272 | Water Sword+1    |
+|273 | Water Sword+2    |
+|274 | Water Sword+3   |
+|275 | Ice Sword+1   |
+|276 | Ice Sword+2   |
+|277 |  Ice Sword+3    |
+|278 | Thunder Sword+1     |
+|279 | Thunder Sword+2     |
+|280 |Thunder Sword+3    |
+|281 | Dragon Sword+1    |
+|282 | Dragon Sword+2    |
+|283 | Dragon Sword+3    |
+|284 | Critical Eye+4    |
+|285 | Critical Eye+5     |
+|286 | Attack Up Very Large     |
+|287 | Attack Up Absolute     |
+|288 | Super Earplugs    |
 |289 | Peerless    |
-|290 | PrecisionUP2    |
-|291 | HealthUP40    |
-|292 | HealthUP50    |
-|293 |  Razor_SharpUP2    |
-|294 | DefenseUP90     |
-|295 |  DefenseUP120    |
-|296 | Summer_Person    |
-|297 | Winter_General    |
-|298 | Artillery_Expert    |
-|299 | Artillery_God    |
-|300 | Pressure_Large    |
-|301 |  Capture_Guru    |
-|302 | FocusUP2     |
-|303 | FocusUP1     |
+|290 | Precision+2    |
+|291 | Health+40    |
+|292 | Health+50    |
+|293 |  Razor Sharp+2    |
+|294 | Defense+90     |
+|295 |  Defense+120    |
+|296 | Summer Person    |
+|297 | Winter General    |
+|298 | Artillery Expert    |
+|299 | Artillery God    |
+|300 | Pressure Large    |
+|301 |  Capture Guru    |
+|302 | Focus+2     |
+|303 | Focus+1     |
 |304 | Distraction    |
-|305 | SnS_Tech_Sword_Saint   |
-|306 | SnS_Tech_Kaiden    |
-|307 | SnS_Tech_Expert    |
-|308 | SnS_Tech_Novice    |
-|309 |  DS_Tech_Dual_Dragon    |
-|310 |DS_Tech_Kaiden      |
-|311 | DS_Tech_Expert     |
-|312 | DS_Tech_Novice    |
-|313 | GS_Tech_Sword_King    |
-|314 | GS_Tech_Kaiden    |
-|315 |GS_Tech_Expert    |
-|316 | GS_Tech_Novice    |
-|317 | LS_Tech_Katana_God     |
-|318 |  LS_Tech_Kaiden    |
-|319 |  LS_Tech_Expert    |
-|320 | LS_Tech_Novice    |
-|321 | Hammer_Tech_B_Beast    |
-|322 | Hammer_Tech_Kaiden    |
-|323 | Hammer_Tech_Expert    |
-|324 | Hammer_Tech_Novice   |
-|325 | HH_Tech_F_Emperor     |
-|326 | HH_Tech_Kaiden     |
-|327 |  HH_Tech_Expert    |
-|328 | HH_Tech_Novice    |
-|329 | Lance_Tech_H_Spear    |
-|330 | Lance_Tech_Kaiden    |
-|331 | Lance_Tech_Expert    |
-|332 |Lance_Tech_Novice    |
-|333 | GL_Tech_Cannon_Ruler     |
-|334 |  GL_Tech_Kaiden    |
-|335 | GL_Tech_Expert     |
-|336 | GL_Tech_Novice    |
-|337 | HBG_Tech_Gun_Sage    |
-|338 | HBG_Tech_Kaiden    |
-|339 | HBG_Tech_Expert    |
-|340 | HBG_Tech_Novice    |
-|341 |  LBG_Tech_Gun_Prodigy    |
-|342 |  LBG_Tech_Kaiden    |
-|343 | LBG_Tech_Expert     |
-|344 | LBG_Tech_Novice    |
-|345 | Bow_Tech_Bow_Demon    |
-|346 | Bow_Tech_Kaiden    |
-|347 | Bow_Tech_Expert    |
-|348 | Bow_Tech_Novice    |
-|349 | Violent_Wind_Breaker     |
-|350 |  Quake_ResUP2    |
-|351 | Trap_Expert     |
-|352 | Trap_Master    |
-|353 | Weapon_Handling    |
-|354 | Elemental_Attack_Up    |
-|355 | Elemental_Attack_Down    |
-|356 | Stamina_Rec_Large    |
-|357 | Stamina_Rec_Small     |
-|358 |  Stamina_Rec_Down    |
-|359 | Kickboxing_King     |
-|360 | Strong_ArmUP2    |
-|361 | Throwing_KnivesUP1    |
-|362 | Throwing_KnivesUP2    |
-|363 | CaringUP1    |
-|364 | CaringUP2    |
-|365 |  CaringUP3    |
-|366 |  Def_Lock    |
-|367 |  FencingUP1    |
-|368 | FencingUP2    |
-|369 |Status_Halved    |
-|370 | Status_Immunity    |
-|371 | Status_Doubled  |
-|372 | SnS_Tech_Sword_Saint2   |
-|373 |   DS_Tech_Dual_Dragon2   |
-|374 | GS_Tech_Sword_King2     |
-|375 |  LS_Tech_Katana_God2    |
-|376 | Hammer_Tech_Blunt_Beast2    |
-|377 | HH_Tech_Flamboyant_Emperor2    |
-|378 | Lance_Tech_Heavenly_Spear2    |
-|379 | GL_Tech_Cannon_Emperor2  |
-|380 | HBG_Tech_Gun_Sage2   |
-|381 |  LBG_Tech_Gun_Prodigy2    |
-|382 |  Bow_Tech_Bow_Demon2    |
-|383 |  PassiveUP1    |
-|384 | Wide_AreaUP3    |
-|385 | Wide_AreaDOWN1    |
-|386 | Heavy_Drinker    |
+|305 | SnS Tech Sword Saint   |
+|306 | SnS Tech Kaiden    |
+|307 | SnS Tech Expert    |
+|308 | SnS Tech Novice    |
+|309 |  DS Tech Dual Dragon    |
+|310 |DS Tech Kaiden      |
+|311 | DS Tech Expert     |
+|312 | DS Tech Novice    |
+|313 | GS Tech Sword King    |
+|314 | GS Tech Kaiden    |
+|315 |GS Tech Expert    |
+|316 | GS Tech Novice    |
+|317 | LS Tech Katana God     |
+|318 |  LS Tech Kaiden    |
+|319 |  LS Tech Expert    |
+|320 | LS Tech Novice    |
+|321 | Hammer Tech B Beast    |
+|322 | Hammer Tech Kaiden    |
+|323 | Hammer Tech Expert    |
+|324 | Hammer Tech Novice   |
+|325 | HH Tech F Emperor     |
+|326 | HH Tech Kaiden     |
+|327 |  HH Tech Expert    |
+|328 | HH Tech Novice    |
+|329 | Lance Tech H Spear    |
+|330 | Lance Tech Kaiden    |
+|331 | Lance Tech Expert    |
+|332 |Lance Tech Novice    |
+|333 | GL Tech Cannon Ruler     |
+|334 |  GL Tech Kaiden    |
+|335 | GL Tech Expert     |
+|336 | GL Tech Novice    |
+|337 | HBG Tech Gun Sage    |
+|338 | HBG Tech Kaiden    |
+|339 | HBG Tech Expert    |
+|340 | HBG Tech Novice    |
+|341 |  LBG Tech Gun Prodigy    |
+|342 |  LBG Tech Kaiden    |
+|343 | LBG Tech Expert     |
+|344 | LBG Tech Novice    |
+|345 | Bow Tech Bow Demon    |
+|346 | Bow Tech Kaiden    |
+|347 | Bow Tech Expert    |
+|348 | Bow Tech Novice    |
+|349 | Violent Wind Breaker     |
+|350 |  Quake Res+2    |
+|351 | Trap Expert     |
+|352 | Trap Master    |
+|353 | Weapon Handling    |
+|354 | Elemental Attack Up    |
+|355 | Elemental Attack Down    |
+|356 | Stamina Rec Large    |
+|357 | Stamina Rec Small     |
+|358 |  Stamina Rec Down    |
+|359 | Kickboxing King     |
+|360 | Strong Arm+2    |
+|361 | Throwing Knives+1    |
+|362 | Throwing Knives+2    |
+|363 | Caring+1    |
+|364 | Caring+2    |
+|365 |  Caring+3    |
+|366 |  Def Lock    |
+|367 |  Fencing+1    |
+|368 | Fencing+2    |
+|369 |Status Halved    |
+|370 | Status Immunity    |
+|371 | Status Doubled  |
+|372 | SnS Tech Sword Saint2   |
+|373 |   DS Tech Dual Dragon2   |
+|374 | GS Tech Sword King2     |
+|375 |  LS Tech Katana God2    |
+|376 | Hammer Tech Blunt Beast2    |
+|377 | HH Tech Flamboyant Emperor2    |
+|378 | Lance Tech Heavenly Spear2    |
+|379 | GL Tech Cannon Emperor2  |
+|380 | HBG Tech Gun Sage2   |
+|381 |  LBG Tech Gun Prodigy2    |
+|382 |  Bow Tech Bow Demon2    |
+|383 |  Passive+1    |
+|384 | Wide Area+3    |
+|385 | Wide Area-1    |
+|386 | Heavy Drinker    |
 |387 | Drunkard    |
-|388 | Crystal_Res   |
-|389 |  Crystal_Vulnerability    |
-|390 |  Magnetic_Res    |
-|391 | Magnet_Vulnerability     |
-|392 | Light_Tread    |
+|388 | Crystal Res   |
+|389 |  Crystal Vulnerability    |
+|390 |  Magnetic Res    |
+|391 | Magnet Vulnerability     |
+|392 | Light Tread    |
 |393 | Relief    |
 |394 | Shiriagari    |
-|395 | Lone_Wolf    |
+|395 | Lone Wolf    |
 |396 | Compensation  |
-|397 |   Rapid_Fire   |
-|398 | Sharpening_Artisan     |
-|399 |  UnaffectedUP1    |
-|400 | UnaffectedUP2  |
-|401 | UnaffectedUP3   |
-|402 | ReflectUP1    |
-|403 | ReflectUP2   |
-|404 | ReflectUP3   |
-|405 |Honed_BladeUP1      |
-|406 | Honed_BladeUP2     |
-|407 | Honed_BladeUP3     |
-|408 | Strong_AttackUP1   |
-|409 | Strong_AttackUP2   |
-|410 | Strong_AttackUP3   |
-|411 | Strong_AttackUP4  |
-|412 | Strong_AttackUP5   |
-|413 |  EncourageUP1    |
-|414 |  EncourageUP2    |
-|415 | GraceUP1     |
-|416 | GraceUP2    |
-|417 | GraceUP3    |
-|418 | VitalityUP1    |
-|419 | VitalityUP2    |
-|420 | VitalityUP3    |
-|421 | VitalityDOWN1     |
-|422 |Wrath_Awoken      |
+|397 |   Rapid Fire   |
+|398 | Sharpening Artisan     |
+|399 |  Unaffected+1    |
+|400 | Unaffected+2  |
+|401 | Unaffected+3   |
+|402 | Reflect+1    |
+|403 | Reflect+2   |
+|404 | Reflect+3   |
+|405 |Honed Blade+1      |
+|406 | Honed Blade+2     |
+|407 | Honed Blade+3     |
+|408 | Strong Attack+1   |
+|409 | Strong Attack+2   |
+|410 | Strong Attack+3   |
+|411 | Strong Attack+4  |
+|412 | Strong Attack+5   |
+|413 |  Encourage+1    |
+|414 |  Encourage+2    |
+|415 | Grace+1     |
+|416 | Grace+2    |
+|417 | Grace+3    |
+|418 | Vitality+1    |
+|419 | Vitality+2    |
+|420 | Vitality+3    |
+|421 | Vitality-1     |
+|422 |Wrath Awoken      |
 |423 |Buchigire      |
-|424 | Iron_ArmUP1    |
-|425 | Iron_ArmUP2    |
+|424 | Iron Arm+1    |
+|425 | Iron Arm+2    |
 |426 | Breeder    |
 |427 | unk1    |
 |428 | unk2    |
-|429 | IssenUP1     |
-|430 | IssenUP2     |
-|431 | IssenUP3     |
+|429 | Issen+1     |
+|430 | Issen+2     |
+|431 | Issen+3     |
 |432 | Fortify   |
 |433 | Tenacity    |
-|434 | Steady_HandUP1    |
-|435 | MountingUP1    |
-|436 | MountingUP2    |
-|437 |  MountingUP3    |
-|438 | Exploit_Weakness     |
-|439 |  Exploit_Weakness2    |
-|440 | Reduce_Weakness    |
-|441 | Combo_ExpertUP1    |
-|442 | Combo_ExpertUP2    |
-|443 | Combo_ExpertUP3    |
-|444 | Combo_ExpertDOWN1    |
-|445 |  Hunter_Life    |
-|446 |  Hunter_Valhalla    |
-|447 |  Critical_ShotUP1    |
-|448 |  Critical_ShotUP2    |
-|449 |  Critical_ShotUP3    |
-|450 |   unk3   |
-|451 |  Movement_Speed_UPUP1    |
-|452 |  Movement_Speed_UPUP2    |
-|453 |  Saving_Master    |
-|454 |  Saving_Expert    |
-|455 |  Charge_Attack_UpUP1    |
-|456 |   Charge_Attack_UpUP2   |
-|457 |  Evade_Distance_Up    |
-|458 |  Red_Soul    |
-|459 | Blue_Soul   |
-|460 | VampirismUP1     |
-|461 | VampirismUP2     |
-|462 |  AdaptationUP1    |
-|463 |  AdaptationUP2    |
-|464 |  Dark_Finale    |
-|465 |  Medical_Sage    |
-|466 |  Tonfa_Tech_P_Phoenix    |
-|467 |   Tonfa_Tech_Kaiden   |
-|468 |  Tonfa_Tech_Expert    |
-|469 |   Tonfa_Tech_Novice   |
-|470 |   Tonfa_Tech_Large_Dragon_Club   |
+|434 | Steady Hand+1    |
+|435 | Mounting+1    |
+|436 | Mounting+2    |
+|437 |  Mounting+3    |
+|438 | Exploit Weakness     |
+|439 |  Exploit Weakness2    |
+|440 | Reduce Weakness    |
+|441 | Combo Expert+1    |
+|442 | Combo Expert+2    |
+|443 | Combo Expert+3    |
+|444 | Combo Expert-1    |
+|445 |  Hunter Life    |
+|446 |  Hunter Valhalla    |
+|447 |  Critical Shot+1    |
+|448 |  Critical Shot+2    |
+|449 |  Critical Shot+3    |
+|450 |   Evasion+3   |
+|451 |  Movement Speed UP+1    |
+|452 |  Movement Speed UP+2    |
+|453 |  Saving Master    |
+|454 |  Saving Expert    |
+|455 |  Charge Attack Up+1    |
+|456 |   Charge Attack Up+2   |
+|457 |  Evade Distance Up    |
+|458 |  Red Soul    |
+|459 | Blue Soul   |
+|460 | Vampirism+1     |
+|461 | Vampirism+2     |
+|462 |  Adaptation+1    |
+|463 |  Adaptation+2    |
+|464 |  Dark Finale    |
+|465 |  Medical Sage    |
+|466 |  Tonfa Tech P Phoenix    |
+|467 |   Tonfa Tech Kaiden   |
+|468 |  Tonfa Tech Expert    |
+|469 |   Tonfa Tech Novice   |
+|470 |   Tonfa Tech Large Dragon Club   |
 |471 |   Incitement   |
-|472 |  Blazing_MajestyUP1    |
-|473 |   Blazing_MajestyUP2   |
-|474 |  Drug_Knowledge    |
-|475 |   Absolute_Defense   |
+|472 |  Blazing Majesty+1    |
+|473 |   Blazing Majesty+2   |
+|474 |  Drug Knowledge    |
+|475 |   Absolute Defense   |
 |476 |  Imperturbable    |
-|477 |  Fully_Prepared    |
+|477 |  Fully Prepared    |
 |478 |  Negligence    |
-|479 |   Extreme_Collection   |
+|479 |   Extreme Collection   |
 |480 | Stylish     |
 |481 |  Assistance    |
-|482 |  Recoil_ReductionUP3    |
-|483 |   Gentle_ShotUP1   |
-|484 |  Gentle_ShotUP2    |
-|485 | Gentle_ShotUP3     |
-|486 |  Elemental_Exploit    |
-|487 | Elemental_Diffusion     |
-|488 |   Combat_Supremacy   |
+|482 |  Recoil Reduction+3    |
+|483 |   Gentle Shot+1   |
+|484 |  Gentle Shot+2    |
+|485 | Gentle Shot+3     |
+|486 |  Elemental Exploit    |
+|487 | Elemental Diffusion     |
+|488 |   Combat Supremacy   |
 |489 |Vigorous      |
-|490 |  VigorousUP2    |
-|491 | S_Immunity_Myriad     |
-|492 | Sword_GodUP1     |
-|493 | Sword_GodUP2     |
-|494 |   Thunder_Clad   |
-|495 |  Status_Pursuit    |
-|496 |  Drawing_ArtsUP1    |
-|497 |  Drawing_ArtsUP2    |
-|498 |   Blast_Resistance   |
-|499 |  Crit_Conversion    |
-|500 |  Crit_Conversion2    |
-|501 | Solid_Determination     |
-|502 |  Stylish_Assault    |
-|503 |  Freeze_Res    |
-|504 |  Ice_Age    |
-|505 |  Consumption_Slayer    |
-|506 |  Swaxe_Tech_E_Marshal    |
-|507 |   Swaxe_Tech_Kaiden   |
-|508 |  Swaxe_Tech_Expert    |
-|509 |  Swaxe_Tech_Novice    |
-|510 |  Swaxe_Tech_Great_Sword_General    |
-|511 |  FortificationUP1    |
-|512 |   FortificationUP2   |
+|490 |  Vigorous+2    |
+|491 | S Immunity Myriad     |
+|492 | Sword God+1     |
+|493 | Sword God+2     |
+|494 |   Thunder Clad   |
+|495 |  Status Pursuit    |
+|496 |  Drawing Arts+1    |
+|497 |  Drawing Arts+2    |
+|498 |   Blast Resistance   |
+|499 |  Crit Conversion    |
+|500 |  Crit Conversion2    |
+|501 | Solid Determination     |
+|502 |  Stylish Assault    |
+|503 |  Freeze Res    |
+|504 |  Ice Age    |
+|505 |  Consumption Slayer    |
+|506 |  Swaxe Tech E Marshal    |
+|507 |   Swaxe Tech Kaiden   |
+|508 |  Swaxe Tech Expert    |
+|509 |  Swaxe Tech Novice    |
+|510 |  Swaxe Tech Great Sword General    |
+|511 |  Fortification+1    |
+|512 |   Fortification+2   |
 |513 |  Sniper    |
 |514 |  Obscurity    |
-|515 |  Evasion_Boost    |
+|515 |  Evasion Boost    |
 |516 | Rush|
-|517 |  EncourageUP_2    |
-|518 |  ReflectUP_3    |
+|517 |  Encourage+ 2    |
+|518 |  Reflect+ 3    |
 |519 |   Skilled   |
 |520 |Ceaseless      |
-|521 | Point_Breakthrough     |
-|522 | Abnormality	     |
+|521 | Point Breakthrough     |
+|522 | Abnormality    |
 |523 |  Spacing    |
-|524 |  Strong_AttackUP6    |
-|525 |   Sword_GodUP3   |
-|526 |   Steady_HandUP2   |
-|527 |  TrainedUP1    |
-|528 |  TrainedUP2    |
+|524 |  Strong Attack+6    |
+|525 |   Sword God+3   |
+|526 |   Steady Hand+2   |
+|527 |  Trained+1    |
+|528 |  Trained+2    |
 |529 |  Furious    |
-|530 |  Magspike_Tech_M_Star    |
-|531 |  Magspike_Tech_Kaiden    |
-|532 |  Magspike_Tech_Expert    |
-|533 | Magspike_Tech_Novice    |
-|534 | Magspike_Tech_Large_Magnetic_Star   |
+|530 |  Magspike Tech M Star    |
+|531 |  Magspike Tech Kaiden    |
+|532 |  Magspike Tech Expert    |
+|533 | Magspike Tech Novice    |
+|534 | Magspike Tech Large Magnetic Star   |
 
 ### Objective Type (hex)
 
@@ -767,13 +765,13 @@ UP/DOWN means +/- here
 |257| 0x101|  Capture |
 |513 |0x201|  Slay |
 |32772| 0x8004|  Damage |
-|98308 |0x18004| Slay_or_Damage |
-|262144 |0x40000|  Slay_All |
-|131072 |0x20000|  Slay_Total |
+|98308 |0x18004| Slay or Damage |
+|262144 |0x40000|  Slay All |
+|131072 |0x20000|  Slay Total |
 |2 |0x02|   Deliver |
-|16388 |0x4004|Break_Part |
-|4098 |0x1002| Deliver_Flag |
-|16 |0x10| Esoteric_Action |
+|16388 |0x4004|Break Part |
+|4098 |0x1002| Deliver Flag |
+|16 |0x10| Esoteric Action |
 
 ### Weapon Type
 
@@ -1430,3 +1428,219 @@ UP/DOWN means +/- here
 | 5  |White |
 | 6  |  Purple
 | 7  |  Cyan|
+
+### Halk Skills
+
+| ID | Skill|
+|----|-----|
+|1|Large Monster Priority|
+|2|Small Monster Priority|
+|3|Near Hunter Priority|
+|4|Always Aggressive|
+|5|Item Defender|
+|6|Rising Intent|
+|7|Carving Defender|
+|8|Unescapable|
+|9|Health Conscious|
+|10|Helper [Health]|
+|11|Helper [Antidote]|
+|12|Helper [Deoderant]|
+|13|Gook Luck|
+|13|Fast Riser|
+|14|Bomber|
+|15|Unflinching|
+|16|Monster Spotter|
+|17|Mapper|
+|18|Breath Ball Attack|
+|19|Claw Attack Focus|
+|20|More Pugi Appearances|
+|21|Flying Wyvern Offense|
+|22|Fanged Beast Offense|
+|23|Piscine Offense|
+|24|Carapaceon Offense|
+|25|Bird Wyvern Offense|
+|26|Elder Dragon Offense|
+|27|Elemental Beam Attack|
+|28|Demon Drug Dust|
+|29|Armour Drug Dust|
+|30|Affinity Added|
+|31|Improve Status Attack|
+|32|Improve Evasion|
+|33|Improve Attack|
+|34|Signal to Halt Attacks|
+|35|Improve Fire Element|
+|36|Improve Ice Element|
+|37|Improve Water Element|
+|38|Improve Thunder Element|
+|39|Improve Dragon Element|
+|40|Small Bomber|
+|41|Supporter|
+|42|Elemental Bite|
+|43|Brute Wyvern Offense|
+|44|Breath Ball Support|
+|45|Attack Focus|
+|46|Defence Focus|
+|47|Jungle Attack|
+|48|Desert Attack|
+|49|Swamp Attack|
+|50|Snowy Mountains Attack|
+|51|Volcano Attack|
+|52|Tower Attack|
+|53|Forest and Hills Attack|
+|54|Great Forest Attack|
+|55|Arena Attack|
+|56|Gorge Attack|
+|57|Highlands Attack|
+|58|Tidal Island Attack|
+|59|Wind Pressure|
+|60|Earplugs|
+|61|Lone Attack|
+|62|Party Attack|
+|63|Gathering Affection|
+|64|Danger Affection|
+|65|Secret Area Affection|
+|66|Leviathan Offense|
+|67|Rapid Breath Attack|
+|68|Empower Attack and Def|
+|69|Charging Attack|
+|70|Smash Attack|
+|71|Polar Sea Attack|
+|72|Summer Assault|
+|73|Winter Assault|
+|74|Contain Monster|
+|75|Swift Battle|
+|76|Long Battle|
+|77|Fanged Wyvern Offense|
+|78|Flower Field Attack|
+|79|White Lake Attack|
+|80|Painted Falls Attack|
+
+### Sigil Skills
+
+|ID| Skill| Sub1| Sub2| Sub3|
+|--|------|-----|-----|-----|
+|1|Attack Slayer||||
+|2|Elemental Slayer||||
+|3|Status Attack Slayer||||
+|4|Affinity Slayer||||
+|5|Defense Slayer||||
+|6|Stun Value Slayer||||
+|7|Flying Wyvern Slayer||||
+|8|Bird Wyvern Slayer||||
+|9|Carapaceon Slayer||||
+|10|Piscine Slayer||||
+|11|Fanged Beast Slayer||||
+|12|Brute Wyvern Slayer||||
+|13|Leviathan Slayer||||
+|14|Elder Dragon Slayer||||
+|15|Small Monster Slayer||||
+|16|Elemental Coating/Crystal||||
+|17|Hot||||
+|18|Cold||||
+|19|Morning||||
+|20|Night||||
+|21|Breeding Season||||
+|22|Warm Season||||
+|23|Cold Season||||
+|24|Monday||||
+|25|Tuesday||||
+|26|Wednesday||||
+|27|Thursday||||
+|28|Friday||||
+|29|Saturday||||
+|30|Sunday||||
+|31|Manager||||
+|32|Balloon||||
+|33|Dowsing||||
+|34|Hunter Soul||||
+|35|Soul Collection||||
+|36|Gook's Friend||||
+|37|Halk's Friend||||
+|38|Money Expert||||
+|39|Exp Expert||||
+|40|Omnivore||||
+|41|Carving Division||||
+|42|Sleeping||||
+|43|Decoy||||
+|44|Spoilt||||
+|45|Unity||||
+|46|Aid||||
+|47|Rapid Fire Add|Normal LV1|Normal LV2|Pierce LV1|
+|48|Ultra Rapid Fire Add|Normal LV1|Normal LV2|Pierce LV1|
+|49|Disable Rapid|Normal LV1|Normal LV2|Pierce LV1|
+|50|Heat Cannon Add||||
+|51|Ballista Saver||||
+|52|Raw Bow Boost||||
+|53|Raw SnS Boost||||
+|54|Sonic Bomb Range||||
+|55|T.Boost (SnS)|Slide Attack|Shield Attack|Infinite Slash|
+|56|T.Boost (DS)|Frontflip Attack|Rush Attack|Sharpen Tech|
+|57|T.Boost (GS)|Upswing|Rotation|Guard Slash|
+|58|T.Boost (LS)|Piercing Stab|Upswing|Retreating Sword|
+|59|T.Boost (Lance)|Shield Attack|Charge Finisher||
+|60|T.Boost (GL)|Rush Thrust|Horizontal Slash||
+|61|T.Boost (Hammer)|Baseball Swing|Unsheathe Upswing|Charge Move Speed|
+|62|T.Boost (HH)|Musical Attacks|Beatdown||
+|63|T.Change (SnS)||||
+|64|T.Change (DS)||||
+|65|T.Change (GS)||||
+|66|T.Change (LS)|Drill Charge|||
+|67|T.Change (Lance)||||
+|68|T.Change (GL)||||
+|69|T.Change (Ham)||||
+|70|T.Change (HH)||||
+|71|T.Change (LBG)|Just Gauge|||
+|72|T.Change (HBG)||||
+|73|T.Change (Bow)|Piercing Shot|||
+|74|Length Up|SnS|Lance|GS|
+|75|Shelling Change|Normal|Spread|Long|
+|76|Note Change 1|White|Purple|Blue|
+|77|Note Change 2|White|Purple|Blue|
+|78|Note Change 3|White|Purple|Blue|
+|79|Arc Shot Change|Wide Pellet|Narrow Pellet|Explosive Shell|
+|80|Rarity Change|Rare-1|Rare-2|Rare-3|
+|81|Shelling Change|Normal|Spread|Long|
+|82|Tech Boost Bow|Shoryuken|||
+|83|Cat Breeder||||
+|84|Shot Change|Cluster Nuke|Blunt Pellet||
+|85|Draw Strength (GS)||||
+|86|Draw Strength (Hammer)||||
+|87|Draw Strength (Lance)||||
+|88|Draw Strength (SnS)||||
+|89|Draw Strength (DS)||||
+|90|Draw Strength (LS)||||
+|91|Draw Strength (HH)||||
+|92|Draw Strength (GL)||||
+|93|Draw Strength (Tonfa)||||
+|94|Tech Boost Tonfa|EX Gauge|Combo Gauge||
+|95|Fanged Beast Slayer||||
+|96|Unsheathed Movement Speed||||
+|97|Tech Boost Swaxe|Stunning Blast|Guard Boost|Charge Move Speed|
+|98|Tech Boost HBG|Heat Gauge|LV2|LV3|
+|99|Great Sword Up|||
+|100|Heavy Bowgun Up||||
+|101|Hammer Up||||
+|102|Lance Up (slot 315)||||
+|103|Sword and Shield Up||||
+|104|Light Bowgun Up||||
+|105|Dual Swords Up||||
+|106|Long Sword Up||||
+|107|Hunting Horn Up||||
+|108|Gunlance Up||||
+|109|Bow Up||||
+|110|Tonfa Up||||
+|111|Swaxe Up|||
+|112|Magspike Up||||
+|113|Zenith Cooldown||||
+|114|Zenith Duration||||
+|115|Zenith Fire Res||||
+|116|Zenith Water Res||||
+|117|Zenith Ice Res||||
+|118|Zenith Thunder Res||||
+|119|Zenith Dragon Res||||
+|120|Zenith Healing (slot 376)||||
+|121|Zenith Heroics||||
+|122|Zenith Attack (slot 378)||||
+|123|Zenith Elemental (slot 379)||||
+|124|Zenith Movement Speed||||
+|125|All Zenith AOEs||||

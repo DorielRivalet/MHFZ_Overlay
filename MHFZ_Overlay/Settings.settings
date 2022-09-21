@@ -114,10 +114,10 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Monster1PartX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">860</Value>
+      <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="Monster1PartY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">407</Value>
+      <Value Profile="(Default)">685</Value>
     </Setting>
     <Setting Name="AlwaysShowPlayerInfo" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -130,6 +130,108 @@
     </Setting>
     <Setting Name="GuildName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="TimerInfoShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TimerX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="TimerY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">560</Value>
+    </Setting>
+    <Setting Name="HitCountShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="HitCountX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="HitCountY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">600</Value>
+    </Setting>
+    <Setting Name="PlayerAtkShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PlayerAtkX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="PlayerAtkY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">640</Value>
+    </Setting>
+    <Setting Name="TimerMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Time Left</Value>
+    </Setting>
+    <Setting Name="MonsterAtkMultShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterAtkMultX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1060</Value>
+    </Setting>
+    <Setting Name="MonsterAtkMultY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="MonsterDefrateShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterDefrateX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1060</Value>
+    </Setting>
+    <Setting Name="MonsterDefrateY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">230</Value>
+    </Setting>
+    <Setting Name="MonsterSizeShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterSizeX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1060</Value>
+    </Setting>
+    <Setting Name="MonsterSizeY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">260</Value>
+    </Setting>
+    <Setting Name="MonsterPoisonShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterPoisonX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1060</Value>
+    </Setting>
+    <Setting Name="MonsterPoisonY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="MonsterSleepShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterSleepX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1060</Value>
+    </Setting>
+    <Setting Name="MonsterSleepY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">330</Value>
+    </Setting>
+    <Setting Name="MonsterParaShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterParaX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1060</Value>
+    </Setting>
+    <Setting Name="MonsterParaY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">360</Value>
+    </Setting>
+    <Setting Name="MonsterBlastShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterBlastX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1060</Value>
+    </Setting>
+    <Setting Name="MonsterBlastY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">390</Value>
+    </Setting>
+    <Setting Name="MonsterStunShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterStunX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1060</Value>
+    </Setting>
+    <Setting Name="MonsterStunY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">420</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -33,7 +33,25 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowMonsterInfos { get; set; } = true;
 
+        public bool ShowMonsterAtkMult { get; set; } = true;
+
+        public bool ShowMonsterDefrate { get; set; } = true;
+
+        public bool ShowMonsterSize { get; set; } = true;
+        public bool ShowMonsterPoison { get; set; } = true;
+        public bool ShowMonsterSleep { get; set; } = true;
+        public bool ShowMonsterPara { get; set; } = true;
+        public bool ShowMonsterBlast { get; set; } = true;
+        public bool ShowMonsterStun { get; set; } = true;
+
+
         public bool ShowPlayerInfos { get; set; } = true;
+
+        public bool ShowTimerInfo { get; set; } = true;
+        public bool ShowHitCountInfo { get; set; } = true;
+        public bool ShowPlayerAtkInfo { get; set; } = true;
+       
+
 
         public bool ShowMonsterHPBars { get; set; } = true;
 
@@ -261,21 +279,33 @@ namespace MHFZ_Overlay.addresses
             {
                 case 0: //None
                 case 10: //Veggie Elder
+                case 18://Felyne?
+                case 23://Melynx
                 case 29: //Rocks
                 case 32: //Pugis
+                case 57://Shakalaka
+                case 63://Remobra
                 case 86: //Cactus
                 case 87: //Gorge Objects
                 case 88: //Gorge Rocks
                 case 118: //Dummy
+                case 124://Uruki
                 case 133: //UNK
+                case 134://Felyne
                 case 135: //Blue NPC
                 case 136: //UNK
                 case 137: //Cactus
                 case 138: //Veggie Elders
                 case 156: //UNK
+                case 157: //Egyurasu
                 case 168: //Rocks
                 case 171: //Unknown Blue Barrel
+                case 173://Costumed Uruki
                 case 175://PSO2 Rappy
+                case 176://King Shakalaka
+                case 19://Vespoid
+                case 24://Hornetaur
+                case 56: //Great Thunderbug
                     Monster1Part1Name = "None";
                     Monster1Part2Name = "None";
                     Monster1Part3Name = "None";
@@ -289,57 +319,146 @@ namespace MHFZ_Overlay.addresses
                     break;
 
                 // Rath skeleton
-                //TODO: is tigrex the same?
                 case 1: //Rathian
                 case 11: //Rathalos
                 case 14: //Diablos
                 case 15://Khezu
-                case 17: //Gravios
-                case 22: //Basarios
-                case 26: //Monoblos
+                case 26: //Monoblos 
                 case 37: //Pink Rathian
                 case 41: //Silver Rathalos
                 case 42: //Gold Rathian
                 case 43: //Black Diablos
                 case 44: //White Monoblos
                 case 45://Red Khezu
-                case 47://Black Gravios
                 case 49: //Azure Rathalos
-                case 76://Tigrex
-                case 77: //Akantor
                 case 80: //Espinas
                 case 81: //Orange Espinas
-                case 89://Pariapuria
                 case 90://White Espinas
-                case 94://Dyuragaua
                 case 96://Gurenzeburu
                 case 100://UNKNOWN
-                case 106://Odibatorasu
                 case 109: //Anorupatisu
-                case 110://Hyujikiki
-                case 113://Mi Ru
                 case 122: //Zerureusu
                 case 126: //Meraginasu
-                case 127://Diorekkusu
                 case 130: //Varusaburosu
-                case 131://Poborubarumu
                 case 139://Gureadomosu
-                case 141: //Toridcless
+                case 174: //Sparkling Zerureusu
+                    Monster1Part1Name = "Body";
+                    Monster1Part2Name = "L. Wing";
+                    Monster1Part3Name = "R. Wing";
+                    Monster1Part4Name = "L. Leg";
+                    Monster1Part5Name = "R. Leg";
+                    Monster1Part6Name = "Neck";
+                    Monster1Part7Name = "Head";
+                    Monster1Part8Name = "Tail Tip";
+                    Monster1Part9Name = "Tail";
+                    Monster1Part10Name = "None";
+                    break;
+
+                // Flying Wyvern Skeleton 2
+                case 17: //Gravios
+                case 22: //Basarios
+                case 47://Black Gravios
+                    Monster1Part1Name = "Body";
+                    Monster1Part2Name = "L. Wing";
+                    Monster1Part3Name = "R. Wing";
+                    Monster1Part4Name = "L. Leg";
+                    Monster1Part5Name = "R. Leg";
+                    Monster1Part6Name = "Head";
+                    Monster1Part7Name = "Belly";
+                    Monster1Part8Name = "Tail Tip";
+                    Monster1Part9Name = "Tail";
+                    Monster1Part10Name = "None";
+                    break;
+
+                //Rex Wyvern Skeleton 1
+                case 76://Tigrex
+                case 77://Akantor
+                case 110://Hyujikiki
+                case 127://Diorekkusu
                 case 151://Barioth
                 case 159://Nargacuga
-                case 160://Keoaruboru
                 case 163://Blinking Nargacuga
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "Back";
+                    Monster1Part4Name = "Tail";
+                    Monster1Part5Name = "L. Wing";
+                    Monster1Part6Name = "L. Leg";
+                    Monster1Part7Name = "R. Wing";
+                    Monster1Part8Name = "R. Leg"; //swap to back?
+                    Monster1Part9Name = "Tail Tip";
+                    Monster1Part10Name = "None";
+                    break;
+
+                //Rex Wyvern Skeleton 2
+                case 89://Pariapuria
                 case 169://Seregios
-                case 174: //Sparkling Zerureusu
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
+                case 141: //Toridcless
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "L. Wing";
+                    Monster1Part4Name = "R. Wing";
+                    Monster1Part5Name = "L. Leg";
+                    Monster1Part6Name = "R. Leg";
+                    Monster1Part7Name = "Tail";
+                    Monster1Part8Name = "Back"; 
+                    Monster1Part9Name = "Tail Tip";
+                    Monster1Part10Name = "None";
+                    break;
+
+                //Rex Wyvern Skeleton 3
+                case 113://Mi Ru
+                case 94://Dyuragaua
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "L. Wing";
+                    Monster1Part3Name = "R. Wing";
+                    Monster1Part4Name = "Hindlegs";
+                    Monster1Part5Name = "Body";
+                    Monster1Part6Name = "Belly";
+                    Monster1Part7Name = "Tail";
+                    Monster1Part8Name = "Tail Tip"; //swap to back?
+                    Monster1Part9Name = "Back";
+                    Monster1Part10Name = "None";
+                    break;
+
+
+                //Big Rex Wyvern Skeleton 1
+                case 131://Poborubarumu
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "Hindlegs";
+                    Monster1Part4Name = "Tail Tip";
+                    Monster1Part5Name = "R. Foreleg";
+                    Monster1Part6Name = "L. Foreleg";
+                    Monster1Part7Name = "R.Forewing";
+                    Monster1Part8Name = "L.Forewing"; 
+                    Monster1Part9Name = "Back";//unsure
+                    Monster1Part10Name = "None";
+                    break;
+
+                case 106://Odibatorasu
+                    Monster1Part1Name = "L. Foreleg";
+                    Monster1Part2Name = "R. Foreleg";
+                    Monster1Part3Name = "L. Hindleg";
+                    Monster1Part4Name = "R. Hindleg";
+                    Monster1Part5Name = "Back";
+                    Monster1Part6Name = "Belly";
+                    Monster1Part7Name = "Body";
+                    Monster1Part8Name = "Head";
+                    Monster1Part9Name = "Back";
+                    Monster1Part10Name = "None";
+                    break;
+
+                case 160://Keoaruboru (sometimes doesn't load properly)
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "Back";
+                    Monster1Part4Name = "L. Hindleg";
+                    Monster1Part5Name = "R. Hindleg";
+                    Monster1Part6Name = "L. Foreleg";
+                    Monster1Part7Name = "R. Foreleg";
+                    Monster1Part8Name = "Tail";
+                    Monster1Part9Name = "Tail Tip";
                     Monster1Part10Name = "None";
                     break;
 
@@ -353,21 +472,46 @@ namespace MHFZ_Overlay.addresses
                 case 107://Disufiroa
                 case 108://Rebidiora
                 case 128://Garuba Daora
-                case 132://Duremudira
                 case 140://Harudomerugu
-                case 145://3rd Phase Duremudira
                 case 150://Toa Tesukatora
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "Belly"; //or back?
+                    Monster1Part4Name = "Forelegs";
+                    Monster1Part5Name = "Hindlegs";
+                    Monster1Part6Name = "Wings";
+                    Monster1Part7Name = "Tail";
+                    Monster1Part8Name = "Back";
+                    Monster1Part9Name = "Tail Tip";
+                    Monster1Part10Name = "None";
+                    break;
+
                 case 154://Guanzorumu
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Wings";
+                    Monster1Part3Name = "L. Foreleg"; 
+                    Monster1Part4Name = "R. Foreleg";
+                    Monster1Part5Name = "L. Hindleg";
+                    Monster1Part6Name = "R. Hindleg";
+                    Monster1Part7Name = "Tail";
+                    Monster1Part8Name = "Body";
+                    Monster1Part9Name = "Tail Tip";
+                    Monster1Part10Name = "None";
+                    break;
+
+                //Duremudira (doesnt load properly)
+                case 132://Duremudira
+                case 145://3rd Phase Duremudira
                 case 167://Arrogant Duremudira
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Wings";
+                    Monster1Part3Name = "Tail";
+                    Monster1Part4Name = "Hindlegs";
+                    Monster1Part5Name = "Belly";
+                    Monster1Part6Name = "Forelegs";
+                    Monster1Part7Name = "Body";
+                    Monster1Part8Name = "Back";
+                    Monster1Part9Name = "Tail Tip";
                     Monster1Part10Name = "None";
                     break;
 
@@ -375,15 +519,15 @@ namespace MHFZ_Overlay.addresses
                 case 2: //Fatalis
                 case 36: //Crimson Fatalis
                 case 71: //White Fatalis
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
+                    Monster1Part1Name = "Chest";
+                    Monster1Part2Name = "Belly";
+                    Monster1Part3Name = "L. Leg";
+                    Monster1Part4Name = "R. Leg";
+                    Monster1Part5Name = "Neck";
+                    Monster1Part6Name = "Face";
+                    Monster1Part7Name = "Tail/Back";
+                    Monster1Part8Name = "Wings";
+                    Monster1Part9Name = "Tail Tip";
                     Monster1Part10Name = "None";
                     break;
 
@@ -391,31 +535,30 @@ namespace MHFZ_Overlay.addresses
                 //Magala
                 case 162: //Gore Magala
                 case 164: //Shagaru Magala
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Horn";
+                    Monster1Part3Name = "Body";
+                    Monster1Part4Name = "Wings";
+                    Monster1Part5Name = "Forelegs";
+                    Monster1Part6Name = "L. Hindleg";
+                    Monster1Part7Name = "R. Hindleg";
+                    Monster1Part8Name = "Tail";
+                    Monster1Part9Name = "Tail Tip";
                     Monster1Part10Name = "None";
                     break;
 
-                //Hervibore/Equine
+                //Hervibore Skeleton
                 case 3: //Kelbi
                 case 4://Mosswine
                 case 5://Bullfango
                 case 12://Aptonoth
                 case 25://Apceros
-                case 33://Kirin
                 case 68://Bulldrome
                 case 69://Anteka
                 case 70://Popo
                 case 97://Burukku
                 case 98://Erupe
-                    Monster1Part1Name = "None";
+                    Monster1Part1Name = "Head";
                     Monster1Part2Name = "None";
                     Monster1Part3Name = "None";
                     Monster1Part4Name = "None";
@@ -427,7 +570,20 @@ namespace MHFZ_Overlay.addresses
                     Monster1Part10Name = "None";
                     break;
 
-              //Bird Wyvern Skeleton
+                case 33://Kirin
+                    Monster1Part1Name = "Body";
+                    Monster1Part2Name = "None";
+                    Monster1Part3Name = "None";
+                    Monster1Part4Name = "None";
+                    Monster1Part5Name = "None";
+                    Monster1Part6Name = "None";
+                    Monster1Part7Name = "None";
+                    Monster1Part8Name = "None";
+                    Monster1Part9Name = "None";
+                    Monster1Part10Name = "None";
+                    break;
+
+                //Bird Wyvern Skeleton
                 case 6://Yian Kut-Ku
                 case 20://Gypceros
                 case 38://Blue Yian Kut-Ku
@@ -437,15 +593,15 @@ namespace MHFZ_Overlay.addresses
                 case 78://Bright Hypnoc
                 case 82://White Hypnoc
                 case 114://Farunokku
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
+                    Monster1Part1Name = "Body";
+                    Monster1Part2Name = "L. Wing";
+                    Monster1Part3Name = "R. Wing";
+                    Monster1Part4Name = "L. Leg";
+                    Monster1Part5Name = "R. Leg";
+                    Monster1Part6Name = "Neck";
+                    Monster1Part7Name = "Head";
+                    Monster1Part8Name = "Tail";
+                    Monster1Part9Name = "Tail Tip";
                     Monster1Part10Name = "None";
                     break;
 
@@ -457,7 +613,7 @@ namespace MHFZ_Overlay.addresses
                 case 30://Ioprey
                 case 31://Iodrome
                 case 35://Giaprey / Giadrome
-                    Monster1Part1Name = "None";
+                    Monster1Part1Name = "Head";
                     Monster1Part2Name = "None";
                     Monster1Part3Name = "None";
                     Monster1Part4Name = "None";
@@ -471,19 +627,54 @@ namespace MHFZ_Overlay.addresses
 
                 //Fanged Beast Monkey Skeleton
                 case 51://Blangonga
-                case 52://Congalala
                 case 53://Rajang
                 case 61://Blango
                 case 62://Conga
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "R. Side";
+                    Monster1Part3Name = "L. Side";
+                    Monster1Part4Name = "Body";
+                    Monster1Part5Name = "Tail";
+                    Monster1Part6Name = "None";
+                    Monster1Part7Name = "None";
+                    Monster1Part8Name = "None";
+                    Monster1Part9Name = "Chest";
+                    Monster1Part10Name = "None";
+                    break;
+
                 case 101://Gogomoa
                 case 102://Kokomoa
-                case 123://Gourgarf
-                case 158://Voljang
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "L. Foreleg";
+                    Monster1Part4Name = "R. Foreleg";
+                    Monster1Part5Name = "L. Hindleg";
+                    Monster1Part6Name = "R. Hindleg";
+                    Monster1Part7Name = "Tail";
+                    Monster1Part8Name = "None";
+                    Monster1Part9Name = "None";
+                    Monster1Part10Name = "None";
+                    break;
+
+                case 123://Gourgarf (Lolo)
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "R. Hindleg";
+                    Monster1Part3Name = "L. Hindleg";
+                    Monster1Part4Name = "Body";
+                    Monster1Part5Name = "Tail";
+                    Monster1Part6Name = "L. Foreleg";
+                    Monster1Part7Name = "R. Foreleg";
+                    Monster1Part8Name = "Back";
+                    Monster1Part9Name = "Tail Tip";
+                    Monster1Part10Name = "None";
+                    break;
+
+                case 52://Congalala
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "Hindlegs";
+                    Monster1Part4Name = "Forelegs";
+                    Monster1Part5Name = "Tail";
                     Monster1Part6Name = "None";
                     Monster1Part7Name = "None";
                     Monster1Part8Name = "None";
@@ -491,44 +682,84 @@ namespace MHFZ_Overlay.addresses
                     Monster1Part10Name = "None";
                     break;
 
-                //Lynian Skeleton
-                case 9://Felyne
-                case 18://Felyne?
-                case 23://Melynx
-                case 57://Shakalaka
-                case 124://Uruki
-                case 134://Felyne
-                case 173://Costumed Uruki
-                case 176://King Shakalaka
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
+                case 158://Voljang
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "R. Foreleg";
+                    Monster1Part3Name = "L. Foreleg";
+                    Monster1Part4Name = "Body";
+                    Monster1Part5Name = "R. Hindleg";
+                    Monster1Part6Name = "L. Hindleg";
+                    Monster1Part7Name = "Tail";
+                    Monster1Part8Name = "Back";
+                    Monster1Part9Name = "Tail Tip";
                     Monster1Part10Name = "None";
                     break;
 
                 //Brute Wyvern Skeleton
                 case 104://Abiorugu
                 case 112://Giaorugu
-                case 142://Gasurabazura
-                case 147://Deviljho
-                case 148://Brachydios
-                case 152://Uragaan
-                case 155://Starving Deviljho
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "R. Leg";
+                    Monster1Part3Name = "L. Leg";
+                    Monster1Part4Name = "Arms";
+                    Monster1Part5Name = "?"; //TODO
+                    Monster1Part6Name = "Torso";
+                    Monster1Part7Name = "?"; //TODO
+                    Monster1Part8Name = "Tail";
                     Monster1Part9Name = "None";
+                    Monster1Part10Name = "None";
+                    break;
+
+                case 147://Deviljho
+                case 155://Starving Deviljho
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Chest";
+                    Monster1Part3Name = "Neck";
+                    Monster1Part4Name = "Arms";
+                    Monster1Part5Name = "R. Leg";
+                    Monster1Part6Name = "L. Leg";
+                    Monster1Part7Name = "Tail";
+                    Monster1Part8Name = "None";
+                    Monster1Part9Name = "Tail Tip";
+                    Monster1Part10Name = "None";
+                    break;
+
+                case 142://Gasurabazura
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Belly"; //swap to back?
+                    Monster1Part3Name = "L. Arm";
+                    Monster1Part4Name = "R. Arm";
+                    Monster1Part5Name = "L. Leg";
+                    Monster1Part6Name = "R. Leg";
+                    Monster1Part7Name = "Back";
+                    Monster1Part8Name = "Tail";
+                    Monster1Part9Name = "Tail Tip";
+                    Monster1Part10Name = "None";
+                    break;
+
+                case 148://Brachydios
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Belly";
+                    Monster1Part3Name = "L. Arm";
+                    Monster1Part4Name = "R. Arm";
+                    Monster1Part5Name = "L. Leg";
+                    Monster1Part6Name = "R. Leg";
+                    Monster1Part7Name = "Tail";
+                    Monster1Part8Name = "Back";
+                    Monster1Part9Name = "Tail Tip";
+                    Monster1Part10Name = "None";
+                    break;
+
+                case 152://Uragaan
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "Belly";
+                    Monster1Part4Name = "Arms";
+                    Monster1Part5Name = "R. Leg";
+                    Monster1Part6Name = "L. Leg";
+                    Monster1Part7Name = "Tail";
+                    Monster1Part8Name = "Back";
+                    Monster1Part9Name = "Tail Tip";
                     Monster1Part10Name = "None";
                     break;
 
@@ -541,51 +772,87 @@ namespace MHFZ_Overlay.addresses
                 case 79://Red Lavasioth
                 case 119://Goruganosu
                 case 120://Aruganosu
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
+                    Monster1Part1Name = "Body";
+                    Monster1Part2Name = "L. Fin";
+                    Monster1Part3Name = "R. Fin";
+                    Monster1Part4Name = "L. Leg";
+                    Monster1Part5Name = "R. Leg";
+                    Monster1Part6Name = "Neck";
+                    Monster1Part7Name = "Head";
+                    Monster1Part8Name = "Tail";
+                    Monster1Part9Name = "Tail Tip";
                     Monster1Part10Name = "None";
                     break;
 
                 //Leviathan Skeleton
                 case 105://Kuarusepusu
                 case 115://Pokaradon
-                case 116://Shantien
                 case 117://Poka
                 case 121://Baruragaru
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "R. Foreleg";
+                    Monster1Part4Name = "L. Foreleg";
+                    Monster1Part5Name = "Tail";
+                    Monster1Part6Name = "R. Hindleg";
+                    Monster1Part7Name = "L. Hindleg";
+                    Monster1Part8Name = "Back";
+                    Monster1Part9Name = "Tail Tip";
+                    Monster1Part10Name = "None";
+                    break;
+
                 case 165://Amatsu
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "Neck";
+                    Monster1Part4Name = "L. Wing";
+                    Monster1Part5Name = "R. Wing";
+                    Monster1Part6Name = "Hindlegs";
+                    Monster1Part7Name = "Tail";
+                    Monster1Part8Name = "Back";
+                    Monster1Part9Name = "Tail Tip";
+                    Monster1Part10Name = "None";
+                    break;
+
+                case 116://Shantien
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "L. Foreleg";
+                    Monster1Part4Name = "R. Foreleg";
+                    Monster1Part5Name = "Hindlegs";
+                    Monster1Part6Name = "Tail";
+                    Monster1Part7Name = "?";
+                    Monster1Part8Name = "?";
+                    Monster1Part9Name = "?";
                     Monster1Part10Name = "None";
                     break;
 
                 //Fanged Wyvern Skeleton
-                case 129://Inagami
                 case 146://Zinogre
                 case 153://Stygian Zinogre
                 case 166://Elzelion
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "Back";
+                    Monster1Part4Name = "L. Foreleg";
+                    Monster1Part5Name = "R. Foreleg";
+                    Monster1Part6Name = "L. Hindleg";
+                    Monster1Part7Name = "R. Hindleg";
+                    Monster1Part8Name = "Tail";
+                    Monster1Part9Name = "Tail Tip";
+                    Monster1Part10Name = "None";
+                    break;
+
+                case 129://Inagami
+                    Monster1Part1Name = "Head";
+                    Monster1Part2Name = "Body";
+                    Monster1Part3Name = "R. Foreleg";
+                    Monster1Part4Name = "L. Foreleg";
+                    Monster1Part5Name = "R. Hindleg";
+                    Monster1Part6Name = "L. Hindleg";
+                    Monster1Part7Name = "Tail";
+                    Monster1Part8Name = "?";
+                    Monster1Part9Name = "?";
                     Monster1Part10Name = "None";
                     break;
 
@@ -686,22 +953,6 @@ namespace MHFZ_Overlay.addresses
                     Monster1Part10Name = "None";
                     break;
 
-                //Neopteron Skeleton
-                case 19://Vespoid
-                case 24://Hornetaur
-                case 56: //Great Thunderbug
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
                 //Shen Gaoren
                 case 55:
                     Monster1Part1Name = "None";
@@ -774,16 +1025,16 @@ namespace MHFZ_Overlay.addresses
                     break;
 
                 case > 176:
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
+                    Monster1Part1Name = "Error";
+                    Monster1Part2Name = "Error";
+                    Monster1Part3Name = "Error";
+                    Monster1Part4Name = "Error";
+                    Monster1Part5Name = "Error";
+                    Monster1Part6Name = "Error";
+                    Monster1Part7Name = "Error";
+                    Monster1Part8Name = "Error";
+                    Monster1Part9Name = "Error";
+                    Monster1Part10Name = "Error";
                     break;
             }
 
