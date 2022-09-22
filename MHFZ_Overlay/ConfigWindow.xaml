@@ -282,16 +282,18 @@
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAtkX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Attack Y Coordinate"/>
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAtkY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Total Current Sharpness Values" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Total Sharpness"/>
-                        <ToggleButton Grid.Row="11" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Total Sharpness Info X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Total Sharpness Info Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Current Sharpness as Percentage"/>
-                        <ToggleButton Grid.Row="14" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Currently Equipped Weapon (includes Town Set)" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0" Text="{Binding CurrentWeaponName}"/>
-                        <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="15" x:Name="playerWepTextBox" Text="{Binding CurrentWeaponName}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Highest Attack Color (resets per quest)" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Highest Attack Color"/>
+                        <ToggleButton Grid.Row="11" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestAtkColor}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Total Current Sharpness Values" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Total Sharpness"/>
+                        <ToggleButton Grid.Row="12" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Total Sharpness Info X Coordinate"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Total Sharpness Info Y Coordinate"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Current Sharpness as Percentage"/>
+                        <ToggleButton Grid.Row="15" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Currently Equipped Weapon (includes Town Set)" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="{Binding CurrentWeaponName}"/>
+                        <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="16" x:Name="playerWepTextBox" Text="{Binding CurrentWeaponName}"/>
                     </Grid>
                 </ScrollViewer>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">

@@ -994,5 +994,17 @@ namespace MHFZ_Overlay {
                 this["DamageNumbersAreaHeight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableHighestAtkColor {
+            get {
+                return ((bool)(this["EnableHighestAtkColor"]));
+            }
+            set {
+                this["EnableHighestAtkColor"] = value;
+            }
+        }
     }
 }

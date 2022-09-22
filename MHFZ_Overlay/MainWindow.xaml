@@ -65,7 +65,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <local:OutlinedTextBlock   HorizontalAlignment="Left" Text="Player Atk." Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="playerAtkTextBox" Text="{Binding ATK}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isHighestAtk}" x:Name="playerAtkTextBox" Text="{Binding ATK}" Margin="4,0,0,0"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="MonsterPartHpBars" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster1PartX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster1PartY}" Width="800" Height="80" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterPartHP, Converter={StaticResource BoolToVis}}">

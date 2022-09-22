@@ -1491,12 +1491,47 @@ namespace MHFZ_Overlay.addresses
                     //return string.Format("{0}:{}.{}0:00.##}", minutes, seconds % 60);
                }
             }
+
+        //per quest
+        public int HighestAtk = 0;
+
+        public bool ShowHighestAtkColor()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableHighestAtkColor == true)
+                return true;
+            else
+                return false;
+        }
+
+        public string isHighestAtk
+        {
+            get
+            {
+                if (WeaponRaw() == HighestAtk && ShowHighestAtkColor())
+                    return "#f38ba8";
+                else
+                    return "#f5e0dc";
+            }
+        }
+
         public string ATK
         {
             get
             {
                 int weaponRaw = WeaponRaw();
                 int weaponType = WeaponType();
+
+                if (QuestID() == 0) //should work fine
+                {
+                    HighestAtk = 0;
+                }
+
+                if (weaponRaw > HighestAtk)
+                {
+                    HighestAtk = weaponRaw;
+                }
+
                 return weaponRaw.ToString();// ((int)(GetMultFromWeaponType(weaponType) * weaponRaw)).ToString();
             }
         }

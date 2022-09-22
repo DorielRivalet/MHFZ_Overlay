@@ -36,12 +36,37 @@ Additionally, if information from the overlay is wrong or inaccurate (e.g. monst
 ## Features
 
 - [x] Monster Effective HP Bars (*e.g.* Burning Freezing Elzelion's 1,000,000 HP!)
+
+![Monster HP Bars](./demo/hp1.png)
+![Monster HP Bars](./demo/hp2.png)
+
 - [x] Sharpness Numbers (colorized by current sharpness tier!)
+
+![Sharpness Numbers](./demo/sharpness1.png)
+![Sharpness Numbers](./demo/sharpness2.png)
+![Sharpness Numbers](./demo/sharpness3.png)
+
 - [x] Quest Timer (Two modes: elapsed time and time left. Down to the centiseconds in accuracy!)
 - [x] Hit Count (counts *Reflect*, *Stylish Up*, Heatblade, *Fencing+2* and more!)
+
+![Player Stats](./demo/playerstat1.png)
+
+- [x] Player True Raw (current highest value shown in red!)
+
+![Player Attack](./demo/playeratk1.png)
+
 - [x] Monster Status Ailments (Poison, Sleep, Paralysis, Blast, Stun!)
+
+![Monster Ailments](./demo/ailments1.png)
+
 - [x] Monster Body Parts (up to 10 parts!)
+
+![Monster Body Parts](./demo/monsterparts1.png)
+
 - [x] Damage Numbers (dynamic colors and size!)
+
+![Damage Numbers](./demo/damagenumbers1.png)
+
 - [x] [Discord Rich Presence](#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area and more!)
 
 ## Bugs
