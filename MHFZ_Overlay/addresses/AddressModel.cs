@@ -11,6 +11,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -499,7 +500,7 @@ namespace MHFZ_Overlay.addresses
                     Monster1Part10Name = "None";
                     break;
 
-                //Duremudira (doesnt load properly)
+                //Duremudira (doesn't load properly)
                 case 132://Duremudira
                 case 145://3rd Phase Duremudira
                 case 167://Arrogant Duremudira
@@ -1345,6 +1346,16 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
+        public string GetTimerMode()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.TimerMode == "Time Left")
+                return "Time Left";
+            else if (s.TimerMode == "Time Elapsed")
+                return "Time Elapsed";
+            else return "Time Left";
+        }
+
         public int MaxSharpness = 0;
 
         public string TimeLeftPercent = "";
@@ -1394,7 +1405,20 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                int time = TimeInt();
+                int time;
+
+                if (GetTimerMode() == "Time Elapsed")
+                {
+                    time = TimeDefInt() - TimeInt();
+                }
+                else if (GetTimerMode() == "Time Left")
+                {
+                    time = TimeInt();
+                } else // default to Time Left mode
+                {
+                    time = TimeInt();
+                }
+
                 double seconds = time / 30;
                 double minutes = seconds / 60;
                 double centiseconds = seconds / 100;

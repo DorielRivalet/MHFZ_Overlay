@@ -268,7 +268,7 @@
                             <ComboBoxItem>Time Left</ComboBoxItem>
                             <ComboBoxItem>Time Elapsed</ComboBoxItem>
                         </ComboBox>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Timer as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Quest Timer as Percentage"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Time Left as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Time Left as Percentage"/>
                         <ToggleButton Grid.Row="4" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableTimeLeftPercentage}"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Hit Count" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Hit Count (doesn't count Ice Age hits)"/>
                         <ToggleButton Grid.Row="5" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=HitCountShown}"/>
