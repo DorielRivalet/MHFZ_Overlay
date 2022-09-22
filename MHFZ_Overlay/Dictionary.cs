@@ -28,7 +28,9 @@ namespace Dictionary
             {20, "Higher"},
             {26, "HR5"},
             {31, "HR5"},
+            {32, "Supremacy 1"}, //needs testing
             {42, "HR5"},
+            {46, "Supremacy 2" }, //needs testing. unknown repel+slay uses this
             {53, "G Rank"},
             {54, "Musou 1"},
             {55, "Musou 2"},
@@ -172,7 +174,7 @@ namespace Dictionary
             {124, "Uruki"},//
             {125, "Forokururu"},//
             {126, "Meraginasu"},//
-            {127, "Diorekkusu"},//
+            {127, "Diorex"},//
             {128, "Garuba Daora"},//
             {129, "Inagami"},//
             {130, "Varusaburosu"},//
@@ -194,7 +196,7 @@ namespace Dictionary
             {146, "Zinogre"},//
             {147, "Deviljho"},//
             {148, "Brachydios"},//
-            {149, "Berserk Laviente"},//
+            {149, "Berserk Raviente"},//
             {150, "Toa Tesukatora"},//
             {151, "Barioth"},//
             {152, "Uragaan"},//

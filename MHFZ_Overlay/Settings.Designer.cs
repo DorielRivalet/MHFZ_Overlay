@@ -1006,5 +1006,41 @@ namespace MHFZ_Overlay {
                 this["EnableHighestAtkColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Monster1IconShown {
+            get {
+                return ((bool)(this["Monster1IconShown"]));
+            }
+            set {
+                this["Monster1IconShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public double Monster1IconX {
+            get {
+                return ((double)(this["Monster1IconX"]));
+            }
+            set {
+                this["Monster1IconX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("470")]
+        public double Monster1IconY {
+            get {
+                return ((double)(this["Monster1IconY"]));
+            }
+            set {
+                this["Monster1IconY"] = value;
+            }
+        }
     }
 }

@@ -313,6 +313,7 @@ namespace MHFZ_Overlay
 
             DataLoader.model.ShowMonsterHPBars = v && s.HealthBarsShown;
             DataLoader.model.ShowMonsterPartHP = v && s.PartHealthBarsShown;
+            DataLoader.model.ShowMonster1Icon = v && s.Monster1IconShown;
         }
 
         private void HidePlayerInfoWhenNotInQuest()
@@ -416,6 +417,10 @@ namespace MHFZ_Overlay
                 case "MonsterPartHpBars":
                     s.Monster1PartX = (double)(pos.X - XOffset);
                     s.Monster1PartY = (double)(pos.Y - YOffset);
+                    break;
+                case "Monster1Icon":
+                    s.Monster1IconX = (double)(pos.X - XOffset);
+                    s.Monster1IconY = (double)(pos.Y - YOffset);
                     break;
             }
 
@@ -567,11 +572,11 @@ namespace MHFZ_Overlay
 /// ## implement for monsters 1-4
 /// select monster 
 /// ## configuration
-/// move data translation into dataloder out of the abstract address model
-/// ## remove unnecesary fields in DataLoader
+/// move data translation into dataloader out of the abstract address model
+/// ## remove unnecessary fields in DataLoader
 /// figure out way to make it work for all monsters with the same functions (use list u dunmbass)
 /// ## figure out a way to make templates
-/// bodyparts
+/// body parts
 /// ## status panel
 /// ## maybe more ....
 /// Tooltips for Configuration

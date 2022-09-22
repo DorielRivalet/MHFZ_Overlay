@@ -248,5 +248,14 @@
     <Setting Name="EnableHighestAtkColor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="Monster1IconShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Monster1IconX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="Monster1IconY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">470</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

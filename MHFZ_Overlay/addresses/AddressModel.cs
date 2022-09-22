@@ -60,6 +60,8 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowMonsterPartHP { get; set; } = true;
 
+        public bool ShowMonster1Icon { get; set; } = true;
+
         abstract public bool IsNotRoad();
 
         abstract public int HitCountInt();
@@ -2062,6 +2064,453 @@ namespace MHFZ_Overlay.addresses
                     return "Group";
                 default: 
                     return "";
+            }
+        }
+
+        public string CurrentMonster1Icon
+        {
+            get
+            {
+                string baseAddress = "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/";
+                string extension1 = ".png";
+                string extension2 = ".gif"; //zeniths and rainbow color
+
+                switch (LargeMonster1ID())
+                {
+                    case 0: //none
+                        return baseAddress + "fatalis" + extension1;
+                    case 1:
+                        return baseAddress + "rathian" + extension1;
+                    case 2:
+                        return baseAddress + "fatalis" + extension1;
+                    case 3:
+                        return baseAddress + "kelbi" + extension1;
+                    case 4:
+                        return baseAddress + "mosswine" + extension1;
+                    case 5:
+                        return baseAddress + "bullfango" + extension1;
+                    case 6:
+                        return baseAddress + "yian_kut-ku" + extension1;
+                    case 7:
+                        return baseAddress + "lao-shan_lung" + extension1;
+                    case 8:
+                        return baseAddress + "cephadrome" + extension1;
+                    case 9:
+                        return baseAddress + "felyne" + extension1;
+                    case 10: //veggie elder
+                        return baseAddress + "fatalis" + extension1; 
+                    case 11:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_rathalos" + extension2;
+                        else
+                            return baseAddress + "rathalos" + extension1;
+                    case 12:
+                        return baseAddress + "aptonoth" + extension1;
+                    case 13:
+                        return baseAddress + "genprey" + extension1;
+                    case 14:
+                        return baseAddress + "diablos" + extension1;
+                    case 15:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_khezu" + extension2;
+                        else
+                            return baseAddress + "khezu" + extension1;
+                    case 16:
+                        return baseAddress + "velociprey" + extension1;
+                    case 17:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_gravios" + extension2;
+                        else
+                            return baseAddress + "gravios" + extension1;
+                    case 18:
+                        return baseAddress + "felyne" + extension1;
+                    case 19:
+                        return baseAddress + "vespoid" + extension1;
+                    case 20:
+                        return baseAddress + "gypceros" + extension1;
+                    case 21:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_plesioth" + extension2;
+                        else
+                            return baseAddress + "plesioth" + extension1;
+                    case 22:
+                        return baseAddress + "basarios" + extension1;
+                    case 23:
+                        return baseAddress + "melynx" + extension1;
+                    case 24:
+                        return baseAddress + "hornetaur" + extension1;
+                    case 25:
+                        return baseAddress + "apceros" + extension1;
+                    case 26:
+                        return baseAddress + "monoblos" + extension1;
+                    case 27:
+                        return baseAddress + "velocidrome" + extension1;
+                    case 28:
+                        return baseAddress + "gendrome" + extension1;
+                    case 29://rocks
+                        return baseAddress + "fatalis" + extension1;
+                    case 30:
+                        return baseAddress + "ioprey" + extension1;
+                    case 31:
+                        return baseAddress + "iodrome" + extension1;
+                    case 32://pugis
+                        return baseAddress + "fatalis" + extension1;
+                    case 33:
+                        return baseAddress + "kirin" + extension1;
+                    case 34:
+                        return baseAddress + "cephalos" + extension1;
+                    case 35:
+                        return baseAddress + "giaprey" + extension1;
+                    case 36:
+                        return baseAddress + "crimson_fatalis" + extension1;
+                    case 37:
+                        return baseAddress + "pink_rathian" + extension1;
+                    case 38:
+                        return baseAddress + "blue_yian_kut-ku" + extension1;
+                    case 39:
+                        return baseAddress + "purple_gypceros" + extension1;
+                    case 40:
+                        return baseAddress + "yian_garuga" + extension1;
+                    case 41:
+                        return baseAddress + "silver_rathalos" + extension1;
+                    case 42:
+                        return baseAddress + "gold_rathian" + extension1;
+                    case 43:
+                        return baseAddress + "black_diablos" + extension1;
+                    case 44:
+                        return baseAddress + "white_monoblos" + extension1;
+                    case 45:
+                        return baseAddress + "red_khezu" + extension1;
+                    case 46:
+                        return baseAddress + "green_plesioth" + extension1;
+                    case 47:
+                        return baseAddress + "black_gravios" + extension1;
+                    case 48:
+                        return baseAddress + "daimyo_hermitaur" + extension1;
+                    case 49:
+                        return baseAddress + "azure_rathalos" + extension1;
+                    case 50:
+                        return baseAddress + "ashen_lao-shan_lung" + extension1;
+                    case 51:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_blangonga" + extension2;
+                        else
+                            return baseAddress + "blangonga" + extension1;
+                    case 52:
+                        return baseAddress + "congalala" + extension1;
+                    case 53:
+                        return baseAddress + "rajang" + extension1;
+                    case 54:
+                        return baseAddress + "kushala_daora" + extension1;
+                    case 55:
+                        return baseAddress + "shen_gaoren" + extension1;
+                    case 56:
+                        return baseAddress + "great_thunderbug" + extension1;
+                    case 57:
+                        return baseAddress + "shakalaka" + extension1;
+                    case 58:
+                        return baseAddress + "yama_tsukami" + extension1;
+                    case 59:
+                        return baseAddress + "chameleos" + extension1;
+                    case 60:
+                        return baseAddress + "rusted_kushala_daora" + extension1;
+                    case 61:
+                        return baseAddress + "blango" + extension1;
+                    case 62:
+                        return baseAddress + "conga" + extension1;
+                    case 63:
+                        return baseAddress + "remobra" + extension1;
+                    case 64:
+                        return baseAddress + "lunastra" + extension1;
+                    case 65:
+                        if (RankBand() == 32)
+                            return baseAddress + "supremacy_teostra" + extension1;
+                        else
+                            return baseAddress + "teostra" + extension1;
+                    case 66:
+                        return baseAddress + "hermitaur" + extension1;
+                    case 67:
+                        return baseAddress + "shogun_ceanataur" + extension1;
+                    case 68:
+                        return baseAddress + "bulldrome" + extension1;
+                    case 69:
+                        return baseAddress + "anteka" + extension1;
+                    case 70:
+                        return baseAddress + "popo" + extension1;
+                    case 71:
+                        return baseAddress + "white_fatalis" + extension1;
+                    case 72:
+                        return baseAddress + "yama_tsukami" + extension1;
+                    case 73:
+                        return baseAddress + "ceanataur" + extension1;
+                    case 74:
+                        return baseAddress + "hypnocatrice" + extension1;
+                    case 75:
+                        return baseAddress + "lavasioth" + extension1;
+                    case 76:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_tigrex" + extension2;
+                        else
+                            return baseAddress + "tigrex" + extension1;
+                    case 77:
+                        return baseAddress + "akantor" + extension1;
+                    case 78:
+                        return baseAddress + "bright_hypnoc" + extension1;
+                    case 79:
+                        return baseAddress + "red_lavasioth" + extension1;
+                    case 80:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_espinas" + extension2;
+                        else
+                            return baseAddress + "espinas" + extension1;
+                    case 81:
+                        return baseAddress + "orange_espinas" + extension1;
+                    case 82:
+                        return baseAddress + "white_hypnoc" + extension1;
+                    case 83:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_akura_vashimu" + extension2;
+                        else
+                            return baseAddress + "akura_vashimu" + extension1;
+                    case 84:
+                        return baseAddress + "akura_jebia" + extension1;
+                    case 85:
+                        return baseAddress + "berukyurosu" + extension1;
+                    case 86://cactus
+                        return baseAddress + "fatalis" + extension1;
+                    case 87://gorge objects
+                        return baseAddress + "fatalis" + extension1;
+                    case 88://gorge rocks
+                        return baseAddress + "fatalis" + extension1;
+                    case 89:
+                        if (RankBand() == 32 || RankBand() == 54)
+                            return baseAddress + "thirsty_pariapuria" + extension2;
+                        else
+                            return baseAddress + "pariapuria" + extension1;
+                    case 90:
+                        return baseAddress + "white_espinas" + extension1;
+                    case 91:
+                        return baseAddress + "kamu_orugaron" + extension1;
+                    case 92:
+                        return baseAddress + "nono_orugaron" + extension1;
+                    case 93:
+                        return baseAddress + "raviente" + extension1;
+                    case 94:
+                        return baseAddress + "dyuragaua" + extension1;
+                    case 95:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_doragyurosu" + extension2;
+                        else if (RankBand() == 32)
+                            return baseAddress + "supremacy_doragyurosu" + extension1;
+                        else
+                            return baseAddress + "doragyurosu" + extension1;
+                    case 96:
+                        return baseAddress + "gurenzeburu" + extension1;
+                    case 97:
+                        return baseAddress + "burukku" + extension1;
+                    case 98:
+                        return baseAddress + "erupe" + extension1;
+                    case 99:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_rukodiora" + extension2;
+                        else
+                            return baseAddress + "rukodiora" + extension1;
+                    case 100:
+                        return baseAddress + "unknown" + extension1;
+                    case 101:
+                        return baseAddress + "gogomoa" + extension1;
+                    case 102://kokomoa
+                        return baseAddress + "gogomoa" + extension1;
+                    case 103:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_taikun_zamuza" + extension2;
+                        else
+                            return baseAddress + "taikun_zamuza" + extension1;
+                    case 104:
+                        return baseAddress + "abiorugu" + extension1;
+                    case 105:
+                        return baseAddress + "kuarusepusu" + extension1;
+                    case 106:
+                        return baseAddress + "odibatorasu" + extension1;
+                    case 107:
+                        return baseAddress + "disufiroa" + extension1;
+                    case 108:
+                        return baseAddress + "rebidiora" + extension1;
+                    case 109:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_anorupatisu" + extension2;
+                        else
+                            return baseAddress + "anorupatisu" + extension1;
+                    case 110:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_hyujikiki" + extension2;
+                        else
+                            return baseAddress + "hyujikiki" + extension1;
+                    case 111:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_midogaron" + extension2;
+                        else
+                            return baseAddress + "midogaron" + extension1;
+                    case 112:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_giaorugu" + extension2;
+                        else
+                            return baseAddress + "giaorugu" + extension1;
+                    case 113:
+                        if (RankBand() == 55)
+                            return baseAddress + "shifting_mi_ru" + extension1;
+                        else
+                            return baseAddress + "'mi_ru" + extension1;
+                    case 114:
+                        return baseAddress + "farunokku" + extension1;
+                    case 115:
+                        return baseAddress + "pokaradon" + extension1;
+                    case 116:
+                        return baseAddress + "shantien" + extension1;
+                    case 117:
+                        return baseAddress + "pokara" + extension1;
+                    case 118://dummy
+                        return baseAddress + "fatalis" + extension1;
+                    case 119:
+                        return baseAddress + "goruganosu" + extension1;
+                    case 120:
+                        return baseAddress + "aruganosu" + extension1;
+                    case 121:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_baruragaru" + extension2;
+                        else
+                            return baseAddress + "baruragaru" + extension1;
+                    case 122:
+                        return baseAddress + "zerureusu" + extension1;
+                    case 123:
+                        return baseAddress + "gourgarf" + extension1;
+                    case 124:
+                        return baseAddress + "uruki" + extension1;
+                    case 125:
+                        return baseAddress + "forokururu" + extension1;
+                    case 126:
+                        return baseAddress + "meraginasu" + extension1;
+                    case 127:
+                        return baseAddress + "diorex" + extension1;
+                    case 128:
+                        return baseAddress + "garuba_daora" + extension1;
+                    case 129:
+                        return baseAddress + "inagami" + extension1;
+                    case 130:
+                        return baseAddress + "varusaburosu" + extension1;
+                    case 131:
+                        return baseAddress + "poborubarumu" + extension1;
+                    case 132:
+                        return baseAddress + "duremudira" + extension1;
+                    case 133://UNK
+                        return baseAddress + "fatalis" + extension1;
+                    case 134:
+                        return baseAddress + "felyne" + extension1;
+                    case 135://blue npc
+                        return baseAddress + "fatalis" + extension1;
+                    case 136://UNK
+                        return baseAddress + "fatalis" + extension1;
+                    case 137://cactus
+                        return baseAddress + "fatalis" + extension1;
+                    case 138://veggie elders
+                        return baseAddress + "fatalis" + extension1;
+                    case 139:
+                        return baseAddress + "gureadomosu" + extension1;
+                    case 140:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_harudomerugu" + extension2;
+                        else
+                            return baseAddress + "harudomerugu" + extension1;
+                    case 141:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_toridcless" + extension2;
+                        else
+                            return baseAddress + "toridcless" + extension1;
+                    case 142:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_gasurabazura" + extension2;
+                        else
+                            return baseAddress + "gasurabazura" + extension1;
+                    case 143:
+                        return baseAddress + "kusubami" + extension1;
+                    case 144:
+                        return baseAddress + "yama_kurai" + extension1;
+                    case 145://3rd phase duremudira
+                        return baseAddress + "duremudira" + extension1;
+                    case 146:
+                        return baseAddress + "zinogre" + extension1;
+                    case 147:
+                        return baseAddress + "deviljho" + extension1;
+                    case 148:
+                        return baseAddress + "brachydios" + extension1;
+                    case 149:
+                        return baseAddress + "berserk_raviente" + extension1;
+                    case 150:
+                        return baseAddress + "toa_tesukatora" + extension1;
+                    case 151:
+                        return baseAddress + "barioth" + extension1;
+                    case 152:
+                        return baseAddress + "uragaan" + extension1;
+                    case 153:
+                        return baseAddress + "stygian_zinogre" + extension1;
+                    case 154:
+                        if (RankBand() >= 54 && RankBand() <= 55)
+                            return baseAddress + "ruling_guanzorumu" + extension1;
+                        else
+                            return baseAddress + "guanzorumu" + extension1;
+                    case 155:
+                        if (RankBand() == 55)
+                            return baseAddress + "golden_deviljho" + extension1;
+                        else
+                            return baseAddress + "starving_deviljho" + extension1;
+                    case 156://UNK
+                        return baseAddress + "fatalis" + extension1;
+                    case 157:
+                        return baseAddress + "egyurasu" + extension1;
+                    case 158:
+                        return baseAddress + "voljang" + extension1;
+                    case 159:
+                        return baseAddress + "nargacuga" + extension1;
+                    case 160:
+                        return baseAddress + "keoaruboru" + extension1;
+                    case 161:
+                        return baseAddress + "zenaserisu" + extension1;
+                    case 162:
+                        return baseAddress + "gore_magala" + extension1;
+                    case 163:
+                        return baseAddress + "blinking_nargacuga" + extension1;
+                    case 164:
+                        return baseAddress + "shagaru_magala" + extension1;
+                    case 165:
+                        return baseAddress + "amatsu" + extension1;
+                    case 166:
+                        if (RankBand() >= 54 && RankBand() <= 55)
+                            return baseAddress + "burning_freezing_elzelion" + extension1;
+                        else
+                            return baseAddress + "elzelion" + extension1;
+                    case 167:
+                        return baseAddress + "arrogant_duremudira" + extension1;
+                    case 168://rocks
+                        return baseAddress + "fatalis" + extension1;
+                    case 169:
+                        return baseAddress + "seregios" + extension1;
+                    case 170:
+                        return baseAddress + "zenith_bogabadorumu" + extension2;
+                    case 171://unknown blue barrel
+                        return baseAddress + "fatalis" + extension1;
+                    case 172:
+                        return baseAddress + "blitzkrieg_bogabadorumu" + extension1;
+                    case 173://costumed uruki
+                        return baseAddress + "uruki" + extension1;
+                    case 174:
+                        return baseAddress + "sparkling_zerureusu" + extension1;
+                    case 175://PSO2 Rappy
+                        return baseAddress + "fatalis" + extension1;
+                    case 176:
+                        return baseAddress + "king_shakalaka" + extension1;
+                    default:
+                        return baseAddress + "fatalis" + extension1;
+                }
             }
         }
 

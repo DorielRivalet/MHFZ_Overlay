@@ -235,6 +235,16 @@
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.StunMax}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}" Row1Width="1" Row2Width="2" />
         </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="Monster1Icon" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster1IconY}" Width="64" Height="64" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonster1Icon, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Image Source="{Binding CurrentMonster1Icon}" Grid.Column="0" Grid.Row="0"/>
+        </Grid>
         <Canvas x:Name="DamageNumbers" Visibility="{Binding Source={StaticResource Settings},Path=EnableDamageNumbers, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}" Height="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}" Canvas.Left="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"/>
         <Button x:Name="ExitDragAndDrop" Visibility="Hidden" HorizontalAlignment="Left"  Foreground="#f5e0dc"  Style="{StaticResource DefaultButton}"  Click="ExitDragAndDrop_Click" Canvas.Left="850" Canvas.Top="1">
             <Button.Content>

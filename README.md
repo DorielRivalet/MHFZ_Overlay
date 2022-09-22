@@ -8,6 +8,8 @@
 
 [The design and icons used in this project are part of the *Material Design Icons* and related components](https://fonts.google.com/icons)
 
+The font used is the in-game one, *MS Gothic*.
+
 ## Requirements
 
 - [.NET Desktop Runtime 6.0 x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.7-windows-x64-installer)
@@ -55,6 +57,10 @@ Additionally, if information from the overlay is wrong or inaccurate (e.g. monst
 
 ![Player Attack](./demo/playeratk1.png)
 
+- [x] Monster Stats (attack multiplier, defense rate and size!)
+
+![Monster Stats(./demo/monsterstat1.png)
+
 - [x] Monster Status Ailments (Poison, Sleep, Paralysis, Blast, Stun!)
 
 ![Monster Ailments](./demo/ailments1.png)
@@ -96,7 +102,6 @@ Additionally, if information from the overlay is wrong or inaccurate (e.g. monst
 - Damage numbers Label border
 - Automatically set default positions according to screen resolution
 - Global damage number labels
-- Player attack multicolor relative to highest attack obtained per quest
 - Attach user interface to game window option
 - Sound effects
 - Sharpness graph
