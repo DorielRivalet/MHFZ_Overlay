@@ -35,7 +35,7 @@ Additionally, if information from the overlay is wrong or inaccurate (e.g. monst
 
 ## Features
 
-- [x] Monster Effective HP Bars (*e.g.* Burning Freezing Elzelion 1000000 HP!)
+- [x] Monster Effective HP Bars (*e.g.* Burning Freezing Elzelion's 1,000,000 HP!)
 - [x] Sharpness Numbers (colorized by current sharpness tier!)
 - [x] Quest Timer (Two modes: elapsed time and time left. Down to the centiseconds in accuracy!)
 - [x] Hit Count (counts *Reflect*, *Stylish Up*, Heatblade, *Fencing+2* and more!)
@@ -52,6 +52,7 @@ Additionally, if information from the overlay is wrong or inaccurate (e.g. monst
 - Sometimes when exiting Drag and Drop the monster HP information disappears
 - Spawning in the same area as the monster doesn't load the information properly. Fix: re-enter area
 - Duremudira HP not showing
+- Monster size values not shown correctly
 
 ## Features not yet implemented
 

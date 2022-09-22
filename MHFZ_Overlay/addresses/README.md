@@ -274,22 +274,22 @@
 |51  | Auto Reload    |
 |52  | Recoil Reduction+1    |
 |53  |  Recoil Reduction+2    |
-|54  |  NormalORRapid Up    |
-|55  |  PierceORPierce Up    |
-|56  | PelletORSpread Up    |
+|54  |  Normal/Rapid Up    |
+|55  |  Pierce/Pierce Up    |
+|56  | Pellet/Spread Up    |
 |57  | Normal S Lv1 Add    |
 |58  | Normal S All Add    |
 |59  | Pierce S Lv1 Add    |
-|60  | Pierce S Lv1AND2 Add    |
+|60  | Pierce S Lv1&2 Add    |
 |61  |  Pierce S All Add    |
 |62  |  Pellet S LV1 Add    |
-|63  |  Pellet S LV1AND2 Add    |
+|63  |  Pellet S LV1&2 Add    |
 |64  | Pellet Shot All Add    |
 |65  | Crag S Lv1 Add    |
-|66  | Crag S Lv1ANDLv2 Add    |
+|66  | Crag S Lv1&Lv2 Add    |
 |67  | Crag S All Add    |
 |68  | Cluster S Lv1 Add    |
-|69  |  Cluster S Lv1ANDLv2 Add    |
+|69  |  Cluster S Lv1&Lv2 Add    |
 |70  | Cluster S All Add     |
 |71  | Status Attack Up     |
 |72  | Bomber    |
@@ -711,7 +711,7 @@
 |488 |   Combat Supremacy   |
 |489 |Vigorous      |
 |490 |  Vigorous+2    |
-|491 | S Immunity Myriad     |
+|491 | Status Immunity Myriad     |
 |492 | Sword God+1     |
 |493 | Sword God+2     |
 |494 |   Thunder Clad   |
