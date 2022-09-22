@@ -946,5 +946,53 @@ namespace MHFZ_Overlay {
                 this["MonsterStunY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("700")]
+        public double DamageNumbersX {
+            get {
+                return ((double)(this["DamageNumbersX"]));
+            }
+            set {
+                this["DamageNumbersX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        public double DamageNumbersY {
+            get {
+                return ((double)(this["DamageNumbersY"]));
+            }
+            set {
+                this["DamageNumbersY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public double DamageNumbersAreaWidth {
+            get {
+                return ((double)(this["DamageNumbersAreaWidth"]));
+            }
+            set {
+                this["DamageNumbersAreaWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("250")]
+        public double DamageNumbersAreaHeight {
+            get {
+                return ((double)(this["DamageNumbersAreaHeight"]));
+            }
+            set {
+                this["DamageNumbersAreaHeight"] = value;
+            }
+        }
     }
 }

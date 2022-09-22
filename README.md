@@ -68,12 +68,11 @@ Additionally, if information from the overlay is wrong or inaccurate (e.g. monst
 - Weapon stats import/export
 - Quest stats import/export
 - Monster stats import/export
-- Halk level address
 - Damage numbers Label border
 - Automatically set default positions according to screen resolution
 - Global damage number labels
 - Player attack multicolor relative to highest attack obtained per quest
-- Attach UI to game window option
+- Attach user interface to game window option
 - Sound effects
 - Sharpness graph
 

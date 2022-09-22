@@ -233,5 +233,17 @@
     <Setting Name="MonsterStunY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">420</Value>
     </Setting>
+    <Setting Name="DamageNumbersX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">700</Value>
+    </Setting>
+    <Setting Name="DamageNumbersY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">400</Value>
+    </Setting>
+    <Setting Name="DamageNumbersAreaWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="DamageNumbersAreaHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">250</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
