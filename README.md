@@ -35,6 +35,8 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 
 Additionally, if information from the overlay is wrong or inaccurate (e.g. monster parts labels), feel free to send an issue.
 
+If the monster HP shown is less than what its actual values should be, restart both the game and the overlay.
+
 ## Features
 
 - [x] Monster Effective HP Bars (*e.g.* Burning Freezing Elzelion's 1,000,000 HP!)
@@ -59,7 +61,7 @@ Additionally, if information from the overlay is wrong or inaccurate (e.g. monst
 
 - [x] Monster Stats (attack multiplier, defense rate and size!)
 
-![Monster Stats(./demo/monsterstat1.png)
+![Monster Stats](./demo/monsterstat1.png)
 
 - [x] Monster Status Ailments (Poison, Sleep, Paralysis, Blast, Stun!)
 
@@ -84,6 +86,7 @@ Additionally, if information from the overlay is wrong or inaccurate (e.g. monst
 - Spawning in the same area as the monster doesn't load the information properly. Fix: re-enter area
 - Duremudira HP not showing
 - Monster size values not shown correctly
+- Monster HP values are less than the actual values when not loading properly
 
 ## Features not yet implemented
 
@@ -110,7 +113,7 @@ Additionally, if information from the overlay is wrong or inaccurate (e.g. monst
 
 1. In Discord, My Account -> Activity Privacy -> Check "Display current activity as a status message"
 2. [Discord Developer Portal](https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
-3. In Developer Portal, Rich Presence -> Art Assets -> Add Image(s) -> Upload the contents of the img folder (except monster)
+3. In Developer Portal, Rich Presence -> Art Assets -> Add Image(s) -> Upload the contents of the img folder (except monster. Should end with 172 uploads)
 4. In Developer Portal, General Information -> Copy Application ID
 5. In Overlay Settings, Paste into Overlay Settings Discord Rich Presence Application/Client ID
 

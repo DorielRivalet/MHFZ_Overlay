@@ -3,6 +3,9 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Navigation;
 using System.Windows.Input;
+using System;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace MHFZ_Overlay
 {
@@ -109,6 +112,37 @@ namespace MHFZ_Overlay
             if (e.Text.Length > 1 && e.Text[0] == '0')
                 e.Handled = true;
         }
+
+        //https://stackoverflow.com/questions/1051989/regex-for-alphanumeric-but-at-least-one-letter
+        //^(?=.*[a-zA-Z].*)([a-zA-Z0-9]{6,12})$
+        //([a-zA-Z0-9_\s]+)
+        //[^a-zA-Z_0-9]
+
+        //private string ValidateNamePattern = @"[^a-zA-Z_0-9]";
+
+        private void ValidateName(object sender, TextCompositionEventArgs e)
+        {
+            // Create a Regex  
+            //Regex rg = new Regex(ValidateNamePattern);
+
+            // Get all matches  
+            //MatchCollection matchedText = rg.Matches(e.Text);
+            //https://stackoverflow.com/questions/1046740/how-can-i-validate-a-string-to-only-allow-alphanumeric-characters-in-it
+            if (!(e.Text.All(char.IsLetterOrDigit)))
+            {
+                //just letters and digits.
+                e.Handled = true;
+            }
+
+            //if (matchedText.Count == 0 && e.Text.Length >= 12)
+             //   e.Handled = true;
+        }
+
+        //private void ValidateDiscordInvite(object sender, TextCompositionEventArgs e)
+        //{
+        //    if (!(e.Text.Substring(0,27) == "https://discord.com/invite/") )
+        //        e.Handled = true;
+        //}
 
         private void lnkImg_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {

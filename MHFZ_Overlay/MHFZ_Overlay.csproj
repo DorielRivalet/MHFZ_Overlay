@@ -12,20 +12,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DiscordRichPresenceController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Page Remove="icons\Cancel.xaml" />
     <Page Remove="icons\Close.xaml" />
     <Page Remove="icons\Done.xaml" />
     <Page Remove="icons\DragDropControl.xaml" />
     <Page Remove="icons\Refresh.xaml" />
     <Page Remove="icons\Settings.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="DiscordRichPresenceController.cs" />
   </ItemGroup>
 
   <ItemGroup>

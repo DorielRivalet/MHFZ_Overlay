@@ -1,4 +1,5 @@
-﻿using MHFZ_Overlay.addresses;
+﻿using DiscordRPC;
+using MHFZ_Overlay.addresses;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -81,24 +82,163 @@ namespace MHFZ_Overlay
         [DllImport("user32.dll")]
         public static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
 
-        public MainWindow()
+        public DiscordRpcClient Client { get; private set; }
+
+        public bool ShowDiscordRPC
+        {
+            get
             {
-                InitializeComponent();
-                Left = 0;
-                Top = 0;
-                Topmost = true;
-                DispatcherTimer timer = new();
-                timer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 30);
-                timer.Tick += Timer_Tick;
-                timer.Start();
-                DataContext = DataLoader.model;
-                //GlobalHotKey.RegisterHotKey("Shift + Insert", () => ToggleVisibility());
-                GlobalHotKey.RegisterHotKey("Shift + F1", () => OpenConfigButton_Key());
-                GlobalHotKey.RegisterHotKey("Shift + F5", () => ReloadButton_Key());
-                GlobalHotKey.RegisterHotKey("Shift + F6", () => CloseButton_Key());
-                OpenConfigButton.Visibility = Visibility.Hidden;
-                ReloadButton.Visibility = Visibility.Hidden;
-                CloseButton.Visibility = Visibility.Hidden;
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                if (s.EnableRichPresence == true)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        public string GetDiscordClientID
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                if (s.DiscordClientID.Length == 19)
+                    return s.DiscordClientID;
+                else
+                    return "";
+            }
+        }
+
+        public string GetDiscordServerInvite
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                if (s.DiscordServerInvite.Length >= 8)
+                    return s.DiscordServerInvite;
+                else
+                    return "";
+            }
+        }
+
+        public string GetHunterName
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                if (s.HunterName.Length >= 1)
+                    return s.HunterName;
+                else
+                    return "Hunter Name";
+            }
+        }
+
+        public string GetGuildName
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                if (s.GuildName.Length >= 1)
+                    return s.GuildName;
+                else
+                    return "Guild Name";
+            }
+        }
+
+        void Setup()
+        {
+            Client = new DiscordRpcClient(GetDiscordClientID);  //Creates the client
+            Client.Initialize();                            //Connects the client
+        }
+
+        //Dispose client
+        void Cleanup()
+        {
+            if (Client != null)//&& ShowDiscordRPC)
+            {
+                Client.Dispose();
+            }
+            
+        }
+
+        /// <summary>
+        /// The current presence to send to discord.
+        /// </summary>
+        private static RichPresence presenceTemplate = new RichPresence()
+        {
+            Details = "Loading...",
+            State = "Overlay 0.2.0",
+            //check img folder
+            Assets = new Assets()
+            {
+                LargeImageKey = "cattleya",
+                LargeImageText = "Please Wait",
+                SmallImageKey = "transcend",
+                SmallImageText = "Hunter Name | Guild Name"
+            },
+            Buttons = new DiscordRPC.Button[]
+                {
+                    new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
+                }
+        };
+
+        //Main entry point?
+        public MainWindow()
+        {
+            InitializeComponent();
+            Left = 0;
+            Top = 0;
+            Topmost = true;
+            DispatcherTimer timer = new();
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 30);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+            DataContext = DataLoader.model;
+            //GlobalHotKey.RegisterHotKey("Shift + Insert", () => ToggleVisibility());
+            GlobalHotKey.RegisterHotKey("Shift + F1", () => OpenConfigButton_Key());
+            GlobalHotKey.RegisterHotKey("Shift + F5", () => ReloadButton_Key());
+            GlobalHotKey.RegisterHotKey("Shift + F6", () => CloseButton_Key());
+            OpenConfigButton.Visibility = Visibility.Hidden;
+            ReloadButton.Visibility = Visibility.Hidden;
+            CloseButton.Visibility = Visibility.Hidden;
+
+            ////Main Loop
+            //Setting a random details to test the update rate of the presence
+            //Program.startRichPresence("");
+            //Issue104();
+            //IssueMultipleSets();
+            //IssueJoinLogic();
+
+            //Console.WriteLine("Press any key to terminate");
+            //onsole.ReadKey();
+            if (ShowDiscordRPC && GetDiscordClientID != "")
+            {
+                Setup();
+
+                //Set Presence
+                presenceTemplate.Timestamps = Timestamps.Now;
+
+                if (GetHunterName != "" && GetGuildName != "")
+                {
+                    presenceTemplate.Assets = new Assets()
+                    {
+                        LargeImageKey = "cattleya",
+                        LargeImageText = "Please Wait",
+                        SmallImageKey = "transcend",
+                        SmallImageText = GetHunterName + " | " + GetGuildName
+                    };
+                }
+
+                if (GetDiscordServerInvite != "") 
+                {
+                    presenceTemplate.Buttons = new DiscordRPC.Button[] { }; ;
+                    presenceTemplate.Buttons = new DiscordRPC.Button[]
+                    {
+                        new DiscordRPC.Button() { Label = "Join Server", Url = String.Format("https://discord.com/invite/{0}",GetDiscordServerInvite)}
+                    };
+                }
+
+                Client.SetPresence(presenceTemplate);
+            }
         }
 
 
@@ -456,6 +596,7 @@ namespace MHFZ_Overlay
         #region clickbuttons
         private void ReloadButton_Click(object sender, RoutedEventArgs e)
         {
+            Cleanup();
             Application.Current.Shutdown();
             System.Windows.Forms.Application.Restart();
         }
@@ -472,11 +613,13 @@ namespace MHFZ_Overlay
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            Cleanup();
             Application.Current.Shutdown();
         }
 
         private void ReloadButton_Key()
         {
+            Cleanup();
             Application.Current.Shutdown();
             System.Windows.Forms.Application.Restart();
         }
@@ -492,6 +635,7 @@ namespace MHFZ_Overlay
 
         private void CloseButton_Key()
         {
+            Cleanup();
             Application.Current.Shutdown();
         }
 

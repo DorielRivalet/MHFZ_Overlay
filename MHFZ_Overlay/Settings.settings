@@ -126,10 +126,10 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="HunterName" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">HunterName</Value>
     </Setting>
     <Setting Name="GuildName" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">GuildName</Value>
     </Setting>
     <Setting Name="TimerInfoShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

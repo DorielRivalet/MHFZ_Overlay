@@ -37,6 +37,7 @@ namespace MHFZ_Overlay
             else
             {
                 System.Windows.MessageBox.Show("Launch game first");
+                
                 App.Current.Shutdown();
             }
         }
