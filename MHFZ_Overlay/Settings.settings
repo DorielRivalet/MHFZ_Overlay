@@ -257,5 +257,8 @@
     <Setting Name="Monster1IconY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">470</Value>
     </Setting>
+    <Setting Name="DiscordTimerMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Time Left</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

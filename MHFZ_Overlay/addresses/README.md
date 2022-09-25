@@ -65,6 +65,7 @@
 - Diva Skill Uses Left "mhfo-hd.dll"+ED3EB0A
 - Halk Fullness "mhfo-hd.dll"+ED3C123
 - Rank Band "mhfo-hd.dll"+2AFA788
+- Partnya Rank Points "mhfo-hd.dll"+E551114
 
 ## Not HGE
 
@@ -132,6 +133,7 @@
 - Halk Fullness mhfo.dll+6101983
 - Rank Band mhfo.dll+28C2BD8
 - Hit Count mhfo.dll+60792E6
+- Partnya Rank Points mhfo.dll+5919554
 
 ## IDs
 
@@ -193,8 +195,8 @@
 |51  ||
 |52  ||
 |53  | G Rank    |
-|54  | Musou 1 (Repel/20m)|
-|55  | Musou 2 (Slay/10m)|
+|54  | Musou 1 (Repel/20m/Lower Shiten)|
+|55  | Musou 2 (Slay/10m/Upper Shiten)|
 |56  ||
 |57  ||
 |58  ||
@@ -970,9 +972,9 @@
 |170 | Broken|
 |171 | Broken|
 |172 | Broken|
-|173 | Your House (original)|
+|173 | My House (original)|
 |174 | Broken|
-|175 |  Unknown Skybox thing|
+|175 |  My House (MAX)|
 |176 | Dundorma Fort 03|
 |177 | Dundorma Fort 02|
 |178 | Dundorma Fort 01|
@@ -1257,8 +1259,8 @@
 |457 |  Interception/Fortress Area 3 (Main Area) |
 |458 |  Hunter's Road 1 Area 1|
 |459 | Hunter's Road 2 Base Camp|
-|460 | Historic 1|
-|461 | Historic 2|
+|460 | Historic Base Camp|
+|461 | Historic Area 1|
 |462 |  MezFes Entrance|
 |463 |  Volpkun Together|
 |464 |  Uruki Pachinko|
@@ -1644,3 +1646,12 @@
 |123|Zenith Elemental (slot 379)||||
 |124|Zenith Movement Speed||||
 |125|All Zenith AOEs||||
+
+### Weapon Style
+
+|ID| Style|
+|--|------|
+|0|Earth|
+|1|Heaven|
+|2|Storm|
+|3|Extreme|

@@ -75,7 +75,7 @@ If the monster HP shown is less than what its actual values should be, restart b
 
 ![Damage Numbers](./demo/damagenumbers1.png)
 
-- [x] [Discord Rich Presence](#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area and more!)
+- [x] [Discord Rich Presence](#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area, [speedrun mode, zen mode](#how-to-enable-speedrun--zen-modes), and more!)
 
 ## Bugs
 
@@ -108,13 +108,30 @@ If the monster HP shown is less than what its actual values should be, restart b
 - Attach user interface to game window option
 - Sound effects
 - Sharpness graph
+- Language options
+- PvP addresses
 
 ## How to Enable Discord Rich Presence
 
-1. In Discord, My Account -> Activity Privacy -> Check "Display current activity as a status message"
-2. [Discord Developer Portal](https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
-3. In Developer Portal, Rich Presence -> Art Assets -> Add Image(s) -> Upload the contents of the img folder (except monster. Should end with 172 uploads)
-4. In Developer Portal, General Information -> Copy Application ID
-5. In Overlay Settings, Paste into Overlay Settings Discord Rich Presence Application/Client ID
+- In Discord, My Account -> Activity Privacy -> Check "Display current activity as a status message"
 
-- The ID also shows up in OAuth2 section as Client ID
+![Discord](./demo/discord1.png)
+
+- [Discord Developer Portal](https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
+
+![Discord](./demo/discord2.png)
+
+- In Developer Portal, General Information -> Copy Application ID
+
+![Discord](./demo/discord3.png)
+
+- In Overlay Settings, Paste into Overlay Settings Discord Rich Presence Application/Client ID (The ID also shows up in OAuth2 section as Client ID)
+
+![Discord](./demo/discord4.png)
+
+## How to Enable Speedrun & Zen Modes
+
+- Speedrunner Mode: Disable **everything** (quest timer and discord rich presence optional)
+- Zen Mode: Disable **everything** (discord rich presence optional)
+
+~~Congrats now you won't be accused of cheating~~

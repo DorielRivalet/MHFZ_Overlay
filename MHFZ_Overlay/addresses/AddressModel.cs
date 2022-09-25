@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using DiscordRPC;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -123,7 +124,7 @@ namespace MHFZ_Overlay.addresses
         abstract public int FirstDistrictDuremudiraSlays();
         abstract public int SecondDistrictDuremudiraEncounters() ;
         abstract public int SecondDistrictDuremudiraSlays() ;
-        abstract public int DeliveryQuestPoints();
+        abstract public int DeliveryQuestPoints(); //doesn't seem to work
 
 
         //red is 0
@@ -136,8 +137,8 @@ namespace MHFZ_Overlay.addresses
         abstract public int HalkFullness();
         abstract public int RankBand();
 
-
-
+        //abstract public int PartnyaRank();
+        abstract public int PartnyaRankPoints();
         //parts
         abstract public int Monster1Part1();
         abstract public int Monster1Part2();
@@ -2284,7 +2285,7 @@ namespace MHFZ_Overlay.addresses
                         return baseAddress + "fatalis" + extension1;
                     case 89:
                         if (RankBand() == 32 || RankBand() == 54)
-                            return baseAddress + "thirsty_pariapuria" + extension2;
+                            return baseAddress + "thirsty_pariapuria" + extension1;
                         else
                             return baseAddress + "pariapuria" + extension1;
                     case 90:
@@ -2438,7 +2439,10 @@ namespace MHFZ_Overlay.addresses
                     case 145://3rd phase duremudira
                         return baseAddress + "duremudira" + extension1;
                     case 146:
-                        return baseAddress + "zinogre" + extension1;
+                        if (RankBand() >= 54 && RankBand() <= 55)
+                            return baseAddress + "howling_zinogre" + extension1;
+                        else
+                            return baseAddress + "zinogre" + extension1;
                     case 147:
                         return baseAddress + "deviljho" + extension1;
                     case 148:
@@ -2513,6 +2517,39 @@ namespace MHFZ_Overlay.addresses
                 }
             }
         }
+
+
+        //Discord RPC
+        //public void UpdateArea()
+        //{
+        //    switch (AreaID())
+        //    {
+        //        case 0:
+        //        default:
+        //            break;
+        //    }
+                
+                    
+        //}
+
+        
+
+        //if (MainWindow.presenceTemplate)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

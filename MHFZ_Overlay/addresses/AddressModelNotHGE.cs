@@ -129,7 +129,7 @@ namespace MHFZ_Overlay.addresses
         public override int GSR() => M.Read2Byte("mhfo.dll+50349A2");
         public override int RoadFloor() => M.Read2Byte("mhfo.dll+5C47600");
         public override int WeaponStyle() => M.ReadByte("mhfo.dll+50348D2");
-        public override int QuestID() => M.ReadInt("mhfo.dll+5FB4A4C");
+        public override int QuestID() => M.Read2Byte("mhfo.dll+5FB4A4C");
         public override int UrukiPachinkoFish() => M.ReadByte("mhfo.dll+61EC176");
         public override int UrukiPachinkoMushroom() => M.ReadByte("mhfo.dll+61EC178");
         public override int UrukiPachinkoSeed() => M.ReadByte("mhfo.dll+61EC17A");
@@ -161,7 +161,7 @@ namespace MHFZ_Overlay.addresses
         public override int GuildFoodSkill() => M.Read2Byte("mhfo.dll+5BC70D8");
         public override int GalleryEvaluationScore() => M.ReadInt("mhfo.dll+6103250");
         public override int PoogiePoints() => M.ReadByte("mhfo.dll+6100350");
-        public override int PoogieItemUseID() => M.ReadInt("mhfo.dll+61540F8");
+        public override int PoogieItemUseID() => M.Read2Byte("mhfo.dll+61540F8");
         public override int PoogieCostume() => M.ReadByte("mhfo.dll+1A88392");
 
 
@@ -191,5 +191,7 @@ namespace MHFZ_Overlay.addresses
         public override int HalkFullness() => M.ReadByte("mhfo.dll+6101983");
         public override int RankBand() => M.ReadByte("mhfo.dll+28C2BD8");
 
+        //public override int PartnyaRank() => M.Read2Byte("mhfo.dll+5CA5520");
+        public override int PartnyaRankPoints() => M.ReadInt("mhfo.dll+5919554");
     }
 }

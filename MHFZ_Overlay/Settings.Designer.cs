@@ -1042,5 +1042,17 @@ namespace MHFZ_Overlay {
                 this["Monster1IconY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Time Left")]
+        public string DiscordTimerMode {
+            get {
+                return ((string)(this["DiscordTimerMode"]));
+            }
+            set {
+                this["DiscordTimerMode"] = value;
+            }
+        }
     }
 }

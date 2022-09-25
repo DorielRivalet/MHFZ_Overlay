@@ -272,7 +272,7 @@
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=TimerX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Quest Timer Y Coordinate"/>
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=TimerY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Select Timing Mode" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Timing Mode"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select Timing Mode (In-Game Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Timing Mode"/>
                         <!--https://stackoverflow.com/questions/43807345/binding-wpf-combobox-to-a-user-settings-property-->
                         <ComboBox Grid.Column="1" Grid.Row="3" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=TimerMode}">
                             <ComboBoxItem>Time Left</ComboBoxItem>
@@ -534,6 +534,8 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <TextBlock Margin="5,5,5,5" ToolTip="Enable Discord Rich Presence" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="(Overlay restart required) Rich Presence"/>
                     <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableRichPresence}"/>
@@ -561,6 +563,11 @@
                     <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HunterName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
                     <TextBlock Margin="5,5,5,5" ToolTip="Your guild (in-game) name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="(Optional) Guild Name"/>
                     <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GuildName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Select Quest Timing Mode (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Quest Timing Mode"/>
+                    <ComboBox Grid.Column="1" Grid.Row="5" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordTimerMode}">
+                        <ComboBoxItem>Time Left</ComboBoxItem>
+                        <ComboBoxItem>Time Elapsed</ComboBoxItem>
+                    </ComboBox>
                 </Grid>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
                     <Grid.ColumnDefinitions>
