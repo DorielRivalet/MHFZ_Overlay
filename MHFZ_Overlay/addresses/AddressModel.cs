@@ -279,6 +279,10 @@ namespace MHFZ_Overlay.addresses
         // grouping by skeleton too
         public string GetPartName(int number,int monsterID)
         {
+
+            if (roadOverride() == false)
+                monsterID = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
+
             switch (monsterID)
             {
                 case 0: //None
