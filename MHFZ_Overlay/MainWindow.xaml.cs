@@ -1122,6 +1122,9 @@ namespace MHFZ_Overlay
 
         public string getMonsterIcon(int id)
         {
+            if (DataLoader.model.roadOverride() == false)
+                id = DataLoader.model.RoadSelectedMonster() == 0 ? DataLoader.model.LargeMonster1ID() : DataLoader.model.LargeMonster2ID();
+
             switch (id)
             {
                 case 0: //none (fatalis)

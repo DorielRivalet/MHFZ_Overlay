@@ -1,4 +1,4 @@
-﻿<!-- TODO: Modularize the grouping-->
+﻿<!-- -->
     <Window x:Class="MHFZ_Overlay.ConfigWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -173,52 +173,26 @@
                         <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="2" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>
                         <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="3" Text="Always Show Player Info" Style="{StaticResource ConfigTextBox}"/>
                         <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="3" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowPlayerInfo}"/>
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="4" Text="Road Override"  Style="{StaticResource ConfigTextBox}" >
-                            <ToolTipService.ToolTip>
-                               <StackPanel Background="#1e1e2e"  >
-                                   <TextBlock Foreground="#cdd6f4">
-                                       0 = No Override
-                                       <LineBreak/>
-                                       1 = Never Road
-                                       <LineBreak/>
-                                       2 = Always Road
-                                   </TextBlock>
-                               </StackPanel>
-                            </ToolTipService.ToolTip>   
-                        </TextBlock>
-                        <TextBox TextAlignment="Center" Background="#585b70" Foreground="#cdd6f4" Grid.Column="1" Grid.Row="4" x:Name="RoadOverrideTextBox" Style="{StaticResource ConfigTextField}" PreviewTextInput="RoadOverrideTextBox_PreviewTextInput" TextChanged="RoadOverrideTextBox_TextChanged" Text="{Binding Source={StaticResource Settings}, Path=IsRoadOverride}" >
-                            <ToolTipService.ToolTip>
-                                <StackPanel Background="#1e1e2e"  >
-                                    <TextBlock Foreground="#cdd6f4">
-                               0 = No Override
-                               <LineBreak/>
-                               1 = Never Road
-                               <LineBreak/>
-                               2 = Always Road
-                                    </TextBlock>
-                                </StackPanel>
-                            </ToolTipService.ToolTip>
-                        </TextBox>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="5" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
-                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="6" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
-                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="7" Text="Damage Numbers Color" Style="{StaticResource ConfigTextBox}"/>
-                        <xctk:ColorPicker Grid.Column="1" Grid.Row="7" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=DamageNumbersColor}"></xctk:ColorPicker>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Damage Numbers Area X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Damage Numbers Area Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Damage Numbers Area Width"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Damage Numbers Area Height"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Monster 1 Icon"/>
-                        <ToggleButton Grid.Row="12" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=Monster1IconShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster 1 Icon X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Monster 1 Icon Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="4" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
+                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="4" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="5" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
+                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
+                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="6" Text="Damage Numbers Color" Style="{StaticResource ConfigTextBox}"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=DamageNumbersColor}"></xctk:ColorPicker>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Damage Numbers Area X Coordinate"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Damage Numbers Area Y Coordinate"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Damage Numbers Area Width"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Damage Numbers Area Height"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Monster 1 Icon"/>
+                        <ToggleButton Grid.Row="11" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=Monster1IconShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Monster 1 Icon X Coordinate"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster 1 Icon Y Coordinate"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
                     </Grid>
                 </ScrollViewer>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">

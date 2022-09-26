@@ -95,7 +95,6 @@ If the monster HP shown is less than what its actual values should be, restart b
 - Auto detect which player is playing
 - Selecting monsters for body parts and monster status
 - Fix max HP for Road
-- Better detection for if the player is in Road so the Road Override is not necessary anymore
 - Allow lock-on to be used to select monsters
 - Overlay font options
 - Add shortcut for saving

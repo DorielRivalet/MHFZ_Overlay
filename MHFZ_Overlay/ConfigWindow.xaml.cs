@@ -37,14 +37,14 @@ namespace MHFZ_Overlay
 
         }
 
-        private void RoadOverrideTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            if (RoadOverrideTextBox.Text.Length > 1)
-            {
-                RoadOverrideTextBox.Text = RoadOverrideTextBox.Text.Remove(0, 1);
-                RoadOverrideTextBox.CaretIndex = 1;
-            }
-        }
+        //private void RoadOverrideTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        //{
+        //    if (RoadOverrideTextBox.Text.Length > 1)
+        //    {
+        //        RoadOverrideTextBox.Text = RoadOverrideTextBox.Text.Remove(0, 1);
+        //        RoadOverrideTextBox.CaretIndex = 1;
+        //    }
+        //}
 
         public void SaveKey_Press()
         {

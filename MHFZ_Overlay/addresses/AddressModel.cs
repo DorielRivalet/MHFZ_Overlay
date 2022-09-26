@@ -238,10 +238,10 @@ namespace MHFZ_Overlay.addresses
 
         public bool? roadOverride()
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.IsRoadOverride == 1)
+            //should work
+            if (QuestID() != 23527 && QuestID() != 23628)
                 return true;
-            else if (s.IsRoadOverride == 2)
+            else if (QuestID() == 23527 || QuestID() == 23628)
                 return false;
             return null;
         }
@@ -2075,8 +2075,14 @@ namespace MHFZ_Overlay.addresses
                 string baseAddress = "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/";
                 string extension1 = ".png";
                 string extension2 = ".gif"; //zeniths and rainbow color
+                int id;
 
-                switch (LargeMonster1ID())
+                if (roadOverride() == false)
+                    id = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
+                else
+                    id = LargeMonster1ID();
+
+                switch (id)
                 {
                     case 0: //none
                         return baseAddress + "fatalis" + extension1;
