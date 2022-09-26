@@ -32,12 +32,13 @@ namespace Dictionary
             {42, "HR5"},
             {46, "Supremacy 2" }, //needs testing. unknown repel+slay uses this
             {53, "G Rank"},
-            {54, "Musou 1"},
-            {55, "Musou 2"},
+            {54, "Musou 1"},//lower shiten unknown/disu. thirsty/starving.
+            {55, "Musou 2"},//upper shiten disu. shifting/golden.
             {64, "Z1"},
             {65, "Z2"},
             {66, "Z3"},
             {67, "Z4"},
+            {70,"Upper Shiten" },//upper shiten Unknown
             {71, "Interception"},
             {72, "Interception"},
             {73, "Interception"}
@@ -129,7 +130,7 @@ namespace Dictionary
             {79, "Red Lavasioth"},//
             {80, "Espinas"},//
             {81, "Orange Espinas"},//
-            {82, "White Hypnoc"},//
+            {82, "Silver Hypnoc"},//
             {83, "Akura Vashimu"},//
             {84, "Akura Jebia"},//
             {85, "Berukyurosu"},//

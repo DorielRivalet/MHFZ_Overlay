@@ -595,7 +595,7 @@ namespace MHFZ_Overlay.addresses
                 case 40: //Yian Garuga
                 case 74://Hypnocatrice
                 case 78://Bright Hypnoc
-                case 82://White Hypnoc
+                case 82://Silver Hypnoc
                 case 114://Farunokku
                     Monster1Part1Name = "Body";
                     Monster1Part2Name = "L. Wing";
@@ -2245,7 +2245,7 @@ namespace MHFZ_Overlay.addresses
                     case 73:
                         return baseAddress + "ceanataur" + extension1;
                     case 74:
-                        return baseAddress + "hypnocatrice" + extension1;
+                        return baseAddress + "hypnoc" + extension1;
                     case 75:
                         return baseAddress + "lavasioth" + extension1;
                     case 76:
@@ -2267,7 +2267,7 @@ namespace MHFZ_Overlay.addresses
                     case 81:
                         return baseAddress + "orange_espinas" + extension1;
                     case 82:
-                        return baseAddress + "white_hypnoc" + extension1;
+                        return baseAddress + "silver_hypnoc" + extension1;
                     case 83:
                         if (RankBand() >= 64 && RankBand() <= 67)
                             return baseAddress + "zenith_akura_vashimu" + extension2;
@@ -2361,7 +2361,7 @@ namespace MHFZ_Overlay.addresses
                         if (RankBand() == 55)
                             return baseAddress + "shifting_mi_ru" + extension1;
                         else
-                            return baseAddress + "'mi_ru" + extension1;
+                            return baseAddress + "mi_ru" + extension1;
                     case 114:
                         return baseAddress + "farunokku" + extension1;
                     case 115:
@@ -2396,7 +2396,10 @@ namespace MHFZ_Overlay.addresses
                     case 128:
                         return baseAddress + "garuba_daora" + extension1;
                     case 129:
-                        return baseAddress + "inagami" + extension1;
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_inagami" + extension2;
+                        else
+                            return baseAddress + "inagami" + extension1;
                     case 130:
                         return baseAddress + "varusaburosu" + extension1;
                     case 131:
@@ -2469,8 +2472,8 @@ namespace MHFZ_Overlay.addresses
                             return baseAddress + "starving_deviljho" + extension1;
                     case 156://UNK
                         return baseAddress + "fatalis" + extension1;
-                    case 157:
-                        return baseAddress + "egyurasu" + extension1;
+                    case 157://egyurasu
+                        return baseAddress + "fatalis" + extension1;
                     case 158:
                         return baseAddress + "voljang" + extension1;
                     case 159:
@@ -2517,39 +2520,6 @@ namespace MHFZ_Overlay.addresses
                 }
             }
         }
-
-
-        //Discord RPC
-        //public void UpdateArea()
-        //{
-        //    switch (AreaID())
-        //    {
-        //        case 0:
-        //        default:
-        //            break;
-        //    }
-                
-                    
-        //}
-
-        
-
-        //if (MainWindow.presenceTemplate)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

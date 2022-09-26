@@ -1,5 +1,6 @@
 ﻿using DiscordRPC;
 using MHFZ_Overlay.addresses;
+using MHFZ_Overlay.controls;
 using Microsoft.VisualBasic;
 using System;
 using System.Drawing;
@@ -16,6 +17,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
+using static System.Net.WebRequestMethods;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
@@ -332,7 +334,7 @@ namespace MHFZ_Overlay
                 }
                 else if (curNum < 0)
                 {
-                    curNum = 1000 + curNum;
+                    curNum = 1000 + curNum; //TODO
                     CreateDamageNumberLabel(curNum);
                 }
                 else
@@ -887,9 +889,9 @@ namespace MHFZ_Overlay
                 case 8:
                 case 9:
                 case 10:
-                    return "Low Rank";
+                    return "Low Rank ";
                 case 11:
-                    return "Low/High Rank";
+                    return "Low/High Rank ";
                 case 12:
                 case 13:
                 case 14:
@@ -899,11 +901,11 @@ namespace MHFZ_Overlay
                 case 18:
                 case 19:
                 case 20:
-                    return "High Rank";
+                    return "High Rank ";
                 case 26:
                 case 31:
                 case 42:
-                    return "HR5";
+                    return "HR5 ";
                 case 32:
                 case 46:
                     if (GetRealMonsterName(DataLoader.model.CurrentMonster1Icon).Contains("Supremacy"))
@@ -911,26 +913,96 @@ namespace MHFZ_Overlay
                         return "";
                     } else
                     {
-                        return "Supremacy";
+                        return "Supremacy ";
                     }
-                case 53://TODO: conquest levels via quest id
-                    return "G Rank";
-                case 54://TODO
-                    return ""; //20m lower shiten/musou repel/musou lesser slay
+                case 53://: conquest levels via quest id
+                    //shantien
+                    //lv1 23585
+                    //lv200 23586
+                    //lv1000 23587
+                    //lv9999 23588
+                    //disufiroa
+                    //lv1 23589
+                    //lv200 23590
+                    //lv1000 23591
+                    //lv9999 23592
+                    //fatalis
+                    //lv1 23593
+                    //lv200 23594
+                    //lv1000 23595
+                    //lv9999 23596
+                    //crimson fatalis
+                    //lv1 23597
+                    //lv200 23598
+                    //lv1000 23599
+                    //lv9999 23601
+                    //upper shiten unknown 23605
+                    //lower shiten unknown 23604
+                    //upper shiten disufiroa 23603
+                    //lower shiten disu 23602
+                    //thirsty 55532
+                    //shifting 55920
+                    //starving 55916
+                    //golden 55917
+                    switch (DataLoader.model.QuestID())
+                    {
+                        default: 
+                            return "G Rank ";
+                        case 23585:
+                        case 23589:
+                        case 23593:
+                        case 23597:
+                            return "Lv1 ";
+                        case 23586:
+                        case 23590:
+                        case 23594:
+                        case 23598:
+                            return "Lv200 ";
+                        case 23587:
+                        case 23591:
+                        case 23595:
+                        case 23599:
+                            return "Lv1000 ";
+                        case 23588:
+                        case 23592:
+                        case 23596:
+                        case 23601:
+                            return "Lv9999 ";
+                    }
+                    
+                case 54:
+                    switch (DataLoader.model.QuestID())
+                    {
+                        default:
+                            return "";
+                        case 23604:
+                        case 23602:
+                            return "Lower Shiten ";
+                    }
+                //return ""; //20m lower shiten/musou repel/musou lesser slay
                 case 55:
-                    return ""; //10m upper shiten/musou true slay
+                    switch (DataLoader.model.QuestID())
+                    {
+                        default:
+                            return "";
+                        case 23603:
+                            return "Upper Shiten ";
+                    }
+                    //10m upper shiten/musou true slay
                 case 64:
-                    return "Z1";
+                    return "Z1 ";
                 case 65:
-                    return "Z2";
+                    return "Z2 ";
                 case 66:
-                    return "Z3";
+                    return "Z3 ";
                 case 67:
-                    return "Z4";
+                    return "Z4 ";
+                case 70://unknown
+                    return "Upper Shiten ";
                 case 71:
                 case 72:
                 case 73:
-                    return "Interception";
+                    return "Interception ";
                 default:
                     return "";
             }
@@ -1048,6 +1120,488 @@ namespace MHFZ_Overlay
                 return "(Zen) ";
         }
 
+        public string getMonsterIcon(int id)
+        {
+            switch (id)
+            {
+                case 0: //none (fatalis)
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 1:
+                    return "https://i.imgur.com/uW1PHeW.png";
+                case 2:
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 3:
+                    return "https://i.imgur.com/Ad5xCF6.png";
+                case 4:
+                    return "https://i.imgur.com/qWSVddC.png";
+                case 5:
+                    return "https://i.imgur.com/qz7CynW.png";
+                case 6:
+                    return "https://i.imgur.com/TtJ7KPw.png";
+                case 7:
+                    return "https://i.imgur.com/ZW43PS5.png";
+                case 8:
+                    return "https://i.imgur.com/RwkhTLJ.png";
+                case 9:
+                    return "https://i.imgur.com/Ry2zu5r.png";
+                case 10: //veggie elder
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 11:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/o8bJZUN.gif";
+                    else
+                        return "https://i.imgur.com/suPp2tU.png";
+                case 12:
+                    return "https://i.imgur.com/15KEndF.png";
+                case 13:
+                    return "https://i.imgur.com/ChQomJ4.png";
+                case 14:
+                    return "https://i.imgur.com/XZaYYFL.png";
+                case 15:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/t58j2Zm.gif";
+                    else
+                        return "https://i.imgur.com/f8rLuGe.png";
+                case 16:
+                    return "https://i.imgur.com/WGrl1DY.png";
+                case 17:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/PGkduy9.gif";
+                    else
+                        return "https://i.imgur.com/Sj4SsYR.png";
+                case 18:
+                    return "https://i.imgur.com/Ry2zu5r.png";
+                case 19:
+                    return "https://i.imgur.com/dhiIvMc.png";
+                case 20:
+                    return "https://i.imgur.com/vovKgVw.png";
+                case 21:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/bsHESxp.gif";
+                    else
+                        return "https://i.imgur.com/BQUAjEf.png";
+                case 22:
+                    return "https://i.imgur.com/y86jUp6.png";
+                case 23:
+                    return "https://i.imgur.com/LoqmciT.png";
+                case 24:
+                    return "https://i.imgur.com/uXam7c6.png";
+                case 25:
+                    return "https://i.imgur.com/Y2ovscJ.png";
+                case 26:
+                    return "https://i.imgur.com/bJt02Qe.png";
+                case 27:
+                    return "https://i.imgur.com/6HMWaGt.png";
+                case 28:
+                    return "https://i.imgur.com/XBWX8Wm.png";
+                case 29://rocks
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 30:
+                    return "https://i.imgur.com/KDxPzPs.png";
+                case 31:
+                    return "https://i.imgur.com/QsyXEmc.png";
+                case 32://pugis
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 33:
+                    return "https://i.imgur.com/5s4ToRS.png";
+                case 34:
+                    return "https://i.imgur.com/3n7NQG9.png";
+                case 35:
+                    return "https://i.imgur.com/QPl1AEF.png";
+                case 36:
+                    return "https://i.imgur.com/Aid5Hia.png";
+                case 37:
+                    return "https://i.imgur.com/yn3uMc2.png";
+                case 38:
+                    return "https://i.imgur.com/NmRxU2H.png";
+                case 39:
+                    return "https://i.imgur.com/eDiBAxX.png";
+                case 40:
+                    return "https://i.imgur.com/ApZmoUv.png";
+                case 41:
+                    return "https://i.imgur.com/mYY8y19.png";
+                case 42:
+                    return "https://i.imgur.com/xe8nLNM.png";
+                case 43:
+                    return "https://i.imgur.com/IVXcxRD.png";
+                case 44:
+                    return "https://i.imgur.com/BQ9FJBB.png";
+                case 45:
+                    return "https://i.imgur.com/Cmb6AYd.png";
+                case 46:
+                    return "https://i.imgur.com/LQnA7d6.png";
+                case 47:
+                    return "https://i.imgur.com/Fmw5Etb.png";
+                case 48:
+                    return "https://i.imgur.com/WDe9OJl.png";
+                case 49:
+                    return "https://i.imgur.com/gSCligX.png";
+                case 50:
+                    return "https://i.imgur.com/fHPx16u.png";
+                case 51:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/YiyBzoU.gif";
+                    else
+                        return "https://i.imgur.com/Di3LdOq.png";
+                case 52:
+                    return "https://i.imgur.com/qxaMV1h.png";
+                case 53:
+                    return "https://i.imgur.com/R1dDHaQ.png";
+                case 54:
+                    return "https://i.imgur.com/uAyaJ9z.png";
+                case 55:
+                    return "https://i.imgur.com/pgKJuGj.png";
+                case 56:
+                    return "https://i.imgur.com/u0M5jXA.png";
+                case 57:
+                    return "https://i.imgur.com/UaZkOgY.png";
+                case 58:
+                    return "https://i.imgur.com/suHOj84.png";
+                case 59:
+                    return "https://i.imgur.com/TXmNN2X.png";
+                case 60:
+                    return "https://i.imgur.com/4hNQwSU.png";
+                case 61:
+                    return "https://i.imgur.com/3hBdp8b.png";
+                case 62:
+                    return "https://i.imgur.com/zxQcbQD.png";
+                case 63:
+                    return "https://i.imgur.com/kewyYlK.png";
+                case 64:
+                    return "https://i.imgur.com/8OvYfy6.png";
+                case 65:
+                    if (DataLoader.model.RankBand() == 32)
+                        return "https://i.imgur.com/l1zOESv.png";
+                    else
+                        return "https://i.imgur.com/dgq8E90.png";
+                case 66:
+                    return "https://i.imgur.com/l2SOZee.png";
+                case 67:
+                    return "https://i.imgur.com/lEcEWZ6.png";
+                case 68:
+                    return "https://i.imgur.com/AxBWXBC.png";
+                case 69:
+                    return "https://i.imgur.com/QxGg3Np.png";
+                case 70:
+                    return "https://i.imgur.com/jTFVi1A.png";
+                case 71:
+                    return "https://i.imgur.com/LC5OZmo.png";
+                case 72:
+                    return "https://i.imgur.com/suHOj84.png";
+                case 73:
+                    return "https://i.imgur.com/2PbL0oE.png";
+                case 74:
+                    return "https://i.imgur.com/tkYXFBc.png";
+                case 75:
+                    return "https://i.imgur.com/ZSgmzGi.png";
+                case 76:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/K7qTAoa.gif";
+                    else
+                        return "https://i.imgur.com/QKw3HSE.png";
+                case 77:
+                    return "https://i.imgur.com/CKY7zkV.png";
+                case 78:
+                    return "https://i.imgur.com/fhF6yZY.png";
+                case 79:
+                    return "https://i.imgur.com/AzfTTSq.png";
+                case 80:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/sMr1oCg.gif";
+                    else
+                        return "https://i.imgur.com/cx07Z7B.png";
+                case 81:
+                    return "https://i.imgur.com/m8DhwiJ.png";
+                case 82:
+                    return "https://i.imgur.com/WZkQYDL.png";
+                case 83:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/jdy96PH.gif";
+                    else
+                        return "https://i.imgur.com/QiRd5dc.png";
+                case 84:
+                    return "https://i.imgur.com/hOfRrph.png";
+                case 85:
+                    return "https://i.imgur.com/KBCnVhH.png";
+                case 86://cactus
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 87://gorge objects
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 88://gorge rocks
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 89:
+                    if (DataLoader.model.RankBand() == 32 || DataLoader.model.RankBand() == 54)
+                        return "https://i.imgur.com/yDk0aha.png";
+                    else
+                        return "https://i.imgur.com/eXaT0PD.png";
+                case 90:
+                    return "https://i.imgur.com/Uc5mTQi.png";
+                case 91:
+                    return "https://i.imgur.com/L9naUDO.png";
+                case 92:
+                    return "https://i.imgur.com/klyXxuc.png";
+                case 93:
+                    return "https://i.imgur.com/blsy8Rx.png";
+                case 94:
+                    return "https://i.imgur.com/dxEtSjL.png";
+                case 95:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/qirZmdn.gif";
+                    else if (DataLoader.model.RankBand() == 32)
+                        return "https://i.imgur.com/Rk7FKxS.png";
+                    else
+                        return "https://i.imgur.com/HmNSD8G.png";
+                case 96:
+                    return "https://i.imgur.com/gLA5gdi.png";
+                case 97:
+                    return "https://i.imgur.com/6RIoFpM.png";
+                case 98:
+                    return "https://i.imgur.com/R3xnyMd.png";
+                case 99:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/BhbCOWn.gif";
+                    else
+                        return "https://i.imgur.com/84ZBXjW.png";
+                case 100:
+                    return "https://i.imgur.com/ssuzTlK.png";
+                case 101:
+                    return "https://i.imgur.com/HBYZoa0.png";
+                case 102://kokomoa
+                    return "https://i.imgur.com/HBYZoa0.png";
+                case 103:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/FbfYG4P.gif";
+                    else
+                        return "https://i.imgur.com/CACFYGy.png";
+                case 104:
+                    return "https://i.imgur.com/dxkeQcm.png";
+                case 105:
+                    return "https://i.imgur.com/PqTQLGE.png";
+                case 106:
+                    return "https://i.imgur.com/KvC12wl.png";
+                case 107:
+                    return "https://i.imgur.com/eQnTB2u.png";
+                case 108:
+                    return "https://i.imgur.com/fdFZFKe.png";
+                case 109:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/LUXuyEi.gif";
+                    else
+                        return "https://i.imgur.com/XKot29j.png";
+                case 110:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/jKcdja3.gif";
+                    else
+                        return "https://i.imgur.com/YqZLy2J.png";
+                case 111:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/YJWD5xy.gif";
+                    else
+                        return "https://i.imgur.com/WvHY8Lf.png";
+                case 112:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/oTBfALR.gif";
+                    else
+                        return "https://i.imgur.com/ZFsUNTL.png";
+                case 113:
+                    if (DataLoader.model.RankBand() == 55)
+                        return "https://i.imgur.com/Zv4TyA6.png";
+                    else
+                        return "https://i.imgur.com/e3l7mhh.png";
+                case 114:
+                    return "https://i.imgur.com/cBHzq5t.png";
+                case 115:
+                    return "https://i.imgur.com/OpYh7mb.png";
+                case 116:
+                    return "https://i.imgur.com/Ib4dmgd.png";
+                case 117:
+                    return "https://i.imgur.com/jaKE3QM.png";
+                case 118://dummy
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 119:
+                    return "https://i.imgur.com/lhWI52f.png";
+                case 120:
+                    return "https://i.imgur.com/89UGYzZ.png";
+                case 121:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/2WKXvPn.gif";
+                    else
+                        return "https://i.imgur.com/AvO02Ri.png";
+                case 122:
+                    return "https://i.imgur.com/XOEGJRu.png";
+                case 123:
+                    return "https://i.imgur.com/0TeOdn4.png";
+                case 124:
+                    return "https://i.imgur.com/fQPpwGE.png";
+                case 125:
+                    return "https://i.imgur.com/p7LWhIe.png";
+                case 126:
+                    return "https://i.imgur.com/iQMDmCN.png";
+                case 127:
+                    return "https://i.imgur.com/4zi1Kva.png";
+                case 128:
+                    return "https://i.imgur.com/NHyezpo.png";
+                case 129:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/yDF4h6I.gif";
+                    else
+                        return "https://i.imgur.com/bioZ1Rx.png";
+                case 130:
+                    return "https://i.imgur.com/KXLFD8f.png";
+                case 131:
+                    return "https://i.imgur.com/56tHHHc.png";
+                case 132:
+                    return "https://i.imgur.com/fKVoJ3m.png";
+                case 133://UNK
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 134:
+                    return "https://i.imgur.com/Ry2zu5r.png";
+                case 135://blue npc
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 136://UNK
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 137://cactus
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 138://veggie elders
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 139:
+                    return "https://i.imgur.com/JntsUFx.png";
+                case 140:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/5NPChxD.gif";
+                    else
+                        return "https://i.imgur.com/daI89CT.png";
+                case 141:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/Z5BuMEZ.gif";
+                    else
+                        return "https://i.imgur.com/1Ru7AMQ.png";
+                case 142:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/vwkiFLs.gif";
+                    else
+                        return "https://i.imgur.com/OtU0yAB.png";
+                case 143:
+                    return "https://i.imgur.com/EMWA1p7.png";
+                case 144:
+                    return "https://i.imgur.com/rzHoBt7.png";
+                case 145://3rd phase duremudira
+                    return "https://i.imgur.com/fKVoJ3m.png";
+                case 146:
+                    if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
+                        return "https://i.imgur.com/nqtgjY2.png";
+                    else
+                        return "https://i.imgur.com/hU4lRx3.png";
+                case 147:
+                    return "https://i.imgur.com/eGsb66E.png";
+                case 148:
+                    return "https://i.imgur.com/XrYCP6k.png";
+                case 149:
+                    return "https://i.imgur.com/HDkGUQL.png";
+                case 150:
+                    return "https://i.imgur.com/muRi2Yz.png";
+                case 151:
+                    return "https://i.imgur.com/OE88eb9.png";
+                case 152:
+                    return "https://i.imgur.com/K3vqmPA.png";
+                case 153:
+                    return "https://i.imgur.com/oz11SGA.png";
+                case 154:
+                    if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
+                        return "https://i.imgur.com/fQgQEUT.png";
+                    else
+                        return "https://i.imgur.com/ZaCyD6O.png";
+                case 155:
+                    if (DataLoader.model.RankBand() == 55)
+                        return "https://i.imgur.com/zqvdQbw.png";
+                    else
+                        return "https://i.imgur.com/OYIaUWR.png";
+                case 156://UNK
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 157://egyurasu
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 158:
+                    return "https://i.imgur.com/WgzdVtV.png";
+                case 159:
+                    return "https://i.imgur.com/Xi9lXsZ.png";
+                case 160:
+                    return "https://i.imgur.com/tHCL5U3.png";
+                case 161:
+                    return "https://i.imgur.com/cLOEjlO.png";
+                case 162:
+                    return "https://i.imgur.com/Lq6kNtM.png";
+                case 163:
+                    return "https://i.imgur.com/WS7SNx5.png";
+                case 164:
+                    return "https://i.imgur.com/15V9po1.png";
+                case 165:
+                    return "https://i.imgur.com/z5E7rSP.png";
+                case 166:
+                    if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
+                        return "https://i.imgur.com/oTxCKYd.png";
+                    else
+                        return "https://i.imgur.com/CxoXy9E.png";
+                case 167:
+                    return "https://i.imgur.com/3FILchg.png";
+                case 168://rocks
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 169:
+                    return "https://i.imgur.com/BEeL8xd.png";
+                case 170:
+                    return "https://i.imgur.com/tbV6QPE.gif";
+                case 171://unknown blue barrel
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 172:
+                    return "https://i.imgur.com/oA3v6df.png";
+                case 173://costumed uruki
+                    return "https://i.imgur.com/fQPpwGE.png";
+                case 174:
+                    return "https://i.imgur.com/2RPa7HB.png";
+                case 175://PSO2 Rappy
+                    return "https://i.imgur.com/3pQEtzw.png";
+                case 176:
+                    return "https://i.imgur.com/UXi0TEu.png";
+                default:
+                    return "https://i.imgur.com/3pQEtzw.png"; //fatalis
+            }
+        }
+
+        public bool ShowCurrentHPPercentage()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableCurrentHPPercentage == true)
+                return true;
+            else
+                return false;
+        }
+
+        public int currentMonster1MaxHP = 0;
+        public string currentMonster1HPPercent = "";
+
+        public string GetMonster1EHPPercent()
+        {
+            if (currentMonster1MaxHP < int.Parse(DataLoader.model.Monster1HP))
+                currentMonster1MaxHP = int.Parse(DataLoader.model.Monster1HP);
+
+            if (currentMonster1MaxHP == 0)
+                currentMonster1MaxHP = 1;
+
+            if (!(ShowCurrentHPPercentage()))
+                return "";
+
+            return string.Format(" ({0:0}%)", (float)int.Parse(DataLoader.model.Monster1HP) / currentMonster1MaxHP * 100.0);
+        }
+
+        public int GetMonster1EHP()
+        {
+            return DataLoader.model.DisplayMonsterEHP(float.Parse(DataLoader.model.Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), DataLoader.model.Monster1HPInt(), DataLoader.model.Monster1DefMult());
+        }
+
+        public int GetMonster1MaxEHP()
+        {
+            return currentMonster1MaxHP;
+        }
+
         private void UpdateDiscordRPC()
         {
             if (!(isDiscordRPCRunning))
@@ -1076,7 +1630,7 @@ namespace MHFZ_Overlay
             //DataLoader.model.DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat)
 
             //Info
-            if (DataLoader.model.QuestID() != 0 && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0)
+            if (DataLoader.model.QuestID() != 0 && DataLoader.model.TimeDefInt() != DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0)
             {
                 //inQuest = true;
 
@@ -1110,12 +1664,12 @@ namespace MHFZ_Overlay
                         presenceTemplate.State = String.Format("Slay 1st District Duremudira | Slain: {0} | Encounters: {1}", DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
                         break;
                     default:
-                        presenceTemplate.State = String.Format("{0} {1} {2} | True Raw: {3} (Max {4}) | Hits: {5}",GetObjectiveNameFromID(DataLoader.model.ObjectiveType()),GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.ATK,DataLoader.model.HighestAtk,DataLoader.model.HitCount);
+                        presenceTemplate.State = String.Format("{0} {1}{2} | True Raw: {3} (Max {4}) | Hits: {5}",GetObjectiveNameFromID(DataLoader.model.ObjectiveType()),GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.ATK,DataLoader.model.HighestAtk,DataLoader.model.HitCount);
                         break;
                 }
 
-                //presenceTemplate.Assets.LargeImageKey = monsterNameKey;
-
+                presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
+                presenceTemplate.Assets.LargeImageText = string.Format("{0}/{1}{2}",GetMonster1EHP(),GetMonster1MaxEHP(),GetMonster1EHPPercent());
             }
             else if (DataLoader.model.QuestID() == 0)
             {
@@ -1261,6 +1815,7 @@ namespace MHFZ_Overlay
             else if (DataLoader.model.QuestID() == 0 && inQuest && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) == 0)
             { 
                 inQuest = false;
+                currentMonster1MaxHP = 0;//reset values
                 presenceTemplate.Timestamps = Timestamps.Now; 
             }
 
@@ -1517,8 +2072,12 @@ namespace MHFZ_Overlay
     }
 }
 /// <TODO>
+/// [] Not Done
+/// [X] Done
+/// [O] WIP
+/// 
 /// ## Look at hp bar to make better
-/// ## damage numbers
+/// [O] damage numbers
 /// ## look at other popular overlays and steal their design
 /// fix road stuff
 /// ## implement for monsters 1-4
@@ -1528,9 +2087,8 @@ namespace MHFZ_Overlay
 /// ## remove unnecessary fields in DataLoader
 /// figure out way to make it work for all monsters with the same functions (use list u dunmbass)
 /// ## figure out a way to make templates
-/// body parts
-/// ## status panel
-/// ## maybe more ....
-/// Tooltips for Configuration
-/// Configuration for Damage numbers
+/// [O] body parts
+/// [] status panel
+/// [X] Tooltips for Configuration
+/// [X]Configuration for Damage numbers
 /// </TODO>

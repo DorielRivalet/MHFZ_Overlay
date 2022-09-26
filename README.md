@@ -87,6 +87,7 @@ If the monster HP shown is less than what its actual values should be, restart b
 - Duremudira HP not showing
 - Monster size values not shown correctly
 - Monster HP values are less than the actual values when not loading properly
+- Damage numbers over 1000 not working
 
 ## Features not yet implemented
 
