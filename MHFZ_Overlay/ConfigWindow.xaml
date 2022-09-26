@@ -47,13 +47,13 @@
         <!--SCROLLBARS-->
         <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
             <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-            <Setter Property="Foreground" Value="#11111b"/>
+                <Setter Property="Foreground" Value="#89b4fa"/>
             <Setter Property="Background" Value="#74c7ec"/>
             <Setter Property="Width" Value="8"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ScrollBar}">
-                            <Grid x:Name="GridRoot" Width="8" Background="#313244">
+                            <Grid x:Name="GridRoot" Width="8" Background="#11111b">
                             <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="False">
                                 <Track.Thumb>
                                     <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" 
@@ -370,11 +370,11 @@
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="8" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarColor}"></xctk:ColorPicker>
                     <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0" Text="Monster 4 HP Bar Color"/>
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="9" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarColor}"></xctk:ColorPicker>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Part Hit Points (reach threshold a 2nd time to break a part)" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Monster 1 Part HP"/>
-                    <ToggleButton Grid.Row="10" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PartHealthBarsShown}"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Monster 1 Part HP X Coordinate"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Part Hit Points (reach threshold a 2nd time to break a part)" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Monster 1 Part Threshold"/>
+                    <ToggleButton Grid.Row="10" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PartThresholdShown}"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Monster 1 Part Threshold X Coordinate"/>
                     <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartX}"  PreviewTextInput="ValidateNumber"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Monster 1 Part HP Y Coordinate"/>
+                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Monster 1 Part Threshold Y Coordinate"/>
                     <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartY}"  PreviewTextInput="ValidateNumber"/>
                     </Grid>
                 </ScrollViewer>

@@ -12,7 +12,7 @@ namespace MHFZ_Overlay
         #region DataLoaderVariables
         //needed for getting data
         readonly Mem m = new();
-        bool isHighGradeEdition;
+        public bool isHighGradeEdition;
         int index;
         public AddressModel model { get; }
 

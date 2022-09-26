@@ -131,7 +131,7 @@ If the monster HP shown is less than what its actual values should be, restart b
 
 ## How to Enable Speedrun & Zen Modes
 
-- Speedrunner Mode: Disable **everything** (quest timer and discord rich presence optional)
-- Zen Mode: Disable **everything** (discord rich presence optional)
+- Speedrunner Mode: Disable **everything** (Monster Icon, Quest Timer and Discord Rich Presence optional)
+- Zen Mode: Disable **everything** (Monster Icon and Discord Rich Presence optional)
 
 ~~Congrats now you won't be accused of cheating~~

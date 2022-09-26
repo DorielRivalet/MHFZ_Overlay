@@ -458,12 +458,12 @@ namespace MHFZ_Overlay {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool PartHealthBarsShown {
+        public bool PartThresholdShown {
             get {
-                return ((bool)(this["PartHealthBarsShown"]));
+                return ((bool)(this["PartThresholdShown"]));
             }
             set {
-                this["PartHealthBarsShown"] = value;
+                this["PartThresholdShown"] = value;
             }
         }
         

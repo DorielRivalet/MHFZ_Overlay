@@ -177,7 +177,7 @@ namespace MHFZ_Overlay
             {
                 LargeImageKey = "cattleya",
                 LargeImageText = "Please Wait",
-                SmallImageKey = "transcend",
+                SmallImageKey = "https://i.imgur.com/9OkLYAz.png",
                 SmallImageText = "Hunter Name | Guild Name"
             },
             Buttons = new DiscordRPC.Button[]
@@ -210,7 +210,7 @@ namespace MHFZ_Overlay
                     {
                         LargeImageKey = "cattleya",
                         LargeImageText = "Please Wait",
-                        SmallImageKey = "transcend",
+                        SmallImageKey = "https://i.imgur.com/9OkLYAz.png",
                         SmallImageText = GetHunterName + " | " + GetGuildName
                     };
                 }
@@ -489,7 +489,7 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowMonsterStun = v && s.MonsterStunShown;
 
             DataLoader.model.ShowMonsterHPBars = v && s.HealthBarsShown;
-            DataLoader.model.ShowMonsterPartHP = v && s.PartHealthBarsShown;
+            DataLoader.model.ShowMonsterPartHP = v && s.PartThresholdShown;
             DataLoader.model.ShowMonster1Icon = v && s.Monster1IconShown;
         }
 
@@ -546,7 +546,10 @@ namespace MHFZ_Overlay
         public string getArmorSkill(int id)
         {
             Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(id, out string? skillname);
-            return skillname + "";
+            if (skillname == "")
+                return "None";
+            else
+                return skillname + "";
         }
 
         public string getItemName(int id)
@@ -624,17 +627,17 @@ namespace MHFZ_Overlay
                     weaponIconName += "bow";
                     break;
                 default:
-                    weaponIconName = "transcend";
+                    weaponIconName = "https://i.imgur.com/9OkLYAz.png";//transcend
                     break;
             }
 
-            if (weaponIconName != "transcend" && !(colorName.Contains("White")))
+            if (weaponIconName != "https://i.imgur.com/9OkLYAz.png" && !(colorName.Contains("White")))
                 weaponIconName += "_";
 
             if (colorName.Contains("Green"))
             {
                 weaponIconName += "green";
-            } 
+            }
             else if (colorName.Contains("Red"))
             {
                 weaponIconName += "red";
@@ -680,66 +683,178 @@ namespace MHFZ_Overlay
                 weaponIconName += "rainbow";
             }
 
-            if (weaponIconName.Contains("rainbow"))
+            switch (weaponIconName)
             {
-                if (weaponIconName.Contains("sns"))
-                {
-                    weaponIconName = "https://i.imgur.com/3a6OI1V.gif";
-                }
-                else if (weaponIconName.Contains("ds"))
-                {
-                    weaponIconName = "https://i.imgur.com/eWTRTJl.gif";
-                }
-                else if (weaponIconName.Contains("gs"))
-                {
-                    weaponIconName = "https://i.imgur.com/WnRuqll.gif";
-                }
-                else if (weaponIconName.Contains("ls"))
-                {
-                    weaponIconName = "https://i.imgur.com/BUYVOih.gif";
-                }
-                else if (weaponIconName.Contains("hammer"))
-                {
-                    weaponIconName = "https://i.imgur.com/GIAbKkO.gif";
-                }
-                else if (weaponIconName.Contains("hh"))
-                {
-                    weaponIconName = "https://i.imgur.com/VuRLWWG.gif";
-                }
-                else if (weaponIconName.Contains("lance"))
-                {
-                    weaponIconName = "https://i.imgur.com/BXgEuDy.gif";
-                }
-                else if (weaponIconName.Contains("gl"))
-                {
-                    weaponIconName = "https://i.imgur.com/47VsWHj.gif";
-                }
-                else if (weaponIconName.Contains("saf"))
-                {
-                    weaponIconName = "https://i.imgur.com/icBF5lS.gif";
-                }
-                else if (weaponIconName.Contains("tonfa"))
-                {
-                    weaponIconName = "https://i.imgur.com/2StcKCZ.gif";
-                }
-                else if (weaponIconName.Contains("ms"))
-                {
-                    weaponIconName = "https://i.imgur.com/TyZFrvK.gif";
-                }
-                else if (weaponIconName.Contains("lbg"))
-                {
-                    weaponIconName = "https://i.imgur.com/Q0Firpd.gif";
-                }
-                else if (weaponIconName.Contains("hbg"))
-                {
-                    weaponIconName = "https://i.imgur.com/TgPORx6.gif";
-                }
-                else if (weaponIconName.Contains("bow"))
-                {
-                    weaponIconName = "https://i.imgur.com/rsEycVk.gif";
-                }
+                default: return "https://i.imgur.com/9OkLYAz.png"; //transcend
+                case "sns": return "https://i.imgur.com/hVCDfnA.png";
+                case "sns_green": return "https://i.imgur.com/U61zPJa.png";
+                case "sns_red": return "https://i.imgur.com/ZGCd1lH.png";
+                case "sns_pink": return "https://i.imgur.com/O4qyBfI.png";
+                case "sns_blue": return "https://i.imgur.com/dQvflcw.png";
+                case "sns_navy": return "https://i.imgur.com/vdeSnZh.png";
+                case "sns_cyan": return "https://i.imgur.com/37gfP8P.png";
+                case "sns_purple": return "https://i.imgur.com/x7dFt4G.png";
+                case "sns_orange": return "https://i.imgur.com/bz22IiF.png";
+                case "sns_yellow": return "https://i.imgur.com/wKItSbP.png";
+                case "sns_grey": return "https://i.imgur.com/U25Xxfj.png";
+                case "sns_rainbow": return "https://i.imgur.com/3a6OI1V.gif";
+                case "ds": return "https://i.imgur.com/JIFNgz9.png";
+                case "ds_green": return "https://i.imgur.com/MEWrHcC.png";
+                case "ds_red": return "https://i.imgur.com/dzIoOF2.png";
+                case "ds_pink": return "https://i.imgur.com/OfUVJy6.png";
+                case "ds_blue": return "https://i.imgur.com/fUvIuCl.png";
+                case "ds_navy": return "https://i.imgur.com/oPz7WAA.png";
+                case "ds_cyan": return "https://i.imgur.com/Lkf6v4A.png";
+                case "ds_purple": return "https://i.imgur.com/b5Ly09E.png";
+                case "ds_orange": return "https://i.imgur.com/LdHWvui.png";
+                case "ds_yellow": return "https://i.imgur.com/2A8UXdT.png";
+                case "ds_grey": return "https://i.imgur.com/snw6dPs.png";
+                case "ds_rainbow": return "https://i.imgur.com/eWTRTJl.gif";
+                case "gs": return "https://i.imgur.com/vLxcWM8.png";
+                case "gs_green": return "https://i.imgur.com/9puI44e.png";
+                case "gs_red": return "https://i.imgur.com/Xhs5yJj.png";
+                case "gs_pink": return "https://i.imgur.com/DXI9FHs.png";
+                case "gs_blue": return "https://i.imgur.com/GxWofdH.png";
+                case "gs_navy": return "https://i.imgur.com/ZM1Isqt.png";
+                case "gs_cyan": return "https://i.imgur.com/tO2TrkB.png";
+                case "gs_purple": return "https://i.imgur.com/ijgJ69Y.png";
+                case "gs_orange": return "https://i.imgur.com/CWHEhAi.png";
+                case "gs_yellow": return "https://i.imgur.com/ZpGOD3z.png";
+                case "gs_grey": return "https://i.imgur.com/82HhSFD.png";
+                case "gs_rainbow": return "https://i.imgur.com/WnRuqll.gif";
+                case "ls": return "https://i.imgur.com/qdA0x3k.png";
+                case "ls_green": return "https://i.imgur.com/9LvQVQ7.png";
+                case "ls_red": return "https://i.imgur.com/oc0ExLi.png";
+                case "ls_pink": return "https://i.imgur.com/jjBGbGu.png";
+                case "ls_blue": return "https://i.imgur.com/AZ606vb.png";
+                case "ls_navy": return "https://i.imgur.com/M6mmOpO.png";
+                case "ls_cyan": return "https://i.imgur.com/qHFbpoJ.png";
+                case "ls_purple": return "https://i.imgur.com/ICgTu6S.png";
+                case "ls_orange": return "https://i.imgur.com/XPYDego.png";
+                case "ls_yellow": return "https://i.imgur.com/H4vJFd1.png";
+                case "ls_grey": return "https://i.imgur.com/1v7T5Hm.png";
+                case "ls_rainbow": return "https://i.imgur.com/BUYVOih.gif";
+                case "hammer": return "https://i.imgur.com/hnY1HC0.png";
+                case "hammer_green": return "https://i.imgur.com/iOGBcmQ.png";
+                case "hammer_red": return "https://i.imgur.com/Z5QGsTO.png";
+                case "hammer_pink": return "https://i.imgur.com/WHkXOoC.png";
+                case "hammer_blue": return "https://i.imgur.com/fb7bxlw.png";
+                case "hammer_navy": return "https://i.imgur.com/oaLfSIP.png";
+                case "hammer_cyan": return "https://i.imgur.com/N2N0Uib.png";
+                case "hammer_purple": return "https://i.imgur.com/CqNUgtg.png";
+                case "hammer_orange": return "https://i.imgur.com/PzYNYZh.png";
+                case "hammer_yellow": return "https://i.imgur.com/Ujpj7WL.png";
+                case "hammer_grey": return "https://i.imgur.com/R0xCYk5.png";
+                case "hammer_rainbow": return "https://i.imgur.com/GIAbKkO.gif";
+                case "hh": return "https://i.imgur.com/EmjAq37.png";
+                case "hh_green": return "https://i.imgur.com/LWCOXI4.png";
+                case "hh_red": return "https://i.imgur.com/lwtBV09.png";
+                case "hh_pink": return "https://i.imgur.com/tZBuDi2.png";
+                case "hh_blue": return "https://i.imgur.com/7qncIzQ.png";
+                case "hh_navy": return "https://i.imgur.com/yaFS4N0.png";
+                case "hh_cyan": return "https://i.imgur.com/GvHKg1u.png";
+                case "hh_purple": return "https://i.imgur.com/33FpZMA.png";
+                case "hh_orange": return "https://i.imgur.com/5ZHbR8K.png";
+                case "hh_yellow": return "https://i.imgur.com/2YdtoVI.png";
+                case "hh_grey": return "https://i.imgur.com/pyPzmJI.png";
+                case "hh_rainbow": return "https://i.imgur.com/VuRLWWG.gif";
+                case "lance": return "https://i.imgur.com/M8fmT4f.png";
+                case "lance_green": return "https://i.imgur.com/zSyyIZY.png";
+                case "lance_red": return "https://i.imgur.com/ZFeN3aA.png";
+                case "lance_pink": return "https://i.imgur.com/X1EncHA.png";
+                case "lance_blue": return "https://i.imgur.com/qMM2gqG.png";
+                case "lance_navy": return "https://i.imgur.com/F7vp82x.png";
+                case "lance_cyan": return "https://i.imgur.com/9q1rqfF.png";
+                case "lance_purple": return "https://i.imgur.com/qF9JMEE.png";
+                case "lance_orange": return "https://i.imgur.com/s1Agqri.png";
+                case "lance_yellow": return "https://i.imgur.com/EcOCe50.png";
+                case "lance_grey": return "https://i.imgur.com/jKPcLtN.png";
+                case "lance_rainbow": return "https://i.imgur.com/BXgEuDy.gif";
+                case "gl": return "https://i.imgur.com/9wq3LQe.png";
+                case "gl_green": return "https://i.imgur.com/bQdGiiB.png";
+                case "gl_red": return "https://i.imgur.com/QorzUm5.png";
+                case "gl_pink": return "https://i.imgur.com/OqkXeZy.png";
+                case "gl_blue": return "https://i.imgur.com/lsFZSnT.png";
+                case "gl_navy": return "https://i.imgur.com/2fkkHVd.png";
+                case "gl_cyan": return "https://i.imgur.com/MzqTO9c.png";
+                case "gl_purple": return "https://i.imgur.com/QqDN0jm.png";
+                case "gl_orange": return "https://i.imgur.com/GowSPSA.png";
+                case "gl_yellow": return "https://i.imgur.com/az9QfWH.png";
+                case "gl_grey": return "https://i.imgur.com/Q5lK9Nw.png";
+                case "gl_rainbow": return "https://i.imgur.com/47VsWHj.gif";
+                case "saf": return "https://i.imgur.com/fVbaN34.png";
+                case "saf_green": return "https://i.imgur.com/V3x8aaf.png";
+                case "saf_red": return "https://i.imgur.com/3l8TO9T.png";
+                case "saf_pink": return "https://i.imgur.com/DTXXEb9.png";
+                case "saf_blue": return "https://i.imgur.com/Dgr9oQg.png";
+                case "saf_navy": return "https://i.imgur.com/Tv40lQg.png";
+                case "saf_cyan": return "https://i.imgur.com/uKxiYhr.png";
+                case "saf_purple": return "https://i.imgur.com/x3RC716.png";
+                case "saf_orange": return "https://i.imgur.com/GU2eOdb.png";
+                case "saf_yellow": return "https://i.imgur.com/f0jrcYq.png";
+                case "saf_grey": return "https://i.imgur.com/jIRe9fA.png";
+                case "saf_rainbow": return "https://i.imgur.com/icBF5lS.gif";
+                case "tonfa": return "https://i.imgur.com/8YpLQ5G.png";
+                case "tonfa_green": return "https://i.imgur.com/0VflTRd.png";
+                case "tonfa_red": return "https://i.imgur.com/f5mIJgU.png";
+                case "tonfa_pink": return "https://i.imgur.com/M6ANARX.png";
+                case "tonfa_blue": return "https://i.imgur.com/BrCnJbs.png";
+                case "tonfa_navy": return "https://i.imgur.com/b2lbCN1.png";
+                case "tonfa_cyan": return "https://i.imgur.com/7bm8xyW.png";
+                case "tonfa_purple": return "https://i.imgur.com/BOcCFhU.png";
+                case "tonfa_orange": return "https://i.imgur.com/vi8qGs5.png";
+                case "tonfa_yellow": return "https://i.imgur.com/qDR1aJZ.png";
+                case "tonfa_grey": return "https://i.imgur.com/GxFrQm6.png";
+                case "tonfa_rainbow": return "https://i.imgur.com/2StcKCZ.gif";
+                case "ms": return "https://i.imgur.com/s3OaNkP.png";
+                case "ms_green": return "https://i.imgur.com/7c8pPow.png";
+                case "ms_red": return "https://i.imgur.com/zA4wMON.png";
+                case "ms_pink": return "https://i.imgur.com/dOc22Dm.png";
+                case "ms_blue": return "https://i.imgur.com/rz4anE4.png";
+                case "ms_navy": return "https://i.imgur.com/dvghN1a.png";
+                case "ms_cyan": return "https://i.imgur.com/gCWBOWm.png";
+                case "ms_purple": return "https://i.imgur.com/UI3KO1c.png";
+                case "ms_orange": return "https://i.imgur.com/9Bg0QzE.png";
+                case "ms_yellow": return "https://i.imgur.com/rAKEtTa.png";
+                case "ms_grey": return "https://i.imgur.com/dNkcRIR.png";
+                case "ms_rainbow": return "https://i.imgur.com/TyZFrvK.gif";
+                case "lbg": return "https://i.imgur.com/txp2GsM.png";
+                case "lbg_green": return "https://i.imgur.com/CMf9U6x.png";
+                case "lbg_red": return "https://i.imgur.com/aKLv0na.png";
+                case "lbg_pink": return "https://i.imgur.com/theTGWy.png";
+                case "lbg_blue": return "https://i.imgur.com/IgXj7vl.png";
+                case "lbg_navy": return "https://i.imgur.com/N8vleIL.png";
+                case "lbg_cyan": return "https://i.imgur.com/4iF0Kex.png";
+                case "lbg_purple": return "https://i.imgur.com/V36MwUh.png";
+                case "lbg_orange": return "https://i.imgur.com/FZ3sAAr.png";
+                case "lbg_yellow": return "https://i.imgur.com/l0Fga4q.png";
+                case "lbg_grey": return "https://i.imgur.com/WE1oZuG.png";
+                case "lbg_rainbow": return "https://i.imgur.com/Q0Firpd.gif";
+                case "hbg": return "https://i.imgur.com/8WD2bI7.png";
+                case "hbg_green": return "https://i.imgur.com/j6qe1uh.png";
+                case "hbg_red": return "https://i.imgur.com/hd8cwCa.png";
+                case "hbg_pink": return "https://i.imgur.com/PDfABOO.png";
+                case "hbg_blue": return "https://i.imgur.com/qURblCM.png";
+                case "hbg_navy": return "https://i.imgur.com/FxInecI.png";
+                case "hbg_cyan": return "https://i.imgur.com/UclnhBS.png";
+                case "hbg_purple": return "https://i.imgur.com/IHifTBB.png";
+                case "hbg_orange": return "https://i.imgur.com/7JRHNzp.png";
+                case "hbg_yellow": return "https://i.imgur.com/rihlgaB.png";
+                case "hbg_grey": return "https://i.imgur.com/mKpJc0p.png";
+                case "hbg_rainbow": return "https://i.imgur.com/TgPORx6.gif";
+                case "bow": return "https://i.imgur.com/haCsXQr.png";
+                case "bow_green": return "https://i.imgur.com/vykrGg9.png";
+                case "bow_red": return "https://i.imgur.com/01nEtNy.png";
+                case "bow_pink": return "https://i.imgur.com/DLIYT8G.png";
+                case "bow_blue": return "https://i.imgur.com/THX3O3X.png";
+                case "bow_navy": return "https://i.imgur.com/DGHifcq.png";
+                case "bow_cyan": return "https://i.imgur.com/sXnzQrG.png";
+                case "bow_purple": return "https://i.imgur.com/D6NYg8r.png";
+                case "bow_orange": return "https://i.imgur.com/fy47m6l.png";
+                case "bow_yellow": return "https://i.imgur.com/ExGTxvl.png";
+                case "bow_grey": return "https://i.imgur.com/Y5vOofE.png";
+                case "bow_rainbow": return "https://i.imgur.com/rsEycVk.gif";
             }
-            return weaponIconName;
         }
 
         public string GetRealMonsterName(string iconName)
@@ -914,6 +1029,25 @@ namespace MHFZ_Overlay
             }
         }
 
+        public string getGameMode(bool isHighGradeEdition)
+        {
+            if (isHighGradeEdition)
+                return " [High-Grade Edition]";
+            else
+                return "";
+        }
+
+        public string getOverlayMode()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown)
+                return "";
+            else if (s.TimerInfoShown)
+                return "(Speedrun) ";
+            else
+                return "(Zen) ";
+        }
+
         private void UpdateDiscordRPC()
         {
             if (!(isDiscordRPCRunning))
@@ -921,7 +1055,7 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            presenceTemplate.Details = getAreaName(DataLoader.model.AreaID());
+            presenceTemplate.Details = string.Format("{0}{1}{2}",getOverlayMode(),getAreaName(DataLoader.model.AreaID()),getGameMode(DataLoader.isHighGradeEdition));
 
             //quest ids:
             //mp road: 23527
@@ -1228,7 +1362,7 @@ namespace MHFZ_Overlay
                     s.SharpnessInfoX = (double)(pos.X - XOffset);
                     s.SharpnessInfoY = (double)(pos.Y - YOffset);
                     break;
-                case "MonsterPartHpBars":
+                case "MonsterPartThreshold":
                     s.Monster1PartX = (double)(pos.X - XOffset);
                     s.Monster1PartY = (double)(pos.Y - YOffset);
                     break;

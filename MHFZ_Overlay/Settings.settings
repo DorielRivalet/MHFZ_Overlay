@@ -110,7 +110,7 @@
     <Setting Name="SharpnessInfoY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">62</Value>
     </Setting>
-    <Setting Name="PartHealthBarsShown" Type="System.Boolean" Scope="User">
+    <Setting Name="PartThresholdShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Monster1PartX" Type="System.Double" Scope="User">
