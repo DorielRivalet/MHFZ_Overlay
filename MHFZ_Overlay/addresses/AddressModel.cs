@@ -1917,6 +1917,44 @@ namespace MHFZ_Overlay.addresses
         public string Monster3Name => getMonsterName(LargeMonster3ID());
         public string Monster4Name => getMonsterName(LargeMonster4ID());
 
+        public string RealMonsterName
+        {
+            get {
+                string RealName = CurrentMonster1Icon.Replace("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/", "");
+                RealName = RealName.Replace(".gif", "");
+                RealName = RealName.Replace(".png", "");
+                RealName = RealName.Replace("zenith_", "");
+                RealName = RealName.Replace("_", " ");
+
+                //https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
+                RealName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(RealName);
+
+                //dure
+                if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
+                    return "Duremudira";
+                else if (QuestID() == 23648 || QuestID() == 23649)
+                    return "Arrogant Duremudira";
+                else
+                    return RealName;
+            }
+            //quest ids:
+            //mp road: 23527
+            //solo road: 23628
+            //1st district dure: 21731
+            //2nd district dure: 21746
+            //1st district dure sky corridor: 21749
+            //2nd district dure sky corridor: 21750
+            //arrogant dure repel: 23648
+            //arrogant dure slay: 23649
+            //urgent tower: 21751
+            //4th district dure: 21748
+            //3rd district dure: 21747
+            //3rd district dure 2: 21734
+            //UNUSED sky corridor: 21730
+            //sky corridor prologue: 21729
+
+        }
+
         public string getMonsterName(int id)
         {
             if (Configuring)
@@ -1924,7 +1962,11 @@ namespace MHFZ_Overlay.addresses
             if (id == 0)
                 return "";
             Dictionary.List.MonsterID.TryGetValue(id, out string? monstername);
-            return monstername + "";
+
+            if (monstername != null && monstername != RealMonsterName)
+                return RealMonsterName;
+            else
+                return monstername + "";
         }
         //DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult()).ToString()
         public string Monster1HP => Configuring ? "0" : ShowMonsterEHP() ? DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult()).ToString() : Monster1HPInt().ToString();
