@@ -172,7 +172,7 @@ namespace MHFZ_Overlay
         /// </summary>
         public static RichPresence presenceTemplate = new RichPresence()
         {
-            Details = "Overlay 0.2.0 by Imulion",
+            Details = "Overlay v0.2.0 by Imulion",
             State = "Loading...",
             //check img folder
             Assets = new Assets()
@@ -895,7 +895,7 @@ namespace MHFZ_Overlay
         }
 
         public string GetRankNameFromID(int id)
-        {//TODO: Twinheads
+        {
             switch (id)
             {
                 case 0:
