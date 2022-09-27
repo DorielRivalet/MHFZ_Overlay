@@ -1956,8 +1956,11 @@ namespace MHFZ_Overlay
         {
             if (DataLoader.model.Objective1Quantity() <= 1)
                 return "";
-            else
+            // hunt / capture / slay
+            else if (DataLoader.model.ObjectiveType() == 0x1 || DataLoader.model.ObjectiveType() == 0x101 || DataLoader.model.ObjectiveType() == 0x201)
                 return DataLoader.model.Objective1Quantity().ToString() + " ";
+            else 
+                return "";
         }
 
         
