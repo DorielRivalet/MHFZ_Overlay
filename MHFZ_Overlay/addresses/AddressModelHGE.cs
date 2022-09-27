@@ -257,9 +257,15 @@ namespace MHFZ_Overlay.addresses
 
         public override int DivaSkillUsesLeft() => M.ReadByte("mhfo-hd.dll+ED3EB0A");
         public override int HalkFullness() => M.ReadByte("mhfo-hd.dll+ED3C123");
-        public override int RankBand() => M.ReadByte("mhfo-hd.dll+2AFA7888");
+        public override int RankBand() => M.ReadByte("mhfo-hd.dll+2AFA788");
 
         //public override int PartnyaRank() => M.Read2Byte("mhfo-hd.dll+E8DF010");
         public override int PartnyaRankPoints() => M.ReadInt("mhfo-hd.dll+E551114");
+
+        public override int Objective1ID() => M.Read2Byte("mhfo-hd.dll+2AFA834");
+        public override int Objective1Quantity() => M.Read2Byte("mhfo-hd.dll+2AFA836");
+        public override int Objective1CurrentQuantityMonster() => M.Read2Byte("mhfo-hd.dll+ECB2A38");
+        public override int Objective1CurrentQuantityItem() => M.Read2Byte("mhfo-hd.dll+DC6C2F2");
+
     }
 }

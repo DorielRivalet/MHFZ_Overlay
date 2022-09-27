@@ -208,6 +208,13 @@ namespace MHFZ_Overlay.addresses
         abstract public int Monster2Stun();
         abstract public int Monster2StunNeed();
         abstract public string Monster2Size();
+        abstract public int Objective1ID();
+        abstract public int Objective1Quantity();
+        abstract public int Objective1CurrentQuantityMonster();
+        abstract public int Objective1CurrentQuantityItem();
+
+
+
 
         abstract public int RoadSelectedMonster();
         public bool HasMonster1 => ShowHPBar(LargeMonster1ID(), Monster1HPInt());
@@ -282,6 +289,21 @@ namespace MHFZ_Overlay.addresses
 
             if (roadOverride() == false)
                 monsterID = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
+
+            if (getDureName() != "None")
+            {
+                //switch(getDureName)
+                //{
+                //    case "1st District Duremudira":
+                //    case "2nd District Duremudira":
+                //    case "3rd District Duremudira":
+                //    case "4th District Duremudira":
+                //    case "Arrogant Duremudira":
+                //        return 
+                //}
+                monsterID = 132;
+            }
+                
 
             switch (monsterID)
             {
@@ -509,7 +531,7 @@ namespace MHFZ_Overlay.addresses
 
                 //Duremudira (doesn't load properly)
                 case 132://Duremudira
-                case 145://3rd Phase Duremudira
+                case 145://3rd Phase Duremudira (used on gathering quest)
                 case 167://Arrogant Duremudira
                     Monster1Part1Name = "Head";
                     Monster1Part2Name = "Wings";
@@ -664,7 +686,7 @@ namespace MHFZ_Overlay.addresses
                     Monster1Part10Name = "None";
                     break;
 
-                case 123://Gourgarf (Lolo)
+                case 123://Gougarf (Lolo)
                     Monster1Part1Name = "Head";
                     Monster1Part2Name = "R. Hindleg";
                     Monster1Part3Name = "L. Hindleg";
@@ -1874,7 +1896,28 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string Monster1Name => getMonsterName(GetNotRoad() || RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID()); //monster 1 is used for the first display and road uses 2nd choice to store 2nd monster
+        public string getDureName()
+        {
+            if (QuestID() == 21731 || QuestID() == 21749)
+                return "1st District Duremudira";
+            else if (QuestID() == 21746 || QuestID() == 21750)
+                return "2nd District Duremudira";
+            else if (QuestID() == 21747 || QuestID() == 21734)
+                return "3rd District Duremudira";
+            else if (QuestID() == 21748)
+                return "4th District Duremudira";
+            else if (QuestID() == 23648 || QuestID() == 23649)
+                return "Arrogant Duremudira";
+            else 
+                return "None";
+        }
+
+        public string getObjectiveName()
+        {
+            return "";
+        }
+
+        public string Monster1Name => (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750 || QuestID() == 21748 || QuestID() == 23648 || QuestID() == 23649 || QuestID() == 21747 || QuestID() == 21734) ? getDureName() : getMonsterName(GetNotRoad() || RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID()); //monster 1 is used for the first display and road uses 2nd choice to store 2nd monster
         public string Monster2Name => getMonsterName(LargeMonster2ID());
         public string Monster3Name => getMonsterName(LargeMonster3ID());
         public string Monster4Name => getMonsterName(LargeMonster4ID());
@@ -2085,6 +2128,12 @@ namespace MHFZ_Overlay.addresses
                     id = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
                 else
                     id = LargeMonster1ID();
+
+                //dure
+                if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
+                    return baseAddress + "duremudira" + extension1;
+                else if (QuestID() == 23648 || QuestID() == 23649)
+                    return baseAddress + "arrogant_duremudira" + extension1;
 
                 switch (id)
                 {
@@ -2394,7 +2443,7 @@ namespace MHFZ_Overlay.addresses
                     case 122:
                         return baseAddress + "zerureusu" + extension1;
                     case 123:
-                        return baseAddress + "gourgarf" + extension1;
+                        return baseAddress + "gougarf" + extension1;
                     case 124:
                         return baseAddress + "uruki" + extension1;
                     case 125:

@@ -66,6 +66,10 @@
 - Halk Fullness "mhfo-hd.dll"+ED3C123
 - Rank Band "mhfo-hd.dll"+2AFA788
 - Partnya Rank Points "mhfo-hd.dll"+E551114
+- Objective 1 ID mhfo-hd.dll+2AFA834
+- Objective 1 Quantity mhfo-hd.dll+2AFA836
+- Objective 1 Current Quantity Monster mhfo-hd.dll+ECB2A38
+- Objective 1 Current Quantity Item "mhfo-hd.dll"+DC6C2F2
 
 ## Not HGE
 
@@ -134,6 +138,10 @@
 - Rank Band mhfo.dll+28C2BD8
 - Hit Count mhfo.dll+60792E6
 - Partnya Rank Points mhfo.dll+5919554
+- Objective 1 ID mhfo.dll+28C2C84
+- Objective 1 Quantity mhfo.dll+28C2C86
+- Objective 1 Current Quantity Monster mhfo.dll+60792E6
+- Objective 1 Current Quantity Item mhfo.dll+5034732
 
 ## IDs
 
@@ -800,7 +808,7 @@
 | ID | Area Name |
 |----|------|
 | 0  |Loading|
-| 1  | Jungle Night Basecamp    |
+| 1  | Jungle Night Base Camp    |
 | 2  | Jungle Night Area 1    |
 | 3  | Jungle Night Area 2    |
 | 4  | Jungle Night Area 3    |
@@ -815,12 +823,12 @@
 |13  | Arena with Moat Day Area 1     |
 |14  |  Siege Fortress Day   |
 |15  |  Snowy Mountains Night Secret Area    |
-|16  | Swamp Night Basecamp    |
+|16  | Swamp Night Base Camp    |
 |17  | Arena with Moat Night Area 1    |
 |18  | Jungle Night Area 5   |
 |19  | Jungle Night Area 9 |
 |20  | Castle Schrade Base Camp/Area 1    |
-|21  |  Forest and Hills Day Basecamp |
+|21  |  Forest and Hills Day Base Camp |
 |22  | Jungle Night Area 8  |
 |23  |   Jungle Night Area 7 |
 |24  | Desert Night Secret Area    |
@@ -844,8 +852,8 @@
 |42  |Forest and Hills Day Area 11  |
 |43  | Forest and Hills Day Area 12    |
 |44  | Duplicate of Swamp Night Area 1    |
-|45  |  Desert Camp Night    |
-|46  |  Arena with Moat Night Basecamp    |
+|45  |  Desert Base Camp Night    |
+|46  |  Arena with Moat Night Base Camp    |
 |47  |  Desert Night Area 2   |
 |48  | Desert Night Area 7    |
 |49  | Desert Night Area 3    |
@@ -857,7 +865,7 @@
 |55  | Desert Night Area 9    |
 |56  | Desert Night Area 10 |
 |57  | Arena with Pillar Night Area 1    |
-|58  | Volcano Night Basecamp    |
+|58  | Volcano Night Base Camp    |
 |59  | Volcano Night Area 4    |
 |60  | Volcano Night Area 5  |
 |61  | Volcano Night Area 1    |
@@ -897,7 +905,7 @@
 |95  |  Snowy Mountains Day Area 2|
 |96  | Snowy Mountains Day Area 7|
 |97  | Snowy Mountains Day Area 8|
-|98  | Snowy Mountains Day Basecamp|
+|98  | Snowy Mountains Day Base Camp|
 |99  | Snowy Mountains Day Area 1|
 |100 | Snowy Mountains Day Area 6|
 |101 |  Snowy Mountains Night Area 4|
@@ -909,7 +917,7 @@
 |107 | Snowy Mountains Night Base Camp|
 |108 | Snowy Mountains Night Area 1|
 |109 |   Snowy Mountains Night Area 6|
-|110 | Jungle Day Basecamp|
+|110 | Jungle Day Base Camp|
 |111 | Jungle Day Area 10|
 |112 | Jungle Day Area 2|
 |113 | Jungle Day Area 3|
@@ -920,7 +928,7 @@
 |118 | Jungle Day Area 7|
 |119 | Jungle Day Area 6|
 |120 | Jungle Day Area 10|
-|121 | Tower 3 Camp|
+|121 | Tower 3 Base Camp|
 |122 | Tower 3 Area 1|
 |123 | Tower 3 Area 2|
 |124 | Tower 3 Area 10|
@@ -939,7 +947,7 @@
 |137 | Broken|
 |138 | Tower 2|
 |139 | Tower 1 Area 9/Tower with Nesthole|
-|140 | Desert Day Basecamp|
+|140 | Desert Day Base Camp|
 |141 | Desert Day Area 2|
 |142 | Desert Day Area 7|
 |143 | Desert Day Area 3|
@@ -950,7 +958,7 @@
 |148 | Desert Day Area 8|
 |149 |  Desert Day Area 9|
 |150 | Desert Day Area 10|
-|151 |  Swamp Day Basecamp|
+|151 |  Swamp Day Base Camp|
 |152 | Swamp Day Area 1|
 |153 | Swamp Day Area 2|
 |154 | Swamp Day Area 3|
@@ -960,7 +968,7 @@
 |158 | Swamp Day Area 5|
 |159 | Swamp Day Area 7|
 |160 | Swamp Day Area 4|
-|161 | Volcano Day Basecamp|
+|161 | Volcano Day Base Camp|
 |162 | Volcano Day Area 4|
 |163 | Volcano Day Area 5|
 |164 | Volcano Day Area 1|
@@ -983,16 +991,16 @@
 |181 |  Dundorma Fort 02|
 |182 |  Dundorma Fort 01|
 |183 | Dundorma Fort Base Camp|
-|184 | Forest and hill Night base camp|
-|185 | Forest and hill Night Area 6|
-|186 | Forest and hill Night Area 3|
-|187 | Forest and hill Night Area 10|
-|188 | Forest and hill Night Area 8|
+|184 | Forest and Hills Night Base camp|
+|185 | Forest and Hills Night Area 6|
+|186 | Forest and Hills Night Area 3|
+|187 | Forest and Hills Night Area 10|
+|188 | Forest and Hills Night Area 8|
 |189 |  Forest and HIll Night 9|
-|190 |  Forest and hill Night Area 4|
-|191 |  Forest and hill Night Area 2|
-|192 | Forest and hill Night Area 1|
-|193 | Forest and hill Night Area 5|
+|190 |  Forest and Hills Night Area 4|
+|191 |  Forest and Hills Night Area 2|
+|192 | Forest and Hills Night Area 1|
+|193 | Forest and Hills Night Area 5|
 |194 | Forest and Hills Night Area 7|
 |195 | Forest and Hills Night Area 11|
 |196 | Forest and Hills Night Area 12|
@@ -1044,10 +1052,10 @@
 |242 | Unused Version of the Top of G.Forest (Day)|
 |243 | Unused Version of the Top of G.Forest (Night)|
 |244 | Code Claiming Room|
-|245 |  Top of Great Forest Day Camp|
+|245 |  Top of Great Forest Day Base Camp|
 |246 |Top of Great Forest Day Area 1      |
-|247 |  Highlands Base Day Camp    |
-|248 | Highlands Night Basecamp|
+|247 |  Highlands Day Base Camp    |
+|248 | Highlands Night Base Camp|
 |249 | Highlands Day Area 1|
 |250 | Highlands Night Area 1|
 |251 | Highlands Day Area 2|
@@ -1057,8 +1065,8 @@
 |255 | Highlands Day Area 4|
 |256 | Caravan Changing Area (Night/Day)|
 |257 | Blacksmith|
-|258 | Caravan Blimp Basecamp|
-|259 | Caravan Blimp Basecamp|
+|258 | Caravan Blimp Base Camp|
+|259 | Caravan Blimp Base Camp|
 |260 | Caravan Area (Ravi "Great Reward Clause")|
 |261 | Caravan Changing Area|
 |262 | Caravan Guest House|
@@ -1087,9 +1095,9 @@
 |285 | Absent|
 |286 | PvP Room|
 |287 | Absent|
-|288 | Gorge Day Basecamp|
-|289 | Gorge Night Basecamp|
-|290 | Gorge Day Basecamp|
+|288 | Gorge Day Base Camp|
+|289 | Gorge Night Base Camp|
+|290 | Gorge Day Base Camp|
 |291 | Gorge Night Area 1|
 |292 | Gorge Day Area 1|
 |293 |  Gorge Night Area 2|
@@ -1121,7 +1129,7 @@
 |319 |  Solitude Island|
 |320 | Solitude Isle 3|
 |321 | Solitude Island|
-|322 | Tidal Island Day Basecamp|
+|322 | Tidal Island Day Base Camp|
 |323 | Tidal Island Day Area 1|
 |324 | Tidal Island Day Area 2|
 |325 | Tidal Island Day Area 3|
@@ -1144,7 +1152,7 @@
 |342 |  Large Airship Base Camp Day|
 |343 | Large Airship Deck Day|
 |344 | Large Airship Crashed|
-|345 | Polar Sea Basecamp Day|
+|345 | Polar Sea Base Camp Day|
 |346 | Polar Sea Night|
 |347 | Polar Sea Day Area 1|
 |348 | Polar Sea Night Area 1|
@@ -1249,8 +1257,8 @@
 |447 |  Amatsu Arena 2|
 |448 |  Shagaru Arena 1|
 |449 |  Shagaru Arena 2|
-|450 |   Interception/Fortress Camp |
-|451 |  Interception/Fortress Camp |
+|450 |   Interception/Fortress Base Camp |
+|451 |  Interception/Fortress Base Camp |
 |452 |  Interception/Fortress Area 1 |
 |453 |  Interception/Fortress Area 1 |
 |454 |  Interception/Fortress Area 2 |

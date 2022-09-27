@@ -193,5 +193,13 @@ namespace MHFZ_Overlay.addresses
 
         //public override int PartnyaRank() => M.Read2Byte("mhfo.dll+5CA5520");
         public override int PartnyaRankPoints() => M.ReadInt("mhfo.dll+5919554");
+
+        public override int Objective1ID() => M.Read2Byte("mhfo.dll+28C2C84");
+
+        public override int Objective1Quantity() => M.Read2Byte("mhfo.dll+28C2C86");
+
+        public override int Objective1CurrentQuantityMonster() => M.Read2Byte("mhfo.dll+60792E6");
+        public override int Objective1CurrentQuantityItem() => M.Read2Byte("mhfo.dll+5034732");
+
     }
 }

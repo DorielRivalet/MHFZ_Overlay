@@ -84,7 +84,7 @@ If the monster HP shown is less than what its actual values should be, restart b
 - With Monster EHP enabled, if you cart, the max EHP turns into the current EHP, along with some other info max values
 - Sometimes when exiting Drag and Drop the monster HP information disappears
 - Spawning in the same area as the monster doesn't load the information properly. Fix: re-enter area
-- Duremudira HP not showing
+- Duremudira HP not showing. Fix: enable *Always Show Monster Info*, load another quest showing the HP bars (not just the numbers), then retry.
 - Monster size values not shown correctly
 - Monster HP values are less than the actual values when not loading properly
 - Damage numbers over 1000 not working
@@ -110,6 +110,8 @@ If the monster HP shown is less than what its actual values should be, restart b
 - Sharpness graph
 - Language options
 - PvP addresses
+- Better Hunter's Road icon
+- Handle multiple objectives information
 
 ## How to Enable Discord Rich Presence
 

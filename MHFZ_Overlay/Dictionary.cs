@@ -860,7 +860,7 @@ namespace Dictionary
             {0x02,"Deliver" },
             {0x4004,"Break Part" },
             {0x1002,"Deliver Flag" },
-            {0x10,"Esoteric Action" }
+            {0x10,"Esoteric Action" } //what is this for?
         };
     };
     public class MapAreaList
@@ -913,7 +913,7 @@ namespace Dictionary
             {42,"Forest and Hills Day Area 11" },
             {43,"Forest and Hills Day Area 12" },
             {44,"Duplicate of Swamp Night Area 1" },
-            {45,"Desert Camp Night" },
+            {45,"Desert Base Camp Night" },
             {46,"Arena with Moat Night Base Camp" },
             {47,"Desert Night Area 2" },
             {48,"Desert Night Area 7" },
@@ -989,7 +989,7 @@ namespace Dictionary
             {118,"Jungle Day Area 7" },
             {119,"Jungle Day Area 6" },
             {120,"Jungle Day Area 10" },
-            {121,"Tower 3 Camp" },
+            {121,"Tower 3 Base Camp" },
             {122,"Tower 3 Area 1" },
             {123,"Tower 3 Area 2" },
             {124,"Tower 3 Area 10" },
@@ -1113,9 +1113,9 @@ namespace Dictionary
             {242,"Unused Version of the Top of G.Forest (Day)" },
             {243,"Unused Version of the Top of G.Forest (Night)" },
             {244,"Code Claiming Room" },
-            {245,"Top of Great Forest Day Camp" },
+            {245,"Top of Great Forest Day Base Camp" },
             {246,"Top of Great Forest Day Area 1" },
-            {247,"Highlands Base Day Camp" },
+            {247,"Highlands Day Base Camp" },
             {248,"Highlands Night Base Camp" },
             {249,"Highlands Day Area 1" },
             {250,"Highlands Night Area 1" },
@@ -1318,8 +1318,8 @@ namespace Dictionary
             {447,"Amatsu Arena 2" },
             {448,"Shagaru Arena 1" },
             {449,"Shagaru Arena 2" },
-            {450,"Interception/Fortress Camp" },
-            {451,"Interception/Fortress Camp" },
+            {450,"Interception/Fortress Base Camp" },
+            {451,"Interception/Fortress Base Camp" },
             {452,"Interception/Fortress Area 1" },
             {453,"Interception/Fortress Area 1" },
             {454,"Interception/Fortress Area 2" },

@@ -164,7 +164,7 @@ namespace MHFZ_Overlay
             {
                 Client.Dispose();
             }
-            
+
         }
 
         /// <summary>
@@ -220,12 +220,12 @@ namespace MHFZ_Overlay
                 //if (GetDiscordServerInvite != "")
                 //{
                 //should work fine
-                    presenceTemplate.Buttons = new DiscordRPC.Button[] { }; ;
-                    presenceTemplate.Buttons = new DiscordRPC.Button[]
-                    {
+                presenceTemplate.Buttons = new DiscordRPC.Button[] { }; ;
+                presenceTemplate.Buttons = new DiscordRPC.Button[]
+                {
                     new DiscordRPC.Button() {Label = "Overlay Repository", Url = "https://github.com/Imulion/MHFZ_Overlay"},
                     new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
-                    };
+                };
                 //}
 
                 if (GetDiscordServerInvite != "")
@@ -285,7 +285,7 @@ namespace MHFZ_Overlay
         {
             HideMonsterInfoWhenNotInQuest();
             HidePlayerInfoWhenNotInQuest();
-            
+
             DataLoader.model.ReloadData();
             Monster1HPBar.ReloadData();
             Monster2HPBar.ReloadData();
@@ -369,7 +369,7 @@ namespace MHFZ_Overlay
                 FontFamily = new System.Windows.Media.FontFamily("MS Gothic Bold")
                 //BorderBrush = System.Windows.Media.Brushes.Black,
                 //BorderThickness = new Thickness(2.0)
-                
+
                 //BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
             };
             //damageLabel.
@@ -436,7 +436,7 @@ namespace MHFZ_Overlay
                     break;
             }
 
-            if (!ShowDamageNumbersMulticolor()) 
+            if (!ShowDamageNumbersMulticolor())
             {
                 //damageLabel.Foreground = Brushes.Orange;
                 //https://stackoverflow.com/questions/14601759/convert-color-to-byte-value
@@ -455,7 +455,7 @@ namespace MHFZ_Overlay
             DamageNumbers.Children.Add(damageLabel);
 
             RemoveDamageNumberLabel(damageLabel);
-            
+
 
         }
 
@@ -542,7 +542,7 @@ namespace MHFZ_Overlay
                 case 2: return "Storm";
                 case 3: return "Extreme";
                 default: return "None";
-            } 
+            }
         }
 
         public string getArmorSkill(int id)
@@ -574,7 +574,7 @@ namespace MHFZ_Overlay
         public string getArmorColor()
         {
             Dictionary.ArmorColorList.ArmorColorID.TryGetValue(DataLoader.model.ArmorColor(), out string? colorname);
-            return colorname+"";
+            return colorname + "";
         }
 
         public string getWeaponIconFromID(int id)
@@ -861,24 +861,45 @@ namespace MHFZ_Overlay
 
         public string GetRealMonsterName(string iconName)
         {
-            string RealMonsterName = iconName.Replace("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/","");
+            //quest ids:
+            //mp road: 23527
+            //solo road: 23628
+            //1st district dure: 21731
+            //2nd district dure: 21746
+            //1st district dure sky corridor: 21749
+            //2nd district dure sky corridor: 21750
+            //arrogant dure repel: 23648
+            //arrogant dure slay: 23649
+            //urgent tower: 21751
+            //4th district dure: 21748
+            //3rd district dure: 21747
+            //3rd district dure 2: 21734
+            //UNUSED sky corridor: 21730
+            //sky corridor prologue: 21729
+            string RealMonsterName = iconName.Replace("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/", "");
             RealMonsterName = RealMonsterName.Replace(".gif", "");
             RealMonsterName = RealMonsterName.Replace(".png", "");
             RealMonsterName = RealMonsterName.Replace("zenith_", "");
             RealMonsterName = RealMonsterName.Replace("_", " ");
-            
+
             //https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
             RealMonsterName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(RealMonsterName);
-            
-            return RealMonsterName;
+
+            //dure
+            if (DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750)
+                return "Duremudira";
+            else if (DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649)
+                return "Arrogant Duremudira";
+            else
+                return RealMonsterName;
         }
 
         public string GetRankNameFromID(int id)
-        {
+        {//TODO: Twinheads
             switch (id)
             {
                 case 0:
-                 return "";
+                    return "";
                 case 1:
                 case 2:
                 case 3:
@@ -946,7 +967,7 @@ namespace MHFZ_Overlay
                     //golden 55917
                     switch (DataLoader.model.QuestID())
                     {
-                        default: 
+                        default:
                             return "G Rank ";
                         case 23585:
                         case 23589:
@@ -969,7 +990,7 @@ namespace MHFZ_Overlay
                         case 23601:
                             return "Lv9999 ";
                     }
-                    
+
                 case 54:
                     switch (DataLoader.model.QuestID())
                     {
@@ -988,7 +1009,7 @@ namespace MHFZ_Overlay
                         case 23603:
                             return "Upper Shiten ";
                     }
-                    //10m upper shiten/musou true slay
+                //10m upper shiten/musou true slay
                 case 64:
                     return "Z1 ";
                 case 65:
@@ -1013,40 +1034,335 @@ namespace MHFZ_Overlay
             switch (id)
             {
                 case 0:
-                    return "Nothing";
+                    return "Nothing ";
                 case 1:
-                    return "Hunt";
+                    return "Hunt ";
                 case 257:
-                    return "Capture";
+                    return "Capture ";
                 case 513:
-                    return "Slay";
+                    return "Slay ";
                 case 32772:
-                    return "Repel";
+                    return "Repel ";
                 case 98308:
-                    return "Slay or Repel";
+                    return "Slay or Repel ";
                 case 262144:
-                    return "Slay All";
+                    return "Slay All ";
                 case 131072:
-                    return "Slay Total";
+                    return "Slay Total ";
                 case 2:
-                    return "Deliver";
+                    return "Deliver ";
                 case 16388:
-                    return "Break Part";
+                    return "Break Part ";
                 case 4098:
-                    return "Deliver Flag";
+                    return "Deliver Flag ";
                 case 16:
-                    return "Esoteric Action";
+                    return "Esoteric Action ";
                 default:
-                    return "Nothing";
+                    return "Nothing ";
             }
         }
 
-        public string getAreaIconFromID(int id)
+        public string getAreaIconFromID(int id) //TODO: are highlands, tidal island or painted falls icons correct?
         {
-            switch (id) 
+            switch (id)
             {
                 case 0://Loading
                     return "https://i.imgur.com/Dwdfpen.png";
+                case 1://Jungle areas
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 18:
+                case 19:
+                case 22:
+                case 23:
+                case 26:
+                case 110:
+                case 111:
+                case 112:
+                case 113:
+                case 114:
+                case 115:
+                case 116:
+                case 117:
+                case 118:
+                case 119:
+                case 120:
+                case 212:
+                case 213:
+                    return "https://i.imgur.com/IZ8Zrv4.png";
+                case 6: //Snowy mountain areas
+                case 15:
+                case 92:
+                case 93:
+                case 94:
+                case 95:
+                case 96:
+                case 97:
+                case 98:
+                case 99:
+                case 100:
+                case 101:
+                case 102:
+                case 103:
+                case 104:
+                case 105:
+                case 106:
+                case 107:
+                case 108:
+                case 109:
+                case 218:
+                case 219:
+                    return "https://i.imgur.com/LLr0RoN.png";
+                case 7: //Desert areas
+                case 24:
+                case 45:
+                case 47:
+                case 48:
+                case 49:
+                case 50:
+                case 51:
+                case 52:
+                case 53:
+                case 54:
+                case 55:
+                case 56:
+                case 140:
+                case 141:
+                case 142:
+                case 143:
+                case 144:
+                case 145:
+                case 146:
+                case 147:
+                case 148:
+                case 149:
+                case 150:
+                case 214:
+                case 215:
+                    return "https://i.imgur.com/qmLxGj3.png";
+                case 8://Volcano areas
+                case 27:
+                case 58:
+                case 59:
+                case 60:
+                case 61:
+                case 62:
+                case 63:
+                case 64:
+                case 65:
+                case 74:
+                case 161:
+                case 162:
+                case 163:
+                case 164:
+                case 165:
+                case 166:
+                case 167:
+                case 168:
+                case 169:
+                case 216:
+                case 217:
+                case 220:
+                case 221:
+                case 222:
+                case 223:
+                    return "https://i.imgur.com/m18pzvD.png";
+                case 9://Swamp areas
+                case 16:
+                case 29:
+                case 44:
+                case 67:
+                case 68:
+                case 69:
+                case 70:
+                case 71:
+                case 72:
+                case 73:
+                case 75:
+                case 151:
+                case 152:
+                case 153:
+                case 154:
+                case 155:
+                case 156:
+                case 157:
+                case 158:
+                case 159:
+                case 160:
+                    return "https://i.imgur.com/i9oRjSE.png";
+                case 21://Forest and Hills areas
+                case 32:
+                case 33:
+                case 34:
+                case 35:
+                case 36:
+                case 37:
+                case 38:
+                case 39:
+                case 40:
+                case 41:
+                case 42:
+                case 43:
+                case 184:
+                case 185:
+                case 186:
+                case 187:
+                case 188:
+                case 189:
+                case 190:
+                case 191:
+                case 192:
+                case 193:
+                case 194:
+                case 195:
+                case 196:
+                    return "https://i.imgur.com/mSCOW0P.png";
+                case 224://Great Forest areas
+                case 225:
+                case 226:
+                case 227:
+                case 228:
+                case 229:
+                case 230:
+                case 231:
+                case 232:
+                case 233:
+                case 234:
+                case 235:
+                case 236:
+                case 237:
+                case 238:
+                case 239:
+                case 240:
+                case 241:
+                    return "https://i.imgur.com/prSGAFU.png";
+                case 247://Highlands areas
+                case 248:
+                case 249:
+                case 250:
+                case 251:
+                case 252:
+                case 253:
+                case 254:
+                case 255:
+                case 302:
+                case 303:
+                case 304:
+                case 305:
+                case 306:
+                case 307:
+                case 308:
+                    return "https://i.imgur.com/2HkWBN6.png";
+                case 322://Tidal Island areas
+                case 323:
+                case 324:
+                case 325:
+                case 326:
+                case 327:
+                case 328:
+                case 329:
+                case 330:
+                case 331:
+                case 332:
+                case 333:
+                case 334:
+                case 335:
+                case 336:
+                case 337:
+                case 338:
+                case 339:
+                    return "https://i.imgur.com/31ounTS.png";
+                case 345://Polar Sea areas
+                case 346:
+                case 347:
+                case 348:
+                case 349:
+                case 350:
+                case 351:
+                case 352:
+                case 353:
+                case 354:
+                case 355:
+                case 356:
+                case 357:
+                case 358:
+                    return "https://i.imgur.com/XpIow4u.png";
+                case 361://Flower Field areas
+                case 362:
+                case 363:
+                case 364:
+                case 365:
+                case 366:
+                case 367:
+                case 368:
+                case 369:
+                case 370:
+                case 371:
+                case 372:
+                    return "https://i.imgur.com/ybX6w9G.png";
+                case 390://TODO test
+                case 391://Tower / Tenrou (Sky Corridor) areas
+                case 392:
+                case 393:
+                case 394:
+                case 399://dure doorway
+                case 414://dure door
+                case 415:
+                case 416:
+                    return "https://i.imgur.com/Kq8qx0P.png";
+                case 400://White Lake areas
+                case 401:
+                case 402:
+                case 403:
+                case 404:
+                case 405:
+                case 406:
+                case 407:
+                case 408:
+                case 409:
+                case 410:
+                case 411:
+                case 412:
+                case 413:
+                    return "https://i.imgur.com/qz6XfEq.png";
+                case 423://Painted Falls areas
+                case 424:
+                case 425:
+                case 426:
+                case 427:
+                case 428:
+                case 429:
+                case 430:
+                case 431:
+                case 432:
+                case 433:
+                case 434:
+                case 435:
+                case 436:
+                    return "https://i.imgur.com/36TTe1a.png";
+                case 459://Hunter's Road Base Camp
+                    return "https://i.imgur.com/Jr8q9av.png";//TODO test
+                case 288://Gorge areas
+                case 289:
+                case 290:
+                case 291:
+                case 292:
+                case 293:
+                case 294:
+                case 295:
+                case 296:
+                case 297:
+                case 298:
+                case 299:
+                case 300:
+                case 301:
+                    return "https://i.imgur.com/EKfebRg.png";
+
+
+
+
                 case 200://Mezeporta
                 case 397://Mezeporta dupe non-HD
                     return "https://i.imgur.com/c4iPpu8.png"; //cattleya
@@ -1122,8 +1438,29 @@ namespace MHFZ_Overlay
 
         public string getMonsterIcon(int id)
         {
+            //quest ids:
+            //mp road: 23527
+            //solo road: 23628
+            //1st district dure: 21731
+            //2nd district dure: 21746
+            //1st district dure sky corridor: 21749
+            //2nd district dure sky corridor: 21750
+            //arrogant dure repel: 23648
+            //arrogant dure slay: 23649
+            //urgent tower: 21751
+            //4th district dure: 21748
+            //3rd district dure: 21747
+            //3rd district dure 2: 21734
+            //UNUSED sky corridor: 21730
+            //sky corridor prologue: 21729
             if (DataLoader.model.roadOverride() == false)
                 id = DataLoader.model.RoadSelectedMonster() == 0 ? DataLoader.model.LargeMonster1ID() : DataLoader.model.LargeMonster2ID();
+
+            //Duremudira Arena
+            if (DataLoader.model.AreaID() == 398 && (DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750)) 
+                id = 132;//duremudira
+            else if (DataLoader.model.AreaID() == 398 && (DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649))
+                id = 167;//arrogant duremudira
 
             switch (id)
             {
@@ -1586,7 +1923,7 @@ namespace MHFZ_Overlay
             if (currentMonster1MaxHP < int.Parse(DataLoader.model.Monster1HP))
                 currentMonster1MaxHP = int.Parse(DataLoader.model.Monster1HP);
 
-            if (currentMonster1MaxHP == 0)
+            if (currentMonster1MaxHP == 0 || GetMonster1EHP() == 0) //should be OK
                 currentMonster1MaxHP = 1;
 
             if (!(ShowCurrentHPPercentage()))
@@ -1605,6 +1942,44 @@ namespace MHFZ_Overlay
             return currentMonster1MaxHP;
         }
 
+        //TODO cactus quest shows fatalis
+        public string GetObjective1Name(int id)
+        {
+            string? objValue1;
+            bool isNameExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out objValue1);  //returns true
+            //Console.WriteLine(itemValue1); //Print "First"
+            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
+            return objValue1 + "";
+        }
+
+        public string GetObjective1Quantity()
+        {
+            if (DataLoader.model.Objective1Quantity() <= 1)
+                return "";
+            else
+                return DataLoader.model.Objective1Quantity().ToString() + " ";
+        }
+
+        
+        public string GetObjective1CurrentQuantity()
+        {
+            if (DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002)
+            {
+                if (DataLoader.model.Objective1Quantity() <= 1)
+                    return "";
+                else
+                    return DataLoader.model.Objective1CurrentQuantityItem().ToString() + "/";
+            }
+            else
+            {
+                if (DataLoader.model.Objective1Quantity() <= 1)
+                    return "";
+                else
+                    //increases when u hit a dead large monster
+                    return DataLoader.model.Objective1CurrentQuantityMonster().ToString() + "/";
+            }  
+        }
+
         private void UpdateDiscordRPC()
         {
             if (!(isDiscordRPCRunning))
@@ -1612,7 +1987,7 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            presenceTemplate.Details = string.Format("{0}{1}{2}",getOverlayMode(),getAreaName(DataLoader.model.AreaID()),getGameMode(DataLoader.isHighGradeEdition));
+            presenceTemplate.Details = string.Format("{0}{1}{2}", getOverlayMode(), getAreaName(DataLoader.model.AreaID()), getGameMode(DataLoader.isHighGradeEdition));
 
             //quest ids:
             //mp road: 23527
@@ -1633,7 +2008,7 @@ namespace MHFZ_Overlay
             //DataLoader.model.DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat)
 
             //Info
-            if (DataLoader.model.QuestID() != 0 && DataLoader.model.TimeDefInt() != DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0)
+            if ((DataLoader.model.QuestID() != 0 && DataLoader.model.TimeDefInt() != DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0) || ((DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750 || DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649 || DataLoader.model.QuestID() == 21748 || DataLoader.model.QuestID() == 21747 || DataLoader.model.QuestID() == 21734) && int.Parse(DataLoader.model.ATK) > 0))
             {
                 //inQuest = true;
 
@@ -1653,10 +2028,10 @@ namespace MHFZ_Overlay
                 switch (DataLoader.model.QuestID())
                 {
                     case 23527:// Hunter's Road Multiplayer
-                        presenceTemplate.State = String.Format("Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)",DataLoader.model.RoadFloor()+1,DataLoader.model.RoadMaxStagesMultiplayer(),DataLoader.model.RoadTotalStagesMultiplayer(),DataLoader.model.RoadPoints(),DataLoader.model.RoadFatalisSlain(),DataLoader.model.RoadFatalisEncounters());
+                        presenceTemplate.State = String.Format("Multiplayer Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)",DataLoader.model.RoadFloor()+1,DataLoader.model.RoadMaxStagesMultiplayer(),DataLoader.model.RoadTotalStagesMultiplayer(),DataLoader.model.RoadPoints(),DataLoader.model.RoadFatalisSlain(),DataLoader.model.RoadFatalisEncounters());
                         break;
                     case 23628://solo road
-                        presenceTemplate.State = String.Format("Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)", DataLoader.model.RoadFloor()+1, DataLoader.model.RoadMaxStagesSolo(), DataLoader.model.RoadTotalStagesSolo(),DataLoader.model.RoadPoints(),DataLoader.model.RoadFatalisSlain(), DataLoader.model.RoadFatalisEncounters());
+                        presenceTemplate.State = String.Format("Solo Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)", DataLoader.model.RoadFloor()+1, DataLoader.model.RoadMaxStagesSolo(), DataLoader.model.RoadTotalStagesSolo(),DataLoader.model.RoadPoints(),DataLoader.model.RoadFatalisSlain(), DataLoader.model.RoadFatalisEncounters());
                         break;
                     case 21731://1st district dure
                     case 21749://sky corridor version
@@ -1664,15 +2039,51 @@ namespace MHFZ_Overlay
                         break;
                     case 21746://2nd district dure
                     case 21750://sky corridor version
-                        presenceTemplate.State = String.Format("Slay 1st District Duremudira | Slain: {0} | Encounters: {1}", DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
+                        presenceTemplate.State = String.Format("Slay 2nd District Duremudira | Slain: {0} | Encounters: {1}", DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
                         break;
                     default:
-                        presenceTemplate.State = String.Format("{0} {1}{2} | True Raw: {3} (Max {4}) | Hits: {5}",GetObjectiveNameFromID(DataLoader.model.ObjectiveType()),GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.ATK,DataLoader.model.HighestAtk,DataLoader.model.HitCount);
+                        if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4} | True Raw: {5} (Max {6}) | Hits: {7}", GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
+                        else
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4} | True Raw: {5} (Max {6}) | Hits: {7}",GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(),GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.ATK,DataLoader.model.HighestAtk,DataLoader.model.HitCount);
                         break;
                 }
 
-                presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
-                presenceTemplate.Assets.LargeImageText = string.Format("{0}/{1}{2}",GetMonster1EHP(),GetMonster1MaxEHP(),GetMonster1EHPPercent());
+                //Gathering/etc
+                if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
+                {
+                    presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                }
+                //Tenrou Sky Corridor areas
+                else if (DataLoader.model.AreaID() == 391 || DataLoader.model.AreaID() == 392 || DataLoader.model.AreaID() == 394 || DataLoader.model.AreaID() == 415 || DataLoader.model.AreaID() == 416) 
+                {
+                    presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                }
+                //Duremudira Doors
+                else if (DataLoader.model.AreaID() == 399 || DataLoader.model.AreaID() == 414) 
+                {
+                    presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                }
+                //Duremudira Arena
+                else if (DataLoader.model.AreaID() == 398) 
+                {
+                    presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}/{1}{2}", GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
+                }
+                //Hunter's Road Base Camp
+                else if (DataLoader.model.AreaID() == 459) 
+                {
+                    presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                }
+                else
+                {
+                    presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}/{1}{2}", GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
+                }
             }
             else if (DataLoader.model.QuestID() == 0)
             {
@@ -1810,12 +2221,12 @@ namespace MHFZ_Overlay
                     case "Time Elapsed":
                         presenceTemplate.Timestamps = Timestamps.Now;
                         break;
-                    default:
+                    default://dure doorway too
                         presenceTemplate.Timestamps = Timestamps.FromTimeSpan((double)DataLoader.model.TimeDefInt() / 30.0);
                         break;
                 }
             } 
-            else if (DataLoader.model.QuestID() == 0 && inQuest && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) == 0)
+            else if (DataLoader.model.QuestID() == 0 && inQuest && int.Parse(DataLoader.model.ATK) == 0)
             { 
                 inQuest = false;
                 currentMonster1MaxHP = 0;//reset values
