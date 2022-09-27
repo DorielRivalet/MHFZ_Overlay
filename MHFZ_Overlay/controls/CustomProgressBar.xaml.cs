@@ -99,6 +99,17 @@ namespace MHFZ_Overlay.controls
 
         public string CurrentHPPercent = "";
 
+        public string DescriptorHorizontalAlignment
+        {
+            get
+            {
+                if (Desc == "Poison" || Desc == "Sleep" || Desc == "Para." || Desc == "Blast" || Desc == "Stun")
+                    return "Left";
+                else
+                    return "Right";
+            }
+        }
+
         public string ValueText
         {
             get
