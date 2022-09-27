@@ -1923,7 +1923,7 @@ namespace MHFZ_Overlay.addresses
                 string RealName = CurrentMonster1Icon.Replace("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/", "");
                 RealName = RealName.Replace(".gif", "");
                 RealName = RealName.Replace(".png", "");
-                RealName = RealName.Replace("zenith_", "");
+                RealName = RealName.Replace("zenith_", "Zenith ");
                 RealName = RealName.Replace("_", " ");
 
                 //https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
