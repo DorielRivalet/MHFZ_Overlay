@@ -1912,12 +1912,7 @@ namespace MHFZ_Overlay.addresses
                 return "None";
         }
 
-        public string getObjectiveName()
-        {
-            return "";
-        }
-
-        public string Monster1Name => (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750 || QuestID() == 21748 || QuestID() == 23648 || QuestID() == 23649 || QuestID() == 21747 || QuestID() == 21734) ? getDureName() : getMonsterName(GetNotRoad() || RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID()); //monster 1 is used for the first display and road uses 2nd choice to store 2nd monster
+        public string Monster1Name => getDureName() != "None" ? getDureName() : getMonsterName(GetNotRoad() || RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID()); //monster 1 is used for the first display and road uses 2nd choice to store 2nd monster
         public string Monster2Name => getMonsterName(LargeMonster2ID());
         public string Monster3Name => getMonsterName(LargeMonster3ID());
         public string Monster4Name => getMonsterName(LargeMonster4ID());

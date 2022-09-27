@@ -1,3 +1,5 @@
+<div><video controls src="https://user-images.githubusercontent.com/100863878/192533340-8497ec26-96ad-4e4a-b16d-c8f336330ff8.mp4" muted="false"></video></div>
+
 # MHFZ_Overlay
 
 ## About
@@ -77,6 +79,8 @@ If the monster HP shown is less than what its actual values should be, restart b
 
 - [x] [Discord Rich Presence](#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area, [speedrun mode, zen mode](#how-to-enable-speedrun--zen-modes), and more!)
 
+![Discord Rich Presence](./demo/discord5.png)
+
 ## Bugs
 
 - Monster Infos are sometimes outside of the screen (if they don't show at all even if you open the config menu, this is probably your issue)
@@ -131,9 +135,16 @@ If the monster HP shown is less than what its actual values should be, restart b
 
 ![Discord](./demo/discord4.png)
 
+![Discord Rich Presence](./demo/discord6.png)
+
 ## How to Enable Speedrun & Zen Modes
 
 - Speedrunner Mode: Disable **everything** (Monster Icon, Quest Timer and Discord Rich Presence optional)
+
+![Discord Rich Presence](./demo/discord7.png)
+
 - Zen Mode: Disable **everything** (Monster Icon and Discord Rich Presence optional)
+
+![Discord Rich Presence](./demo/discord8.png)
 
 ~~Congrats now you won't be accused of cheating~~
