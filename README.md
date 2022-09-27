@@ -2,6 +2,17 @@
 
 [![Preview](https://res.cloudinary.com/marcomontalbano/image/upload/v1664306592/video_to_markdown/images/youtube--_6hHiRHTt_U-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/_6hHiRHTt_U "Preview")
 
+<div align = center>
+
+---
+
+**[<kbd> <br> :rocket: Install <br> </kbd>](#installation)** 
+**[<kbd> <br> 📘 Hotkeys<br> </kbd>](#hotkeys)** 
+**[<kbd> <br> 🕹 Features <br> </kbd>](#features)** 
+
+---
+</div>
+
 ## About
 
 [This project is directly inspired from the overlay created by *suzaku01*](https://github.com/suzaku01/mhf_displayer)
@@ -84,7 +95,6 @@ If the monster HP shown is less than what its actual values should be, restart b
 ## Bugs
 
 - Monster Infos are sometimes outside of the screen (if they don't show at all even if you open the config menu, this is probably your issue)
-- Road detection doesn't work all the time (use road override if road in general works for you)
 - With Monster EHP enabled, if you cart, the max EHP turns into the current EHP, along with some other info max values
 - Sometimes when exiting Drag and Drop the monster HP information disappears
 - Spawning in the same area as the monster doesn't load the information properly. Fix: re-enter area
