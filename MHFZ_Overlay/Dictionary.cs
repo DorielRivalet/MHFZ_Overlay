@@ -34,6 +34,8 @@ namespace Dictionary
             {53, "G Rank"},
             {54, "Musou 1"},//lower shiten unknown/disu. thirsty/starving.
             {55, "Musou 2"},//upper shiten disu. shifting/golden.
+            {56, "Twinhead 1" },//twinhead rajang / voljang and rajang
+            {57, "Twinhead 2" },//twinhead mi ru / white and brown espi / unknown and zeru / rajang and dorag
             {64, "Z1"},
             {65, "Z2"},
             {66, "Z3"},

@@ -205,8 +205,8 @@
 |53  | G Rank    |
 |54  | Musou 1 (Repel/20m/Lower Shiten)|
 |55  | Musou 2 (Slay/10m/Upper Shiten)|
-|56  ||
-|57  ||
+|56  | Twinhead (Rajang+Voljang)|
+|57  | Twinhead (mi ru / espis / unknown+zeru / rajang+dorag)|
 |58  ||
 |59  ||
 |60  ||

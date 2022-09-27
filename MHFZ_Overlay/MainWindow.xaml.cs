@@ -1010,6 +1010,11 @@ namespace MHFZ_Overlay
                             return "Upper Shiten ";
                     }
                 //10m upper shiten/musou true slay
+
+                
+                case 56://twinhead rajang / voljang and rajang
+                case 57://twinhead mi ru / white and brown espi / unknown and zeru / rajang and dorag
+                    return "Twinhead ";
                 case 64:
                     return "Z1 ";
                 case 65:
@@ -1952,6 +1957,15 @@ namespace MHFZ_Overlay
             return objValue1 + "";
         }
 
+        public string GetPoogieClothes(int id)
+        {
+            string? clothesValue1;
+            _ = Dictionary.PoogieCostumeList.PoogieCostumeID.TryGetValue(id, out clothesValue1);  //returns true
+            //Console.WriteLine(itemValue1); //Print "First"
+            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
+            return clothesValue1 + "";
+        }
+
         public string GetObjective1Quantity()
         {
             if (DataLoader.model.Objective1Quantity() <= 1)
@@ -2136,7 +2150,7 @@ namespace MHFZ_Overlay
                         break;
 
                     case 205://Pugi Farm
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | Poogie Points: {1} | Poogie Clothes: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.PoogiePoints(), GetPoogieClothes(DataLoader.model.PoogieCostume()), getItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 256://Caravan Areas

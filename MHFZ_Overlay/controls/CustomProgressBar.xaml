@@ -12,7 +12,7 @@
             <ColumnDefinition Width="{Binding ElementName=window, Path=Width1}"/>
             <ColumnDefinition Width="{Binding ElementName=window, Path=Width2}"/>
         </Grid.ColumnDefinitions>
-        <local1:OutlinedTextBlock x:Name="Descriptor" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding ElementName=window, Path=Desc, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding ElementName=window, Path=BarColor}"/>
+        <local1:OutlinedTextBlock x:Name="Descriptor" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding ElementName=window, Path=Desc, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding ElementName=window, Path=BarColor}"/>
         <local1:OutlinedTextBlock x:Name="BarText" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" FontFamily="Source Code Pro" FontSize="16" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding ElementName=window, Path=BarColor}" Text="{Binding ElementName=window, Path=ValueText, UpdateSourceTrigger=PropertyChanged}" Panel.ZIndex="1" Margin="8,0,0,0"/>
         <ProgressBar FontFamily="Source Code Pro" Style="{StaticResource MyProgressBar}" x:Name="PercentBar" Grid.Column="1" Value="{Binding ElementName=window, Path=Value, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding ElementName=window, Path=BarColor}" FontSize="16"/>
     </Grid>
