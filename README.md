@@ -31,7 +31,7 @@ The font used is the in-game one, *MS Gothic*.
 ## Installation
 
 1. [Get **ALL** of the requirements](#requirements)
-2. [Download the latest version from the *Releases*](https://github.com/Imulion/MHFZ_Overlay/releases/latest)
+2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest)
 3. Make sure Windows or your antivirus did not delete the `MHFZOverlay.dll` file (because it reads the games memory windows might detect it as a trojan so you might have to get it out of quarantine)
 4. Run `MHFZ_Overlay.exe`
 5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
@@ -44,7 +44,7 @@ The font used is the in-game one, *MS Gothic*.
 
 **It's recommended to start the overlay when you are done loading into Mezeporta.**
 
-If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/Imulion/MHFZ_Overlay/issues).
+If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/DorielRivalet/MHFZ_Overlay/issues).
 
 Additionally, if information from the overlay is wrong or inaccurate (e.g. monster parts labels), feel free to send an issue.
 
@@ -126,6 +126,7 @@ If the monster HP shown is less than what its actual values should be, restart b
 - PvP addresses
 - Better Hunter's Road icon
 - Handle multiple objectives information
+- Zenith information in Road
 
 ## How to Enable Discord Rich Presence
 
