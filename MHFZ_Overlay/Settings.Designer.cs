@@ -1054,5 +1054,17 @@ namespace MHFZ_Overlay {
                 this["DiscordTimerMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Never")]
+        public string DiscordRoadTimerReset {
+            get {
+                return ((string)(this["DiscordRoadTimerReset"]));
+            }
+            set {
+                this["DiscordRoadTimerReset"] = value;
+            }
+        }
     }
 }

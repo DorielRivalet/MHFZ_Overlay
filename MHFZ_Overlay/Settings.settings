@@ -260,5 +260,8 @@
     <Setting Name="DiscordTimerMode" Type="System.String" Scope="User">
       <Value Profile="(Default)">Time Left</Value>
     </Setting>
+    <Setting Name="DiscordRoadTimerReset" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Never</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

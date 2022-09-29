@@ -1385,6 +1385,16 @@ namespace MHFZ_Overlay.addresses
             else return "Time Left";
         }
 
+        public string GetRoadTimerResetMode()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.DiscordRoadTimerReset == "Never")
+                return "Never";
+            else if (s.DiscordRoadTimerReset == "Always")
+                return "Always";
+            else return "Never";
+        }
+
         public int MaxSharpness = 0;
 
         public string TimeLeftPercent = "";
@@ -1571,27 +1581,18 @@ namespace MHFZ_Overlay.addresses
             {
                 //see palettes.md
                 int currentSharpnessLevel = SharpnessLevel();
-                switch (currentSharpnessLevel)
+                return currentSharpnessLevel switch
                 {
-                    case 0:
-                        return "#c50f3a";
-                    case 1:
-                        return "#e85218";
-                    case 2:
-                        return "#f3c832";
-                    case 3:
-                        return "#5ed300";
-                    case 4:
-                        return "#3068ee";
-                    case 5:
-                        return "#f0f0f0";
-                    case 6:
-                        return "#de7aff";
-                    case 7:
-                        return "#86f4f4";
-                    default:
-                        return "#ffffff";
-                }
+                    0 => "#c50f3a",//Red
+                    1 => "#e85218",//Orange
+                    2 => "#f3c832",//Yellow
+                    3 => "#5ed300",//Green
+                    4 => "#3068ee",//Blue
+                    5 => "#f0f0f0",//White
+                    6 => "#de7aff",//Purple
+                    7 => "#86f4f4",//Cyan
+                    _ => "#ffffff",//
+                };
             }
         }
 
@@ -1633,15 +1634,12 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                switch (SelectedMonster)
+                return SelectedMonster switch
                 {
-                    case 0:
-                        return Monster1Size();
-                    case 1:
-                        return Monster2Size();
-                    default:
-                        return Monster1Size();
-                }
+                    0 => Monster1Size(),
+                    1 => Monster2Size(),
+                    _ => Monster1Size(),
+                };
             }
         }
 
@@ -1650,15 +1648,12 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                switch (SelectedMonster)
+                return SelectedMonster switch
                 {
-                    case 0:
-                        return Monster1AtkMult();
-                    case 1:
-                        return Monster2AtkMult();
-                    default:
-                        return Monster1AtkMult();
-                }
+                    0 => Monster1AtkMult(),
+                    1 => Monster2AtkMult(),
+                    _ => Monster1AtkMult(),
+                };
             }
         }
 
@@ -1722,15 +1717,12 @@ namespace MHFZ_Overlay.addresses
             {
                 if (Configuring)
                     return 100;
-                switch (SelectedMonster)
+                return SelectedMonster switch
                 {
-                    case 0:
-                        return Monster1Poison();
-                    case 1:
-                        return Monster2Poison();
-                    default:
-                        return Monster1Poison();
-                }
+                    0 => Monster1Poison(),
+                    1 => Monster2Poison(),
+                    _ => Monster1Poison(),
+                };
             }
         }
 
@@ -1740,15 +1732,12 @@ namespace MHFZ_Overlay.addresses
             {
                 if (Configuring)
                     return 100;
-                switch (SelectedMonster)
+                return SelectedMonster switch
                 {
-                    case 0:
-                        return Monster1PoisonNeed();
-                    case 1:
-                        return Monster2PoisonNeed();
-                    default:
-                        return Monster1PoisonNeed();
-                }
+                    0 => Monster1PoisonNeed(),
+                    1 => Monster2PoisonNeed(),
+                    _ => Monster1PoisonNeed(),
+                };
             }
         }
 
@@ -1758,15 +1747,12 @@ namespace MHFZ_Overlay.addresses
             {
                 if (Configuring)
                     return 100;
-                switch (SelectedMonster)
+                return SelectedMonster switch
                 {
-                    case 0:
-                        return Monster1Sleep();
-                    case 1:
-                        return Monster2Sleep();
-                    default:
-                        return Monster1Sleep();
-                }
+                    0 => Monster1Sleep(),
+                    1 => Monster2Sleep(),
+                    _ => Monster1Sleep(),
+                };
             }
         }
 
@@ -1776,15 +1762,12 @@ namespace MHFZ_Overlay.addresses
             {
                 if (Configuring)
                     return 100;
-                switch (SelectedMonster)
+                return SelectedMonster switch
                 {
-                    case 0:
-                        return Monster1SleepNeed();
-                    case 1:
-                        return Monster2SleepNeed();
-                    default:
-                        return Monster1SleepNeed();
-                }
+                    0 => Monster1SleepNeed(),
+                    1 => Monster2SleepNeed(),
+                    _ => Monster1SleepNeed(),
+                };
             }
         }
         public int ParaCurrent
@@ -1793,15 +1776,12 @@ namespace MHFZ_Overlay.addresses
             {
                 if (Configuring)
                     return 100;
-                switch (SelectedMonster)
+                return SelectedMonster switch
                 {
-                    case 0:
-                        return Monster1Para();
-                    case 1:
-                        return Monster2Para();
-                    default:
-                        return Monster1Para();
-                }
+                    0 => Monster1Para(),
+                    1 => Monster2Para(),
+                    _ => Monster1Para(),
+                };
             }
         }
 
@@ -1811,15 +1791,12 @@ namespace MHFZ_Overlay.addresses
             {
                 if (Configuring)
                     return 100;
-                switch (SelectedMonster)
+                return SelectedMonster switch
                 {
-                    case 0:
-                        return Monster1ParaNeed();
-                    case 1:
-                        return Monster2ParaNeed();
-                    default:
-                        return Monster1ParaNeed();
-                }
+                    0 => Monster1ParaNeed(),
+                    1 => Monster2ParaNeed(),
+                    _ => Monster1ParaNeed(),
+                };
             }
         }
 
@@ -1831,15 +1808,12 @@ namespace MHFZ_Overlay.addresses
             {
                 if (Configuring)
                     return 100;
-                switch (SelectedMonster)
+                return SelectedMonster switch
                 {
-                    case 0:
-                        return Monster1Blast();
-                    case 1:
-                        return Monster2Blast();
-                    default:
-                        return Monster1Blast();
-                }
+                    0 => Monster1Blast(),
+                    1 => Monster2Blast(),
+                    _ => Monster1Blast(),
+                };
             }
         }
 
@@ -1849,15 +1823,12 @@ namespace MHFZ_Overlay.addresses
             {
                 if (Configuring)
                     return 100;
-                switch (SelectedMonster)
+                return SelectedMonster switch
                 {
-                    case 0:
-                        return Monster1BlastNeed();
-                    case 1:
-                        return Monster2BlastNeed();
-                    default:
-                        return Monster1BlastNeed();
-                }
+                    0 => Monster1BlastNeed(),
+                    1 => Monster2BlastNeed(),
+                    _ => Monster1BlastNeed(),
+                };
             }
         }
         public int StunCurrent
@@ -1866,15 +1837,12 @@ namespace MHFZ_Overlay.addresses
             {
                 if (Configuring)
                     return 100;
-                switch (SelectedMonster)
+                return SelectedMonster switch
                 {
-                    case 0:
-                        return Monster1Stun();
-                    case 1:
-                        return Monster2Stun();
-                    default:
-                        return Monster1Stun();
-                }
+                    0 => Monster1Stun(),
+                    1 => Monster2Stun(),
+                    _ => Monster1Stun(),
+                };
             }
         }
 
@@ -1884,15 +1852,12 @@ namespace MHFZ_Overlay.addresses
             {
                 if (Configuring)
                     return 100;
-                switch (SelectedMonster)
+                return SelectedMonster switch
                 {
-                    case 0:
-                        return Monster1StunNeed();
-                    case 1:
-                        return Monster2StunNeed();
-                    default:
-                        return Monster1StunNeed();
-                }
+                    0 => Monster1StunNeed(),
+                    1 => Monster2StunNeed(),
+                    _ => Monster1StunNeed(),
+                };
             }
         }
 
@@ -2085,71 +2050,40 @@ namespace MHFZ_Overlay.addresses
          */
         public float GetMultFromWeaponType(int weaponType)
         {
-            switch (weaponType)
+            return weaponType switch
             {
-                case 0:
-                case 7:
-                    return 4.8f;
-                case 4:
-                case 6:
-                    return 1.4f;
-                case 2:
-                case 8:
-                    return 5.2f;
-                case 12:
-                case 13:
-                    return 5.4f;
-                case 3:
-                case 9:
-                    return 2.3f;
-                case 1:
-                case 5:
-                case 10:
-                    return 1.2f;
-                case 11:
-                    return 1.8f;
-                default:
-                    return 1f;
-            }
+                0 or 7 => 4.8f,
+                4 or 6 => 1.4f,
+                2 or 8 => 5.2f,
+                12 or 13 => 5.4f,
+                3 or 9 => 2.3f,
+                1 or 5 or 10 => 1.2f,
+                11 => 1.8f,
+                _ => 1f,
+            };
         }
 
         public string GetWeaponNameFromType(int weaponType)
         {
-            switch (weaponType)
+            return weaponType switch
             {
-                case 0:
-                    return "Great Sword";
-                case 1:
-                    return "Heavy Bowgun";
-                case 2:
-                    return "Hammer";
-                case 3:
-                    return "Lance";
-                case 4:
-                    return "Sword and Shield";
-                case 5:
-                    return "Light Bowgun";
-                case 6:
-                    return "Dual Swords";
-                case 7:
-                    return "Long Sword";
-                case 8:
-                    return "Hunting Horn";
-                case 9:
-                    return "Gunlance";
-                case 10:
-                    return "Bow";
-                case 11:
-                    return "Tonfa";
-                case 12:
-                    return "Switch Axe F";
-                case 13:
-                    return "Magnet Spike";
-                case 14:
-                    return "Group";
-                default: 
-                    return "";
-            }
+                0 => "Great Sword",
+                1 => "Heavy Bowgun",
+                2 => "Hammer",
+                3 => "Lance",
+                4 => "Sword and Shield",
+                5 => "Light Bowgun",
+                6 => "Dual Swords",
+                7 => "Long Sword",
+                8 => "Hunting Horn",
+                9 => "Gunlance",
+                10 => "Bow",
+                11 => "Tonfa",
+                12 => "Switch Axe F",
+                13 => "Magnet Spike",
+                14 => "Group",
+                _ => "",
+            };
         }
 
         public string CurrentMonster1Icon

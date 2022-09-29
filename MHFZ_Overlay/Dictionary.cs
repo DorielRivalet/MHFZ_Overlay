@@ -309,7 +309,7 @@ namespace Dictionary
     {
         public static Dictionary<int, string> ArmorSkillID = new Dictionary<int, string>()
         {
-            {0, ""},
+            {0, "None"},
             {1, "Paralysis Halved"},
             {2, "Negate Paralysis"},
             {3, "Paralysis Doubled"},
@@ -1206,7 +1206,7 @@ namespace Dictionary
             {333,"Tidal Island Area 3 (Night)" },
             {334,"Tidal Island Day Area 4" },
             {335,"Tidal Island Day Area 5" },
-            {336," Tidal Island Day" },
+            {336,"Tidal Island Day" },
             {337,"Tidal Island (Orange Area 5)" },
             {338,"Tidal Island Area 4 (Night)" },
             {339,"Tidal Island Area 5 (Night)" },

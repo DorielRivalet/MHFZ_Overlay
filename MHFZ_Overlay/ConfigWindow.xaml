@@ -7,7 +7,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
-        Title="Monster Hunter Frontier Z Overlay Version v0.2.0"
+        Title="Monster Hunter Frontier Z Overlay Version v0.2.1"
          Height="720" Width="1280" ResizeMode="CanMinimize"
         Foreground="#cdd6f4" 
         
@@ -510,6 +510,8 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <TextBlock Margin="5,5,5,5" ToolTip="Enable Discord Rich Presence" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="(Overlay restart required) Rich Presence"/>
                     <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableRichPresence}"/>
@@ -541,6 +543,11 @@
                     <ComboBox Grid.Column="1" Grid.Row="5" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordTimerMode}">
                         <ComboBoxItem>Time Left</ComboBoxItem>
                         <ComboBoxItem>Time Elapsed</ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Reset Time on Floor change (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Road Timer Reset per Floor"/>
+                    <ComboBox Grid.Column="1" Grid.Row="6" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordRoadTimerReset}">
+                        <ComboBoxItem>Never</ComboBoxItem>
+                        <ComboBoxItem>Always</ComboBoxItem>
                     </ComboBox>
                 </Grid>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">

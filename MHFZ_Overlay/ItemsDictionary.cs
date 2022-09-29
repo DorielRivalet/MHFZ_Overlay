@@ -9,7 +9,7 @@ namespace Dictionary
 
         public static void initiate()
         {
-            ItemIDs[0] = "-";
+            ItemIDs[0] = "None";
             ItemIDs[1] = "Book of Combos 1";
             ItemIDs[2] = "Book of Combos 2";
             ItemIDs[3] = "Book of Combos 3";
