@@ -62,11 +62,17 @@ namespace MHFZ_Overlay
     {
         public DataLoader DataLoader { get; set; } = new();
 
+        #region click through
+
         private int originalStyle = 0;
 
         //https://stackoverflow.com/questions/2798245/click-through-in-c-sharp-form
         //https://stackoverflow.com/questions/686132/opening-a-form-in-c-sharp-without-focus/10727337#10727337
-        //https://social.msdn.microsoft.com/Forums/en-us/a5e3cbbb-fd07-4343-9b60-6903cdfeca76/click-through-window-with-image-wpf-issues-httransparent-isnt-working?forum=csharplanguage
+        //https://social.msdn.microsoft.com/Forums/en-us/a5e3cbbb-fd07-4343-9b60-6903cdfeca76/click-through-window-with-image-wpf-issues-httransparent-isnt-working?forum=csharplanguage        
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Window.SourceInitialized" /> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
         protected override void OnSourceInitialized(EventArgs e)
         {
             // Get this window's handle         
@@ -90,8 +96,24 @@ namespace MHFZ_Overlay
         [DllImport("user32.dll")]
         public static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
 
+        #endregion
+
+        #region discord rpc
+
+        /// <summary>
+        /// Gets the client.
+        /// </summary>
+        /// <value>
+        /// The client.
+        /// </value>
         public DiscordRpcClient Client { get; private set; }
 
+        /// <summary>
+        /// Gets a value indicating whether [show discord RPC].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [show discord RPC]; otherwise, <c>false</c>.
+        /// </value>
         public bool ShowDiscordRPC
         {
             get
@@ -104,6 +126,12 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Gets the discord client identifier.
+        /// </summary>
+        /// <value>
+        /// The discord client identifier.
+        /// </value>
         public string GetDiscordClientID
         {
             get
@@ -116,6 +144,12 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Gets the discord server invite.
+        /// </summary>
+        /// <value>
+        /// The discord server invite.
+        /// </value>
         public string GetDiscordServerInvite
         {
             get
@@ -128,6 +162,12 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Gets the name of the hunter.
+        /// </summary>
+        /// <value>
+        /// The name of the hunter.
+        /// </value>
         public string GetHunterName
         {
             get
@@ -140,6 +180,12 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Gets the name of the guild.
+        /// </summary>
+        /// <value>
+        /// The name of the guild.
+        /// </value>
         public string GetGuildName
         {
             get
@@ -152,13 +198,19 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Setups this instance.
+        /// </summary>
         void Setup()
         {
             Client = new DiscordRpcClient(GetDiscordClientID);  //Creates the client
             Client.Initialize();                            //Connects the client
         }
 
-        //Dispose client
+        //Dispose client        
+        /// <summary>
+        /// Cleanups this instance.
+        /// </summary>
         void Cleanup()
         {
             if (Client != null)//&& ShowDiscordRPC)
@@ -195,6 +247,9 @@ namespace MHFZ_Overlay
         /// </summary>
         public static bool isDiscordRPCRunning = false;
 
+        /// <summary>
+        /// Initializes the discord RPC.
+        /// </summary>
         private void InitializeDiscordRPC()
         {
             if (isDiscordRPCRunning)
@@ -244,7 +299,14 @@ namespace MHFZ_Overlay
             }
         }
 
-        //Main entry point?
+        #endregion
+
+        #region main
+
+        //Main entry point?        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -282,6 +344,7 @@ namespace MHFZ_Overlay
         int counter = 0;
         int prevTime = 0;
 
+        //
         public void Timer_Tick(object? obj, EventArgs e)
         {
             HideMonsterInfoWhenNotInQuest();
@@ -311,6 +374,13 @@ namespace MHFZ_Overlay
         bool isFirstAttack = false;
         public bool IsDragConfigure { get; set; } = false;
 
+        #endregion
+
+        #region damage
+
+        /// <summary>
+        /// Creates the damage number.
+        /// </summary>
         private void CreateDamageNumber()
         {
             int damage = 0;
@@ -349,6 +419,10 @@ namespace MHFZ_Overlay
             prevNum = damage;
         }
 
+        /// <summary>
+        /// Shows multicolor damage numbers?
+        /// </summary>
+        /// <returns></returns>
         public bool ShowDamageNumbersMulticolor()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -358,6 +432,10 @@ namespace MHFZ_Overlay
                 return false;
         }
 
+        /// <summary>
+        /// Creates the damage number label.
+        /// </summary>
+        /// <param name="damage">The damage.</param>
         private void CreateDamageNumberLabel(int damage)
         {
             Random random = new();
@@ -460,6 +538,10 @@ namespace MHFZ_Overlay
 
         }
 
+        /// <summary>
+        /// Removes the damage number label.
+        /// </summary>
+        /// <param name="tb">The tb.</param>
         private void RemoveDamageNumberLabel(Label tb)
         {
             DispatcherTimer timer = new();
@@ -468,8 +550,15 @@ namespace MHFZ_Overlay
             timer.Start();
         }
 
+        #endregion
+
+        #region UI
+
         //does this sometimes bug?
-        //the UI flashes at least once when loading into quest
+        //the UI flashes at least once when loading into quest        
+        /// <summary>
+        /// Hides the monster information when not in quest.
+        /// </summary>
         private void HideMonsterInfoWhenNotInQuest()
         {
             int time = DataLoader.model.TimeInt();
@@ -496,6 +585,9 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowMonster1Icon = v && s.Monster1IconShown;
         }
 
+        /// <summary>
+        /// Hides the player information when not in quest.
+        /// </summary>
         private void HidePlayerInfoWhenNotInQuest()
         {
             int time = DataLoader.model.TimeInt();
@@ -514,6 +606,15 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowSharpness = v && s.EnableSharpness;
         }
 
+        #endregion
+
+        #region get info
+
+        /// <summary>
+        /// Gets the name of the area.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string getAreaName(int id)
         {
             if (id == 0)
@@ -522,6 +623,10 @@ namespace MHFZ_Overlay
             return areaname + "";
         }
 
+        /// <summary>
+        /// Gets the discord timer mode.
+        /// </summary>
+        /// <returns></returns>
         public string GetDiscordTimerMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -534,6 +639,11 @@ namespace MHFZ_Overlay
 
         private bool inQuest = false;
 
+        /// <summary>
+        /// Gets the weapon style from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string GetWeaponStyleFromID(int id)
         {
             return id switch
@@ -546,6 +656,11 @@ namespace MHFZ_Overlay
             };
         }
 
+        /// <summary>
+        /// Gets the armor skill.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string getArmorSkill(int id)
         {
             Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(id, out string? skillname);
@@ -555,6 +670,11 @@ namespace MHFZ_Overlay
                 return skillname + "";
         }
 
+        /// <summary>
+        /// Gets the name of the item.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string getItemName(int id)
         {
             string itemValue1;
@@ -566,18 +686,32 @@ namespace MHFZ_Overlay
 
         public bool itemsLoaded = false;
 
+        /// <summary>
+        /// Gets the weapon name from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string getWeaponNameFromID(int id)
         {
             Dictionary.WeaponList.WeaponID.TryGetValue(id, out string? weaponname);
             return weaponname + "";
         }
 
+        /// <summary>
+        /// Gets the color of the armor.
+        /// </summary>
+        /// <returns></returns>
         public string getArmorColor()
         {
             Dictionary.ArmorColorList.ArmorColorID.TryGetValue(DataLoader.model.ArmorColor(), out string? colorname);
             return colorname + "";
         }
 
+        /// <summary>
+        /// Gets the weapon icon from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string getWeaponIconFromID(int id)
         {
             string weaponName = getWeaponNameFromID(id);
@@ -860,6 +994,11 @@ namespace MHFZ_Overlay
             };
         }
 
+        /// <summary>
+        /// Gets the real name of the monster.
+        /// </summary>
+        /// <param name="iconName">Name of the icon.</param>
+        /// <returns></returns>
         public string GetRealMonsterName(string iconName)
         {
             //quest ids:
@@ -895,6 +1034,11 @@ namespace MHFZ_Overlay
                 return RealMonsterName;
         }
 
+        /// <summary>
+        /// Gets the rank name from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string GetRankNameFromID(int id)
         {
             switch (id)
@@ -1035,6 +1179,11 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Gets the objective name from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string GetObjectiveNameFromID(int id)
         {
             return id switch
@@ -1055,6 +1204,11 @@ namespace MHFZ_Overlay
             };
         }
 
+        /// <summary>
+        /// Gets the area icon from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string getAreaIconFromID(int id) //TODO: are highlands, tidal island or painted falls icons correct?
         {
             switch (id)
@@ -1410,6 +1564,11 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Gets the game mode.
+        /// </summary>
+        /// <param name="isHighGradeEdition">if set to <c>true</c> [is high grade edition].</param>
+        /// <returns></returns>
         public string getGameMode(bool isHighGradeEdition)
         {
             if (isHighGradeEdition)
@@ -1418,6 +1577,10 @@ namespace MHFZ_Overlay
                 return "";
         }
 
+        /// <summary>
+        /// Gets the overlay mode.
+        /// </summary>
+        /// <returns></returns>
         public string getOverlayMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -1429,6 +1592,11 @@ namespace MHFZ_Overlay
                 return "(Zen) ";
         }
 
+        /// <summary>
+        /// Gets the monster icon.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string getMonsterIcon(int id)
         {
             //quest ids:
@@ -1899,6 +2067,10 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Shows the current hp percentage.
+        /// </summary>
+        /// <returns></returns>
         public bool ShowCurrentHPPercentage()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -1911,6 +2083,10 @@ namespace MHFZ_Overlay
         public int currentMonster1MaxHP = 0;
         public string currentMonster1HPPercent = "";
 
+        /// <summary>
+        /// Gets the monster1 ehp percent.
+        /// </summary>
+        /// <returns></returns>
         public string GetMonster1EHPPercent()
         {
             if (currentMonster1MaxHP < int.Parse(DataLoader.model.Monster1HP))
@@ -1925,17 +2101,30 @@ namespace MHFZ_Overlay
             return string.Format(" ({0:0}%)", (float)int.Parse(DataLoader.model.Monster1HP) / currentMonster1MaxHP * 100.0);
         }
 
+        /// <summary>
+        /// Gets the monster1 ehp.
+        /// </summary>
+        /// <returns></returns>
         public int GetMonster1EHP()
         {
             return DataLoader.model.DisplayMonsterEHP(float.Parse(DataLoader.model.Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), DataLoader.model.Monster1HPInt(), DataLoader.model.Monster1DefMult());
         }
 
+        /// <summary>
+        /// Gets the monster1 maximum ehp.
+        /// </summary>
+        /// <returns></returns>
         public int GetMonster1MaxEHP()
         {
             return currentMonster1MaxHP;
         }
 
-        //TODO cactus quest shows fatalis
+        //TODO cactus quest shows fatalis        
+        /// <summary>
+        /// Gets the name of the objective1.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string GetObjective1Name(int id)
         {
             string? objValue1;
@@ -1945,6 +2134,11 @@ namespace MHFZ_Overlay
             return objValue1 + "";
         }
 
+        /// <summary>
+        /// Gets the poogie clothes.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string GetPoogieClothes(int id)
         {
             string? clothesValue1;
@@ -1954,6 +2148,10 @@ namespace MHFZ_Overlay
             return clothesValue1 + "";
         }
 
+        /// <summary>
+        /// Gets the objective1 quantity.
+        /// </summary>
+        /// <returns></returns>
         public string GetObjective1Quantity()
         {
             if (DataLoader.model.Objective1Quantity() <= 1)
@@ -1965,7 +2163,10 @@ namespace MHFZ_Overlay
                 return "";
         }
 
-        
+        /// <summary>
+        /// Gets the objective1 current quantity.
+        /// </summary>
+        /// <returns></returns>
         public string GetObjective1CurrentQuantity()
         {
             if (DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002)
@@ -1985,6 +2186,16 @@ namespace MHFZ_Overlay
             }  
         }
 
+        #endregion
+
+        #region discord info
+
+        /// <summary>
+        /// Determines whether this instance is road.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is road; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsRoad()
         {
             if (DataLoader.model.roadOverride() != null && DataLoader.model.roadOverride() == false)
@@ -1995,6 +2206,12 @@ namespace MHFZ_Overlay
                 return false;
         }
 
+        /// <summary>
+        /// Determines whether this instance is dure quest.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is dure; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsDure()
         {
             if (DataLoader.model.getDureName() != "None")
@@ -2003,7 +2220,11 @@ namespace MHFZ_Overlay
                 return false;
         }
 
-        //dure and road
+        //dure and road        
+        /// <summary>
+        /// In the arena?
+        /// </summary>
+        /// <returns></returns>
         public bool InArena()
         {
             if (DataLoader.model.AreaID() == 398 || DataLoader.model.AreaID() == 458)
@@ -2020,6 +2241,9 @@ namespace MHFZ_Overlay
 
         private bool inDuremudiraDoorway = false;
 
+        /// <summary>
+        /// Updates the discord RPC.
+        /// </summary>
         private void UpdateDiscordRPC()
         {
             if (!(isDiscordRPCRunning))
@@ -2427,7 +2651,7 @@ namespace MHFZ_Overlay
             Client.SetPresence(presenceTemplate);
         }
 
-
+        #endregion
 
         #region DragAndDrop
 

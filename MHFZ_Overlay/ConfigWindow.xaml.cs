@@ -14,9 +14,18 @@ namespace MHFZ_Overlay
     /// </summary>
     public partial class ConfigWindow : Window
     {
-
+        /// <summary>
+        /// Gets or sets the main window.
+        /// </summary>
+        /// <value>
+        /// The main window.
+        /// </value>
         private MainWindow MainWindow { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigWindow"/> class.
+        /// </summary>
+        /// <param name="mainWindow">The main window.</param>
         public ConfigWindow(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -27,6 +36,11 @@ namespace MHFZ_Overlay
             //GlobalHotKey.RegisterHotKey("Alt+Shift+c", () => DefaultKey_Press());
         }
 
+        /// <summary>
+        /// Handles the PreviewTextInput event of the RoadOverrideTextBox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="TextCompositionEventArgs"/> instance containing the event data.</param>
         private void RoadOverrideTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (e.Text != "0" && e.Text != "1" && e.Text != "2")
@@ -46,6 +60,9 @@ namespace MHFZ_Overlay
         //    }
         //}
 
+        /// <summary>
+        /// Saves the key press.
+        /// </summary>
         public void SaveKey_Press()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -53,6 +70,11 @@ namespace MHFZ_Overlay
             Close();
         }
 
+        /// <summary>
+        /// Handles the Click event of the SaveButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -60,6 +82,9 @@ namespace MHFZ_Overlay
             Close();
         }
 
+        /// <summary>
+        /// Cancels the key press.
+        /// </summary>
         public void CancelKey_Press()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -67,6 +92,11 @@ namespace MHFZ_Overlay
             Close();
         }
 
+        /// <summary>
+        /// Handles the Click event of the CancelButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -74,6 +104,10 @@ namespace MHFZ_Overlay
             Close();
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Window.Closing" /> event.
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.ComponentModel.CancelEventArgs" /> that contains the event data.</param>
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             base.OnClosing(e);
@@ -82,23 +116,41 @@ namespace MHFZ_Overlay
             MainWindow.DataLoader.model.Configuring = false;
         }
 
+        /// <summary>
+        /// Defaults the key press.
+        /// </summary>
         public void DefaultKey_Press()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Reset();
         }
 
+        /// <summary>
+        /// Handles the Click event of the DefaultButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void DefaultButton_Click(object sender, RoutedEventArgs e)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Reset();
         }
 
+        /// <summary>
+        /// Handles the Click event of the ConfigureButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ConfigureButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.EnableDragAndDrop();
         }
 
+        /// <summary>
+        /// Validates the number.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="TextCompositionEventArgs"/> instance containing the event data.</param>
         private void ValidateNumber(object sender, TextCompositionEventArgs e)
         {
             foreach (char ch in e.Text)
@@ -120,6 +172,11 @@ namespace MHFZ_Overlay
 
         //private string ValidateNamePattern = @"[^a-zA-Z_0-9]";
 
+        /// <summary>
+        /// Validates the name.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="TextCompositionEventArgs"/> instance containing the event data.</param>
         private void ValidateName(object sender, TextCompositionEventArgs e)
         {
             // Create a Regex  
@@ -144,6 +201,11 @@ namespace MHFZ_Overlay
         //        e.Handled = true;
         //}
 
+        /// <summary>
+        /// Handles the RequestNavigate event of the lnkImg control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
         private void lnkImg_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
 
@@ -155,9 +217,9 @@ namespace MHFZ_Overlay
 
     /* LoadConfig on startup
      * Load Config on window open to have extra copy
-     * On Save -> Window close -> tell programm to use new copy instead of current -> Save Config File
+     * On Save -> Window close -> tell program to use new copy instead of current -> Save Config File
      * On Cancel -> Window Close -> Discard copy of config
-     * On Config Change Still show changes immediatly and show windows which are set to show -> Ignore logic that hides windows during this time and force  them on if they are enabled
+     * On Config Change Still show changes immediately and show windows which are set to show -> Ignore logic that hides windows during this time and force  them on if they are enabled
      * 
      */
 }

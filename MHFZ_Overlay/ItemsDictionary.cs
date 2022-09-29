@@ -3,10 +3,16 @@ using System.Collections.Concurrent;
 
 namespace Dictionary
 {
+    /// <summary>
+    /// Items dictionary
+    /// </summary>
     public class Items
     {
         public static ConcurrentDictionary<int, string> ItemIDs = new ConcurrentDictionary<int, string>();
 
+        /// <summary>
+        /// Initiates this instance.
+        /// </summary>
         public static void initiate()
         {
             ItemIDs[0] = "None";

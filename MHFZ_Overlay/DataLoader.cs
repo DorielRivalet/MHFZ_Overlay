@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace MHFZ_Overlay
 {
+    /// <summary>
+    /// DataLoader
+    /// </summary>
     public class DataLoader
     {
         #region DataLoaderVariables
@@ -18,6 +21,9 @@ namespace MHFZ_Overlay
 
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLoader"/> class.
+        /// </summary>
         public DataLoader()
         {
             int PID = m.GetProcIdFromName("mhf");
@@ -42,6 +48,10 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Creates the code cave.
+        /// </summary>
+        /// <param name="PID">The pid.</param>
         private void CreateCodeCave(int PID)
         {
             Process? proc = LoadMHFODLL(PID);
@@ -79,6 +89,13 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Writes the byte from address.
+        /// </summary>
+        /// <param name="codecaveAddress">The codecave address.</param>
+        /// <param name="proc">The proc.</param>
+        /// <param name="offset1">The offset1.</param>
+        /// <param name="offset2">The offset2.</param>
         void WriteByteFromAddress(UIntPtr codecaveAddress, Process proc, long offset1, int offset2)
         {
             long address = proc.Modules[index].BaseAddress.ToInt32() + offset1;
@@ -88,6 +105,11 @@ namespace MHFZ_Overlay
             m.WriteBytes(codecaveAddress + offset2, addressByte);
         }
 
+        /// <summary>
+        /// Loads the mhfo.dll.
+        /// </summary>
+        /// <param name="PID">The pid.</param>
+        /// <returns></returns>
         Process? LoadMHFODLL(int PID)
         {
             //Search and get mhfo-hd.dll module base address

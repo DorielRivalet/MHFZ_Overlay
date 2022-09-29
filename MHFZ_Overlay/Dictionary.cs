@@ -2,6 +2,9 @@
 
 namespace Dictionary
 {
+    ///<summary>
+    ///The rank bands list
+    ///</summary>
     public class RanksBandsList
     {
         public static Dictionary<int, string> RankBandsID = new Dictionary<int, string>()
@@ -46,6 +49,10 @@ namespace Dictionary
             {73, "Interception"}
         };
     }
+
+    ///<summary>
+    ///The monster ID list
+    ///</summary>
     public class List
     {
         public static Dictionary<int, string> MonsterID = new Dictionary<int, string>()
@@ -229,6 +236,10 @@ namespace Dictionary
             {176, "King Shakalaka"}//
         };
     };
+
+    ///<summary>
+    ///The weapon list
+    ///</summary>
     public class WeaponList
     {
         public static Dictionary<int, string> WeaponID = new Dictionary<int, string>()
@@ -250,6 +261,10 @@ namespace Dictionary
             {14, "Group"}
         };
     };
+
+    ///<summary>
+    ///The sharpness list
+    ///</summary>
     public class SharpnessList
     {
 
@@ -265,6 +280,10 @@ namespace Dictionary
             {7, "Cyan"}
         };
     };
+
+    ///<summary>
+    ///The poogie costumes list
+    ///</summary>
     public class PoogieCostumeList
     {
 
@@ -305,6 +324,10 @@ namespace Dictionary
         };
 
     };
+
+    ///<summary>
+    ///The armor skills list
+    ///</summary>
     public class ArmorSkillList
     {
         public static Dictionary<int, string> ArmorSkillID = new Dictionary<int, string>()
@@ -846,6 +869,10 @@ namespace Dictionary
             {534, "Magspike Tech Large Magnetic Star"}
         };
     };
+
+    ///<summary>
+    ///The objective type list
+    ///</summary>
     public class ObjectiveTypeList
     {
 
@@ -865,6 +892,10 @@ namespace Dictionary
             {0x10,"Esoteric Action" } //what is this for?
         };
     };
+
+    ///<summary>
+    ///The map areas list
+    ///</summary>
     public class MapAreaList
     {
 
@@ -1342,6 +1373,10 @@ namespace Dictionary
             {469,"Dokkan Battle Cats" }
         };
     };
+
+    ///<summary>
+    ///The armor colors list
+    ///</summary>
     public class ArmorColorList
     {
 

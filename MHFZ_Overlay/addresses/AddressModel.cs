@@ -33,6 +33,8 @@ namespace MHFZ_Overlay.addresses
 
         public int SelectedMonster = 0;
 
+        #region init bool
+
         public bool ShowMonsterInfos { get; set; } = true;
 
         public bool ShowMonsterAtkMult { get; set; } = true;
@@ -63,6 +65,9 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowMonster1Icon { get; set; } = true;
 
+        #endregion
+
+        #region abstract bool
         abstract public bool IsNotRoad();
 
         abstract public int HitCountInt();
@@ -217,6 +222,9 @@ namespace MHFZ_Overlay.addresses
 
 
         abstract public int RoadSelectedMonster();
+
+        #endregion
+
         public bool HasMonster1 => ShowHPBar(LargeMonster1ID(), Monster1HPInt());
         public bool HasMonster2 => ((LargeMonster2ID() > 0 && Monster2HPInt() != 0 && GetNotRoad()) || Configuring); // road check since the 2nd choice is used as the monster #1
         public bool HasMonster3 => ShowHPBar(LargeMonster3ID(), Monster3HPInt());
@@ -226,6 +234,10 @@ namespace MHFZ_Overlay.addresses
 
         public bool _configuring = false;
 
+        /// <summary>
+        /// Shows the monster ehp.
+        /// </summary>
+        /// <returns></returns>
         public bool ShowMonsterEHP()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -235,14 +247,26 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="AddressModel"/> is configuring.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if configuring; otherwise, <c>false</c>.
+        /// </value>
         public bool Configuring { get { return _configuring; } set { _configuring = value; ReloadData(); } }
 
+        /// <summary>
+        /// Shows the hp bar?
+        /// </summary>
+        /// <param name="monsterId">The monster identifier.</param>
+        /// <param name="monsterHp">The monster hp.</param>
+        /// <returns></returns>
         public bool ShowHPBar(int monsterId, int monsterHp)
         {
             return (monsterId > 0 && monsterHp != 0) || Configuring;
         }
 
-
+        //
         public bool? roadOverride()
         {
             //should work
@@ -253,6 +277,7 @@ namespace MHFZ_Overlay.addresses
             return null;
         }
 
+        //
         public bool GetNotRoad()
         {
             bool? b = roadOverride();
@@ -260,6 +285,8 @@ namespace MHFZ_Overlay.addresses
                 return b.Value;
             return IsNotRoad();
         }
+
+        #region monster parts
 
         public string Monster1Part1Name = "None";
         public string Monster1Part2Name = "None";
@@ -284,6 +311,10 @@ namespace MHFZ_Overlay.addresses
 
         //assumption: it follows ferias' monster part order top to bottom, presumably (e.g. head is at the top, so part 0 is head, and so on)
         // grouping by skeleton too
+
+        ///<summary>
+        ///Monster parts labels
+        ///</summary>
         public string GetPartName(int number,int monsterID)
         {
 
@@ -1357,6 +1388,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        #endregion
+
+        /// <summary>
+        /// Shows the sharpness percentage.
+        /// </summary>
+        /// <returns></returns>
         public bool ShowSharpnessPercentage()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -1366,6 +1403,10 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
+        /// <summary>
+        /// Shows the time left percentage.
+        /// </summary>
+        /// <returns></returns>
         public bool ShowTimeLeftPercentage()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -1375,6 +1416,10 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
+        /// <summary>
+        /// Gets the timer mode.
+        /// </summary>
+        /// <returns></returns>
         public string GetTimerMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -1440,6 +1485,9 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        ///<summary>
+        ///MM:SS.cs
+        ///</summary>
         public string Time
         {
             get
@@ -1534,6 +1582,10 @@ namespace MHFZ_Overlay.addresses
         //per quest
         public int HighestAtk = 0;
 
+        /// <summary>
+        /// Shows the color of the highest atk.
+        /// </summary>
+        /// <returns></returns>
         public bool ShowHighestAtkColor()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -1554,6 +1606,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        ///<summary>
+        ///<para>Player true raw</para>
+        ///<br>Attack addition is added as either Attack A or Attack B and is before or after Hunting Horn buffs respectively.</br>
+        ///<br>Values that are known to reside in Attack B are Rush, Stylish Assault, Flash Conversion, Obscurity, Incitement, Rush, Vigorous Up and Partnyaa Attack Buffs.</br>
+        ///<para>Final True  = ((Weapon True + Attack A) * HH Buff + Attack B) * Multipliers + Additional</para>
+        ///</summary>
         public string ATK
         {
             get
@@ -1575,6 +1633,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the color of the sharpness.
+        /// </summary>
+        /// <value>
+        /// The color of the sharpness.
+        /// </value>
         public string SharpnessColor
         {
             get
@@ -1596,6 +1660,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the sharpness number.
+        /// </summary>
+        /// <value>
+        /// The sharpness number.
+        /// </value>
         public string SharpnessNumber
         {
             get
@@ -1609,6 +1679,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the current weapon multiplier.
+        /// </summary>
+        /// <value>
+        /// The current weapon multiplier.
+        /// </value>
         public float CurrentWeaponMultiplier
         {
             get
@@ -1620,6 +1696,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the name of the current weapon.
+        /// </summary>
+        /// <value>
+        /// The name of the current weapon.
+        /// </value>
         public string CurrentWeaponName
         { 
             get
@@ -1630,6 +1712,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the size.
+        /// </summary>
+        /// <value>
+        /// The size.
+        /// </value>
         public string Size
         {
             get
@@ -1643,7 +1731,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-
+        /// <summary>
+        /// Gets the atk mult.
+        /// </summary>
+        /// <value>
+        /// The atk mult.
+        /// </value>
         public string AtkMult
         {
             get
@@ -1659,6 +1752,13 @@ namespace MHFZ_Overlay.addresses
 
         public bool isMonsterFocused = false;
 
+        /// <summary>
+        /// Displays the monster ehp.
+        /// </summary>
+        /// <param name="defrate">The defrate.</param>
+        /// <param name="monsterhp">The monsterhp.</param>
+        /// <param name="monsterdefrate">The monsterdefrate.</param>
+        /// <returns></returns>
         public int DisplayMonsterEHP(float defrate, int monsterhp, string monsterdefrate)
         {
             if (defrate > 0)
@@ -1678,6 +1778,9 @@ namespace MHFZ_Overlay.addresses
             return 0;
         }
 
+        /// <summary>
+        /// Reloads the maximum ehp.
+        /// </summary>
         public void ReloadMaxEHP()
         {
             if (SavedMonster1MaxHP < Monster1HPInt())
@@ -1690,6 +1793,12 @@ namespace MHFZ_Overlay.addresses
                 SavedMonster4MaxHP = (int)(Monster4HPInt() / float.Parse("1", CultureInfo.InvariantCulture.NumberFormat));
         }
 
+        /// <summary>
+        /// Gets the defrate multiplier.
+        /// </summary>
+        /// <value>
+        /// The defrate multiplier.
+        /// </value>
         public string DefMult
         {
             get
@@ -1711,6 +1820,14 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        #region monster status
+
+        /// <summary>
+        /// Gets the current poison.
+        /// </summary>
+        /// <value>
+        /// The poison current.
+        /// </value>
         public int PoisonCurrent
         {
             get
@@ -1726,6 +1843,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the poison maximum.
+        /// </summary>
+        /// <value>
+        /// The poison maximum.
+        /// </value>
         public int PoisonMax
         {
             get
@@ -1741,6 +1864,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the current sleep.
+        /// </summary>
+        /// <value>
+        /// The sleep current.
+        /// </value>
         public int SleepCurrent
         {
             get
@@ -1756,6 +1885,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the sleep maximum.
+        /// </summary>
+        /// <value>
+        /// The sleep maximum.
+        /// </value>
         public int SleepMax
         {
             get
@@ -1770,6 +1905,13 @@ namespace MHFZ_Overlay.addresses
                 };
             }
         }
+
+        /// <summary>
+        /// Gets the current paralysis.
+        /// </summary>
+        /// <value>
+        /// The para current.
+        /// </value>
         public int ParaCurrent
         {
             get
@@ -1785,6 +1927,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the para maximum.
+        /// </summary>
+        /// <value>
+        /// The para maximum.
+        /// </value>
         public int ParaMax
         {
             get
@@ -1800,8 +1948,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-
-
+        /// <summary>
+        /// Gets the current blast.
+        /// </summary>
+        /// <value>
+        /// The blast current.
+        /// </value>
         public int BlastCurrent
         {
             get
@@ -1817,6 +1969,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the blast maximum.
+        /// </summary>
+        /// <value>
+        /// The blast maximum.
+        /// </value>
         public int BlastMax
         {
             get
@@ -1831,6 +1989,13 @@ namespace MHFZ_Overlay.addresses
                 };
             }
         }
+
+        /// <summary>
+        /// Gets the current stun.
+        /// </summary>
+        /// <value>
+        /// The stun current.
+        /// </value>
         public int StunCurrent
         {
             get
@@ -1846,6 +2011,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the stun maximum.
+        /// </summary>
+        /// <value>
+        /// The stun maximum.
+        /// </value>
         public int StunMax
         {
             get
@@ -1861,6 +2032,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        #endregion
+
+        /// <summary>
+        /// Gets the name of Duremudira.
+        /// </summary>
+        /// <returns></returns>
         public string getDureName()
         {
             if (QuestID() == 21731 || QuestID() == 21749)
@@ -1882,6 +2059,12 @@ namespace MHFZ_Overlay.addresses
         public string Monster3Name => getMonsterName(LargeMonster3ID());
         public string Monster4Name => getMonsterName(LargeMonster4ID());
 
+        /// <summary>
+        /// Gets the real name of the monster.
+        /// </summary>
+        /// <value>
+        /// The real name of the monster.
+        /// </value>
         public string RealMonsterName
         {
             get {
@@ -1920,6 +2103,11 @@ namespace MHFZ_Overlay.addresses
 
         }
 
+        /// <summary>
+        /// Gets the name of the monster.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string getMonsterName(int id)
         {
             if (Configuring)
@@ -1933,6 +2121,9 @@ namespace MHFZ_Overlay.addresses
             else
                 return monstername + "";
         }
+
+        #region monster hp
+
         //DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult()).ToString()
         public string Monster1HP => Configuring ? "0" : ShowMonsterEHP() ? DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult()).ToString() : Monster1HPInt().ToString();
 
@@ -2014,6 +2205,8 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        #endregion
+
         /* 
         Multipliers 
             Sword and Shield 單手劍 片手剣 1.4x
@@ -2048,6 +2241,11 @@ namespace MHFZ_Overlay.addresses
             13    Magnet Spike
             14    Group
          */
+        /// <summary>
+        /// Gets the multiplier from weapon type.
+        /// </summary>
+        /// <param name="weaponType">Type of the weapon.</param>
+        /// <returns></returns>
         public float GetMultFromWeaponType(int weaponType)
         {
             return weaponType switch
@@ -2063,6 +2261,11 @@ namespace MHFZ_Overlay.addresses
             };
         }
 
+        /// <summary>
+        /// Gets the name of the weapon type.
+        /// </summary>
+        /// <param name="weaponType">Type of the weapon.</param>
+        /// <returns></returns>
         public string GetWeaponNameFromType(int weaponType)
         {
             return weaponType switch
@@ -2086,6 +2289,14 @@ namespace MHFZ_Overlay.addresses
             };
         }
 
+        #region monster icon
+
+        /// <summary>
+        /// Gets the current monster1 icon.
+        /// </summary>
+        /// <value>
+        /// The current monster1 icon.
+        /// </value>
         public string CurrentMonster1Icon
         {
             get
@@ -2551,8 +2762,13 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        #endregion
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        /// <summary>
+        /// Reloads the data.
+        /// </summary>
         public void ReloadData()
         {
             
