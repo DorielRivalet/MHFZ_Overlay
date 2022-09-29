@@ -173,7 +173,7 @@ namespace MHFZ_Overlay
         /// </summary>
         public static RichPresence presenceTemplate = new RichPresence()
         {
-            Details = "Overlay v0.2.1 by Imulion",
+            Details = "【MHF-Z】Overlay v0.2.1",
             State = "Loading...",
             //check img folder
             Assets = new Assets()
@@ -185,7 +185,7 @@ namespace MHFZ_Overlay
             },
             Buttons = new DiscordRPC.Button[]
                 {
-                    new DiscordRPC.Button() {Label = "Overlay Repository", Url = "https://github.com/Imulion/MHFZ_Overlay"},
+                    new DiscordRPC.Button() {Label = "Overlay Repository", Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
                     new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
                 }
         };
@@ -224,7 +224,7 @@ namespace MHFZ_Overlay
                 presenceTemplate.Buttons = new DiscordRPC.Button[] { }; ;
                 presenceTemplate.Buttons = new DiscordRPC.Button[]
                 {
-                    new DiscordRPC.Button() {Label = "Overlay Repository", Url = "https://github.com/Imulion/MHFZ_Overlay"},
+                    new DiscordRPC.Button() {Label = "Overlay Repository", Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
                     new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
                 };
                 //}
@@ -234,7 +234,7 @@ namespace MHFZ_Overlay
                     presenceTemplate.Buttons = new DiscordRPC.Button[] { }; ;
                     presenceTemplate.Buttons = new DiscordRPC.Button[]
                     {
-                    new DiscordRPC.Button() {Label = "Overlay Repository", Url = "https://github.com/Imulion/MHFZ_Overlay"},
+                    new DiscordRPC.Button() {Label = "Overlay Repository", Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
                     new DiscordRPC.Button() { Label = "Join Discord Server", Url = String.Format("https://discord.com/invite/{0}",GetDiscordServerInvite)}
                     };
                 }

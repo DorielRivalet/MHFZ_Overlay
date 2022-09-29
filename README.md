@@ -102,6 +102,7 @@ If the monster HP shown is less than what its actual values should be, restart b
 - Monster size values not shown correctly
 - Monster HP values are less than the actual values when not loading properly
 - Damage numbers over 1000 not working
+- Yamas and Berukyurosu information not working
 
 ## Features not yet implemented
 

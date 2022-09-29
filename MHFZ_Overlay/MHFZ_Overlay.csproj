@@ -9,6 +9,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseWindowsForms>True</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationIcon>mhfzoverlayicon256.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +19,10 @@
     <Page Remove="icons\DragDropControl.xaml" />
     <Page Remove="icons\Refresh.xaml" />
     <Page Remove="icons\Settings.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="mhfzoverlayicon256.ico" />
   </ItemGroup>
 
   <ItemGroup>
