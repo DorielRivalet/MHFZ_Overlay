@@ -21,7 +21,7 @@
 
 [The design and icons used in this project are part of the *Material Design Icons* and related components](https://fonts.google.com/icons)
 
-The font used is the in-game one, *MS Gothic*.
+The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced.
 
 ## Requirements
 
@@ -103,6 +103,7 @@ If the monster HP shown is less than what its actual values should be, restart b
 - Monster HP values are less than the actual values when not loading properly
 - Damage numbers over 1000 not working
 - Yamas and Berukyurosu information not working
+- Daily quests not working
 
 ## Features not yet implemented
 
@@ -128,6 +129,7 @@ If the monster HP shown is less than what its actual values should be, restart b
 - Better Hunter's Road icon
 - Handle multiple objectives information
 - Zenith information in Road
+- Settings import/export
 
 ## How to Enable Discord Rich Presence
 

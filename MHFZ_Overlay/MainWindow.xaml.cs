@@ -225,7 +225,7 @@ namespace MHFZ_Overlay
         /// </summary>
         public static RichPresence presenceTemplate = new RichPresence()
         {
-            Details = "【MHF-Z】Overlay v0.2.1",
+            Details = "【MHF-Z】Overlay v0.3.0",
             State = "Loading...",
             //check img folder
             Assets = new Assets()
