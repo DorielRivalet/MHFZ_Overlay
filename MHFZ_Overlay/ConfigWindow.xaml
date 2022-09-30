@@ -5,9 +5,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
-        Title="Monster Hunter Frontier Z Overlay Version v0.2.1"
+        Title="Monster Hunter Frontier Z Overlay Version v0.3.0"
          Height="720" Width="1280" ResizeMode="CanMinimize"
         Foreground="#cdd6f4" 
         
@@ -113,7 +114,7 @@
                             <Border Name="Border" BorderThickness=".5,.5,.5,0" BorderBrush="#b4befe" CornerRadius="4,4,0,0" Margin="2,0">
                                 <ContentPresenter x:Name="ContentSite"
                                         VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
+                                        
                                         ContentSource="Header"
                                         Margin="10,2"/>
                             </Border>
@@ -130,7 +131,13 @@
                 </Setter>
             </Style>
         </TabControl.Resources>
-        <TabItem ToolTip="General settings" Background="#11111b" Foreground="#cdd6f4" Header="General">
+        <TabItem ToolTip="General settings" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Image Name="generalImg" Source="icons/book.png" Width="32" Height="32"/>
+                    <TextBlock Text="General" Margin="4,0,0,0" VerticalAlignment="Center" />
+                </StackPanel>
+            </TabItem.Header>
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -207,7 +214,13 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem ToolTip="Player settings" Background="#11111b" Foreground="#cdd6f4" Header="Player Info">
+        <TabItem ToolTip="Player settings" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Image Name="playerimg" Source="icons/helm.png" Width="32" Height="32"/>
+                    <TextBlock Text="Hunter Info" Margin="4,0,0,0" VerticalAlignment="Center" />
+                </StackPanel>
+            </TabItem.Header>
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -292,7 +305,13 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem ToolTip="Monster HP settings" Background="#11111b" Foreground="#cdd6f4" Header="Monster HP Bars">
+        <TabItem ToolTip="Monster HP settings" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Image Name="hpimg" Source="icons/monster.png" Width="32" Height="32"/>
+                    <TextBlock Text="Monster HP Bars" Margin="4,0,0,0" VerticalAlignment="Center" />
+                </StackPanel>
+            </TabItem.Header>
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -364,7 +383,13 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem ToolTip="Monster status settings" Background="#11111b" Foreground="#cdd6f4" Header="Monster Status Info">
+        <TabItem ToolTip="Monster status settings" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Image Name="statusImg" Source="icons/poison.png" Width="32" Height="32"/>
+                    <TextBlock Text="Monster Status Info" Margin="4,0,0,0" VerticalAlignment="Center" />
+                </StackPanel>
+            </TabItem.Header>
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -487,7 +512,13 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem ToolTip="Discord settings" Background="#11111b" Foreground="#cdd6f4" Header="Discord Rich Presence">
+        <TabItem ToolTip="Discord settings" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontSize="32" Text="&#xf392;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Margin="4,0,0,0" VerticalAlignment="Center" />
+                    <TextBlock Text="Discord Rich Presence" Margin="4,0,0,0" VerticalAlignment="Center" />
+                </StackPanel>
+            </TabItem.Header>
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -562,7 +593,13 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem ToolTip="Authors and developers information" Background="#11111b" Foreground="#cdd6f4" Header="Credits">
+        <TabItem ToolTip="Authors and developers information" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xf09b;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Margin="4,0,0,0" VerticalAlignment="Center" FontSize="32"/>
+                    <TextBlock Text="Credits" Margin="4,0,0,0" VerticalAlignment="Center" />
+                </StackPanel>
+            </TabItem.Header>
             <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>

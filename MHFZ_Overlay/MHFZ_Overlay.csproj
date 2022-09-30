@@ -13,6 +13,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\SourceCodePro-Black.ttf" />
+    <None Remove="Fonts\SourceCodePro-BlackItalic.ttf" />
+    <None Remove="Fonts\SourceCodePro-Bold.ttf" />
+    <None Remove="Fonts\SourceCodePro-BoldItalic.ttf" />
+    <None Remove="Fonts\SourceCodePro-ExtraBold.ttf" />
+    <None Remove="Fonts\SourceCodePro-ExtraBoldItalic.ttf" />
+    <None Remove="Fonts\SourceCodePro-ExtraLight.ttf" />
+    <None Remove="Fonts\SourceCodePro-ExtraLightItalic.ttf" />
+    <None Remove="Fonts\SourceCodePro-Italic-VariableFont_wght.ttf" />
+    <None Remove="Fonts\SourceCodePro-Italic.ttf" />
+    <None Remove="Fonts\SourceCodePro-Light.ttf" />
+    <None Remove="Fonts\SourceCodePro-LightItalic.ttf" />
+    <None Remove="Fonts\SourceCodePro-Medium.ttf" />
+    <None Remove="Fonts\SourceCodePro-MediumItalic.ttf" />
+    <None Remove="Fonts\SourceCodePro-Regular.ttf" />
+    <None Remove="Fonts\SourceCodePro-SemiBold.ttf" />
+    <None Remove="Fonts\SourceCodePro-SemiBoldItalic.ttf" />
+    <None Remove="Fonts\SourceCodePro-VariableFont_wght.ttf" />
+    <None Remove="icons\book.png" />
+    <None Remove="icons\helm.png" />
+    <None Remove="icons\monster.png" />
+    <None Remove="icons\poison.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Remove="icons\Cancel.xaml" />
     <Page Remove="icons\Close.xaml" />
     <Page Remove="icons\Done.xaml" />
@@ -28,6 +53,7 @@
   <ItemGroup>
     <PackageReference Include="DiscordRichPresence" Version="1.0.175" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.4.0" />
+    <PackageReference Include="FontAwesome.Sharp" Version="6.1.1" />
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
     <PackageReference Include="Memory.dll.x86" Version="1.2.24" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
@@ -35,6 +61,68 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\SourceCodePro-Black.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-BlackItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-Bold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-BoldItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-ExtraBold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-ExtraBoldItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-ExtraLight.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-ExtraLightItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-Italic-VariableFont_wght.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-Italic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-Light.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-LightItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-Medium.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-MediumItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-Regular.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-SemiBold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-SemiBoldItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceCodePro-VariableFont_wght.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\book.png">
+      <Generator></Generator>
+    </Resource>
+    <Resource Include="icons\helm.png">
+      <Generator></Generator>
+    </Resource>
+    <Resource Include="icons\monster.png" />
+    <Resource Include="icons\poison.png" />
     <Resource Include="icons\Refresh.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

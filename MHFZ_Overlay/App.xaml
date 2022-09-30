@@ -9,11 +9,11 @@
         <ResourceDictionary>
             <local:Settings x:Key="Settings"/>
             <Style x:Key="WinAll" TargetType="{x:Type Window}">
-                <Setter Property="FontFamily" Value="Source Code Pro" />
+                <!--<Setter Property="FontFamily" Value="Source Code Pro" />-->
                 <Setter Property="FontSize" Value="16" />
             </Style>
             <Style x:Key="MainTextBox" TargetType="{x:Type TextBlock}">
-                <Setter Property="FontFamily" Value="Source Code Pro" />
+                <!--<Setter Property="FontFamily" Value="Source Code Pro" />-->
                 <Setter Property="FontSize" Value="{Binding Source={StaticResource Settings}, Path=FontSize}" />
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="Margin" Value="5" />
@@ -63,7 +63,7 @@
                 <Setter Property="Background" Value="#00000000"/>
                 <Setter Property="Margin" Value="5"/>
                 <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="FontFamily" Value="Source Code Pro"/>
+                <!--<Setter Property="FontFamily" Value="Source Code Pro"/>-->
             </Style>
             <Style x:Key="ConfigSingleGrid" TargetType="{x:Type Grid}">
                 <Setter Property="Margin" Value="20"/>
@@ -142,6 +142,8 @@
                 <Setter Property="ColorMode" Value="ColorCanvas"/>
             </Style>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
+            <FontFamily x:Key="Source Code Pro">pack://application:,,,/Fonts/#Source Code Pro</FontFamily>
+            <FontFamily x:Key="Source Code Pro Bold">pack://application:,,,/Fonts/#Source Code Pro Bold</FontFamily>
             <!--<ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
