@@ -124,7 +124,8 @@ namespace MHFZ_Overlay.addresses
 
 
         //new addresses
-        public override int AreaID() => M.Read2Byte("mhfo.dll+5034388");
+        //public override int AreaID() => M.Read2Byte("mhfo.dll+5034388");
+        public override int AreaID() => M.Read2Byte("mhfo.dll+6124B6E");
         public override int GRankNumber() => M.Read2Byte("mhfo.dll+613DD30");
         public override int GSR() => M.Read2Byte("mhfo.dll+50349A2");
         public override int RoadFloor() => M.Read2Byte("mhfo.dll+5C47600");

@@ -21,7 +21,7 @@
 
 [The design and icons used in this project are part of the *Material Design Icons* and related components](https://fonts.google.com/icons)
 
-The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced.
+The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced. This project also uses Font Awesome's fonts.
 
 ## Requirements
 
@@ -48,7 +48,7 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 
 Additionally, if information from the overlay is wrong or inaccurate (e.g. monster parts labels), feel free to send an issue.
 
-If the monster HP shown is less than what its actual values should be, restart both the game and the overlay.
+If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load.
 
 ## Features
 
@@ -105,6 +105,8 @@ If the monster HP shown is less than what its actual values should be, restart b
 - Yamas and Berukyurosu information not working
 - Daily quests not working
 
+[Check more bugs here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
+
 ## Features not yet implemented
 
 - Choose which player to load data from
@@ -130,6 +132,9 @@ If the monster HP shown is less than what its actual values should be, restart b
 - Handle multiple objectives information
 - Zenith information in Road
 - Settings import/export
+- Discord Rich Presence Party Size
+
+[Check more possible future features here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 
 ## How to Enable Discord Rich Presence
 

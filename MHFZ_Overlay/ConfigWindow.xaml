@@ -8,7 +8,7 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
-        Title="Monster Hunter Frontier Z Overlay Version v0.3.0"
+        Title="Monster Hunter Frontier Z Overlay v0.4.0"
          Height="720" Width="1280" ResizeMode="CanMinimize"
         Foreground="#cdd6f4" 
         
@@ -273,7 +273,27 @@
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HitCountX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Hit Count Y Coordinate"/>
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HitCountY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Player True Raw" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Attack Value"/>
+                        <!--        ///<summary>
+        ///<para>Player true raw</para>
+        ///<br>Attack addition is added as either Attack A or Attack B and is before or after Hunting Horn buffs respectively.</br>
+        ///<br>Values that are known to reside in Attack B are Rush, Stylish Assault, Flash Conversion, Obscurity, Incitement, Rush, Vigorous Up and Partnyaa Attack Buffs.</br>
+        ///<para>Final True  = ((Weapon True + Attack A) * HH Buff + Attack B) * Multipliers + Additional</para>
+        ///</summary>-->
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Player True Raw" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Attack Value">
+                            <ToolTipService.ToolTip>
+                                <StackPanel Background="#FF313131"  >
+                                    <TextBlock Foreground="#7FFFFFFF">
+                                       Player True Raw
+                                       <LineBreak/>
+                                       Attack addition is added as either Attack A or Attack B and is before or after Hunting Horn buffs respectively.
+                                       <LineBreak/>
+                                       Values that are known to reside in Attack B are Rush, Stylish Assault, Flash Conversion, Obscurity, Incitement, Rush, Vigorous Up and Partnyaa Attack Buffs.
+                                       <LineBreak/>
+                                        Final True  = ((Weapon True + Attack A) * HH Buff + Attack B) * Multipliers + Additional
+                                    </TextBlock>
+                                </StackPanel>
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
                         <ToggleButton Grid.Row="8" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAtkShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Attack X Coordinate"/>
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAtkX}"  PreviewTextInput="ValidateNumber"/>
@@ -554,9 +574,7 @@
                                    <LineBreak/>
                                    2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
                                    <LineBreak/>
-                                   3. Rich Presence -> Art Assets -> Add Image(s) -> Upload the contents of the img folder (except monster)
-                                   <LineBreak/>
-                                   4. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID
+                                   3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID
                                    <LineBreak/>
                                    The ID also shows up in OAuth2 section as Client ID
                                </TextBlock>
@@ -580,6 +598,15 @@
                         <ComboBoxItem>Never</ComboBoxItem>
                         <ComboBoxItem>Always</ComboBoxItem>
                     </ComboBox>
+                    <TextBlock Grid.Column="0" Grid.Row="8" Grid.RowSpan="4" Grid.ColumnSpan="2" Foreground="#cdd6f4">
+                                   1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
+                                   <LineBreak/>
+                                   2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
+                                   <LineBreak/>
+                                   3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID
+                                   <LineBreak/>
+                                   The ID also shows up in OAuth2 section as Client ID
+                    </TextBlock>
                 </Grid>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
                     <Grid.ColumnDefinitions>
