@@ -1,27 +1,18 @@
 ﻿using DiscordRPC;
-using MHFZ_Overlay.addresses;
-using MHFZ_Overlay.controls;
-using Microsoft.VisualBasic;
 using System;
-using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using System.Windows.Threading;
-using static System.Net.WebRequestMethods;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
-using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 using DataFormats = System.Windows.DataFormats;
 using DataObject = System.Windows.DataObject;
@@ -31,6 +22,7 @@ using Label = System.Windows.Controls.Label;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
 //using static System.Globalization.CultureInfo;
+
 
 namespace MHFZ_Overlay
 {
@@ -2215,6 +2207,14 @@ namespace MHFZ_Overlay
         public bool IsDure()
         {
             if (DataLoader.model.getDureName() != "None")
+                return true;
+            else
+                return false;
+        }
+
+        public bool IsRavi()
+        {
+            if (DataLoader.model.getRaviName() != "None")
                 return true;
             else
                 return false;

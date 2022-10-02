@@ -124,8 +124,8 @@ namespace MHFZ_Overlay.addresses
 
 
         //new addresses
-        //public override int AreaID() => M.Read2Byte("mhfo.dll+5034388");
-        public override int AreaID() => M.Read2Byte("mhfo.dll+6124B6E");
+        public override int AreaID() => M.Read2Byte("mhfo.dll+5034388");
+        public override int RavienteAreaID() => M.Read2Byte("mhfo.dll+6124B6E");
         public override int GRankNumber() => M.Read2Byte("mhfo.dll+613DD30");
         public override int GSR() => M.Read2Byte("mhfo.dll+50349A2");
         public override int RoadFloor() => M.Read2Byte("mhfo.dll+5C47600");
@@ -202,5 +202,8 @@ namespace MHFZ_Overlay.addresses
         public override int Objective1CurrentQuantityMonster() => M.Read2Byte("mhfo.dll+60792E6");
         public override int Objective1CurrentQuantityItem() => M.Read2Byte("mhfo.dll+5034732");
 
+        public override int RavienteTriggeredEvent() => M.Read2Byte("mhfo.dll+61005C6");
+        public override int GreatSlayingPoints() => M.ReadInt("mhfo.dll+5B45FF8");
+        public override int GreatSlayingPointsSaved() => M.ReadInt("mhfo.dll+61005C4");
     }
 }

@@ -98,12 +98,14 @@ If the monster HP shown is less than what its actual values should be, restart b
 - With Monster EHP enabled, if you cart, the max EHP turns into the current EHP, along with some other info max values
 - Sometimes when exiting Drag and Drop the monster HP information disappears
 - Spawning in the same area as the monster doesn't load the information properly. Fix: re-enter area
-- Duremudira HP not showing. Fix: enable *Always Show Monster Info*, load another quest showing the HP bars (not just the numbers), then retry.
+- Duremudira/Road/Raviente HP not showing. Fix: enable *Always Show Monster Info*, load another quest showing the HP bars (not just the numbers), then retry.
 - Monster size values not shown correctly
 - Monster HP values are less than the actual values when not loading properly
 - Damage numbers over 1000 not working
 - Yamas and Berukyurosu information not working
 - Daily quests not working
+
+Fully reinstalling the game or .NET dependencies may fix some bugs.
 
 [Check more bugs here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
 
@@ -133,6 +135,7 @@ If the monster HP shown is less than what its actual values should be, restart b
 - Zenith information in Road
 - Settings import/export
 - Discord Rich Presence Party Size
+- Raviente Support Part Info
 
 [Check more possible future features here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 

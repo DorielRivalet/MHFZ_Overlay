@@ -267,5 +267,9 @@ namespace MHFZ_Overlay.addresses
         public override int Objective1CurrentQuantityMonster() => M.Read2Byte("mhfo-hd.dll+ECB2A38");
         public override int Objective1CurrentQuantityItem() => M.Read2Byte("mhfo-hd.dll+DC6C2F2");
 
+        public override int RavienteTriggeredEvent() => 1;
+        public override int RavienteAreaID() => 1;
+        public override int GreatSlayingPoints() => 1;
+        public override int GreatSlayingPointsSaved() => 1;
     }
 }

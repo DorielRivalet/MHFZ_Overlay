@@ -156,7 +156,7 @@
 | 4  | Lower    |
 | 5  | Lower     |
 | 6  |  Lower    |
-| 7  |  Lower    |
+| 7  |  Lower (also Raviente)   |
 | 8  | Lower    |
 | 9  | Lower    |
 |10  | Lower    |
@@ -202,7 +202,7 @@
 |50  ||
 |51  ||
 |52  ||
-|53  | G Rank    |
+|53  | G Rank (also Berserk Raviente)   |
 |54  | Musou 1 (Repel/20m/Lower Shiten)|
 |55  | Musou 2 (Slay/10m/Upper Shiten)|
 |56  | Twinhead (Rajang+Voljang)|
@@ -1116,19 +1116,19 @@
 |306 | Highlands Night Area 6|
 |307 | Highlands Day Area 7|
 |308 | Highlands Night Area 7|
-|309 |  Solitude Island|
+|309 |  Solitude Island 9 (Area 3)|
 |310 |Campaign Tent|
-|311 | Raviente Balloon|
-|312 | Raviente Balloon|
-|313 | Solitude Island|
-|314 | Solitude Isle 1|
-|315 |Solitude Island|
-|316 | Solitude Island|
-|317 | Solitude Isle 2|
-|318 |  Solitude Island|
-|319 |  Solitude Island|
-|320 | Solitude Isle 3|
-|321 | Solitude Island|
+|311 | Raviente Balloon (Day)|
+|312 | Raviente Balloon (Sunset)|
+|313 | Solitude Island (Night)|
+|314 | Solitude Island 1 (Area 1)|
+|315 |Solitude Island 2 (Area 1) |
+|316 | Solitude Island 3 (Area 1)|
+|317 | Solitude Island 4 (Area 2)|
+|318 |  Solitude Island 5 (Area 2)|
+|319 |  Solitude Island 6 (Area 2)|
+|320 | Solitude Island 7 (Area 3)|
+|321 | Solitude Island 8 (Area 3)|
 |322 | Tidal Island Day Base Camp|
 |323 | Tidal Island Day Area 1|
 |324 | Tidal Island Day Area 2|
@@ -1224,12 +1224,12 @@
 |414 |  Duremudira Door|
 |415 | Urgent Tower|
 |416 | 4th District Tower|
-|417 | Berserk Raviente Base Camp Slay 1|
-|418 |Berserk Raviente Combat 01|
-|419 | Berserk Raviente Combat 02|
-|420 | Berserk Raviente Combat 03|
-|421 | Berserk Raviente Combat 04|
-|422 |Berserk Raviente Combat 05|
+|417 | Berserk Raviente Base Camp|
+|418 |Berserk Raviente Combat Phase 1|
+|419 | Berserk Raviente Combat Phase 2|
+|420 | Berserk Raviente Combat Phase 3|
+|421 | Berserk Raviente Combat Phase 4|
+|422 |Berserk Raviente Combat Phase 5|
 |423 |Painted Falls Day Base Camp|
 |424 | Painted Falls Night Base Camp|
 |425 | Painted Falls Day Area 1|
@@ -1244,14 +1244,14 @@
 |434 | Painted Falls Night Area 5|
 |435 |Painted Falls Day Area 6|
 |436 | Painted Falls Night Area 6|
-|437 |  Guanzorumu Arena 01|
-|438 | Berserk Raviente Base Camp|
-|439 |  Guanzorumu Arena 02|
-|440 | Berserk Raviente Support 01|
-|441 | Berserk Raviente Support 02|
-|442 | Berserk Raviente Support 03|
-|443 | Berserk Raviente Support 04|
-|444 | Berserk Raviente Support 05|
+|437 |  Berserk Raviente Base Camp (Support)|
+|438 | Guanzorumu Arena 1|
+|439 |  Guanzorumu Arena 2|
+|440 | Berserk Raviente Support Phase 1|
+|441 | Berserk Raviente Support Phase 2|
+|442 | Berserk Raviente Support Phase 3|
+|443 | Berserk Raviente Support Phase 4|
+|444 | Berserk Raviente Support Phase 5|
 |445 |  Diva Hall|
 |446 |  Amatsu Arena 1|
 |447 |  Amatsu Arena 2|
@@ -1663,3 +1663,56 @@
 |1|Heaven|
 |2|Storm|
 |3|Extreme|
+
+### Raviente Trigger Events
+
+|ID| Event|
+|--|------|
+|0|Slay 1|
+|1|Sedation 1|
+|2|Destruction 1|
+|3|Slay 2|
+|4|Sedation 2|
+|5|Sedation 3|
+|6|Slay 4|
+|7|Slay 5|
+|8|Sedation 5|
+|9|Slay 6|
+|10|Slay 7|
+|11|Sedation 7|
+|12|Sedation 8|
+|13|Slay 9|
+
+### Violent Raviente Trigger Events
+
+|ID| Event|
+|--|------|
+|0|Slay 1|
+|1|Sedation 1|
+|2|Destruction 1|
+|3|Slay 2|
+|4|Sedation 2|
+|5|Sedation 3|
+|6|Slay 4|
+|7|Slay 5|
+|8|Sedation 5|
+|9|Slay 6|
+|10|Slay 7|
+|11|Slay 8|
+|12|Sedation 7|
+|13|Slay 9|
+
+### Berserk Raviente (Practice) Trigger Events
+
+|ID| Event|
+|--|------|
+|0|Slay 1|
+|1|Sedation 1|
+|2|Support and Combat 1|
+|3|Destruction 2|
+|4|Destruction 3|
+|5|Destruction 4|
+|6|Support 2|
+|7|Sedation 4|
+|8|Sedation 5|
+|9|Sedation 6|

@@ -120,7 +120,7 @@
       <Value Profile="(Default)">685</Value>
     </Setting>
     <Setting Name="AlwaysShowPlayerInfo" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="EnableSharpnessPercentage" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

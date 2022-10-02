@@ -67,7 +67,7 @@ namespace MHFZ_Overlay.addresses
 
         #endregion
 
-        #region abstract bool
+        #region abstract vars
         abstract public bool IsNotRoad();
 
         abstract public int HitCountInt();
@@ -222,6 +222,14 @@ namespace MHFZ_Overlay.addresses
 
 
         abstract public int RoadSelectedMonster();
+
+        abstract public int RavienteTriggeredEvent();
+
+        //normal and violent. berserk support
+        abstract public int RavienteAreaID();
+
+        abstract public int GreatSlayingPoints();
+        abstract public int GreatSlayingPointsSaved();
 
         #endregion
 
@@ -2051,6 +2059,33 @@ namespace MHFZ_Overlay.addresses
             else if (QuestID() == 23648 || QuestID() == 23649)
                 return "Arrogant Duremudira";
             else 
+                return "None";
+        }
+
+        //quest ids
+        //ravi 62105 TODO: same ids in all phases?
+        //violent 62101 
+        //berserk
+        //berserk practice
+        // support 1 55803 
+        //extreme
+        /// <summary>
+        /// Gets the name of the ravi.
+        /// </summary>
+        /// <returns></returns>
+        public string getRaviName()
+        {
+            if (QuestID() == 21731 || QuestID() == 21749)
+                return "1st District Duremudira";
+            else if (QuestID() == 21746 || QuestID() == 21750)
+                return "2nd District Duremudira";
+            else if (QuestID() == 21747 || QuestID() == 21734)
+                return "3rd District Duremudira";
+            else if (QuestID() == 21748)
+                return "4th District Duremudira";
+            else if (QuestID() == 23648 || QuestID() == 23649)
+                return "Arrogant Duremudira";
+            else
                 return "None";
         }
 
