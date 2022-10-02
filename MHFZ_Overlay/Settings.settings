@@ -263,5 +263,8 @@
     <Setting Name="DiscordRoadTimerReset" Type="System.String" Scope="User">
       <Value Profile="(Default)">Never</Value>
     </Setting>
+    <Setting Name="DiscordQuestNameShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

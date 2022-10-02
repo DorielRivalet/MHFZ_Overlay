@@ -547,67 +547,74 @@
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Style="{StaticResource ConfigSingleGrid}" x:Name="DiscordRichPresence" Margin="20,20,20,20" Grid.ColumnSpan="9">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Enable Discord Rich Presence" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="(Overlay restart required) Rich Presence"/>
-                    <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableRichPresence}"/>
-                    <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="(Mandatory) Client/Application ID">
-                        <ToolTipService.ToolTip>
-                           <StackPanel Background="#FF313131"  >
-                               <TextBlock Foreground="#cdd6f4">
-                                   1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
-                                   <LineBreak/>
-                                   2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
-                                   <LineBreak/>
-                                   3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID
-                                   <LineBreak/>
-                                   The ID also shows up in OAuth2 section as Client ID
-                               </TextBlock>
-                           </StackPanel>
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordClientID}"  PreviewTextInput="ValidateNumber" MaxLength="19"/>
-                    <TextBlock Margin="5,5,5,5" ToolTip="The server you play on (e.g. https://discord.gg/y8mF6amH, enter only the ID, not the whole link)" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="(Optional) Frontier Discord Server Invite Link"/>
-                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordServerInvite}"  PreviewTextInput="ValidateName" MaxLength="10"/>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Your hunter name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="(Optional) Hunter Name"/>
-                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HunterName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Your guild (in-game) name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="(Optional) Guild Name"/>
-                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GuildName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Select Quest Timing Mode (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Quest Timing Mode"/>
-                    <ComboBox Grid.Column="1" Grid.Row="5" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordTimerMode}">
-                        <ComboBoxItem>Time Left</ComboBoxItem>
-                        <ComboBoxItem>Time Elapsed</ComboBoxItem>
-                    </ComboBox>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Reset Time on Floor change (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Road Timer Reset per Floor"/>
-                    <ComboBox Grid.Column="1" Grid.Row="6" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordRoadTimerReset}">
-                        <ComboBoxItem>Never</ComboBoxItem>
-                        <ComboBoxItem>Always</ComboBoxItem>
-                    </ComboBox>
-                    <TextBlock Grid.Column="0" Grid.Row="8" Grid.RowSpan="4" Grid.ColumnSpan="2" Foreground="#cdd6f4">
-                                   1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
-                                   <LineBreak/>
-                                   2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
-                                   <LineBreak/>
-                                   3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID
-                                   <LineBreak/>
-                                   The ID also shows up in OAuth2 section as Client ID
-                    </TextBlock>
-                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                    <Grid Style="{StaticResource ConfigSingleGrid}" x:Name="DiscordRichPresence" Margin="20,20,20,20" Grid.ColumnSpan="9">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Enable Discord Rich Presence" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="(Overlay restart required) Rich Presence"/>
+                        <CheckBox Background="#b4befe" Style="{StaticResource ConfigCheckBox}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableRichPresence}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="(Mandatory) Client/Application ID">
+                            <ToolTipService.ToolTip>
+                               <StackPanel Background="#FF313131"  >
+                                   <TextBlock Foreground="#cdd6f4">
+                                       1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
+                                       <LineBreak/>
+                                       2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
+                                       <LineBreak/>
+                                       3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID
+                                       <LineBreak/>
+                                       The ID also shows up in OAuth2 section as Client ID
+                                   </TextBlock>
+                               </StackPanel>
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordClientID}"  PreviewTextInput="ValidateNumber" MaxLength="19"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="The server you play on (e.g. https://discord.gg/y8mF6amH, enter only the ID, not the whole link)" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="(Optional) Frontier Discord Server Invite Link"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordServerInvite}"  PreviewTextInput="ValidateName" MaxLength="10"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Your hunter name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="(Optional) Hunter Name"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HunterName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Your guild (in-game) name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="(Optional) Guild Name"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GuildName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select Quest Timing Mode (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Quest Timing Mode"/>
+                        <ComboBox Grid.Column="1" Grid.Row="5" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordTimerMode}">
+                            <ComboBoxItem>Time Left</ComboBoxItem>
+                            <ComboBoxItem>Time Elapsed</ComboBoxItem>
+                        </ComboBox>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Reset Time on Floor change (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Road Timer Reset per Floor"/>
+                        <ComboBox Grid.Column="1" Grid.Row="6" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordRoadTimerReset}">
+                            <ComboBoxItem>Never</ComboBoxItem>
+                            <ComboBoxItem>Always</ComboBoxItem>
+                        </ComboBox>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Name (some are untranslated)" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Quest Name"/>
+                        <ToggleButton Grid.Row="7" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=DiscordQuestNameShown}"/>
+                        <TextBlock Grid.Column="0" Grid.Row="9" Grid.RowSpan="4" Grid.ColumnSpan="2" Foreground="#cdd6f4">
+                                       1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
+                                       <LineBreak/>
+                                       2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
+                                       <LineBreak/>
+                                       3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID
+                                       <LineBreak/>
+                                       The ID also shows up in OAuth2 section as Client ID
+                        </TextBlock>
+                    </Grid>
+                </ScrollViewer>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>

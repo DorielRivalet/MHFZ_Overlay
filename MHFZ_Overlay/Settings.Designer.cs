@@ -1066,5 +1066,17 @@ namespace MHFZ_Overlay {
                 this["DiscordRoadTimerReset"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DiscordQuestNameShown {
+            get {
+                return ((bool)(this["DiscordQuestNameShown"]));
+            }
+            set {
+                this["DiscordQuestNameShown"] = value;
+            }
+        }
     }
 }

@@ -673,7 +673,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string getItemName(int id)
+        public string GetItemName(int id)
         {
             string itemValue1;
             bool isItemExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out itemValue1);  //returns true
@@ -682,7 +682,23 @@ namespace MHFZ_Overlay
             return itemValue1 + "";
         }
 
+        /// <summary>
+        /// Gets the name of the quest.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetQuestNameFromID(int id)
+        {
+            if (!(ShowDiscordQuestNames)) return "";
+            string QuestValue1;
+            bool isQuestExists1 = Dictionary.Quests.QuestIDs.TryGetValue(id, out QuestValue1);  //returns true
+            //Console.WriteLine(itemValue1); //Print "First"
+            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
+            return QuestValue1 + "";
+        }
+
         public bool itemsLoaded = false;
+        public bool questsLoaded = false;
 
         /// <summary>
         /// Gets the weapon name from identifier.
@@ -999,6 +1015,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetRealMonsterName(string iconName)
         {
+            if (ShowDiscordQuestNames) return "";
             //quest ids:
             //mp road: 23527
             //solo road: 23628
@@ -1039,6 +1056,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetRankNameFromID(int id)
         {
+            if (ShowDiscordQuestNames) return "";
             switch (id)
             {
                 case 0:
@@ -1159,13 +1177,13 @@ namespace MHFZ_Overlay
                 case 57://twinhead mi ru / white and brown espi / unknown and zeru / rajang and dorag
                     return "Twinhead ";
                 case 64:
-                    return "Z1 ";
+                    return "Zenith★1 ";
                 case 65:
-                    return "Z2 ";
+                    return "Zenith★2 ";
                 case 66:
-                    return "Z3 ";
+                    return "Zenith★3 ";
                 case 67:
-                    return "Z4 ";
+                    return "Zenith★4 ";
                 case 70://unknown
                     return "Upper Shiten ";
                 case 71:
@@ -1184,6 +1202,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetObjectiveNameFromID(int id)
         {
+            if (ShowDiscordQuestNames) return "";
             return id switch
             {
                 0 => "Nothing ",
@@ -2125,6 +2144,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetObjective1Name(int id)
         {
+            if (ShowDiscordQuestNames) return "";
             string? objValue1;
             bool isNameExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out objValue1);  //returns true
             //Console.WriteLine(itemValue1); //Print "First"
@@ -2152,6 +2172,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetObjective1Quantity()
         {
+            if (ShowDiscordQuestNames) return "";
             if (DataLoader.model.Objective1Quantity() <= 1)
                 return "";
             // hunt / capture / slay
@@ -2167,6 +2188,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetObjective1CurrentQuantity()
         {
+            if (ShowDiscordQuestNames) return "";
             if (DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002)
             {
                 if (DataLoader.model.Objective1Quantity() <= 1)
@@ -2247,6 +2269,18 @@ namespace MHFZ_Overlay
 
         private bool inDuremudiraDoorway = false;
 
+        public bool ShowDiscordQuestNames
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                if (s.DiscordQuestNameShown == true)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         /// <summary>
         /// Updates the discord RPC.
         /// </summary>
@@ -2255,6 +2289,12 @@ namespace MHFZ_Overlay
             if (!(isDiscordRPCRunning))
             {
                 return;
+            }
+
+            if (!(questsLoaded && ShowDiscordQuestNames))
+            {
+                questsLoaded = true;
+                Dictionary.Quests.Initiate();
             }
 
             presenceTemplate.Details = string.Format("{0}{1}{2}", getOverlayMode(), getAreaName(DataLoader.model.AreaID()), getGameMode(DataLoader.isHighGradeEdition));
@@ -2313,9 +2353,9 @@ namespace MHFZ_Overlay
                         break;
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4} | True Raw: {5} (Max {6}) | Hits: {7}", GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | True Raw: {6} (Max {7}) | Hits: {8}",GetQuestNameFromID(DataLoader.model.QuestID()),GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
                         else
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4} | True Raw: {5} (Max {6}) | Hits: {7}",GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(),GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.ATK,DataLoader.model.HighestAtk,DataLoader.model.HitCount);
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | True Raw: {6} (Max {7}) | Hits: {8}",GetQuestNameFromID(DataLoader.model.QuestID()),GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(),GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.ATK,DataLoader.model.HighestAtk,DataLoader.model.HitCount);
                         break;
                 }
 
@@ -2358,10 +2398,10 @@ namespace MHFZ_Overlay
             else if (DataLoader.model.QuestID() == 0)
             {
                 if (!(itemsLoaded))
-                { 
+                {
+                    itemsLoaded = true;
                     //load item list
                     Dictionary.Items.initiate();
-                    itemsLoaded = true;
                 }
                 //inQuest = false;
 
@@ -2388,7 +2428,7 @@ namespace MHFZ_Overlay
                     case 340://SR Rooms
                     case 341:
                     case 397://Mezeporta Dupe(non-HD)
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Diva Skill: {3} ({4} Left) | Poogie Item: {5}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetDivaSkillNameFromID(DataLoader.model.DivaSkill()), DataLoader.model.DivaSkillUsesLeft(), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Diva Skill: {3} ({4} Left) | Poogie Item: {5}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetDivaSkillNameFromID(DataLoader.model.DivaSkill()), DataLoader.model.DivaSkillUsesLeft(), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 173:// My House (original)
@@ -2399,11 +2439,11 @@ namespace MHFZ_Overlay
                     case 202://Guild Halls
                     case 203:
                     case 204:
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 205://Pugi Farm
-                        presenceTemplate.State = string.Format("GR: {0} | Poogie Points: {1} | Poogie Clothes: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.PoogiePoints(), GetPoogieClothes(DataLoader.model.PoogieCostume()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | Poogie Points: {1} | Poogie Clothes: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.PoogiePoints(), GetPoogieClothes(DataLoader.model.PoogieCostume()), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 256://Caravan Areas
@@ -2423,7 +2463,7 @@ namespace MHFZ_Overlay
                         break;
 
                     case 265://Guuku Farm
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 283://Halk Area TODO partnya lv
@@ -2431,7 +2471,7 @@ namespace MHFZ_Overlay
                         break;
 
                     case 286://PvP Room
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 379://Diva Hall
@@ -2445,7 +2485,7 @@ namespace MHFZ_Overlay
                     case 462://MezFez Entrance
                     case 463: //Volpkun Together
                     case 465://MezFez Minigame
-                        presenceTemplate.State = string.Format("GR: {0} | MezFes Points: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.MezeportaFestivalPoints(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | MezFes Points: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.MezeportaFestivalPoints(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 464://Uruki Pachinko
@@ -2469,7 +2509,7 @@ namespace MHFZ_Overlay
                         break;
 
                     default: //same as Mezeporta
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
                 }
 

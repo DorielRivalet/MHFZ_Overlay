@@ -39,10 +39,10 @@ namespace Dictionary
             {55, "Musou 2"},//upper shiten disu. shifting/golden.
             {56, "Twinhead 1" },//twinhead rajang / voljang and rajang
             {57, "Twinhead 2" },//twinhead mi ru / white and brown espi / unknown and zeru / rajang and dorag
-            {64, "Z1"},
-            {65, "Z2"},
-            {66, "Z3"},
-            {67, "Z4"},
+            {64, "Zenith★1"},
+            {65, "Zenith★2"},
+            {66, "Zenith★3"},
+            {67, "Zenith★4"},
             {70,"Upper Shiten" },//upper shiten Unknown
             {71, "Interception"},
             {72, "Interception"},

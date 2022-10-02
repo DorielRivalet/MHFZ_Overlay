@@ -149,7 +149,7 @@
 
 ## IDs
 
-### Rank Bands
+### Rank Bands / Stat Tables
 
 | ID | Rank Band|
 |----|------|
