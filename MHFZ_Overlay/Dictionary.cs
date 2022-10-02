@@ -1040,7 +1040,7 @@ namespace Dictionary
             {136,"Dundorma Grand Priest" },
             {137,"Broken" },
             {138,"Tower 2" },
-            {139,"Tower 1 Area 9" },
+            {139,"Tower 1 Area 9 (Nest Hole)" },
             {140,"Desert Day Base Camp" },
             {141,"Desert Day Area 2" },
             {142,"Desert Day Area 7" },
@@ -1488,6 +1488,52 @@ namespace Dictionary
             {103, "Dining Grey 2"},
             {104, "Dining Grey 3"},
             {105, "Dining Grey 4"}
+        };
+    };
+
+    ///<summary>
+    ///The diva skill list
+    ///</summary>
+    public class DivaSkillList
+    {
+
+        public static Dictionary<int, string> DivaSkillID = new Dictionary<int, string>()
+        {
+            {0, "None"},
+            {1, "High Speed Gathering"},
+            {2, "Weapon Handling"},
+            {3, "Focus+2"},
+            {4, "Hunter Valhalla"},
+            {5, "Status Immunity"},
+            {6, "S. Immunity (Myriad)"},
+            {7, "Starving Wolf+2"},
+            {8, "Imperturbable"},
+            {9, "Lone Wolf"},
+            {10, "Vampirism+2"},
+            {11, "Evade Distance Up"},
+            {12, "Combination Expert+3"},
+            {13, "Stylish"},
+            {14, "Good Luck"},
+            {15, "Great Luck"},
+            {16, "Carving Expert"},
+            {17, ""},
+            {18, ""},
+            {19, ""},
+            {20, "Relief"},
+            {21, "Recovery Items UP"},
+            {22, "Hunger Negated"},
+            {23, "Sharpening Artisan"},
+            {24, "Recovery Speed +2"},
+            {25, "Guard+2"},
+            {26, "Speed Eating"},
+            {27, "Encourage+2"},
+            {28, "Stamina Rec Up (Lg)"},
+            {29, "Razor Sharp +2"},
+            {30, "Evasion+2"},
+            {31, "True Guts"},
+            {32, "Magnetic Res"},
+            {33, "Crystal Res"},
+            {34, "Honed Blade+3"}
         };
     }
 }

@@ -615,6 +615,12 @@ namespace MHFZ_Overlay
             return areaname + "";
         }
 
+        public string GetDivaSkillNameFromID(int id)
+        {
+            Dictionary.DivaSkillList.DivaSkillID.TryGetValue(id, out string? divaskillaname);
+            return divaskillaname + "";
+        }
+
         /// <summary>
         /// Gets the discord timer mode.
         /// </summary>
@@ -2382,7 +2388,7 @@ namespace MHFZ_Overlay
                     case 340://SR Rooms
                     case 341:
                     case 397://Mezeporta Dupe(non-HD)
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Diva Skill: {3} ({4} Left) | Poogie Item: {5}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetDivaSkillNameFromID(DataLoader.model.DivaSkill()), DataLoader.model.DivaSkillUsesLeft(), getItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 173:// My House (original)
@@ -2430,7 +2436,7 @@ namespace MHFZ_Overlay
 
                     case 379://Diva Hall
                     case 445:
-                        presenceTemplate.State = string.Format("GR: {0} | Diva Bond: {1} | Items Given: {2} | Diva Skills Left: {3}", DataLoader.model.GRankNumber(), DataLoader.model.DivaBond(), DataLoader.model.DivaItemsGiven(), DataLoader.model.DivaSkillUsesLeft());
+                        presenceTemplate.State = string.Format("GR: {0} | Diva Skill: {1} ({2} Left) | Diva Bond: {3} | Items Given: {4}", DataLoader.model.GRankNumber(), GetDivaSkillNameFromID(DataLoader.model.DivaSkill()),DataLoader.model.DivaSkillUsesLeft(),DataLoader.model.DivaBond(), DataLoader.model.DivaItemsGiven());
                         break;
 
                     // case 458:// "Hunter's Road 1 Area 1" },

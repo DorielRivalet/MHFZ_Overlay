@@ -231,6 +231,40 @@ namespace MHFZ_Overlay.addresses
         abstract public int GreatSlayingPoints();
         abstract public int GreatSlayingPointsSaved();
 
+
+        //Yamas and Beru
+        abstract public int AlternativeMonster1HPInt();
+        abstract public int AlternativeMonster1AtkMult();
+        abstract public int AlternativeMonster1DefMult();
+        abstract public int AlternativeMonster1Size();
+
+        abstract public int AlternativeMonster1Poison();
+        abstract public int AlternativeMonster1PoisonNeed();
+        abstract public int AlternativeMonster1Sleep();
+        abstract public int AlternativeMonster1SleepNeed();
+
+        abstract public int AlternativeMonster1Para();
+        abstract public int AlternativeMonster1ParaNeed();
+        abstract public int AlternativeMonster1Blast();
+        abstract public int AlternativeMonster1BlastNeed();
+
+        abstract public int AlternativeMonster1Stun();
+        abstract public int AlternativeMonster1StunNeed();
+
+        abstract public int AlternativeMonster1Part1();
+        abstract public int AlternativeMonster1Part2();
+        abstract public int AlternativeMonster1Part3();
+        abstract public int AlternativeMonster1Part4();
+        abstract public int AlternativeMonster1Part5();
+        abstract public int AlternativeMonster1Part6();
+        abstract public int AlternativeMonster1Part7();
+        abstract public int AlternativeMonster1Part8();
+        abstract public int AlternativeMonster1Part9();
+        abstract public int AlternativeMonster1Part10();
+
+        abstract public int DivaSkill();
+        abstract public int StarGrades();
+
         #endregion
 
         public bool HasMonster1 => ShowHPBar(LargeMonster1ID(), Monster1HPInt());

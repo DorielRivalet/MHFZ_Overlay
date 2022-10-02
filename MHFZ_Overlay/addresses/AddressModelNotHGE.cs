@@ -205,5 +205,38 @@ namespace MHFZ_Overlay.addresses
         public override int RavienteTriggeredEvent() => M.Read2Byte("mhfo.dll+61005C6");
         public override int GreatSlayingPoints() => M.ReadInt("mhfo.dll+5B45FF8");
         public override int GreatSlayingPointsSaved() => M.ReadInt("mhfo.dll+61005C4");
+
+        public override int AlternativeMonster1HPInt() => 1;
+        public override int AlternativeMonster1AtkMult() => 1;
+        public override int AlternativeMonster1DefMult() => 1;
+        public override int AlternativeMonster1Size() => 1;
+
+        public override int AlternativeMonster1Poison() => 1;
+        public override int AlternativeMonster1PoisonNeed() => 1;
+        public override int AlternativeMonster1Sleep() => 1;
+        public override int AlternativeMonster1SleepNeed() => 1;
+
+        public override int AlternativeMonster1Para() => 1;
+        public override int AlternativeMonster1ParaNeed() => 1;
+        public override int AlternativeMonster1Blast() => 1;
+        public override int AlternativeMonster1BlastNeed() => 1;
+
+        public override int AlternativeMonster1Stun() => 1;
+        public override int AlternativeMonster1StunNeed() => 1;
+
+        public override int AlternativeMonster1Part1() => 1;
+        public override int AlternativeMonster1Part2() => 1;
+        public override int AlternativeMonster1Part3() => 1;
+        public override int AlternativeMonster1Part4() => 1;
+        public override int AlternativeMonster1Part5() => 1;
+        public override int AlternativeMonster1Part6() => 1;
+        public override int AlternativeMonster1Part7() => 1;
+        public override int AlternativeMonster1Part8() => 1;
+        public override int AlternativeMonster1Part9() => 1;
+        public override int AlternativeMonster1Part10() => 1;
+
+        public override int DivaSkill() => M.ReadByte("mhfo.dll+6104368");
+        public override int StarGrades() => M.ReadByte("mhfo.dll+5B3D086");
+
     }
 }

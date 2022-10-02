@@ -70,6 +70,8 @@
 - Objective 1 Quantity mhfo-hd.dll+2AFA836
 - Objective 1 Current Quantity Monster mhfo-hd.dll+ECB2A38
 - Objective 1 Current Quantity Item "mhfo-hd.dll"+DC6C2F2
+- Diva Skill mhfo-hd.dll+ED3EB08
+- Star Grades mhfo-hd.dll+E774CAE
 
 ## Not HGE
 
@@ -142,6 +144,8 @@
 - Objective 1 Quantity mhfo.dll+28C2C86
 - Objective 1 Current Quantity Monster mhfo.dll+60792E6
 - Objective 1 Current Quantity Item mhfo.dll+5034732
+- Diva Skill mhfo.dll+6104368
+- Star Grades mhfo.dll+5B3D086
 
 ## IDs
 
@@ -946,7 +950,7 @@
 |136 | Dundorma Grand Priest|
 |137 | Broken|
 |138 | Tower 2|
-|139 | Tower 1 Area 9/Tower with Nesthole|
+|139 | Tower 1 Area 9 (Nest Hole)|
 |140 | Desert Day Base Camp|
 |141 | Desert Day Area 2|
 |142 | Desert Day Area 7|
@@ -1663,6 +1667,44 @@
 |1|Heaven|
 |2|Storm|
 |3|Extreme|
+
+### Diva Skill
+
+|ID| Skill|
+|--|------|
+|0|None|
+|1|High Speed Gathering|
+|2|Weapon Handling|
+|3|Focus+2|
+|4|Hunter Valhalla|
+|5|Status Immunity|
+|6|S. Immunity (Myriad)|
+|7|Starving Wolf+2|
+|8|Imperturbable|
+|9|Lone Wolf|
+|10|Vampirism+2|
+|11|Evade Distance Up|
+|12|Combination Expert|
+|13|Stylish|
+|14|Good Luck|
+|15|Great Luck|
+|16|Carving Expert|
+|17||
+|18||
+|19||
+|20|Relief|
+|20|Recovery Items UP|
+|21|Hunger Negated|
+|22|Sharpening Artisan|
+|23|Recovery Speed+2|
+|24|Guard+2|
+|25|Speed Eating|
+|26|Encourage+2|
+|27|Evasion+2|
+|28|True Guts|
+|29|Magnetic Res|
+|30|Crystal Res|
+|31|Honed Blade+3|
 
 ### Raviente Trigger Events
 
