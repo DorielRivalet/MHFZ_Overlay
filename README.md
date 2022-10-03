@@ -91,6 +91,7 @@ If the monster HP shown is less than what its actual values should be, restart b
 - [x] [Discord Rich Presence](#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area, [speedrun mode, zen mode](#how-to-enable-speedrun--zen-modes), and more!)
 
 ![Discord Rich Presence](./demo/discord5.png)
+![Discord Rich Presence](./demo/discord9.gif)
 
 ## Bugs
 
@@ -137,6 +138,7 @@ Fully reinstalling the game or .NET dependencies may fix some bugs.
 - Discord Rich Presence Party Size
 - Raviente Support Part Info
 - Detect UL/HC
+- Guild Pugi address
 
 [Check more possible future features here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 

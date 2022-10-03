@@ -602,7 +602,7 @@
                             <ComboBoxItem>Never</ComboBoxItem>
                             <ComboBoxItem>Always</ComboBoxItem>
                         </ComboBox>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Name (some are untranslated)" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Quest Name"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Name (some are untranslated. Replaces Objective and Monster information)" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Quest Name"/>
                         <ToggleButton Grid.Row="7" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=DiscordQuestNameShown}"/>
                         <TextBlock Grid.Column="0" Grid.Row="9" Grid.RowSpan="4" Grid.ColumnSpan="2" Foreground="#cdd6f4">
                                        1. My Account -> Activity Privacy -> Check "Display current activity as a status message"

@@ -2281,6 +2281,41 @@ namespace MHFZ_Overlay
             }
         }
 
+        public string GetQuestInformation()
+        {
+            if ((ShowDiscordQuestNames))
+            {
+                switch (DataLoader.model.QuestID())
+                {
+                    case 23648://arrogant repel
+                        return "Repel Arrogant Duremudira | ";
+                    case 23649://arrogant slay
+                        return "Slay Arrogant Duremudira | ";
+                    case 23527:// Hunter's Road Multiplayer
+                        return "";                    
+                   case 23628://solo road
+                        return "";
+                    case 21731://1st district dure
+                    case 21749://sky corridor version
+                        //return string.Format("{0}{1} | ", DataLoader.model.FirstDistrictDuremudiraSlays(), DataLoader.model.FirstDistrictDuremudiraEncounters());
+                        return "Slay 1st District Duremudira | "; ;
+                    case 21746://2nd district dure
+                    case 21750://sky corridor version
+                        return "Slay 2nd District Duremudira | ";
+                        //return string.Format("{0}{1} | ", DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
+                    default:
+                        if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
+                            return string.Format("{0}{1}{2}{3}{4} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetObjective1Name(DataLoader.model.Objective1ID()));
+                        else
+                            return string.Format("{0}{1}{2}{3}{4} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon));
+                }
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         /// <summary>
         /// Updates the discord RPC.
         /// </summary>
@@ -2345,11 +2380,11 @@ namespace MHFZ_Overlay
                         break;
                     case 21731://1st district dure
                     case 21749://sky corridor version
-                        presenceTemplate.State = String.Format("Slay 1st District Duremudira | Slain: {0} | Encounters: {1}",DataLoader.model.FirstDistrictDuremudiraSlays(),DataLoader.model.FirstDistrictDuremudiraEncounters());
+                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.FirstDistrictDuremudiraSlays(),DataLoader.model.FirstDistrictDuremudiraEncounters());
                         break;
                     case 21746://2nd district dure
                     case 21750://sky corridor version
-                        presenceTemplate.State = String.Format("Slay 2nd District Duremudira | Slain: {0} | Encounters: {1}", DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
+                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
                         break;
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
@@ -2363,36 +2398,36 @@ namespace MHFZ_Overlay
                 if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
                 {
                     presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}",GetQuestInformation(),getAreaName(DataLoader.model.AreaID()));
                 }
                 //Tenrou Sky Corridor areas
                 else if (DataLoader.model.AreaID() == 391 || DataLoader.model.AreaID() == 392 || DataLoader.model.AreaID() == 394 || DataLoader.model.AreaID() == 415 || DataLoader.model.AreaID() == 416) 
                 {
                     presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), getAreaName(DataLoader.model.AreaID()));
                 }
                 //Duremudira Doors
                 else if (DataLoader.model.AreaID() == 399 || DataLoader.model.AreaID() == 414) 
                 {
                     presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), getAreaName(DataLoader.model.AreaID()));
                 }
                 //Duremudira Arena
                 else if (DataLoader.model.AreaID() == 398) 
                 {
                     presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}/{1}{2}", GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
                 }
                 //Hunter's Road Base Camp
                 else if (DataLoader.model.AreaID() == 459) 
                 {
                     presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), getAreaName(DataLoader.model.AreaID()));
                 }
                 else
                 {
                     presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}/{1}{2}", GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
                 }
             }
             else if (DataLoader.model.QuestID() == 0)

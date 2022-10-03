@@ -1078,5 +1078,17 @@ namespace MHFZ_Overlay {
                 this["DiscordQuestNameShown"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DiscordArmorSetShown {
+            get {
+                return ((bool)(this["DiscordArmorSetShown"]));
+            }
+            set {
+                this["DiscordArmorSetShown"] = value;
+            }
+        }
     }
 }
