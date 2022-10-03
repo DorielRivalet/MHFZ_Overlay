@@ -1,18 +1,9 @@
-﻿using Dictionary;
-using Memory;
+﻿using Memory;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Runtime.CompilerServices;
-using System.Runtime.Intrinsics.X86;
-using System.Security.RightsManagement;
 using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Xml.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
-using DiscordRPC;
 
 namespace MHFZ_Overlay.addresses
 {

@@ -240,7 +240,8 @@ namespace MHFZ_Overlay.addresses
         public override int RoadTotalStagesSolo() => M.Read2Byte("mhfo-hd.dll+E87FB5C");
         public override int RoadMaxStagesSolo() => M.Read2Byte("mhfo-hd.dll+E87FB80");
         public override int RoadFatalisSlain() => M.Read2Byte("mhfo-hd.dll+E87FB60");
-        public override int RoadFatalisEncounters() => M.Read2Byte("mhfo-hd.dll+ECD71C4");
+        //public override int RoadFatalisEncounters() => M.Read2Byte("mhfo-hd.dll+ECD71C4");
+        public override int RoadFatalisEncounters() => M.Read2Byte("mhfo-hd.dll+ED3EBBC");
         public override int FirstDistrictDuremudiraEncounters() => M.Read2Byte("mhfo-hd.dll+ED3EBB4");
         public override int FirstDistrictDuremudiraSlays() => M.Read2Byte("mhfo-hd.dll+E87FB64");
         public override int SecondDistrictDuremudiraEncounters() => M.Read2Byte("mhfo-hd.dll+ED3EBB8");

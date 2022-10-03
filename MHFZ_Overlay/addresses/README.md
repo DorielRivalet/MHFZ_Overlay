@@ -55,8 +55,8 @@
 - 1st District Dure Slain "mhfo-hd.dll"+E87FB64
 - 2nd District Dure Encounters "mhfo-hd.dll"+ED3EBB8
 - 2nd District Dure Slain "mhfo-hd.dll"+E87FB68
-- Road Fatalis Encounters "mhfo-hd.dll"+ECD71C4
-- Road Fatalis Slain "mhfo-hd.dll"+E87FB60
+- Road Fatalis Encounters mhfo-hd.dll+ED3EBBC
+- Road Fatalis Slain mhfo-hd.dll+E87FB60
 - Delivery Quests Points "mhfo-hd.dll"+ED3B212
 - Partner Level "mhfo-hd.dll"+E378E3E
 - Sharpness Level, zero-indexed "mhfo-hd.dll"+DC6C27F
