@@ -607,12 +607,32 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string getAreaName(int id)
+        public string GetAreaName(int id)
         {
             if (id == 0)
                 return "Loading...";
             Dictionary.MapAreaList.MapAreaID.TryGetValue(id, out string? areaname);
             return areaname + "";
+        }
+
+        public string GetCaravanSkills()
+        {
+            int id1 = DataLoader.model.CaravanSkill1();
+            int id2 = DataLoader.model.CaravanSkill2();
+            int id3 = DataLoader.model.CaravanSkill3();
+
+            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id1, out string? caravanSkillName1);
+            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id2, out string? caravanSkillName2);
+            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id3, out string? caravanSkillName3);
+
+            if (caravanSkillName1 == "" || caravanSkillName1 == "None")
+                return "None";
+            else if (caravanSkillName2 == "" || caravanSkillName2 == "None")
+                return caravanSkillName1 + "";
+            else if (caravanSkillName3 == "" || caravanSkillName3 == "None")
+                return caravanSkillName1 + ", " + caravanSkillName2;
+            else
+                return caravanSkillName1 + ", " + caravanSkillName2 + ", " + caravanSkillName3;
         }
 
         public string GetDivaSkillNameFromID(int id)
@@ -2339,7 +2359,7 @@ namespace MHFZ_Overlay
                 Dictionary.Items.initiate();
             }
 
-            presenceTemplate.Details = string.Format("{0}{1}{2}", getOverlayMode(), getAreaName(DataLoader.model.AreaID()), getGameMode(DataLoader.isHighGradeEdition));
+            presenceTemplate.Details = string.Format("{0}{1}{2}", getOverlayMode(), GetAreaName(DataLoader.model.AreaID()), getGameMode(DataLoader.isHighGradeEdition));
 
             //quest ids:
             //mp road: 23527
@@ -2405,19 +2425,19 @@ namespace MHFZ_Overlay
                 if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
                 {
                     presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}",GetQuestInformation(),getAreaName(DataLoader.model.AreaID()));
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}",GetQuestInformation(),GetAreaName(DataLoader.model.AreaID()));
                 }
                 //Tenrou Sky Corridor areas
                 else if (DataLoader.model.AreaID() == 391 || DataLoader.model.AreaID() == 392 || DataLoader.model.AreaID() == 394 || DataLoader.model.AreaID() == 415 || DataLoader.model.AreaID() == 416) 
                 {
                     presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), getAreaName(DataLoader.model.AreaID()));
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), GetAreaName(DataLoader.model.AreaID()));
                 }
                 //Duremudira Doors
                 else if (DataLoader.model.AreaID() == 399 || DataLoader.model.AreaID() == 414) 
                 {
                     presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), getAreaName(DataLoader.model.AreaID()));
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), GetAreaName(DataLoader.model.AreaID()));
                 }
                 //Duremudira Arena
                 else if (DataLoader.model.AreaID() == 398) 
@@ -2429,7 +2449,7 @@ namespace MHFZ_Overlay
                 else if (DataLoader.model.AreaID() == 459) 
                 {
                     presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), getAreaName(DataLoader.model.AreaID()));
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), GetAreaName(DataLoader.model.AreaID()));
                 }
                 else
                 {
@@ -2550,7 +2570,7 @@ namespace MHFZ_Overlay
                 }
 
                 presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                presenceTemplate.Assets.LargeImageText = GetAreaName(DataLoader.model.AreaID());
             }
 
             //Timer
@@ -2720,7 +2740,7 @@ namespace MHFZ_Overlay
 
             if (GetHunterName != "" && GetGuildName != "")
             {
-                presenceTemplate.Assets.SmallImageText = String.Format("{0} | {1} | GSR: {2} | {3} Style", GetHunterName, GetGuildName, DataLoader.model.GSR(), GetWeaponStyleFromID(DataLoader.model.WeaponStyle()));
+                presenceTemplate.Assets.SmallImageText = String.Format("{0} | {1} | GSR: {2} | {3} Style | Caravan Skills: {4}", GetHunterName, GetGuildName, DataLoader.model.GSR(), GetWeaponStyleFromID(DataLoader.model.WeaponStyle()),GetCaravanSkills());
             }
             //string currentState = presenceTemplate.State;
             //DiscordRPC.Timestamps currentTimestamps = presenceTemplate.Timestamps;

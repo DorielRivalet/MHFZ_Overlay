@@ -256,6 +256,10 @@ namespace MHFZ_Overlay.addresses
         abstract public int DivaSkill();
         abstract public int StarGrades();
 
+        abstract public int CaravanSkill1();
+        abstract public int CaravanSkill2();
+        abstract public int CaravanSkill3();
+
         #endregion
 
         public bool HasMonster1 => ShowHPBar(LargeMonster1ID(), Monster1HPInt());

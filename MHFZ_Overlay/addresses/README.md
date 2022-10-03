@@ -72,6 +72,9 @@
 - Objective 1 Current Quantity Item "mhfo-hd.dll"+DC6C2F2
 - Diva Skill mhfo-hd.dll+ED3EB08
 - Star Grades mhfo-hd.dll+E774CAE
+- Caravan Skill 1 mhfo-hd.dll+DC6C448
+- Caravan Skill 2 mhfo-hd.dll+DC6C44A
+- Caravan Skill 3 mhfo-hd.dll+DC6C44C
 
 ## Not HGE
 
@@ -146,6 +149,9 @@
 - Objective 1 Current Quantity Item mhfo.dll+5034732
 - Diva Skill mhfo.dll+6104368
 - Star Grades mhfo.dll+5B3D086
+- Caravan Skill 1 mhfo.dll+5034888
+- Caravan Skill 2 mhfo.dll+503488A
+- Caravan Skill 3 mhfo.dll+503488C
 
 ## IDs
 
@@ -1705,6 +1711,120 @@
 |29|Magnetic Res|
 |30|Crystal Res|
 |31|Honed Blade+3|
+
+### Caravan Skill
+
+|ID| Event|
+|--|------|
+|0|None|
+|1|Courage|
+|2|Lander|
+|3|Vine Superhero|
+|4|Mining Expert|
+|5|Insect Expert|
+|6|Vine Master|
+|7|Hot Master|
+|8|Cold Master|
+|9|Bonus Art|
+|10|Combo Tech (Sm)|
+|11|Combo Tech (Med)|
+|12|Combo Tech (Lg)|
+|13|Riser (Sm)|
+|14|Riser (Med)|
+|15|Riser (Lg)|
+|16|Carving Expert|
+|17||
+|18||
+|19|Natural Recovery (Sm)|
+|20|Natural Recovery (Med)|
+|21|Natural Recovery (Lg)|
+|22|Master Carver (Sm)|
+|23|Master Carver (Med)|
+|24|Master Carver (Lg)|
+|25|Healing Technique (Sm)|
+|26|Healing Technique (Med)|
+|27|Healing Technique (Lg)|
+|28||
+|29||
+|30||
+|31||
+|32||
+|33||
+|34||
+|35||
+|36||
+|37|Last Minute Ace (Sm)|
+|38|Last Minute Ace (Med)|
+|39|Last Minute Ace (Lg)|
+|40|Goddess of Luck (Sm)|
+|41|Goddess of Luck (Med)|
+|42|Goddess of Luck (Lg)|
+|43||
+|44||
+|45||
+|46||
+|47||
+|48||
+|49||
+|50||
+|51||
+|52||
+|53||
+|54||
+|55||
+|56||
+|57||
+|58||
+|59||
+|60||
+|61||
+|62||
+|63||
+|64||
+|65||
+|66||
+|67||
+|68||
+|69||
+|70||
+|71||
+|72||
+|73||
+|74||
+|75||
+|76|Recovery Items Up|
+|77|Blunt Striker|
+|78|KO Technique|
+|79|Shooting Rampage|
+|80|Art of Dancing|
+|81|Unstable Defender (Sm)|
+|82|Unstable Defender (Med)|
+|83|Unstable Defender (Lg)|
+|84|Rousing Attacker (Sm)|
+|85|Rousing Attacker (Med)|
+|86|Rousing Attacker (Lg)|
+|87|Perfect Defense (Sm)|
+|88|Perfect Defense (Med)|
+|89|Perfect Defense (Lg)|
+|90|Revenge! (Sm)|
+|91|Revenge! (Med)|
+|92|Revenge! (Lg)|
+|93||
+|94||
+|95||
+|96|Combination Celebrity|
+|97||
+|98|Weapon Art (Sm)|
+|99|Weapon Art (Med)|
+|100|Weapon Art (Lg)|
+|101|Wild Awakening|
+|102|Decisive Hunter|
+|103|Instant Guard Stance|
+|104|Self-Defense|
+|105|Prepared Stance|
+|106|Shield Angel|
+|107|Spear Angel|
+|108|Elite Flame|
 
 ### Raviente Trigger Events
 

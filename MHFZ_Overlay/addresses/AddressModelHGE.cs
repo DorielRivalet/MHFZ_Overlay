@@ -306,5 +306,9 @@ namespace MHFZ_Overlay.addresses
 
         public override int StarGrades() => M.ReadByte("mhfo-hd.dll+E774CAE");
 
+        public override int CaravanSkill1() => M.ReadByte("mhfo-hd.dll+DC6C448");
+        public override int CaravanSkill2() => M.ReadByte("mhfo-hd.dll+DC6C44A");
+        public override int CaravanSkill3() => M.ReadByte("mhfo-hd.dll+DC6C44C");
+
     }
 }

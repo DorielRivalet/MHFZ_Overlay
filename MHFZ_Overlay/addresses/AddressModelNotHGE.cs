@@ -238,5 +238,10 @@ namespace MHFZ_Overlay.addresses
         public override int DivaSkill() => M.ReadByte("mhfo.dll+6104368");
         public override int StarGrades() => M.ReadByte("mhfo.dll+5B3D086");
 
+        public override int CaravanSkill1() => M.ReadByte("mhfo.dll+5034888");
+        public override int CaravanSkill2() => M.ReadByte("mhfo.dll+503488A");
+        public override int CaravanSkill3() => M.ReadByte("mhfo.dll+503488C");
+
+
     }
 }
