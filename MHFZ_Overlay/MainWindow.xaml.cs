@@ -1013,9 +1013,9 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="iconName">Name of the icon.</param>
         /// <returns></returns>
-        public string GetRealMonsterName(string iconName)
+        public string GetRealMonsterName(string iconName, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames) return "";
+            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             //quest ids:
             //mp road: 23527
             //solo road: 23628
@@ -1054,9 +1054,9 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetRankNameFromID(int id)
+        public string GetRankNameFromID(int id, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames) return "";
+            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             switch (id)
             {
                 case 0:
@@ -1200,9 +1200,9 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetObjectiveNameFromID(int id)
+        public string GetObjectiveNameFromID(int id, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames) return "";
+            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             return id switch
             {
                 0 => "Nothing ",
@@ -2142,9 +2142,9 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetObjective1Name(int id)
+        public string GetObjective1Name(int id, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames) return "";
+            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             string? objValue1;
             bool isNameExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out objValue1);  //returns true
             //Console.WriteLine(itemValue1); //Print "First"
@@ -2170,25 +2170,25 @@ namespace MHFZ_Overlay
         /// Gets the objective1 quantity.
         /// </summary>
         /// <returns></returns>
-        public string GetObjective1Quantity()
+        public string GetObjective1Quantity(bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames) return "";
+            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             if (DataLoader.model.Objective1Quantity() <= 1)
                 return "";
             // hunt / capture / slay
             else if (DataLoader.model.ObjectiveType() == 0x1 || DataLoader.model.ObjectiveType() == 0x101 || DataLoader.model.ObjectiveType() == 0x201)
                 return DataLoader.model.Objective1Quantity().ToString() + " ";
             else 
-                return "";
+                return DataLoader.model.Objective1Quantity().ToString() + " ";
         }
 
         /// <summary>
         /// Gets the objective1 current quantity.
         /// </summary>
         /// <returns></returns>
-        public string GetObjective1CurrentQuantity()
+        public string GetObjective1CurrentQuantity(bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames) return "";
+            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             if (DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002)
             {
                 if (DataLoader.model.Objective1Quantity() <= 1)
@@ -2283,7 +2283,7 @@ namespace MHFZ_Overlay
 
         public string GetQuestInformation()
         {
-            if ((ShowDiscordQuestNames))
+            if (ShowDiscordQuestNames)
             {
                 switch (DataLoader.model.QuestID())
                 {
@@ -2305,9 +2305,9 @@ namespace MHFZ_Overlay
                         //return string.Format("{0}{1} | ", DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
-                            return string.Format("{0}{1}{2}{3}{4} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetObjective1Name(DataLoader.model.Objective1ID()));
+                            return string.Format("{0}{1}{2}{3}{4} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(),true), GetObjective1CurrentQuantity(true), GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(),true), GetObjective1Name(DataLoader.model.Objective1ID(),true));
                         else
-                            return string.Format("{0}{1}{2}{3}{4} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon));
+                            return string.Format("{0}{1}{2}{3}{4} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(),true), "", GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(),true), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon,true));
                 }
             }
             else
@@ -2330,6 +2330,13 @@ namespace MHFZ_Overlay
             {
                 questsLoaded = true;
                 Dictionary.Quests.Initiate();
+            }
+
+            if (!(itemsLoaded))
+            {
+                itemsLoaded = true;
+                //load item list
+                Dictionary.Items.initiate();
             }
 
             presenceTemplate.Details = string.Format("{0}{1}{2}", getOverlayMode(), getAreaName(DataLoader.model.AreaID()), getGameMode(DataLoader.isHighGradeEdition));
@@ -2432,12 +2439,6 @@ namespace MHFZ_Overlay
             }
             else if (DataLoader.model.QuestID() == 0)
             {
-                if (!(itemsLoaded))
-                {
-                    itemsLoaded = true;
-                    //load item list
-                    Dictionary.Items.initiate();
-                }
                 //inQuest = false;
 
                 switch(DataLoader.model.AreaID())
