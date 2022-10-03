@@ -260,6 +260,15 @@ namespace MHFZ_Overlay.addresses
         abstract public int CaravanSkill2();
         abstract public int CaravanSkill3();
 
+        abstract public int CurrentFaints();
+        abstract public int MaxFaints();
+
+        abstract public int CaravanScore();
+
+        abstract public int CaravanMonster1ID();
+        //unsure
+        abstract public int CaravanMonster2ID();
+
         #endregion
 
         public bool HasMonster1 => ShowHPBar(LargeMonster1ID(), Monster1HPInt());
@@ -312,6 +321,15 @@ namespace MHFZ_Overlay.addresses
             else if (QuestID() == 23527 || QuestID() == 23628)
                 return false;
             return null;
+        }
+
+        public bool CaravanOverride()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableCaravanOverride == true)
+                return true;
+            else
+                return false;
         }
 
         //

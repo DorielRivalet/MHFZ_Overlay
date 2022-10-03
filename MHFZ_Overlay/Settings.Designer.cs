@@ -1090,5 +1090,17 @@ namespace MHFZ_Overlay {
                 this["DiscordArmorSetShown"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableCaravanOverride {
+            get {
+                return ((bool)(this["EnableCaravanOverride"]));
+            }
+            set {
+                this["EnableCaravanOverride"] = value;
+            }
+        }
     }
 }

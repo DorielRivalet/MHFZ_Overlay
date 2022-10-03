@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
@@ -1621,7 +1622,7 @@ namespace MHFZ_Overlay
         public string getOverlayMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown)
+            if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown)
                 return "";
             else if (s.TimerInfoShown)
                 return "(Speedrun) ";
@@ -2260,6 +2261,49 @@ namespace MHFZ_Overlay
                 return false;
         }
 
+        public bool IsToggeableDifficulty()
+        {
+            if (!(IsDure()) && !(IsRavi()) && !(IsRoad()) && DataLoader.model.QuestID() != 0)
+            {
+                switch (DataLoader.model.RankBand())
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                    case 11:
+                    case 12:
+                    case 13:
+                    case 14:
+                    case 15:
+                    case 16:
+                    case 17:
+                    case 18:
+                    case 19:
+                    case 20:
+                    case 26:
+                    case 31:
+                    case 42:
+                    case 53:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+            else
+            { 
+                return false; 
+            }
+        }
+
+
         public bool IsRavi()
         {
             if (DataLoader.model.getRaviName() != "None")
@@ -2301,6 +2345,17 @@ namespace MHFZ_Overlay
             }
         }
 
+        public string GetStarGrade(bool isLargeImageText = false)
+        {
+            if (ShowDiscordQuestNames && !(isLargeImageText)) 
+                return "";
+
+            if (IsToggeableDifficulty())
+                return string.Format(" ★{0} ", DataLoader.model.StarGrades().ToString());
+            else
+                return "";
+        }
+
         public string GetQuestInformation()
         {
             if (ShowDiscordQuestNames)
@@ -2325,9 +2380,9 @@ namespace MHFZ_Overlay
                         //return string.Format("{0}{1} | ", DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
-                            return string.Format("{0}{1}{2}{3}{4} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(),true), GetObjective1CurrentQuantity(true), GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(),true), GetObjective1Name(DataLoader.model.Objective1ID(),true));
+                            return string.Format("{0}{1}{2}{3}{4}{5} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(),true), GetObjective1CurrentQuantity(true), GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(),true),GetStarGrade(true), GetObjective1Name(DataLoader.model.Objective1ID(),true));
                         else
-                            return string.Format("{0}{1}{2}{3}{4} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(),true), "", GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(),true), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon,true));
+                            return string.Format("{0}{1}{2}{3}{4}{5} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(),true), "", GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(),true), GetStarGrade(true), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon,true));
                 }
             }
             else
@@ -2415,9 +2470,9 @@ namespace MHFZ_Overlay
                         break;
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | True Raw: {6} (Max {7}) | Hits: {8}",GetQuestNameFromID(DataLoader.model.QuestID()),GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}",GetQuestNameFromID(DataLoader.model.QuestID()),GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetStarGrade(), GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
                         else
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | True Raw: {6} (Max {7}) | Hits: {8}",GetQuestNameFromID(DataLoader.model.QuestID()),GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(),GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.ATK,DataLoader.model.HighestAtk,DataLoader.model.HitCount);
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}",GetQuestNameFromID(DataLoader.model.QuestID()),GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(),GetRankNameFromID(DataLoader.model.RankBand()), GetStarGrade(),GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.ATK,DataLoader.model.HighestAtk,DataLoader.model.HitCount);
                         break;
                 }
 

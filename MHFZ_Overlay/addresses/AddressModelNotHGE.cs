@@ -242,6 +242,13 @@ namespace MHFZ_Overlay.addresses
         public override int CaravanSkill2() => M.ReadByte("mhfo.dll+503488A");
         public override int CaravanSkill3() => M.ReadByte("mhfo.dll+503488C");
 
+        public override int CurrentFaints() => 1;
+        public override int MaxFaints() => 1;
 
+        public override int CaravanScore() => 1;
+
+        public override int CaravanMonster1ID() => 1;
+        //unsure
+        public override int CaravanMonster2ID() => 1;
     }
 }
