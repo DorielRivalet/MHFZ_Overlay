@@ -138,7 +138,7 @@
                     <TextBlock Text="General" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
-            <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
+            <Grid x:Name="GeneralContent"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="100"/>
@@ -147,7 +147,8 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                    <Grid Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="0" x:Name="General" Margin="20,20,20,20" >
+                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="0" x:Name="General" Margin="20,20,20,20" >
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
@@ -204,15 +205,15 @@
                         <ToggleButton Grid.Row="14" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}"/>
                     </Grid>
                 </ScrollViewer>
-                <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
+                <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="ConfigureButton" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
-                    <Button Grid.Column="1" x:Name="DefaultButton" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
-                    <Button Grid.Column="2" x:Name="SaveButton" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
+                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
+                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
                 </Grid>
             </Grid>
         </TabItem>
@@ -223,7 +224,7 @@
                     <TextBlock Text="Hunter Info" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
-            <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
+            <Grid x:Name="PlayerContent" Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="100"/>
@@ -232,7 +233,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                    <Grid Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="1" x:Name="PlayerInfo" Margin="20,20,20,20">
+                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="1" x:Name="PlayerInfo" Margin="20,20,20,20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
@@ -315,15 +316,15 @@
                         <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="16" x:Name="playerWepTextBox" Text="{Binding CurrentWeaponName}"/>
                     </Grid>
                 </ScrollViewer>
-                <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
+                <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="ConfigureButton2" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
-                    <Button Grid.Column="1" x:Name="DefaultButton2" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
-                    <Button Grid.Column="2" x:Name="SaveButton2" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
+                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton2" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
+                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton2" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton2" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
                 </Grid>
             </Grid>
         </TabItem>
@@ -334,7 +335,7 @@
                     <TextBlock Text="Monster HP Bars" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
-            <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
+            <Grid x:Name="MonsterHPContent" Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="100"/>
@@ -344,7 +345,7 @@
                 </Grid.ColumnDefinitions>
                 <!--https://stackoverflow.com/questions/17946487/how-to-scroll-a-grid-->
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                    <Grid Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="1" x:Name="MonsterBars" Margin="20,20,20,20" Grid.ColumnSpan="2">
+                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="1" x:Name="MonsterBars" Margin="20,20,20,20" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="1*"/>
@@ -393,15 +394,15 @@
                     <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartY}"  PreviewTextInput="ValidateNumber"/>
                     </Grid>
                 </ScrollViewer>
-                <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
+                <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="ConfigureButton3" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
-                    <Button Grid.Column="1" x:Name="DefaultButton3" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
-                    <Button Grid.Column="2" x:Name="SaveButton3" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
+                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton3" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
+                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton3" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton3" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
                 </Grid>
             </Grid>
         </TabItem>
@@ -412,7 +413,7 @@
                     <TextBlock Text="Monster Status Info" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
-            <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
+            <Grid x:Name="MonsterStatusContent"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="100"/>
@@ -421,7 +422,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                    <Grid Style="{StaticResource ConfigSingleGrid}" x:Name="MonsterStatus" Margin="20,20,20,20" Grid.ColumnSpan="9">
+                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="MonsterStatus" Margin="20,20,20,20" Grid.ColumnSpan="9">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
@@ -522,15 +523,15 @@
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}"></xctk:ColorPicker>
                     </Grid>
                 </ScrollViewer>
-                <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
+                <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="ConfigureButton4" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
-                    <Button Grid.Column="1" x:Name="DefaultButton4" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
-                    <Button Grid.Column="2" x:Name="SaveButton4" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
+                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton4" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
+                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton4" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton4" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
                 </Grid>
             </Grid>
         </TabItem>
@@ -541,7 +542,7 @@
                     <TextBlock Text="Discord Rich Presence" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
-            <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
+            <Grid x:Name="DiscordRPCContent" Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="100"/>
@@ -550,7 +551,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                    <Grid Style="{StaticResource ConfigSingleGrid}" x:Name="DiscordRichPresence" Margin="20,20,20,20" Grid.ColumnSpan="9">
+                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="DiscordRichPresence" Margin="20,20,20,20" Grid.ColumnSpan="9">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
@@ -617,15 +618,15 @@
                         </TextBlock>
                     </Grid>
                 </ScrollViewer>
-                <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="#1e1e2e">
+                <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="ConfigureButton5" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
-                    <Button Grid.Column="1" x:Name="DefaultButton5" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
-                    <Button Grid.Column="2" x:Name="SaveButton5" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
+                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton5" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
+                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton5" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton5" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
                 </Grid>
             </Grid>
         </TabItem>
@@ -636,14 +637,14 @@
                     <TextBlock Text="Credits" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
-            <Grid Background="#1e1e2e"  Height="Auto"  Width="Auto">
+            <Grid x:Name="CreditsContent"  Height="Auto"  Width="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Style="{StaticResource ConfigSingleGrid}" x:Name="Credits" Margin="20,20,20,20" Grid.ColumnSpan="9">
+                <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="Credits" Margin="20,20,20,20" Grid.ColumnSpan="9">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="2*"/>

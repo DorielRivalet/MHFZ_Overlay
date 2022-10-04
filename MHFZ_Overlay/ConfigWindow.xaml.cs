@@ -6,6 +6,8 @@ using System.Windows.Input;
 using System;
 using System.Text.RegularExpressions;
 using System.Linq;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace MHFZ_Overlay
 {
@@ -31,6 +33,14 @@ namespace MHFZ_Overlay
             InitializeComponent();
             Topmost = true;
             MainWindow = mainWindow;
+
+            //https://stackoverflow.com/questions/30839173/change-background-image-in-wpf-using-c-sharp
+            GeneralContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/1.png")));
+            PlayerContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/2.png")));
+            MonsterHPContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/3.png")));
+            MonsterStatusContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/4.png")));
+            DiscordRPCContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/5.png")));
+            CreditsContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/6.png")));
             //GlobalHotKey.RegisterHotKey("Alt+Shift+a", () => SaveKey_Press());
             //GlobalHotKey.RegisterHotKey("Alt+Shift+b", () => CancelKey_Press());
             //GlobalHotKey.RegisterHotKey("Alt+Shift+c", () => DefaultKey_Press());

@@ -13,6 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Background\1.png" />
+    <None Remove="Background\2.png" />
+    <None Remove="Background\3.png" />
+    <None Remove="Background\4.png" />
+    <None Remove="Background\5.png" />
+    <None Remove="Background\6.png" />
     <None Remove="Fonts\SourceCodePro-Black.ttf" />
     <None Remove="Fonts\SourceCodePro-BlackItalic.ttf" />
     <None Remove="Fonts\SourceCodePro-Bold.ttf" />
@@ -62,6 +68,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Background\1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Background\2.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Background\3.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Background\4.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Background\5.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Background\6.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Fonts\SourceCodePro-Black.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
