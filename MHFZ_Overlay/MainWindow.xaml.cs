@@ -2351,7 +2351,7 @@ namespace MHFZ_Overlay
                 return "";
 
             if (IsToggeableDifficulty())
-                return string.Format(" ★{0} ", DataLoader.model.StarGrades().ToString());
+                return string.Format("★{0} ", DataLoader.model.StarGrades().ToString());
             else
                 return "";
         }
