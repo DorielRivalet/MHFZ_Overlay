@@ -2505,12 +2505,12 @@ namespace MHFZ_Overlay
                 else if (DataLoader.model.AreaID() == 459) 
                 {
                     presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), GetAreaName(DataLoader.model.AreaID()));
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1} | Faints: {2}/{3}", GetQuestInformation(), GetAreaName(DataLoader.model.AreaID()),DataLoader.model.CurrentFaints(),DataLoader.model.MaxFaints());
                 }
                 else
                 {
                     presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), DataLoader.model.MaxFaints());
                 }
             }
             else if (DataLoader.model.QuestID() == 0)

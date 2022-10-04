@@ -1102,5 +1102,17 @@ namespace MHFZ_Overlay {
                 this["EnableCaravanOverride"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableCaravanScore {
+            get {
+                return ((bool)(this["EnableCaravanScore"]));
+            }
+            set {
+                this["EnableCaravanScore"] = value;
+            }
+        }
     }
 }
