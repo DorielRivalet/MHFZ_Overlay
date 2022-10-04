@@ -271,8 +271,8 @@ namespace MHFZ_Overlay.addresses
 
         #endregion
 
-        public bool HasMonster1 => ShowHPBar(LargeMonster1ID(), Monster1HPInt());
-        public bool HasMonster2 => ((LargeMonster2ID() > 0 && Monster2HPInt() != 0 && GetNotRoad()) || Configuring); // road check since the 2nd choice is used as the monster #1
+        public bool HasMonster1 => CaravanOverride() ? ShowHPBar(CaravanMonster1ID(), Monster1HPInt()) : ShowHPBar(LargeMonster1ID(), Monster1HPInt());
+        public bool HasMonster2 => CaravanOverride() ? ((CaravanMonster2ID() > 0 && Monster2HPInt() != 0 && GetNotRoad()) || Configuring) : ((LargeMonster2ID() > 0 && Monster2HPInt() != 0 && GetNotRoad()) || Configuring); // road check since the 2nd choice is used as the monster #1
         public bool HasMonster3 => ShowHPBar(LargeMonster3ID(), Monster3HPInt());
         public bool HasMonster4 => ShowHPBar(LargeMonster4ID(), Monster4HPInt());
 
@@ -369,13 +369,17 @@ namespace MHFZ_Overlay.addresses
 
         ///<summary>
         ///Monster parts labels
+        ///<para>int number: The part number from 1 to 10</para>
+        ///<para>int monsterID: the monsterID</para>
         ///</summary>
         public string GetPartName(int number,int monsterID)
         {
-
+            //keep in mind this has the null
             if (roadOverride() == false)
                 monsterID = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
-
+            else if (CaravanOverride())
+                monsterID = CaravanMonster1ID();
+            
             if (getDureName() != "None")
             {
                 //switch(getDureName)
@@ -2137,9 +2141,9 @@ namespace MHFZ_Overlay.addresses
         }
 
         public string Monster1Name => getDureName() != "None" ? getDureName() : getMonsterName(GetNotRoad() || RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID()); //monster 1 is used for the first display and road uses 2nd choice to store 2nd monster
-        public string Monster2Name => getMonsterName(LargeMonster2ID());
-        public string Monster3Name => getMonsterName(LargeMonster3ID());
-        public string Monster4Name => getMonsterName(LargeMonster4ID());
+        public string Monster2Name => CaravanOverride() ? getMonsterName(CaravanMonster2ID(),false) : getMonsterName(LargeMonster2ID(),false);
+        public string Monster3Name => getMonsterName(LargeMonster3ID(),false);
+        public string Monster4Name => getMonsterName(LargeMonster4ID(),false);
 
         /// <summary>
         /// Gets the real name of the monster.
@@ -2190,7 +2194,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string getMonsterName(int id)
+        public string getMonsterName(int id, bool isFirstMonster = true)
         {
             if (Configuring)
                 return "Blitzkrieg Bogabadorumu";
@@ -2198,7 +2202,7 @@ namespace MHFZ_Overlay.addresses
                 return "";
             Dictionary.List.MonsterID.TryGetValue(id, out string? monstername);
 
-            if (monstername != null && monstername != RealMonsterName)
+            if (monstername != null && monstername != RealMonsterName && isFirstMonster)
                 return RealMonsterName;
             else
                 return monstername + "";
@@ -2390,6 +2394,8 @@ namespace MHFZ_Overlay.addresses
 
                 if (roadOverride() == false)
                     id = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
+                else if (CaravanOverride())
+                    id = CaravanMonster1ID();
                 else
                     id = LargeMonster1ID();
 

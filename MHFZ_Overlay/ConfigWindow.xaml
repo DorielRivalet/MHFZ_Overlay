@@ -105,9 +105,10 @@
         </Style>
         </ResourceDictionary>
     </Window.Resources>
-    <TabControl Margin="5" BorderBrush="Transparent" Background="#181825">
+    <TabControl Margin="5" BorderBrush="Transparent" Background="Transparent">
         <TabControl.Resources>
             <Style TargetType="TabItem">
+                
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabItem">
@@ -118,24 +119,29 @@
                                         ContentSource="Header"
                                         Margin="10,2"/>
                             </Border>
+                            
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="#585b70" />
                                 </Trigger>
                                 <Trigger Property="IsSelected" Value="False">
-                                    <Setter TargetName="Border" Property="Background" Value="#11111b" />
+                                    <Setter TargetName="Border" Property="Background" Value="#1e1e2e" />
+                                    
                                 </Trigger>
                             </ControlTemplate.Triggers>
+                            
                         </ControlTemplate>
+                        
                     </Setter.Value>
+                    
                 </Setter>
             </Style>
         </TabControl.Resources>
-        <TabItem ToolTip="General settings" Background="#11111b" Foreground="#cdd6f4">
+        <TabItem ToolTip="General settings" Background="Transparent" Foreground="#cdd6f4">
             <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Background="Transparent" Orientation="Horizontal">
                     <Image Name="generalImg" Source="icons/book.png" Width="32" Height="32"/>
-                    <TextBlock Text="General" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f5e0dc"/>
+                    <TextBlock Background="Transparent" Text="General" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f5e0dc"/>
                 </StackPanel>
             </TabItem.Header>
             <Grid x:Name="GeneralContent"  Height="Auto"  Width="Auto">
@@ -201,7 +207,7 @@
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster 1 Icon Y Coordinate"/>
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan or Pioneer quests to display the correct monster information" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Caravan Override"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan, Pioneer or Daily quests to display the correct monster information" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Caravan/Pioneer/Daily Quest Override"/>
                         <ToggleButton Grid.Row="14" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}"/>
                     </Grid>
                 </ScrollViewer>

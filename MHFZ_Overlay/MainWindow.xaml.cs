@@ -1654,7 +1654,8 @@ namespace MHFZ_Overlay
             //sky corridor prologue: 21729
             if (DataLoader.model.roadOverride() == false)
                 id = DataLoader.model.RoadSelectedMonster() == 0 ? DataLoader.model.LargeMonster1ID() : DataLoader.model.LargeMonster2ID();
-
+            else if (DataLoader.model.CaravanOverride())
+                id = DataLoader.model.CaravanMonster1ID();
             //Duremudira Arena
             if (DataLoader.model.AreaID() == 398 && (DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750)) 
                 id = 132;//duremudira
@@ -2347,7 +2348,7 @@ namespace MHFZ_Overlay
 
         public string GetStarGrade(bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames && !(isLargeImageText)) 
+            if ((ShowDiscordQuestNames && !(isLargeImageText)) || DataLoader.model.CaravanOverride()) 
                 return "";
 
             if (IsToggeableDifficulty())
