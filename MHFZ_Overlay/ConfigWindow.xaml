@@ -135,7 +135,7 @@
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Name="generalImg" Source="icons/book.png" Width="32" Height="32"/>
-                    <TextBlock Text="General" Margin="4,0,0,0" VerticalAlignment="Center" />
+                    <TextBlock Text="General" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f5e0dc"/>
                 </StackPanel>
             </TabItem.Header>
             <Grid x:Name="GeneralContent"  Height="Auto"  Width="Auto">
@@ -221,7 +221,7 @@
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Name="playerimg" Source="icons/helm.png" Width="32" Height="32"/>
-                    <TextBlock Text="Hunter Info" Margin="4,0,0,0" VerticalAlignment="Center" />
+                    <TextBlock Text="Hunter Info" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f38ba8"/>
                 </StackPanel>
             </TabItem.Header>
             <Grid x:Name="PlayerContent" Height="Auto"  Width="Auto">
@@ -332,7 +332,7 @@
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Name="hpimg" Source="icons/monster.png" Width="32" Height="32"/>
-                    <TextBlock Text="Monster HP Bars" Margin="4,0,0,0" VerticalAlignment="Center" />
+                    <TextBlock Foreground="#a6e3a1" Text="Monster HP Bars" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
             <Grid x:Name="MonsterHPContent" Height="Auto"  Width="Auto">
@@ -410,7 +410,7 @@
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Name="statusImg" Source="icons/poison.png" Width="32" Height="32"/>
-                    <TextBlock Text="Monster Status Info" Margin="4,0,0,0" VerticalAlignment="Center" />
+                    <TextBlock Foreground="#cba6f7" Text="Monster Status Info" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
             <Grid x:Name="MonsterStatusContent"  Height="Auto"  Width="Auto">
@@ -539,7 +539,7 @@
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock FontSize="32" Text="&#xf392;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Margin="4,0,0,0" VerticalAlignment="Center" />
-                    <TextBlock Text="Discord Rich Presence" Margin="4,0,0,0" VerticalAlignment="Center" />
+                    <TextBlock Foreground="#b4befe" Text="Discord Rich Presence" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
             <Grid x:Name="DiscordRPCContent" Height="Auto"  Width="Auto">
@@ -634,7 +634,7 @@
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xf09b;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Margin="4,0,0,0" VerticalAlignment="Center" FontSize="32"/>
-                    <TextBlock Text="Credits" Margin="4,0,0,0" VerticalAlignment="Center" />
+                    <TextBlock Foreground="#74c7ec" Text="Credits" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
             <Grid x:Name="CreditsContent"  Height="Auto"  Width="Auto">
@@ -656,9 +656,9 @@
                         <RowDefinition Height="128"/>
                         <RowDefinition Height="128"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Margin="10,0,0,10" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="Imulion"  FontSize="18" HorizontalAlignment="Center"/>
-                    <TextBlock Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="suzaku01"  FontSize="18" HorizontalAlignment="Center"/>
-                    <TextBlock Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="Doriel Rivalet"  FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Foreground="#89dceb" Margin="10,0,0,10" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="Imulion"  FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Foreground="#89b4fa" Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="suzaku01"  FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Foreground="#f38ba8" Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="Doriel Rivalet"  FontSize="18" HorizontalAlignment="Center"/>
                     <Image Width="128" Height="128" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" x:Name="myImg" Source="https://avatars.githubusercontent.com/u/27354834?v=4" Margin="10,0,0,10"/>
                     <Image Width="128" Height="128" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" x:Name="myImg3"  Source="https://avatars.githubusercontent.com/u/89909040?v=4" Margin="10,0,0,10"/>
                     <Image Width="128" Height="128" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" x:Name="myImg2" Source="https://avatars.githubusercontent.com/u/100863878?v=4" Margin="10,0,0,10"/>
