@@ -574,6 +574,11 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowMonsterStun = v && s.MonsterStunShown;
 
             DataLoader.model.ShowMonsterHPBars = v && s.HealthBarsShown;
+            DataLoader.model.ShowMonster1HPBar = v && s.Monster1HealthBarShown;
+            DataLoader.model.ShowMonster2HPBar = v && s.Monster2HealthBarShown;
+            DataLoader.model.ShowMonster3HPBar = v && s.Monster3HealthBarShown;
+            DataLoader.model.ShowMonster4HPBar = v && s.Monster4HealthBarShown;
+
             DataLoader.model.ShowMonsterPartHP = v && s.PartThresholdShown;
             DataLoader.model.ShowMonster1Icon = v && s.Monster1IconShown;
         }
@@ -2845,9 +2850,25 @@ namespace MHFZ_Overlay
                     s.PlayerAtkX = (double)(pos.X - XOffset);
                     s.PlayerAtkY = (double)(pos.Y - YOffset);
                     break;
-                case "MonsterHpBars":
-                    s.HealthBarsX = (double)(pos.X - XOffset);
-                    s.HealthBarsY = (double)(pos.Y - YOffset);
+                //case "MonsterHpBars":
+                //    s.HealthBarsX = (double)(pos.X - XOffset);
+                //    s.HealthBarsY = (double)(pos.Y - YOffset);
+                //    break;
+                case "Monster1HpBar":
+                    s.Monster1HealthBarX = (double)(pos.X - XOffset);
+                    s.Monster1HealthBarY = (double)(pos.Y - YOffset);
+                    break;
+                case "Monster2HpBar":
+                    s.Monster2HealthBarX = (double)(pos.X - XOffset);
+                    s.Monster2HealthBarY = (double)(pos.Y - YOffset);
+                    break;
+                case "Monster3HpBar":
+                    s.Monster3HealthBarX = (double)(pos.X - XOffset);
+                    s.Monster3HealthBarY = (double)(pos.Y - YOffset);
+                    break;
+                case "Monster4HpBar":
+                    s.Monster4HealthBarX = (double)(pos.X - XOffset);
+                    s.Monster4HealthBarY = (double)(pos.Y - YOffset);
                     break;
                 //case "MonsterStatusInfo":
                 //    s.MonsterStatusInfoX = (double)(pos.X - XOffset);

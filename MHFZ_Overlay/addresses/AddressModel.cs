@@ -50,6 +50,11 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowMonsterHPBars { get; set; } = true;
 
+        public bool ShowMonster1HPBar { get; set; } = true;
+        public bool ShowMonster2HPBar { get; set; } = true;
+        public bool ShowMonster3HPBar { get; set; } = true;
+        public bool ShowMonster4HPBar { get; set; } = true;
+
         public bool ShowSharpness { get; set; } = true;
 
         public bool ShowMonsterPartHP { get; set; } = true;

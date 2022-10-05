@@ -1114,5 +1114,149 @@ namespace MHFZ_Overlay {
                 this["EnableCaravanScore"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Monster1HealthBarShown {
+            get {
+                return ((bool)(this["Monster1HealthBarShown"]));
+            }
+            set {
+                this["Monster1HealthBarShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        public double Monster1HealthBarX {
+            get {
+                return ((double)(this["Monster1HealthBarX"]));
+            }
+            set {
+                this["Monster1HealthBarX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public double Monster1HealthBarY {
+            get {
+                return ((double)(this["Monster1HealthBarY"]));
+            }
+            set {
+                this["Monster1HealthBarY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Monster2HealthBarShown {
+            get {
+                return ((bool)(this["Monster2HealthBarShown"]));
+            }
+            set {
+                this["Monster2HealthBarShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        public double Monster2HealthBarX {
+            get {
+                return ((double)(this["Monster2HealthBarX"]));
+            }
+            set {
+                this["Monster2HealthBarX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public double Monster2HealthBarY {
+            get {
+                return ((double)(this["Monster2HealthBarY"]));
+            }
+            set {
+                this["Monster2HealthBarY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Monster3HealthBarShown {
+            get {
+                return ((bool)(this["Monster3HealthBarShown"]));
+            }
+            set {
+                this["Monster3HealthBarShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        public double Monster3HealthBarX {
+            get {
+                return ((double)(this["Monster3HealthBarX"]));
+            }
+            set {
+                this["Monster3HealthBarX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("120")]
+        public double Monster3HealthBarY {
+            get {
+                return ((double)(this["Monster3HealthBarY"]));
+            }
+            set {
+                this["Monster3HealthBarY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Monster4HealthBarShown {
+            get {
+                return ((bool)(this["Monster4HealthBarShown"]));
+            }
+            set {
+                this["Monster4HealthBarShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        public double Monster4HealthBarX {
+            get {
+                return ((double)(this["Monster4HealthBarX"]));
+            }
+            set {
+                this["Monster4HealthBarX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("160")]
+        public double Monster4HealthBarY {
+            get {
+                return ((double)(this["Monster4HealthBarY"]));
+            }
+            set {
+                this["Monster4HealthBarY"] = value;
+            }
+        }
     }
 }
