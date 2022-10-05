@@ -274,6 +274,86 @@ namespace MHFZ_Overlay.addresses
         //unsure
         abstract public int CaravanMonster2ID();
 
+        abstract public int MeleeWeaponID();
+        abstract public int RangedWeaponID();
+        //TODO: Sigils
+        abstract public int WeaponDeco1ID();
+        abstract public int WeaponDeco2ID();
+        abstract public int WeaponDeco3ID();
+        abstract public int ArmorHeadID();
+        abstract public int ArmorHeadDeco1ID();
+        abstract public int ArmorHeadDeco2ID();
+        abstract public int ArmorHeadDeco3ID();
+        abstract public int ArmorChestID();
+        abstract public int ArmorChestDeco1ID();
+        abstract public int ArmorChestDeco2ID();
+        abstract public int ArmorChestDeco3ID();
+        abstract public int ArmorWaistID();
+        abstract public int ArmorWaistDeco1ID();
+        abstract public int ArmorWaistDeco2ID();
+        abstract public int ArmorWaistDeco3ID();
+        abstract public int ArmorLegsID();
+        abstract public int ArmorLegsDeco1ID();
+        abstract public int ArmorLegsDeco2ID();
+        abstract public int ArmorLegsDeco3ID();
+        abstract public int Cuff1ID();
+        abstract public int Cuff2ID();
+        abstract public int TotalDefense();
+        abstract public int PouchItem1ID();
+        abstract public int PouchItem1Qty();
+        abstract public int PouchItem2ID();
+        abstract public int PouchItem2Qty();
+        abstract public int PouchItem3ID();
+        abstract public int PouchItem3Qty();
+        abstract public int PouchItem4ID();
+        abstract public int PouchItem4Qty();
+        abstract public int PouchItem5ID();
+        abstract public int PouchItem5Qty();
+        abstract public int PouchItem6ID();
+        abstract public int PouchItem6Qty();
+        abstract public int PouchItem7ID();
+        abstract public int PouchItem7Qty();
+        abstract public int PouchItem8ID();
+        abstract public int PouchItem8Qty();
+        abstract public int PouchItem9ID();
+        abstract public int PouchItem9Qty();
+        abstract public int PouchItem10ID();
+        abstract public int PouchItem10Qty();
+        abstract public int PouchItem11ID();
+        abstract public int PouchItem11Qty();
+        abstract public int PouchItem12ID();
+        abstract public int PouchItem12Qty();
+        abstract public int PouchItem13ID();
+        abstract public int PouchItem13Qty();
+        abstract public int PouchItem14ID();
+        abstract public int PouchItem14Qty();
+        abstract public int PouchItem15ID();
+        abstract public int PouchItem15Qty();
+        abstract public int PouchItem16ID();
+        abstract public int PouchItem16Qty();
+        abstract public int PouchItem17ID();
+        abstract public int PouchItem17Qty();
+        abstract public int PouchItem18ID();
+        abstract public int PouchItem18Qty();
+        abstract public int PouchItem19ID();
+        abstract public int PouchItem19Qty();
+        abstract public int PouchItem20ID();
+        abstract public int PouchItem20Qty();
+        abstract public int AmmoPouchItem1ID();
+        abstract public int AmmoPouchItem2ID();
+        abstract public int AmmoPouchItem3ID();
+        abstract public int AmmoPouchItem4ID();
+        abstract public int AmmoPouchItem5ID();
+        abstract public int AmmoPouchItem6ID();
+        abstract public int AmmoPouchItem7ID();
+        abstract public int AmmoPouchItem8ID();
+        abstract public int AmmoPouchItem9ID();
+        abstract public int AmmoPouchItem10ID();
+
+
+
+
+
         #endregion
 
         public bool HasMonster1 => CaravanOverride() ? ShowHPBar(CaravanMonster1ID(), Monster1HPInt()) : ShowHPBar(LargeMonster1ID(), Monster1HPInt());

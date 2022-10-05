@@ -1453,6 +1453,7 @@
 
 | ID | Skill|
 |----|-----|
+|0|None|
 |1|Large Monster Priority|
 |2|Small Monster Priority|
 |3|Near Hunter Priority|
@@ -1539,6 +1540,7 @@
 
 |ID| Skill| Sub1| Sub2| Sub3|
 |--|------|-----|-----|-----|
+|0|None||||
 |1|Attack Slayer||||
 |2|Elemental Slayer||||
 |3|Status Attack Slayer||||
@@ -1878,3 +1880,7 @@
 |7|Sedation 4|
 |8|Sedation 5|
 |9|Sedation 6|
+
+### Berserk Raviente Trigger Events
+
+### Extreme Berserk Raviente Trigger Events

@@ -250,5 +250,84 @@ namespace MHFZ_Overlay.addresses
         public override int CaravanMonster1ID() => M.ReadByte("mhfo.dll+28C2C84");
         //unsure
         public override int CaravanMonster2ID() => M.ReadByte("mhfo.dll+28C2C8C");
+
+
+        public override int MeleeWeaponID() => 1;
+        public override int RangedWeaponID() => 1;
+            //TODO: Sigils
+        public override int WeaponDeco1ID() => 1;
+        public override int WeaponDeco2ID() => 1;
+        public override int WeaponDeco3ID() => 1;
+        public override int ArmorHeadID() => 1;
+        public override int ArmorHeadDeco1ID() => 1;
+        public override int ArmorHeadDeco2ID() => 1;
+        public override int ArmorHeadDeco3ID() => 1;
+        public override int ArmorChestID() => 1;
+        public override int ArmorChestDeco1ID() => 1;
+        public override int ArmorChestDeco2ID() => 1;
+        public override int ArmorChestDeco3ID() => 1;
+        public override int ArmorWaistID() => 1;
+        public override int ArmorWaistDeco1ID() => 1;
+        public override int ArmorWaistDeco2ID() => 1;
+        public override int ArmorWaistDeco3ID() => 1;
+        public override int ArmorLegsID() => 1;
+        public override int ArmorLegsDeco1ID() => 1;
+        public override int ArmorLegsDeco2ID() => 1;
+        public override int ArmorLegsDeco3ID() => 1;
+        public override int Cuff1ID() => 1;
+        public override int Cuff2ID() => 1;
+        public override int TotalDefense() => M.Read2Byte("mhfo.dll+5034338");
+        public override int PouchItem1ID() => 1;
+        public override int PouchItem1Qty() => 1;
+        public override int PouchItem2ID() => 1;
+        public override int PouchItem2Qty() => 1;
+        public override int PouchItem3ID() => 1;
+        public override int PouchItem3Qty() => 1;
+        public override int PouchItem4ID() => 1;
+        public override int PouchItem4Qty() => 1;
+        public override int PouchItem5ID() => 1;
+        public override int PouchItem5Qty() => 1;
+        public override int PouchItem6ID() => 1;
+        public override int PouchItem6Qty() => 1;
+        public override int PouchItem7ID() => 1;
+        public override int PouchItem7Qty() => 1;
+        public override int PouchItem8ID() => 1;
+        public override int PouchItem8Qty() => 1;
+        public override int PouchItem9ID() => 1;
+        public override int PouchItem9Qty() => 1;
+        public override int PouchItem10ID() => 1;
+        public override int PouchItem10Qty() => 1;
+        public override int PouchItem11ID() => 1;
+        public override int PouchItem11Qty() => 1;
+        public override int PouchItem12ID() => 1;
+        public override int PouchItem12Qty() => 1;
+        public override int PouchItem13ID() => 1;
+        public override int PouchItem13Qty() => 1;
+        public override int PouchItem14ID() => 1;
+        public override int PouchItem14Qty() => 1;
+        public override int PouchItem15ID() => 1;
+        public override int PouchItem15Qty() => 1;
+        public override int PouchItem16ID() => 1;
+        public override int PouchItem16Qty() => 1;
+        public override int PouchItem17ID() => 1;
+        public override int PouchItem17Qty() => 1;
+        public override int PouchItem18ID() => 1;
+        public override int PouchItem18Qty() => 1;
+        public override int PouchItem19ID() => 1;
+        public override int PouchItem19Qty() => 1;
+        public override int PouchItem20ID() => 1;
+        public override int PouchItem20Qty() => 1;
+        public override int AmmoPouchItem1ID() => 1;
+        public override int AmmoPouchItem2ID() => 1;
+        public override int AmmoPouchItem3ID() => 1;
+        public override int AmmoPouchItem4ID() => 1;
+        public override int AmmoPouchItem5ID() => 1;
+        public override int AmmoPouchItem6ID() => 1;
+        public override int AmmoPouchItem7ID() => 1;
+        public override int AmmoPouchItem8ID() => 1;
+        public override int AmmoPouchItem9ID() => 1;
+        public override int AmmoPouchItem10ID() => 1;
+        //TODO: cat pouch
+
     }
 }
