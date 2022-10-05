@@ -140,6 +140,7 @@ Fully reinstalling the game or .NET dependencies may fix some bugs.
 - Raviente Support Part Info
 - Detect UL/HC
 - Guild Pugi address
+- Performance improvements
 
 [Check more possible future features here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 

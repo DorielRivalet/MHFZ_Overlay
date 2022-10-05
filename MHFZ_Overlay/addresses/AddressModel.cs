@@ -298,6 +298,15 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
+        public bool ShowCaravanScore()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableCaravanScore == true)
+                return true;
+            else
+                return false;
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="AddressModel"/> is configuring.
         /// </summary>
