@@ -121,7 +121,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#fab387")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#a6e3a1")]
         public string MonsterBlastBarColor {
             get {
                 return ((string)(this["MonsterBlastBarColor"]));

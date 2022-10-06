@@ -746,6 +746,7 @@ namespace MHFZ_Overlay
 
         public bool itemsLoaded = false;
         public bool questsLoaded = false;
+        public bool gearLoaded = false;
 
         /// <summary>
         /// Gets the weapon name from identifier.
@@ -2439,6 +2440,19 @@ namespace MHFZ_Overlay
                 itemsLoaded = true;
                 //load item list
                 Dictionary.Items.initiate();
+            }
+
+            if (!(gearLoaded))
+            {
+                gearLoaded = true;
+                //load all gear lists
+                //Dictionary.MeleeWeapons.initiate();
+                //Dictionary.RangedWeapons.initiate();
+                //Dictionary.ArmorHeads.initiate();
+                //Dictionary.ArmorChests.initiate();
+                //Dictionary.ArmorArms.initiate();
+                //Dictionary.ArmorWaists.initiate();
+                //Dictionary.ArmorLegs.initiate();
             }
 
             presenceTemplate.Details = string.Format("{0}{1}{2}{3}",GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));

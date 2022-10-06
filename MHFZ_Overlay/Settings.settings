@@ -27,7 +27,7 @@
       <Value Profile="(Default)">#cba6f7</Value>
     </Setting>
     <Setting Name="MonsterBlastBarColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#fab387</Value>
+      <Value Profile="(Default)">#a6e3a1</Value>
     </Setting>
     <Setting Name="MonsterSleepBarColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#74c7ec</Value>

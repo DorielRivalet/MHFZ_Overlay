@@ -1,31 +1,4 @@
-﻿using DiscordRPC;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using static System.Windows.Forms.DataFormats;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Diagnostics.Metrics;
-using System.Drawing.Drawing2D;
-using System.Net;
-using System.Security.Policy;
-using System.Windows.Documents;
-using System.Windows.Media.Media3D;
-using System.Windows.Shapes;
-using System.Windows;
-using Microsoft.VisualBasic.Logging;
-using SharpCompress.Common;
-using SharpCompress.Readers;
-using static System.Windows.Forms.AxHost;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
-using System.Collections;
-using System.ComponentModel;
-using System.Drawing;
-using System.Net.NetworkInformation;
-using System.Security.Cryptography;
-using System.Threading;
-using System.Windows.Controls;
-using System.Windows.Forms;
-using System.Windows.Media.Imaging;
-using System;
+﻿using System.Collections.Generic;
 
 namespace Dictionary
 {

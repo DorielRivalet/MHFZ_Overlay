@@ -333,6 +333,10 @@ namespace MHFZ_Overlay.addresses
         public override int ArmorChestDeco1ID() => 1;
         public override int ArmorChestDeco2ID() => 1;
         public override int ArmorChestDeco3ID() => 1;
+        public override int ArmorArmsID() => 1;
+        public override int ArmorArmsDeco1ID() => 1;
+        public override int ArmorArmsDeco2ID() => 1;
+        public override int ArmorArmsDeco3ID() => 1;
         public override int ArmorWaistID() => 1;
         public override int ArmorWaistDeco1ID() => 1;
         public override int ArmorWaistDeco2ID() => 1;
@@ -385,15 +389,25 @@ namespace MHFZ_Overlay.addresses
         public override int PouchItem20ID() => 1;
         public override int PouchItem20Qty() => 1;
         public override int AmmoPouchItem1ID() => 1;
+        public override int AmmoPouchItem1Qty() => 1;
         public override int AmmoPouchItem2ID() => 1;
+        public override int AmmoPouchItem2Qty() => 1;
         public override int AmmoPouchItem3ID() => 1;
+        public override int AmmoPouchItem3Qty() => 1;
         public override int AmmoPouchItem4ID() => 1;
+        public override int AmmoPouchItem4Qty() => 1;
         public override int AmmoPouchItem5ID() => 1;
+        public override int AmmoPouchItem5Qty() => 1;
         public override int AmmoPouchItem6ID() => 1;
+        public override int AmmoPouchItem6Qty() => 1;
         public override int AmmoPouchItem7ID() => 1;
+        public override int AmmoPouchItem7Qty() => 1;
         public override int AmmoPouchItem8ID() => 1;
+        public override int AmmoPouchItem8Qty() => 1;
         public override int AmmoPouchItem9ID() => 1;
+        public override int AmmoPouchItem9Qty() => 1;
         public override int AmmoPouchItem10ID() => 1;
+        public override int AmmoPouchItem10Qty() => 1;
 
 
     }

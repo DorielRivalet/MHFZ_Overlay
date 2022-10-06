@@ -288,6 +288,10 @@ namespace MHFZ_Overlay.addresses
         abstract public int ArmorChestDeco1ID();
         abstract public int ArmorChestDeco2ID();
         abstract public int ArmorChestDeco3ID();
+        abstract public int ArmorArmsID();
+        abstract public int ArmorArmsDeco1ID();
+        abstract public int ArmorArmsDeco2ID();
+        abstract public int ArmorArmsDeco3ID();
         abstract public int ArmorWaistID();
         abstract public int ArmorWaistDeco1ID();
         abstract public int ArmorWaistDeco2ID();
@@ -340,15 +344,25 @@ namespace MHFZ_Overlay.addresses
         abstract public int PouchItem20ID();
         abstract public int PouchItem20Qty();
         abstract public int AmmoPouchItem1ID();
+        abstract public int AmmoPouchItem1Qty();
         abstract public int AmmoPouchItem2ID();
+        abstract public int AmmoPouchItem2Qty();
         abstract public int AmmoPouchItem3ID();
+        abstract public int AmmoPouchItem3Qty();
         abstract public int AmmoPouchItem4ID();
+        abstract public int AmmoPouchItem4Qty();
         abstract public int AmmoPouchItem5ID();
+        abstract public int AmmoPouchItem5Qty();
         abstract public int AmmoPouchItem6ID();
+        abstract public int AmmoPouchItem6Qty();
         abstract public int AmmoPouchItem7ID();
+        abstract public int AmmoPouchItem7Qty();
         abstract public int AmmoPouchItem8ID();
+        abstract public int AmmoPouchItem8Qty();
         abstract public int AmmoPouchItem9ID();
+        abstract public int AmmoPouchItem9Qty();
         abstract public int AmmoPouchItem10ID();
+        abstract public int AmmoPouchItem10Qty();
 
 
 

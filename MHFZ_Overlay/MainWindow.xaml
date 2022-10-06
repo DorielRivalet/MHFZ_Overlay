@@ -235,7 +235,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <uc:CustomProgressBar  Foreground="#fab387" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" x:Name="MonsterBlastBar" IsHitTestVisible="False"
+            <uc:CustomProgressBar  Foreground="#a6e3a1" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" x:Name="MonsterBlastBar" IsHitTestVisible="False"
                                Description="Blast"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.BlastCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.BlastMax}"
