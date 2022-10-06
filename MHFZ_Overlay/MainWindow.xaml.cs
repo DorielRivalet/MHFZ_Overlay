@@ -1555,7 +1555,7 @@ namespace MHFZ_Overlay
                 case 436:
                     return "https://i.imgur.com/36TTe1a.png";
                 case 459://Hunter's Road Base Camp
-                    return "https://i.imgur.com/Jr8q9av.png";//TODO test
+                    return "https://i.imgur.com/MEPAa5x.png";//TODO test
                 case 288://Gorge areas
                 case 289:
                 case 290:
