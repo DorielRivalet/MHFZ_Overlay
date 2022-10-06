@@ -296,6 +296,42 @@ namespace MHFZ_Overlay
 
         #region main
 
+        public bool itemsLoaded = false;
+        public bool questsLoaded = false;
+        public bool gearLoaded = false;
+
+        /// <summary>
+        /// Loads the dictionaries
+        /// </summary>
+        private void LoadDictionaries()
+        {
+            if (!(questsLoaded && ShowDiscordQuestNames))
+            {
+                questsLoaded = true;
+                Dictionary.Quests.Initiate();
+            }
+
+            if (!(itemsLoaded))
+            {
+                itemsLoaded = true;
+                //load item list
+                Dictionary.Items.initiate();
+            }
+
+            if (!(gearLoaded))
+            {
+                gearLoaded = true;
+                //load all gear lists
+                //Dictionary.MeleeWeapons.initiate();
+                //Dictionary.RangedWeapons.initiate();
+                //Dictionary.ArmorHeads.initiate();
+                //Dictionary.ArmorChests.initiate();
+                //Dictionary.ArmorArms.initiate();
+                //Dictionary.ArmorWaists.initiate();
+                //Dictionary.ArmorLegs.initiate();
+            }
+        }
+
         //Main entry point?        
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -330,6 +366,7 @@ namespace MHFZ_Overlay
 
             //Console.WriteLine("Press any key to terminate");
             //onsole.ReadKey();
+            LoadDictionaries();
             InitializeDiscordRPC();
         }
 
@@ -743,10 +780,6 @@ namespace MHFZ_Overlay
             //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
             return QuestValue1 + "";
         }
-
-        public bool itemsLoaded = false;
-        public bool questsLoaded = false;
-        public bool gearLoaded = false;
 
         /// <summary>
         /// Gets the weapon name from identifier.
@@ -2776,7 +2809,34 @@ namespace MHFZ_Overlay
         public string GetMaxFaints()
         {
             if (
-                DataLoader.model.CaravanOverride() ||
+                (
+                    DataLoader.model.CaravanOverride() && !
+                    (
+                        DataLoader.model.QuestID() == 23603 ||
+                        DataLoader.model.RankBand() == 70 ||
+                        DataLoader.model.QuestID() == 23602 ||
+                        DataLoader.model.QuestID() == 23604 ||
+                        DataLoader.model.QuestID() == 23588 ||
+                        DataLoader.model.QuestID() == 23592 ||
+                        DataLoader.model.QuestID() == 23596 ||
+                        DataLoader.model.QuestID() == 23601 ||
+                        DataLoader.model.QuestID() == 23599 ||
+                        DataLoader.model.QuestID() == 23595 ||
+                        DataLoader.model.QuestID() == 23591 ||
+                        DataLoader.model.QuestID() == 23587 ||
+                        DataLoader.model.QuestID() == 23598 ||
+                        DataLoader.model.QuestID() == 23594 ||
+                        DataLoader.model.QuestID() == 23590 ||
+                        DataLoader.model.QuestID() == 23586 ||
+                        DataLoader.model.QuestID() == 23597 ||
+                        DataLoader.model.QuestID() == 23593 ||
+                        DataLoader.model.QuestID() == 23589 ||
+                        DataLoader.model.QuestID() == 23585
+                    )
+                )
+                
+                ||
+
                 DataLoader.model.QuestID() == 23603 ||
                 DataLoader.model.RankBand() == 70 ||
                 DataLoader.model.QuestID() == 23602 ||
@@ -2979,32 +3039,6 @@ namespace MHFZ_Overlay
             if (!(isDiscordRPCRunning))
             {
                 return;
-            }
-
-            if (!(questsLoaded && ShowDiscordQuestNames))
-            {
-                questsLoaded = true;
-                Dictionary.Quests.Initiate();
-            }
-
-            if (!(itemsLoaded))
-            {
-                itemsLoaded = true;
-                //load item list
-                Dictionary.Items.initiate();
-            }
-
-            if (!(gearLoaded))
-            {
-                gearLoaded = true;
-                //load all gear lists
-                //Dictionary.MeleeWeapons.initiate();
-                //Dictionary.RangedWeapons.initiate();
-                //Dictionary.ArmorHeads.initiate();
-                //Dictionary.ArmorChests.initiate();
-                //Dictionary.ArmorArms.initiate();
-                //Dictionary.ArmorWaists.initiate();
-                //Dictionary.ArmorLegs.initiate();
             }
 
             presenceTemplate.Details = string.Format("{0}{1}{2}{3}",GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));

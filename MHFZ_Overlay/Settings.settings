@@ -311,5 +311,8 @@
     <Setting Name="Monster4HealthBarY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">160</Value>
     </Setting>
+    <Setting Name="WeaponClassExport" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Blademaster</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

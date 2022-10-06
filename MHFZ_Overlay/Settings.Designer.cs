@@ -1258,5 +1258,17 @@ namespace MHFZ_Overlay {
                 this["Monster4HealthBarY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Blademaster")]
+        public string WeaponClassExport {
+            get {
+                return ((string)(this["WeaponClassExport"]));
+            }
+            set {
+                this["WeaponClassExport"] = value;
+            }
+        }
     }
 }

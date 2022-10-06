@@ -72,9 +72,103 @@
 - Objective 1 Current Quantity Item "mhfo-hd.dll"+DC6C2F2
 - Diva Skill mhfo-hd.dll+ED3EB08
 - Star Grades mhfo-hd.dll+E774CAE
+- Current Faints mhfo-hd.dll+DC6C35B
+- Max Faints mhfo-hd.dll+C4C8FE8
+- Alternative Max Faints mhfo-hd.dll+2AFA814
 - Caravan Skill 1 mhfo-hd.dll+DC6C448
 - Caravan Skill 2 mhfo-hd.dll+DC6C44A
 - Caravan Skill 3 mhfo-hd.dll+DC6C44C
+- Caravan Score mhfo-hd.dll+ED8F764
+- Caravan Monster 1 ID mhfo-hd.dll+2AFA834
+- Caravan Monster 2 ID mhfo-hd.dll+1C41D12
+- MeleeWeaponID() => 1;
+- RangedWeaponID() => 1;
+- WeaponDeco1ID() => 1;
+- WeaponDeco2ID() => 1;
+- WeaponDeco3ID() => 1;
+- ArmorHeadID() => 1;
+- ArmorHeadDeco1ID() => 1;
+- ArmorHeadDeco2ID() => 1;
+- ArmorHeadDeco3ID() => 1;
+- ArmorChestID() => 1;
+- ArmorChestDeco1ID() => 1;
+- ArmorChestDeco2ID() => 1;
+- ArmorChestDeco3ID() => 1;
+- ArmorArmsID() => 1;
+- ArmorArmsDeco1ID() => 1;
+- ArmorArmsDeco2ID() => 1;
+- ArmorArmsDeco3ID() => 1;
+- ArmorWaistID() => 1;
+- ArmorWaistDeco1ID() => 1;
+- ArmorWaistDeco2ID() => 1;
+- ArmorWaistDeco3ID() => 1;
+- ArmorLegsID() => 1;
+- ArmorLegsDeco1ID() => 1;
+- ArmorLegsDeco2ID() => 1;
+- ArmorLegsDeco3ID() => 1;
+- Cuff1ID() => 1;
+- Cuff2ID() => 1;
+- TotalDefense() => 1;
+- PouchItem1ID() => 1;
+- PouchItem1Qty() => 1;
+- PouchItem2ID() => 1;
+- PouchItem2Qty() => 1;
+- PouchItem3ID() => 1;
+- PouchItem3Qty() => 1;
+- PouchItem4ID() => 1;
+- PouchItem4Qty() => 1;
+- PouchItem5ID() => 1;
+- PouchItem5Qty() => 1;
+- PouchItem6ID() => 1;
+- PouchItem6Qty() => 1;
+- PouchItem7ID() => 1;
+- PouchItem7Qty() => 1;
+- PouchItem8ID() => 1;
+- PouchItem8Qty() => 1;
+- PouchItem9ID() => 1;
+- PouchItem9Qty() => 1;
+- PouchItem10ID() => 1;
+- PouchItem10Qty() => 1;
+- PouchItem11ID() => 1;
+- PouchItem11Qty() => 1;
+- PouchItem12ID() => 1;
+- PouchItem12Qty() => 1;
+- PouchItem13ID() => 1;
+- PouchItem13Qty() => 1;
+- PouchItem14ID() => 1;
+- PouchItem14Qty() => 1;
+- PouchItem15ID() => 1;
+- PouchItem15Qty() => 1;
+- PouchItem16ID() => 1;
+- PouchItem16Qty() => 1;
+- PouchItem17ID() => 1;
+- PouchItem17Qty() => 1;
+- PouchItem18ID() => 1;
+- PouchItem18Qty() => 1;
+- PouchItem19ID() => 1;
+- PouchItem19Qty() => 1;
+- PouchItem20ID() => 1;
+- PouchItem20Qty() => 1;
+- AmmoPouchItem1ID() => 1;
+- AmmoPouchItem1Qty() => 1;
+- AmmoPouchItem2ID() => 1;
+- AmmoPouchItem2Qty() => 1;
+- AmmoPouchItem3ID() => 1;
+- AmmoPouchItem3Qty() => 1;
+- AmmoPouchItem4ID() => 1;
+- AmmoPouchItem4Qty() => 1;
+- AmmoPouchItem5ID() => 1;
+- AmmoPouchItem5Qty() => 1;
+- AmmoPouchItem6ID() => 1;
+- AmmoPouchItem6Qty() => 1;
+- AmmoPouchItem7ID() => 1;
+- AmmoPouchItem7Qty() => 1;
+- AmmoPouchItem8ID() => 1;
+- AmmoPouchItem8Qty() => 1;
+- AmmoPouchItem9ID() => 1;
+- AmmoPouchItem9Qty() => 1;
+- AmmoPouchItem10ID() => 1;
+- AmmoPouchItem10Qty() => 1;
 
 ## Not HGE
 
@@ -149,9 +243,103 @@
 - Objective 1 Current Quantity Item mhfo.dll+5034732
 - Diva Skill mhfo.dll+6104368
 - Star Grades mhfo.dll+5B3D086
+- Current Faints mhfo.dll+503479B
+- Max Faints mhfo.dll+1AA899C
+- Alternative Max Faints mhfo.dll+28C2C64
 - Caravan Skill 1 mhfo.dll+5034888
 - Caravan Skill 2 mhfo.dll+503488A
 - Caravan Skill 3 mhfo.dll+503488C
+- Caravan Score mhfo.dll+6154FC4
+- Caravan Monster 1 ID mhfo.dll+28C2C84
+- Caravan Monster 2 ID mhfo.dll+28C2C8C
+- MeleeWeaponID mhfo.dll+4FCA1A2
+- RangedWeaponID mhfo.dll+4FCA1A2
+- WeaponDeco1ID() => 1;
+- WeaponDeco2ID() => 1;
+- WeaponDeco3ID() => 1;
+- ArmorHeadID mhfo.dll+4FCA162
+- ArmorHeadDeco1ID() => 1;
+- ArmorHeadDeco2ID() => 1;
+- ArmorHeadDeco3ID() => 1;
+- ArmorChestID mhfo.dll+4FCA172
+- ArmorChestDeco1ID() => 1;
+- ArmorChestDeco2ID() => 1;
+- ArmorChestDeco3ID() => 1;
+- ArmorArmsID mhfo.dll+4FCA182
+- ArmorArmsDeco1ID() => 1;
+- ArmorArmsDeco2ID() => 1;
+- ArmorArmsDeco3ID() => 1;
+- ArmorWaistID mhfo.dll+4FCA192
+- ArmorWaistDeco1ID() => 1;
+- ArmorWaistDeco2ID() => 1;
+- ArmorWaistDeco3ID() => 1;
+- ArmorLegsID mhfo.dll+4FCA142
+- ArmorLegsDeco1ID() => 1;
+- ArmorLegsDeco2ID() => 1;
+- ArmorLegsDeco3ID() => 1;
+- Cuff1ID mhfo.dll+50348C2
+- Cuff2ID mhfo.dll+50348C4
+- TotalDefense mhfo.dll+5034338
+- PouchItem1ID mhfo.dll+50345A8
+- PouchItem1Qty mhfo.dll+50345AA
+- PouchItem2ID mhfo.dll+50345B0
+- PouchItem2Qty mhfo.dll+50345B2
+- PouchItem3ID mhfo.dll+50345B8
+- PouchItem3Qty mhfo.dll+50345BA
+- PouchItem4ID mhfo.dll+50345C0
+- PouchItem4Qty mhfo.dll+50345C2
+- PouchItem5ID mhfo.dll+50345C8
+- PouchItem5Qty mhfo.dll+50345CA
+- PouchItem6ID mhfo.dll+50345D0
+- PouchItem6Qty mhfo.dll+50345D2
+- PouchItem7ID mhfo.dll+50345D8
+- PouchItem7Qty mhfo.dll+610445A
+- PouchItem8ID mhfo.dll+50345E0
+- PouchItem8Qty mhfo.dll+50345E2
+- PouchItem9ID mhfo.dll+50345E8
+- PouchItem9Qty mhfo.dll+610446A
+- PouchItem10ID mhfo.dll+50345F0
+- PouchItem10Qty mhfo.dll+50345F2
+- PouchItem11ID mhfo.dll+50345F8
+- PouchItem11Qty mhfo.dll+50345FA
+- PouchItem12ID mhfo.dll+5034600
+- PouchItem12Qty mhfo.dll+5034602
+- PouchItem13ID mhfo.dll+5034608
+- PouchItem13Qty mhfo.dll+503460A
+- PouchItem14ID mhfo.dll+5034610
+- PouchItem14Qty mhfo.dll+5034612
+- PouchItem15ID mhfo.dll+5034618
+- PouchItem15Qty mhfo.dll+503461A
+- PouchItem16ID mhfo.dll+5034620
+- PouchItem16Qty mhfo.dll+5034622
+- PouchItem17ID mhfo.dll+5034628
+- PouchItem17Qty mhfo.dll+503462A
+- PouchItem18ID mhfo.dll+5034630
+- PouchItem18Qty mhfo.dll+5034632
+- PouchItem19ID mhfo.dll+5034638
+- PouchItem19Qty mhfo.dll+61044BA
+- PouchItem20ID mhfo.dll+5034640
+- PouchItem20Qty mhfo.dll+5034642
+- AmmoPouchItem1ID mhfo.dll+5034648
+- AmmoPouchItem1Qty mhfo.dll+503464A
+- AmmoPouchItem2ID mhfo.dll+5034650
+- AmmoPouchItem2Qty mhfo.dll+5034652
+- AmmoPouchItem3ID mhfo.dll+5034658
+- AmmoPouchItem3Qty mhfo.dll+503465A
+- AmmoPouchItem4ID mhfo.dll+5034660
+- AmmoPouchItem4Qty mhfo.dll+5034662
+- AmmoPouchItem5ID mhfo.dll+5034668
+- AmmoPouchItem5Qty mhfo.dll+503466A
+- AmmoPouchItem6ID mhfo.dll+5034670
+- AmmoPouchItem6Qty mhfo.dll+5034672
+- AmmoPouchItem7ID mhfo.dll+5034678
+- AmmoPouchItem7Qty mhfo.dll+503467A
+- AmmoPouchItem8ID mhfo.dll+5034680
+- AmmoPouchItem8Qty mhfo.dll+5034682
+- AmmoPouchItem9ID mhfo.dll+5034688
+- AmmoPouchItem9Qty mhfo.dll+503468A
+- AmmoPouchItem10ID mhfo.dll+5034690
+- AmmoPouchItem10Qty mhfo.dll+5034692
 
 ## IDs
 
