@@ -266,7 +266,10 @@ namespace MHFZ_Overlay.addresses
         abstract public int CaravanSkill3();
 
         abstract public int CurrentFaints();
+        //road and normal
         abstract public int MaxFaints();
+        //shitens, conquests, pioneer, daily, caravan
+        abstract public int AlternativeMaxFaints();
 
         abstract public int CaravanScore();
 

@@ -2769,6 +2769,44 @@ namespace MHFZ_Overlay
             }  
         }
 
+        /// <summary>
+        /// Gets the max faints
+        /// </summary>
+        /// <returns></returns>
+        public string GetMaxFaints()
+        {
+            if (
+                DataLoader.model.CaravanOverride() ||
+                DataLoader.model.QuestID() == 23603 ||
+                DataLoader.model.RankBand() == 70 ||
+                DataLoader.model.QuestID() == 23602 ||
+                DataLoader.model.QuestID() == 23604 ||
+                DataLoader.model.QuestID() == 23588 ||
+                DataLoader.model.QuestID() == 23592 ||
+                DataLoader.model.QuestID() == 23596 ||
+                DataLoader.model.QuestID() == 23601 ||
+                DataLoader.model.QuestID() == 23599 ||
+                DataLoader.model.QuestID() == 23595 ||
+                DataLoader.model.QuestID() == 23591 ||
+                DataLoader.model.QuestID() == 23587 ||
+                DataLoader.model.QuestID() == 23598 ||
+                DataLoader.model.QuestID() == 23594 ||
+                DataLoader.model.QuestID() == 23590 ||
+                DataLoader.model.QuestID() == 23586 ||
+                DataLoader.model.QuestID() == 23597 ||
+                DataLoader.model.QuestID() == 23593 ||
+                DataLoader.model.QuestID() == 23589 ||
+                DataLoader.model.QuestID() == 23585
+                )
+            {
+                return DataLoader.model.AlternativeMaxFaints().ToString(); ;
+            }
+            else
+            {
+                return DataLoader.model.MaxFaints().ToString();
+            }
+        }
+
         #endregion
 
         #region discord info
@@ -3059,12 +3097,12 @@ namespace MHFZ_Overlay
                 else if (DataLoader.model.AreaID() == 459) 
                 {
                     presenceTemplate.Assets.LargeImageKey = GetAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1} | Faints: {2}/{3}", GetQuestInformation(), GetAreaName(DataLoader.model.AreaID()),DataLoader.model.CurrentFaints(),DataLoader.model.MaxFaints());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1} | Faints: {2}/{3}", GetQuestInformation(), GetAreaName(DataLoader.model.AreaID()),DataLoader.model.CurrentFaints(),GetMaxFaints());
                 }
                 else
                 {
                     presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), DataLoader.model.MaxFaints());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), GetMaxFaints());
                 }
             }
             else if (DataLoader.model.QuestID() == 0)

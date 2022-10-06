@@ -244,6 +244,7 @@ namespace MHFZ_Overlay.addresses
 
         public override int CurrentFaints() => M.ReadByte("mhfo.dll+503479B");
         public override int MaxFaints() => M.ReadByte("mhfo.dll+1AA899C");
+        public override int AlternativeMaxFaints() => M.ReadByte("mhfo.dll+28C2C64");
 
         public override int CaravanScore() => M.ReadInt("mhfo.dll+6154FC4");
 
