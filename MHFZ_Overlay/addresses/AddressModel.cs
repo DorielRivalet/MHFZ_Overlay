@@ -2254,6 +2254,151 @@ namespace MHFZ_Overlay.addresses
         public string Monster4Name => getMonsterName(LargeMonster4ID(),false);
 
         /// <summary>
+        /// Gets the name of the rank.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetRankName(int id)
+        {
+            switch (id)
+            {
+                case 0:
+                    return "";
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                    return "Low Rank ";
+                case 11:
+                    return "Low/High Rank ";
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                case 16:
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                    return "High Rank ";
+                case 26:
+                case 31:
+                case 42:
+                    return "HR5 ";
+                case 32:
+                case 46://supremacies
+                        //if (GetRealMonsterName(DataLoader.model.CurrentMonster1Icon).Contains("Supremacy"))
+                        //{
+                    return "Supremacy ";
+                //} else
+                //{
+                //   return "";
+                //}
+                case 53://: conquest levels via quest id
+                        //shantien
+                        //lv1 23585
+                        //lv200 23586
+                        //lv1000 23587
+                        //lv9999 23588
+                        //disufiroa
+                        //lv1 23589
+                        //lv200 23590
+                        //lv1000 23591
+                        //lv9999 23592
+                        //fatalis
+                        //lv1 23593
+                        //lv200 23594
+                        //lv1000 23595
+                        //lv9999 23596
+                        //crimson fatalis
+                        //lv1 23597
+                        //lv200 23598
+                        //lv1000 23599
+                        //lv9999 23601
+                        //upper shiten unknown 23605
+                        //lower shiten unknown 23604
+                        //upper shiten disufiroa 23603
+                        //lower shiten disu 23602
+                        //thirsty 55532
+                        //shifting 55920
+                        //starving 55916
+                        //golden 55917
+                    switch (QuestID())
+                    {
+                        default:
+                            return "G Rank ";
+                        case 23585:
+                        case 23589:
+                        case 23593:
+                        case 23597:
+                            return "Lv1 ";
+                        case 23586:
+                        case 23590:
+                        case 23594:
+                        case 23598:
+                            return "Lv200 ";
+                        case 23587:
+                        case 23591:
+                        case 23595:
+                        case 23599:
+                            return "Lv1000 ";
+                        case 23588:
+                        case 23592:
+                        case 23596:
+                        case 23601:
+                            return "Lv9999 ";
+                    }
+
+                case 54:
+                    switch (QuestID())
+                    {
+                        default:
+                            return "";
+                        case 23604:
+                        case 23602:
+                            return "Lower Shiten ";
+                    }
+                //return ""; //20m lower shiten/musou repel/musou lesser slay
+                case 55:
+                    switch (QuestID())
+                    {
+                        default:
+                            return "";
+                        case 23603:
+                            return "Upper Shiten ";
+                    }
+                //10m upper shiten/musou true slay
+
+
+                case 56://twinhead rajang / voljang and rajang
+                case 57://twinhead mi ru / white and brown espi / unknown and zeru / rajang and dorag
+                    return "Twinhead ";
+                case 64:
+                    return "Zenith★1 ";
+                case 65:
+                    return "Zenith★2 ";
+                case 66:
+                    return "Zenith★3 ";
+                case 67:
+                    return "Zenith★4 ";
+                case 70://unknown
+                    return "Upper Shiten ";
+                case 71:
+                case 72:
+                case 73:
+                    return "Interception ";
+                default:
+                    return "";
+            }
+        }
+
+        /// <summary>
         /// Gets the real name of the monster.
         /// </summary>
         /// <value>
@@ -2262,22 +2407,499 @@ namespace MHFZ_Overlay.addresses
         public string RealMonsterName
         {
             get {
-                string RealName = CurrentMonster1Icon.Replace("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/", "");
-                RealName = RealName.Replace(".gif", "");
-                RealName = RealName.Replace(".png", "");
-                RealName = RealName.Replace("zenith_", "Zenith ");
-                RealName = RealName.Replace("_", " ");
+                //string RealName = CurrentMonster1Icon.Replace("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/", "");
+                //RealName = RealName.Replace(".gif", "");
+                //RealName = RealName.Replace(".png", "");
+                //RealName = RealName.Replace("zenith_", "Zenith ");
+                //RealName = RealName.Replace("_", " ");
 
-                //https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
-                RealName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(RealName);
+                ////https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
+                //RealName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(RealName);
+
+                int id;
+
+                if (roadOverride() == false)
+                    id = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
+                else if (CaravanOverride())
+                    id = CaravanMonster1ID();
+                else
+                    id = LargeMonster1ID();
 
                 //dure
                 if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
                     return "Duremudira";
                 else if (QuestID() == 23648 || QuestID() == 23649)
                     return "Arrogant Duremudira";
-                else
-                    return RealName;
+
+                switch (id)
+                {
+                    case 0: //none
+                        return "None";
+                    case 1:
+                        return "Rathian";
+                    case 2:
+                        if (RankBand() == 53)
+                            return "Fatalis";
+                        else
+                            return "Fatalis";
+                    case 3:
+                        return "Kelbi";
+                    case 4:
+                        return "Mosswine";
+                    case 5:
+                        return "Bullfango";
+                    case 6:
+                        return "Yian Kut-Ku";
+                    case 7:
+                        return "Lao-Shan Lung";
+                    case 8:
+                        return "Cephadrome";
+                    case 9:
+                        return "Felyne";
+                    case 10: //veggie elder
+                        return "Veggie Elder";
+                    case 11:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Rathalos";
+                        else
+                            return "Rathalos";
+                    case 12:
+                        return "Aptonoth";
+                    case 13:
+                        return "Genprey";
+                    case 14:
+                        return "Diablos";
+                    case 15:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Khezu";
+                        else
+                            return "Khezu";
+                    case 16:
+                        return "Velociprey";
+                    case 17:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Gravios";
+                        else
+                            return "Gravios";
+                    case 18:
+                        return "Felyne";
+                    case 19:
+                        return "Vespoid";
+                    case 20:
+                        return "Gypceros";
+                    case 21:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Plesioth";
+                        else
+                            return "Plesioth";
+                    case 22:
+                        return "Basarios";
+                    case 23:
+                        return "Melynx";
+                    case 24:
+                        return "Hornetaur";
+                    case 25:
+                        return "Apceros";
+                    case 26:
+                        return "Monoblos";
+                    case 27:
+                        return "Velocidrome";
+                    case 28:
+                        return "Gendrome";
+                    case 29://rocks
+                        return "Rocks";
+                    case 30:
+                        return "Ioprey";
+                    case 31:
+                        return "Iodrome";
+                    case 32://pugis
+                        return "Poogie";
+                    case 33:
+                        return "Kirin";
+                    case 34:
+                        return "Cephalos";
+                    case 35:
+                        return "Giaprey";
+                    case 36:
+                        if (RankBand() == 53)
+                            return "Crimson Fatalis";
+                        else
+                            return "Crimson Fatalis";
+                    case 37:
+                        return "Pink Rathian";
+                    case 38:
+                        return "Blue Yian Kut-Ku";
+                    case 39:
+                        return "Purple Gypceros";
+                    case 40:
+                        return "Yian Garuga";
+                    case 41:
+                        return "Silver Rathalos";
+                    case 42:
+                        return "Gold Rathian";
+                    case 43:
+                        return "Black Diablos";
+                    case 44:
+                        return "White Monoblos";
+                    case 45:
+                        return "Red Khezu";
+                    case 46:
+                        return "Green Plesioth";
+                    case 47:
+                        return "Black Gravios";
+                    case 48:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Daimyo Hermitaur";
+                        else
+                            return "Daimyo Hermitaur";
+                    case 49:
+                        return "Azure Rathalos";
+                    case 50:
+                        return "Ashen Lao-Shan Lung";
+                    case 51:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Blangonga";
+                        else
+                            return "Blangonga";
+                    case 52:
+                        return "Congalala";
+                    case 53:
+                        if (RankBand() == 56 || RankBand() == 57)
+                            return "Rajang";
+                        else
+                            return "Rajang";
+                    case 54:
+                        return "Kushala Daora";
+                    case 55:
+                        return "Shen Gaoren";
+                    case 56:
+                        return "Great Thunderbug";
+                    case 57:
+                        return "Shakalaka";
+                    case 58:
+                        return "Yama Tsukami";
+                    case 59:
+                        return "Chameleos";
+                    case 60:
+                        return "Rusted Kushala Daora";
+                    case 61:
+                        return "Blango";
+                    case 62:
+                        return "Conga";
+                    case 63:
+                        return "Remobra";
+                    case 64:
+                        return "Lunastra";
+                    case 65:
+                        if (RankBand() == 32)
+                            return "Teostra";
+                        else
+                            return "Teostra";
+                    case 66:
+                        return "Hermitaur";
+                    case 67:
+                        return "Shogun Ceanataur";
+                    case 68:
+                        return "Bulldrome";
+                    case 69:
+                        return "Anteka";
+                    case 70:
+                        return "Popo";
+                    case 71:
+                        if (RankBand() == 53)
+                            return "White Fatalis";
+                        else
+                            return "White Fatalis";
+                    case 72:
+                        return "Yama Tsukami";
+                    case 73:
+                        return "Ceanataur";
+                    case 74:
+                        return "Hypnoc";
+                    case 75:
+                        return "Lavasioth";
+                    case 76:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Tigrex";
+                        else
+                            return "Tigrex";
+                    case 77:
+                        return "Akantor";
+                    case 78:
+                        return "Bright Hypnoc";
+                    case 79:
+                        return "Red Lavasioth";
+                    case 80:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Espinas";
+                        else
+                            return "Espinas";
+                    case 81:
+                        return "Orange Espinas";
+                    case 82:
+                        return "Silver Hypnoc";
+                    case 83:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Akura Vashimu";
+                        else
+                            return "Akura Vashimu";
+                    case 84:
+                        return "Akura Jebia";
+                    case 85:
+                        return "Berukyurosu";
+                    case 86://cactus
+                        return "Cactus";
+                    case 87://gorge objects
+                        return "Gorge Object";
+                    case 88://gorge rocks
+                        return "Gorge Rock";
+                    case 89:
+                        if (RankBand() == 32 || RankBand() == 54)
+                            return "Thirsty Pariapuria";
+                        else
+                            return "Pariapuria";
+                    case 90:
+                        return "White Espinas";
+                    case 91:
+                        return "Kamu Orugaron";
+                    case 92:
+                        return "Nono Orugaron";
+                    case 93:
+                        return "Raviente";
+                    case 94:
+                        return "Dyuragaua";
+                    case 95:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Doragyurosu";
+                        else if (RankBand() == 32)
+                            return "Doragyurosu";
+                        else
+                            return "Doragyurosu";
+                    case 96:
+                        return "Gurenzeburu";
+                    case 97:
+                        return "Burukku";
+                    case 98:
+                        return "Erupe";
+                    case 99:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Rukodiora";
+                        else
+                            return "Rukodiora";
+                    case 100:
+                        if (RankBand() == 70 || RankBand() == 54)
+                            return "Unknown";
+                        else
+                            return "Unknown";
+                    case 101:
+                        return "Gogomoa";
+                    case 102://kokomoa
+                        return "Kokomoa";
+                    case 103:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Taikun Zamuza";
+                        else
+                            return "Taikun Zamuza";
+                    case 104:
+                        return "Abiorugu";
+                    case 105:
+                        return "Kuarusepusu";
+                    case 106:
+                        if (RankBand() == 32)
+                            return "Odibatorasu";
+                        else
+                            return "Odibatorasu";
+                    case 107:
+                        if (RankBand() == 54 || RankBand() == 55)
+                            return "Disufiroa";
+                        else
+                            return "Disufiroa";
+                    case 108:
+                        return "Rebidiora";
+                    case 109:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Anorupatisu";
+                        else
+                            return "Anorupatisu";
+                    case 110:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Zenith Hyujikiki";
+                        else
+                            return "Hyujikiki";
+                    case 111:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Midogaron";
+                        else
+                            return "Midogaron";
+                    case 112:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Giaorugu";
+                        else
+                            return "Giaorugu";
+                    case 113:
+                        if (RankBand() == 55)
+                            return "Shifting Mi Ru";
+                        else
+                            return "Mi Ru";
+                    case 114:
+                        return "Farunokku";
+                    case 115:
+                        return "Pokaradon";
+                    case 116:
+                        if (RankBand() == 53)
+                            return "Shantien";
+                        else
+                            return "Shantien";
+                    case 117:
+                        return "Pokara";
+                    case 118://dummy
+                        return "Dummy";
+                    case 119:
+                        return "Goruganosu";
+                    case 120:
+                        return "Aruganosu";
+                    case 121:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Baruragaru";
+                        else
+                            return "Baruragaru";
+                    case 122:
+                        return "Zerureusu";
+                    case 123:
+                        return "Gougarf";
+                    case 124:
+                        return "Uruki";
+                    case 125:
+                        return "Forokururu";
+                    case 126:
+                        return "Meraginasu";
+                    case 127:
+                        return "Diorex";
+                    case 128:
+                        return "Garuba Daora";
+                    case 129:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Inagami";
+                        else
+                            return "Inagami";
+                    case 130:
+                        return "Varusaburosu";
+                    case 131:
+                        return "Poborubarumu";
+                    case 132:
+                        return "Duremudira";
+                    case 133://UNK
+                        return "UNK";
+                    case 134:
+                        return "Felyne";
+                    case 135://blue npc
+                        return "Blue NPC";
+                    case 136://UNK
+                        return "UNK";
+                    case 137://cactus
+                        return "Cactus";
+                    case 138://veggie elders
+                        return "Veggie Elder";
+                    case 139:
+                        return "Gureadomosu";
+                    case 140:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Harudomerugu";
+                        else
+                            return "Harudomerugu";
+                    case 141:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Toridcless";
+                        else
+                            return "Toridcless";
+                    case 142:
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return "Gasurabazura";
+                        else
+                            return "Gasurabazura";
+                    case 143:
+                        return "Kusubami";
+                    case 144:
+                        return "Yama Kurai";
+                    case 145://3rd phase duremudira
+                        return "Duremudira";
+                    case 146:
+                        if (RankBand() >= 54 && RankBand() <= 55)
+                            return "Howling Zinogre";
+                        else
+                            return "Zinogre";
+                    case 147:
+                        return "Deviljho";
+                    case 148:
+                        return "Brachydios";
+                    case 149:
+                        return "Berserk Raviente";
+                    case 150:
+                        return "Toa Tesukatora";
+                    case 151:
+                        return "Barioth";
+                    case 152:
+                        return "Uragaan";
+                    case 153:
+                        return "Stygian Zinogre";
+                    case 154:
+                        if (RankBand() >= 54 && RankBand() <= 55)
+                            return "Ruling Guanzorumu";
+                        else
+                            return "Guanzorumu";
+                    case 155:
+                        if (RankBand() == 55)
+                            return "Golden Deviljho";
+                        else
+                            return "Starving Deviljho";
+                    case 156://UNK
+                        return "UNK";
+                    case 157://egyurasu
+                        return "Egyurasu";
+                    case 158:
+                        return "Voljang";
+                    case 159:
+                        return "Nargacuga";
+                    case 160:
+                        return "Keoaruboru";
+                    case 161:
+                        return "Zenaserisu";
+                    case 162:
+                        return "Gore Magala";
+                    case 163:
+                        return "Blinking Nargacuga";
+                    case 164:
+                        return "Shagaru Magala";
+                    case 165:
+                        return "Amatsu";
+                    case 166:
+                        if (RankBand() >= 54 && RankBand() <= 55)
+                            return "Burning Freezing Elzelion";
+                        else
+                            return "Elzelion";
+                    case 167:
+                        return "Arrogant Duremudira";
+                    case 168://rocks
+                        return "Rock";
+                    case 169:
+                        return "Seregios";
+                    case 170:
+                        return "Bogabadorumu";
+                    case 171://unknown blue barrel
+                        return "Blue Barrel";
+                    case 172:
+                        return "Blitzkrieg Bogabadorumu";
+                    case 173://costumed uruki
+                        return "Uruki";
+                    case 174:
+                        return "Sparkling Zerureusu";
+                    case 175://PSO2 Rappy
+                        return "PSO2 Rappy";
+                    case 176:
+                        return "King Shakalaka";
+                    default:
+                        return "Loading...";
+                }
             }
             //quest ids:
             //mp road: 23527
@@ -2311,9 +2933,9 @@ namespace MHFZ_Overlay.addresses
             Dictionary.List.MonsterID.TryGetValue(id, out string? monstername);
 
             if (monstername != null && monstername != RealMonsterName && isFirstMonster)
-                return RealMonsterName;
+                return string.Format("{0}{1}",GetRankName(RankBand()), RealMonsterName);
             else
-                return monstername + "";
+                return string.Format("{0}{1}", GetRankName(RankBand()), monstername); ;
         }
 
         #region monster hp
@@ -2485,6 +3107,8 @@ namespace MHFZ_Overlay.addresses
 
         #region monster icon
 
+        
+
         /// <summary>
         /// Gets the current monster1 icon.
         /// </summary>
@@ -2494,8 +3118,8 @@ namespace MHFZ_Overlay.addresses
         public string CurrentMonster1Icon
         {
             get
-            {
-                string baseAddress = "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/";
+            {//TODO: rework this
+                string baseAddress = "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/";
                 string extension1 = ".png";
                 string extension2 = ".gif"; //zeniths and rainbow color
                 int id;
@@ -2630,7 +3254,10 @@ namespace MHFZ_Overlay.addresses
                     case 47:
                         return baseAddress + "black_gravios" + extension1;
                     case 48:
-                        return baseAddress + "daimyo_hermitaur" + extension1;
+                        if (RankBand() >= 64 && RankBand() <= 67)
+                            return baseAddress + "zenith_daimyo_hermitaur" + extension2;
+                        else
+                            return baseAddress + "daimyo_hermitaur" + extension1;
                     case 49:
                         return baseAddress + "azure_rathalos" + extension1;
                     case 50:

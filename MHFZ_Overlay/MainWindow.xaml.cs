@@ -1079,22 +1079,499 @@ namespace MHFZ_Overlay
             //3rd district dure 2: 21734
             //UNUSED sky corridor: 21730
             //sky corridor prologue: 21729
-            string RealMonsterName = iconName.Replace("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/", "");
-            RealMonsterName = RealMonsterName.Replace(".gif", "");
-            RealMonsterName = RealMonsterName.Replace(".png", "");
-            RealMonsterName = RealMonsterName.Replace("zenith_", "");
-            RealMonsterName = RealMonsterName.Replace("_", " ");
+            //string RealMonsterName = iconName.Replace("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/", "");
+            //RealMonsterName = RealMonsterName.Replace(".gif", "");
+            //RealMonsterName = RealMonsterName.Replace(".png", "");
+            //RealMonsterName = RealMonsterName.Replace("zenith_", "");
+            //RealMonsterName = RealMonsterName.Replace("_", " ");
 
-            //https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
-            RealMonsterName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(RealMonsterName);
+            ////https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
+            //RealMonsterName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(RealMonsterName);
+
+            int id;
+
+            if (DataLoader.model.roadOverride() == false)
+                id = DataLoader.model.RoadSelectedMonster() == 0 ? DataLoader.model.LargeMonster1ID() : DataLoader.model.LargeMonster2ID();
+            else if (DataLoader.model.CaravanOverride())
+                id = DataLoader.model.CaravanMonster1ID();
+            else
+                id = DataLoader.model.LargeMonster1ID();
 
             //dure
             if (DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750)
                 return "Duremudira";
             else if (DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649)
                 return "Arrogant Duremudira";
-            else
-                return RealMonsterName;
+
+            switch (id)
+            {
+                case 0: //none
+                    return "None";
+                case 1:
+                    return "Rathian";
+                case 2:
+                    if (DataLoader.model.RankBand() == 53)
+                        return "Fatalis";
+                    else
+                        return "Fatalis";
+                case 3:
+                    return "Kelbi";
+                case 4:
+                    return "Mosswine";
+                case 5:
+                    return "Bullfango";
+                case 6:
+                    return "Yian Kut-Ku";
+                case 7:
+                    return "Lao-Shan Lung";
+                case 8:
+                    return "Cephadrome";
+                case 9:
+                    return "Felyne";
+                case 10: //veggie elder
+                    return "Veggie Elder";
+                case 11:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Rathalos";
+                    else
+                        return "Rathalos";
+                case 12:
+                    return "Aptonoth";
+                case 13:
+                    return "Genprey";
+                case 14:
+                    return "Diablos";
+                case 15:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Khezu";
+                    else
+                        return "Khezu";
+                case 16:
+                    return "Velociprey";
+                case 17:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Gravios";
+                    else
+                        return "Gravios";
+                case 18:
+                    return "Felyne";
+                case 19:
+                    return "Vespoid";
+                case 20:
+                    return "Gypceros";
+                case 21:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Plesioth";
+                    else
+                        return "Plesioth";
+                case 22:
+                    return "Basarios";
+                case 23:
+                    return "Melynx";
+                case 24:
+                    return "Hornetaur";
+                case 25:
+                    return "Apceros";
+                case 26:
+                    return "Monoblos";
+                case 27:
+                    return "Velocidrome";
+                case 28:
+                    return "Gendrome";
+                case 29://rocks
+                    return "Rocks";
+                case 30:
+                    return "Ioprey";
+                case 31:
+                    return "Iodrome";
+                case 32://pugis
+                    return "Poogie";
+                case 33:
+                    return "Kirin";
+                case 34:
+                    return "Cephalos";
+                case 35:
+                    return "Giaprey";
+                case 36:
+                    if (DataLoader.model.RankBand() == 53)
+                        return "Crimson Fatalis";
+                    else
+                        return "Crimson Fatalis";
+                case 37:
+                    return "Pink Rathian";
+                case 38:
+                    return "Blue Yian Kut-Ku";
+                case 39:
+                    return "Purple Gypceros";
+                case 40:
+                    return "Yian Garuga";
+                case 41:
+                    return "Silver Rathalos";
+                case 42:
+                    return "Gold Rathian";
+                case 43:
+                    return "Black Diablos";
+                case 44:
+                    return "White Monoblos";
+                case 45:
+                    return "Red Khezu";
+                case 46:
+                    return "Green Plesioth";
+                case 47:
+                    return "Black Gravios";
+                case 48:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Daimyo Hermitaur";
+                    else
+                        return "Daimyo Hermitaur";
+                case 49:
+                    return "Azure Rathalos";
+                case 50:
+                    return "Ashen Lao-Shan Lung";
+                case 51:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Blangonga";
+                    else
+                        return "Blangonga";
+                case 52:
+                    return "Congalala";
+                case 53:
+                    if (DataLoader.model.RankBand() == 56 || DataLoader.model.RankBand() == 57)
+                        return "Rajang";
+                    else
+                        return "Rajang";
+                case 54:
+                    return "Kushala Daora";
+                case 55:
+                    return "Shen Gaoren";
+                case 56:
+                    return "Great Thunderbug";
+                case 57:
+                    return "Shakalaka";
+                case 58:
+                    return "Yama Tsukami";
+                case 59:
+                    return "Chameleos";
+                case 60:
+                    return "Rusted Kushala Daora";
+                case 61:
+                    return "Blango";
+                case 62:
+                    return "Conga";
+                case 63:
+                    return "Remobra";
+                case 64:
+                    return "Lunastra";
+                case 65:
+                    if (DataLoader.model.RankBand() == 32)
+                        return "Supremacy Teostra";
+                    else
+                        return "Teostra";
+                case 66:
+                    return "Hermitaur";
+                case 67:
+                    return "Shogun Ceanataur";
+                case 68:
+                    return "Bulldrome";
+                case 69:
+                    return "Anteka";
+                case 70:
+                    return "Popo";
+                case 71:
+                    if (DataLoader.model.RankBand() == 53)
+                        return "White Fatalis";
+                    else
+                        return "White Fatalis";
+                case 72:
+                    return "Yama Tsukami";
+                case 73:
+                    return "Ceanataur";
+                case 74:
+                    return "Hypnoc";
+                case 75:
+                    return "Lavasioth";
+                case 76:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Zenith Tigrex";
+                    else
+                        return "Tigrex";
+                case 77:
+                    return "Akantor";
+                case 78:
+                    return "Bright Hypnoc";
+                case 79:
+                    return "Red Lavasioth";
+                case 80:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Espinas";
+                    else
+                        return "Espinas";
+                case 81:
+                    return "Orange Espinas";
+                case 82:
+                    return "Silver Hypnoc";
+                case 83:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Akura Vashimu";
+                    else
+                        return "Akura Vashimu";
+                case 84:
+                    return "Akura Jebia";
+                case 85:
+                    return "Berukyurosu";
+                case 86://cactus
+                    return "Cactus";
+                case 87://gorge objects
+                    return "Gorge Object";
+                case 88://gorge rocks
+                    return "Gorge Rock";
+                case 89:
+                    if (DataLoader.model.RankBand() == 32 || DataLoader.model.RankBand() == 54)
+                        return "Thirsty Pariapuria";
+                    else
+                        return "Pariapuria";
+                case 90:
+                    return "White Espinas";
+                case 91:
+                    return "Kamu Orugaron";
+                case 92:
+                    return "Nono Orugaron";
+                case 93:
+                    return "Raviente";
+                case 94:
+                    return "Dyuragaua";
+                case 95:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Doragyurosu";
+                    else if (DataLoader.model.RankBand() == 32)
+                        return "Supremacy Doragyurosu";
+                    else
+                        return "Doragyurosu";
+                case 96:
+                    return "Gurenzeburu";
+                case 97:
+                    return "Burukku";
+                case 98:
+                    return "Erupe";
+                case 99:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Rukodiora";
+                    else
+                        return "Rukodiora";
+                case 100:
+                    if (DataLoader.model.RankBand() == 70 || DataLoader.model.RankBand() == 54)
+                        return "Unknown";
+                    else
+                        return "Unknown";
+                case 101:
+                    return "Gogomoa";
+                case 102://kokomoa
+                    return "Kokomoa";
+                case 103:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Taikun Zamuza";
+                    else
+                        return "Taikun Zamuza";
+                case 104:
+                    return "Abiorugu";
+                case 105:
+                    return "Kuarusepusu";
+                case 106:
+                    if (DataLoader.model.RankBand() == 32)
+                        return "Supremacy Odibatorasu";
+                    else
+                        return "Odibatorasu";
+                case 107:
+                    if (DataLoader.model.RankBand() == 54 || DataLoader.model.RankBand() == 55)
+                        return "Disufiroa";
+                    else
+                        return "Disufiroa";
+                case 108:
+                    return "Rebidiora";
+                case 109:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Anorupatisu";
+                    else
+                        return "Anorupatisu";
+                case 110:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Hyujikiki";
+                    else
+                        return "Hyujikiki";
+                case 111:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Midogaron";
+                    else
+                        return "Midogaron";
+                case 112:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Giaorugu";
+                    else
+                        return "Giaorugu";
+                case 113:
+                    if (DataLoader.model.RankBand() == 55)
+                        return "Shifting Mi Ru";
+                    else
+                        return "Mi Ru";
+                case 114:
+                    return "Farunokku";
+                case 115:
+                    return "Pokaradon";
+                case 116:
+                    if (DataLoader.model.RankBand() == 53)
+                        return "Shantien";
+                    else
+                        return "Shantien";
+                case 117:
+                    return "Pokara";
+                case 118://dummy
+                    return "Dummy";
+                case 119:
+                    return "Goruganosu";
+                case 120:
+                    return "Aruganosu";
+                case 121:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Baruragaru";
+                    else
+                        return "Baruragaru";
+                case 122:
+                    return "Zerureusu";
+                case 123:
+                    return "Gougarf";
+                case 124:
+                    return "Uruki";
+                case 125:
+                    return "Forokururu";
+                case 126:
+                    return "Meraginasu";
+                case 127:
+                    return "Diorex";
+                case 128:
+                    return "Garuba Daora";
+                case 129:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Inagami";
+                    else
+                        return "Inagami";
+                case 130:
+                    return "Varusaburosu";
+                case 131:
+                    return "Poborubarumu";
+                case 132:
+                    return "Duremudira";
+                case 133://UNK
+                    return "UNK";
+                case 134:
+                    return "Felyne";
+                case 135://blue npc
+                    return "Blue NPC";
+                case 136://UNK
+                    return "UNK";
+                case 137://cactus
+                    return "Cactus";
+                case 138://veggie elders
+                    return "Veggie Elder";
+                case 139:
+                    return "Gureadomosu";
+                case 140:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Harudomerugu";
+                    else
+                        return "Harudomerugu";
+                case 141:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Toridcless";
+                    else
+                        return "Toridcless";
+                case 142:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Gasurabazura";
+                    else
+                        return "Gasurabazura";
+                case 143:
+                    return "Kusubami";
+                case 144:
+                    return "Yama Kurai";
+                case 145://3rd phase duremudira
+                    return "Duremudira";
+                case 146:
+                    if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
+                        return "Howling Zinogre";
+                    else
+                        return "Zinogre";
+                case 147:
+                    return "Deviljho";
+                case 148:
+                    return "Brachydios";
+                case 149:
+                    return "Berserk Raviente";
+                case 150:
+                    return "Toa Tesukatora";
+                case 151:
+                    return "Barioth";
+                case 152:
+                    return "Uragaan";
+                case 153:
+                    return "Stygian Zinogre";
+                case 154:
+                    if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
+                        return "Ruling Guanzorumu";
+                    else
+                        return "Guanzorumu";
+                case 155:
+                    if (DataLoader.model.RankBand() == 55)
+                        return "Golden Deviljho";
+                    else
+                        return "Starving Deviljho";
+                case 156://UNK
+                    return "UNK";
+                case 157://egyurasu
+                    return "Egyurasu";
+                case 158:
+                    return "Voljang";
+                case 159:
+                    return "Nargacuga";
+                case 160:
+                    return "Keoaruboru";
+                case 161:
+                    return "Zenaserisu";
+                case 162:
+                    return "Gore Magala";
+                case 163:
+                    return "Blinking Nargacuga";
+                case 164:
+                    return "Shagaru Magala";
+                case 165:
+                    return "Amatsu";
+                case 166:
+                    if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
+                        return "Burning Freezing Elzelion";
+                    else
+                        return "Elzelion";
+                case 167:
+                    return "Arrogant Duremudira";
+                case 168://rocks
+                    return "Rock";
+                case 169:
+                    return "Seregios";
+                case 170:
+                    return "Bogabadorumu";
+                case 171://unknown blue barrel
+                    return "Blue Barrel";
+                case 172:
+                    return "Blitzkrieg Bogabadorumu";
+                case 173://costumed uruki
+                    return "Uruki";
+                case 174:
+                    return "Sparkling Zerureusu";
+                case 175://PSO2 Rappy
+                    return "PSO2 Rappy";
+                case 176:
+                    return "King Shakalaka";
+                default:
+                    return "Loading...";
+            }
         }
 
         /// <summary>
@@ -1137,14 +1614,14 @@ namespace MHFZ_Overlay
                 case 42:
                     return "HR5 ";
                 case 32:
-                case 46:
-                    if (GetRealMonsterName(DataLoader.model.CurrentMonster1Icon).Contains("Supremacy"))
-                    {
+                case 46://supremacies
+                    //if (GetRealMonsterName(DataLoader.model.CurrentMonster1Icon).Contains("Supremacy"))
+                    //{
                         return "";
-                    } else
-                    {
-                        return "Supremacy ";
-                    }
+                    //} else
+                    //{
+                     //   return "";
+                    //}
                 case 53://: conquest levels via quest id
                     //shantien
                     //lv1 23585
@@ -1700,207 +2177,210 @@ namespace MHFZ_Overlay
                         return "https://i.imgur.com/VJNLFWf.png";
                     else
                         return "https://i.imgur.com/Fht5iyz.png";
-                case 3:
+                case 3://kelbi
                     return "https://i.imgur.com/Ad5xCF6.png";
-                case 4:
+                case 4://mosswine
                     return "https://i.imgur.com/qWSVddC.png";
-                case 5:
+                case 5://bullfango
                     return "https://i.imgur.com/qz7CynW.png";
-                case 6:
+                case 6://kutku
                     return "https://i.imgur.com/TtJ7KPw.png";
-                case 7:
+                case 7://lao
                     return "https://i.imgur.com/ZW43PS5.png";
-                case 8:
+                case 8://cephadrome
                     return "https://i.imgur.com/RwkhTLJ.png";
-                case 9:
+                case 9://felyne
                     return "https://i.imgur.com/Ry2zu5r.png";
                 case 10: //veggie elder
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 11:
+                case 11://rathalos
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/o8bJZUN.gif";
                     else
                         return "https://i.imgur.com/suPp2tU.png";
-                case 12:
+                case 12://aptonoth
                     return "https://i.imgur.com/15KEndF.png";
-                case 13:
+                case 13://genprey
                     return "https://i.imgur.com/ChQomJ4.png";
-                case 14:
+                case 14://diablos
                     return "https://i.imgur.com/XZaYYFL.png";
-                case 15:
+                case 15://khezu
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/t58j2Zm.gif";
                     else
                         return "https://i.imgur.com/f8rLuGe.png";
-                case 16:
+                case 16://velociprey
                     return "https://i.imgur.com/WGrl1DY.png";
-                case 17:
+                case 17://gravios
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/PGkduy9.gif";
                     else
                         return "https://i.imgur.com/Sj4SsYR.png";
-                case 18:
+                case 18://felyne
                     return "https://i.imgur.com/Ry2zu5r.png";
-                case 19:
+                case 19://vespoid
                     return "https://i.imgur.com/dhiIvMc.png";
-                case 20:
+                case 20://gypceros
                     return "https://i.imgur.com/vovKgVw.png";
-                case 21:
+                case 21://plesioth
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/bsHESxp.gif";
                     else
                         return "https://i.imgur.com/BQUAjEf.png";
-                case 22:
+                case 22://basarios
                     return "https://i.imgur.com/y86jUp6.png";
-                case 23:
+                case 23://melynx
                     return "https://i.imgur.com/LoqmciT.png";
-                case 24:
+                case 24://hornetaur
                     return "https://i.imgur.com/uXam7c6.png";
-                case 25:
+                case 25://apceros
                     return "https://i.imgur.com/Y2ovscJ.png";
-                case 26:
+                case 26://monoblos
                     return "https://i.imgur.com/bJt02Qe.png";
-                case 27:
+                case 27://velocidrome
                     return "https://i.imgur.com/6HMWaGt.png";
-                case 28:
+                case 28://gendrome
                     return "https://i.imgur.com/XBWX8Wm.png";
                 case 29://rocks
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 30:
+                case 30://ioprey
                     return "https://i.imgur.com/KDxPzPs.png";
-                case 31:
+                case 31://iodrome
                     return "https://i.imgur.com/QsyXEmc.png";
-                case 32://pugis
+                case 32://pugis/poogies
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 33:
+                case 33://kirin
                     return "https://i.imgur.com/5s4ToRS.png";
-                case 34:
+                case 34://cephalos
                     return "https://i.imgur.com/3n7NQG9.png";
-                case 35:
+                case 35://giaprey
                     return "https://i.imgur.com/QPl1AEF.png";
                 case 36://crimson fatalis
                     if (DataLoader.model.RankBand() == 53)
                         return "https://i.imgur.com/PRFnN10.png";
                     else
                         return "https://i.imgur.com/T36zMrZ.png";
-                case 37:
+                case 37://pink rathian
                     return "https://i.imgur.com/yn3uMc2.png";
-                case 38:
+                case 38://blue kutku
                     return "https://i.imgur.com/NmRxU2H.png";
-                case 39:
+                case 39://purple gypceros
                     return "https://i.imgur.com/eDiBAxX.png";
-                case 40:
+                case 40://garuga
                     return "https://i.imgur.com/ApZmoUv.png";
-                case 41:
+                case 41://silverlos
                     return "https://i.imgur.com/mYY8y19.png";
-                case 42:
+                case 42://goldian
                     return "https://i.imgur.com/xe8nLNM.png";
-                case 43:
+                case 43://black diablos
                     return "https://i.imgur.com/IVXcxRD.png";
-                case 44:
+                case 44://white monoblos
                     return "https://i.imgur.com/BQ9FJBB.png";
-                case 45:
+                case 45://red khezu
                     return "https://i.imgur.com/Cmb6AYd.png";
-                case 46:
+                case 46://green plesioth
                     return "https://i.imgur.com/LQnA7d6.png";
-                case 47:
+                case 47://black gravios
                     return "https://i.imgur.com/Fmw5Etb.png";
-                case 48:
-                    return "https://i.imgur.com/WDe9OJl.png";
-                case 49:
+                case 48://zenith daimyo
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/AO0Olia.gif";
+                    else
+                        return "https://i.imgur.com/WDe9OJl.png";
+                case 49://azurelos
                     return "https://i.imgur.com/gSCligX.png";
-                case 50:
+                case 50://ashen lao
                     return "https://i.imgur.com/fHPx16u.png";
-                case 51:
+                case 51://blangonga
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/YiyBzoU.gif";
                     else
                         return "https://i.imgur.com/Di3LdOq.png";
-                case 52:
+                case 52://congalala
                     return "https://i.imgur.com/qxaMV1h.png";
                 case 53://rajang
                     if (DataLoader.model.RankBand() == 56 || DataLoader.model.RankBand() == 57)
                         return "https://i.imgur.com/HRMmhW1.png";
                     else
                         return "https://i.imgur.com/R1dDHaQ.png";
-                case 54:
+                case 54://kushala
                     return "https://i.imgur.com/uAyaJ9z.png";
-                case 55:
+                case 55://shen
                     return "https://i.imgur.com/pgKJuGj.png";
-                case 56:
+                case 56://great thunderbug
                     return "https://i.imgur.com/u0M5jXA.png";
-                case 57:
+                case 57://shakalaka
                     return "https://i.imgur.com/UaZkOgY.png";
-                case 58:
+                case 58://yama tsukami
                     return "https://i.imgur.com/suHOj84.png";
-                case 59:
+                case 59://chammy
                     return "https://i.imgur.com/TXmNN2X.png";
-                case 60:
+                case 60://rusted kushala
                     return "https://i.imgur.com/4hNQwSU.png";
-                case 61:
+                case 61://blango
                     return "https://i.imgur.com/3hBdp8b.png";
-                case 62:
+                case 62://conga
                     return "https://i.imgur.com/zxQcbQD.png";
-                case 63:
+                case 63://remobra
                     return "https://i.imgur.com/kewyYlK.png";
-                case 64:
+                case 64://lunastra
                     return "https://i.imgur.com/8OvYfy6.png";
                 case 65://teostra
                     if (DataLoader.model.RankBand() == 32)
                         return "https://i.imgur.com/H3zUhEw.png";
                     else
                         return "https://i.imgur.com/dgq8E90.png";
-                case 66:
+                case 66://hermitaur
                     return "https://i.imgur.com/l2SOZee.png";
-                case 67:
+                case 67://shogun
                     return "https://i.imgur.com/lEcEWZ6.png";
-                case 68:
+                case 68://bulldrome
                     return "https://i.imgur.com/AxBWXBC.png";
-                case 69:
+                case 69://anteka
                     return "https://i.imgur.com/QxGg3Np.png";
-                case 70:
+                case 70://popo
                     return "https://i.imgur.com/jTFVi1A.png";
                 case 71://white fatalis
                     if (DataLoader.model.RankBand() == 53)
                         return "https://i.imgur.com/OAbx9JC.png";
                     else
                         return "https://i.imgur.com/z2QtMnG.png";
-                case 72:
+                case 72://yama tsukami
                     return "https://i.imgur.com/suHOj84.png";
-                case 73:
+                case 73://ceanataur
                     return "https://i.imgur.com/2PbL0oE.png";
-                case 74:
+                case 74://hypnoc
                     return "https://i.imgur.com/tkYXFBc.png";
-                case 75:
+                case 75://lavasioth
                     return "https://i.imgur.com/ZSgmzGi.png";
-                case 76:
+                case 76://tigrex
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/K7qTAoa.gif";
                     else
                         return "https://i.imgur.com/QKw3HSE.png";
-                case 77:
+                case 77://akantor
                     return "https://i.imgur.com/CKY7zkV.png";
-                case 78:
+                case 78://bright hypnoc
                     return "https://i.imgur.com/fhF6yZY.png";
-                case 79:
+                case 79://red lavasioth
                     return "https://i.imgur.com/AzfTTSq.png";
-                case 80:
+                case 80://espinas
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/sMr1oCg.gif";
                     else
                         return "https://i.imgur.com/cx07Z7B.png";
-                case 81:
+                case 81://orange espi
                     return "https://i.imgur.com/m8DhwiJ.png";
-                case 82:
+                case 82://silver hypnoc
                     return "https://i.imgur.com/WZkQYDL.png";
-                case 83:
+                case 83://akura vashimu
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/jdy96PH.gif";
                     else
                         return "https://i.imgur.com/QiRd5dc.png";
-                case 84:
+                case 84://akura jebia
                     return "https://i.imgur.com/hOfRrph.png";
-                case 85:
+                case 85://beru
                     return "https://i.imgur.com/KBCnVhH.png";
                 case 86://cactus
                     return "https://i.imgur.com/3pQEtzw.png";
@@ -1913,15 +2393,15 @@ namespace MHFZ_Overlay
                         return "https://i.imgur.com/rskDsju.png";
                     else
                         return "https://i.imgur.com/eXaT0PD.png";
-                case 90:
+                case 90://white espi
                     return "https://i.imgur.com/Uc5mTQi.png";
-                case 91:
+                case 91://kamu orugaron
                     return "https://i.imgur.com/L9naUDO.png";
-                case 92:
+                case 92://nono orugaron
                     return "https://i.imgur.com/klyXxuc.png";
-                case 93:
+                case 93://raviente
                     return "https://i.imgur.com/blsy8Rx.png";
-                case 94:
+                case 94://dyuragaua
                     return "https://i.imgur.com/dxEtSjL.png";
                 case 95://dorag
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
@@ -1930,13 +2410,13 @@ namespace MHFZ_Overlay
                         return "https://i.imgur.com/orniFm3.png";
                     else
                         return "https://i.imgur.com/HmNSD8G.png";
-                case 96:
+                case 96://gurenzeburu
                     return "https://i.imgur.com/gLA5gdi.png";
-                case 97:
+                case 97://burukku
                     return "https://i.imgur.com/6RIoFpM.png";
-                case 98:
+                case 98://erupe
                     return "https://i.imgur.com/R3xnyMd.png";
-                case 99:
+                case 99://ruko
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/BhbCOWn.gif";
                     else
@@ -1946,18 +2426,18 @@ namespace MHFZ_Overlay
                         return "https://i.imgur.com/fplk67z.png";
                     else
                         return "https://i.imgur.com/ssuzTlK.png";
-                case 101:
+                case 101://gogomoa
                     return "https://i.imgur.com/HBYZoa0.png";
                 case 102://kokomoa
                     return "https://i.imgur.com/HBYZoa0.png";
-                case 103:
+                case 103://taikun
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/FbfYG4P.gif";
                     else
                         return "https://i.imgur.com/CACFYGy.png";
-                case 104:
+                case 104://abio
                     return "https://i.imgur.com/dxkeQcm.png";
-                case 105:
+                case 105://kuaru
                     return "https://i.imgur.com/PqTQLGE.png";
                 case 106://odiba
                     if (DataLoader.model.RankBand() == 32)
@@ -1969,24 +2449,24 @@ namespace MHFZ_Overlay
                         return "https://i.imgur.com/S8kiGS3.png";
                     else
                         return "https://i.imgur.com/eQnTB2u.png";
-                case 108:
+                case 108://rebi
                     return "https://i.imgur.com/fdFZFKe.png";
-                case 109:
+                case 109://anoru
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/LUXuyEi.gif";
                     else
                         return "https://i.imgur.com/XKot29j.png";
-                case 110:
+                case 110://hyuji
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/jKcdja3.gif";
                     else
                         return "https://i.imgur.com/YqZLy2J.png";
-                case 111:
+                case 111://mido
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/YJWD5xy.gif";
                     else
                         return "https://i.imgur.com/WvHY8Lf.png";
-                case 112:
+                case 112://giao
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/oTBfALR.gif";
                     else
@@ -1996,16 +2476,16 @@ namespace MHFZ_Overlay
                         return "https://i.imgur.com/FWPACuf.png";
                     else
                         return "https://i.imgur.com/e3l7mhh.png";
-                case 114:
+                case 114://faru
                     return "https://i.imgur.com/cBHzq5t.png";
-                case 115:
+                case 115://pokaradon
                     return "https://i.imgur.com/OpYh7mb.png";
                 case 116://shantien
                     if (DataLoader.model.RankBand() == 53)
                         return "https://i.imgur.com/y0b0y7G.png";
                     else
                         return "https://i.imgur.com/Ib4dmgd.png";
-                case 117:
+                case 117://pokara
                     return "https://i.imgur.com/jaKE3QM.png";
                 case 118://dummy
                     return "https://i.imgur.com/3pQEtzw.png";
@@ -2013,39 +2493,39 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/jwR2xoG.png";
                 case 120://aruganosu
                     return "https://i.imgur.com/d9K9HlH.png";
-                case 121:
+                case 121://baru
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/2WKXvPn.gif";
                     else
                         return "https://i.imgur.com/AvO02Ri.png";
-                case 122:
+                case 122://zeru
                     return "https://i.imgur.com/XOEGJRu.png";
-                case 123:
+                case 123://gougarf
                     return "https://i.imgur.com/0TeOdn4.png";
-                case 124:
+                case 124://uruki
                     return "https://i.imgur.com/fQPpwGE.png";
-                case 125:
+                case 125://foro
                     return "https://i.imgur.com/p7LWhIe.png";
-                case 126:
+                case 126://mera
                     return "https://i.imgur.com/iQMDmCN.png";
-                case 127:
+                case 127://diorex
                     return "https://i.imgur.com/4zi1Kva.png";
-                case 128:
+                case 128://garuba
                     return "https://i.imgur.com/NHyezpo.png";
-                case 129:
+                case 129://inagami
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/yDF4h6I.gif";
                     else
                         return "https://i.imgur.com/bioZ1Rx.png";
-                case 130:
+                case 130://varusaburosu
                     return "https://i.imgur.com/KXLFD8f.png";
-                case 131:
+                case 131://pobo
                     return "https://i.imgur.com/56tHHHc.png";
-                case 132:
+                case 132://dure
                     return "https://i.imgur.com/fKVoJ3m.png";
                 case 133://UNK
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 134:
+                case 134://felyne
                     return "https://i.imgur.com/Ry2zu5r.png";
                 case 135://blue npc
                     return "https://i.imgur.com/3pQEtzw.png";
@@ -2057,22 +2537,22 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/3pQEtzw.png";
                 case 139:
                     return "https://i.imgur.com/JntsUFx.png";
-                case 140:
+                case 140://harudo
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/5NPChxD.gif";
                     else
                         return "https://i.imgur.com/daI89CT.png";
-                case 141:
+                case 141://torid
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/Z5BuMEZ.gif";
                     else
                         return "https://i.imgur.com/1Ru7AMQ.png";
-                case 142:
+                case 142://gasura
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/vwkiFLs.gif";
                     else
                         return "https://i.imgur.com/OtU0yAB.png";
-                case 143:
+                case 143://kusubami
                     return "https://i.imgur.com/EMWA1p7.png";
                 case 144://yama kurai
                     return "https://i.imgur.com/qy7yTjz.png";
@@ -2083,19 +2563,19 @@ namespace MHFZ_Overlay
                         return "https://i.imgur.com/bcx6HGf.png";
                     else
                         return "https://i.imgur.com/hU4lRx3.png";
-                case 147:
+                case 147://jho
                     return "https://i.imgur.com/eGsb66E.png";
-                case 148:
+                case 148://brachy
                     return "https://i.imgur.com/XrYCP6k.png";
-                case 149:
+                case 149://berserk
                     return "https://i.imgur.com/HDkGUQL.png";
-                case 150:
+                case 150://toa
                     return "https://i.imgur.com/muRi2Yz.png";
-                case 151:
+                case 151://barioth
                     return "https://i.imgur.com/OE88eb9.png";
-                case 152:
+                case 152://uragaan
                     return "https://i.imgur.com/K3vqmPA.png";
-                case 153:
+                case 153://styggy
                     return "https://i.imgur.com/oz11SGA.png";
                 case 154://guanzorumu
                     if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
@@ -2111,21 +2591,21 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/3pQEtzw.png";
                 case 157://egyurasu
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 158:
+                case 158://voljang
                     return "https://i.imgur.com/WgzdVtV.png";
-                case 159:
+                case 159://narga
                     return "https://i.imgur.com/Xi9lXsZ.png";
-                case 160:
+                case 160://keo
                     return "https://i.imgur.com/tHCL5U3.png";
-                case 161:
+                case 161://zena
                     return "https://i.imgur.com/cLOEjlO.png";
-                case 162:
+                case 162://gore
                     return "https://i.imgur.com/Lq6kNtM.png";
-                case 163:
-                    return "https://i.imgur.com/WS7SNx5.png";
-                case 164:
+                case 163://blinking nargacuga
+                    return "https://i.imgur.com/ossvc1M.png";
+                case 164://shaggy
                     return "https://i.imgur.com/15V9po1.png";
-                case 165:
+                case 165://amatsu
                     return "https://i.imgur.com/z5E7rSP.png";
                 case 166://elzelion
                     if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
@@ -2136,9 +2616,9 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/HrSImCm.png";
                 case 168://rocks
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 169:
+                case 169://steve
                     return "https://i.imgur.com/BEeL8xd.png";
-                case 170:
+                case 170://boggy
                     return "https://i.imgur.com/tbV6QPE.gif";
                 case 171://unknown blue barrel
                     return "https://i.imgur.com/3pQEtzw.png";
@@ -2150,9 +2630,9 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/3c8kwQD.png";
                 case 175://PSO2 Rappy
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 176:
+                case 176://king shakalaka
                     return "https://i.imgur.com/UXi0TEu.png";
-                default:
+                default:// "?" icon
                     return "https://i.imgur.com/3pQEtzw.png"; //fatalis
             }
         }
@@ -2253,6 +2733,16 @@ namespace MHFZ_Overlay
                 return DataLoader.model.Objective1Quantity().ToString() + " ";
             else 
                 return DataLoader.model.Objective1Quantity().ToString() + " ";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string GetRepelDamage()
+        {
+            //1 qty is 100 true hp
+            return "";
         }
 
         /// <summary>
