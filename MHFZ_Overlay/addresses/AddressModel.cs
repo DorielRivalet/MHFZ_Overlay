@@ -2516,11 +2516,14 @@ namespace MHFZ_Overlay.addresses
                 switch (id)
                 {
                     case 0: //none
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 1:
                         return baseAddress + "rathian" + extension1;
                     case 2:
-                        return baseAddress + "fatalis" + extension1;
+                        if (RankBand() == 53)
+                            return baseAddress + "conquest_fatalis" + extension1;
+                        else
+                            return baseAddress + "fatalis" + extension1;
                     case 3:
                         return baseAddress + "kelbi" + extension1;
                     case 4:
@@ -2536,7 +2539,7 @@ namespace MHFZ_Overlay.addresses
                     case 9:
                         return baseAddress + "felyne" + extension1;
                     case 10: //veggie elder
-                        return baseAddress + "fatalis" + extension1; 
+                        return baseAddress + "random" + extension1; 
                     case 11:
                         if (RankBand() >= 64 && RankBand() <= 67)
                             return baseAddress + "zenith_rathalos" + extension2;
@@ -2586,13 +2589,13 @@ namespace MHFZ_Overlay.addresses
                     case 28:
                         return baseAddress + "gendrome" + extension1;
                     case 29://rocks
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 30:
                         return baseAddress + "ioprey" + extension1;
                     case 31:
                         return baseAddress + "iodrome" + extension1;
                     case 32://pugis
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 33:
                         return baseAddress + "kirin" + extension1;
                     case 34:
@@ -2600,7 +2603,10 @@ namespace MHFZ_Overlay.addresses
                     case 35:
                         return baseAddress + "giaprey" + extension1;
                     case 36:
-                        return baseAddress + "crimson_fatalis" + extension1;
+                        if (RankBand() == 53)
+                            return baseAddress + "conquest_crimson_fatalis" + extension1;
+                        else
+                            return baseAddress + "crimson_fatalis" + extension1;
                     case 37:
                         return baseAddress + "pink_rathian" + extension1;
                     case 38:
@@ -2637,7 +2643,10 @@ namespace MHFZ_Overlay.addresses
                     case 52:
                         return baseAddress + "congalala" + extension1;
                     case 53:
-                        return baseAddress + "rajang" + extension1;
+                        if (RankBand() == 56 || RankBand() == 57)
+                            return baseAddress + "twinhead_rajang" + extension1;
+                        else
+                            return baseAddress + "rajang" + extension1;
                     case 54:
                         return baseAddress + "kushala_daora" + extension1;
                     case 55:
@@ -2676,7 +2685,10 @@ namespace MHFZ_Overlay.addresses
                     case 70:
                         return baseAddress + "popo" + extension1;
                     case 71:
-                        return baseAddress + "white_fatalis" + extension1;
+                        if (RankBand() == 53)
+                            return baseAddress + "road_white_fatalis" + extension1;
+                        else
+                            return baseAddress + "white_fatalis" + extension1;
                     case 72:
                         return baseAddress + "yama_tsukami" + extension1;
                     case 73:
@@ -2715,11 +2727,11 @@ namespace MHFZ_Overlay.addresses
                     case 85:
                         return baseAddress + "berukyurosu" + extension1;
                     case 86://cactus
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 87://gorge objects
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 88://gorge rocks
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 89:
                         if (RankBand() == 32 || RankBand() == 54)
                             return baseAddress + "thirsty_pariapuria" + extension1;
@@ -2754,7 +2766,10 @@ namespace MHFZ_Overlay.addresses
                         else
                             return baseAddress + "rukodiora" + extension1;
                     case 100:
-                        return baseAddress + "unknown" + extension1;
+                        if (RankBand() == 70 || RankBand() == 54)
+                            return baseAddress + "shiten_unknown" + extension1;
+                        else
+                            return baseAddress + "unknown" + extension1;
                     case 101:
                         return baseAddress + "gogomoa" + extension1;
                     case 102://kokomoa
@@ -2769,9 +2784,15 @@ namespace MHFZ_Overlay.addresses
                     case 105:
                         return baseAddress + "kuarusepusu" + extension1;
                     case 106:
-                        return baseAddress + "odibatorasu" + extension1;
+                        if (RankBand() == 32)
+                            return baseAddress + "supremacy_odibatorasu" + extension1;
+                        else
+                            return baseAddress + "odibatorasu" + extension1;
                     case 107:
-                        return baseAddress + "disufiroa" + extension1;
+                        if (RankBand() == 54 || RankBand() == 55)
+                            return baseAddress + "shiten_disufiroa" + extension1;
+                        else
+                            return baseAddress + "disufiroa" + extension1;
                     case 108:
                         return baseAddress + "rebidiora" + extension1;
                     case 109:
@@ -2804,11 +2825,14 @@ namespace MHFZ_Overlay.addresses
                     case 115:
                         return baseAddress + "pokaradon" + extension1;
                     case 116:
-                        return baseAddress + "shantien" + extension1;
+                        if (RankBand() == 53)
+                            return baseAddress + "conquest_shantien" + extension1;
+                        else
+                            return baseAddress + "shantien" + extension1;
                     case 117:
                         return baseAddress + "pokara" + extension1;
                     case 118://dummy
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 119:
                         return baseAddress + "goruganosu" + extension1;
                     case 120:
@@ -2844,17 +2868,17 @@ namespace MHFZ_Overlay.addresses
                     case 132:
                         return baseAddress + "duremudira" + extension1;
                     case 133://UNK
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 134:
                         return baseAddress + "felyne" + extension1;
                     case 135://blue npc
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 136://UNK
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 137://cactus
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 138://veggie elders
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 139:
                         return baseAddress + "gureadomosu" + extension1;
                     case 140:
@@ -2908,9 +2932,9 @@ namespace MHFZ_Overlay.addresses
                         else
                             return baseAddress + "starving_deviljho" + extension1;
                     case 156://UNK
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 157://egyurasu
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 158:
                         return baseAddress + "voljang" + extension1;
                     case 159:
@@ -2935,13 +2959,13 @@ namespace MHFZ_Overlay.addresses
                     case 167:
                         return baseAddress + "arrogant_duremudira" + extension1;
                     case 168://rocks
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 169:
                         return baseAddress + "seregios" + extension1;
                     case 170:
                         return baseAddress + "zenith_bogabadorumu" + extension2;
                     case 171://unknown blue barrel
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 172:
                         return baseAddress + "blitzkrieg_bogabadorumu" + extension1;
                     case 173://costumed uruki
@@ -2949,11 +2973,11 @@ namespace MHFZ_Overlay.addresses
                     case 174:
                         return baseAddress + "sparkling_zerureusu" + extension1;
                     case 175://PSO2 Rappy
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                     case 176:
                         return baseAddress + "king_shakalaka" + extension1;
                     default:
-                        return baseAddress + "fatalis" + extension1;
+                        return baseAddress + "random" + extension1;
                 }
             }
         }

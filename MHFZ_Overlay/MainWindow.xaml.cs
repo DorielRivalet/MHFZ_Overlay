@@ -1691,12 +1691,15 @@ namespace MHFZ_Overlay
 
             switch (id)
             {
-                case 0: //none (fatalis)
+                case 0: //none (fatalis/random)
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 1:
+                case 1://rathian
                     return "https://i.imgur.com/uW1PHeW.png";
-                case 2:
-                    return "https://i.imgur.com/3pQEtzw.png";
+                case 2://fatalis
+                    if (DataLoader.model.RankBand() == 53)
+                        return "https://i.imgur.com/VJNLFWf.png";
+                    else
+                        return "https://i.imgur.com/Fht5iyz.png";
                 case 3:
                     return "https://i.imgur.com/Ad5xCF6.png";
                 case 4:
@@ -1775,8 +1778,11 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/3n7NQG9.png";
                 case 35:
                     return "https://i.imgur.com/QPl1AEF.png";
-                case 36:
-                    return "https://i.imgur.com/Aid5Hia.png";
+                case 36://crimson fatalis
+                    if (DataLoader.model.RankBand() == 53)
+                        return "https://i.imgur.com/PRFnN10.png";
+                    else
+                        return "https://i.imgur.com/T36zMrZ.png";
                 case 37:
                     return "https://i.imgur.com/yn3uMc2.png";
                 case 38:
@@ -1812,8 +1818,11 @@ namespace MHFZ_Overlay
                         return "https://i.imgur.com/Di3LdOq.png";
                 case 52:
                     return "https://i.imgur.com/qxaMV1h.png";
-                case 53:
-                    return "https://i.imgur.com/R1dDHaQ.png";
+                case 53://rajang
+                    if (DataLoader.model.RankBand() == 56 || DataLoader.model.RankBand() == 57)
+                        return "https://i.imgur.com/HRMmhW1.png";
+                    else
+                        return "https://i.imgur.com/R1dDHaQ.png";
                 case 54:
                     return "https://i.imgur.com/uAyaJ9z.png";
                 case 55:
@@ -1836,9 +1845,9 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/kewyYlK.png";
                 case 64:
                     return "https://i.imgur.com/8OvYfy6.png";
-                case 65:
+                case 65://teostra
                     if (DataLoader.model.RankBand() == 32)
-                        return "https://i.imgur.com/l1zOESv.png";
+                        return "https://i.imgur.com/H3zUhEw.png";
                     else
                         return "https://i.imgur.com/dgq8E90.png";
                 case 66:
@@ -1851,8 +1860,11 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/QxGg3Np.png";
                 case 70:
                     return "https://i.imgur.com/jTFVi1A.png";
-                case 71:
-                    return "https://i.imgur.com/LC5OZmo.png";
+                case 71://white fatalis
+                    if (DataLoader.model.RankBand() == 53)
+                        return "https://i.imgur.com/OAbx9JC.png";
+                    else
+                        return "https://i.imgur.com/z2QtMnG.png";
                 case 72:
                     return "https://i.imgur.com/suHOj84.png";
                 case 73:
@@ -1896,9 +1908,9 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/3pQEtzw.png";
                 case 88://gorge rocks
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 89:
+                case 89://pariapuria
                     if (DataLoader.model.RankBand() == 32 || DataLoader.model.RankBand() == 54)
-                        return "https://i.imgur.com/yDk0aha.png";
+                        return "https://i.imgur.com/rskDsju.png";
                     else
                         return "https://i.imgur.com/eXaT0PD.png";
                 case 90:
@@ -1911,11 +1923,11 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/blsy8Rx.png";
                 case 94:
                     return "https://i.imgur.com/dxEtSjL.png";
-                case 95:
+                case 95://dorag
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/qirZmdn.gif";
                     else if (DataLoader.model.RankBand() == 32)
-                        return "https://i.imgur.com/Rk7FKxS.png";
+                        return "https://i.imgur.com/orniFm3.png";
                     else
                         return "https://i.imgur.com/HmNSD8G.png";
                 case 96:
@@ -1929,8 +1941,11 @@ namespace MHFZ_Overlay
                         return "https://i.imgur.com/BhbCOWn.gif";
                     else
                         return "https://i.imgur.com/84ZBXjW.png";
-                case 100:
-                    return "https://i.imgur.com/ssuzTlK.png";
+                case 100://unknown
+                    if (DataLoader.model.RankBand() == 70 || DataLoader.model.RankBand() == 54)
+                        return "https://i.imgur.com/fplk67z.png";
+                    else
+                        return "https://i.imgur.com/ssuzTlK.png";
                 case 101:
                     return "https://i.imgur.com/HBYZoa0.png";
                 case 102://kokomoa
@@ -1944,10 +1959,16 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/dxkeQcm.png";
                 case 105:
                     return "https://i.imgur.com/PqTQLGE.png";
-                case 106:
-                    return "https://i.imgur.com/KvC12wl.png";
-                case 107:
-                    return "https://i.imgur.com/eQnTB2u.png";
+                case 106://odiba
+                    if (DataLoader.model.RankBand() == 32)
+                        return "https://i.imgur.com/zqvxw7m.png";
+                    else
+                        return "https://i.imgur.com/KvC12wl.png";
+                case 107://disu
+                    if (DataLoader.model.RankBand() == 54 || DataLoader.model.RankBand() == 55)
+                        return "https://i.imgur.com/S8kiGS3.png";
+                    else
+                        return "https://i.imgur.com/eQnTB2u.png";
                 case 108:
                     return "https://i.imgur.com/fdFZFKe.png";
                 case 109:
@@ -1970,25 +1991,28 @@ namespace MHFZ_Overlay
                         return "https://i.imgur.com/oTBfALR.gif";
                     else
                         return "https://i.imgur.com/ZFsUNTL.png";
-                case 113:
+                case 113://mi ru
                     if (DataLoader.model.RankBand() == 55)
-                        return "https://i.imgur.com/Zv4TyA6.png";
+                        return "https://i.imgur.com/FWPACuf.png";
                     else
                         return "https://i.imgur.com/e3l7mhh.png";
                 case 114:
                     return "https://i.imgur.com/cBHzq5t.png";
                 case 115:
                     return "https://i.imgur.com/OpYh7mb.png";
-                case 116:
-                    return "https://i.imgur.com/Ib4dmgd.png";
+                case 116://shantien
+                    if (DataLoader.model.RankBand() == 53)
+                        return "https://i.imgur.com/y0b0y7G.png";
+                    else
+                        return "https://i.imgur.com/Ib4dmgd.png";
                 case 117:
                     return "https://i.imgur.com/jaKE3QM.png";
                 case 118://dummy
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 119:
-                    return "https://i.imgur.com/lhWI52f.png";
-                case 120:
-                    return "https://i.imgur.com/89UGYzZ.png";
+                case 119://goruganosu
+                    return "https://i.imgur.com/jwR2xoG.png";
+                case 120://aruganosu
+                    return "https://i.imgur.com/d9K9HlH.png";
                 case 121:
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/2WKXvPn.gif";
@@ -2050,13 +2074,13 @@ namespace MHFZ_Overlay
                         return "https://i.imgur.com/OtU0yAB.png";
                 case 143:
                     return "https://i.imgur.com/EMWA1p7.png";
-                case 144:
-                    return "https://i.imgur.com/rzHoBt7.png";
+                case 144://yama kurai
+                    return "https://i.imgur.com/qy7yTjz.png";
                 case 145://3rd phase duremudira
                     return "https://i.imgur.com/fKVoJ3m.png";
-                case 146:
+                case 146://zinogre
                     if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
-                        return "https://i.imgur.com/nqtgjY2.png";
+                        return "https://i.imgur.com/bcx6HGf.png";
                     else
                         return "https://i.imgur.com/hU4lRx3.png";
                 case 147:
@@ -2073,14 +2097,14 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/K3vqmPA.png";
                 case 153:
                     return "https://i.imgur.com/oz11SGA.png";
-                case 154:
+                case 154://guanzorumu
                     if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
-                        return "https://i.imgur.com/fQgQEUT.png";
+                        return "https://i.imgur.com/kBMkdfr.png";
                     else
                         return "https://i.imgur.com/ZaCyD6O.png";
-                case 155:
+                case 155://starving jho
                     if (DataLoader.model.RankBand() == 55)
-                        return "https://i.imgur.com/zqvdQbw.png";
+                        return "https://i.imgur.com/HZc9wjS.png";
                     else
                         return "https://i.imgur.com/OYIaUWR.png";
                 case 156://UNK
@@ -2103,13 +2127,13 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/15V9po1.png";
                 case 165:
                     return "https://i.imgur.com/z5E7rSP.png";
-                case 166:
+                case 166://elzelion
                     if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
-                        return "https://i.imgur.com/oTxCKYd.png";
+                        return "https://i.imgur.com/HX8b8EB.png";
                     else
                         return "https://i.imgur.com/CxoXy9E.png";
-                case 167:
-                    return "https://i.imgur.com/3FILchg.png";
+                case 167://arrogant dure
+                    return "https://i.imgur.com/HrSImCm.png";
                 case 168://rocks
                     return "https://i.imgur.com/3pQEtzw.png";
                 case 169:
@@ -2118,12 +2142,12 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/tbV6QPE.gif";
                 case 171://unknown blue barrel
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 172:
-                    return "https://i.imgur.com/oA3v6df.png";
+                case 172://blitzkrieg boga
+                    return "https://i.imgur.com/vd6Y06a.png";
                 case 173://costumed uruki
                     return "https://i.imgur.com/fQPpwGE.png";
-                case 174:
-                    return "https://i.imgur.com/2RPa7HB.png";
+                case 174://sparkling zeru
+                    return "https://i.imgur.com/3c8kwQD.png";
                 case 175://PSO2 Rappy
                     return "https://i.imgur.com/3pQEtzw.png";
                 case 176:
