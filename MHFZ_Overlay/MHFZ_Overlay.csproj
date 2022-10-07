@@ -185,4 +185,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="HunterSets\" />
+  </ItemGroup>
+
 </Project>

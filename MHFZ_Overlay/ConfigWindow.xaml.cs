@@ -8,6 +8,10 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.IO;
+using Microsoft.Win32;
+using System.Diagnostics.Metrics;
+using System.Threading;
 
 namespace MHFZ_Overlay
 {
@@ -23,6 +27,11 @@ namespace MHFZ_Overlay
         /// The main window.
         /// </value>
         private MainWindow MainWindow { get; set; }
+
+        public string FullCurrentProgramVersion()
+        {
+            return string.Format("Monster Hunter Frontier Z Overlay {0}", MainWindow.CurrentProgramVersion);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigWindow"/> class.
@@ -44,6 +53,10 @@ namespace MHFZ_Overlay
             //GlobalHotKey.RegisterHotKey("Alt+Shift+a", () => SaveKey_Press());
             //GlobalHotKey.RegisterHotKey("Alt+Shift+b", () => CancelKey_Press());
             //GlobalHotKey.RegisterHotKey("Alt+Shift+c", () => DefaultKey_Press());
+
+            //DataContext = this;
+            
+            //MyTitle = FullCurrentProgramVersion();
         }
 
         /// <summary>
@@ -221,6 +234,18 @@ namespace MHFZ_Overlay
 
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
             e.Handled = true;
+        }
+
+        /// <summary>
+        /// Handles the Click event of the btnSaveFile control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void BtnSaveFile_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == true)
+                File.WriteAllText(saveFileDialog.FileName, txtEditor.Text);
         }
     };
 

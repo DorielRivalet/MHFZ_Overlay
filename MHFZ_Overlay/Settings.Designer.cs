@@ -1270,5 +1270,29 @@ namespace MHFZ_Overlay {
                 this["WeaponClassExport"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Code Block")]
+        public string TextFormatExport {
+            get {
+                return ((string)(this["TextFormatExport"]));
+            }
+            set {
+                this["TextFormatExport"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Male")]
+        public string GenderExport {
+            get {
+                return ((string)(this["GenderExport"]));
+            }
+            set {
+                this["GenderExport"] = value;
+            }
+        }
     }
 }

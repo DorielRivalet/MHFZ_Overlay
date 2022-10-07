@@ -61,6 +61,7 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowMonster1Icon { get; set; } = true;
 
+
         #endregion
 
         #region abstract vars
@@ -268,7 +269,7 @@ namespace MHFZ_Overlay.addresses
         abstract public int CurrentFaints();
         //road and normal
         abstract public int MaxFaints();
-        //shitens, conquests, pioneer, daily, caravan
+        //shitens, conquests, pioneer, daily, caravan, interception
         abstract public int AlternativeMaxFaints();
 
         abstract public int CaravanScore();

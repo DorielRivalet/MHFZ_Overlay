@@ -314,5 +314,11 @@
     <Setting Name="WeaponClassExport" Type="System.String" Scope="User">
       <Value Profile="(Default)">Blademaster</Value>
     </Setting>
+    <Setting Name="TextFormatExport" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Code Block</Value>
+    </Setting>
+    <Setting Name="GenderExport" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Male</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

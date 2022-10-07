@@ -82,6 +82,8 @@ namespace MHFZ_Overlay
 
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
+        //set version here
+        public const string CurrentProgramVersion = "v0.4.0";
 
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);
@@ -116,6 +118,47 @@ namespace MHFZ_Overlay
                     return true;
                 else
                     return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets the weapon class
+        /// </summary>
+        public string GetWeaponClass
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                if (s.WeaponClassExport != null)
+                    return s.WeaponClassExport;
+                else
+                    return "Blademaster";
+            }
+        }
+
+        /// <summary>
+        /// Gets the weapon class
+        /// </summary>
+        public string GetTextFormat
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                if (s.TextFormatExport != null)
+                    return s.TextFormatExport;
+                else
+                    return "None";
+            }
+        }
+
+        /// <summary>
+        /// Generates the gear stats
+        /// </summary>
+        public string GenerateGearStats
+        {
+            get
+            {
+                return string.Format("【MHF-Z】Overlay {0} {1}{2}\n\nText", MainWindow.CurrentProgramVersion);
             }
         }
 
@@ -218,7 +261,7 @@ namespace MHFZ_Overlay
         /// </summary>
         public static RichPresence presenceTemplate = new RichPresence()
         {
-            Details = "【MHF-Z】Overlay v0.4.0",
+            Details = "【MHF-Z】Overlay "+CurrentProgramVersion,
             State = "Loading...",
             //check img folder
             Assets = new Assets()
@@ -230,7 +273,7 @@ namespace MHFZ_Overlay
             },
             Buttons = new DiscordRPC.Button[]
                 {
-                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay v0.4.0", Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
+                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
                     new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
                 }
         };
@@ -272,7 +315,7 @@ namespace MHFZ_Overlay
                 presenceTemplate.Buttons = new DiscordRPC.Button[] { }; ;
                 presenceTemplate.Buttons = new DiscordRPC.Button[]
                 {
-                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay v0.4.0", Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
+                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
                     new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
                 };
                 //}
@@ -282,7 +325,7 @@ namespace MHFZ_Overlay
                     presenceTemplate.Buttons = new DiscordRPC.Button[] { }; ;
                     presenceTemplate.Buttons = new DiscordRPC.Button[]
                     {
-                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay v0.4.0", Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
+                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
                     new DiscordRPC.Button() { Label = "Join Discord Server", Url = String.Format("https://discord.com/invite/{0}",GetDiscordServerInvite)}
                     };
                 }

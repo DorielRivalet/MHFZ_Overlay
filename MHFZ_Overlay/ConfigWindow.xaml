@@ -9,7 +9,7 @@
         xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
         Title="Monster Hunter Frontier Z Overlay v0.4.0"
-         Height="720" Width="1280" ResizeMode="CanMinimize"
+        Height="720" Width="1280" ResizeMode="CanMinimize"
         Foreground="#cdd6f4" 
         
                 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -207,7 +207,7 @@
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster 1 Icon Y Coordinate"/>
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan, Pioneer or Daily quests to display the correct information" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Caravan/Pioneer/Daily Quest Override"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan, Pioneer, Interception or Daily quests to display the correct information" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Caravan/Pioneer/Interception/Daily Quest Override"/>
                         <ToggleButton Grid.Row="14" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}"/>
                     </Grid>
                 </ScrollViewer>
@@ -245,6 +245,16 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
@@ -318,8 +328,29 @@
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Current Sharpness as Percentage"/>
                         <ToggleButton Grid.Row="15" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Currently Equipped Weapon (includes Town Set)" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="{Binding CurrentWeaponName}"/>
-                        <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="16" x:Name="playerWepTextBox" Text="{Binding CurrentWeaponName}"/>
+                        <!--<TextBlock Margin="5,5,5,5" ToolTip="Currently Equipped Weapon (includes Town Set)" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="{Binding CurrentWeaponName}"/>
+                        <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="16" x:Name="playerWepTextBox" Text="{Binding CurrentWeaponName}"/>-->
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select Weapon Class to show the correct weapon ID type" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Weapon Class"/>
+                        <ComboBox Grid.Column="1" Grid.Row="16" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=WeaponClassExport}">
+                            <ComboBoxItem>Blademaster</ComboBoxItem>
+                            <ComboBoxItem>Gunner</ComboBoxItem>
+                        </ComboBox>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select Gender" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Gender"/>
+                        <ComboBox Grid.Column="1" Grid.Row="17" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=GenderExport}">
+                            <ComboBoxItem>Male</ComboBoxItem>
+                            <ComboBoxItem>Female</ComboBoxItem>
+                        </ComboBox>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select Markdown Text Format" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Gear Export Text Format"/>
+                        <ComboBox Grid.Column="1" Grid.Row="18" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=TextFormatExport}">
+                            <ComboBoxItem>Code Block</ComboBoxItem>
+                            <ComboBoxItem>None</ComboBoxItem>
+                        </ComboBox>
+                        <DockPanel Grid.Row="19" Margin="5,5,5,5" Grid.ColumnSpan="2" Grid.RowSpan="8">
+                            <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,5">
+                                <Button Name="BtnSaveFile" Click="BtnSaveFile_Click">Save file</Button>
+                            </WrapPanel>
+                            <TextBlock Text="test2" Name="txtEditor" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                        </DockPanel>
                     </Grid>
                 </ScrollViewer>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">
@@ -612,7 +643,7 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Foreground="#cdd6f4">
+                        <TextBlock Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Foreground="#cdd6f4">
                                        1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
                                        <LineBreak/>
                                        2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"

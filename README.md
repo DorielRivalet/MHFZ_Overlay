@@ -105,7 +105,6 @@ If the monster HP shown is less than what its actual values should be, restart b
 - Monster HP values are less than the actual values when not loading properly
 - Damage numbers over 1000 not working
 - Yamas and Berukyurosu information not working
-- Daily quests not working
 
 Fully reinstalling the game or .NET dependencies may fix some bugs.
 
@@ -132,7 +131,6 @@ Fully reinstalling the game or .NET dependencies may fix some bugs.
 - Sharpness graph
 - Language options
 - PvP addresses
-- Better Hunter's Road icon
 - Handle multiple objectives information
 - Zenith information in Road
 - Settings import/export
@@ -141,6 +139,7 @@ Fully reinstalling the game or .NET dependencies may fix some bugs.
 - Detect UL/HC
 - Guild Pugi address
 - Performance improvements
+- Armor Set Website links
 
 [Check more possible future features here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 
