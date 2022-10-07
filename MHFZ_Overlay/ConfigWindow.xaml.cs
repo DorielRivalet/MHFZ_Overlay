@@ -55,7 +55,7 @@ namespace MHFZ_Overlay
             //GlobalHotKey.RegisterHotKey("Alt+Shift+c", () => DefaultKey_Press());
 
             //DataContext = this;
-            
+            //this.DataContext = this;
             //MyTitle = FullCurrentProgramVersion();
         }
 
@@ -247,6 +247,8 @@ namespace MHFZ_Overlay
             if (saveFileDialog.ShowDialog() == true)
                 File.WriteAllText(saveFileDialog.FileName, txtEditor.Text);
         }
+
+
     };
 
 

@@ -8,6 +8,7 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
+            x:Name="Config"
         Title="Monster Hunter Frontier Z Overlay v0.4.0"
         Height="720" Width="1280" ResizeMode="CanMinimize"
         Foreground="#cdd6f4" 
@@ -349,7 +350,7 @@
                             <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,5">
                                 <Button Name="BtnSaveFile" Click="BtnSaveFile_Click">Save file</Button>
                             </WrapPanel>
-                            <TextBlock Text="test2" Name="txtEditor" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                            <TextBlock Text="{Binding ATK}" Name="txtEditor" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
                         </DockPanel>
                     </Grid>
                 </ScrollViewer>

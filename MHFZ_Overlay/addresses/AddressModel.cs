@@ -9,6 +9,8 @@ namespace MHFZ_Overlay.addresses
 {
     public abstract class AddressModel : INotifyPropertyChanged
     {
+        #region properties
+
         public readonly Mem M;
 
         public int SavedMonster1MaxHP = 0;
@@ -23,6 +25,13 @@ namespace MHFZ_Overlay.addresses
         public AddressModel(Mem m) => M = m;
 
         public int SelectedMonster = 0;
+
+        //public string SavedGender = "";
+        //public string SavedWeaponClass = "";
+        //public string SavedTextFormat = "";
+        //public string SavedGearStats = "";
+
+        #endregion
 
         #region init bool
 
@@ -3612,6 +3621,86 @@ namespace MHFZ_Overlay.addresses
                 }
             }
         }
+
+        #endregion
+
+        #region gear stats
+
+        /// <summary>
+        /// Gets the weapon class
+        /// </summary>
+        public string GetWeaponClass()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.WeaponClassExport != null)
+                return s.WeaponClassExport;
+            else
+                return "Blademaster";
+        }
+
+        /// <summary>
+        /// Gets the weapon class
+        /// </summary>
+        public string GetTextFormat()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.TextFormatExport != null)
+                return s.TextFormatExport;
+            else
+                return "None";
+        }
+
+        /// <summary>
+        /// Gets the gender.
+        /// </summary>
+        /// <value>
+        /// The gender.
+        /// </value>
+        public string GetGender()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.GenderExport != null)
+                return s.GenderExport;
+            else
+                return "";
+        }
+
+        /// <summary>
+        /// Gets the name of the weapon.
+        /// </summary>
+        /// <value>
+        /// The name of the weapon.
+        /// </value>
+        public string GetRealWeaponName()
+        {
+            string className = GetWeaponClass();
+
+            if (className == "Blademaster")
+            {
+                Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
+                return wepname + "";
+            }
+            return "";
+        }
+
+
+
+        /// <summary>
+        /// Generates the gear stats
+        /// </summary>
+        //public string GenerateGearStats()
+        //{
+        //    SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}Text", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetRealWeaponName());
+        //    return SavedGearStats;
+        //}
+
+        //public string GetGearStats
+        //{
+        //    get
+        //    {
+        //        return GenerateGearStats();
+        //    }
+        //}
 
         #endregion
 

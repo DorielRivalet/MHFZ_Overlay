@@ -122,47 +122,6 @@ namespace MHFZ_Overlay
         }
 
         /// <summary>
-        /// Gets the weapon class
-        /// </summary>
-        public string GetWeaponClass
-        {
-            get
-            {
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-                if (s.WeaponClassExport != null)
-                    return s.WeaponClassExport;
-                else
-                    return "Blademaster";
-            }
-        }
-
-        /// <summary>
-        /// Gets the weapon class
-        /// </summary>
-        public string GetTextFormat
-        {
-            get
-            {
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-                if (s.TextFormatExport != null)
-                    return s.TextFormatExport;
-                else
-                    return "None";
-            }
-        }
-
-        /// <summary>
-        /// Generates the gear stats
-        /// </summary>
-        public string GenerateGearStats
-        {
-            get
-            {
-                return string.Format("【MHF-Z】Overlay {0} {1}{2}\n\nText", MainWindow.CurrentProgramVersion);
-            }
-        }
-
-        /// <summary>
         /// Gets the discord client identifier.
         /// </summary>
         /// <value>
@@ -411,6 +370,7 @@ namespace MHFZ_Overlay
             //onsole.ReadKey();
             LoadDictionaries();
             InitializeDiscordRPC();
+            //DataLoader.model.GenerateGearStats();
         }
 
 
@@ -3726,6 +3686,9 @@ namespace MHFZ_Overlay
         {
 
         }
+
+        
+
     }
 }
 /// <TODO>
