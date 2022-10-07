@@ -29,7 +29,7 @@ namespace MHFZ_Overlay.addresses
         //public string SavedGender = "";
         //public string SavedWeaponClass = "";
         //public string SavedTextFormat = "";
-        //public string SavedGearStats = "";
+        public string SavedGearStats = "";
 
         #endregion
 
@@ -3626,6 +3626,7 @@ namespace MHFZ_Overlay.addresses
 
         #region gear stats
 
+
         /// <summary>
         /// Gets the weapon class
         /// </summary>
@@ -3639,7 +3640,7 @@ namespace MHFZ_Overlay.addresses
         }
 
         /// <summary>
-        /// Gets the weapon class
+        /// Gets the text format
         /// </summary>
         public string GetTextFormat()
         {
@@ -3662,8 +3663,10 @@ namespace MHFZ_Overlay.addresses
             if (s.GenderExport != null)
                 return s.GenderExport;
             else
-                return "";
+                return "Male";
         }
+
+
 
         /// <summary>
         /// Gets the name of the weapon.
@@ -3671,19 +3674,156 @@ namespace MHFZ_Overlay.addresses
         /// <value>
         /// The name of the weapon.
         /// </value>
-        public string GetRealWeaponName()
+        public string GetRealWeaponName
         {
-            string className = GetWeaponClass();
-
-            if (className == "Blademaster")
+            get
             {
-                Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
-                return wepname + "";
+                string className = GetWeaponClass();
+
+                if (className == "Blademaster")
+                {
+                    Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
+                    return wepname + "";
+                }
+                else
+                {
+                    return "None";
+                }
             }
-            return "";
         }
 
+        /// <summary>
+        /// Gets the name of the head piece.
+        /// </summary>
+        /// <value>
+        /// The name of the head piece.
+        /// </value>
+        public string GetArmorHeadName
+        {
+            get
+            {
+                Dictionary.ArmorHeads.ArmorHeadIDs.TryGetValue(ArmorHeadID(), out string? piecename);
+                return piecename + "";
+            }
+        }
 
+        /// <summary>
+        /// Gets the name of the chest piece.
+        /// </summary>
+        /// <value>
+        /// The name of the chest piece.
+        /// </value>
+        public string GetArmorChestName
+        {
+            get
+            {
+                Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(ArmorChestID(), out string? piecename);
+                return piecename + "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the arms piece.
+        /// </summary>
+        /// <value>
+        /// The name of the arms piece.
+        /// </value>
+        public string GetArmorArmName
+        {
+            get
+            {
+                Dictionary.ArmorArms.ArmorArmIDs.TryGetValue(ArmorArmsID(), out string? piecename);
+                return piecename + "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the waist piece.
+        /// </summary>
+        /// <value>
+        /// The name of the waist piece.
+        /// </value>
+        public string GetArmorWaistName
+        {
+            get
+            {
+                Dictionary.ArmorWaists.ArmorWaistIDs.TryGetValue(ArmorWaistID(), out string? piecename);
+                return piecename + "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the head piece.
+        /// </summary>
+        /// <value>
+        /// The name of the head piece.
+        /// </value>
+        public string GetArmorLegName
+        {
+            get
+            {
+                Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(ArmorLegsID(), out string? piecename);
+                return piecename + "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the decos.
+        /// </summary>
+        /// <value>
+        /// The decos.
+        /// </value>
+        public string GetDecos
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the sigils.
+        /// </summary>
+        /// <value>
+        /// The sigils.
+        /// </value>
+        public string GetSigils
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the first cuff.
+        /// </summary>
+        /// <value>
+        /// The name of the first cuff.
+        /// </value>
+        public string GetCuff1Name
+        {
+            get
+            {
+                Dictionary.Items.ItemIDs.TryGetValue(Cuff1ID(), out string? cuffname);
+                return cuffname + "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the second cuff.
+        /// </summary>
+        /// <value>
+        /// The name of the second cuff.
+        /// </value>
+        public string GetCuff2Name
+        {
+            get
+            {
+                Dictionary.Items.ItemIDs.TryGetValue(Cuff2ID(), out string? cuffname);
+                return cuffname + "";
+            }
+        }
 
         /// <summary>
         /// Generates the gear stats
@@ -3701,6 +3841,28 @@ namespace MHFZ_Overlay.addresses
         //        return GenerateGearStats();
         //    }
         //}
+
+        /// <summary>
+        /// Generates the gear stats
+        /// </summary>
+        public string GenerateGearStats()
+        {
+            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}\n\nText", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetRealWeaponName);
+            return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}\n\nText", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetRealWeaponName);
+        }
+
+        public string GetGearStats
+        {
+            get
+            {
+                return GenerateGearStats();
+            }
+        }
+
+        void CopyToClipBoard(string data)
+        {
+            Clipboard.SetText(data);
+        }
 
         #endregion
 

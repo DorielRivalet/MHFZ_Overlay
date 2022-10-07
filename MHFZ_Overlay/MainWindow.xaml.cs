@@ -324,13 +324,13 @@ namespace MHFZ_Overlay
             {
                 gearLoaded = true;
                 //load all gear lists
-                //Dictionary.MeleeWeapons.initiate();
-                //Dictionary.RangedWeapons.initiate();
-                //Dictionary.ArmorHeads.initiate();
-                //Dictionary.ArmorChests.initiate();
-                //Dictionary.ArmorArms.initiate();
-                //Dictionary.ArmorWaists.initiate();
-                //Dictionary.ArmorLegs.initiate();
+                Dictionary.MeleeWeapons.Initiate();
+                Dictionary.RangedWeapons.Initiate();
+                Dictionary.ArmorHeads.Initiate();
+                Dictionary.ArmorChests.Initiate();
+                Dictionary.ArmorArms.Initiate();
+                Dictionary.ArmorWaists.Initiate();
+                Dictionary.ArmorLegs.Initiate();
             }
         }
 

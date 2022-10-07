@@ -54,7 +54,8 @@ namespace MHFZ_Overlay
             //GlobalHotKey.RegisterHotKey("Alt+Shift+b", () => CancelKey_Press());
             //GlobalHotKey.RegisterHotKey("Alt+Shift+c", () => DefaultKey_Press());
 
-            //DataContext = this;
+            //todo: test this
+            DataContext = MainWindow.DataLoader.model;
             //this.DataContext = this;
             //MyTitle = FullCurrentProgramVersion();
         }
@@ -245,10 +246,19 @@ namespace MHFZ_Overlay
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             if (saveFileDialog.ShowDialog() == true)
-                File.WriteAllText(saveFileDialog.FileName, txtEditor.Text);
+                File.WriteAllText(saveFileDialog.FileName, GearStats.Text);
         }
 
-
+        /// <summary>
+        /// Copy to clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCopyFile_Click(object sender, RoutedEventArgs e)
+        {
+            //https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
+            Clipboard.SetText(GearStats.Text);
+        }
     };
 
 
