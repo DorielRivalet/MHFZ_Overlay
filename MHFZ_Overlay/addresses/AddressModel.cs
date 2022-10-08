@@ -3717,6 +3717,13 @@ namespace MHFZ_Overlay.addresses
                     string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
                     return string.Format("{0} ({1})", wepname,address);
                 }
+                else if (className == "Gunner")
+                {
+                    Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
+                    //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
+                    string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
+                    return string.Format("{0} ({1})", wepname, address);
+                }
                 else
                 {
                     return "None";
