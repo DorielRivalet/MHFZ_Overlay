@@ -3632,9 +3632,9 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         public string GetWeaponClass()
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.WeaponClassExport != null)
-                return s.WeaponClassExport;
+            
+            if (CurrentWeaponName == "Light Bowgun" || CurrentWeaponName == "Heavy Bowgun" || CurrentWeaponName == "Bow")
+                return "Gunner";
             else
                 return "Blademaster";
         }
@@ -3847,8 +3847,9 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         public string GenerateGearStats()
         {
-            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}\n\nText", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetRealWeaponName);
-            return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}\n\nText", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetRealWeaponName);
+            //save gear to variable
+            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\n\nText", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName);
+            return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\n\nText", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName);
         }
 
         public string GetGearStats

@@ -1261,18 +1261,6 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Blademaster")]
-        public string WeaponClassExport {
-            get {
-                return ((string)(this["WeaponClassExport"]));
-            }
-            set {
-                this["WeaponClassExport"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Code Block")]
         public string TextFormatExport {
             get {
