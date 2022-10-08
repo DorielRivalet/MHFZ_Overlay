@@ -3859,10 +3859,10 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        void CopyToClipBoard(string data)
-        {
-            Clipboard.SetText(data);
-        }
+        //void CopyToClipBoard(string data)
+        //{
+        //    Clipboard.SetText(data);
+        //}
 
         #endregion
 
