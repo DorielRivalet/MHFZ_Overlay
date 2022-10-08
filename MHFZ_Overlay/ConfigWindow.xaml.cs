@@ -238,15 +238,33 @@ namespace MHFZ_Overlay
         }
 
         /// <summary>
+        /// Shows the text format mode
+        /// </summary>
+        /// <returns></returns>
+        public string GetTextFormatMode()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.TextFormatExport != null)
+                return s.TextFormatExport;
+            else
+                return "None";
+        }
+
+        /// <summary>
         /// Handles the Click event of the btnSaveFile control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void BtnSaveFile_Click(object sender, RoutedEventArgs e)
         {
+            string textToSave = GearStats.Text;
+
+            if (GetTextFormatMode() == "Code Block")
+                textToSave = string.Format("```text\n{0}\n```",textToSave);
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             if (saveFileDialog.ShowDialog() == true)
-                File.WriteAllText(saveFileDialog.FileName, GearStats.Text);
+                File.WriteAllText(saveFileDialog.FileName, textToSave);
         }
 
         /// <summary>
@@ -256,8 +274,13 @@ namespace MHFZ_Overlay
         /// <param name="e"></param>
         private void BtnCopyFile_Click(object sender, RoutedEventArgs e)
         {
+            string textToSave = GearStats.Text;
+
+            if (GetTextFormatMode() == "Code Block")
+                textToSave = string.Format("```text\n{0}\n```", textToSave);
+
             //https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
-            Clipboard.SetText(GearStats.Text);
+            Clipboard.SetText(textToSave);
         }
     };
 

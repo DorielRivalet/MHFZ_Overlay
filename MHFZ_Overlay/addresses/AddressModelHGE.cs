@@ -410,6 +410,27 @@ namespace MHFZ_Overlay.addresses
         public override int AmmoPouchItem10ID() => 1;
         public override int AmmoPouchItem10Qty() => 1;
 
+        public override int ArmorSkill1() => 1;
+        public override int ArmorSkill2() => 1;
+        public override int ArmorSkill3() => 1;
+        public override int ArmorSkill4() => 1;
+        public override int ArmorSkill5() => 1;
+        public override int ArmorSkill6() => 1;
+        public override int ArmorSkill7() => 1;
+        public override int ArmorSkill8() => 1;
+        public override int ArmorSkill9() => 1;
+        public override int ArmorSkill10() => 1;
+        public override int ArmorSkill11() => 1;
+        public override int ArmorSkill12() => 1;
+        public override int ArmorSkill13() => 1;
+        public override int ArmorSkill14() => 1;
+        public override int ArmorSkill15() => 1;
+        public override int ArmorSkill16() => 1;
+        public override int ArmorSkill17() => 1;
+        public override int ArmorSkill18() => 1;
+        public override int ArmorSkill19() => 1;
+
+        public override int BloatedWeaponAttack() => 1;
 
     }
 }

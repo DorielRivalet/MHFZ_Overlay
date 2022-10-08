@@ -284,7 +284,9 @@
                             <Button Background="Transparent" Grid.Column="1" x:Name="BtnCopyFile" ToolTip="Copy gear to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/content_copy_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnCopyFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
                         </Grid>
                         <DockPanel Grid.Row="1" Margin="5,5,5,5" Grid.ColumnSpan="2" Grid.RowSpan="6">
-                            <TextBlock Text="{Binding GetGearStats}" Name="GearStats" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                            <ScrollViewer>
+                                <TextBlock Text="{Binding GetGearStats}" Name="GearStats" TextWrapping="Wrap"/>
+                            </ScrollViewer>
                         </DockPanel>
 
                         <!--<TextBlock Margin="5,5,5,5" ToolTip="Select Weapon Class to show the correct weapon ID type (keep in mind that Town Sets override Quest Sets information)" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Weapon Class"/>

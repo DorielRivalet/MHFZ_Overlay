@@ -345,5 +345,27 @@ namespace MHFZ_Overlay.addresses
         public override int AmmoPouchItem10Qty() => M.Read2Byte("mhfo.dll+5034692");
         //TODO: cat pouch
 
+        public override int ArmorSkill1() => M.Read2Byte("mhfo.dll+503475C");
+        public override int ArmorSkill2() => M.Read2Byte("mhfo.dll+503475E");
+        public override int ArmorSkill3() => M.Read2Byte("mhfo.dll+5034760");
+        public override int ArmorSkill4() => M.Read2Byte("mhfo.dll+5034762");
+        public override int ArmorSkill5() => M.Read2Byte("mhfo.dll+5034764");
+        public override int ArmorSkill6() => M.Read2Byte("mhfo.dll+5034766");
+        public override int ArmorSkill7() => M.Read2Byte("mhfo.dll+5034768");
+        public override int ArmorSkill8() => M.Read2Byte("mhfo.dll+503476A");
+        public override int ArmorSkill9() => M.Read2Byte("mhfo.dll+503476C");
+        public override int ArmorSkill10() => M.Read2Byte("mhfo.dll+503476E");
+        public override int ArmorSkill11() => M.Read2Byte("mhfo.dll+5034770");
+        public override int ArmorSkill12() => M.Read2Byte("mhfo.dll+5034772");
+        public override int ArmorSkill13() => M.Read2Byte("mhfo.dll+5034774");
+        public override int ArmorSkill14() => M.Read2Byte("mhfo.dll+5034776");
+        public override int ArmorSkill15() => M.Read2Byte("mhfo.dll+5034778");
+        public override int ArmorSkill16() => M.Read2Byte("mhfo.dll+503477A");
+        public override int ArmorSkill17() => M.Read2Byte("mhfo.dll+503477C");
+        public override int ArmorSkill18() => M.Read2Byte("mhfo.dll+503477E");
+        public override int ArmorSkill19() => M.Read2Byte("mhfo.dll+5034780");
+
+        public override int BloatedWeaponAttack() => M.Read2Byte("mhfo.dll+5BC68C8");
+
     }
 }

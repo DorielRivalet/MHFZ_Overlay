@@ -377,7 +377,27 @@ namespace MHFZ_Overlay.addresses
         abstract public int AmmoPouchItem10ID();
         abstract public int AmmoPouchItem10Qty();
 
+        abstract public int ArmorSkill1();
+        abstract public int ArmorSkill2();
+        abstract public int ArmorSkill3();
+        abstract public int ArmorSkill4();
+        abstract public int ArmorSkill5();
+        abstract public int ArmorSkill6();
+        abstract public int ArmorSkill7();
+        abstract public int ArmorSkill8();
+        abstract public int ArmorSkill9();
+        abstract public int ArmorSkill10();
+        abstract public int ArmorSkill11();
+        abstract public int ArmorSkill12();
+        abstract public int ArmorSkill13();
+        abstract public int ArmorSkill14();
+        abstract public int ArmorSkill15();
+        abstract public int ArmorSkill16();
+        abstract public int ArmorSkill17();
+        abstract public int ArmorSkill18();
+        abstract public int ArmorSkill19();
 
+        abstract public int BloatedWeaponAttack();
 
 
 
@@ -3683,7 +3703,8 @@ namespace MHFZ_Overlay.addresses
                 if (className == "Blademaster")
                 {
                     Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
-                    return wepname + "";
+                    string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
+                    return string.Format("{0} ({1:00})", wepname,address);
                 }
                 else
                 {
@@ -3703,7 +3724,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorHeads.ArmorHeadIDs.TryGetValue(ArmorHeadID(), out string? piecename);
-                return piecename + "";
+                string address = Convert.ToString(ArmorHeadID(), 16).ToUpper();
+                return string.Format("{0} ({1})", piecename, address);
             }
         }
 
@@ -3718,7 +3740,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(ArmorChestID(), out string? piecename);
-                return piecename + "";
+                string address = Convert.ToString(ArmorChestID(), 16).ToUpper();
+                return string.Format("{0} ({1})", piecename, address);
             }
         }
 
@@ -3733,7 +3756,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorArms.ArmorArmIDs.TryGetValue(ArmorArmsID(), out string? piecename);
-                return piecename + "";
+                string address = Convert.ToString(ArmorArmsID(), 16).ToUpper();
+                return string.Format("{0} ({1})", piecename, address);
             }
         }
 
@@ -3748,7 +3772,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorWaists.ArmorWaistIDs.TryGetValue(ArmorWaistID(), out string? piecename);
-                return piecename + "";
+                string address = Convert.ToString(ArmorWaistID(), 16).ToUpper();
+                return string.Format("{0} ({1})", piecename, address);
             }
         }
 
@@ -3763,7 +3788,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(ArmorLegsID(), out string? piecename);
-                return piecename + "";
+                string address = Convert.ToString(ArmorLegsID(), 16).ToUpper();
+                return string.Format("{0} ({1})", piecename, address);
             }
         }
 
@@ -3806,7 +3832,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.Items.ItemIDs.TryGetValue(Cuff1ID(), out string? cuffname);
-                return cuffname + "";
+                string address = Convert.ToString(Cuff1ID(), 16).ToUpper();
+                return string.Format("{0} ({1})", cuffname, address);
             }
         }
 
@@ -3821,7 +3848,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.Items.ItemIDs.TryGetValue(Cuff2ID(), out string? cuffname);
-                return cuffname + "";
+                string address = Convert.ToString(Cuff2ID(), 16).ToUpper();
+                return string.Format("{0} ({1})", cuffname, address);
             }
         }
 
@@ -3843,15 +3871,255 @@ namespace MHFZ_Overlay.addresses
         //}
 
         /// <summary>
+        /// Gets the caravan skills.
+        /// </summary>
+        /// <returns></returns>
+        public string GetCaravanSkills
+        {
+            get
+            {
+                int id1 = CaravanSkill1();
+                int id2 = CaravanSkill2();
+                int id3 = CaravanSkill3();
+
+                Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id1, out string? caravanSkillName1);
+                Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id2, out string? caravanSkillName2);
+                Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id3, out string? caravanSkillName3);
+
+                if (caravanSkillName1 == "" || caravanSkillName1 == "None")
+                    return "None";
+                else if (caravanSkillName2 == "" || caravanSkillName2 == "None")
+                    return caravanSkillName1 + "";
+                else if (caravanSkillName3 == "" || caravanSkillName3 == "None")
+                    return caravanSkillName1 + ", " + caravanSkillName2;
+                else
+                    return caravanSkillName1 + ", " + caravanSkillName2 + ", " + caravanSkillName3;
+            }
+        }
+
+        /// <summary>
+        /// Gets the armor skills.
+        /// </summary>
+        /// <value>
+        /// The armor skills.
+        /// </value>
+        public string GetArmorSkills
+        {
+            get
+            {
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill1(), out string? SkillName1);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill2(), out string? SkillName2);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill3(), out string? SkillName3);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill4(), out string? SkillName4);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill5(), out string? SkillName5);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill6(), out string? SkillName6);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill7(), out string? SkillName7);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill8(), out string? SkillName8);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill9(), out string? SkillName9);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill10(), out string? SkillName10);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill11(), out string? SkillName11);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill12(), out string? SkillName12);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill13(), out string? SkillName13);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill14(), out string? SkillName14);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill15(), out string? SkillName15);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill16(), out string? SkillName16);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill17(), out string? SkillName17);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill18(), out string? SkillName18);
+                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill19(), out string? SkillName19);
+
+                //TODO: refactor
+                if (SkillName1 == null || SkillName1 == "None")
+                    SkillName1 = "";
+                else if (SkillName2 == null || SkillName2 == "None")
+                    SkillName1 += "";
+                else
+                    SkillName1 += ", ";
+
+                if (SkillName2 == null || SkillName2 == "None")
+                    SkillName2 = "";
+                else if (SkillName3 == null || SkillName3 == "None")
+                    SkillName2 += "";
+                else
+                    SkillName2 += ", ";
+
+                if (SkillName3 == null || SkillName3 == "None")
+                    SkillName3 = "";
+                else if (SkillName4 == null || SkillName4 == "None")
+                    SkillName3 += "";
+                else
+                    SkillName3 += ", ";
+
+                if (SkillName4 == null || SkillName4 == "None")
+                    SkillName4 = "";
+                else if (SkillName3 == null || SkillName3 == "None")
+                    SkillName4 += "";
+                else
+                    SkillName4 += ", ";
+
+                if (SkillName5 == null || SkillName5 == "None")
+                    SkillName5 = "";
+                else if (SkillName6 == null || SkillName6 == "None")
+                    SkillName5 += "";
+                else
+                    SkillName5 += ", ";
+
+                if (SkillName6 == null || SkillName6 == "None")
+                    SkillName6 = "";
+                else if (SkillName7 == null || SkillName7 == "None")
+                    SkillName6 += "";
+                else
+                    SkillName6 += ", ";
+
+                if (SkillName7 == null || SkillName7 == "None")
+                    SkillName7 = "";
+                else if (SkillName8 == null || SkillName8 == "None")
+                    SkillName7 += "";
+                else
+                    SkillName7 += ", ";
+
+                if (SkillName8 == null || SkillName8 == "None")
+                    SkillName8 = "";
+                else if (SkillName9 == null || SkillName9 == "None")
+                    SkillName8 += "";
+                else
+                    SkillName8 += ", ";
+
+                if (SkillName9 == null || SkillName9 == "None")
+                    SkillName9 = "";
+                else if (SkillName10 == null || SkillName10 == "None")
+                    SkillName9 += "";
+                else
+                    SkillName9 += ", ";
+
+                if (SkillName10 == null || SkillName10 == "None")
+                    SkillName10 = "";
+                else if (SkillName11 == null || SkillName11 == "None")
+                    SkillName10 += "";
+                else
+                    SkillName10 += ", ";
+
+                if (SkillName11 == null || SkillName11 == "None")
+                    SkillName11 = "";
+                else if (SkillName12 == null || SkillName12 == "None")
+                    SkillName11 += "";
+                else
+                    SkillName11 += ", ";
+
+                if (SkillName12 == null || SkillName12 == "None")
+                    SkillName12 = "";
+                else if (SkillName13 == null || SkillName13 == "None")
+                    SkillName12 += "";
+                else
+                    SkillName12 += ", ";
+
+                if (SkillName13 == null || SkillName13 == "None")
+                    SkillName13 = "";
+                else if (SkillName14 == null || SkillName14 == "None")
+                    SkillName13 += "";
+                else
+                    SkillName13 += ", ";
+
+                if (SkillName14 == null || SkillName14 == "None")
+                    SkillName14 = "";
+                else if (SkillName15 == null || SkillName15 == "None")
+                    SkillName14 += "";
+                else
+                    SkillName14 += ", ";
+
+                if (SkillName15 == null || SkillName15 == "None")
+                    SkillName15 = "";
+                else if (SkillName16 == null || SkillName16 == "None")
+                    SkillName15 += "";
+                else
+                    SkillName15 += ", ";
+
+                if (SkillName16 == null || SkillName16 == "None")
+                    SkillName16 = "";
+                else if (SkillName17 == null || SkillName17 == "None")
+                    SkillName16 += "";
+                else
+                    SkillName16 += ", ";
+
+                if (SkillName17 == null || SkillName17 == "None")
+                    SkillName17 = "";
+                else if (SkillName18 == null || SkillName18 == "None")
+                    SkillName17 += "";
+                else
+                    SkillName17 += ", ";
+
+                if (SkillName18 == null || SkillName18 == "None")
+                    SkillName18 = "";
+                else if (SkillName19 == null || SkillName19 == "None")
+                    SkillName18 += "";
+                else
+                    SkillName18 += ", ";
+
+                if (SkillName19 == null || SkillName19 == "None")
+                    SkillName19 = "";
+                //else if (SkillName6 == null || SkillName6 == "None")
+                //    SkillName5 = SkillName5 + "";
+                else
+                    SkillName19 += "";
+
+                return string.Format("{0}{1}{2}{3}{4}\n{5}{6}{7}{8}{9}\n{10}{11}{12}{13}{14}\n{15}{16}{17}{18}", SkillName1, SkillName2, SkillName3, SkillName4, SkillName5, SkillName6, SkillName7, SkillName8, SkillName9, SkillName10, SkillName11, SkillName12, SkillName13, SkillName14, SkillName15, SkillName16, SkillName17, SkillName18, SkillName19);
+            }
+        }
+
+        /// <summary>
+        /// Gets the diva skill name from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetDivaSkillNameFromID(int id)
+        {
+            Dictionary.DivaSkillList.DivaSkillID.TryGetValue(id, out string? divaskillaname);
+            return divaskillaname + "";
+        }
+
+        /// <summary>
+        /// Gets the name of the item.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetItemName(int id)
+        {
+            string itemValue1;
+            bool isItemExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out itemValue1);  //returns true
+            //Console.WriteLine(itemValue1); //Print "First"
+            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
+            return itemValue1 + "";
+        }
+
+        /// <summary>
+        /// Gets the armor skill.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetArmorSkill(int id)
+        {
+            Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(id, out string? skillname);
+            if (skillname == "")
+                return "None";
+            else
+                return skillname + "";
+        }
+
+        /// <summary>
         /// Generates the gear stats
         /// </summary>
         public string GenerateGearStats()
         {
             //save gear to variable
-            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\n\nText", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName);
-            return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\n\nText", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName);
+            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills:\n{15}\n\nCaravan Skills:\n{16}\n\nDiva Skill:\n{17}\n\nGuild Food:\n{18}\n\nItems:\n{19}\n\nAmmo:\n{20}\n\nPoogie Item:\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), "zenith", "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
+            return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills:\n{15}\n\nCaravan Skills:\n{16}\n\nDiva Skill:\n{17}\n\nGuild Food:\n{18}\n\nItems:\n{19}\n\nAmmo:\n{20}\n\nPoogie Item:\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName,"head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), "zenith", "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
         }
 
+        /// <summary>
+        /// Gets the gear stats.
+        /// </summary>
+        /// <value>
+        /// The gear stats.
+        /// </value>
         public string GetGearStats
         {
             get
