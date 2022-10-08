@@ -407,6 +407,8 @@ namespace MHFZ_Overlay.addresses
         abstract public int ZenithSkill6();
         abstract public int ZenithSkill7();
 
+        abstract public int AutomaticSkill();
+
 
 
         #endregion
@@ -4525,7 +4527,7 @@ namespace MHFZ_Overlay.addresses
         public string GetArmorSkill(int id)
         {
             Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(id, out string? skillname);
-            if (skillname == "")
+            if (skillname == "" || skillname == null)
                 return "None";
             else
                 return skillname + "";
@@ -4539,9 +4541,9 @@ namespace MHFZ_Overlay.addresses
         public string GenerateGearStats()
         {
             //save gear to variable
-            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills:\n{15}\n\nCaravan Skills:\n{16}\n\nDiva Skill:\n{17}\n\nGuild Food:\n{18}\n\nItems:\n{19}\n\nAmmo:\n{20}\n\nPoogie Item:\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
-            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*\n\n**{3}**: {4}\n**Head:** {5}\n**Chest:** {6}\n**Arms:** {7}\n**Waist:** {8}\n**Legs:** {9}\n**Cuffs:** {10}\n\n**Weapon Attack:** {11} | **Total Defense:** {12}\n\n**Zenith Skills:**\n{13}\n\n**Automatic Skills:**\n{14}\n\n**Active Skills:**\n{15}\n\n**Caravan Skills:**\n{16}\n\n**Diva Skill:**\n{17}\n\n**Guild Food:**\n{18}\n\n**Items:**\n{19}\n\n**Ammo:**\n{20}\n\n**Poogie Item:**\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
-            return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills:\n{15}\n\nCaravan Skills:\n{16}\n\nDiva Skill:\n{17}\n\nGuild Food:\n{18}\n\nItems:\n{19}\n\nAmmo:\n{20}\n\nPoogie Item:\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName,"head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
+            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills:\n{15}\n\nCaravan Skills:\n{16}\n\nDiva Skill:\n{17}\n\nGuild Food:\n{18}\n\nItems:\n{19}\n\nAmmo:\n{20}\n\nPoogie Item:\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetArmorSkill(AutomaticSkill()), GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
+            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*\n\n**{3}**: {4}\n**Head:** {5}\n**Chest:** {6}\n**Arms:** {7}\n**Waist:** {8}\n**Legs:** {9}\n**Cuffs:** {10}\n\n**Weapon Attack:** {11} | **Total Defense:** {12}\n\n**Zenith Skills:**\n{13}\n\n**Automatic Skills:**\n{14}\n\n**Active Skills:**\n{15}\n\n**Caravan Skills:**\n{16}\n\n**Diva Skill:**\n{17}\n\n**Guild Food:**\n{18}\n\n**Items:**\n{19}\n\n**Ammo:**\n{20}\n\n**Poogie Item:**\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetArmorSkill(AutomaticSkill()), GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
+            return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills:\n{15}\n\nCaravan Skills:\n{16}\n\nDiva Skill:\n{17}\n\nGuild Food:\n{18}\n\nItems:\n{19}\n\nAmmo:\n{20}\n\nPoogie Item:\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName,"head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetArmorSkill(AutomaticSkill()), GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
         }
 
         /// <summary>

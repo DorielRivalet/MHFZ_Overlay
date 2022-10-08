@@ -441,5 +441,7 @@ namespace MHFZ_Overlay.addresses
         public override int ZenithSkill6() => 1;
         public override int ZenithSkill7() => 1;
 
+        public override int AutomaticSkill() => 1;
+
     }
 }
