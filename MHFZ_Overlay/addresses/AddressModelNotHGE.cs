@@ -376,7 +376,12 @@ namespace MHFZ_Overlay.addresses
         public override int ZenithSkill6() => M.ReadByte("mhfo.dll+51C16E2");
         public override int ZenithSkill7() => M.ReadByte("mhfo.dll+51C16E4");
 
-        public override int AutomaticSkill() => M.Read2Byte("mhfo.dll+5034792");
+        public override int AutomaticSkillWeapon() => M.Read2Byte("mhfo.dll+5034792");
+        public override int AutomaticSkillHead() => M.Read2Byte("mhfo.dll+503478A");
+        public override int AutomaticSkillChest() => M.Read2Byte("mhfo.dll+503478C");
+        public override int AutomaticSkillArms() => M.Read2Byte("mhfo.dll+503478E");
+        public override int AutomaticSkillWaist() => M.Read2Byte("mhfo.dll+5034790");
+        public override int AutomaticSkillLegs() => M.Read2Byte("mhfo.dll+5034786");
 
     }
 }

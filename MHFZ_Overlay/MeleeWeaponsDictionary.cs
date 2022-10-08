@@ -17582,7 +17582,7 @@ namespace Dictionary
             MeleeWeaponIDs[0x4499] = "Volnoborin Ⅱ";
             MeleeWeaponIDs[0x449A] = "Volnoborin Ⅲ";
             MeleeWeaponIDs[0x449B] = "Volnoborin Ⅳ";
-            MeleeWeaponIDs[0x6042] = "Magnica Glanze";
+            MeleeWeaponIDs[0x4260] = "Magnica Glanze";
         }
     }
 }
