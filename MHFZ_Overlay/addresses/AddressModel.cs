@@ -4243,7 +4243,7 @@ namespace MHFZ_Overlay.addresses
                 else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
                     SkillName5 += "";
                 else
-                    SkillName5 += ", ";
+                    SkillName5 += "\n";
 
                 if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
                     SkillName6 = "";
@@ -4259,7 +4259,7 @@ namespace MHFZ_Overlay.addresses
                 else
                     SkillName7 += "";
 
-                return string.Format("{0}{1}{2}{3}{4}\n{5}{6}", SkillName1, SkillName2, SkillName3, SkillName4, SkillName5, SkillName6, SkillName7);
+                return string.Format("{0}{1}{2}{3}{4}{5}{6}", SkillName1, SkillName2, SkillName3, SkillName4, SkillName5, SkillName6, SkillName7);
             }
         }
 
@@ -4388,7 +4388,7 @@ namespace MHFZ_Overlay.addresses
                 else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
                     SkillName5 += "";
                 else
-                    SkillName5 += ", ";
+                    SkillName5 += "\n";
 
                 if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
                     SkillName6 = "";
@@ -4423,7 +4423,7 @@ namespace MHFZ_Overlay.addresses
                 else if (SkillName11 == null || SkillName11 == "None" || SkillName11 == "")
                     SkillName10 += "";
                 else
-                    SkillName10 += ", ";
+                    SkillName10 += "\n";
 
                 if (SkillName11 == null || SkillName11 == "None" || SkillName11 == "")
                     SkillName11 = "";
@@ -4458,7 +4458,7 @@ namespace MHFZ_Overlay.addresses
                 else if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
                     SkillName15 += "";
                 else
-                    SkillName15 += ", ";
+                    SkillName15 += "\n";
 
                 if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
                     SkillName16 = "";
@@ -4488,7 +4488,7 @@ namespace MHFZ_Overlay.addresses
                 else
                     SkillName19 += "";
 
-                return string.Format("{0}{1}{2}{3}{4}\n{5}{6}{7}{8}{9}\n{10}{11}{12}{13}{14}\n{15}{16}{17}{18}", SkillName1, SkillName2, SkillName3, SkillName4, SkillName5, SkillName6, SkillName7, SkillName8, SkillName9, SkillName10, SkillName11, SkillName12, SkillName13, SkillName14, SkillName15, SkillName16, SkillName17, SkillName18, SkillName19);
+                return string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}", SkillName1, SkillName2, SkillName3, SkillName4, SkillName5, SkillName6, SkillName7, SkillName8, SkillName9, SkillName10, SkillName11, SkillName12, SkillName13, SkillName14, SkillName15, SkillName16, SkillName17, SkillName18, SkillName19);
             }
         }
 

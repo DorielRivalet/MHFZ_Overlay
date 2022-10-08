@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Input;
+﻿using System.Collections.Generic;
 
 namespace Dictionary
 {
