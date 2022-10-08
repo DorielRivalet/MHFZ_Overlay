@@ -3703,8 +3703,9 @@ namespace MHFZ_Overlay.addresses
                 if (className == "Blademaster")
                 {
                     Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
-                    string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
-                    return string.Format("{0} ({1:00})", wepname,address);
+                    //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
+                    string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
+                    return string.Format("{0} ({1})", wepname,address);
                 }
                 else
                 {
@@ -3724,7 +3725,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorHeads.ArmorHeadIDs.TryGetValue(ArmorHeadID(), out string? piecename);
-                string address = Convert.ToString(ArmorHeadID(), 16).ToUpper();
+                //string address = Convert.ToString(ArmorHeadID(), 16).ToUpper();
+                string address = ArmorHeadID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", piecename, address);
             }
         }
@@ -3740,7 +3742,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(ArmorChestID(), out string? piecename);
-                string address = Convert.ToString(ArmorChestID(), 16).ToUpper();
+                //string address = Convert.ToString(ArmorChestID(), 16).ToUpper();
+                string address = ArmorChestID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", piecename, address);
             }
         }
@@ -3756,7 +3759,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorArms.ArmorArmIDs.TryGetValue(ArmorArmsID(), out string? piecename);
-                string address = Convert.ToString(ArmorArmsID(), 16).ToUpper();
+                //string address = Convert.ToString(ArmorArmsID(), 16).ToUpper();
+                string address = ArmorArmsID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", piecename, address);
             }
         }
@@ -3772,7 +3776,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorWaists.ArmorWaistIDs.TryGetValue(ArmorWaistID(), out string? piecename);
-                string address = Convert.ToString(ArmorWaistID(), 16).ToUpper();
+                //string address = Convert.ToString(ArmorWaistID(), 16).ToUpper();
+                string address = ArmorWaistID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", piecename, address);
             }
         }
@@ -3788,7 +3793,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(ArmorLegsID(), out string? piecename);
-                string address = Convert.ToString(ArmorLegsID(), 16).ToUpper();
+                //string address = Convert.ToString(ArmorLegsID(), 16).ToUpper();
+                string address = ArmorLegsID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", piecename, address);
             }
         }
@@ -3832,7 +3838,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.Items.ItemIDs.TryGetValue(Cuff1ID(), out string? cuffname);
-                string address = Convert.ToString(Cuff1ID(), 16).ToUpper();
+                //string address = Convert.ToString(Cuff1ID(), 16).ToUpper();
+                string address = Cuff1ID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", cuffname, address);
             }
         }
@@ -3848,7 +3855,8 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.Items.ItemIDs.TryGetValue(Cuff2ID(), out string? cuffname);
-                string address = Convert.ToString(Cuff2ID(), 16).ToUpper();
+                //string address = Convert.ToString(Cuff2ID(), 16).ToUpper();
+                string address = Cuff2ID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", cuffname, address);
             }
         }
@@ -3897,6 +3905,224 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+//
+        public bool IsMaxSkillLevel(int id)
+        {
+            switch (id)
+            {
+                default: 
+                    return false;
+                case 2:
+                case 5:
+                case 8:
+                case 11:
+                case 13:
+                case 16:
+                case 19:
+                //case 23:
+                case 28:
+                case 33:
+                case 38:
+                case 41:
+                case 44:
+                case 45:
+                case 48:
+                case 51:
+                case 53:
+                case 54:
+                case 55:
+                case 56:
+                case 58:
+                case 61:
+                case 64:
+                case 67:
+                case 70:
+                case 71:
+                case 72:
+                case 74:
+                case 78:
+                //case 81:
+                //case 84:
+                case 89:
+                case 94:
+                case 97:
+                case 100:
+                case 106:
+                case 112:
+                case 118:
+                case 124:
+                case 130:
+                case 135:
+                case 140:
+                case 147:
+                case 150:
+                case 153:
+                case 155:
+                case 159:
+                case 162:
+                case 164:
+                case 165:
+                case 169:
+                case 172:
+                case 173:
+                case 178:
+                case 180:
+                case 182:
+                case 184:
+                case 186:
+                case 189:
+                case 190:
+                case 192:
+                case 194:
+                case 199:
+                case 201:
+                case 203://Gunnery?
+                case 212:
+                case 218:
+                //case 219:
+                case 222:
+                case 223:
+                case 228:
+                case 232:
+                case 235:
+                case 238:
+                case 240:
+                case 242:
+                case 244:
+                case 246:
+                case 248:
+                case 250:
+                case 252:
+                case 256:
+                case 259:
+                case 262:
+                case 265:
+                case 268:
+                case 271:
+                case 274:
+                case 277:
+                case 280:
+                case 283:
+                case 285:
+                case 287:
+                case 288:
+                case 289:
+                case 290:
+                case 292:
+                case 293:
+                case 295:
+                case 296:
+                case 297:
+                case 299:
+                case 300:
+                case 301:
+                case 302:
+                case 305:
+                case 309:
+                case 313:
+                case 317:
+                case 321:
+                case 325:
+                case 329:
+                case 333:
+                case 337:
+                case 341:
+                case 345:
+                case 349:
+                case 350:
+                case 352:
+                case 353:
+                case 354:
+                case 356:
+                case 359:
+                case 360:
+                case 362:
+                case 365:
+                case 366:
+                case 368:
+                case 384:
+                case 388:
+                case 390:
+                case 392:
+                case 393:
+                case 394:
+                case 395:
+                case 396:
+                case 397:
+                case 398:
+                case 401:
+                case 404:
+                case 407:
+                case 414:
+                case 417:
+                case 420:
+                case 423:
+                case 425:
+                case 426:
+                case 431:
+                case 432:
+                case 437:
+                case 438:
+                case 443:
+                case 446:
+                case 449:
+                case 452:
+                case 453:
+                case 456:
+                case 457:
+                case 458://Red Soul
+                case 461:
+                case 463:
+                case 464:
+                case 465:
+                case 466:
+                case 471:
+                case 473:
+                case 474:
+                case 475:
+                case 476:
+                case 477:
+                case 480:
+                case 481:
+                case 482:
+                case 485:
+                case 486:
+                case 488:
+                case 489:
+                case 491:
+                case 494:
+                case 495:
+                case 497:
+                case 498:
+                case 499:
+                case 501:
+                case 502:
+                case 503:
+                case 504:
+                case 505:
+                case 506:
+                case 512:
+                case 513:
+                case 514:
+                case 515:
+                case 516:
+                case 517:
+                //case 518://dupe?
+                case 519:
+                case 520:
+                case 521:
+                case 522:
+                case 523:
+                case 524:
+                case 525:
+                case 526:
+                case 528:
+                case 529:
+                case 530:
+                    return true;
+            }
+        }
+
         /// <summary>
         /// Gets the armor skills.
         /// </summary>
@@ -3927,134 +4153,195 @@ namespace MHFZ_Overlay.addresses
                 Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill18(), out string? SkillName18);
                 Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(ArmorSkill19(), out string? SkillName19);
 
+                //todo: refactor pls
+                if (GetTextFormat() == "Markdown")
+                {
+                    if (IsMaxSkillLevel(ArmorSkill1()) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
+                        SkillName1 = string.Format("**{0}**", SkillName1);
+
+                    if (IsMaxSkillLevel(ArmorSkill2()) && (SkillName2 != null || SkillName2 != "None" || SkillName2 != ""))
+                        SkillName2 = string.Format("**{0}**", SkillName2);
+
+                    if (IsMaxSkillLevel(ArmorSkill3()) && (SkillName3 != null || SkillName3 != "None" || SkillName3 != ""))
+                        SkillName3 = string.Format("**{0}**", SkillName3);
+
+                    if (IsMaxSkillLevel(ArmorSkill4()) && (SkillName4 != null || SkillName4 != "None" || SkillName4 != ""))
+                        SkillName4 = string.Format("**{0}**", SkillName4);
+
+                    if (IsMaxSkillLevel(ArmorSkill5()) && (SkillName5 != null || SkillName5 != "None" || SkillName5 != ""))
+                        SkillName5 = string.Format("**{0}**", SkillName5);
+
+                    if (IsMaxSkillLevel(ArmorSkill6()) && (SkillName6 != null || SkillName6 != "None" || SkillName6 != ""))
+                        SkillName6 = string.Format("**{0}**", SkillName6);
+
+                    if (IsMaxSkillLevel(ArmorSkill7()) && (SkillName7 != null || SkillName7 != "None" || SkillName7 != ""))
+                        SkillName7 = string.Format("**{0}**", SkillName7);
+
+                    if (IsMaxSkillLevel(ArmorSkill8()) && (SkillName8 != null || SkillName8 != "None" || SkillName8 != ""))
+                        SkillName8 = string.Format("**{0}**", SkillName8);
+
+                    if (IsMaxSkillLevel(ArmorSkill9()) && (SkillName9 != null || SkillName9 != "None" || SkillName9 != ""))
+                        SkillName9 = string.Format("**{0}**", SkillName9);
+
+                    if (IsMaxSkillLevel(ArmorSkill10()) && (SkillName10 != null || SkillName10 != "None" || SkillName10 != ""))
+                        SkillName10 = string.Format("**{0}**", SkillName10);
+
+                    if (IsMaxSkillLevel(ArmorSkill11()) && (SkillName11 != null || SkillName11 != "None" || SkillName11 != ""))
+                        SkillName11 = string.Format("**{0}**", SkillName11);
+
+                    if (IsMaxSkillLevel(ArmorSkill12()) && (SkillName12 != null || SkillName12 != "None" || SkillName12 != ""))
+                        SkillName12 = string.Format("**{0}**", SkillName12);
+
+                    if (IsMaxSkillLevel(ArmorSkill13()) && (SkillName13 != null || SkillName13 != "None" || SkillName13 != ""))
+                        SkillName13 = string.Format("**{0}**", SkillName13);
+
+                    if (IsMaxSkillLevel(ArmorSkill14()) && (SkillName14 != null || SkillName14 != "None" || SkillName14 != ""))
+                        SkillName14 = string.Format("**{0}**", SkillName14);
+
+                    if (IsMaxSkillLevel(ArmorSkill15()) && (SkillName15 != null || SkillName15 != "None" || SkillName15 != ""))
+                        SkillName15 = string.Format("**{0}**", SkillName15);
+
+                    if (IsMaxSkillLevel(ArmorSkill16()) && (SkillName16 != null || SkillName16 != "None" || SkillName16 != ""))
+                        SkillName16 = string.Format("**{0}**", SkillName16);
+
+                    if (IsMaxSkillLevel(ArmorSkill17()) && (SkillName17 != null || SkillName17 != "None" || SkillName17 != ""))
+                        SkillName17 = string.Format("**{0}**", SkillName17);
+
+                    if (IsMaxSkillLevel(ArmorSkill18()) && (SkillName18 != null || SkillName18 != "None" || SkillName18 != ""))
+                        SkillName18 = string.Format("**{0}**", SkillName18);
+
+                    if (IsMaxSkillLevel(ArmorSkill19()) && (SkillName19 != null || SkillName19 != "None" || SkillName19 != ""))
+                        SkillName19 = string.Format("**{0}**", SkillName19);
+                }
+
                 //TODO: refactor
-                if (SkillName1 == null || SkillName1 == "None")
+                if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
                     SkillName1 = "";
-                else if (SkillName2 == null || SkillName2 == "None")
+                else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
                     SkillName1 += "";
                 else
                     SkillName1 += ", ";
 
-                if (SkillName2 == null || SkillName2 == "None")
+                if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
                     SkillName2 = "";
-                else if (SkillName3 == null || SkillName3 == "None")
+                else if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
                     SkillName2 += "";
                 else
                     SkillName2 += ", ";
 
-                if (SkillName3 == null || SkillName3 == "None")
+                if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
                     SkillName3 = "";
-                else if (SkillName4 == null || SkillName4 == "None")
+                else if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
                     SkillName3 += "";
                 else
                     SkillName3 += ", ";
 
-                if (SkillName4 == null || SkillName4 == "None")
+                if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
                     SkillName4 = "";
                 else if (SkillName3 == null || SkillName3 == "None")
                     SkillName4 += "";
                 else
                     SkillName4 += ", ";
 
-                if (SkillName5 == null || SkillName5 == "None")
+                if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
                     SkillName5 = "";
-                else if (SkillName6 == null || SkillName6 == "None")
+                else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
                     SkillName5 += "";
                 else
                     SkillName5 += ", ";
 
-                if (SkillName6 == null || SkillName6 == "None")
+                if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
                     SkillName6 = "";
-                else if (SkillName7 == null || SkillName7 == "None")
+                else if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
                     SkillName6 += "";
                 else
                     SkillName6 += ", ";
 
-                if (SkillName7 == null || SkillName7 == "None")
+                if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
                     SkillName7 = "";
-                else if (SkillName8 == null || SkillName8 == "None")
+                else if (SkillName8 == null || SkillName8 == "None" || SkillName8 == "")
                     SkillName7 += "";
                 else
                     SkillName7 += ", ";
 
-                if (SkillName8 == null || SkillName8 == "None")
+                if (SkillName8 == null || SkillName8 == "None" || SkillName8 == "")
                     SkillName8 = "";
-                else if (SkillName9 == null || SkillName9 == "None")
+                else if (SkillName9 == null || SkillName9 == "None" || SkillName9 == "")
                     SkillName8 += "";
                 else
                     SkillName8 += ", ";
 
-                if (SkillName9 == null || SkillName9 == "None")
+                if (SkillName9 == null || SkillName9 == "None" || SkillName9 == "")
                     SkillName9 = "";
-                else if (SkillName10 == null || SkillName10 == "None")
+                else if (SkillName10 == null || SkillName10 == "None" || SkillName10 == "")
                     SkillName9 += "";
                 else
                     SkillName9 += ", ";
 
-                if (SkillName10 == null || SkillName10 == "None")
+                if (SkillName10 == null || SkillName10 == "None" || SkillName10 == "")
                     SkillName10 = "";
-                else if (SkillName11 == null || SkillName11 == "None")
+                else if (SkillName11 == null || SkillName11 == "None" || SkillName11 == "")
                     SkillName10 += "";
                 else
                     SkillName10 += ", ";
 
-                if (SkillName11 == null || SkillName11 == "None")
+                if (SkillName11 == null || SkillName11 == "None" || SkillName11 == "")
                     SkillName11 = "";
-                else if (SkillName12 == null || SkillName12 == "None")
+                else if (SkillName12 == null || SkillName12 == "None" || SkillName12 == "")
                     SkillName11 += "";
                 else
                     SkillName11 += ", ";
 
-                if (SkillName12 == null || SkillName12 == "None")
+                if (SkillName12 == null || SkillName12 == "None" || SkillName12 == "")
                     SkillName12 = "";
-                else if (SkillName13 == null || SkillName13 == "None")
+                else if (SkillName13 == null || SkillName13 == "None" || SkillName13 == "")
                     SkillName12 += "";
                 else
                     SkillName12 += ", ";
 
-                if (SkillName13 == null || SkillName13 == "None")
+                if (SkillName13 == null || SkillName13 == "None" || SkillName13 == "")
                     SkillName13 = "";
-                else if (SkillName14 == null || SkillName14 == "None")
+                else if (SkillName14 == null || SkillName14 == "None" || SkillName14 == "")
                     SkillName13 += "";
                 else
                     SkillName13 += ", ";
 
-                if (SkillName14 == null || SkillName14 == "None")
+                if (SkillName14 == null || SkillName14 == "None" || SkillName14 == "")
                     SkillName14 = "";
-                else if (SkillName15 == null || SkillName15 == "None")
+                else if (SkillName15 == null || SkillName15 == "None" || SkillName15 == "")
                     SkillName14 += "";
                 else
                     SkillName14 += ", ";
 
-                if (SkillName15 == null || SkillName15 == "None")
+                if (SkillName15 == null || SkillName15 == "None" || SkillName15 == "")
                     SkillName15 = "";
-                else if (SkillName16 == null || SkillName16 == "None")
+                else if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
                     SkillName15 += "";
                 else
                     SkillName15 += ", ";
 
-                if (SkillName16 == null || SkillName16 == "None")
+                if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
                     SkillName16 = "";
-                else if (SkillName17 == null || SkillName17 == "None")
+                else if (SkillName17 == null || SkillName17 == "None" || SkillName17 == "")
                     SkillName16 += "";
                 else
                     SkillName16 += ", ";
 
-                if (SkillName17 == null || SkillName17 == "None")
+                if (SkillName17 == null || SkillName17 == "None" || SkillName17 == "")
                     SkillName17 = "";
-                else if (SkillName18 == null || SkillName18 == "None")
+                else if (SkillName18 == null || SkillName18 == "None" || SkillName18 == "")
                     SkillName17 += "";
                 else
                     SkillName17 += ", ";
 
-                if (SkillName18 == null || SkillName18 == "None")
+                if (SkillName18 == null || SkillName18 == "None" || SkillName18 == "")
                     SkillName18 = "";
-                else if (SkillName19 == null || SkillName19 == "None")
+                else if (SkillName19 == null || SkillName19 == "None" || SkillName19 == "")
                     SkillName18 += "";
                 else
                     SkillName18 += ", ";
 
-                if (SkillName19 == null || SkillName19 == "None")
+                if (SkillName19 == null || SkillName19 == "None" || SkillName19 == "")
                     SkillName19 = "";
                 //else if (SkillName6 == null || SkillName6 == "None")
                 //    SkillName5 = SkillName5 + "";
@@ -4104,6 +4391,8 @@ namespace MHFZ_Overlay.addresses
                 return skillname + "";
         }
 
+        public string MarkdownSavedGearStats = "";
+
         /// <summary>
         /// Generates the gear stats
         /// </summary>
@@ -4111,6 +4400,7 @@ namespace MHFZ_Overlay.addresses
         {
             //save gear to variable
             SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills:\n{15}\n\nCaravan Skills:\n{16}\n\nDiva Skill:\n{17}\n\nGuild Food:\n{18}\n\nItems:\n{19}\n\nAmmo:\n{20}\n\nPoogie Item:\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), "zenith", "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
+            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*\n\n**{3}**: {4}\n**Head:** {5}\n**Chest:** {6}\n**Arms:** {7}\n**Waist:** {8}\n**Legs:** {9}\n**Cuffs:** {10}\n\n**Weapon Attack:** {11} | **Total Defense:** {12}\n\n**Zenith Skills:**\n{13}\n\n**Automatic Skills:**\n{14}\n\n**Active Skills:**\n{15}\n\n**Caravan Skills:**\n{16}\n\n**Diva Skill:**\n{17}\n\n**Guild Food:**\n{18}\n\n**Items:**\n{19}\n\n**Ammo:**\n{20}\n\n**Poogie Item:**\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), "zenith", "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
             return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills:\n{15}\n\nCaravan Skills:\n{16}\n\nDiva Skill:\n{17}\n\nGuild Food:\n{18}\n\nItems:\n{19}\n\nAmmo:\n{20}\n\nPoogie Item:\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName,"head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), "zenith", "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
         }
 

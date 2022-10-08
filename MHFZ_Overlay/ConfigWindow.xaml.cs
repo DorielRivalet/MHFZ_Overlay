@@ -260,7 +260,9 @@ namespace MHFZ_Overlay
             string textToSave = GearStats.Text;
 
             if (GetTextFormatMode() == "Code Block")
-                textToSave = string.Format("```text\n{0}\n```",textToSave);
+                textToSave = string.Format("```text\n{0}\n```", textToSave);
+            else if (GetTextFormatMode() == "Markdown")
+                textToSave = MainWindow.DataLoader.model.MarkdownSavedGearStats;
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             if (saveFileDialog.ShowDialog() == true)
@@ -278,6 +280,8 @@ namespace MHFZ_Overlay
 
             if (GetTextFormatMode() == "Code Block")
                 textToSave = string.Format("```text\n{0}\n```", textToSave);
+            else if (GetTextFormatMode() == "Markdown")
+                textToSave = MainWindow.DataLoader.model.MarkdownSavedGearStats;
 
             //https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
             Clipboard.SetText(textToSave);
