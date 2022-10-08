@@ -345,6 +345,7 @@ namespace MHFZ_Overlay.addresses
         public override int AmmoPouchItem10Qty() => M.Read2Byte("mhfo.dll+5034692");
         //TODO: cat pouch
 
+        //slots
         public override int ArmorSkill1() => M.Read2Byte("mhfo.dll+503475C");
         public override int ArmorSkill2() => M.Read2Byte("mhfo.dll+503475E");
         public override int ArmorSkill3() => M.Read2Byte("mhfo.dll+5034760");
@@ -366,6 +367,14 @@ namespace MHFZ_Overlay.addresses
         public override int ArmorSkill19() => M.Read2Byte("mhfo.dll+5034780");
 
         public override int BloatedWeaponAttack() => M.Read2Byte("mhfo.dll+5BC68C8");
+
+        public override int ZenithSkill1() => M.ReadByte("mhfo.dll+51C16D8");
+        public override int ZenithSkill2() => M.ReadByte("mhfo.dll+51C16DA");
+        public override int ZenithSkill3() => M.ReadByte("mhfo.dll+51C16DC");
+        public override int ZenithSkill4() => M.ReadByte("mhfo.dll+51C16DE");
+        public override int ZenithSkill5() => M.ReadByte("mhfo.dll+51C16E0");
+        public override int ZenithSkill6() => M.ReadByte("mhfo.dll+51C16E2");
+        public override int ZenithSkill7() => M.ReadByte("mhfo.dll+51C16E4");
 
     }
 }

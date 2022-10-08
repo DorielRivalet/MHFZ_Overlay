@@ -399,6 +399,14 @@ namespace MHFZ_Overlay.addresses
 
         abstract public int BloatedWeaponAttack();
 
+        abstract public int ZenithSkill1();
+        abstract public int ZenithSkill2();
+        abstract public int ZenithSkill3();
+        abstract public int ZenithSkill4();
+        abstract public int ZenithSkill5();
+        abstract public int ZenithSkill6();
+        abstract public int ZenithSkill7();
+
 
 
         #endregion
@@ -3905,7 +3913,42 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-//
+        public bool IsMaxZenithSkill(int id)
+        {
+            switch (id)
+            {
+                default:
+                    return false;
+                case 7:
+                case 9:
+                case 11:
+                case 12:
+                case 14:
+                case 15:
+                case 19:
+                case 23:
+                case 25:
+                case 27:
+                case 29:
+                case 31:
+                case 32:
+                case 34:
+                case 35:
+                case 37:
+                case 39:
+                case 41:
+                case 43:
+                case 46:
+                case 47:
+                case 48:
+                case 49:
+                case 50:
+                case 51:
+                case 52:
+                    return true;
+            }
+        }
+
         public bool IsMaxSkillLevel(int id)
         {
             switch (id)
@@ -4120,6 +4163,103 @@ namespace MHFZ_Overlay.addresses
                 case 529:
                 case 530:
                     return true;
+            }
+        }
+
+        /// <summary>
+        /// Gets the zenith skills.
+        /// </summary>
+        /// <value>
+        /// The zenith skills.
+        /// </value>
+        public string GetZenithSkills
+        {
+            get
+            {
+                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill1(), out string? SkillName1);
+                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill2(), out string? SkillName2);
+                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill3(), out string? SkillName3);
+                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill4(), out string? SkillName4);
+                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill5(), out string? SkillName5);
+                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill6(), out string? SkillName6);
+                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill7(), out string? SkillName7);
+                
+                //todo: refactor pls
+                if (GetTextFormat() == "Markdown")
+                {
+                    if (IsMaxZenithSkill(ZenithSkill1()) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
+                        SkillName1 = string.Format("**{0}**", SkillName1);
+
+                    if (IsMaxZenithSkill(ZenithSkill2()) && (SkillName2 != null || SkillName2 != "None" || SkillName2 != ""))
+                        SkillName2 = string.Format("**{0}**", SkillName2);
+
+                    if (IsMaxZenithSkill(ZenithSkill3()) && (SkillName3 != null || SkillName3 != "None" || SkillName3 != ""))
+                        SkillName3 = string.Format("**{0}**", SkillName3);
+
+                    if (IsMaxZenithSkill(ZenithSkill4()) && (SkillName4 != null || SkillName4 != "None" || SkillName4 != ""))
+                        SkillName4 = string.Format("**{0}**", SkillName4);
+
+                    if (IsMaxZenithSkill(ZenithSkill5()) && (SkillName5 != null || SkillName5 != "None" || SkillName5 != ""))
+                        SkillName5 = string.Format("**{0}**", SkillName5);
+
+                    if (IsMaxZenithSkill(ZenithSkill6()) && (SkillName6 != null || SkillName6 != "None" || SkillName6 != ""))
+                        SkillName6 = string.Format("**{0}**", SkillName6);
+
+                    if (IsMaxZenithSkill(ZenithSkill7()) && (SkillName7 != null || SkillName7 != "None" || SkillName7 != ""))
+                        SkillName7 = string.Format("**{0}**", SkillName7);
+                }
+
+                //TODO: refactor
+                if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
+                    SkillName1 = "";
+                else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
+                    SkillName1 += "";
+                else
+                    SkillName1 += ", ";
+
+                if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
+                    SkillName2 = "";
+                else if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
+                    SkillName2 += "";
+                else
+                    SkillName2 += ", ";
+
+                if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
+                    SkillName3 = "";
+                else if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
+                    SkillName3 += "";
+                else
+                    SkillName3 += ", ";
+
+                if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
+                    SkillName4 = "";
+                else if (SkillName3 == null || SkillName3 == "None")
+                    SkillName4 += "";
+                else
+                    SkillName4 += ", ";
+
+                if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
+                    SkillName5 = "";
+                else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
+                    SkillName5 += "";
+                else
+                    SkillName5 += ", ";
+
+                if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
+                    SkillName6 = "";
+                else if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
+                    SkillName6 += "";
+                else
+                    SkillName6 += ", ";
+
+                if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
+                    SkillName7 = "";
+                //else if (SkillName6 == null || SkillName6 == "None")
+                //    SkillName5 = SkillName5 + "";
+                else
+                    SkillName7 += "";
+
+                return string.Format("{0}{1}{2}{3}{4}\n{5}{6}", SkillName1, SkillName2, SkillName3, SkillName4, SkillName5, SkillName6, SkillName7);
             }
         }
 
@@ -4399,9 +4539,9 @@ namespace MHFZ_Overlay.addresses
         public string GenerateGearStats()
         {
             //save gear to variable
-            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills:\n{15}\n\nCaravan Skills:\n{16}\n\nDiva Skill:\n{17}\n\nGuild Food:\n{18}\n\nItems:\n{19}\n\nAmmo:\n{20}\n\nPoogie Item:\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), "zenith", "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
-            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*\n\n**{3}**: {4}\n**Head:** {5}\n**Chest:** {6}\n**Arms:** {7}\n**Waist:** {8}\n**Legs:** {9}\n**Cuffs:** {10}\n\n**Weapon Attack:** {11} | **Total Defense:** {12}\n\n**Zenith Skills:**\n{13}\n\n**Automatic Skills:**\n{14}\n\n**Active Skills:**\n{15}\n\n**Caravan Skills:**\n{16}\n\n**Diva Skill:**\n{17}\n\n**Guild Food:**\n{18}\n\n**Items:**\n{19}\n\n**Ammo:**\n{20}\n\n**Poogie Item:**\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), "zenith", "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
-            return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills:\n{15}\n\nCaravan Skills:\n{16}\n\nDiva Skill:\n{17}\n\nGuild Food:\n{18}\n\nItems:\n{19}\n\nAmmo:\n{20}\n\nPoogie Item:\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName,"head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), "zenith", "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
+            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills:\n{15}\n\nCaravan Skills:\n{16}\n\nDiva Skill:\n{17}\n\nGuild Food:\n{18}\n\nItems:\n{19}\n\nAmmo:\n{20}\n\nPoogie Item:\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
+            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*\n\n**{3}**: {4}\n**Head:** {5}\n**Chest:** {6}\n**Arms:** {7}\n**Waist:** {8}\n**Legs:** {9}\n**Cuffs:** {10}\n\n**Weapon Attack:** {11} | **Total Defense:** {12}\n\n**Zenith Skills:**\n{13}\n\n**Automatic Skills:**\n{14}\n\n**Active Skills:**\n{15}\n\n**Caravan Skills:**\n{16}\n\n**Diva Skill:**\n{17}\n\n**Guild Food:**\n{18}\n\n**Items:**\n{19}\n\n**Ammo:**\n{20}\n\n**Poogie Item:**\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
+            return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills:\n{15}\n\nCaravan Skills:\n{16}\n\nDiva Skill:\n{17}\n\nGuild Food:\n{18}\n\nItems:\n{19}\n\nAmmo:\n{20}\n\nPoogie Item:\n{21}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName,"head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, "automatic", GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
         }
 
         /// <summary>

@@ -410,6 +410,7 @@ namespace MHFZ_Overlay.addresses
         public override int AmmoPouchItem10ID() => 1;
         public override int AmmoPouchItem10Qty() => 1;
 
+        //slots
         public override int ArmorSkill1() => 1;
         public override int ArmorSkill2() => 1;
         public override int ArmorSkill3() => 1;
@@ -431,6 +432,14 @@ namespace MHFZ_Overlay.addresses
         public override int ArmorSkill19() => 1;
 
         public override int BloatedWeaponAttack() => 1;
+
+        public override int ZenithSkill1() => 1;
+        public override int ZenithSkill2() => 1;
+        public override int ZenithSkill3() => 1;
+        public override int ZenithSkill4() => 1;
+        public override int ZenithSkill5() => 1;
+        public override int ZenithSkill6() => 1;
+        public override int ZenithSkill7() => 1;
 
     }
 }
