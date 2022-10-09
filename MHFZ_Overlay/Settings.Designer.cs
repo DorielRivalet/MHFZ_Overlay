@@ -1282,5 +1282,17 @@ namespace MHFZ_Overlay {
                 this["GenderExport"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool GouBoostExport {
+            get {
+                return ((bool)(this["GouBoostExport"]));
+            }
+            set {
+                this["GouBoostExport"] = value;
+            }
+        }
     }
 }
