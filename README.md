@@ -110,6 +110,8 @@ Fully reinstalling the game or .NET dependencies may fix some bugs.
 
 Starting the overlay may take a bit of time because of the dictionaries (*i.e.* **all** in-game gear and items) and other features.
 
+Press `Alt+Enter` twice if your screen resolution got lowered.
+
 [Check more bugs here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
 
 ## Features not yet implemented

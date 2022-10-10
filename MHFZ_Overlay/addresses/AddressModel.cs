@@ -1,6 +1,7 @@
 ﻿using Memory;
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
 using System.Threading;
 using System.Windows;
@@ -4826,6 +4827,496 @@ namespace MHFZ_Overlay.addresses
         public string MarkdownSavedGearStats = "";
 
         /// <summary>
+        /// Gets the GSR bonus. Values from Ferias guy
+        /// </summary>
+        /// <param name="skillName">Name of the skill.</param>
+        /// <returns></returns>
+        public string GetGSRBonus(string skillName)
+        {
+            int Def = 0;
+            int FireRes = 0;
+            int WaterRes = 0;
+            int IceRes = 0;
+            int ThunderRes = 0;
+            int DragonRes = 0;
+            int AllRes = 0;
+            int ConquestAtk = 0;
+            int ConquestDef = 0;
+
+            int skillNameNumber = int.Parse(skillName.Substring(skillName.IndexOf("+") + 1));
+            string skillNameType = skillName.Substring(0, skillName.IndexOf(","));
+
+            if (GSR() >= 10)
+                Def += 1;
+
+            if (GSR() >= 20)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 30)
+                ConquestDef += 10;
+
+            if (GSR() >= 40)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 50)
+                ConquestAtk += 2;
+
+            if (GSR() >= 60)
+                Def += 1;
+
+            if (GSR() >= 70)
+                ConquestDef += 10;
+
+            if (GSR() >= 80)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 90)
+                Def += 1;
+
+            if (GSR() >= 100)
+                ConquestAtk += 2;
+
+            if (GSR() >= 110)
+                Def += 1;
+
+            if (GSR() >= 120)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 130)
+                ConquestDef += 10;
+
+            if (GSR() >= 140)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 150)
+                ConquestAtk += 2;
+
+            if (GSR() >= 160)
+                Def += 1;
+
+            if (GSR() >= 170)
+                ConquestDef += 10;
+
+            if (GSR() >= 180)
+                AllRes += 1;
+
+            if (GSR() >= 190)
+                Def += 1;
+
+            if (GSR() >= 200)
+                ConquestAtk += 2;
+
+            if (GSR() >= 210)
+                Def += 1;
+
+            if (GSR() >= 220)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 230)
+                ConquestDef += 10;
+
+            if (GSR() >= 240)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 250)
+                ConquestAtk += 2;
+
+            if (GSR() >= 260)
+                Def += 1;
+
+            if (GSR() >= 270)
+                ConquestDef += 10;
+
+            if (GSR() >= 280)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 290)
+                Def += 1;
+
+            if (GSR() >= 300)
+                ConquestAtk += 2;
+
+            if (GSR() >= 310)
+                Def += 1;
+
+            if (GSR() >= 320)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 330)
+                ConquestDef += 10;
+
+            if (GSR() >= 340)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 350)
+                ConquestAtk += 2;
+
+            if (GSR() >= 360)
+                Def += 2;
+
+            if (GSR() >= 370)
+                ConquestDef += 10;
+
+            if (GSR() >= 380)
+                AllRes += 1;
+
+            if (GSR() >= 390)
+                Def += 2;
+
+            if (GSR() >= 400)
+                ConquestAtk += 2;
+
+            if (GSR() >= 410)
+                Def += 2;
+
+            if (GSR() >= 420)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 430)
+                ConquestDef += 10;
+
+            if (GSR() >= 440)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 450)
+                ConquestAtk += 2;
+
+            if (GSR() >= 460)
+                Def += 2;
+
+            if (GSR() >= 470)
+                ConquestDef += 10;
+
+            if (GSR() >= 480)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 490)
+                Def += 2;
+
+            if (GSR() >= 500)
+                ConquestAtk += 2;
+
+            if (GSR() >= 510)
+                Def += 2;
+
+            if (GSR() >= 520)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 530)
+                ConquestDef += 10;
+
+            if (GSR() >= 540)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 550)
+                ConquestAtk += 2;
+
+            if (GSR() >= 560)
+                Def += 2;
+
+            if (GSR() >= 570)
+                ConquestDef += 10;
+
+            if (GSR() >= 580)
+                AllRes += 1;
+
+            if (GSR() >= 590)
+                Def += 2;
+
+            if (GSR() >= 600)
+                ConquestAtk += 2;
+
+            if (GSR() >= 610)
+                Def += 2;
+
+            if (GSR() >= 620)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 630)
+                ConquestDef += 10;
+
+            if (GSR() >= 640)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 650)
+                ConquestAtk += 2;
+
+            if (GSR() >= 660)
+                Def += 2;
+
+            if (GSR() >= 670)
+                ConquestDef += 10;
+
+            if (GSR() >= 680)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 690)
+                Def += 2;
+
+            if (GSR() >= 700)
+                ConquestAtk += 2;
+
+            if (GSR() >= 710)
+                Def += 2;
+
+            if (GSR() >= 720)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 730)
+                ConquestDef += 10;
+
+            if (GSR() >= 740)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 750)
+                ConquestAtk += 2;
+
+            if (GSR() >= 760)
+                Def += 2;
+
+            if (GSR() >= 770)
+                ConquestDef += 10;
+
+            if (GSR() >= 780)
+                AllRes += 1;
+
+            if (GSR() >= 790)
+                Def += 2;
+
+            if (GSR() >= 800)
+                ConquestAtk += 4;
+
+            if (GSR() >= 810)
+                Def += 2;
+
+            if (GSR() >= 820)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 830)
+                ConquestDef += 10;
+
+            if (GSR() >= 840)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 850)
+                ConquestAtk += 4;
+
+            if (GSR() >= 860)
+                Def += 2;
+
+            if (GSR() >= 870)
+                ConquestDef += 10;
+
+            if (GSR() >= 880)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 890)
+                Def += 2;
+
+            if (GSR() >= 900)
+                ConquestAtk += 4;
+
+            if (GSR() >= 910)
+                Def += 2;
+
+            if (GSR() >= 920)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 930)
+                ConquestDef += 10;
+
+            if (GSR() >= 940)
+            {
+                FireRes += 2;
+                WaterRes += 2;
+                IceRes += 2;
+                ThunderRes += 2;
+                DragonRes += 2;
+            }
+
+            if (GSR() >= 950)
+                ConquestAtk += 4;
+
+            if (GSR() >= 960)
+                Def += 2;
+
+            if (GSR() >= 970)
+                ConquestDef += 10;
+
+            if (GSR() >= 980)
+                AllRes += 1;
+
+            if (GSR() >= 960)
+                Def += 2;
+
+            if (GSR() >= 999)
+                ConquestAtk += 4;
+
+
+            //TODO: address for sr unlocks (0 then 11 then 12 then 13 then 14)
+
+
+            return skillNameType switch
+            {
+                "Nothing" => "Nothing",
+                "Def" => string.Format("{0}{1}", skillNameType, skillNameNumber + Def),
+                "Conquest Atk" => string.Format("{0}{1}", skillNameType, skillNameNumber + ConquestAtk),
+                "Conquest Def" => string.Format("{0}{1}", skillNameType, skillNameNumber + ConquestDef),
+                "Fire Res" => string.Format("{0}{1}", skillNameType, skillNameNumber + FireRes),
+                "Water Res" => string.Format("{0}{1}", skillNameType, skillNameNumber + WaterRes),
+                "Thunder Res" => string.Format("{0}{1}", skillNameType, skillNameNumber + ThunderRes),
+                "Ice Res" => string.Format("{0}{1}", skillNameType, skillNameNumber + IceRes),
+                "Dragon Res" => string.Format("{0}{1}", skillNameType, skillNameNumber + DragonRes),
+                "All Res" => string.Format("{0}{1}", skillNameType, skillNameNumber + AllRes),
+                _ => "None",
+            };
+        }
+
+        /// <summary>
         /// Generates the gear stats
         /// </summary>
         public string GenerateGearStats()
@@ -4835,7 +5326,9 @@ namespace MHFZ_Overlay.addresses
 
             if (GetGouBoostMode())
                 showGouBoost = " (After Gou/Muscle Boost)";
-
+            //todo: sr skill
+            //zp in bold for markdown
+            //fruits and speedrunner items also in bold
             SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills{15}:\n{16}\n\nCaravan Skills:\n{17}\n\nDiva Skill:\n{18}\n\nGuild Food:\n{19}\n\nItems:\n{20}\n\nAmmo:\n{21}\n\nPoogie Item:\n{22}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
             MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*\n\n**{3}**: {4}\n**Head:** {5}\n**Chest:** {6}\n**Arms:** {7}\n**Waist:** {8}\n**Legs:** {9}\n**Cuffs:** {10}\n\n**Weapon Attack:** {11} | **Total Defense:** {12}\n\n**Zenith Skills:**\n{13}\n\n**Automatic Skills:**\n{14}\n\n**Active Skills{15}:**\n{16}\n\n**Caravan Skills:**\n{17}\n\n**Diva Skill:**\n{18}\n\n**Guild Food:**\n{19}\n\n**Items:**\n{20}\n\n**Ammo:**\n{21}\n\n**Poogie Item:**\n{22}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
             return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills{15}:\n{16}\n\nCaravan Skills:\n{17}\n\nDiva Skill:\n{18}\n\nGuild Food:\n{19}\n\nItems:\n{20}\n\nAmmo:\n{21}\n\nPoogie Item:\n{22}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName,"head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
