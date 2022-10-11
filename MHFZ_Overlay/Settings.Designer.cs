@@ -1318,5 +1318,29 @@ namespace MHFZ_Overlay {
                 this["Enable11GSR999"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableMetadataExport {
+            get {
+                return ((bool)(this["EnableMetadataExport"]));
+            }
+            set {
+                this["EnableMetadataExport"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GearDescriptionExport {
+            get {
+                return ((string)(this["GearDescriptionExport"]));
+            }
+            set {
+                this["GearDescriptionExport"] = value;
+            }
+        }
     }
 }
