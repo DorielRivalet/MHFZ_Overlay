@@ -277,19 +277,58 @@
                             <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0" Grid.ColumnSpan="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80"/>
-                                <ColumnDefinition Width="80"/>
-                            </Grid.ColumnDefinitions>
-                            <Button Background="Transparent" Grid.Column="0" x:Name="BtnSaveFile" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/file_download_FILL0_wght400_GRAD0_opsz48.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="40" Width="40" ToolTip="Save gear to text file" Click="BtnSaveFile_Click"/>
-                            <Button Background="Transparent" Grid.Column="1" x:Name="BtnCopyFile" ToolTip="Copy gear to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/content_copy_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnCopyFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
-                        </Grid>
-                        <DockPanel Grid.Row="1" Margin="5,5,5,5" Grid.ColumnSpan="2" Grid.RowSpan="6">
-                            <ScrollViewer>
-                                <TextBlock Text="{Binding GetGearStats}" Name="GearStats" TextWrapping="Wrap"/>
-                            </ScrollViewer>
-                        </DockPanel>
+                        <TabControl Margin="5" BorderBrush="Transparent" Background="Transparent" Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="2">
+                            <TabControl.Resources>
+                                <Style TargetType="TabItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="TabItem">
+                                                <Border Name="Border" BorderThickness=".5,.5,.5,0" BorderBrush="#b4befe" CornerRadius="4,4,0,0" Margin="2,0">
+                                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                                </Border>
+
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="#585b70" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="#1e1e2e" />
+
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+
+                                            </ControlTemplate>
+
+                                        </Setter.Value>
+
+                                    </Setter>
+                                </Style>
+                            </TabControl.Resources>
+                            <TabItem ToolTip="Authors and developers information" Background="#11111b" Foreground="#cdd6f4">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Foreground="#74c7ec" Text="Image" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <Grid>
+                                    <TextBlock Text="test"></TextBlock>
+                                </Grid>
+                            </TabItem>
+                            <TabItem ToolTip="Gear Stats (Text)" Background="#11111b" Foreground="#cdd6f4">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Foreground="#74c7ec" Text="Text" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <Grid>
+                                    <TextBlock Text="test2"></TextBlock>
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
 
                         <!--<TextBlock Margin="5,5,5,5" ToolTip="Select Weapon Class to show the correct weapon ID type (keep in mind that Town Sets override Quest Sets information)" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Weapon Class"/>
                         <ComboBox Grid.Column="1" Grid.Row="6" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=WeaponClassExport}">
