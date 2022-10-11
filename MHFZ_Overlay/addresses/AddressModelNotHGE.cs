@@ -383,5 +383,8 @@ namespace MHFZ_Overlay.addresses
         public override int AutomaticSkillWaist() => M.Read2Byte("mhfo.dll+5034790");
         public override int AutomaticSkillLegs() => M.Read2Byte("mhfo.dll+5034786");
 
+        public override int StyleRank1() => M.ReadByte("mhfo.dll+50348D3");
+        public override int StyleRank2() => M.ReadByte("mhfo.dll+503499F");
+
     }
 }

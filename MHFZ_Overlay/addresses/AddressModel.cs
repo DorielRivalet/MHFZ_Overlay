@@ -1,5 +1,6 @@
 ﻿using Memory;
 using System;
+using System.CodeDom;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
@@ -415,6 +416,8 @@ namespace MHFZ_Overlay.addresses
         abstract public int AutomaticSkillWaist();
         abstract public int AutomaticSkillLegs();
 
+        abstract public int StyleRank1();
+        abstract public int StyleRank2();
 
 
         #endregion
@@ -458,6 +461,15 @@ namespace MHFZ_Overlay.addresses
         /// </value>
         public bool Configuring { get { return _configuring; } set { _configuring = value; ReloadData(); } }
 
+        public bool IsAlwaysShowingMonsterInfo()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.AlwaysShowMonsterInfo == true)
+                return true;
+            else
+                return false;
+        }
+
         /// <summary>
         /// Shows the hp bar?
         /// </summary>
@@ -466,7 +478,7 @@ namespace MHFZ_Overlay.addresses
         /// <returns></returns>
         public bool ShowHPBar(int monsterId, int monsterHp)
         {
-            return (monsterId > 0 && monsterHp != 0) || Configuring;
+            return (monsterId > 0 && monsterHp != 0) || Configuring || IsAlwaysShowingMonsterInfo();
         }
 
         //
@@ -3928,6 +3940,13 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Determines whether [is maximum zenith skill].
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        ///   <c>true</c> if [is maximum zenith skill] [the specified identifier]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsMaxZenithSkill(int id)
         {
             switch (id)
@@ -3964,6 +3983,13 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Determines whether [is maximum skill level].
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        ///   <c>true</c> if [is maximum skill level] [the specified identifier]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsMaxSkillLevel(int id)
         {
             switch (id)
@@ -4824,7 +4850,126 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the total GSR weapon unlocks.
+        /// </summary>
+        /// <returns></returns>
+        public string GetTotalGSRWeaponUnlocks()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.GSRUnlocksExport != null)
+                return s.GSRUnlocksExport;
+            else
+                return "11";
+        }
+
+        /// <summary>
+        /// Is the gsr x11+ R999.
+        /// </summary>
+        /// <returns></returns>
+        public bool Is11GSR999()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.Enable11GSR999)
+                return true;
+            else
+                return false;
+        }
+
         public string MarkdownSavedGearStats = "";
+
+        /// <summary>
+        /// Determines whether [is fixed GSR skill value] [the specified skill name].
+        /// </summary>
+        /// <param name="skillName">Name of the skill.</param>
+        /// <returns>
+        ///   <c>true</c> if [is fixed GSR skill value] [the specified skill name]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsFixedGSRSkillValue(string skillName)
+        {
+            return skillName switch
+            {
+                //case "Defense+130":
+                "Passive Master" or "Soul Revival" or "Secret Tech" or "Max Sharpen" or "Sharpening Up" or "Affinity+26" or "Affinity+24" or "Affinity+22" or "Affinity+20" or "Nothing" => true,
+                _ => false,
+            };
+        }
+
+        /// <summary>
+        /// Determines whether [is maximum GSR skill value] [the specified skill name].
+        /// </summary>
+        /// <param name="skillName">Name of the skill.</param>
+        /// <returns>
+        ///   <c>true</c> if [is maximum GSR skill value] [the specified skill name]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsMaxGSRSkillValue(string skillName)
+        {
+            return skillName switch
+            {
+                //case "Defense+130":
+                "Passive Master" or "Soul Revival" or "Secret Tech" or "Max Sharpen" or "Affinity+26" or "Conquest Def+330" or "Conquest Atk+115" or "Def+180" or "Fire Res+35" or "Water Res+35" or "Thunder Res+35" or "Ice Res+35" or "Dragon Res+35" or "All Res+20" => true,
+                _ => false,
+            };
+        }
+
+        /// <summary>
+        /// Gets the GSR skills.
+        /// </summary>
+        /// <value>
+        /// The GSR skills.
+        /// </value>
+        public string GetGSRSkills
+        {
+            get
+            {
+                int Skill1 = StyleRank1();
+                int Skill2 = StyleRank2();
+
+                Dictionary.StyleRankSkillList.StyleRankSkillID.TryGetValue(Skill1, out string? SkillName1);
+                Dictionary.StyleRankSkillList.StyleRankSkillID.TryGetValue(Skill2, out string? SkillName2);
+
+                SkillName1 += "";
+                SkillName2 += "";
+
+                if (SkillName1 == "")
+                    SkillName1 = "Nothing";
+
+                if (SkillName2 == "")
+                    SkillName2 = "Nothing";
+
+                if (!(IsFixedGSRSkillValue(SkillName1)))
+                    SkillName1 = GetGSRBonus(SkillName1);
+
+                if (!(IsFixedGSRSkillValue(SkillName2)))
+                    SkillName2 = GetGSRBonus(SkillName2);
+
+                //todo: refactor pls
+                if (GetTextFormat() == "Markdown")
+                {
+                    if (IsMaxGSRSkillValue(SkillName1) && (SkillName1 != null || SkillName1 != "Nothing" || SkillName1 != ""))
+                        SkillName1 = string.Format("**{0}**", SkillName1);
+
+                    if (IsMaxGSRSkillValue(SkillName2) && (SkillName2 != null || SkillName2 != "Nothing" || SkillName2 != ""))
+                        SkillName2 = string.Format("**{0}**", SkillName2);
+                }
+
+                if (SkillName1 == null || SkillName1 == "Nothing" || SkillName1 == "")
+                    SkillName1 = "";
+                else if (SkillName2 == null || SkillName2 == "Nothing" || SkillName2 == "")
+                    SkillName1 += "";
+                else
+                    SkillName1 += ", ";
+
+                if (SkillName2 == null || SkillName2 == "Nothing" || SkillName2 == "")
+                    SkillName2 = "";
+                //else if (SkillName6 == null || SkillName6 == "None")
+                //    SkillName5 = SkillName5 + "";
+                else
+                    SkillName2 += "";
+
+                return string.Format("{0}{1}", SkillName1, SkillName2);
+            }
+        }
 
         /// <summary>
         /// Gets the GSR bonus. Values from Ferias guy
@@ -4833,6 +4978,13 @@ namespace MHFZ_Overlay.addresses
         /// <returns></returns>
         public string GetGSRBonus(string skillName)
         {
+            //question: does maxing all gsr give 1 more point of all res?
+            //also does it increase before grank slowly for the other res?
+
+            //defense here (needs testing)
+            if (IsFixedGSRSkillValue(skillName))
+                return skillName;
+
             int Def = 0;
             int FireRes = 0;
             int WaterRes = 0;
@@ -4843,8 +4995,10 @@ namespace MHFZ_Overlay.addresses
             int ConquestAtk = 0;
             int ConquestDef = 0;
 
-            int skillNameNumber = int.Parse(skillName.Substring(skillName.IndexOf("+") + 1));
-            string skillNameType = skillName.Substring(0, skillName.IndexOf(","));
+            //skillName = skillName;
+            int skillNameNumber = int.Parse(skillName.Substring(skillName.IndexOf("+")));
+            //int skillNameNumber = int.Parse(skillNameNumberString);
+            string skillNameType = skillName.Substring(0, skillName.IndexOf("+"));
 
             if (GSR() >= 10)
                 Def += 1;
@@ -4852,10 +5006,6 @@ namespace MHFZ_Overlay.addresses
             if (GSR() >= 20)
             {
                 FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 30)
@@ -4863,11 +5013,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 40)
             {
-                FireRes += 2;
                 WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 50)
@@ -4881,11 +5027,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 80)
             {
-                FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
                 ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 90)
@@ -4899,11 +5041,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 120)
             {
-                FireRes += 2;
-                WaterRes += 2;
                 IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 130)
@@ -4911,10 +5049,6 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 140)
             {
-                FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
                 DragonRes += 2;
             }
 
@@ -4942,10 +5076,6 @@ namespace MHFZ_Overlay.addresses
             if (GSR() >= 220)
             {
                 FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 230)
@@ -4953,11 +5083,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 240)
             {
-                FireRes += 2;
                 WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 250)
@@ -4971,11 +5097,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 280)
             {
-                FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
                 ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 290)
@@ -4989,11 +5111,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 320)
             {
-                FireRes += 2;
-                WaterRes += 2;
                 IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 330)
@@ -5001,10 +5119,6 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 340)
             {
-                FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
                 DragonRes += 2;
             }
 
@@ -5032,10 +5146,6 @@ namespace MHFZ_Overlay.addresses
             if (GSR() >= 420)
             {
                 FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 430)
@@ -5043,11 +5153,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 440)
             {
-                FireRes += 2;
                 WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 450)
@@ -5061,11 +5167,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 480)
             {
-                FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
                 ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 490)
@@ -5079,11 +5181,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 520)
             {
-                FireRes += 2;
-                WaterRes += 2;
                 IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 530)
@@ -5091,10 +5189,6 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 540)
             {
-                FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
                 DragonRes += 2;
             }
 
@@ -5122,10 +5216,6 @@ namespace MHFZ_Overlay.addresses
             if (GSR() >= 620)
             {
                 FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 630)
@@ -5133,11 +5223,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 640)
             {
-                FireRes += 2;
                 WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 650)
@@ -5151,11 +5237,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 680)
             {
-                FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
                 ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 690)
@@ -5169,11 +5251,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 720)
             {
-                FireRes += 2;
-                WaterRes += 2;
                 IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 730)
@@ -5181,10 +5259,6 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 740)
             {
-                FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
                 DragonRes += 2;
             }
 
@@ -5212,22 +5286,14 @@ namespace MHFZ_Overlay.addresses
             if (GSR() >= 820)
             {
                 FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 830)
-                ConquestDef += 10;
+                ConquestDef += 10;//15?
 
             if (GSR() >= 840)
             {
-                FireRes += 2;
                 WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 850)
@@ -5237,15 +5303,11 @@ namespace MHFZ_Overlay.addresses
                 Def += 2;
 
             if (GSR() >= 870)
-                ConquestDef += 10;
+                ConquestDef += 10;//15?
 
             if (GSR() >= 880)
             {
-                FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
                 ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 890)
@@ -5259,22 +5321,14 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 920)
             {
-                FireRes += 2;
-                WaterRes += 2;
                 IceRes += 2;
-                ThunderRes += 2;
-                DragonRes += 2;
             }
 
             if (GSR() >= 930)
-                ConquestDef += 10;
+                ConquestDef += 10;//15?
 
             if (GSR() >= 940)
             {
-                FireRes += 2;
-                WaterRes += 2;
-                IceRes += 2;
-                ThunderRes += 2;
                 DragonRes += 2;
             }
 
@@ -5285,7 +5339,7 @@ namespace MHFZ_Overlay.addresses
                 Def += 2;
 
             if (GSR() >= 970)
-                ConquestDef += 10;
+                ConquestDef += 10;//15?
 
             if (GSR() >= 980)
                 AllRes += 1;
@@ -5295,23 +5349,47 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 999)
                 ConquestAtk += 4;
+                //AllRes += 1;/
+                //ConquestDef = 300;
 
+            var GSRSkillAddition = GetTotalGSRWeaponUnlocks() switch
+            {
+                "11" => 0,
+                "12" => 2,
+                "13" => 4,
+                "14" => 5,
+                _ => 0,
+            };
 
-            //TODO: address for sr unlocks (0 then 11 then 12 then 13 then 14)
+            var GSRSkillMultiplier = GetTotalGSRWeaponUnlocks() switch
+            {
+                "11" => 0,
+                "12" => 1,
+                "13" => 2,
+                "14" => 3,
+                _ => 0,
+            };
 
+            if (Is11GSR999() && (skillNameType == "Conquest Atk" || skillNameType == "Conquest Def"))
+            {
+                ConquestAtk = 100 + (5 * GSRSkillMultiplier);
+                ConquestDef = 300 + (10 * GSRSkillMultiplier);
+            }
 
+            //already tested
             return skillNameType switch
             {
                 "Nothing" => "Nothing",
-                "Def" => string.Format("{0}{1}", skillNameType, skillNameNumber + Def),
-                "Conquest Atk" => string.Format("{0}{1}", skillNameType, skillNameNumber + ConquestAtk),
-                "Conquest Def" => string.Format("{0}{1}", skillNameType, skillNameNumber + ConquestDef),
-                "Fire Res" => string.Format("{0}{1}", skillNameType, skillNameNumber + FireRes),
-                "Water Res" => string.Format("{0}{1}", skillNameType, skillNameNumber + WaterRes),
-                "Thunder Res" => string.Format("{0}{1}", skillNameType, skillNameNumber + ThunderRes),
-                "Ice Res" => string.Format("{0}{1}", skillNameType, skillNameNumber + IceRes),
-                "Dragon Res" => string.Format("{0}{1}", skillNameType, skillNameNumber + DragonRes),
-                "All Res" => string.Format("{0}{1}", skillNameType, skillNameNumber + AllRes),
+                "Def" => string.Format("{0}+{1}", skillNameType, skillNameNumber + Def),//goes to 80?
+                "Conquest Atk" => string.Format("{0}+{1}", skillNameType, skillNameNumber + ConquestAtk),
+                "Conquest Def" => string.Format("{0}+{1}", skillNameType, skillNameNumber + ConquestDef),
+                "Fire Res" => string.Format("{0}+{1}", skillNameType, skillNameNumber + FireRes),
+                "Water Res" => string.Format("{0}+{1}", skillNameType, skillNameNumber + WaterRes),
+                "Thunder Res" => string.Format("{0}+{1}", skillNameType, skillNameNumber + ThunderRes),
+                "Ice Res" => string.Format("{0}+{1}", skillNameType, skillNameNumber + IceRes),
+                "Dragon Res" => string.Format("{0}+{1}", skillNameType, skillNameNumber + DragonRes),
+                "All Res" => string.Format("{0}+{1}", skillNameType, skillNameNumber + AllRes),
+                //"Affinity" => string.Format("{0}{1}",skillNameType,skillNameNumber + (2 * GSRSkillMultiplier)),
                 _ => "None",
             };
         }
@@ -5329,9 +5407,9 @@ namespace MHFZ_Overlay.addresses
             //todo: sr skill
             //zp in bold for markdown
             //fruits and speedrunner items also in bold
-            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills{15}:\n{16}\n\nCaravan Skills:\n{17}\n\nDiva Skill:\n{18}\n\nGuild Food:\n{19}\n\nItems:\n{20}\n\nAmmo:\n{21}\n\nPoogie Item:\n{22}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
-            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*\n\n**{3}**: {4}\n**Head:** {5}\n**Chest:** {6}\n**Arms:** {7}\n**Waist:** {8}\n**Legs:** {9}\n**Cuffs:** {10}\n\n**Weapon Attack:** {11} | **Total Defense:** {12}\n\n**Zenith Skills:**\n{13}\n\n**Automatic Skills:**\n{14}\n\n**Active Skills{15}:**\n{16}\n\n**Caravan Skills:**\n{17}\n\n**Diva Skill:**\n{18}\n\n**Guild Food:**\n{19}\n\n**Items:**\n{20}\n\n**Ammo:**\n{21}\n\n**Poogie Item:**\n{22}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
-            return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills{15}:\n{16}\n\nCaravan Skills:\n{17}\n\nDiva Skill:\n{18}\n\nGuild Food:\n{19}\n\nItems:\n{20}\n\nAmmo:\n{21}\n\nPoogie Item:\n{22}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName,"head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), "items", "ammo", GetItemName(PoogieItemUseID()));
+            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills{15}:\n{16}\n\nCaravan Skills:\n{17}\n\nDiva Skill:\n{18}\n\nGuild Food:\n{19}\n\nStyle Rank:\n{20}\n\nItems:\n{21}\n\nAmmo:\n{22}\n\nPoogie Item:\n{23}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills,"items", "ammo", GetItemName(PoogieItemUseID()));
+            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*\n\n**{3}**: {4}\n**Head:** {5}\n**Chest:** {6}\n**Arms:** {7}\n**Waist:** {8}\n**Legs:** {9}\n**Cuffs:** {10}\n\n**Weapon Attack:** {11} | **Total Defense:** {12}\n\n**Zenith Skills:**\n{13}\n\n**Automatic Skills:**\n{14}\n\n**Active Skills{15}:**\n{16}\n\n**Caravan Skills:**\n{17}\n\n**Diva Skill:**\n{18}\n\n**Guild Food:**\n{19}\n\n**Style Rank:**\n{20}\n\n**Items:**\n{21}\n\n**Ammo:**\n{22}\n\n**Poogie Item:**\n{23}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills,"items", "ammo", GetItemName(PoogieItemUseID()));
+            return string.Format("【MHF-Z】Overlay {0} {1}({2})\n\n{3}: {4}\nHead: {5}\nChest: {6}\nArms: {7}\nWaist: {8}\nLegs: {9}\nCuffs: {10}\n\nWeapon Attack: {11} | Total Defense: {12}\n\nZenith Skills:\n{13}\n\nAutomatic Skills:\n{14}\n\nActive Skills{15}:\n{16}\n\nCaravan Skills:\n{17}\n\nDiva Skill:\n{18}\n\nGuild Food:\n{19}\n\nStyle Rank:\n{20}\n\nItems:\n{21}\n\nAmmo:\n{22}\n\nPoogie Item:\n{23}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), CurrentWeaponName, GetRealWeaponName,"head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills,"items", "ammo", GetItemName(PoogieItemUseID()));
         }
 
         /// <summary>

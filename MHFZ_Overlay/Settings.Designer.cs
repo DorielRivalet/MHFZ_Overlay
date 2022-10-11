@@ -1294,5 +1294,29 @@ namespace MHFZ_Overlay {
                 this["GouBoostExport"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("11")]
+        public string GSRUnlocksExport {
+            get {
+                return ((string)(this["GSRUnlocksExport"]));
+            }
+            set {
+                this["GSRUnlocksExport"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Enable11GSR999 {
+            get {
+                return ((bool)(this["Enable11GSR999"]));
+            }
+            set {
+                this["Enable11GSR999"] = value;
+            }
+        }
     }
 }

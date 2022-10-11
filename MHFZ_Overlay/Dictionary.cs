@@ -2069,7 +2069,12 @@ namespace Dictionary
     {
         public static Dictionary<int, string> StyleRankSkillID = new Dictionary<int, string>()
         {
-            //Todo: number values (tfw no sr999)
+            //the bonuses totals are:
+            //defense+50
+            //res+10.
+            //all res+5
+            //conquest def+200 (300 base at x11 gsr999, +10 per g rank weapon unlock)
+            //conquest atk+50 (100 base at x11 gsr999, +5 per g rank weapon unlock)
             {0, "Nothing"},
             {1, ""},
             {2, ""},
@@ -2080,9 +2085,9 @@ namespace Dictionary
             {7, ""},
             {8, ""},
             {9, ""},
-            {10, "Defense+110"},
-            {11, "Conquest Def+330"},
-            {12, "Conquest Atk+115"},
+            {10, "Defense+110"},//?
+            {11, "Conquest Def+0"},//+200 at gsr999, +300 at x11 gsr999, goes to 330 with the 3 weapon unlocks at g rank
+            {12, "Conquest Atk+0"},// see above. but with 100 + 5+ 5+5.
             {13, "Passive Master"},
             {14, "Soul Revival"},
             {15, "Secret Tech"},
@@ -2092,19 +2097,19 @@ namespace Dictionary
             {19, ""},
             {20, ""},
             {21, ""},
-            {22, "Def+10"},//idk
-            {23, "Def+20"},
-            {24, "Def+30"},
-            {25, "Def+40"},
-            {26, "Def+50"},
+            {22, ""},
+            {23, ""},
+            {24, ""},
+            {25, ""},
+            {26, ""},
             {27, "Def+60"},//start
             {28, ""},
             {29, ""},
             {30, ""},
-            {31, "Def+100"},//after nosus
-            {32, "Def+110"},
-            {33, "Def+120"},//120. then 121,... (from bonus) (+10 from magnet spike)
-            {34, "Def+180"},
+            {31, "Def+100"},//after nosus. no g rank weps
+            {32, "Def+110"},//after swaxe?. 1 g rank wep.
+            {33, "Def+120"},//120. then 121,... (from bonus) (+10 from magnet spike). 2 g rank weps.
+            {34, "Def+130"},//todo: needs testing. is at least 140 min. 3 g rank weps. max is 180.
             {35, ""},
             {36, ""},
             {37, ""},
@@ -2118,10 +2123,10 @@ namespace Dictionary
             {45, ""},//todo
             {46, ""},
             {47, ""},
-            {48, "Fire Res+20"},
-            {49, "Fire Res+22"},
-            {50, "Fire Res+24"},
-            {51, "Fire Res+35"},
+            {48, "Fire Res+20"},//after hr6
+            {49, "Fire Res+22"},//1 grank wep
+            {50, "Fire Res+24"},//2 grank wep
+            {51, "Fire Res+25"},//3rd grank wep goes by +1.
             {52, ""},
             {53, ""},
             {54, ""},
@@ -2138,7 +2143,7 @@ namespace Dictionary
             {65, "Water Res+20"},//after nosus
             {66, "Water Res+22"},//todo
             {67, "Water Res+24"},
-            {68, "Water Res+35"},
+            {68, "Water Res+25"},
             {69, ""},
             {70, ""},
             {71, ""},
@@ -2155,7 +2160,7 @@ namespace Dictionary
             {82, "Thunder Res+20"},
             {83, "Thunder Res+22"},
             {84, "Thunder Res+24"},
-            {85, "Thunder Res+35"},
+            {85, "Thunder Res+25"},
             {86, ""},
             {87, ""},
             {88, ""},
@@ -2172,7 +2177,7 @@ namespace Dictionary
             {99, "Ice Res+20"},
             {100, "Ice Res+22"},
             {101, "Ice Res+24"},
-            {102, "Ice Res+35"},
+            {102, "Ice Res+25"},
             {103, ""},
             {104, ""},
             {105, ""},
@@ -2189,18 +2194,18 @@ namespace Dictionary
             {116, "Dragon Res+20"},
             {117, "Dragon Res+22"},
             {118, "Dragon Res+24"},
-            {119, "Dragon Res+35"},
+            {119, "Dragon Res+25"},
             {120, ""},
             {121, ""},
             {122, ""},
             {123, ""},
             {124, "All Res+7"},
-            {125, "All Res+8"},//untested
-            {126, "All Res+9"},//untested
-            {127, "All Res+10"},//from 7 to 10
-            {128, "All Res+12"},
-            {129, "All Res+14"},
-            {130, ""},
+            {125, ""},//untested
+            {126, ""},//untested
+            {127, "All Res+10"},//from 7 to 10. after hr6.
+            {128, "All Res+12"},//1st g rank wep
+            {129, "All Res+14"},//2nd g rank wep
+            {130, "All Res+15"},//3rd g rank wep
             {131, ""},
             {132, ""},
             {133, ""},

@@ -2130,3 +2130,119 @@
 ### Berserk Raviente Trigger Events
 
 ### Extreme Berserk Raviente Trigger Events
+
+### Special Effects (G Style Rank)
+
+|GSR| Effect|
+|--|------|
+|0|Def+100, Ele Res+20, All Res+10, Affinity+20|
+|10|Def+1|
+|20|Fire Res+2|
+|30|Conquest Def+10|
+|40|Water Res+2|
+|50|Conquest Atk+2|
+|60|Def+1|
+|70|Conquest Def+10|
+|80|Thunder Res+2|
+|90|Def+1|
+|100|Conquest Atk+2, 2 special effects can be set|
+|110|Def+1|
+|120|Ice Res+2|
+|130|Conquest Def+10|
+|140|Dragon Res+2|
+|150|Conquest Atk+2|
+|160|Def+1|
+|170|Conquest Def+10|
+|180|All Res+1|
+|190|Def+1|
+|200|Conquest Atk+2|
+|210|Def+1|
+|220|Fire Res+2|
+|230|Conquest Def+10|
+|240|Water Res+2|
+|250|Conquest Atk+2|
+|260|Def+1|
+|270|Conquest Def+10|
+|280|Thunder Res+2|
+|290|Def+1|
+|300|Conquest Atk+2|
+|310|Def+1|
+|320|Ice Res+2|
+|330|Conquest Def+10|
+|340|Dragon Res+2|
+|350|Conquest Atk+2|
+|360|Def+2|
+|370|Conquest Def+10|
+|380|All Res+1|
+|390|Def+2|
+|400|Conquest Atk+2|
+|410|Def+2|
+|420|Fire Res+2|
+|430|Conquest Def+10|
+|440|Water Res+2|
+|450|Conquest Atk+2|
+|460|Def+2|
+|470|Conquest Def+10|
+|480|Thunder Res+2|
+|490|Def+2|
+|500|Conquest Atk+2|
+|510|Def+2|
+|520|Ice Res+2|
+|530|Conquest Def+10|
+|540|Dragon Res+2|
+|550|Conquest Atk+2|
+|560|Def+2|
+|570|Conquest Def+10|
+|580|All Res+1|
+|590|Def+2|
+|600|Conquest Atk+2|
+|610|Def+2|
+|620|Fire Res+2|
+|630|Conquest Def+10|
+|640|Water Res+2|
+|650|Conquest Atk+2|
+|660|Def+2|
+|670|Conquest Def+10|
+|680|Thunder Res+2|
+|690|Def+2|
+|700|Conquest Atk+2|
+|710|Def+2|
+|720|Ice Res+2|
+|730|Conquest Def+10|
+|740|Ice Res+2|
+|750|Conquest Atk+2|
+|760|Def+2|
+|770|Conquest Def+10|
+|780|All Res+1|
+|790|Def+2|
+|800|Conquest Atk+4|
+|810|Def+2|
+|820|Fire Res+2|
+|830|Conquest Def+10|
+|840|Water Res+2|
+|850|Conquest Atk+4|
+|860|Def+2|
+|870|Conquest Def+10|
+|880|Thunder Res+2|
+|890|Def+2|
+|900|Conquest Atk+4|
+|910|Def+2|
+|920|Ice Res+2|
+|930|Conquest Defense+10|
+|940|Dragon Res+2|
+|950|Conquest Atk+4|
+|960|Def+2|
+|970|Conquest Def+10|
+|980|All Res+1|
+|990|Def+2|
+|999|Passive Master, Conquest Atk+4|
+|x11 GSR999|Soul Revival, Conquest Atk Base 100, Conquest Def Base 300, G Rank Weapon unlock bonuses for conquest skills (+10 Def, +5 Atk each)|
+
+# GSR Weapon Unlock Bonus
+
+|Unlocks| Bonus|
+|--|------|
+|11|None|
+|12|Affinity+2, Ele Res+2, All Res+2, Def+10, Conquest Atk Base 100+5, Conquest Def Base 300+10|
+|13|Affinity+2, Ele Res+2, All Res+2, Def+10, Conquest Atk Base 100+5, Conquest Def Base 300+10|
+|14|Affinity+2, Ele Res+1, All Res+1, Def+10, Conquest Atk Base 100+5, Conquest Def Base 300+10|
