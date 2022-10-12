@@ -4142,7 +4142,7 @@ namespace MHFZ_Overlay.addresses
 
                 //string address = Convert.ToString(ArmorHeadID(), 16).ToUpper();
                 string address = ArmorHeadID().ToString("X4").ToUpper();
-                return string.Format("{0} ({1})", piecename, address);
+                return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorHeadDeco1ID()), GetDecoName(ArmorHeadDeco2ID()), GetDecoName(ArmorHeadDeco3ID()));
             }
         }
 
@@ -4163,7 +4163,7 @@ namespace MHFZ_Overlay.addresses
 
                 //string address = Convert.ToString(ArmorChestID(), 16).ToUpper();
                 string address = ArmorChestID().ToString("X4").ToUpper();
-                return string.Format("{0} ({1})", piecename, address);
+                return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorChestDeco1ID()), GetDecoName(ArmorChestDeco2ID()), GetDecoName(ArmorChestDeco3ID()));
             }
         }
 
@@ -4184,7 +4184,7 @@ namespace MHFZ_Overlay.addresses
 
                 //string address = Convert.ToString(ArmorArmsID(), 16).ToUpper();
                 string address = ArmorArmsID().ToString("X4").ToUpper();
-                return string.Format("{0} ({1})", piecename, address);
+                return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorArmsDeco1ID()), GetDecoName(ArmorArmsDeco2ID()), GetDecoName(ArmorArmsDeco3ID()));
             }
         }
 
@@ -4205,7 +4205,7 @@ namespace MHFZ_Overlay.addresses
 
                 //string address = Convert.ToString(ArmorWaistID(), 16).ToUpper();
                 string address = ArmorWaistID().ToString("X4").ToUpper();
-                return string.Format("{0} ({1})", piecename, address);
+                return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorWaistDeco1ID()), GetDecoName(ArmorWaistDeco2ID()), GetDecoName(ArmorWaistDeco3ID()));
             }
         }
 
@@ -4226,7 +4226,7 @@ namespace MHFZ_Overlay.addresses
 
                 //string address = Convert.ToString(ArmorLegsID(), 16).ToUpper();
                 string address = ArmorLegsID().ToString("X4").ToUpper();
-                return string.Format("{0} ({1})", piecename, address);
+                return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorLegsDeco1ID()), GetDecoName(ArmorLegsDeco2ID()), GetDecoName(ArmorLegsDeco3ID()));
             }
         }
 
@@ -4236,13 +4236,33 @@ namespace MHFZ_Overlay.addresses
         /// <value>
         /// The decos.
         /// </value>
-        public string GetDecos
+        public string GetDecoName(int id)
         {
-            get
+            Dictionary.Items.ItemIDs.TryGetValue(id, out string? DecoName);
+
+            //todo: refactor pls
+            if (GetTextFormat() == "Markdown")
             {
-                return "";
+                if (IsMetaItem(id) && (DecoName != null || DecoName != "None" || DecoName != ""))
+                    DecoName = string.Format("**{0}**", DecoName);
             }
-        }
+
+            if (DecoName == null || DecoName == "None" || DecoName == "")
+                DecoName = "Empty";
+            //else if (ItemName6 == null || ItemName6 == "None")
+            //    ItemName5 = ItemName5 + "";
+            else
+                DecoName += "";
+
+            //Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(ArmorLegsID(), out string? piecename);
+
+            //if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
+            //    piecename = string.Format("**{0}**", piecename);
+
+            //string address = Convert.ToString(ArmorLegsID(), 16).ToUpper();
+            string address = id.ToString("X4").ToUpper();
+            return string.Format("{0} ({1})", DecoName, address);
+        }   
 
         /// <summary>
         /// Gets the sigils.
