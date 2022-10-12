@@ -286,6 +286,12 @@ namespace MHFZ_Overlay
             //https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
             Clipboard.SetText(textToSave);
         }
+
+        private void BtnImageFile_Click(object sender, RoutedEventArgs e)
+        {
+            return;
+        }
+
     };
 
 
