@@ -5396,6 +5396,12 @@ namespace MHFZ_Overlay.addresses
             };
         }
 
+        /// <summary>
+        /// Gets the metadata.
+        /// </summary>
+        /// <value>
+        /// The metadata.
+        /// </value>
         public string GetMetadata
         {
             get
@@ -5423,6 +5429,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Gets the gear description.
+        /// </summary>
+        /// <value>
+        /// The gear description.
+        /// </value>
         public string GetGearDescription
         {
             get
@@ -5538,8 +5550,62 @@ namespace MHFZ_Overlay.addresses
                 case 15079:
 
                 //all true hiden
-
-
+                case 13640:
+                case 13641:
+                case 13642:
+                case 13643:
+                case 13644:
+                case 13645:
+                case 13646:
+                case 13647:
+                case 13648:
+                case 13649:
+                case 13650:
+                case 13651:
+                case 13652:
+                case 13653:
+                case 13654:
+                case 13655:
+                case 13656:
+                case 13657:
+                case 13658:
+                case 13659:
+                case 13660:
+                case 13661:
+                case 13662:
+                case 13663:
+                case 13664:
+                case 13665:
+                case 13666:
+                case 13667:
+                case 13668:
+                case 13669:
+                case 13670:
+                case 13671:
+                case 13672:
+                case 13673:
+                case 13674:
+                case 13675:
+                case 13676:
+                case 13677:
+                case 13678:
+                case 13679:
+                case 13680:
+                case 13681:
+                case 13682:
+                case 13683:
+                case 13684:
+                case 13685:
+                case 13686:
+                case 13687:
+                case 13688:
+                case 13689:
+                case 13690:
+                case 13691:
+                case 15546:
+                case 15547:
+                case 15548:
+                case 15549:
                     return true;
             }
         }
