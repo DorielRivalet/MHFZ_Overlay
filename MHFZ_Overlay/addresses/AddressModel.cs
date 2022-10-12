@@ -3729,20 +3729,37 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 string className = GetWeaponClass();
+                string lv = GetGRWeaponLevel(GRWeaponLv());
+
+                if (GetTextFormat() == "Markdown")
+                {
+                    if (lv == " Lv. 50" || lv == " Lv. 100")
+                        lv = string.Format("**{0}**",lv);
+                }
+
+                var style = WeaponStyle() switch
+                {
+                    0 => "Earth Style",
+                    1 => "Heaven Style",
+                    2 => "Storm Style",
+                    3 => "Extreme Style",
+                    _ => "Earth Style"
+                };
 
                 if (className == "Blademaster")
                 {
                     Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
                     //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
-                    return string.Format("{0} ({1})", wepname,address);
+
+                    return string.Format("{0}{1} ({2}) | {3}", wepname, lv, address, style);
                 }
                 else if (className == "Gunner")
                 {
                     Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
                     //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
-                    return string.Format("{0} ({1})", wepname, address);
+                    return string.Format("{0}{1} ({2}) | {3}", wepname, lv, address, style);
                 }
                 else
                 {
@@ -4785,6 +4802,16 @@ namespace MHFZ_Overlay.addresses
             };
         }
 
+        public bool IsMaxCaravanSkill(int id)
+        {
+            switch (id)
+            {
+                default:
+                    return false;
+
+            }
+        }
+
         /// <summary>
         /// Gets the automatic skills.
         /// </summary>
@@ -5624,7 +5651,7 @@ namespace MHFZ_Overlay.addresses
                 return "";
             //else if (level % 50 == 0)
             //    return "Lv. " + level;
-            else return "Lv. " + level;
+            else return " Lv. " + level;
 
         }
 
