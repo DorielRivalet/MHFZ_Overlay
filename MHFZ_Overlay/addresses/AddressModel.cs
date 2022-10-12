@@ -4331,21 +4331,58 @@ namespace MHFZ_Overlay.addresses
         }
 
         /// <summary>
-        /// Generates the gear stats
+        /// Determines whether [is maximum caravan skill] [the specified identifier].
         /// </summary>
-        //public string GenerateGearStats()
-        //{
-        //    SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}Text", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetRealWeaponName());
-        //    return SavedGearStats;
-        //}
-
-        //public string GetGearStats
-        //{
-        //    get
-        //    {
-        //        return GenerateGearStats();
-        //    }
-        //}
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        ///   <c>true</c> if [is maximum caravan skill] [the specified identifier]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsMaxCaravanSkill(int id)
+        {
+            
+            switch (id)
+            {
+                default:
+                    return false;
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 12:
+                case 15:
+                case 16:
+                case 21:
+                case 24:
+                case 27:
+                case 39:
+                case 42:
+                case 76:
+                case 77:
+                case 78:
+                case 79:
+                case 80:
+                case 83:
+                case 86:
+                case 89:
+                case 92:
+                case 96:
+                case 100:
+                case 101:
+                case 102:
+                case 103:
+                case 104:
+                case 105:
+                case 106:
+                case 107:
+                case 108:
+                    return true;
+            }
+        }
 
         /// <summary>
         /// Gets the caravan skills.
@@ -4362,6 +4399,16 @@ namespace MHFZ_Overlay.addresses
                 Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id1, out string? caravanSkillName1);
                 Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id2, out string? caravanSkillName2);
                 Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id3, out string? caravanSkillName3);
+
+                if (IsMaxCaravanSkill(id1))
+                    caravanSkillName1 = String.Format("**{0}**", caravanSkillName1);
+
+                if (IsMaxCaravanSkill(id2))
+                    caravanSkillName2 = String.Format("**{0}**", caravanSkillName2);
+
+                if (IsMaxCaravanSkill(id3))
+                    caravanSkillName3 = String.Format("**{0}**", caravanSkillName3);
+
 
                 if (caravanSkillName1 == "" || caravanSkillName1 == "None")
                     return "None";
@@ -5215,16 +5262,6 @@ namespace MHFZ_Overlay.addresses
 
                 _ => id,
             };
-        }
-
-        public bool IsMaxCaravanSkill(int id)
-        {
-            switch (id)
-            {
-                default:
-                    return false;
-
-            }
         }
 
         /// <summary>

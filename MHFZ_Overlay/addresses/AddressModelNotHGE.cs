@@ -257,6 +257,7 @@ namespace MHFZ_Overlay.addresses
         
         public override int RangedWeaponID() => M.Read2Byte("mhfo.dll+5033F92");
             //TODO: Sigils
+            //the deco addresses for the weapon includes the tower sigils
         public override int WeaponDeco1ID() => M.Read2Byte("mhfo.dll+5033F96");
         public override int WeaponDeco2ID() => M.Read2Byte("mhfo.dll+5033F98");
         public override int WeaponDeco3ID() => M.Read2Byte("mhfo.dll+5033F9A");
