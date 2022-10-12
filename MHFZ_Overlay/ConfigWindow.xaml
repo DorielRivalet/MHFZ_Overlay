@@ -349,7 +349,7 @@
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
                                             <ScrollViewer VerticalScrollBarVisibility="Visible">
-                                                <TextBlock Text="{Binding GetGearStats}" Name="GearStats" TextWrapping="Wrap"/>
+                                                <TextBlock ToolTip="If the values are incorrect, double check your settings, check your guild card and change gear either from sets or manually" Text="{Binding GetGearStats}" Name="GearStats" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
                                     </Grid>

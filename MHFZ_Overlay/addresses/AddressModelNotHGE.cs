@@ -282,6 +282,7 @@ namespace MHFZ_Overlay.addresses
         public override int ArmorLegsDeco3ID() => 1;
         public override int Cuff1ID() => M.Read2Byte("mhfo.dll+50348C2");
         public override int Cuff2ID() => M.Read2Byte("mhfo.dll+50348C4");
+        //updates when checking guild card
         public override int TotalDefense() => M.Read2Byte("mhfo.dll+5034338");
         public override int PouchItem1ID() => M.Read2Byte("mhfo.dll+50345A8");
         public override int PouchItem1Qty() => M.Read2Byte("mhfo.dll+50345AA");
@@ -385,6 +386,8 @@ namespace MHFZ_Overlay.addresses
 
         public override int StyleRank1() => M.ReadByte("mhfo.dll+50348D3");
         public override int StyleRank2() => M.ReadByte("mhfo.dll+503499F");
+
+        public override int GRWeaponLv() => M.Read2Byte("mhfo.dll+5033F94");
 
     }
 }

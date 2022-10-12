@@ -419,6 +419,8 @@ namespace MHFZ_Overlay.addresses
         abstract public int StyleRank1();
         abstract public int StyleRank2();
 
+        abstract public int GRWeaponLv();
+
 
         #endregion
 
@@ -5432,6 +5434,132 @@ namespace MHFZ_Overlay.addresses
                 else 
                     return "";
             }
+        }
+
+        /// <summary>
+        /// Determines whether item [is meta item].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is meta item]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsMetaItem(int id)
+        {
+            switch (id)
+            {
+                default: return false;
+                case 14642://hunter taloncharm
+                case 1681://maiden items
+                case 1682:
+                case 1683:
+                case 1684:
+                case 1481:
+                case 1482:
+                case 1483:
+                case 4750://perfect whetstone
+                case 8030://shiri
+                case 8026://encourage
+                case 8037://impatience charm
+                case 8031://elixir of peace
+                case 8040://gathering charm min
+                case 8042://gathering charm max
+                case 8047://health charm
+                case 8052://stamina charm
+                case 1548://starving wolf potion
+                case 4943://serious drink affinity
+                case 9719://all element drug
+                case 9715://quick mega juice
+                case 9714://quick max potion
+                case 4358://potion g2
+                case 78://farcaster
+                case 4952://halk pot
+                case 5771://halk call
+                case 1537://nearcaster
+                case 1888://power sword crystal
+                case 1553://LS spirit drink
+                case 14803://adrenaline charm
+                case 14804://starving wolf charm
+                case 91://small barrel bombs
+                case 92:
+                case 1782://random ball
+                case 300://poogie crackers
+                case 9717://attack medicine
+                case 34://lifepowder
+                case 4723://gook amulet
+                case 5277://gook bomb
+                case 5279://gook cracker
+                case 5711://gook whistle
+                case 5712://gook fireworks
+                case 5714://gook pickaxe
+                case 5715://gook fishing net
+                case 5716://gook bugnet
+                case 5717://gook gloves
+
+                //decos
+                //all ravi
+                case 12724:
+                case 12725:
+                case 12726:
+                case 12727:
+                case 12728:
+                case 12729:
+                case 12730:
+                case 12731:
+                case 12732:
+                case 12733:
+                case 12734:
+                case 12735:
+                case 12736:
+                case 12737:
+                case 12738:
+                case 12739:
+                case 12740:
+                case 12741:
+                case 12742:
+                case 12743:
+                case 12744:
+                case 12745:
+                case 12746:
+                case 12747:
+                case 12748:
+                case 12749:
+                case 12750:
+                case 12751:
+                case 12752:
+                case 12753:
+                case 15070:
+                case 15071:
+                case 15072:
+                case 15073:
+                case 15074:
+                case 15075:
+                case 15076:
+                case 15077:
+                case 15078:
+                case 15079:
+
+                //all true hiden
+
+
+                    return true;
+            }
+        }
+
+        public bool IsMetaGear(string piece)
+        {
+            if (piece.Contains("ZP") || piece.Contains("PZ") || piece.Contains("SnS・") || piece.Contains("DS・") || piece.Contains("GS・") || piece.Contains("LS・") || piece.Contains("Hammer・") || piece.Contains("HH・") || piece.Contains("Lance・") || piece.Contains("GL・") || piece.Contains("Swaxe・") || piece.Contains("Tonfa・") || piece.Contains("Magspike・") || piece.Contains("LBG・") || piece.Contains("HBG・") || piece.Contains("Bow・"))
+                return true;
+            else
+                return false;
+        }
+
+        public string GetGRWeaponLevel(int level)
+        {
+            if (level == 0)
+                return "";
+            //else if (level % 50 == 0)
+            //    return "Lv. " + level;
+            else return "Lv. " + level;
+
         }
 
         /// <summary>
