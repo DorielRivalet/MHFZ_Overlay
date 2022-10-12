@@ -3768,6 +3768,363 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string GetAmmoPouch
+        {
+            get
+            {
+                int Item1 = AmmoPouchItem1ID();
+                int Item2 = AmmoPouchItem2ID();
+                int Item3 = AmmoPouchItem3ID();
+                int Item4 = AmmoPouchItem4ID();
+                int Item5 = AmmoPouchItem5ID();
+                int Item6 = AmmoPouchItem6ID();
+                int Item7 = AmmoPouchItem7ID();
+                int Item8 = AmmoPouchItem8ID();
+                int Item9 = AmmoPouchItem9ID();
+                int Item10 = AmmoPouchItem10ID();
+
+                Dictionary.Items.ItemIDs.TryGetValue(Item1, out string? ItemName1);
+                Dictionary.Items.ItemIDs.TryGetValue(Item2, out string? ItemName2);
+                Dictionary.Items.ItemIDs.TryGetValue(Item3, out string? ItemName3);
+                Dictionary.Items.ItemIDs.TryGetValue(Item4, out string? ItemName4);
+                Dictionary.Items.ItemIDs.TryGetValue(Item5, out string? ItemName5);
+                Dictionary.Items.ItemIDs.TryGetValue(Item6, out string? ItemName6);
+                Dictionary.Items.ItemIDs.TryGetValue(Item7, out string? ItemName7);
+                Dictionary.Items.ItemIDs.TryGetValue(Item8, out string? ItemName8);
+                Dictionary.Items.ItemIDs.TryGetValue(Item9, out string? ItemName9);
+                Dictionary.Items.ItemIDs.TryGetValue(Item10, out string? ItemName10);
+
+                //TODO: refactor. also the values have to be skipped if item slot is empty
+                if (ItemName1 == null || ItemName1 == "None" || ItemName1 == "" || AmmoPouchItem1Qty() == 0)
+                    ItemName1 = "Empty, ";
+                else if (ItemName2 == null || ItemName2 == "None" || ItemName2 == "" || AmmoPouchItem2Qty() == 0)
+                    ItemName1 += ", ";
+                else
+                    ItemName1 += ", ";
+
+                if (ItemName2 == null || ItemName2 == "None" || ItemName2 == "" || AmmoPouchItem2Qty() == 0)
+                    ItemName2 = "Empty, ";
+                else if (ItemName3 == null || ItemName3 == "None" || ItemName3 == "" || AmmoPouchItem3Qty() == 0)
+                    ItemName2 += ", ";
+                else
+                    ItemName2 += ", ";
+
+                if (ItemName3 == null || ItemName3 == "None" || ItemName3 == "" || AmmoPouchItem3Qty() == 0)
+                    ItemName3 = "Empty, ";
+                else if (ItemName4 == null || ItemName4 == "None" || ItemName4 == "" || AmmoPouchItem4Qty() == 0)
+                    ItemName3 += ", ";
+                else
+                    ItemName3 += ", ";
+
+                if (ItemName4 == null || ItemName4 == "None" || ItemName4 == "" || AmmoPouchItem4Qty() == 0)
+                    ItemName4 = "Empty, ";
+                else if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || AmmoPouchItem5Qty() == 0)
+                    ItemName4 += ", ";
+                else
+                    ItemName4 += ", ";
+
+                if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || AmmoPouchItem5Qty() == 0)
+                    ItemName5 = "Empty, \n";
+                else if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || AmmoPouchItem6Qty() == 0)
+                    ItemName5 += "";
+                else
+                    ItemName5 += "\n";
+
+                if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || AmmoPouchItem6Qty() == 0)
+                    ItemName6 = "Empty, ";
+                else if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || AmmoPouchItem7Qty() == 0)
+                    ItemName6 += ", ";
+                else
+                    ItemName6 += ", ";
+
+                if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || AmmoPouchItem7Qty() == 0)
+                    ItemName7 = "Empty, ";
+                else if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || AmmoPouchItem8Qty() == 0)
+                    ItemName7 += ", ";
+                else
+                    ItemName7 += ", ";
+
+                if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || AmmoPouchItem8Qty() == 0)
+                    ItemName8 = "Empty, ";
+                else if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || AmmoPouchItem9Qty() == 0)
+                    ItemName8 += ", ";
+                else
+                    ItemName8 += ", ";
+
+                if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || AmmoPouchItem9Qty() == 0)
+                    ItemName9 = "Empty, ";
+                else if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0)
+                    ItemName9 += ", ";
+                else
+                    ItemName9 += ", ";
+
+                if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0)
+                    ItemName10 = "Empty";
+                //else if (ItemName6 == null || ItemName6 == "None")
+                //    ItemName5 = ItemName5 + "";
+                else
+                    ItemName10 += "";
+
+                return string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}", ItemName1, ItemName2, ItemName3, ItemName4, ItemName5, ItemName6, ItemName7, ItemName8, ItemName9, ItemName10);
+            }
+        }
+
+        public string GetItemPouch
+        {
+            get
+            {
+                int Item1 = PouchItem1ID();
+                int Item2 = PouchItem2ID();
+                int Item3 = PouchItem3ID();
+                int Item4 = PouchItem4ID();
+                int Item5 = PouchItem5ID();
+                int Item6 = PouchItem6ID();
+                int Item7 = PouchItem7ID();
+                int Item8 = PouchItem8ID();
+                int Item9 = PouchItem9ID();
+                int Item10 = PouchItem10ID();
+                int Item11 = PouchItem11ID();
+                int Item12 = PouchItem12ID();
+                int Item13 = PouchItem13ID();
+                int Item14 = PouchItem14ID();
+                int Item15 = PouchItem15ID();
+                int Item16 = PouchItem16ID();
+                int Item17 = PouchItem17ID();
+                int Item18 = PouchItem18ID();
+                int Item19 = PouchItem19ID();
+                int Item20 = PouchItem20ID();
+
+                Dictionary.Items.ItemIDs.TryGetValue(Item1, out string? ItemName1);
+                Dictionary.Items.ItemIDs.TryGetValue(Item2, out string? ItemName2);
+                Dictionary.Items.ItemIDs.TryGetValue(Item3, out string? ItemName3);
+                Dictionary.Items.ItemIDs.TryGetValue(Item4, out string? ItemName4);
+                Dictionary.Items.ItemIDs.TryGetValue(Item5, out string? ItemName5);
+                Dictionary.Items.ItemIDs.TryGetValue(Item6, out string? ItemName6);
+                Dictionary.Items.ItemIDs.TryGetValue(Item7, out string? ItemName7);
+                Dictionary.Items.ItemIDs.TryGetValue(Item8, out string? ItemName8);
+                Dictionary.Items.ItemIDs.TryGetValue(Item9, out string? ItemName9);
+                Dictionary.Items.ItemIDs.TryGetValue(Item10, out string? ItemName10);
+                Dictionary.Items.ItemIDs.TryGetValue(Item11, out string? ItemName11);
+                Dictionary.Items.ItemIDs.TryGetValue(Item12, out string? ItemName12);
+                Dictionary.Items.ItemIDs.TryGetValue(Item13, out string? ItemName13);
+                Dictionary.Items.ItemIDs.TryGetValue(Item14, out string? ItemName14);
+                Dictionary.Items.ItemIDs.TryGetValue(Item15, out string? ItemName15);
+                Dictionary.Items.ItemIDs.TryGetValue(Item16, out string? ItemName16);
+                Dictionary.Items.ItemIDs.TryGetValue(Item17, out string? ItemName17);
+                Dictionary.Items.ItemIDs.TryGetValue(Item18, out string? ItemName18);
+                Dictionary.Items.ItemIDs.TryGetValue(Item19, out string? ItemName19);
+                Dictionary.Items.ItemIDs.TryGetValue(Item20, out string? ItemName20);
+
+                //todo: refactor pls
+                if (GetTextFormat() == "Markdown")
+                {
+                    if (IsMetaItem(Item1) && (ItemName1 != null || ItemName1 != "None" || ItemName1 != ""))
+                        ItemName1 = string.Format("**{0}**", ItemName1);
+
+                    if (IsMetaItem(Item2) && (ItemName2 != null || ItemName2 != "None" || ItemName2 != ""))
+                        ItemName2 = string.Format("**{0}**", ItemName2);
+
+                    if (IsMetaItem(Item3) && (ItemName3 != null || ItemName3 != "None" || ItemName3 != ""))
+                        ItemName3 = string.Format("**{0}**", ItemName3);
+
+                    if (IsMetaItem(Item4) && (ItemName4 != null || ItemName4 != "None" || ItemName4 != ""))
+                        ItemName4 = string.Format("**{0}**", ItemName4);
+
+                    if (IsMetaItem(Item5) && (ItemName5 != null || ItemName5 != "None" || ItemName5 != ""))
+                        ItemName5 = string.Format("**{0}**", ItemName5);
+
+                    if (IsMetaItem(Item6) && (ItemName6 != null || ItemName6 != "None" || ItemName6 != ""))
+                        ItemName6 = string.Format("**{0}**", ItemName6);
+
+                    if (IsMetaItem(Item7) && (ItemName7 != null || ItemName7 != "None" || ItemName7 != ""))
+                        ItemName7 = string.Format("**{0}**", ItemName7);
+
+                    if (IsMetaItem(Item8) && (ItemName8 != null || ItemName8 != "None" || ItemName8 != ""))
+                        ItemName8 = string.Format("**{0}**", ItemName8);
+
+                    if (IsMetaItem(Item9) && (ItemName9 != null || ItemName9 != "None" || ItemName9 != ""))
+                        ItemName9 = string.Format("**{0}**", ItemName9);
+
+                    if (IsMetaItem(Item10) && (ItemName10 != null || ItemName10 != "None" || ItemName10 != ""))
+                        ItemName10 = string.Format("**{0}**", ItemName10);
+
+                    if (IsMetaItem(Item11) && (ItemName11 != null || ItemName11 != "None" || ItemName11 != ""))
+                        ItemName11 = string.Format("**{0}**", ItemName11);
+
+                    if (IsMetaItem(Item12) && (ItemName12 != null || ItemName12 != "None" || ItemName12 != ""))
+                        ItemName12 = string.Format("**{0}**", ItemName12);
+
+                    if (IsMetaItem(Item13) && (ItemName13 != null || ItemName13 != "None" || ItemName13 != ""))
+                        ItemName13 = string.Format("**{0}**", ItemName13);
+
+                    if (IsMetaItem(Item14) && (ItemName14 != null || ItemName14 != "None" || ItemName14 != ""))
+                        ItemName14 = string.Format("**{0}**", ItemName14);
+
+                    if (IsMetaItem(Item15) && (ItemName15 != null || ItemName15 != "None" || ItemName15 != ""))
+                        ItemName15 = string.Format("**{0}**", ItemName15);
+
+                    if (IsMetaItem(Item16) && (ItemName16 != null || ItemName16 != "None" || ItemName16 != ""))
+                        ItemName16 = string.Format("**{0}**", ItemName16);
+
+                    if (IsMetaItem(Item17) && (ItemName17 != null || ItemName17 != "None" || ItemName17 != ""))
+                        ItemName17 = string.Format("**{0}**", ItemName17);
+
+                    if (IsMetaItem(Item18) && (ItemName18 != null || ItemName18 != "None" || ItemName18 != ""))
+                        ItemName18 = string.Format("**{0}**", ItemName18);
+
+                    if (IsMetaItem(Item19) && (ItemName19 != null || ItemName19 != "None" || ItemName19 != ""))
+                        ItemName19 = string.Format("**{0}**", ItemName19);
+
+                    if (IsMetaItem(Item20) && (ItemName20 != null || ItemName20 != "None" || ItemName20 != ""))
+                        ItemName20 = string.Format("**{0}**", ItemName20);
+                }
+
+                //TODO: refactor. also the values have to be skipped if item slot is empty
+                if (ItemName1 == null || ItemName1 == "None" || ItemName1 == "" || PouchItem1Qty() == 0)
+                    ItemName1 = "Empty, ";
+                else if (ItemName2 == null || ItemName2 == "None" || ItemName2 == "" || PouchItem2Qty() == 0)
+                    ItemName1 += ", ";
+                else
+                    ItemName1 += ", ";
+
+                if (ItemName2 == null || ItemName2 == "None" || ItemName2 == "" || PouchItem2Qty() == 0)
+                    ItemName2 = "Empty, ";
+                else if (ItemName3 == null || ItemName3 == "None" || ItemName3 == "" || PouchItem3Qty() == 0)
+                    ItemName2 += ", ";
+                else
+                    ItemName2 += ", ";
+
+                if (ItemName3 == null || ItemName3 == "None" || ItemName3 == "" || PouchItem3Qty() == 0)
+                    ItemName3 = "Empty, ";
+                else if (ItemName4 == null || ItemName4 == "None" || ItemName4 == "" || PouchItem4Qty() == 0)
+                    ItemName3 += ", ";
+                else
+                    ItemName3 += ", ";
+
+                if (ItemName4 == null || ItemName4 == "None" || ItemName4 == "" || PouchItem4Qty() == 0)
+                    ItemName4 = "Empty, ";
+                else if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || PouchItem5Qty() == 0)
+                    ItemName4 += ", ";
+                else
+                    ItemName4 += ", ";
+
+                if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || PouchItem5Qty() == 0)
+                    ItemName5 = "Empty, \n";
+                else if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || PouchItem6Qty() == 0)
+                    ItemName5 += "";
+                else
+                    ItemName5 += "\n";
+
+                if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || PouchItem6Qty() == 0)
+                    ItemName6 = "Empty, ";
+                else if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || PouchItem7Qty() == 0)
+                    ItemName6 += ", ";
+                else
+                    ItemName6 += ", ";
+
+                if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || PouchItem7Qty() == 0)
+                    ItemName7 = "Empty, ";
+                else if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || PouchItem8Qty() == 0)
+                    ItemName7 += ", ";
+                else
+                    ItemName7 += ", ";
+
+                if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || PouchItem8Qty() == 0)
+                    ItemName8 = "Empty, ";
+                else if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || PouchItem9Qty() == 0)
+                    ItemName8 += ", ";
+                else
+                    ItemName8 += ", ";
+
+                if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || PouchItem9Qty() == 0)
+                    ItemName9 = "Empty, ";
+                else if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || PouchItem10Qty() == 0)
+                    ItemName9 += ", ";
+                else
+                    ItemName9 += ", ";
+
+                if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || PouchItem10Qty() == 0)
+                    ItemName10 = "Empty, \n";
+                else if (ItemName11 == null || ItemName11 == "None" || ItemName11 == "" || PouchItem11Qty() == 0)
+                    ItemName10 += "";
+                else
+                    ItemName10 += "\n";
+
+                if (ItemName11 == null || ItemName11 == "None" || ItemName11 == "" || PouchItem11Qty() == 0)
+                    ItemName11 = "Empty, ";
+                else if (ItemName12 == null || ItemName12 == "None" || ItemName12 == "" || PouchItem12Qty() == 0)
+                    ItemName11 += ", ";
+                else
+                    ItemName11 += ", ";
+
+                if (ItemName12 == null || ItemName12 == "None" || ItemName12 == "" || PouchItem12Qty() == 0)
+                    ItemName12 = "Empty, ";
+                else if (ItemName13 == null || ItemName13 == "None" || ItemName13 == "" || PouchItem13Qty() == 0)
+                    ItemName12 += ", ";
+                else
+                    ItemName12 += ", ";
+
+                if (ItemName13 == null || ItemName13 == "None" || ItemName13 == "" || PouchItem13Qty() == 0)
+                    ItemName13 = "Empty, ";
+                else if (ItemName14 == null || ItemName14 == "None" || ItemName14 == "" || PouchItem14Qty() == 0)
+                    ItemName13 += ", ";
+                else
+                    ItemName13 += ", ";
+
+                if (ItemName14 == null || ItemName14 == "None" || ItemName14 == "" || PouchItem14Qty() == 0)
+                    ItemName14 = "Empty, ";
+                else if (ItemName15 == null || ItemName15 == "None" || ItemName15 == "" || PouchItem15Qty() == 0)
+                    ItemName14 += ", ";
+                else
+                    ItemName14 += ", ";
+
+                if (ItemName15 == null || ItemName15 == "None" || ItemName15 == "" || PouchItem15Qty() == 0)
+                    ItemName15 = "Empty, \n";
+                else if (ItemName16 == null || ItemName16 == "None" || ItemName16 == "" || PouchItem16Qty() == 0)
+                    ItemName15 += "";
+                else
+                    ItemName15 += "\n";
+
+                if (ItemName16 == null || ItemName16 == "None" || ItemName16 == "" || PouchItem16Qty() == 0)
+                    ItemName16 = "Empty, ";
+                else if (ItemName17 == null || ItemName17 == "None" || ItemName17 == "" || PouchItem17Qty() == 0)
+                    ItemName16 += ", ";
+                else
+                    ItemName16 += ", ";
+
+                if (ItemName17 == null || ItemName17 == "None" || ItemName17 == "" || PouchItem16Qty() == 0)
+                    ItemName17 = "Empty, ";
+                else if (ItemName18 == null || ItemName18 == "None" || ItemName18 == "" || PouchItem18Qty() == 0)
+                    ItemName17 += ", ";
+                else
+                    ItemName17 += ", ";
+
+                if (ItemName18 == null || ItemName18 == "None" || ItemName18 == "" || PouchItem17Qty() == 0)
+                    ItemName18 = "Empty, ";
+                else if (ItemName19 == null || ItemName19 == "None" || ItemName19 == "" || PouchItem19Qty() == 0)
+                    ItemName18 += "";
+                else
+                    ItemName18 += ", ";
+
+                if (ItemName19 == null || ItemName19 == "None" || ItemName19 == "" || PouchItem18Qty() == 0)
+                    ItemName19 = "Empty, ";
+                else if (ItemName20 == null || ItemName20 == "None" || ItemName20 == "" || PouchItem20Qty() == 0)
+                    ItemName19 += ", ";
+                else
+                    ItemName19 += ", ";
+
+                if (ItemName20 == null || ItemName20 == "None" || ItemName20 == "" || PouchItem20Qty() == 0)
+                    ItemName20 = "Empty";
+                //else if (ItemName6 == null || ItemName6 == "None")
+                //    ItemName5 = ItemName5 + "";
+                else
+                    ItemName20 += "";
+
+                return string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}", ItemName1, ItemName2, ItemName3, ItemName4, ItemName5, ItemName6, ItemName7, ItemName8, ItemName9, ItemName10, ItemName11, ItemName12, ItemName13, ItemName14, ItemName15, ItemName16, ItemName17, ItemName18, ItemName19, ItemName20);
+            }
+        }
+
+
         /// <summary>
         /// Gets the name of the head piece.
         /// </summary>
@@ -4293,7 +4650,7 @@ namespace MHFZ_Overlay.addresses
 
                 if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
                     SkillName4 = "";
-                else if (SkillName3 == null || SkillName3 == "None")
+                else if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
                     SkillName4 += "";
                 else
                     SkillName4 += ", ";
@@ -4519,7 +4876,7 @@ namespace MHFZ_Overlay.addresses
 
                 if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
                     SkillName4 = "";
-                else if (SkillName3 == null || SkillName3 == "None")
+                else if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
                     SkillName4 += "";
                 else
                     SkillName4 += ", ";
@@ -4853,7 +5210,7 @@ namespace MHFZ_Overlay.addresses
 
                 if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
                     SkillName4 = "";
-                else if (SkillName3 == null || SkillName3 == "None")
+                else if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
                     SkillName4 += "";
                 else
                     SkillName4 += ", ";
@@ -5668,9 +6025,9 @@ namespace MHFZ_Overlay.addresses
             //todo: sr skill
             //zp in bold for markdown
             //fruits and speedrunner items also in bold
-            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills,"items", "ammo", GetItemName(PoogieItemUseID()));
-            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills,"items", "ammo", GetItemName(PoogieItemUseID()));
-            return string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName,"head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills,"items", "ammo", GetItemName(PoogieItemUseID()));
+            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()));
+            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, "head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()));
+            return string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName,"head", "chest", "arm", "waist", "leg", "cuff", BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()));
         }
 
         /// <summary>
