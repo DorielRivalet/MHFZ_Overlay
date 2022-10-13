@@ -2129,7 +2129,41 @@
 
 ### Berserk Raviente Trigger Events
 
+|ID| Event|
+|--|------|
+|0|Slay 1|
+|1|Destruction 1|
+|2|Sedation 2|
+|3|Destruction 2|
+|4|Support 1 Done|
+|5|Support 2|
+|6|Destruction 3|
+|7|Part Break|
+|8|Destruction 4|
+|9|Destruction 5|
+|10|Support 2 Done|
+|11|Destruction 6|
+|12|Destruction 7|
+|13|Slay Done|
+
 ### Extreme Berserk Raviente Trigger Events
+
+|ID| Event|
+|--|------|
+|0|Slay 1|
+|1|Destruction 1|
+|2|Sedation 2|
+|3|Destruction 2|
+|4|Support 1 Done|
+|5|Support 2|
+|6|Destruction 3|
+|7|Part Break|
+|8|Destruction 4|
+|9|Destruction 5|
+|10|Support 2 Done|
+|11|Destruction 6|
+|12|Destruction 7|
+|13|Slay Done|
 
 ### Special Effects (G Style Rank)
 

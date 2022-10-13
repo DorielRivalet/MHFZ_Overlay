@@ -226,7 +226,11 @@ namespace MHFZ_Overlay.addresses
         abstract public int Objective1CurrentQuantityMonster();
         abstract public int Objective1CurrentQuantityItem();
 
-
+        //ravi
+        abstract public int RavienteTriggeredEvent();
+        abstract public int GreatSlayingPoints();
+        abstract public int GreatSlayingPointsSaved();
+        abstract public int RavienteAreaID();
 
 
         abstract public int RoadSelectedMonster();
@@ -564,7 +568,23 @@ namespace MHFZ_Overlay.addresses
                 //}
                 monsterID = 132;
             }
-                
+
+            if (getRaviName() != "None")
+            {
+                switch (getRaviName())
+                {
+                    case "Raviente":
+                    case "Violent Raviente":
+                        monsterID = 93;
+                        break;
+                    case "Berserk Raviente Practice":
+                    case "Berserk Raviente":
+                    case "Extreme Raviente":
+                        monsterID = 149;
+                        break;
+                }
+            }
+
 
             switch (monsterID)
             {
@@ -2297,21 +2317,61 @@ namespace MHFZ_Overlay.addresses
         /// <returns></returns>
         public string getRaviName()
         {
-            if (QuestID() == 21731 || QuestID() == 21749)
-                return "1st District Duremudira";
-            else if (QuestID() == 21746 || QuestID() == 21750)
-                return "2nd District Duremudira";
-            else if (QuestID() == 21747 || QuestID() == 21734)
-                return "3rd District Duremudira";
-            else if (QuestID() == 21748)
-                return "4th District Duremudira";
-            else if (QuestID() == 23648 || QuestID() == 23649)
-                return "Arrogant Duremudira";
+            //quest ids:
+            //mp road: 23527
+            //solo road: 23628
+            //1st district dure: 21731
+            //2nd district dure: 21746
+            //1st district dure sky corridor: 21749
+            //2nd district dure sky corridor: 21750
+            //arrogant dure repel: 23648
+            //arrogant dure slay: 23649
+            //urgent tower: 21751
+            //4th district dure: 21748
+            //3rd district dure: 21747
+            //3rd district dure 2: 21734
+            //UNUSED sky corridor: 21730
+            //sky corridor prologue: 21729
+            //raviente 62105
+            //raviente carve 62108
+            ///violent raviente 62101
+            ///violent carve 62104
+            //berserk slay practice 55796
+            //berserk support practice 1 55802
+            //berserk support practice 2 55803
+            //berserk support practice 3 55804
+            //berserk support practice 4 55805
+            //berserk support practice 5 55806
+            //berserk practice carve 55807
+            //berserk slay  54751
+            //berserk support 1 54756
+            //berserk support 2 54757
+            //berserk support 3 54758
+            //berserk support 4 54759
+            //berserk support 5 54760
+            //berserk carve 54761
+            //extreme slay (musou table 54) 55596 
+            //extreme support 1 55602
+            //extreme support 2 55603
+            //extreme support 3 55604
+            //extreme support 4 55605
+            //extreme support 5 55606
+            //extreme carve 55607
+            if (QuestID() == 62105 || QuestID() == 62108)
+                return "Raviente";
+            else if (QuestID() == 62101 || QuestID() == 62104)
+                return "Violent Raviente";
+            else if (QuestID() == 55796 || QuestID() == 55802 || QuestID() == 55803 || QuestID() == 55804 || QuestID() == 55805 || QuestID() == 55806 || QuestID() == 55807)
+                return "Berserk Raviente Practice";
+            else if (QuestID() == 54751 || QuestID() == 54756 || QuestID() == 54757 || QuestID() == 54758 || QuestID() == 54759 || QuestID() == 54760 || QuestID() == 54761)
+                return "Berserk Raviente";
+            else if (QuestID() == 55596 || QuestID() == 55602 || QuestID() == 55603 || QuestID() == 55604 || QuestID() == 55605 || QuestID() == 55606 || QuestID() == 55607)
+                return "Extreme Raviente";
             else
                 return "None";
         }
 
-        public string Monster1Name => getDureName() != "None" ? getDureName() : getMonsterName(GetNotRoad() || RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID()); //monster 1 is used for the first display and road uses 2nd choice to store 2nd monster
+        public string Monster1Name => getDureName() != "None" ? getDureName() : getRaviName() != "None" ? getRaviName() : getMonsterName(GetNotRoad() || RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID()); //monster 1 is used for the first display and road uses 2nd choice to store 2nd monster
         public string Monster2Name => CaravanOverride() ? getMonsterName(CaravanMonster2ID(),false) : getMonsterName(LargeMonster2ID(),false);
         public string Monster3Name => getMonsterName(LargeMonster3ID(),false);
         public string Monster4Name => getMonsterName(LargeMonster4ID(),false);

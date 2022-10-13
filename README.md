@@ -144,6 +144,7 @@ Press `Alt+Enter` twice if your screen resolution got lowered.
 - Guild Pugi address
 - Performance improvements
 - Armor Set Website links
+- Sky Corridor
 
 [Check more possible future features here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 

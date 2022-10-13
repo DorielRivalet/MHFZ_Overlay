@@ -2235,5 +2235,97 @@ namespace Dictionary
             {157, "Affinity+24"},
             {158, "Affinity+26"}
         };
+    };
+
+    /// <summary>
+    /// The Raviente Trigger Events list
+    /// </summary>
+    public class RavienteTriggerEvents
+    {
+        public static Dictionary<int, string> RavienteTriggerEventIDs = new Dictionary<int, string>()
+        {
+            {0, "Slay 1"},
+            {1, "Sedation 1"},
+            {2, "Destruction 1"},
+            {3, "Slay 2"},
+            {4, "Sedation 2"},
+            {5, "Sedation 3"},
+            {6, "Slay 4"},
+            {7, "Slay 5"},
+            {8, "Sedation 5"},
+            {9, "Slay 6"},
+            {10, "Slay 7"},
+            {11, "Sedation 7"},
+            {12, "Sedation 8"},
+            {13, "Slay 9"}
+        };
+    };
+
+    /// <summary>
+    /// The Violent Raviente Trigger Events list
+    /// </summary>
+    public class ViolentRavienteTriggerEvents
+    {
+        public static Dictionary<int, string> ViolentRavienteTriggerEventIDs = new Dictionary<int, string>()
+        {
+            {0, "Slay 1"},
+            {1, "Sedation 1"},
+            {2, "Destruction 1"},
+            {3, "Slay 2"},
+            {4, "Sedation 2"},
+            {5, "Sedation 3"},
+            {6, "Slay 4"},
+            {7, "Slay 5"},
+            {8, "Sedation 5"},
+            {9, "Slay 6"},
+            {10, "Slay 7"},
+            {11, "Slay 8"},
+            {12, "Sedation 7"},
+            {13, "Slay 9"}
+        };
+    };
+
+    /// <summary>
+    /// The Berserk Raviente Practice Trigger Events list
+    /// </summary>
+    public class BerserkRavientePracticeTriggerEvents
+    {
+        public static Dictionary<int, string> BerserkRavientePracticeTriggerEventIDs = new Dictionary<int, string>()
+        {
+            {0, "Slay 1"},
+            {1, "Sedation 1"},
+            {2, "Support and Combat 1"},
+            {3, "Destruction 2"},
+            {4, "Destruction 3"},
+            {5, "Destruction 4"},
+            {6, "Support 2"},
+            {7, "Sedation 4"},
+            {8, "Sedation 5"},
+            {9, "Sedation 6"},
+        };
+    };
+
+    /// <summary>
+    /// The Berserk Raviente Trigger Events list
+    /// </summary>
+    public class BerserkRavienteTriggerEvents
+    {
+        public static Dictionary<int, string> BerserkRavienteTriggerEventIDs = new Dictionary<int, string>()
+        {
+            {0, "Slay 1"},
+            {1, "Sedation 1"},  
+            {2, "Sedation 2"},
+            {3, "Destruction 2"},
+            {4, "Support 1 Done"},
+            {5, "Support 2"},
+            {6, "Destruction 3"},
+            {7, "Part Break"},
+            {8, "Destruction 4"},
+            {9, "Destruction 5"},
+            {10, "Support 2 Done"},
+            {11, "Destruction 6"},
+            {12, "Destruction 7"},
+            {13, "Slay Done"}
+        };
     }
 }

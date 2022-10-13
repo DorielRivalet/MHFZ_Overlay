@@ -1139,6 +1139,27 @@ namespace MHFZ_Overlay
             else if (DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649)
                 return "Arrogant Duremudira";
 
+            //ravi
+            if (DataLoader.model.getRaviName() != "None")
+            {
+                switch (DataLoader.model.getRaviName())
+                {
+                    case "Raviente":
+                        return "Raviente";
+                    case "Violent Raviente":
+                        return "Violent Raviente";
+                    case "Berserk Raviente Practice":
+                        return "Berserk Raviente (Practice)";
+                    case "Berserk Raviente":
+                        return "Berserk Raviente";
+                    case "Extreme Raviente":
+                        return "Extreme Raviente";
+                    default:
+                        return "Raviente";
+                }
+            }
+
+
             switch (id)
             {
                 case 0: //none
@@ -3061,6 +3082,31 @@ namespace MHFZ_Overlay
             //3rd district dure 2: 21734
             //UNUSED sky corridor: 21730
             //sky corridor prologue: 21729
+            //raviente 62105
+            //raviente carve 62108
+            ///violent raviente 62101
+            ///violent carve 62104
+            //berserk slay practice 55796
+            //berserk support practice 1 55802
+            //berserk support practice 2 55803
+            //berserk support practice 3 55804
+            //berserk support practice 4 55805
+            //berserk support practice 5 55806
+            //berserk practice carve 55807
+            //berserk slay  54751
+            //berserk support 1 54756
+            //berserk support 2 54757
+            //berserk support 3 54758
+            //berserk support 4 54759
+            //berserk support 5 54760
+            //berserk carve 54761
+            //extreme slay (musou table 54) 55596 
+            //extreme support 1 55602
+            //extreme support 2 55603
+            //extreme support 3 55604
+            //extreme support 4 55605
+            //extreme support 5 55606
+            //extreme carve 55607
 
             //DataLoader.model.DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat)
 
@@ -3097,6 +3143,33 @@ namespace MHFZ_Overlay
                     case 21746://2nd district dure
                     case 21750://sky corridor version
                         presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
+                        break;
+                    case 62105://raviente quests
+                    case 62108:
+                    case 62101:
+                    case 62104:
+                    case 55796:
+                    case 55802:
+                    case 55803:
+                    case 55804:
+                    case 55805:
+                    case 55806:
+                    case 55807:
+                    case 54751:
+                    case 54756:
+                    case 54757:
+                    case 54758:
+                    case 54759:
+                    case 54760:
+                    case 54761:
+                    case 55596://extreme
+                    case 55602:
+                    case 55603:
+                    case 55604:
+                    case 55605:
+                    case 55606:
+                    case 55607:
+                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetStarGrade(), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
                         break;
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
