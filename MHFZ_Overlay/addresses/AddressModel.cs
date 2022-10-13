@@ -2770,8 +2770,10 @@ namespace MHFZ_Overlay.addresses
                     case 88://gorge rocks
                         return "Gorge Rock";
                     case 89:
-                        if (RankBand() == 32 || RankBand() == 54)
+                        if (RankBand() == 54)
                             return "Thirsty Pariapuria";
+                        else if (RankBand() == 32)//supremacy
+                            return "Pariapuria";
                         else
                             return "Pariapuria";
                     case 90:
