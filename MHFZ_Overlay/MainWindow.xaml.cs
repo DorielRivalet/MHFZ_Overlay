@@ -3073,29 +3073,31 @@ namespace MHFZ_Overlay
 
         public string GetRavienteEvent(int id)
         {
-            return "";
             //if (!(ShowDiscordQuestNames)) return "";
             //string EventValue1;
-            //bool isEventExists1 = Dictionary.Quests.QuestIDs.TryGetValue(id, out EventValue1);  //returns true
-            ////Console.WriteLine(itemValue1); //Print "First"
-            ////Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
+            Dictionary.RavienteTriggerEvents.RavienteTriggerEventIDs.TryGetValue(id, out string? EventValue1);
+            Dictionary.ViolentRavienteTriggerEvents.ViolentRavienteTriggerEventIDs.TryGetValue(id, out string? EventValue2);
+            Dictionary.BerserkRavienteTriggerEvents.BerserkRavienteTriggerEventIDs.TryGetValue(id, out string? EventValue3);
+            Dictionary.BerserkRavientePracticeTriggerEvents.BerserkRavientePracticeTriggerEventIDs.TryGetValue(id, out string? EventValue4);
+            //Console.WriteLine(itemValue1); //Print "First"
+            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
             //return EventValue1 + "";
 
-            //switch (DataLoader.model.getRaviName())
-            //{
-            //    default:
-            //        return "";
-            //    case "Raviente":
-            //        return "";
-            //    case "Violent Raviente":
-            //        return "";
-            //    case "Berserk Raviente Practice":
-            //        return "";
-            //    case "Berserk Raviente":
-            //        return "";
-            //    case "Extreme Raviente":
-            //        return "";
-            //}
+            switch (DataLoader.model.getRaviName())
+            {
+                default:
+                    return "";
+                case "Raviente":
+                    return EventValue1+"";
+                case "Violent Raviente":
+                    return EventValue2+"";
+                case "Berserk Raviente Practice":
+                    return EventValue4+"";
+                case "Berserk Raviente":
+                    return EventValue3+"";
+                case "Extreme Raviente":
+                    return EventValue3+"";
+            }
         }
 
         /// <summary>
@@ -3253,7 +3255,7 @@ namespace MHFZ_Overlay
                     presenceTemplate.Assets.LargeImageText = string.Format("{0}{1} | Faints: {2}/{3}", GetQuestInformation(), GetAreaName(DataLoader.model.AreaID()),DataLoader.model.CurrentFaints(),GetMaxFaints());
                 }
                 //Raviente
-                else if (DataLoader.model.AreaID() == 309 || (DataLoader.model.AreaID() == 311 && DataLoader.model.AreaID() <= 321) || (DataLoader.model.AreaID() >= 417 && DataLoader.model.AreaID() <= 422) || DataLoader.model.AreaID() == 437 || (DataLoader.model.AreaID() >= 440 && DataLoader.model.AreaID() <= 444))
+                else if (DataLoader.model.AreaID() == 309 || (DataLoader.model.AreaID() >= 311 && DataLoader.model.AreaID() <= 321) || (DataLoader.model.AreaID() >= 417 && DataLoader.model.AreaID() <= 422) || DataLoader.model.AreaID() == 437 || (DataLoader.model.AreaID() >= 440 && DataLoader.model.AreaID() <= 444))
                 {
                     presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
                     presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5} | Points: {6} | {7}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), GetMaxFaints(), DataLoader.model.GreatSlayingPoints(), GetRavienteEvent(DataLoader.model.RavienteTriggeredEvent()));
