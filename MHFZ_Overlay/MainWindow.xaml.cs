@@ -658,7 +658,23 @@ namespace MHFZ_Overlay
             if (id == 0)
                 return "Loading...";
             Dictionary.MapAreaList.MapAreaID.TryGetValue(id, out string? areaname);
-            return areaname + "";
+            Dictionary.MapAreaList.MapAreaID.TryGetValue(DataLoader.model.RavienteAreaID(), out string? raviareaname);
+
+            switch (DataLoader.model.getRaviName())
+            {
+                default://or None
+                    return areaname + "";
+                case "Raviente":
+                case "Violent Raviente":
+                    return raviareaname + "";
+                case "Berserk Raviente Practice":
+                case "Berserk Raviente":
+                case "Extreme Raviente":
+                    if (DataLoader.model.QuestID() != 55796 || DataLoader.model.QuestID() != 55807 || DataLoader.model.QuestID() != 54751 || DataLoader.model.QuestID() != 54761 || DataLoader.model.QuestID() != 55596 || DataLoader.model.QuestID() != 55607)
+                        return areaname + "";
+                    else
+                        return raviareaname + "";
+            }
         }
 
         /// <summary>
@@ -3055,6 +3071,33 @@ namespace MHFZ_Overlay
             }
         }
 
+        public string GetRavienteEvent(int id)
+        {
+            return "";
+            //if (!(ShowDiscordQuestNames)) return "";
+            //string EventValue1;
+            //bool isEventExists1 = Dictionary.Quests.QuestIDs.TryGetValue(id, out EventValue1);  //returns true
+            ////Console.WriteLine(itemValue1); //Print "First"
+            ////Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
+            //return EventValue1 + "";
+
+            //switch (DataLoader.model.getRaviName())
+            //{
+            //    default:
+            //        return "";
+            //    case "Raviente":
+            //        return "";
+            //    case "Violent Raviente":
+            //        return "";
+            //    case "Berserk Raviente Practice":
+            //        return "";
+            //    case "Berserk Raviente":
+            //        return "";
+            //    case "Extreme Raviente":
+            //        return "";
+            //}
+        }
+
         /// <summary>
         /// Updates the discord RPC.
         /// </summary>
@@ -3209,6 +3252,12 @@ namespace MHFZ_Overlay
                     presenceTemplate.Assets.LargeImageKey = GetAreaIconFromID(DataLoader.model.AreaID());
                     presenceTemplate.Assets.LargeImageText = string.Format("{0}{1} | Faints: {2}/{3}", GetQuestInformation(), GetAreaName(DataLoader.model.AreaID()),DataLoader.model.CurrentFaints(),GetMaxFaints());
                 }
+                //Raviente
+                else if (DataLoader.model.AreaID() == 309 || (DataLoader.model.AreaID() == 311 && DataLoader.model.AreaID() <= 321) || (DataLoader.model.AreaID() >= 417 && DataLoader.model.AreaID() <= 422) || DataLoader.model.AreaID() == 437 || (DataLoader.model.AreaID() >= 440 && DataLoader.model.AreaID() <= 444))
+                {
+                    presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5} | Points: {6} | {7}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), GetMaxFaints(), DataLoader.model.GreatSlayingPoints(), GetRavienteEvent(DataLoader.model.RavienteTriggeredEvent()));
+                }
                 else
                 {
                     presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
@@ -3265,7 +3314,7 @@ namespace MHFZ_Overlay
                     case 261:
                     case 262:
                     case 263:
-                        presenceTemplate.State = string.Format("CP: {0} | Gg: {1} | g: {2} | Gem Lv: {3}", DataLoader.model.CaravanPoints(), DataLoader.model.RaviGg(), DataLoader.model.Ravig(), DataLoader.model.CaravenGemLevel()+1);
+                        presenceTemplate.State = string.Format("CP: {0} | Gg: {1} | g: {2} | Gem Lv: {3} | Great Slaying Points: {4}", DataLoader.model.CaravanPoints(), DataLoader.model.RaviGg(), DataLoader.model.Ravig(), DataLoader.model.CaravenGemLevel()+1, DataLoader.model.GreatSlayingPointsSaved());
                         break;
 
                     case 257://Blacksmith

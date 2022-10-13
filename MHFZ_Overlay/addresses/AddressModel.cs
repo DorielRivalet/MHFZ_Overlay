@@ -230,18 +230,11 @@ namespace MHFZ_Overlay.addresses
         abstract public int RavienteTriggeredEvent();
         abstract public int GreatSlayingPoints();
         abstract public int GreatSlayingPointsSaved();
+        //normal and violent. berserk support
         abstract public int RavienteAreaID();
 
 
         abstract public int RoadSelectedMonster();
-
-        abstract public int RavienteTriggeredEvent();
-
-        //normal and violent. berserk support
-        abstract public int RavienteAreaID();
-
-        abstract public int GreatSlayingPoints();
-        abstract public int GreatSlayingPointsSaved();
 
 
         //Yamas and Beru
