@@ -453,5 +453,24 @@ namespace MHFZ_Overlay.addresses
 
         public override int GRWeaponLv() => 1;
 
+        public override int Sigil1Name1() => 1;
+        public override int Sigil1Value1() => 1;
+        public override int Sigil1Name2() => 1;
+        public override int Sigil1Value2() => 1;
+        public override int Sigil1Name3() => 1;
+        public override int Sigil1Value3() => 1;
+        public override int Sigil2Name1() => 1;
+        public override int Sigil2Value1() => 1;
+        public override int Sigil2Name2() => 1;
+        public override int Sigil2Value2() => 1;
+        public override int Sigil2Name3() => 1;
+        public override int Sigil2Value3() => 1;
+        public override int Sigil3Name1() => 1;
+        public override int Sigil3Value1() => 1;
+        public override int Sigil3Name2() => 1;
+        public override int Sigil3Value2() => 1;
+        public override int Sigil3Name3() => 1;
+        public override int Sigil3Value3() => 1;
+
     }
 }

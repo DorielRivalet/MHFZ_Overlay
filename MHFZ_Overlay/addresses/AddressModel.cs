@@ -1,4 +1,5 @@
-﻿using Memory;
+﻿using Dictionary;
+using Memory;
 using System;
 using System.CodeDom;
 using System.ComponentModel;
@@ -419,6 +420,26 @@ namespace MHFZ_Overlay.addresses
         abstract public int StyleRank2();
 
         abstract public int GRWeaponLv();
+
+        abstract public int Sigil1Name1();
+        abstract public int Sigil1Value1();
+        abstract public int Sigil1Name2();
+        abstract public int Sigil1Value2();
+        abstract public int Sigil1Name3();
+        abstract public int Sigil1Value3();
+        abstract public int Sigil2Name1();
+        abstract public int Sigil2Value1();
+        abstract public int Sigil2Name2();
+        abstract public int Sigil2Value2();
+        abstract public int Sigil2Name3();
+        abstract public int Sigil2Value3();
+        abstract public int Sigil3Name1();
+        abstract public int Sigil3Value1();
+        abstract public int Sigil3Name2();
+        abstract public int Sigil3Value2();
+        abstract public int Sigil3Name3();
+        abstract public int Sigil3Value3();
+
 
 
         #endregion
@@ -4172,7 +4193,7 @@ namespace MHFZ_Overlay.addresses
                     //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
 
-                    return string.Format("{0}{1} ({2}) | {3} | {4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID()), GetDecoName(WeaponDeco2ID()), GetDecoName(WeaponDeco3ID()));
+                    return string.Format("{0}{1} ({2}) | {3} | {4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(),1), GetDecoName(WeaponDeco2ID(),2), GetDecoName(WeaponDeco3ID(),3));
 
                 }
                 else if (className == "Gunner")
@@ -4180,7 +4201,7 @@ namespace MHFZ_Overlay.addresses
                     Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
                     //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
-                    return string.Format("{0}{1} ({2}) | {3} | {4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID()), GetDecoName(WeaponDeco2ID()), GetDecoName(WeaponDeco3ID()));
+                    return string.Format("{0}{1} ({2}) | {3} | {4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(),1), GetDecoName(WeaponDeco2ID(),2), GetDecoName(WeaponDeco3ID(),3));
                 }
                 else
                 {
@@ -4657,7 +4678,7 @@ namespace MHFZ_Overlay.addresses
         /// <value>
         /// The decos.
         /// </value>
-        public string GetDecoName(int id)
+        public string GetDecoName(int id, int slot = 0)
         {
             Dictionary.Items.ItemIDs.TryGetValue(id, out string? DecoName);
 
@@ -4675,6 +4696,11 @@ namespace MHFZ_Overlay.addresses
             else
                 DecoName += "";
 
+            if (DecoName == "Empty" && slot != 0)
+            {
+                return GetSigilName(slot);
+            }
+
             //Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(ArmorLegsID(), out string? piecename);
 
             //if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
@@ -4691,12 +4717,166 @@ namespace MHFZ_Overlay.addresses
         /// <value>
         /// The sigils.
         /// </value>
-        public string GetSigils
+        public string GetSigilName(int slot)
         {
-            get
+            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil1Name1(), out string? Sigil1Type1);
+            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil1Name2(), out string? Sigil1Type2);
+            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil1Name3(), out string? Sigil1Type3);
+            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil2Name1(), out string? Sigil2Type1);
+            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil2Name2(), out string? Sigil2Type2);
+            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil2Name3(), out string? Sigil2Type3);
+            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil3Name1(), out string? Sigil3Type1);
+            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil3Name2(), out string? Sigil3Type2);
+            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil3Name3(), out string? Sigil3Type3);
+
+            string value1;
+            string value2;
+            string value3;
+            string type1;
+            string type2;
+            string type3;
+            string sign1 = "";
+            string sign2 = "";
+            string sign3 = "";
+
+            string Sigil1Type1Value = Sigil1Value1().ToString();
+            string Sigil1Type2Value = Sigil1Value2().ToString();
+            string Sigil1Type3Value = Sigil1Value3().ToString();
+            string Sigil2Type1Value = Sigil2Value1().ToString();
+            string Sigil2Type2Value = Sigil2Value2().ToString();
+            string Sigil2Type3Value = Sigil2Value3().ToString();
+            string Sigil3Type1Value = Sigil3Value1().ToString();
+            string Sigil3Type2Value = Sigil3Value2().ToString();
+            string Sigil3Type3Value = Sigil3Value3().ToString();
+
+            switch (slot)
             {
-                return "";
+                default:
+
+                    return "Empty";
+
+                case 1:
+
+                    if (Sigil1Type1Value == "0" || Sigil1Name1() == 0)
+                        return "Empty";
+                    else
+                    {
+                        type1 = Sigil1Type1 + ": ";
+                        value1 = Sigil1Type1Value + ", ";
+                    }
+
+                    if (Sigil1Type2Value == "0" || Sigil1Name2() == 0)
+                    {
+                        value2 = "";
+                        type2 = "Empty, ";
+                    }
+                    else
+                    {
+                        value2 = Sigil1Type2Value + ", ";
+                        type2 = Sigil1Type2 + ": ";
+                    }
+
+                    if (Sigil1Type3Value == "0" || Sigil1Name3() == 0)
+                    {
+                        value3 = "";
+                        type3 = "Empty";
+                    }
+                    else
+                    {
+                        value3 = Sigil1Type3Value + "";
+                        type3 = Sigil1Type3 + ": ";
+                    }
+                    
+                    break;
+
+                case 2:
+
+                    if (Sigil2Type1Value == "0" || Sigil2Name1() == 0)
+                        return "Empty";
+                    else
+                    {
+                        type1 = Sigil2Type1 + ": ";
+                        value1 = Sigil2Type1Value + ", ";
+                    }
+
+                    if (Sigil2Type2Value == "0" || Sigil2Name2() == 0)
+                    {
+                        value2 = "";
+                        type2 = "None, ";
+                    }
+                    else
+                    {
+                        value2 = Sigil2Type2Value + ", ";
+                        type2 = Sigil2Type2 + ": ";
+                    }
+
+                    if (Sigil2Type3Value == "0" || Sigil2Name3() == 0)
+                    {
+                        value3 = "";
+                        type3 = "None";
+                    }
+                    else
+                    {
+                        value3 = Sigil2Type3Value + "";
+                        type3 = Sigil2Type3 + ": ";
+                    }
+
+                    break;
+
+                case 3:
+
+                    if (Sigil3Type1Value == "0" || Sigil3Name1() == 0)
+                        return "Empty";
+                    else
+                    {
+                        type1 = Sigil3Type1 + ": ";
+                        value1 = Sigil3Type1Value + ", ";
+                    }
+
+                    if (Sigil3Type2Value == "0" || Sigil3Name2() == 0)
+                    {
+                        value2 = "";
+                        type2 = "None, ";
+                    }
+                    else
+                    {
+                        value2 = Sigil3Type2Value + ", ";
+                        type2 = Sigil3Type2 + ": ";
+                    }
+
+                    if (Sigil3Type3Value == "0" || Sigil3Name3() == 0)
+                    {
+                        value3 = "";
+                        type3 = "None";
+                    }
+                    else
+                    {
+                        value3 = Sigil3Type3Value + "";
+                        type3 = Sigil3Type3 + ": ";
+                    }
+
+                    break;
             }
+
+            if (value1 != "")
+            {
+                if (value1[..1] != "-")
+                    sign1 = "+";
+            }
+
+            if (value2 != "")
+            {
+                if (value2[..1] != "-")
+                    sign2 = "+";
+            }
+
+            if (value3 != "")
+            {
+                if (value3[..1] != "-")
+                    sign3 = "+";
+            }
+
+            return string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", type1, sign1, value1, type2, sign2, value2, type3, sign3, value3);
         }
 
         /// <summary>
