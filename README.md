@@ -167,7 +167,7 @@ Press `Alt+Enter` twice if your screen resolution got lowered.
 
 ![Discord](./demo/discord4.png)
 
-![Discord Rich Presence](./demo/discord6.png)
+![Discord Rich Presence](./demo/discord6.gif)
 
 ## How to Enable Speedrun & Zen Modes
 
