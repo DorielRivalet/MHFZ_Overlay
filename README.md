@@ -145,6 +145,7 @@ Press `Alt+Enter` twice if your screen resolution got lowered.
 - Performance improvements
 - Armor Set Website links
 - Sky Corridor
+- Drag and Drop multiple selection
 
 [Check more possible future features here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 

@@ -184,10 +184,6 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="0" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
@@ -267,6 +263,9 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
