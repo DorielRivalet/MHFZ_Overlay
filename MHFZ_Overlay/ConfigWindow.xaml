@@ -179,6 +179,15 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="0" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
@@ -211,6 +220,17 @@
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan, Pioneer, Raviente, Interception or Daily quests to display the correct information" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Caravan/Pioneer/Raviente/Interception/Daily Quest Override"/>
                         <ToggleButton Grid.Row="14" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}"/>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Map" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Location Map"/>
+                        <ToggleButton Grid.Row="15" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMap}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Map X Coordinate"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Map Y Coordinate"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Map Area Width"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="18" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaWidth}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Map Area Height"/>
+                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="19" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaHeight}"  PreviewTextInput="ValidateNumber"/>
                     </Grid>
                 </ScrollViewer>
                 <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">

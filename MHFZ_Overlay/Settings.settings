@@ -332,5 +332,20 @@
     <Setting Name="GearDescriptionExport" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="EnableMap" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MapAreaWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="MapAreaHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="MapX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="MapY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">410</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -1342,5 +1342,65 @@ namespace MHFZ_Overlay {
                 this["GearDescriptionExport"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableMap {
+            get {
+                return ((bool)(this["EnableMap"]));
+            }
+            set {
+                this["EnableMap"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double MapAreaWidth {
+            get {
+                return ((double)(this["MapAreaWidth"]));
+            }
+            set {
+                this["MapAreaWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double MapAreaHeight {
+            get {
+                return ((double)(this["MapAreaHeight"]));
+            }
+            set {
+                this["MapAreaHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public double MapX {
+            get {
+                return ((double)(this["MapX"]));
+            }
+            set {
+                this["MapX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("410")]
+        public double MapY {
+            get {
+                return ((double)(this["MapY"]));
+            }
+            set {
+                this["MapY"] = value;
+            }
+        }
     }
 }

@@ -1443,8 +1443,8 @@
 |435 |Painted Falls Day Area 6|
 |436 | Painted Falls Night Area 6|
 |437 |  Berserk Raviente Base Camp (Support)|
-|438 | Guanzorumu Arena 1|
-|439 |  Guanzorumu Arena 2|
+|438 | Cloud Viewing Fortress Arena 1|
+|439 |  Cloud Viewing Fortress Arena 2|
 |440 | Berserk Raviente Support Phase 1|
 |441 | Berserk Raviente Support Phase 2|
 |442 | Berserk Raviente Support Phase 3|

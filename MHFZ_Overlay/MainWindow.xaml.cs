@@ -642,6 +642,8 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowHitCountInfo = v && s.HitCountShown;
             DataLoader.model.ShowPlayerAtkInfo = v && s.PlayerAtkShown;
             DataLoader.model.ShowSharpness = v && s.EnableSharpness;
+
+            DataLoader.model.ShowMap = v && s.EnableMap;
         }
 
         #endregion
@@ -2069,11 +2071,12 @@ namespace MHFZ_Overlay
                 case 392:
                 case 393:
                 case 394:
-                case 399://dure doorway
-                case 414://dure door
                 case 415:
                 case 416:
                     return "https://i.imgur.com/Kq8qx0P.png";
+                case 399://dure doorway
+                case 414://dure door
+                    return "https://i.imgur.com/ylzLXo8.gif";
                 case 400://White Lake areas
                 case 401:
                 case 402:
@@ -3665,6 +3668,10 @@ namespace MHFZ_Overlay
                 case "Monster1Icon":
                     s.Monster1IconX = (double)(pos.X - XOffset);
                     s.Monster1IconY = (double)(pos.Y - YOffset);
+                    break;
+                case "MapImage":
+                    s.MapX = (double)(pos.X - XOffset);
+                    s.MapY = (double)(pos.Y - YOffset);
                     break;
             }
 
