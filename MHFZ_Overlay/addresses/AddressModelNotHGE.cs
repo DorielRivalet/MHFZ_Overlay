@@ -390,24 +390,24 @@ namespace MHFZ_Overlay.addresses
 
         public override int GRWeaponLv() => M.Read2Byte("mhfo.dll+5033F94");
 
-        public override int Sigil1Name1() => M.Read2Byte("mhfo.dll+5BF91E4");
-        public override int Sigil1Value1() => M.Read2Byte("mhfo.dll+5BF91EA");
-        public override int Sigil1Name2() => M.Read2Byte("mhfo.dll+5BF91E6");
-        public override int Sigil1Value2() => M.Read2Byte("mhfo.dll+5BF91EC");
-        public override int Sigil1Name3() => M.Read2Byte("mhfo.dll+5BF91E8");
-        public override int Sigil1Value3() => M.Read2Byte("mhfo.dll+5BF91EE");
-        public override int Sigil2Name1() => M.Read2Byte("mhfo.dll+5BF91F0");
-        public override int Sigil2Value1() => M.Read2Byte("mhfo.dll+5BF91F6");
-        public override int Sigil2Name2() => M.Read2Byte("mhfo.dll+5BF91F2");
-        public override int Sigil2Value2() => M.Read2Byte("mhfo.dll+5BF91F8");
-        public override int Sigil2Name3() => M.Read2Byte("mhfo.dll+5BF91F4");
-        public override int Sigil2Value3() => M.Read2Byte("mhfo.dll+5BF91FA");
-        public override int Sigil3Name1() => M.Read2Byte("mhfo.dll+5BF9604");
-        public override int Sigil3Value1() => M.Read2Byte("mhfo.dll+5BF960A");
-        public override int Sigil3Name2() => M.Read2Byte("mhfo.dll+5BF9606");
-        public override int Sigil3Value2() => M.Read2Byte("mhfo.dll+5BF960C");
-        public override int Sigil3Name3() => M.Read2Byte("mhfo.dll+5BF9608");
-        public override int Sigil3Value3() => M.Read2Byte("mhfo.dll+5BF960E");
+        public override int Sigil1Name1() => M.ReadByte("mhfo.dll+5BF91E4");
+        public override int Sigil1Value1() => M.ReadByte("mhfo.dll+5BF91EA");
+        public override int Sigil1Name2() => M.ReadByte("mhfo.dll+5BF91E6");
+        public override int Sigil1Value2() => M.ReadByte("mhfo.dll+5BF91EC");
+        public override int Sigil1Name3() => M.ReadByte("mhfo.dll+5BF91E8");
+        public override int Sigil1Value3() => M.ReadByte("mhfo.dll+5BF91EE");
+        public override int Sigil2Name1() => M.ReadByte("mhfo.dll+5BF91F0");
+        public override int Sigil2Value1() => M.ReadByte("mhfo.dll+5BF91F6");
+        public override int Sigil2Name2() => M.ReadByte("mhfo.dll+5BF91F2");
+        public override int Sigil2Value2() => M.ReadByte("mhfo.dll+5BF91F8");
+        public override int Sigil2Name3() => M.ReadByte("mhfo.dll+5BF91F4");
+        public override int Sigil2Value3() => M.ReadByte("mhfo.dll+5BF91FA");
+        public override int Sigil3Name1() => M.ReadByte("mhfo.dll+5BF9604");
+        public override int Sigil3Value1() => M.ReadByte("mhfo.dll+5BF960A");
+        public override int Sigil3Name2() => M.ReadByte("mhfo.dll+5BF9606");
+        public override int Sigil3Value2() => M.ReadByte("mhfo.dll+5BF960C");
+        public override int Sigil3Name3() => M.ReadByte("mhfo.dll+5BF9608");
+        public override int Sigil3Value3() => M.ReadByte("mhfo.dll+5BF960E");
 
     }
 }

@@ -4735,9 +4735,6 @@ namespace MHFZ_Overlay.addresses
             string type1;
             string type2;
             string type3;
-            string sign1 = "";
-            string sign2 = "";
-            string sign3 = "";
 
             string Sigil1Type1Value = Sigil1Value1().ToString();
             string Sigil1Type2Value = Sigil1Value2().ToString();
@@ -4762,7 +4759,12 @@ namespace MHFZ_Overlay.addresses
                     else
                     {
                         type1 = Sigil1Type1 + ": ";
-                        value1 = Sigil1Type1Value + ", ";
+
+                        if (int.Parse(Sigil1Type1Value) > 127)
+                            value1 = (int.Parse(Sigil1Type1Value) - 256).ToString() + ", ";
+                        else
+                            value1 = "+" + Sigil1Type1Value + ", ";
+
                     }
 
                     if (Sigil1Type2Value == "0" || Sigil1Name2() == 0)
@@ -4772,7 +4774,12 @@ namespace MHFZ_Overlay.addresses
                     }
                     else
                     {
-                        value2 = Sigil1Type2Value + ", ";
+
+                        if (int.Parse(Sigil1Type2Value) > 127)
+                            value2 = (int.Parse(Sigil1Type2Value) - 256).ToString() + ", ";
+                        else
+                            value2 = "+" + Sigil1Type2Value + ", ";
+
                         type2 = Sigil1Type2 + ": ";
                     }
 
@@ -4783,7 +4790,12 @@ namespace MHFZ_Overlay.addresses
                     }
                     else
                     {
-                        value3 = Sigil1Type3Value + "";
+
+                        if (int.Parse(Sigil1Type3Value) > 127)
+                            value3 = (int.Parse(Sigil1Type3Value) - 256).ToString() + ", ";
+                        else
+                            value3 = "+" + Sigil1Type3Value + ", ";
+
                         type3 = Sigil1Type3 + ": ";
                     }
                     
@@ -4796,7 +4808,12 @@ namespace MHFZ_Overlay.addresses
                     else
                     {
                         type1 = Sigil2Type1 + ": ";
-                        value1 = Sigil2Type1Value + ", ";
+
+                        if (int.Parse(Sigil2Type1Value) > 127)
+                            value1 = (int.Parse(Sigil2Type1Value) - 256).ToString() + ", ";
+                        else
+                            value1 = "+" + Sigil2Type1Value + ", ";
+
                     }
 
                     if (Sigil2Type2Value == "0" || Sigil2Name2() == 0)
@@ -4806,7 +4823,12 @@ namespace MHFZ_Overlay.addresses
                     }
                     else
                     {
-                        value2 = Sigil2Type2Value + ", ";
+
+                        if (int.Parse(Sigil2Type2Value) > 127)
+                            value2 = (int.Parse(Sigil2Type2Value) - 256).ToString() + ", ";
+                        else
+                            value2 = "+" + Sigil2Type2Value + ", ";
+
                         type2 = Sigil2Type2 + ": ";
                     }
 
@@ -4817,7 +4839,12 @@ namespace MHFZ_Overlay.addresses
                     }
                     else
                     {
-                        value3 = Sigil2Type3Value + "";
+
+                        if (int.Parse(Sigil2Type3Value) > 127)
+                            value3 = (int.Parse(Sigil2Type3Value) - 256).ToString() + ", ";
+                        else
+                            value3 = "+" + Sigil2Type3Value + ", ";
+
                         type3 = Sigil2Type3 + ": ";
                     }
 
@@ -4830,7 +4857,12 @@ namespace MHFZ_Overlay.addresses
                     else
                     {
                         type1 = Sigil3Type1 + ": ";
-                        value1 = Sigil3Type1Value + ", ";
+
+                        if (int.Parse(Sigil3Type1Value) > 127)
+                            value1 = (int.Parse(Sigil3Type1Value) - 256).ToString() + ", ";
+                        else
+                            value1 = "+" + Sigil3Type1Value + ", ";
+
                     }
 
                     if (Sigil3Type2Value == "0" || Sigil3Name2() == 0)
@@ -4840,7 +4872,12 @@ namespace MHFZ_Overlay.addresses
                     }
                     else
                     {
-                        value2 = Sigil3Type2Value + ", ";
+
+                        if (int.Parse(Sigil3Type2Value) > 127)
+                            value2 = (int.Parse(Sigil3Type2Value) - 256).ToString() + ", ";
+                        else
+                            value2 = "+" + Sigil3Type2Value + ", ";
+
                         type2 = Sigil3Type2 + ": ";
                     }
 
@@ -4851,32 +4888,19 @@ namespace MHFZ_Overlay.addresses
                     }
                     else
                     {
-                        value3 = Sigil3Type3Value + "";
+
+                        if (int.Parse(Sigil3Type3Value) > 127)
+                            value3 = (int.Parse(Sigil3Type3Value) - 256).ToString() + ", ";
+                        else
+                            value3 = "+" + Sigil3Type3Value + ", ";
+
                         type3 = Sigil3Type3 + ": ";
                     }
 
                     break;
             }
 
-            if (value1 != "")
-            {
-                if (value1[..1] != "-")
-                    sign1 = "+";
-            }
-
-            if (value2 != "")
-            {
-                if (value2[..1] != "-")
-                    sign2 = "+";
-            }
-
-            if (value3 != "")
-            {
-                if (value3[..1] != "-")
-                    sign3 = "+";
-            }
-
-            return string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", type1, sign1, value1, type2, sign2, value2, type3, sign3, value3);
+            return string.Format("{0}{1}{2}{3}{4}{5}", type1, value1, type2, value2, type3, value3);
         }
 
         /// <summary>
