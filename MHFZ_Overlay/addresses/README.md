@@ -2279,7 +2279,7 @@
 |999|Passive Master, Conquest Atk+4|
 |x11 GSR999|Soul Revival, Conquest Atk Base 100, Conquest Def Base 300, G Rank Weapon unlock bonuses for conquest skills (+10 Def, +5 Atk each)|
 
-# GSR Weapon Unlock Bonus
+### GSR Weapon Unlock Bonus
 
 |Unlocks| Bonus|
 |--|------|
@@ -2287,3 +2287,44 @@
 |12|Affinity+2, Ele Res+2, All Res+2, Def+10, Conquest Atk Base 100+5, Conquest Def Base 300+10|
 |13|Affinity+2, Ele Res+2, All Res+2, Def+10, Conquest Atk Base 100+5, Conquest Def Base 300+10|
 |14|Affinity+2, Ele Res+1, All Res+1, Def+10, Conquest Atk Base 100+5, Conquest Def Base 300+10|
+
+### Road and Duremudira Skills
+
+|ID| Skill|
+|--|------|
+|0|None|
+|1|Attack|
+|2|Defense|
+|3||
+|4||
+|5|Recovery|
+|6||
+|7||
+|8||
+|9||
+|10||
+|11||
+|12||
+|13||
+|14|Care|
+|15|Pharmacist|
+|16||
+|17||
+|18|Virus Res.|
+|19|Guardian Offense|
+|20|Guardian Defense|
+|21||
+|22|Frost Res.|
+|23|Fire Res|
+|24|Water Res|
+|25|Ice Res|
+|26|Thunder Res|
+|27|Dragon Res|
+|28|Starting Gm Up|
+|29|Rd P Up|
+|30|Revival Sage|
+|31|Advancement Guru|
+|32|Last Stand|
+|33|Bonus Encounter|
+|34|All Res|
+|35|Rewards Up|

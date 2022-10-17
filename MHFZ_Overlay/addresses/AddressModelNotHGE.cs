@@ -551,5 +551,41 @@ namespace MHFZ_Overlay.addresses
 
         public override int QuestState() => M.ReadByte("mhfo.dll+61180F2");
 
+
+        public override int RoadDureSkill1Name() => M.ReadByte("mhfo.dll+610403C");
+        public override int RoadDureSkill1Level() => M.ReadByte("mhfo.dll+610403E");
+        public override int RoadDureSkill2Name() => M.ReadByte("mhfo.dll+6104040");
+        public override int RoadDureSkill2Level() => M.ReadByte("mhfo.dll+6104042");
+        public override int RoadDureSkill3Name() => M.ReadByte("mhfo.dll+6104044");
+        public override int RoadDureSkill3Level() => M.ReadByte("mhfo.dll+6104046");
+        public override int RoadDureSkill4Name() => M.ReadByte("mhfo.dll+6104048");
+        public override int RoadDureSkill4Level() => M.ReadByte("mhfo.dll+610404A");
+        public override int RoadDureSkill5Name() => M.ReadByte("mhfo.dll+610404C");
+        public override int RoadDureSkill5Level() => M.ReadByte("mhfo.dll+610404E");
+        public override int RoadDureSkill6Name() => M.ReadByte("mhfo.dll+6104050");
+        public override int RoadDureSkill6Level() => M.ReadByte("mhfo.dll+6104052");
+        public override int RoadDureSkill7Name() => M.ReadByte("mhfo.dll+6104054");
+        public override int RoadDureSkill7Level() => M.ReadByte("mhfo.dll+6104056");
+        public override int RoadDureSkill8Name() => M.ReadByte("mhfo.dll+6104058");
+        public override int RoadDureSkill8Level() => M.ReadByte("mhfo.dll+610405A");
+        public override int RoadDureSkill9Name() => M.ReadByte("mhfo.dll+610405C");
+        public override int RoadDureSkill9Level() => M.ReadByte("mhfo.dll+610405E");
+        public override int RoadDureSkill10Name() => M.ReadByte("mhfo.dll+6104060");
+        public override int RoadDureSkill10Level() => M.ReadByte("mhfo.dll+6104062");
+        public override int RoadDureSkill11Name() => M.ReadByte("mhfo.dll+6104064");
+        public override int RoadDureSkill11Level() => M.ReadByte("mhfo.dll+6104066");
+        public override int RoadDureSkill12Name() => M.ReadByte("mhfo.dll+6104068");
+        public override int RoadDureSkill12Level() => M.ReadByte("mhfo.dll+610406A");
+        public override int RoadDureSkill13Name() => M.ReadByte("mhfo.dll+610406C");
+        public override int RoadDureSkill13Level() => M.ReadByte("mhfo.dll+610406E");
+        public override int RoadDureSkill14Name() => M.ReadByte("mhfo.dll+6104070");
+        public override int RoadDureSkill14Level() => M.ReadByte("mhfo.dll+6104072");
+        public override int RoadDureSkill15Name() => M.ReadByte("mhfo.dll+6104074");
+        public override int RoadDureSkill15Level() => M.ReadByte("mhfo.dll+6104076");
+        public override int RoadDureSkill16Name() => M.ReadByte("mhfo.dll+6104078");
+        public override int RoadDureSkill16Level() => M.ReadByte("mhfo.dll+610407A");
+
+
+
     }
 }

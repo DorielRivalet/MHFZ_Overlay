@@ -613,5 +613,40 @@ namespace MHFZ_Overlay.addresses
 
         public override int QuestState() => 0;
 
+        public override int RoadDureSkill1Name() => 1;
+        public override int RoadDureSkill1Level() => 1;
+        public override int RoadDureSkill2Name() => 1;
+        public override int RoadDureSkill2Level() => 1;
+        public override int RoadDureSkill3Name() => 1;
+        public override int RoadDureSkill3Level() => 1;
+        public override int RoadDureSkill4Name() => 1;
+        public override int RoadDureSkill4Level() => 1;
+        public override int RoadDureSkill5Name() => 1;
+        public override int RoadDureSkill5Level() => 1;
+        public override int RoadDureSkill6Name() => 1;
+        public override int RoadDureSkill6Level() => 1;
+        public override int RoadDureSkill7Name() => 1;
+        public override int RoadDureSkill7Level() => 1;
+        public override int RoadDureSkill8Name() => 1;
+        public override int RoadDureSkill8Level() => 1;
+        public override int RoadDureSkill9Name() => 1;
+        public override int RoadDureSkill9Level() => 1;
+        public override int RoadDureSkill10Name() => 1;
+        public override int RoadDureSkill10Level() => 1;
+        public override int RoadDureSkill11Name() => 1;
+        public override int RoadDureSkill11Level() => 1;
+        public override int RoadDureSkill12Name() => 1;
+        public override int RoadDureSkill12Level() => 1;
+        public override int RoadDureSkill13Name() => 1;
+        public override int RoadDureSkill13Level() => 1;
+        public override int RoadDureSkill14Name() => 1;
+        public override int RoadDureSkill14Level() => 1;
+        public override int RoadDureSkill15Name() => 1;
+        public override int RoadDureSkill15Level() => 1;
+        public override int RoadDureSkill16Name() => 1;
+        public override int RoadDureSkill16Level() => 1;
+
+
+
     }
 }

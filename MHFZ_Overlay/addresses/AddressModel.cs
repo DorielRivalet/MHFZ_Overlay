@@ -1,5 +1,6 @@
 ﻿using Dictionary;
 using Memory;
+using Newtonsoft.Json.Linq;
 using System;
 using System.CodeDom;
 using System.ComponentModel;
@@ -581,6 +582,42 @@ namespace MHFZ_Overlay.addresses
         abstract public int GoreMagalaHunted();
 
         abstract public int QuestState();
+
+
+        abstract public int RoadDureSkill1Name();
+        abstract public int RoadDureSkill1Level();
+        abstract public int RoadDureSkill2Name();
+        abstract public int RoadDureSkill2Level();
+        abstract public int RoadDureSkill3Name();
+        abstract public int RoadDureSkill3Level();
+        abstract public int RoadDureSkill4Name();
+        abstract public int RoadDureSkill4Level();
+        abstract public int RoadDureSkill5Name();
+        abstract public int RoadDureSkill5Level();
+        abstract public int RoadDureSkill6Name();
+        abstract public int RoadDureSkill6Level();
+        abstract public int RoadDureSkill7Name();
+        abstract public int RoadDureSkill7Level();
+        abstract public int RoadDureSkill8Name();
+        abstract public int RoadDureSkill8Level();
+        abstract public int RoadDureSkill9Name();
+        abstract public int RoadDureSkill9Level();
+        abstract public int RoadDureSkill10Name();
+        abstract public int RoadDureSkill10Level();
+        abstract public int RoadDureSkill11Name();
+        abstract public int RoadDureSkill11Level();
+        abstract public int RoadDureSkill12Name();
+        abstract public int RoadDureSkill12Level();
+        abstract public int RoadDureSkill13Name();
+        abstract public int RoadDureSkill13Level();
+        abstract public int RoadDureSkill14Name();
+        abstract public int RoadDureSkill14Level();
+        abstract public int RoadDureSkill15Name();
+        abstract public int RoadDureSkill15Level();
+        abstract public int RoadDureSkill16Name();
+        abstract public int RoadDureSkill16Level();
+
+
 
 
         #endregion
@@ -5454,6 +5491,60 @@ namespace MHFZ_Overlay.addresses
         }
 
         /// <summary>
+        /// Determines whether [is maximum road dure skill level] [the specified identifier].
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="level">The level.</param>
+        /// <returns>
+        ///   <c>true</c> if [is maximum road dure skill level] [the specified identifier]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsMaxRoadDureSkillLevel(int id, string level)
+        {
+            if (level == "0")
+                return false;
+
+            switch (id)
+            {
+                default:
+                    return false;
+                case 1:
+                case 2:
+                case 19:
+                case 20:
+                    if (level == "5")
+                        return true;
+                    else return false;
+                case 23:
+                case 24:
+                case 25:
+                case 26:
+                case 27:
+                case 34:
+                case 29:
+                case 31:
+                case 14:
+                case 15:
+                case 18:
+                case 22:
+                    if (level == "3")
+                        return true;
+                    else return false;
+                case 5:
+                case 28:
+                case 33:
+                case 32:
+                    if (level == "2")
+                        return true;
+                    else return false;
+                case 35:
+                case 30:
+                    if (level == "1")
+                        return true;
+                    else return false;
+            }
+        }
+
+        /// <summary>
         /// Gets the zenith skills.
         /// </summary>
         /// <value>
@@ -6872,6 +6963,441 @@ namespace MHFZ_Overlay.addresses
 
         }
 
+        public string GetRoadDureSkills
+        {
+            get
+            {
+                int Skill1 = RoadDureSkill1Name();
+                int Skill2 = RoadDureSkill2Name();
+                int Skill3 = RoadDureSkill3Name();
+                int Skill4 = RoadDureSkill4Name();
+                int Skill5 = RoadDureSkill5Name();
+                int Skill6 = RoadDureSkill6Name();
+                int Skill7 = RoadDureSkill7Name();
+                int Skill8 = RoadDureSkill8Name();
+                int Skill9 = RoadDureSkill9Name();
+                int Skill10 = RoadDureSkill10Name();
+                int Skill11 = RoadDureSkill11Name();
+                int Skill12 = RoadDureSkill12Name();
+                int Skill13 = RoadDureSkill13Name();
+                int Skill14 = RoadDureSkill14Name();
+                int Skill15 = RoadDureSkill15Name();
+                int Skill16 = RoadDureSkill16Name();
+
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill1, out string? SkillName1);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill2, out string? SkillName2);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill3, out string? SkillName3);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill4, out string? SkillName4);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill5, out string? SkillName5);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill6, out string? SkillName6);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill7, out string? SkillName7);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill8, out string? SkillName8);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill9, out string? SkillName9);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill10, out string? SkillName10);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill11, out string? SkillName11);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill12, out string? SkillName12);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill13, out string? SkillName13);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill14, out string? SkillName14);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill15, out string? SkillName15);
+                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill16, out string? SkillName16);
+
+                string SkillLevel1 = RoadDureSkill1Level().ToString();
+                string SkillLevel2 = RoadDureSkill2Level().ToString();
+                string SkillLevel3 = RoadDureSkill3Level().ToString();
+                string SkillLevel4 = RoadDureSkill4Level().ToString();
+                string SkillLevel5 = RoadDureSkill5Level().ToString();
+                string SkillLevel6 = RoadDureSkill6Level().ToString();
+                string SkillLevel7 = RoadDureSkill7Level().ToString();
+                string SkillLevel8 = RoadDureSkill8Level().ToString();
+                string SkillLevel9 = RoadDureSkill9Level().ToString();
+                string SkillLevel10 = RoadDureSkill10Level().ToString();
+                string SkillLevel11 = RoadDureSkill11Level().ToString();
+                string SkillLevel12 = RoadDureSkill12Level().ToString();
+                string SkillLevel13 = RoadDureSkill13Level().ToString();
+                string SkillLevel14 = RoadDureSkill14Level().ToString();
+                string SkillLevel15 = RoadDureSkill15Level().ToString();
+                string SkillLevel16 = RoadDureSkill16Level().ToString();
+
+                //todo: refactor pls
+                if (GetTextFormat() == "Markdown")
+                {
+                    if (IsMaxRoadDureSkillLevel(Skill1, SkillLevel1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
+                        SkillName1 = string.Format("**{0}**", SkillName1);
+
+                    if (IsMaxRoadDureSkillLevel(Skill2, SkillLevel2) && (SkillName2 != null || SkillName2 != "None" || SkillName2 != ""))
+                        SkillName2 = string.Format("**{0}**", SkillName2);
+
+                    if (IsMaxRoadDureSkillLevel(Skill3, SkillLevel3) && (SkillName3 != null || SkillName3 != "None" || SkillName3 != ""))
+                        SkillName3 = string.Format("**{0}**", SkillName3);
+
+                    if (IsMaxRoadDureSkillLevel(Skill4, SkillLevel4) && (SkillName4 != null || SkillName4 != "None" || SkillName4 != ""))
+                        SkillName4 = string.Format("**{0}**", SkillName4);
+
+                    if (IsMaxRoadDureSkillLevel(Skill5, SkillLevel5) && (SkillName5 != null || SkillName5 != "None" || SkillName5 != ""))
+                        SkillName5 = string.Format("**{0}**", SkillName5);
+
+                    if (IsMaxRoadDureSkillLevel(Skill6, SkillLevel6) && (SkillName6 != null || SkillName6 != "None" || SkillName6 != ""))
+                        SkillName6 = string.Format("**{0}**", SkillName6);
+
+                    if (IsMaxRoadDureSkillLevel(Skill7, SkillLevel7) && (SkillName7 != null || SkillName7 != "None" || SkillName7 != ""))
+                        SkillName7 = string.Format("**{0}**", SkillName7);
+
+                    if (IsMaxRoadDureSkillLevel(Skill8, SkillLevel8) && (SkillName8 != null || SkillName8 != "None" || SkillName8 != ""))
+                        SkillName8 = string.Format("**{0}**", SkillName8);
+
+                    if (IsMaxRoadDureSkillLevel(Skill9, SkillLevel9) && (SkillName9 != null || SkillName9 != "None" || SkillName9 != ""))
+                        SkillName9 = string.Format("**{0}**", SkillName9);
+
+                    if (IsMaxRoadDureSkillLevel(Skill10, SkillLevel10) && (SkillName10 != null || SkillName10 != "None" || SkillName10 != ""))
+                        SkillName10 = string.Format("**{0}**", SkillName10);
+
+                    if (IsMaxRoadDureSkillLevel(Skill11, SkillLevel11) && (SkillName11 != null || SkillName11 != "None" || SkillName11 != ""))
+                        SkillName11 = string.Format("**{0}**", SkillName11);
+
+                    if (IsMaxRoadDureSkillLevel(Skill12, SkillLevel12) && (SkillName12 != null || SkillName12 != "None" || SkillName12 != ""))
+                        SkillName12 = string.Format("**{0}**", SkillName12);
+
+                    if (IsMaxRoadDureSkillLevel(Skill13, SkillLevel13) && (SkillName13 != null || SkillName13 != "None" || SkillName13 != ""))
+                        SkillName13 = string.Format("**{0}**", SkillName13);
+
+                    if (IsMaxRoadDureSkillLevel(Skill14, SkillLevel14) && (SkillName14 != null || SkillName14 != "None" || SkillName14 != ""))
+                        SkillName14 = string.Format("**{0}**", SkillName14);
+
+                    if (IsMaxRoadDureSkillLevel(Skill15, SkillLevel15) && (SkillName15 != null || SkillName15 != "None" || SkillName15 != ""))
+                        SkillName15 = string.Format("**{0}**", SkillName15);
+
+                    if (IsMaxRoadDureSkillLevel(Skill16, SkillLevel16) && (SkillName16 != null || SkillName16 != "None" || SkillName16 != ""))
+                        SkillName16 = string.Format("**{0}**", SkillName16);
+                }
+
+                if (SkillLevel1 == "0")
+                {
+                    Skill1 = 0;
+                    SkillLevel1 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel1 = string.Format("** LV{0}**", SkillLevel1);
+                    else
+                        SkillLevel1 = string.Format(" LV{0}", SkillLevel1);
+                }
+
+                if (SkillLevel2 == "0")
+                {
+                    Skill2 = 0;
+                    SkillLevel2 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel2 = string.Format("** LV{0}**", SkillLevel2);
+                    else
+                        SkillLevel2 = string.Format(" LV{0}", SkillLevel2);
+                }
+
+                if (SkillLevel3 == "0")
+                {
+                    Skill3 = 0;
+                    SkillLevel3 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel3 = string.Format("** LV{0}**", SkillLevel3);
+                    else
+                        SkillLevel3 = string.Format(" LV{0}", SkillLevel3);
+                }
+
+                if (SkillLevel4 == "0")
+                {
+                    Skill4 = 0;
+                    SkillLevel4 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel4 = string.Format("** LV{0}**", SkillLevel4);
+                    else
+                        SkillLevel4 = string.Format(" LV{0}", SkillLevel4);
+
+                }
+
+                if (SkillLevel5 == "0")
+                {
+                    Skill5 = 0;
+                    SkillLevel5 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel5 = string.Format("** LV{0}**", SkillLevel5);
+                    else
+                        SkillLevel5 = string.Format(" LV{0}", SkillLevel5);
+                }
+
+
+                if (SkillLevel6 == "0")
+                {
+                    Skill6 = 0;
+                    SkillLevel6 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel6 = string.Format("** LV{0}**", SkillLevel6);
+                    else
+                        SkillLevel6 = string.Format(" LV{0}", SkillLevel6);
+                }
+
+                if (SkillLevel7 == "0")
+                {
+                    Skill7 = 0;
+                    SkillLevel7 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel7 = string.Format("** LV{0}**", SkillLevel7);
+                    else
+                        SkillLevel7 = string.Format(" LV{0}", SkillLevel7);
+                }
+
+                if (SkillLevel8 == "0")
+                {
+                    Skill8 = 0;
+                    SkillLevel8 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel8 = string.Format("** LV{0}**", SkillLevel8);
+                    else
+                        SkillLevel8 = string.Format(" LV{0}", SkillLevel8);
+                }
+
+                if (SkillLevel9 == "0")
+                {
+                    Skill9 = 0;
+                    SkillLevel9 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel9 = string.Format("** LV{0}**", SkillLevel9);
+                    else
+                        SkillLevel9 = string.Format(" LV{0}", SkillLevel9);
+                }
+
+                if (SkillLevel10 == "0")
+                {
+                    Skill10 = 0;
+                    SkillLevel10 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel10 = string.Format("** LV{0}**", SkillLevel10);
+                    else
+                        SkillLevel10 = string.Format(" LV{0}", SkillLevel10);
+                }
+
+                if (SkillLevel11 == "0")
+                {
+                    Skill11 = 0;
+                    SkillLevel11 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel11 = string.Format("** LV{0}**", SkillLevel11);
+                    else
+                        SkillLevel11 = string.Format(" LV{0}", SkillLevel11);
+                }
+
+                if (SkillLevel12 == "0")
+                {
+                    Skill12 = 0;
+                    SkillLevel12 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel12 = string.Format("** LV{0}**", SkillLevel12);
+                    else
+                        SkillLevel12 = string.Format(" LV{0}", SkillLevel12);
+                }
+
+                if (SkillLevel13 == "0")
+                {
+                    Skill13 = 0;
+                    SkillLevel13 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel13 = string.Format("** LV{0}**", SkillLevel13);
+                    else
+                        SkillLevel13 = string.Format(" LV{0}", SkillLevel13);
+                }
+
+                if (SkillLevel14 == "0")
+                {
+                    Skill14 = 0;
+                    SkillLevel14 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel14 = string.Format("** LV{0}**", SkillLevel14);
+                    else
+                        SkillLevel14 = string.Format(" LV{0}", SkillLevel14);
+                }
+
+                if (SkillLevel15 == "0")
+                {
+                    Skill15 = 0;
+                    SkillLevel15 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel15 = string.Format("** LV{0}**", SkillLevel15);
+                    else
+                        SkillLevel15 = string.Format(" LV{0}", SkillLevel15);
+                }
+
+                if (SkillLevel16 == "0")
+                {
+                    Skill16 = 0;
+                    SkillLevel16 = "";
+                }
+                else
+                {
+                    if (GetTextFormat() == "Markdown")
+                        SkillLevel16 = string.Format("** LV{0}**", SkillLevel16);
+                    else
+                        SkillLevel16 = string.Format(" LV{0}", SkillLevel16);
+                }
+
+
+                //TODO: refactor
+                if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
+                    SkillName1 = "";
+                else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
+                    SkillName1 += "";
+                else
+                    SkillLevel1 += ", ";
+
+                if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
+                    SkillName2 = "";
+                else if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
+                    SkillName2 += "";
+                else
+                    SkillLevel2 += ", ";
+
+                if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
+                    SkillName3 = "";
+                else if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
+                    SkillName3 += "";
+                else
+                    SkillLevel3 += ", ";
+
+                if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
+                    SkillName4 = "";
+                else if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
+                    SkillName4 += "";
+                else
+                    SkillLevel4 += ", ";
+
+                if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
+                    SkillName5 = "";
+                else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
+                    SkillName5 += "";
+                else
+                    SkillLevel5 += "\n";
+
+                if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
+                    SkillName6 = "";
+                else if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
+                    SkillName6 += "";
+                else
+                    SkillLevel6 += ", ";
+
+                if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
+                    SkillName7 = "";
+                else if (SkillName8 == null || SkillName8 == "None" || SkillName8 == "")
+                    SkillName7 += "";
+                else
+                    SkillLevel7 += ", ";
+
+                if (SkillName8 == null || SkillName8 == "None" || SkillName8 == "")
+                    SkillName8 = "";
+                else if (SkillName9 == null || SkillName9 == "None" || SkillName9 == "")
+                    SkillName8 += "";
+                else
+                    SkillLevel8 += ", ";
+
+                if (SkillName9 == null || SkillName9 == "None" || SkillName9 == "")
+                    SkillName9 = "";
+                else if (SkillName10 == null || SkillName10 == "None" || SkillName10 == "")
+                    SkillName9 += "";
+                else
+                    SkillLevel9 += ", ";
+
+                if (SkillName10 == null || SkillName10 == "None" || SkillName10 == "")
+                    SkillName10 = "";
+                else if (SkillName11 == null || SkillName11 == "None" || SkillName11 == "")
+                    SkillName10 += "";
+                else
+                    SkillLevel10 += "\n";
+
+                if (SkillName11 == null || SkillName11 == "None" || SkillName11 == "")
+                    SkillName11 = "";
+                else if (SkillName12 == null || SkillName12 == "None" || SkillName12 == "")
+                    SkillName11 += "";
+                else
+                    SkillLevel11 += ", ";
+
+                if (SkillName12 == null || SkillName12 == "None" || SkillName12 == "")
+                    SkillName12 = "";
+                else if (SkillName13 == null || SkillName13 == "None" || SkillName13 == "")
+                    SkillName12 += "";
+                else
+                    SkillLevel12 += ", ";
+
+                if (SkillName13 == null || SkillName13 == "None" || SkillName13 == "")
+                    SkillName13 = "";
+                else if (SkillName14 == null || SkillName14 == "None" || SkillName14 == "")
+                    SkillName13 += "";
+                else
+                    SkillLevel13 += ", ";
+
+                if (SkillName14 == null || SkillName14 == "None" || SkillName14 == "")
+                    SkillName14 = "";
+                else if (SkillName15 == null || SkillName15 == "None" || SkillName15 == "")
+                    SkillName14 += "";
+                else
+                    SkillLevel14 += ", ";
+
+                if (SkillName15 == null || SkillName15 == "None" || SkillName15 == "")
+                    SkillName15 = "";
+                else if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
+                    SkillName15 += "";
+                else
+                    SkillLevel15 += "\n";
+
+                if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
+                    SkillName16 = "";
+                //else if (SkillName6 == null || SkillName6 == "None")
+                //    SkillName5 = SkillName5 + "";
+                else
+                    SkillLevel16 += "";
+
+                return string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}", SkillName1, SkillLevel1, SkillName2, SkillLevel2, SkillName3, SkillLevel3, SkillName4, SkillLevel4, SkillName5, SkillLevel5, SkillName6, SkillLevel6, SkillName7, SkillLevel7, SkillName8, SkillLevel8, SkillName9, SkillLevel9, SkillName10, SkillLevel10, SkillName11, SkillLevel11, SkillName12, SkillLevel12, SkillName13, SkillLevel13, SkillName14, SkillLevel14, SkillName15, SkillLevel15, SkillName16, SkillLevel16);
+            }
+        }
+
         /// <summary>
         /// Generates the gear stats
         /// </summary>
@@ -6885,9 +7411,9 @@ namespace MHFZ_Overlay.addresses
             //todo: sr skill
             //zp in bold for markdown
             //fruits and speedrunner items also in bold
-            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()));
-            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()));
-            return string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()));
+            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
+            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n\n**Road/Duremudira Skills:**\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()),GetRoadDureSkills);
+            return string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
         }
 
         /// <summary>

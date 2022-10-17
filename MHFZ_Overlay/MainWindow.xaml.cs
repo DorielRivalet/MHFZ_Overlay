@@ -2808,7 +2808,7 @@ namespace MHFZ_Overlay
             else if (DataLoader.model.ObjectiveType() == 0x1 || DataLoader.model.ObjectiveType() == 0x101 || DataLoader.model.ObjectiveType() == 0x201)
                 return DataLoader.model.Objective1Quantity().ToString() + " ";
             else if (DataLoader.model.ObjectiveType() == 0x8004 || DataLoader.model.ObjectiveType() == 0x18004)
-                return String.Format("({0} True HP) ",DataLoader.model.Objective1Quantity()*100);
+                return string.Format("({0} True HP) ",DataLoader.model.Objective1Quantity()*100);
             else
                 return DataLoader.model.Objective1Quantity().ToString() + " ";
         }
