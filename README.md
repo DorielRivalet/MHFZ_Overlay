@@ -112,6 +112,8 @@ Starting the overlay may take a bit of time because of the dictionaries (*i.e.* 
 
 Press `Alt+Enter` twice if your screen resolution got lowered.
 
+If the HP shows 0/1 then change area for it to load.
+
 [Check more bugs here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
 
 ## Features not yet implemented

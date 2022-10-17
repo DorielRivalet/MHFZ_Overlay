@@ -981,6 +981,13 @@
 |4098 |0x1002| Deliver Flag |
 |16 |0x10| Esoteric Action |
 
+### Quest State
+| ID | State|
+|----|------|
+|0||
+|1|Complete (waiting)|
+|129|Complete (rewards)|
+
 ### Weapon Type
 
 | ID | Weapon Type|

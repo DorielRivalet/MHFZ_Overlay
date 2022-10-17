@@ -3104,6 +3104,29 @@ namespace MHFZ_Overlay
         }
 
         /// <summary>
+        /// Determines whether [is objective complete].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is objective complete]; otherwise, <c>false</c>.
+        /// </returns>
+        public string IsObjectiveComplete()
+        {
+            switch (DataLoader.model.QuestState())
+            {
+                default:
+                    return "";
+                case 0:
+                    return "";
+                case 1:
+                    return String.Format("Quest Complete! | {0} | ", DataLoader.model.Time);
+                case 129:
+                    return String.Format("Quest Complete! Waiting for rewards | {0} | ",DataLoader.model.Time);
+            }
+        }
+       
+
+
+        /// <summary>
         /// Updates the discord RPC.
         /// </summary>
         private void UpdateDiscordRPC()
@@ -3113,7 +3136,7 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            presenceTemplate.Details = string.Format("{0}{1}{2}{3}",GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
+            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}", IsObjectiveComplete(),GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
 
             //quest ids:
             //mp road: 23527
