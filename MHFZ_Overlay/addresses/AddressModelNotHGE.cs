@@ -549,7 +549,7 @@ namespace MHFZ_Overlay.addresses
         public override int StygianZinogreHunted() => 1;
         public override int GoreMagalaHunted() => 1;
 
-        public override int QuestState() => M.Read2Byte("mhfo.dll+61180F2");
+        public override int QuestState() => M.ReadByte("mhfo.dll+61180F2");
 
     }
 }

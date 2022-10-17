@@ -2807,7 +2807,9 @@ namespace MHFZ_Overlay
             // hunt / capture / slay
             else if (DataLoader.model.ObjectiveType() == 0x1 || DataLoader.model.ObjectiveType() == 0x101 || DataLoader.model.ObjectiveType() == 0x201)
                 return DataLoader.model.Objective1Quantity().ToString() + " ";
-            else 
+            else if (DataLoader.model.ObjectiveType() == 0x8004 || DataLoader.model.ObjectiveType() == 0x18004)
+                return String.Format("({0} True HP) ",DataLoader.model.Objective1Quantity()*100);
+            else
                 return DataLoader.model.Objective1Quantity().ToString() + " ";
         }
 
@@ -3103,13 +3105,12 @@ namespace MHFZ_Overlay
             }
         }
 
+
         /// <summary>
-        /// Determines whether [is objective complete].
+        /// Get quest state
         /// </summary>
-        /// <returns>
-        ///   <c>true</c> if [is objective complete]; otherwise, <c>false</c>.
-        /// </returns>
-        public string IsObjectiveComplete()
+        /// <returns></returns>
+        public string GetQuestState()
         {
             switch (DataLoader.model.QuestState())
             {
@@ -3136,7 +3137,7 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}", IsObjectiveComplete(),GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
+            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}", GetQuestState(),GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
 
             //quest ids:
             //mp road: 23527
