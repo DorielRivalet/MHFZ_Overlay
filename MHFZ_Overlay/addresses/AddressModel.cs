@@ -5202,15 +5202,17 @@ namespace MHFZ_Overlay.addresses
                 Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id2, out string? caravanSkillName2);
                 Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id3, out string? caravanSkillName3);
 
-                if (IsMaxCaravanSkill(id1))
-                    caravanSkillName1 = String.Format("**{0}**", caravanSkillName1);
+                if (GetTextFormat() == "Markdown")
+                {
+                    if (IsMaxCaravanSkill(id1))
+                        caravanSkillName1 = String.Format("**{0}**", caravanSkillName1);
 
-                if (IsMaxCaravanSkill(id2))
-                    caravanSkillName2 = String.Format("**{0}**", caravanSkillName2);
+                    if (IsMaxCaravanSkill(id2))
+                        caravanSkillName2 = String.Format("**{0}**", caravanSkillName2);
 
-                if (IsMaxCaravanSkill(id3))
-                    caravanSkillName3 = String.Format("**{0}**", caravanSkillName3);
-
+                    if (IsMaxCaravanSkill(id3))
+                        caravanSkillName3 = String.Format("**{0}**", caravanSkillName3);
+                }   
 
                 if (caravanSkillName1 == "" || caravanSkillName1 == "None")
                     return "None";
@@ -7022,52 +7024,52 @@ namespace MHFZ_Overlay.addresses
                 if (GetTextFormat() == "Markdown")
                 {
                     if (IsMaxRoadDureSkillLevel(Skill1, SkillLevel1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
-                        SkillName1 = string.Format("**{0}**", SkillName1);
+                        SkillName1 = string.Format("**{0}** ", SkillName1);
 
                     if (IsMaxRoadDureSkillLevel(Skill2, SkillLevel2) && (SkillName2 != null || SkillName2 != "None" || SkillName2 != ""))
-                        SkillName2 = string.Format("**{0}**", SkillName2);
+                        SkillName2 = string.Format("**{0}** ", SkillName2);
 
                     if (IsMaxRoadDureSkillLevel(Skill3, SkillLevel3) && (SkillName3 != null || SkillName3 != "None" || SkillName3 != ""))
-                        SkillName3 = string.Format("**{0}**", SkillName3);
+                        SkillName3 = string.Format("**{0}** ", SkillName3);
 
                     if (IsMaxRoadDureSkillLevel(Skill4, SkillLevel4) && (SkillName4 != null || SkillName4 != "None" || SkillName4 != ""))
-                        SkillName4 = string.Format("**{0}**", SkillName4);
+                        SkillName4 = string.Format("**{0}** ", SkillName4);
 
                     if (IsMaxRoadDureSkillLevel(Skill5, SkillLevel5) && (SkillName5 != null || SkillName5 != "None" || SkillName5 != ""))
-                        SkillName5 = string.Format("**{0}**", SkillName5);
+                        SkillName5 = string.Format("**{0}** ", SkillName5);
 
                     if (IsMaxRoadDureSkillLevel(Skill6, SkillLevel6) && (SkillName6 != null || SkillName6 != "None" || SkillName6 != ""))
-                        SkillName6 = string.Format("**{0}**", SkillName6);
+                        SkillName6 = string.Format("**{0}** ", SkillName6);
 
                     if (IsMaxRoadDureSkillLevel(Skill7, SkillLevel7) && (SkillName7 != null || SkillName7 != "None" || SkillName7 != ""))
-                        SkillName7 = string.Format("**{0}**", SkillName7);
+                        SkillName7 = string.Format("**{0}** ", SkillName7);
 
                     if (IsMaxRoadDureSkillLevel(Skill8, SkillLevel8) && (SkillName8 != null || SkillName8 != "None" || SkillName8 != ""))
-                        SkillName8 = string.Format("**{0}**", SkillName8);
+                        SkillName8 = string.Format("**{0}** ", SkillName8);
 
                     if (IsMaxRoadDureSkillLevel(Skill9, SkillLevel9) && (SkillName9 != null || SkillName9 != "None" || SkillName9 != ""))
-                        SkillName9 = string.Format("**{0}**", SkillName9);
+                        SkillName9 = string.Format("**{0}** ", SkillName9);
 
                     if (IsMaxRoadDureSkillLevel(Skill10, SkillLevel10) && (SkillName10 != null || SkillName10 != "None" || SkillName10 != ""))
-                        SkillName10 = string.Format("**{0}**", SkillName10);
+                        SkillName10 = string.Format("**{0}** ", SkillName10);
 
                     if (IsMaxRoadDureSkillLevel(Skill11, SkillLevel11) && (SkillName11 != null || SkillName11 != "None" || SkillName11 != ""))
-                        SkillName11 = string.Format("**{0}**", SkillName11);
+                        SkillName11 = string.Format("**{0}** ", SkillName11);
 
                     if (IsMaxRoadDureSkillLevel(Skill12, SkillLevel12) && (SkillName12 != null || SkillName12 != "None" || SkillName12 != ""))
-                        SkillName12 = string.Format("**{0}**", SkillName12);
+                        SkillName12 = string.Format("**{0}** ", SkillName12);
 
                     if (IsMaxRoadDureSkillLevel(Skill13, SkillLevel13) && (SkillName13 != null || SkillName13 != "None" || SkillName13 != ""))
-                        SkillName13 = string.Format("**{0}**", SkillName13);
+                        SkillName13 = string.Format("**{0}** ", SkillName13);
 
                     if (IsMaxRoadDureSkillLevel(Skill14, SkillLevel14) && (SkillName14 != null || SkillName14 != "None" || SkillName14 != ""))
-                        SkillName14 = string.Format("**{0}**", SkillName14);
+                        SkillName14 = string.Format("**{0}** ", SkillName14);
 
                     if (IsMaxRoadDureSkillLevel(Skill15, SkillLevel15) && (SkillName15 != null || SkillName15 != "None" || SkillName15 != ""))
-                        SkillName15 = string.Format("**{0}**", SkillName15);
+                        SkillName15 = string.Format("**{0}** ", SkillName15);
 
                     if (IsMaxRoadDureSkillLevel(Skill16, SkillLevel16) && (SkillName16 != null || SkillName16 != "None" || SkillName16 != ""))
-                        SkillName16 = string.Format("**{0}**", SkillName16);
+                        SkillName16 = string.Format("**{0}** ", SkillName16);
                 }
 
                 if (SkillLevel1 == "0")
@@ -7077,8 +7079,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel1 = string.Format("** LV{0}**", SkillLevel1);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill1, SkillLevel1))
+                        SkillLevel1 = string.Format("**LV{0}**", SkillLevel1);
                     else
                         SkillLevel1 = string.Format(" LV{0}", SkillLevel1);
                 }
@@ -7090,8 +7092,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel2 = string.Format("** LV{0}**", SkillLevel2);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill2, SkillLevel2))
+                        SkillLevel2 = string.Format("**LV{0}**", SkillLevel2);
                     else
                         SkillLevel2 = string.Format(" LV{0}", SkillLevel2);
                 }
@@ -7103,8 +7105,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel3 = string.Format("** LV{0}**", SkillLevel3);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill3, SkillLevel3))
+                        SkillLevel3 = string.Format("**LV{0}**", SkillLevel3);
                     else
                         SkillLevel3 = string.Format(" LV{0}", SkillLevel3);
                 }
@@ -7116,8 +7118,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel4 = string.Format("** LV{0}**", SkillLevel4);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill4, SkillLevel4))
+                        SkillLevel4 = string.Format("**LV{0}**", SkillLevel4);
                     else
                         SkillLevel4 = string.Format(" LV{0}", SkillLevel4);
 
@@ -7130,8 +7132,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel5 = string.Format("** LV{0}**", SkillLevel5);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill5, SkillLevel5))
+                        SkillLevel5 = string.Format("**LV{0}**", SkillLevel5);
                     else
                         SkillLevel5 = string.Format(" LV{0}", SkillLevel5);
                 }
@@ -7144,8 +7146,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel6 = string.Format("** LV{0}**", SkillLevel6);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill6, SkillLevel6))
+                        SkillLevel6 = string.Format("**LV{0}**", SkillLevel6);
                     else
                         SkillLevel6 = string.Format(" LV{0}", SkillLevel6);
                 }
@@ -7157,8 +7159,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel7 = string.Format("** LV{0}**", SkillLevel7);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill7, SkillLevel7))
+                        SkillLevel7 = string.Format("**LV{0}**", SkillLevel7);
                     else
                         SkillLevel7 = string.Format(" LV{0}", SkillLevel7);
                 }
@@ -7170,8 +7172,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel8 = string.Format("** LV{0}**", SkillLevel8);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill8, SkillLevel8))
+                        SkillLevel8 = string.Format("**LV{0}**", SkillLevel8);
                     else
                         SkillLevel8 = string.Format(" LV{0}", SkillLevel8);
                 }
@@ -7183,8 +7185,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel9 = string.Format("** LV{0}**", SkillLevel9);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill9, SkillLevel9))
+                        SkillLevel9 = string.Format("**LV{0}**", SkillLevel9);
                     else
                         SkillLevel9 = string.Format(" LV{0}", SkillLevel9);
                 }
@@ -7196,8 +7198,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel10 = string.Format("** LV{0}**", SkillLevel10);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill10, SkillLevel10))
+                        SkillLevel10 = string.Format("**LV{0}**", SkillLevel10);
                     else
                         SkillLevel10 = string.Format(" LV{0}", SkillLevel10);
                 }
@@ -7209,8 +7211,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel11 = string.Format("** LV{0}**", SkillLevel11);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill11, SkillLevel11))
+                        SkillLevel11 = string.Format("**LV{0}**", SkillLevel11);
                     else
                         SkillLevel11 = string.Format(" LV{0}", SkillLevel11);
                 }
@@ -7222,8 +7224,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel12 = string.Format("** LV{0}**", SkillLevel12);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill12, SkillLevel12))
+                        SkillLevel12 = string.Format("**LV{0}**", SkillLevel12);
                     else
                         SkillLevel12 = string.Format(" LV{0}", SkillLevel12);
                 }
@@ -7235,8 +7237,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel13 = string.Format("** LV{0}**", SkillLevel13);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill13, SkillLevel13))
+                        SkillLevel13 = string.Format("**LV{0}**", SkillLevel13);
                     else
                         SkillLevel13 = string.Format(" LV{0}", SkillLevel13);
                 }
@@ -7248,8 +7250,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel14 = string.Format("** LV{0}**", SkillLevel14);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill14, SkillLevel14))
+                        SkillLevel14 = string.Format("**LV{0}**", SkillLevel14);
                     else
                         SkillLevel14 = string.Format(" LV{0}", SkillLevel14);
                 }
@@ -7261,8 +7263,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel15 = string.Format("** LV{0}**", SkillLevel15);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill15, SkillLevel15))
+                        SkillLevel15 = string.Format("**LV{0}**", SkillLevel15);
                     else
                         SkillLevel15 = string.Format(" LV{0}", SkillLevel15);
                 }
@@ -7274,8 +7276,8 @@ namespace MHFZ_Overlay.addresses
                 }
                 else
                 {
-                    if (GetTextFormat() == "Markdown")
-                        SkillLevel16 = string.Format("** LV{0}**", SkillLevel16);
+                    if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill16, SkillLevel16))
+                        SkillLevel16 = string.Format("**LV{0}**", SkillLevel16);
                     else
                         SkillLevel16 = string.Format(" LV{0}", SkillLevel16);
                 }
