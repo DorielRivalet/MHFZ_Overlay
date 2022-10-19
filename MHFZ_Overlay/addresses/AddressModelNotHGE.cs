@@ -561,6 +561,7 @@ namespace MHFZ_Overlay.addresses
         public override int UnknownHunted() => M.Read2Byte("mhfo.dll+6103AD4");
         public override int GoruganosuHunted() => M.Read2Byte("mhfo.dll+6103AFA");
         public override int AruganosuHunted() => M.Read2Byte("mhfo.dll+6103AFC");
+        public override int PSO2RappyHunted() => M.Read2Byte("mhfo.dll+6103B6A");
 
         public override int QuestState() => M.ReadByte("mhfo.dll+61180F2");
 

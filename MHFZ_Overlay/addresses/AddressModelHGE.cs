@@ -624,6 +624,7 @@ namespace MHFZ_Overlay.addresses
         public override int UnknownHunted() => 1;
         public override int GoruganosuHunted() => 1;
         public override int AruganosuHunted() => 1;
+        public override int PSO2RappyHunted() => 1;
 
 
         public override int QuestState() => 0;

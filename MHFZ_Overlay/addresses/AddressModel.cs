@@ -594,6 +594,7 @@ namespace MHFZ_Overlay.addresses
         abstract public int UnknownHunted();
         abstract public int GoruganosuHunted();
         abstract public int AruganosuHunted();
+        abstract public int PSO2RappyHunted();
 
 
         abstract public int QuestState();
