@@ -439,7 +439,7 @@
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
                                             <ScrollViewer VerticalScrollBarVisibility="Visible">
-                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                                <TextBlock ToolTip="" Text="{Binding GetGameGuildFood}" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
                                     </Grid>
@@ -479,6 +479,21 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="icons/armor_skills.png" Width="32" Height="32"/>
                                             <TextBlock Text="Armor Skills" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem ToolTip="View Zenith Skills" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="icons/boggers.png" Width="32" Height="32"/>
+                                            <TextBlock Text="Zenith Skills" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
                                     <Grid>
