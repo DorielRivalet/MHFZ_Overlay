@@ -139,6 +139,33 @@
                 </Setter>
             </Style>
         </TabControl.Resources>
+
+        <!--https://stackoverflow.com/a/7041848/18859245-->
+        <TabControl.Template>
+            <ControlTemplate TargetType="TabControl">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Hidden" >
+                        <TabPanel x:Name="HeaderPanel"
+                          Panel.ZIndex ="1" 
+                          KeyboardNavigation.TabIndex="1"
+                          Grid.Column="0"
+                          Grid.Row="0"
+                          Margin="2,2,2,0"
+                          IsItemsHost="true"/>
+                    </ScrollViewer>
+                    <ContentPresenter x:Name="PART_SelectedContentHost"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      Margin="{TemplateBinding Padding}"
+                                      ContentSource="SelectedContent" Grid.Row="1"/>
+                </Grid>
+            </ControlTemplate>
+        </TabControl.Template>
+
+
         <TabItem ToolTip="General settings" Background="Transparent" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Background="Transparent" Orientation="Horizontal">
@@ -316,6 +343,7 @@
                                 <Button Background="Transparent" Grid.Row="2" x:Name="BtnImageFile" ToolTip="Export image" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/image_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnImageFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
                             </Grid>
 
+                            
                             <TabControl Margin="5" BorderBrush="Transparent" Background="Transparent" Grid.Row="0" Grid.Column="1">
                                 <TabControl.Resources>
                                     <Style TargetType="TabItem">
@@ -347,6 +375,32 @@
                                         </Setter>
                                     </Style>
                                 </TabControl.Resources>
+                                <TabControl.Template>
+                                    <ControlTemplate TargetType="TabControl">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <ScrollViewer HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Hidden" >
+                                                <TabPanel x:Name="HeaderPanel"
+                          Panel.ZIndex ="1" 
+                          KeyboardNavigation.TabIndex="1"
+                          Grid.Column="0"
+                          Grid.Row="0"
+                          Margin="2,2,2,0"
+                          IsItemsHost="true"/>
+                                            </ScrollViewer>
+                                            <ContentPresenter x:Name="PART_SelectedContentHost"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      Margin="{TemplateBinding Padding}"
+                                      ContentSource="SelectedContent" Grid.Row="1"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </TabControl.Template>
+
+
+
                                 <TabItem ToolTip="View Image" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
@@ -373,7 +427,92 @@
                                         </DockPanel>
                                     </Grid>
                                 </TabItem>
+                                <TabItem ToolTip="View Guild Food" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Guild Food" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem ToolTip="View Caravan Skills" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Caravan" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem ToolTip="View Road/Duremudira Skills" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Road/Duremudira Skills" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem ToolTip="View Armor Skills" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Armor Skills" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem ToolTip="View Motion Values" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Motion Values" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem ToolTip="View Hunting Horn Songs" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Hunting Horn Songs" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
                             </TabControl>
+                            
                         </Grid>
                     
 
