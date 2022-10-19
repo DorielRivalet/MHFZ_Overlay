@@ -480,7 +480,7 @@ namespace MHFZ_Overlay.addresses
         abstract public int PinkRathianHunted();
         abstract public int GoldRathianHunted();
         abstract public int RathalosHunted();
-        abstract public int AxureRathalosHunted();
+        abstract public int AzureRathalosHunted();
         abstract public int SilverRathalosHunted();
         abstract public int KhezuHunted();
         abstract public int RedKhezuHunted();
@@ -581,6 +581,21 @@ namespace MHFZ_Overlay.addresses
         abstract public int StygianZinogreHunted();
         abstract public int GoreMagalaHunted();
 
+        abstract public int BlitzkriegBogabadorumuHunted();
+        abstract public int SparklingZerureusuHunted();
+        abstract public int StarvingDeviljhoHunted();
+
+        abstract public int CrimsonFatalisHunted();
+        abstract public int WhiteFatalisHunted();
+        abstract public int CactusHunted();
+        abstract public int ArrogantDuremudiraHunted();//untested
+        //abstract public int KingShakalakaHunted() => 1;
+        abstract public int MiRuHunted();
+        abstract public int UnknownHunted();
+        abstract public int GoruganosuHunted();
+        abstract public int AruganosuHunted();
+
+
         abstract public int QuestState();
 
 
@@ -617,7 +632,8 @@ namespace MHFZ_Overlay.addresses
         abstract public int RoadDureSkill16Name();
         abstract public int RoadDureSkill16Level();
 
-
+        abstract public int PartySize();
+        abstract public int PartySizeMax();
 
 
         #endregion

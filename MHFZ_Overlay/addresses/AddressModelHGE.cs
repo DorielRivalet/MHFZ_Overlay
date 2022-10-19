@@ -510,7 +510,7 @@ namespace MHFZ_Overlay.addresses
         public override int PinkRathianHunted() => 1;
         public override int GoldRathianHunted() => 1;
         public override int RathalosHunted() => 1;
-        public override int AxureRathalosHunted() => 1;
+        public override int AzureRathalosHunted() => 1;
         public override int SilverRathalosHunted() => 1;
         public override int KhezuHunted() => 1;
         public override int RedKhezuHunted() => 1;
@@ -611,6 +611,21 @@ namespace MHFZ_Overlay.addresses
         public override int StygianZinogreHunted() => 1;
         public override int GoreMagalaHunted() => 1;
 
+        public override int BlitzkriegBogabadorumuHunted() => 1;
+        public override int SparklingZerureusuHunted() => 1;
+        public override int StarvingDeviljhoHunted() => 1;
+
+        public override int CrimsonFatalisHunted() => 1;
+        public override int WhiteFatalisHunted() => 1;
+        public override int CactusHunted() => 1;
+        public override int ArrogantDuremudiraHunted() => 1;//untested
+        //public override int KingShakalakaHunted() => 1;
+        public override int MiRuHunted() => 1;
+        public override int UnknownHunted() => 1;
+        public override int GoruganosuHunted() => 1;
+        public override int AruganosuHunted() => 1;
+
+
         public override int QuestState() => 0;
 
         public override int RoadDureSkill1Name() => 1;
@@ -646,7 +661,8 @@ namespace MHFZ_Overlay.addresses
         public override int RoadDureSkill16Name() => 1;
         public override int RoadDureSkill16Level() => 1;
 
-
+        public override int PartySize() => 1;
+        public override int PartySizeMax() => 1;
 
     }
 }

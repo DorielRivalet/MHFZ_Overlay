@@ -3119,9 +3119,9 @@ namespace MHFZ_Overlay
                 case 0:
                     return "";
                 case 1:
-                    return String.Format("Quest Complete! | {0} | ", DataLoader.model.Time);
+                    return String.Format("Achieved Main Objective | {0} | ", DataLoader.model.Time);
                 case 129:
-                    return String.Format("Quest Complete! Waiting for rewards | {0} | ",DataLoader.model.Time);
+                    return String.Format("Quest Clear! | {0} | ",DataLoader.model.Time);
             }
         }
        
@@ -3137,7 +3137,7 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}", GetQuestState(),GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
+            presenceTemplate.Details = string.Format("Party: {0}/{1} | {2}{3}{4}{5}{6}", DataLoader.model.PartySize(), DataLoader.model.PartySizeMax(), GetQuestState(),GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
 
             //quest ids:
             //mp road: 23527

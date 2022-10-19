@@ -140,7 +140,6 @@ If the HP shows 0/1 then change area for it to load.
 - Handle multiple objectives information
 - Zenith information in Road
 - Settings import/export
-- Discord Rich Presence Party Size
 - Raviente Support Part Info
 - Detect UL/HC
 - Guild Pugi address

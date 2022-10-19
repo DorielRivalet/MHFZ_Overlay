@@ -1563,7 +1563,7 @@ namespace Dictionary
             ItemIDs[1545] = "Para Defence Tkt";
             ItemIDs[1546] = "Guts Tkt";
             ItemIDs[1547] = "Adrenaline Potion";
-            ItemIDs[1548] = "Starved Wolf Drink";
+            ItemIDs[1548] = "Starving Wolf Drink";
             ItemIDs[1549] = "Emergency Bag";
             ItemIDs[1550] = "Rasta Return Horn";
             ItemIDs[1551] = "Rasta Cover Horn";
