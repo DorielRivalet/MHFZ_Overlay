@@ -404,6 +404,7 @@
                                 <TabItem ToolTip="View Image" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
+                                            <Image Source="icons/photo.png" Width="32" Height="32"/>
                                             <TextBlock Text="Image" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -416,6 +417,7 @@
                                 <TabItem ToolTip="View Text" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
+                                            <Image Source="icons/page.png" Width="32" Height="32"/>
                                             <TextBlock Text="Text" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -430,6 +432,7 @@
                                 <TabItem ToolTip="View Guild Food" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
+                                            <Image Source="icons/guild_food.png" Width="32" Height="32"/>
                                             <TextBlock Text="Guild Food" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -444,6 +447,7 @@
                                 <TabItem ToolTip="View Caravan Skills" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
+                                            <Image Source="icons/caravan_skills.png" Width="32" Height="32"/>
                                             <TextBlock Text="Caravan" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -458,6 +462,7 @@
                                 <TabItem ToolTip="View Road/Duremudira Skills" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
+                                            <Image Source="icons/dure2.png" Width="32" Height="32"/>
                                             <TextBlock Text="Road/Duremudira Skills" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -472,6 +477,7 @@
                                 <TabItem ToolTip="View Armor Skills" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
+                                            <Image Source="icons/armor_skills.png" Width="32" Height="32"/>
                                             <TextBlock Text="Armor Skills" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -486,6 +492,7 @@
                                 <TabItem ToolTip="View Motion Values" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
+                                            <Image Source="icons/unknown.png" Width="32" Height="32"/>
                                             <TextBlock Text="Motion Values" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -500,6 +507,7 @@
                                 <TabItem ToolTip="View Hunting Horn Songs" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
+                                            <Image Source="icons/note_pink.png" Width="32" Height="32"/>
                                             <TextBlock Text="Hunting Horn Songs" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -514,6 +522,7 @@
                                 <TabItem ToolTip="View Sigils List" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
+                                            <Image Source="icons/sigils.png" Width="32" Height="32"/>
                                             <TextBlock Text="Sigils" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -528,6 +537,7 @@
                                 <TabItem ToolTip="View Diva Prayer Gems" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
+                                            <Image Source="icons/diva_prayer_gems.png" Width="32" Height="32"/>
                                             <TextBlock Text="Diva Prayer Gems" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -542,6 +552,7 @@
                                 <TabItem ToolTip="View Style Rank Upgrades" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
+                                            <Image Source="icons/knife.png" Width="32" Height="32"/>
                                             <TextBlock Text="Style Rank" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
