@@ -37,10 +37,22 @@
     <None Remove="Fonts\SourceCodePro-SemiBold.ttf" />
     <None Remove="Fonts\SourceCodePro-SemiBoldItalic.ttf" />
     <None Remove="Fonts\SourceCodePro-VariableFont_wght.ttf" />
+    <None Remove="icons\armor_skills.png" />
     <None Remove="icons\book.png" />
+    <None Remove="icons\caravan_skills.png" />
+    <None Remove="icons\description_FILL0_wght400_GRAD0_opsz48.png" />
+    <None Remove="icons\diva_prayer_gems.png" />
+    <None Remove="icons\dure2.png" />
+    <None Remove="icons\guild_food.png" />
     <None Remove="icons\helm.png" />
+    <None Remove="icons\knife.png" />
     <None Remove="icons\monster.png" />
+    <None Remove="icons\note_pink.png" />
+    <None Remove="icons\page.png" />
+    <None Remove="icons\photo.png" />
     <None Remove="icons\poison.png" />
+    <None Remove="icons\sigils.png" />
+    <None Remove="icons\unknown.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -143,22 +155,32 @@
     <Resource Include="Fonts\SourceCodePro-VariableFont_wght.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="icons\armor_skills.png" />
     <Resource Include="icons\book.png">
       <Generator></Generator>
     </Resource>
+    <Resource Include="icons\caravan_skills.png" />
     <Resource Include="icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
+    <Resource Include="icons\description_FILL0_wght400_GRAD0_opsz48.png" />
+    <Resource Include="icons\diva_prayer_gems.png" />
+    <Resource Include="icons\dure2.png" />
     <Resource Include="icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
+    <Resource Include="icons\guild_food.png" />
     <Resource Include="icons\helm.png">
       <Generator></Generator>
     </Resource>
     <Resource Include="icons\image_FILL0_wght400_GRAD0_opsz48.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
+    <Resource Include="icons\knife.png" />
     <Resource Include="icons\monster.png" />
+    <Resource Include="icons\note_pink.png" />
+    <Resource Include="icons\page.png" />
+    <Resource Include="icons\photo.png" />
     <Resource Include="icons\poison.png" />
     <Resource Include="icons\Refresh.xaml">
       <SubType>Designer</SubType>
@@ -180,6 +202,8 @@
     <Resource Include="icons\Settings.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
+    <Resource Include="icons\sigils.png" />
+    <Resource Include="icons\unknown.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -195,10 +219,6 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="HunterSets\" />
   </ItemGroup>
 
 </Project>

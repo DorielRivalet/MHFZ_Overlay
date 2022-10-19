@@ -511,6 +511,48 @@
                                         </DockPanel>
                                     </Grid>
                                 </TabItem>
+                                <TabItem ToolTip="View Sigils List" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Sigils" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem ToolTip="View Diva Prayer Gems" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Diva Prayer Gems" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem ToolTip="View Style Rank Upgrades" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Style Rank" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
                             </TabControl>
                             
                         </Grid>
