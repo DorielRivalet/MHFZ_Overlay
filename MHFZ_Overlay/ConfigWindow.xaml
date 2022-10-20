@@ -623,7 +623,7 @@
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
                                             <ScrollViewer VerticalScrollBarVisibility="Visible">
-                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                                <TextBlock ToolTip="" Text="{Binding GetGameDivaInfo}" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
                                     </Grid>

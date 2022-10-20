@@ -7466,7 +7466,7 @@ namespace MHFZ_Overlay.addresses
                     +"Gallery Celebrity\n"+
                     "5000/7000/10000 extra Gallery Points on evaluations.\n\n"
                     +"Garden Celebrity\n"+
-                    "1.2x/1.3x/1.5x items receieved from garden tools.\n\n"+
+                    "1.2x/1.3x/1.5x items received from garden tools.\n\n"+
                     "Recovery Items Up\n"+
                     "Herb, Potion, Mega Potion and Lifepowder effect 1.1x. 100% Bitterbug and Antidote Herb effectiveness.\n\n"+
                     "Blunt Striker\n"+
@@ -7529,7 +7529,7 @@ namespace MHFZ_Overlay.addresses
                     "Shield Angel\n"+
                     "Decreases the amount of damage taken when on support quests on Berserk Raviente.\n\n"+
                     "Spear Angel\n"+
-                    "Increases the amount of damage dealt by Ballistas when playing support on Berserk Raviente.\n\n"+
+                    "Increases the amount of damage dealt by Ballistae when playing support on Berserk Raviente.\n\n"+
                     "Secret Healing Technique [Medium]\n"+
                     "1/11th chance of not consuming healing items when used. (Up to 5 times a quest)\n\n"+
                     "Unstable Defender [Medium]\n"+
@@ -7614,7 +7614,135 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return string.Format("");
+                return string.Format("You can equip your first skill by going into a weapon's Book of Secrets menu and select one of the Special Effect options followed by one of the skills above. After you hit GSR100 you will be able to equip two skills and up until that point you will be able to equip 1.\n\nAt HR5 you gain the basic Defense Skill, at HR6 you gain all the various Elemental Res skills and the first version of Sharpening Up and at HR7 you get access to Affinity Up and max Sharpening Up. All of the Res and Defense skills progress naturally as you rank up in G Style Rank with some having the requirement of GSR999 in the weapon or multiple weapons to be unlocked or maxed out.");
+            }
+        }
+
+        public string GetGameDivaInfo
+        {
+            get
+            {//todo: missing gems?
+                return string.Format("Prayer Gems\nRinging Prayer Gem\n"+
+                    "Adds new items to the GCP store based on level.\n\n"+
+                    "Elegance Prayer Gem\n"+
+                    "Adds passive HP recovery to all quests.\n\n"+
+                    "Heavy Thunder Prayer Gem\n"+
+                    "Elemental damage increases based on level.\n\n"+
+                    "Windstorm Prayer Gem\n"+
+                    "Sharpness does not decrease with blademaster weapons. Works for 5, 10 or 20 quests depending on level during the prayer active window.\n\n"+
+                    "Cutting Edge Prayer Gem\n"+
+                    "Increases the amount of raw damage dealt by a cutting weapon by adjusting hitboxes to be weaker against the damage type.\n\n"+
+                    "Status Length Prayer\n"+
+                    "Increases the duration of status effects on monsters.\n\n"+
+                    "Rising Bullet Prayer Gem\n"+
+                    "Increases the amount of raw damage dealt by a ranged weapon by adjusting hitboxes to be weaker against the damage type.\n\n"+
+                    "Severing Power Prayer Gem\n"+
+                    "Tails can be cut with any damage type.\n\n"+
+                    "Powerful Strikes Prayer Gem\n"+
+                    "Increases affinity of all weapons based on the level of the song.\n\n"+
+                    "Protection Prayer Gem\n"+
+                    "Gives Divine Protection, Goddess' Embrace or Soul Revival based on level.\n\n"+
+                    "Mobilization Prayer Gem\n"+
+                    "Attack will go up based on the number of human hunters in a quest.\n\n"+
+                    "Unshakable Prayer Gem\n"+
+                    "Monsters cannot flee if in the same area as a hunter.\n\n"+
+                    "Blunt Prayer Gem\n"+
+                    "Increases the amount of raw damage dealt by an impact weapon by adjusting hitboxes to be weaker against the damage type.\n\n"+
+                    "Diva Questline\n"+
+                    "Unless rank is specified the monsters are any rank. Your partner needs to be PR81 to progress through these quests. Do the special quests for PRP and give it the HRP tickets you get from progressing by choosing the final option followed by the first option on your partner in the smith or your house. If you find yourself unable to progress you probably need to talk to one of the NPCs who gave you the task again (cats etc.). Be sure to also look for monster names in the text if you can't progress after killing one, you might be on a lower step than you thought. Complete Chapter 3 to unlock Diva Song.\n\n"+
+                    "Chapter 1\n"+
+                    "Part 1: Deliver 1 Thin Jack Mackerel (薄竹筴魚). Deliver 1 Lazurite Jewel (琉璃原珠)\n\n"+
+                    "Part 2: Hunt 1 White Monoblos. Return to the Diva Hall\n\n"+
+                    "Part 3: Talk to the Guild Mistress. Hunt 1 Yama Tsukami. Talk to the Legendary Rasta Edward (Lance User)\n\n"+
+                    "Part 4: Talk to the Guild Mistress. Hunt 1 Chameleos. Talk to the Legendary Rasta Edward\n\n"+
+                    "Part 5: Talk to the Guild Mistress. Hunt 1 Yama Tsukami. Return to the Diva Hall. Claim the items you need to deliver from the Hunter Challenge, you don't need to farm a million Kelbi.\n\n"+
+                    "Rewards: Diva Armour Materials. Items to deliver in Chapter 2 (Hunter Challenge Reward)\n\n"+
+                    "Chapter 2\n"+
+                    "Part 1: Deliver 30 Kelbi Horns (精靈鹿的角). Deliver 20 Chaos Shrooms (混沌茸). Deliver 5 Kirin Azure Horns (麒麟的蒼角). Items delivered above are returned to you\n\n"+
+                    "Part 2: Hunt 3 Cephadromes. Deliver 10 Dragon Seeds (屠龍果實). Hunt 2 Lao Shan Lungs. Return to the Diva Hall. Talk to the Legendary Rastas Edward and Frau (DS user)\n\n"+
+                    "Part 3: Talk to the Legendary Rasta Frau. Return to the Diva Hall. Hunt 1 Baruragaru. Return to the Diva Hall. Talk to the Legendary Rasta Frau. Return to the Diva Hall\n\n"+
+                    "Rewards: Diva HC Armour Materials"+
+                    "Chapter 3\n"+
+                    "Part 1: Hunt 1 Teostra. Return to the Diva Hall. Talk to the Legendary Rasta Frau\n\n"+
+                    "Part 2: Go to the Blacksmith. Return to the Diva Hall. Hunt 3 Rukodioras\n\n"+
+                    "Part 3: Hunt 1 Anorupatisu\n\n"+
+                    "Part 4: Hunt 1 Rebidiora\n\n"+
+                    "Rewards: Diva G Rank Weapon Materials. Diva Weapon Gem (1st Series). 5 Diva Song Gems (Hunter Challenge Reward). 5 Warm Honey Tea (Give the Diva as a gift then Hunter Challenge Reward). Completion of this Chapter unlocks the Diva Song Buffs. Cram her full of warm honey tea and fluffy cakes to max its effects. Your Discord RPC shows the current Bond when you are in the Diva Hall, the maximum is 999.\n\n"+
+                    "Chapter 4\n"+
+                    "Part 1: Hunt 1 Berukyurosu. Hunt 1 Doragyurosu\n\n"+
+                    "Part 2: Deliver 1 Saint Ore (純聖礦石). Hunt 1 Hyujikiki. Hunt 1 Giaorugu\n\n"+
+                    "Part 3: Speak to the Town Square Cats three times. Hunt 2 Gougarfs\n\n"+
+                    "Part 4: Talk to NPC in Blacksmith. Solo Hunt 1 Gurenzeburu\n\n"+
+                    "Part 5: Talk to Guild Mistress. Hunt 1 Pokaradon. Hunt 1 Midogaron. Talk to NPC next to Guild Hall entrance\n\n"+
+                    "Rewards: Diva HC Armour Materials\n\n"+
+                    "Chapter 5\n"+
+                    "Part 1: Hunt 1 Farunokku\n\n"+
+                    "Part 2: Hunt 2 Baruragaru (Return to Fountain between the two)\n\n"+
+                    "Part 3: Hunt 1 Rebidiora\n\n"+
+                    "Part 4: Hunt 1 Zerureusu\n\n"+
+                    "Rewards: Diva Weapon Gem (1st Series)\n\n"+
+                    "Chapter 6\n"+
+                    "Part 1: Hunt 1 Akantor\n\n"+
+                    "Part 2: Hire a partner if you don't have one and then talk to them in your house. Return to the Diva Hall. Talk to partner in house, return to Diva Hall.\n\n"+
+                    "Part 3: ※Partner must be at least PR31 to proceed. Hunt 1 G Rank Yian Kut-ku with partner present.\n\n"+
+                    "Part 4: ※Partner must be at least PR51 to proceed. Hunt 1 Pokaradon with partner present.\n\n"+
+                    "Part 5: ※Partner must be at least PR81 to proceed. Hunt 1 Midogaron with partner present. (Talk to partner in house and return to Diva Hall before leaving on quest)\n\n"+
+                    "Rewards: Diva Armour Materials\n\n" +
+                    "Chapter 7\n"+
+                    "Part 1: Talk to Blacksmith and return to Diva Hall. Hunt 1 Rebidiora\n\n"+
+                    "Part 2: Hunt 2 G Rank HC Gurenzeburu (Return to Fountain between the two)\n\n"+
+                    "Part 3: Hunt 1 Taikun Zamuza\n\n"+
+                    "Part 4: Hunt 1 Meraginasu\n\n"+
+                    "Rewards: Diva Weapon Gem (1st Series)\n\n" +
+                    "Chapter 8\n" +
+                    "Part 1: Speak to Blacksmith and return to Diva Hall\n\n"+
+                    "Part 2: Deliver 3 Grease Stone (白鳥石) and 1 Atarka Ore (亞達爾純礦石). You can mine the ores in the G Rank Flower Field or simply buy them for 235 GCP total. Hunt 1 Forokururu\n\n"+
+                    "Part 3: You need to craft the Prototype Tonfas at this point. Kill 3 Aptonoth in the preset quest\n\n"+
+                    "Part 4: Hunt 1 Yian Kut-Ku (Does not need to be with Tonfas)\n\n"+
+                    "Rewards: Ores spent in part 2 (Hunter Challenge Reward). Used to be ability to craft Tonfas.\n\n" +
+                    "Chapter 9\n" +
+                    "Part 1: Deliver 1 Teostra Miracle Wing (Supremacy Teo)\n\n"+
+                    "Part 2: Hunt 2 G Rank Velocidrome\n\n"+
+                    "Part 3: Hunt 1 Meraginasu\n\n"+
+                    "Part 4: Speak to Gin (Hammer Rasta)\n\n"+
+                    "Rewards: Diva G Rank Armour Materials\n\n" +
+                    "Chapter 10\n"+
+                    "Part 1: Talk to Guild Master. Hunt 1 Monoblos\n\n"+
+                    "Part 2: Hunt 1 Gou Lunastra\n\n"+
+                    "Part 3: Speak to the Guild Mistress\n\n"+
+                    "Part 4: Hunt 1 Anorupatisu (Preset Quest). ※ Everyone must use Tonfas for this mission . (Restricted equipment disables AI outside of Legendaries)\n\n"+
+                    "Rewards: Diva Weapon Materials (1st Series) (2 Gems with Hunter Challenge Reward)\n\n" +
+                    "Chapter 11\n\n" +
+                    "Part 1: Talk to Guild Mistress, Return to Diva Hall\n\n"+
+                    "Part 2: Capture 1 Forokururu\n\n"+
+                    "Part 3: Speak to Leila (Tonfa Legendary). Solo Hunt 1 Diorex. Speak to Leila. Return to the Diva Hall\n\n"+
+                    "Part 4: Hunt 1 Burst Species Meraginasu\n\n"+
+                    "Rewards: Diva Armour Materials\n\n" +
+                    "Chapter 12\n" +
+                    "Part 1: Hunt 1 G Rank Gold Rathian, talk to cats and return to Diva Hall\n\n"+
+                    "Part 2: Speak to Leila and return to the Diva Hall\n\n"+
+                    "Part 3: Hunt 1 Inagami\n\n"+
+                    "Part 4: Hunt 1 G Rank Inagami (Preset quest with set equipment, AI outside of Legendaries is disabled)\n\n"+
+                    "Rewards: Diva Weapon Gem (2nd Series)\n\n" +
+                    "Chapter 13\n" +
+                    "Part 1: Hunt 1 Giaorugu\n\n"+
+                    "Part 2: Hunt 1 G Rank Gravios\n\n"+
+                    "Part 3: Speak to Leila and return to the Diva Hall. Speak to the Blacksmith\n\n"+
+                    "Part 4: Hunt 1 G Rank Forokururu. Hunt 1 G Rank HC Rajang\n\n"+
+                    "Rewards: Diva HC Armour Materials\n\n" +
+                    "Chapter 14\n" +
+                    "Part 1: Hunt 1 Red Lavasioth (Training Quest on Black Quest NPC)\n\n"+
+                    "Part 2: Speak to Flora (SnS Legendary) and return to Diva Hall. Hunt 1 Hyujikiki\n\n"+
+                    "Part 3: Hunt 1 Inagami\n\n"+
+                    "Part 4: Deliver 3 Herbal Medicine G (中藥G). (Can be bought in Guild Hall for Guild Tix)\n\n"+
+                    "Rewards: Diva Weapon Gem (2nd Series)\n\n" +
+                    "Chapter 15\n" +
+                    "Part 1: Talk to Guild Master. Return to fountain. Hunt 1 G Rank White Espinas.\n\n"+
+                    "Part 2: Hunt 1 G Rank Baruragaru\n\n"+
+                    "Part 3: Hunt 1 G Rank Akura Jebia\n\n"+
+                    "Part 4: Hunt 1 Burst (G Rank) Garuba Daora\n\n"+
+                    "Rewards: Diva Armour Materials. Diva Weapon Gem (2nd Series)"
+                    );
             }
         }
 
