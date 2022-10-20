@@ -39,6 +39,7 @@
     <None Remove="Fonts\SourceCodePro-VariableFont_wght.ttf" />
     <None Remove="icons\armor_skills.png" />
     <None Remove="icons\boggers.png" />
+    <None Remove="icons\bone.png" />
     <None Remove="icons\book.png" />
     <None Remove="icons\caravan_skills.png" />
     <None Remove="icons\description_FILL0_wght400_GRAD0_opsz48.png" />
@@ -158,6 +159,7 @@
     </Resource>
     <Resource Include="icons\armor_skills.png" />
     <Resource Include="icons\boggers.png" />
+    <Resource Include="icons\bone.png" />
     <Resource Include="icons\book.png">
       <Generator></Generator>
     </Resource>

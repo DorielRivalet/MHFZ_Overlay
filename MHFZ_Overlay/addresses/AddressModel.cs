@@ -444,7 +444,6 @@ namespace MHFZ_Overlay.addresses
 
         abstract public int FelyneHunted();
         abstract public int MelynxHunted();
-        abstract public int UrukiHunted();
         abstract public int ShakalakaHunted();
         abstract public int VespoidHunted();
         abstract public int HornetaurHunted();
@@ -494,7 +493,7 @@ namespace MHFZ_Overlay.addresses
         abstract public int TigrexHunted();
         abstract public int EspinasHunted();
         abstract public int OrangeEspinasHunted();
-        abstract public int WhiteEspiansHunted();
+        abstract public int WhiteEspinasHunted();
         abstract public int AkantorHunted();
         abstract public int BerukyurosuHunted();
         abstract public int DoragyurosuHunted();
@@ -595,8 +594,11 @@ namespace MHFZ_Overlay.addresses
         abstract public int GoruganosuHunted();
         abstract public int AruganosuHunted();
         abstract public int PSO2RappyHunted();
-
-
+        abstract public int RocksHunted();
+        abstract public int UrukiHunted();
+        abstract public int GorgeObjectsHunted();
+        abstract public int BlinkingNargacugaHunted();
+        abstract public int KingShakalakaHunted();
         abstract public int QuestState();
 
 
@@ -7446,6 +7448,14 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 return GenerateGearStats();
+            }
+        }
+
+        public string GetGameCaravanInfo
+        {
+            get
+            {
+                return string.Format("");
             }
         }
 

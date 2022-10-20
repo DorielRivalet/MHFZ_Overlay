@@ -474,7 +474,6 @@ namespace MHFZ_Overlay.addresses
 
         public override int FelyneHunted() => 1;
         public override int MelynxHunted() => 1;
-        public override int UrukiHunted() => 0;
         public override int ShakalakaHunted() => 1;
         public override int VespoidHunted() => 1;
         public override int HornetaurHunted() => 1;
@@ -524,7 +523,7 @@ namespace MHFZ_Overlay.addresses
         public override int TigrexHunted() => 1;
         public override int EspinasHunted() => 1;
         public override int OrangeEspinasHunted() => 1;
-        public override int WhiteEspiansHunted() => 1;
+        public override int WhiteEspinasHunted() => 1;
         public override int AkantorHunted() => 1;
         public override int BerukyurosuHunted() => 1;
         public override int DoragyurosuHunted() => 1;
@@ -619,14 +618,16 @@ namespace MHFZ_Overlay.addresses
         public override int WhiteFatalisHunted() => 1;
         public override int CactusHunted() => 1;
         public override int ArrogantDuremudiraHunted() => 1;//untested
-        //public override int KingShakalakaHunted() => 1;
+        public override int KingShakalakaHunted() => 1;
         public override int MiRuHunted() => 1;
         public override int UnknownHunted() => 1;
         public override int GoruganosuHunted() => 1;
         public override int AruganosuHunted() => 1;
         public override int PSO2RappyHunted() => 1;
-
-
+        public override int RocksHunted() => 1;
+        public override int UrukiHunted() => 1;
+        public override int GorgeObjectsHunted() => 1;
+        public override int BlinkingNargacugaHunted() => 1;
         public override int QuestState() => 0;
 
         public override int RoadDureSkill1Name() => 1;

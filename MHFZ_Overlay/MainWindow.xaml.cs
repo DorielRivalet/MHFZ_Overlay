@@ -334,6 +334,8 @@ namespace MHFZ_Overlay
             }
         }
 
+
+
         //Main entry point?        
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.

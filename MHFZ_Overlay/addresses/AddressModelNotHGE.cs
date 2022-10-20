@@ -412,7 +412,6 @@ namespace MHFZ_Overlay.addresses
 
         public override int FelyneHunted() => M.Read2Byte("mhfo.dll+6103A1E");
         public override int MelynxHunted() => M.Read2Byte("mhfo.dll+6103A3A");
-        public override int UrukiHunted() => 0;
         public override int ShakalakaHunted() => M.Read2Byte("mhfo.dll+6103A7E")+0;
         public override int VespoidHunted() => M.Read2Byte("mhfo.dll+6103A32");
         public override int HornetaurHunted() => M.Read2Byte("mhfo.dll+6103A3C");
@@ -462,7 +461,7 @@ namespace MHFZ_Overlay.addresses
         public override int TigrexHunted() => M.Read2Byte("mhfo.dll+6103AA4");
         public override int EspinasHunted() => M.Read2Byte("mhfo.dll+6103AAC");
         public override int OrangeEspinasHunted() => M.Read2Byte("mhfo.dll+6103AAE");
-        public override int WhiteEspiansHunted() => M.Read2Byte("mhfo.dll+6103AC0");
+        public override int WhiteEspinasHunted() => M.Read2Byte("mhfo.dll+6103AC0");
         public override int AkantorHunted() => M.Read2Byte("mhfo.dll+6103AA6");
         public override int BerukyurosuHunted() => M.Read2Byte("mhfo.dll+6103AB6");
         public override int DoragyurosuHunted() => M.Read2Byte("mhfo.dll+6103ACA");
@@ -556,12 +555,18 @@ namespace MHFZ_Overlay.addresses
         public override int WhiteFatalisHunted() => M.Read2Byte("mhfo.dll+6103A9A");
         public override int CactusHunted() => M.Read2Byte("mhfo.dll+6103AB8");
         public override int ArrogantDuremudiraHunted() => M.Read2Byte("mhfo.dll+6103B5A");//untested
-        //public override int KingShakalakaHunted() => 1;
+        public override int KingShakalakaHunted() => M.Read2Byte("mhfo.dll+6103B6C");
         public override int MiRuHunted() => M.Read2Byte("mhfo.dll+6103AEE");
         public override int UnknownHunted() => M.Read2Byte("mhfo.dll+6103AD4");
         public override int GoruganosuHunted() => M.Read2Byte("mhfo.dll+6103AFA");
         public override int AruganosuHunted() => M.Read2Byte("mhfo.dll+6103AFC");
         public override int PSO2RappyHunted() => M.Read2Byte("mhfo.dll+6103B6A");
+        public override int RocksHunted() => M.Read2Byte("mhfo.dll+6103A46");
+        public override int UrukiHunted() => M.Read2Byte("mhfo.dll+6103B04");
+        public override int GorgeObjectsHunted() => M.Read2Byte("mhfo.dll+6103ABA");
+        //public override int GorgeRocksHunted() => 
+        public override int BlinkingNargacugaHunted() => M.Read2Byte("mhfo.dll+6103B52");
+
 
         public override int QuestState() => M.ReadByte("mhfo.dll+61180F2");
 
