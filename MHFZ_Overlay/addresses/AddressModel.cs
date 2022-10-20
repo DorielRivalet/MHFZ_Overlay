@@ -7455,6 +7455,165 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
+                return string.Format("If your caravan gem is below level 8 you will have less pages. The skills will however be in the same order.\n\n"+
+                    "Page 1\n"+
+                    "Cafeteria Regular\n"+
+                    "Chance to not consume food when preparing buffs for a quest.\n\n"+
+                    "Negotiation\n"+
+                    "1/8th chance to get a 10%/15%/25% discount on buying things.\n\n"
+                    +"My Tore Celebrity\n"+
+                    "Garden managers affection goes up 1.5x/2x/3x usual values.\n\n"
+                    +"Gallery Celebrity\n"+
+                    "5000/7000/10000 extra Gallery Points on evaluations.\n\n"
+                    +"Garden Celebrity\n"+
+                    "1.2x/1.3x/1.5x items receieved from garden tools.\n\n"+
+                    "Recovery Items Up\n"+
+                    "Herb, Potion, Mega Potion and Lifepowder effect 1.1x. 100% Bitterbug and Antidote Herb effectiveness.\n\n"+
+                    "Blunt Striker\n"+
+                    "Bowgun Melee damage up (3.0x).\n\n"+
+                    "Courage\n"+
+                    "No inching upon being spotted by monsters.\n\n"+
+                    "Combination Technique [Small]\n"+
+                    "10% additional combination success rate.\n\n"+
+                    "Riser [Small]\n"+
+                    "1.5x iframes during the rising animation after taking a hit.\n\n"+
+                    "Page 2\n"+
+                    "Perfect Defense [Small]\n"+
+                    "Blocking within 3 frames of an attack hitting you will cause no stamina or sharpness decrease and prevent knockback and allow you to immediately evade after the block.\n\n"+
+                    "Lander\n"+
+                    "No recovery time after falling, no egg loss on falling.\n\n"+
+                    "Vine Superhero\n"+
+                    "No stamina is consumed while climbing.\n\n"+
+                    "Vine Master\n"+
+                    "Getting hurt while climbing will not cause you to fall\n\n"+
+                    "Art of Dancing\n"+
+                    "Using the 'Dance' action will give +10 attack for one minute. Uses the same buff slot as Power Seeds etc.\n\n"+
+                    "Combination Celebrity\n"+
+                    "Combining items has a chance to produce double the usual results quantity wise.\n\n"+
+                    "Combination Technique [Medium]\n"+
+                    "15% additional combination success rate.\n\n"+
+                    "Riser [Medium]\n"+
+                    "2.0x iframes during the rising animation after taking a hit.\n\n"+
+                    "Perfect Defense [Medium]\n"+
+                    "Blocking within 4 frames of an attack hitting you will cause no stamina or sharpness loss and prevent knockback and allow you to immediately evade after the block.\n\n"+
+                    "Elite Flame\n"+
+                    "Increases the Friendly Fire (heat up) meter over time instead of by friendly fire when on caravan quests.\n\n"+
+                    "Page 3\n"+
+                    "Mine Expert\n"+
+                    "Pickaxes are less likely to break after use.\n\n"+
+                    "Insect Expert\n"+
+                    "Bug nets are less likely to break after use.\n\n"+
+                    "(Recommended) KO Technique\n+" +
+                    "Increases stun damage dealt by 1.1x. Stacks with Sigil.\n\n"+
+                    "Combination Technique [Large]\n"+
+                    "20% additional combination success rate.\n\n"+
+                    "Riser [Large]\n"+
+                    "2.0x iframes during the rising animation after taking a hit.\n\n"+
+                    "Secret Healing Technique [Small]\n"+
+                    "1/12th chance of not consuming healing items when used. (Up to 5 times a quest)\n\n"+
+                    "(Recommended) Perfect Defense [Large]\n"+
+                    "Blocking within 4 frames of an attack hitting you will cause no stamina or sharpness loss and prevent knockback and allow you to immediately evade after the block. Perfectly timed blocks also cause a Reflect effect which deals 72 motion (no critical hits, no elemental).\n\n"+
+                    "Unstable Defender [Small]\n"+
+                    "90% reduction of damage and 20% chance of no damage while blocking\n\n"+
+                    "Rousing Attacker [Small]\n"+
+                    "Attacking a monster while you have 50 or lower health a 40% chance to cause you to regain 10 HP. Cannot trigger more than once every 10 seconds. Can trigger up to 10 times in a quest.\n\n"+
+                    "Revenge![Small]\n"+
+                    "After getting up from a hit there's a chance (1 x Health Loss % chance) to gain 25 attack, 50 defense and no minor knockback for 20 seconds. Counted as a Power Pill for terms of buff effects and does not overlap\n\n"+
+                    "Page 4\n"+
+                    "Hot Master\n"+
+                    "Grants the effects of Heat Cancel\n\n"+
+                    "Cold Master\n"+
+                    "Grants the effects of Cold Cancel\n\n"+
+                    "Prepared Stance\n"+
+                    "If you perform the gesture 應戰準備 <act20> for around 30 seconds the attack ceiling on your currently equipped weapon type increases for a fixed duration.\n\n"+
+                    "Shield Angel\n"+
+                    "Decreases the amount of damage taken when on support quests on Berserk Raviente.\n\n"+
+                    "Spear Angel\n"+
+                    "Increases the amount of damage dealt by Ballistas when playing support on Berserk Raviente.\n\n"+
+                    "Secret Healing Technique [Medium]\n"+
+                    "1/11th chance of not consuming healing items when used. (Up to 5 times a quest)\n\n"+
+                    "Unstable Defender [Medium]\n"+
+                    "90% reduction of damage and 25% chance of no damage while blocking\n\n"+
+                    "Rousing Attacker [Medium]\n"+
+                    "Attacking a monster while you have 50 or lower health a 40% chance to cause you to regain 10 HP. Cannot trigger more than once every 10 seconds. Can trigger up to 15 times in a quest.\n\n"+
+                    "Revenge! [Medium]\n"+
+                    "After getting up from a hit there's a chance (1.5 x Health Loss % chance) to gain 25 attack, 50 defense and no minor knockback for 20 seconds. Counted as a Power Pill for terms of buff effects and does not overlap\n\n"+
+                    "Weapon Art [Small]\n"+
+                    "Increases the True Raw of your equipped weapon by 1.01x of its base True Raw on all weapon types.\n\n"+
+                    "Page 5\n"+
+                    "Bonus Art\n"+
+                    "Food Effect is not lost after fainting.\n\n"+
+                    "Secret Healing Technique [Large]\n"+
+                    "1/10th chance of not consuming healing items when used. (Up to 5 times a quest)\n\n"+
+                    "Last Minute Ace [Small]\n"+
+                    "In the last 5 minutes of a quest you get 80% affinity but take 1.3x damage\n\n"+
+                    "Unstable Defender [Large]\n"+
+                    "90% reduction of damage and 50% chance of no damage while blocking\n\n"+
+                    "Rousing Attacker [Large]\n"+
+                    "Attacking a monster while you have 50 or lower health a 40% chance to cause you to regain 10 HP. Cannot trigger more than once every 10 seconds. Can trigger up to 20 times in a quest.\n\n"+
+                    "Revenge! [Large]\n"+
+                    "After getting up from a hit there's a chance (2 x Health Loss % chance) to gain 25 attack, 50 defense and no minor knockback for 20 seconds. Counted as a Power Pill for terms of buff effects and does not overlap\n\n"+
+                    "Last Minute Ace [Medium]\n"+
+                    "In the last 5 minutes of a quest you get 90% affinity but take 1.3x damage\n\n"+
+                    "Weapon Art [Medium]\n"+
+                    "Increases the True Raw of your equipped weapon by 1.025x of its base True Raw on all weapon types.\n\n"+
+                    "Wild Awakening\n"+
+                    "Combination of both Hot and Cold Master skills.\n\n"+
+                    "Instant Guard Stance\n"+
+                    "Combination of Weapon Art [Med] and Perfect Defense [Med]\n\n"+
+                    "Page 6\n"+
+                    "(Recommended) Shooting Rampage\n"+
+                    "Increases the True Raw of your equipped ranged weapon by 1.1x of its base True Raw. If using a bowguns your accuracy immediately after shooting is lowered by 1.5x.\n\n"+
+                    "Natural Recovery [Small]\n"+
+                    "Using the 'Sleep' gesture will cause your red health to refill up to 5 times.\n\n"+
+                    "Master Carver [Small]\n"+
+                    "While carving if you roll the top item in the carve table and it is below 51% you have a 1/10th chance of rerolling with that item removed from the carving pool up to a maximum of 10 times in a quest.\n\n"+
+                    "Last Minute Ace [Large]\n"+
+                    "In the last 5 minutes of a quest you get 100% affinity but take 1.3x damage\n\n"+
+                    "(Recommended) Weapon Art [Large]\n"+
+                    "Increases the True Raw of your equipped weapon by 1.05x of its base True Raw on all weapon types.\n\n"+
+                    "Decisive Hunter\n"+
+                    "Combination of Weapon Art [Med] and KO Technique\n\n"+
+                    "Natural Recovery [Medium]\n"+
+                    "Using the 'Sleep' gesture will cause your red health to refill up to 10 times.\n\n"+
+                    "Master Carver [Medium]\n"+
+                    "While carving if you roll the top item in the carve table and it is below 51% you have a 1/9th chance of rerolling with that item removed from the carving pool up to a maximum of 15 times in a quest.\n\n"+
+                    "Goddess of Luck [Small]\n"+
+                    "1/10th chance to take no damage on up to 5 hits in a quest (Stacks with Divine Protection, Diva Buff and Girly Charms).\n\n"+
+                    "Self-Defense\n"+
+                    "Combination of Weapon Art [Med] and Unstable Defender [Med]\n\n"+
+                    "Page 7\n"+
+                    "Natural Recovery [Large]\n"+
+                    "Using the 'Sleep' gesture will cause your red health to refill up to 15 times.\n\n"+
+                    "(Recommended) Master Carver [Large]\n"+
+                    "While carving if you roll the top item in the carve table and it is below 51% you have a 1/8th chance of rerolling with that item removed from the carving pool up to a maximum of 20 times in a quest.\n\n"+
+                    "Goddess of Luck [Medium]\n"+
+                    "1/9th chance to take no damage on up to 10 hits in a quest (Stacks with Divine Protection, Diva Buff and Girly Charms).\n\n"+
+                    "Goddess of Luck [Large]\n"+
+                    "1/8th chance to take no damage on up to 20 hits in a quest (Stacks with Divine Protection, Diva Buff and Girly Charms).");
+            }
+        }
+
+        public string GetGameRoadDureInfo
+        {
+            get
+            {
+                return string.Format("");
+            }
+        }
+
+        public string GetGameZenithSkills
+        {
+            get
+            {
+                return string.Format("");
+            }
+        }
+
+        public string GetGameStyleRankInfo
+        {
+            get
+            {
                 return string.Format("");
             }
         }

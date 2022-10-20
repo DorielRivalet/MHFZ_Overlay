@@ -1,12 +1,4 @@
-﻿using Accessibility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq;
-
-namespace MHFZ_Overlay
+﻿namespace MHFZ_Overlay
 {
     public class Monster
     {
