@@ -49,10 +49,12 @@
     <None Remove="icons\helm.png" />
     <None Remove="icons\knife.png" />
     <None Remove="icons\monster.png" />
+    <None Remove="icons\monster_info.png" />
     <None Remove="icons\note_pink.png" />
     <None Remove="icons\page.png" />
     <None Remove="icons\photo.png" />
     <None Remove="icons\poison.png" />
+    <None Remove="icons\quest_info.png" />
     <None Remove="icons\sigils.png" />
     <None Remove="icons\unknown.png" />
   </ItemGroup>
@@ -182,10 +184,12 @@
     </Resource>
     <Resource Include="icons\knife.png" />
     <Resource Include="icons\monster.png" />
+    <Resource Include="icons\monster_info.png" />
     <Resource Include="icons\note_pink.png" />
     <Resource Include="icons\page.png" />
     <Resource Include="icons\photo.png" />
     <Resource Include="icons\poison.png" />
+    <Resource Include="icons\quest_info.png" />
     <Resource Include="icons\Refresh.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

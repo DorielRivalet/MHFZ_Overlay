@@ -7598,7 +7598,95 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return string.Format("");
+                return string.Format("The Maximum Cost is 130.\n\n"+
+                    "Attack\n"+
+                    "Lv1: Small increase to attack.(+10)\n"+
+                    "Lv2: Increases attack.(+20)\n"+
+                    "Lv3: Medium increase to attack.(+30)\n"+
+                    "Lv4: Large increase to attack.(+50)\n"+
+                    "Lv5: Very large increase to attack.(+70)\n\n"+
+                    "Defense\n"+
+                    "Lv1: defense +30\n"+
+                    "Lv2: defense +50\n"+
+                    "Lv3: defense +80\n"+
+                    "Lv4: defense +110\n"+
+                    "Lv5: defense +150\n\n"+
+                    "Health Recovery\n"+
+                    "Lv1: Red Health recovery speed is increased.\n"+
+                    "Lv2: Red health recovery speed is further increased.\n\n"+
+                    "Fire Res\n"+
+                    "Lv1: Fire Res +10\n"+
+                    "Lv2: Fire Res +15\n"+
+                    "Lv3: Fire Res +25\n\n"+
+                    "Water Res\n" +
+                    "Lv1: Water Res +10\n" +
+                    "Lv2: Water Res +15\n" +
+                    "Lv3: Water Res +25\n\n" +
+                    "Thunder Res\n" +
+                    "Lv1: Thunder Res +10\n" +
+                    "Lv2: Thunder Res +15\n" +
+                    "Lv3: Thunder Res +25\n\n" +
+                    "Ice Res\n" +
+                    "Lv1: Ice Res +10\n" +
+                    "Lv2: Ice Res +15\n" +
+                    "Lv3: Ice Res +25\n\n" +
+                    "Dragon Res\n" +
+                    "Lv1: Dragon Res +10\n" +
+                    "Lv2: Dragon Res +15\n" +
+                    "Lv3: Dragon Res +25\n\n" +
+                    "All Res\n"+
+                    "Lv1: All Res +5\n"+
+                    "Lv2: All Res +10\n"+
+                    "Lv3: All Res +15\n\n"+
+                    "Technical Skills\n"+
+                    "Starting Gm Up\n"+
+                    "Lv1: Increases starting Gm.(+1000Gm)\n"+
+                    "Lv2: Increases starting Gm significantly.(+3000Gm)\n\n"+
+                    "Hunting Road Points Up\n"+
+                    "Lv1: Increases Road Point earning slightly (+10%).\n"+
+                    "Lv2: Increases Road Point earning (+20%).\n"+
+                    "Lv3: Increases Road Point earning greatly (+40%).\n\n"+
+                    "Bonus Stages Up\n"+
+                    "Lv1: Increases the likelihood of getting Bonus Stages slightly. Stacks with other players on road.\n"+
+                    "Lv2: Increases the likelihood of getting Bonus Stages. Stacks with other players on road.\n\n" +
+                    "Resurrection Knowledge\n"+
+                    "Lv1: Increases the number of times you can faint on the road before failing (+1 Cart).\n\n"+
+                    "Advancement Knowledge\n"+
+                    "Lv1: Attack increases every 5 stages on the Road. Floor 6 will give +20 Attack while every 5th floor after will grant +10 Attack stopping after floor 26. Maximum buff of 60 Attack for all floors above 26.\n"+
+                    "Lv2: Attack increases every 5 stages on the Road. Floor 6 will give +40 Attack while every 5th floor after will grant +10 Attack stopping after floor 26. Maximum buff of 80 Attack for all floors above 26.\n"+
+                    "Lv3: Attack increases every 5 stages on the Road. Floor 6 will give +60 Attack while every 5th floor after will grant +10 Attack stopping after floor 26. Maximum buff of 100 Attack for all floors above 26.\n\n"+
+                    "Last Stand\n"+
+                    "Lv1: Increases affinity by +30% and Attack by +80 but causes you to have a single faint on Road regardless of other skills.\n"+
+                    "Lv2: Increases affinity by +50% and Attack by +120 but causes you to have a single faint on road regardless of other skills.\n\n"+
+                    "Duremudira Skills\n"+
+                    "Care\n"+
+                    "Lv1: Slightly increases speed of revivals and the amount of health left after being revived.\n"+
+                    "Lv2: Increases speed of revivals and the amount of health left after being revived.\n"+
+                    "Lv3: Greatly increases speed of revivals and the amount of health left after being revived.\n\n"+
+                    "Pharmacist\n"+
+                    "Lv1: Increases the number of revival items you can carry by 1.\n"+
+                    "Lv2: Increases the number of revival items you can carry by 2.\n"+
+                    "Lv3: Increases the number of revival items you can carry by 4.\n\n"+
+                    "Virus Protection\n"+
+                    "Lv1: Increases resistance to Deadly Poison slightly.\n"+
+                    "Lv2: Increases resistance to Deadly Poison.\n"+
+                    "Lv3: Increases resistance to Deadly Poison greatly.\n\n"+
+                    "Frost Protection\n"+
+                    "Lv1: Increases resistance to Powerful Frost slightly.\n"+
+                    "Lv2: Increases resistance to Powerful Frost.\n"+
+                    "Lv3: Increases resistance to Powerful Frost greatly.\n\n"+
+                    "Gatekeeper Offensive\n"+
+                    "Lv1: Increases attack when facing Duremudira by +50 true raw.\n"+
+                    "Lv2: Increases attack when facing Duremudira by +75 true raw.\n"+
+                    "Lv3: Increases attack when facing Duremudira by +100 true raw.\n"+
+                    "Lv4: Increases attack when facing Duremudira by +150 true raw.\n"+
+                    "Lv5: Increases attack when facing Duremudira by +200 true raw.\n\n"+
+                    "Gatekeeper Defensive\n"+
+                    "Lv1: Increases defense when facing Duremudira.\n"+
+                    "Lv2: Increases defense when facing Duremudira.\n"+
+                    "Lv3: Increases defense when facing Duremudira.\n"+
+                    "Lv4: Increases defense when facing Duremudira.\n"+
+                    "Lv5: Increases defense when facing Duremudira.");
             }
         }
 
