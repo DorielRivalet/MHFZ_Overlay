@@ -2948,6 +2948,12 @@ namespace MHFZ_Overlay
                 return false;
         }
 
+        /// <summary>
+        /// Determines whether [is toggeable difficulty].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is toggeable difficulty]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsToggeableDifficulty()
         {
             if (!(IsDure()) && !(IsRavi()) && !(IsRoad()) && DataLoader.model.QuestID() != 0)
@@ -2990,7 +2996,12 @@ namespace MHFZ_Overlay
             }
         }
 
-
+        /// <summary>
+        /// Determines whether this instance is ravi.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is ravi; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsRavi()
         {
             if (DataLoader.model.getRaviName() != "None")
@@ -3020,6 +3031,12 @@ namespace MHFZ_Overlay
 
         private bool inDuremudiraDoorway = false;
 
+        /// <summary>
+        /// Gets a value indicating whether [show discord quest names].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [show discord quest names]; otherwise, <c>false</c>.
+        /// </value>
         public bool ShowDiscordQuestNames
         {
             get
@@ -3032,6 +3049,11 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Gets the star grade.
+        /// </summary>
+        /// <param name="isLargeImageText">if set to <c>true</c> [is large image text].</param>
+        /// <returns></returns>
         public string GetStarGrade(bool isLargeImageText = false)
         {
             if ((ShowDiscordQuestNames && !(isLargeImageText)) || DataLoader.model.CaravanOverride()) 
@@ -3043,6 +3065,10 @@ namespace MHFZ_Overlay
                 return "";
         }
 
+        /// <summary>
+        /// Gets the quest information.
+        /// </summary>
+        /// <returns></returns>
         public string GetQuestInformation()
         {
             if (ShowDiscordQuestNames)
@@ -3078,6 +3104,11 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Gets the raviente event.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public string GetRavienteEvent(int id)
         {
             //if (!(ShowDiscordQuestNames)) return "";
@@ -3126,8 +3157,23 @@ namespace MHFZ_Overlay
                     return String.Format("Quest Clear! | {0} | ",DataLoader.model.Time);
             }
         }
-       
 
+        /// <summary>
+        /// Gets the size of the party.
+        /// </summary>
+        /// <returns></returns>
+        public string GetPartySize()
+        {
+            if (DataLoader.model.PartySize() == 0)
+            {
+                return "";
+            }
+            else
+            {
+                return string.Format("Party: {0}/{1} | ", DataLoader.model.PartySize(), DataLoader.model.PartySizeMax());
+            }
+        }
+       
 
         /// <summary>
         /// Updates the discord RPC.
@@ -3139,7 +3185,7 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            presenceTemplate.Details = string.Format("Party: {0}/{1} | {2}{3}{4}{5}{6}", DataLoader.model.PartySize(), DataLoader.model.PartySizeMax(), GetQuestState(),GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
+            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(),GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
 
             //quest ids:
             //mp road: 23527
@@ -3703,6 +3749,10 @@ namespace MHFZ_Overlay
 
         }
 
+        /// <summary>
+        /// Does the drag drop.
+        /// </summary>
+        /// <param name="item">The item.</param>
         private void DoDragDrop(FrameworkElement? item)
         {
             if (item == null)
@@ -3710,6 +3760,11 @@ namespace MHFZ_Overlay
             DragDrop.DoDragDrop(item, new DataObject(DataFormats.Xaml, item), DragDropEffects.Move);
         }
 
+        /// <summary>
+        /// Handles the Drop event of the MainGrid control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="DragEventArgs"/> instance containing the event data.</param>
         private void MainGrid_Drop(object sender, DragEventArgs e)
         {
             if (MovingObject != null)
@@ -3717,7 +3772,11 @@ namespace MHFZ_Overlay
             MovingObject = null;
         }
 
-
+        /// <summary>
+        /// Elements the mouse left button down.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
         private void ElementMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!IsDragConfigure)

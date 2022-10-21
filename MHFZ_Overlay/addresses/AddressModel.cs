@@ -7606,11 +7606,11 @@ namespace MHFZ_Overlay.addresses
                     "Lv4: Large increase to attack.(+50)\n"+
                     "Lv5: Very large increase to attack.(+70)\n\n"+
                     "Defense\n"+
-                    "Lv1: defense +30\n"+
-                    "Lv2: defense +50\n"+
-                    "Lv3: defense +80\n"+
-                    "Lv4: defense +110\n"+
-                    "Lv5: defense +150\n\n"+
+                    "Lv1: Defense +30\n"+
+                    "Lv2: Defense +50\n"+
+                    "Lv3: Defense +80\n"+
+                    "Lv4: Defense +110\n"+
+                    "Lv5: Defense +150\n\n"+
                     "Health Recovery\n"+
                     "Lv1: Red Health recovery speed is increased.\n"+
                     "Lv2: Red health recovery speed is further increased.\n\n"+
@@ -7694,7 +7694,10 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return string.Format("");
+                return string.Format("Skill Slots Up\n"+
+                    "Available Skill Slots go up by 1/2/3/4/5/6/7. Stacks with the +1 or +2 skill slots from having 3 or 5 standard G Rank pieces (including Z, ZF, ZY, ZX and ZP)\n\n"+
+                    "Flash Conversion\n"+
+                    "Flash Conversion Up+1: Increases attack based on your weapon's natural affinity (5 x √Base Affinity, always rounded down before addition). Example: 50% base affinity = 10 x √50 = 7.07 x 10 = 70. This only uses the true base affinity of your weapon. Sigils, Skills, SR Skills and the +5-10% from having above blue sharpness do not count towards the increase. (The sharpness bonus is always displayed");
             }
         }
 
