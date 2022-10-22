@@ -7791,6 +7791,178 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string GetGameMotionValuesSnS
+        {
+            get
+            {
+                return "KO indicates impact portions which use white sharpness as max multi\r\n" +
+                    "Jump Slash (Unsheathe)\t13(5)･21\r\n" +
+                    "Slide Slash\t21\r\n" +
+                    "Slash 1\t20\r\n"+
+                    "Slash 2\t26\r\n" +
+                    "Slash 3\t10(5)･16\r\n" +
+                    "Horizontal Slash\t31\r\n"+
+                    "Vacuum Slash Sigil\t31･16\r\n" +
+                    "Jump Slash 2\t26･24\r\n"+
+                    "Upslash\t20\r\n" +
+                    "Infinite Slash\t25\r\n" +
+                    "Infinite Slash Sigil\t28\r\n"+
+                    "Shield Bash\t13(5)\r\n" +
+                    "Shield Bash 2\t18(10)\r\n" +
+                    "Shield Bash Sigil\t19(5)\r\n" +
+                    "Shield Bash 2 Sigil\t27(10)\r\n" +
+                    "Slide Slash\t21\r\n" +
+                    "Slide Slash (Sigil)\t31\r\n" +
+                    "Continuous Bashing 1 to 3\t20(13) (Up to x3)\r\n" +
+                    "Dash: Aerial Shield Bash\t34(10)\r\n" +
+                    "Dash: Frontflip Slash\t18･34\r\n" +
+                    "Dash: Jump Slash (Unsheathe)\t13(5)･21\r\n" +
+                    "Evade Slash\t17\r\n" +
+                    "Reflect (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\n" +
+                    "Reflect +1\t24\r\n" +
+                    "Reflect +2\t36\r\n" +
+                    "Reflect +3\t48\r\n" +
+                    "Reflect Up\t68\r\n" +
+                    "Perfect Guard\t72\r\n" +
+                    "Perfect Guard Up\t92\r\n" +
+                    //"SnS Raw Sigil (Added to every hit of all motions)\r\n" +
+                    //"Sigil Additional\t0\r\n" +
+                    "Stylish Up (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\n" +
+                    "Stylish Up\t30";
+            }
+        }
+
+        public string GetGameMotionValuesDS
+        {
+            get
+            {
+                return "Extreme Demon Mode\r\nDownslash 1\t13･17\r\nDownslash 2\t13･10\r\nDownslash 3\t12･9･18･32\r\nUpslash\t22\r\nFlurry Combo\t13x3\r\nFlurry Rotation\t21･33･51\r\nWhirlwind Combo\t14x6\r\nWhirlwind Downslash\t36･54\r\nRising Slash\t13･13･12･12\r\nEvasion Slash (Forward･Back)\t16･16\r\nEvasion Slash (Left･Right)\t8･8･8･8\r\nDash: Upslash\t22\r\nDash: Sky Dance\t8x5\r\nSky Dance Finisher\t27･27\r\nDash: Evasion Slash\t16x2\r\nExtreme Demon Mode (Red Mode)\r\nDownslash 1\t14･18\r\nDownslash 2\t14･11\r\nDownslash 3\t13･10･20･34\r\nUpslash\t24\r\nFlurry Combo\t14x3\r\nFlurry Rotation\t23･36･55\r\nWhirlwind Combo\t15x6\r\nWhirlwind Downslash\t39･58\r\nRising Slash\t14･14･13･13\r\nEvasion Slash (Forward･Back)\t17･17\r\nEvasion Slash (Left･Right)\t9･8･9･8\r\nDash: Upslash\t24\r\nDash: Sky Dance\t8x5\r\nSky Dance Finisher\t29･29\r\nDash: Evasion Slash\t17x2\r\nStandard Mode\r\nRush Slash\t11･5\r\nRush Slash (Sigil)\t16･7\r\nDownslash 1\t10･13\r\nDownslash 2\t10･8\r\nDownslash 3\t9･7･14･24\r\nRotation Slash\t14･9･5\r\nUpslash\t17\r\nDash: Upslash\t17\r\nDash: Sky Dance\t6x5\r\nSky Dance Finisher\t20･20\r\nDemon Mode\r\nRush Slash\t14･6\r\nRush Slash (Sigil)\t21･9\r\nDownslash 1\t13･17\r\nDownslash 2\t13･10\r\nDownslash 3\t12･9･18･32\r\nRotation Slash\t18･12･6･29･17･12\r\nUpslash\t22\r\nFlurry Combo\t13x3\r\nFlurry Rotation\t21･33･51\r\nDash: Upslash\t22\r\nDash: Sky Dance\t8x5\r\nSky Dance Finisher\t27･27\r\nTrue Demon Mode\r\nRush Slash\t14･6\r\nRush Slash (Sigil)\t21･9\r\nDownslash 1\t13･17\r\nDownslash 2\t13･10\r\nDownslash 3\t12･9･18･32\r\nRotation Slash\t18･12･6･29･17･12\r\nUpslash\t22\r\nFlurry Combo\t13x3\r\nFlurry Rotation\t21･33･51\r\nWhirlwind Combo\t14x6\r\nWhirlwind Downslash\t36･54\r\nEvasion Slash\t12x2\r\nDash: Upslash\t22\r\nDash: Sky Dance\t8x5\r\nSky Dance Finisher\t27･27\r\nDash: Evasion Slash\t12x2\r\nTrue Demon Mode (Red Mode)\r\nRush Slash\t15･7\r\nRush Slash (Sigil)\t23･10\r\nDownslash 1\t14･18\r\nDownslash 2\t14･11\r\nDownslash 3\t13･9･20･35\r\nRotation Slash\t20･13･7･31･18･13\r\nUpslash\t22\r\nFlurry Combo\t13x3\r\nFlurry Rotation\t21･33･51\r\nWhirlwind Combo\t14x6\r\nWhirlwind Downslash\t36･54\r\nEvasion Slash\t13x2\r\nDash: Upslash\t24\r\nDash: Sky Dance\t8x5\r\nSky Dance Finisher\t29･29\r\nDash: Evasion Slash\t13x2\r\nStylish Up (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nStylish Up\t30";
+            }
+        }
+
+        public string GetGameMotionValuesGS
+        {
+            get
+            {
+                return "Vertical Slash\t60\r\nVertical Finisher\t45･76\r\nHorizontal Slash\t46\r\nHorizontal Slash (Sigil)\t59\r\nHorizontal Finisher\t105\r\nUpswing\t58\r\nUpswing (Sigil)\t75\r\nUpswing Finisher\t117\r\nLv1 Charge\t85x110%\r\nLv2 Charge\t105x120%\r\nLv3 Charge\t146x130%\r\nUpswing Lv1 Charge\t92\r\nUpswing Lv2 Charge\t112x110%\r\nUpswing Lv3 Charge\t157x120%\r\nUpswing Lv4 Charge\t200x130%\r\nGuard: Vertical\t200\r\nGuard: Horizontal\t125\r\nShining Sword (Fencing Disabled)\t27x17 (459)\r\nCharge Attack Up+1\r\nLv1 Charge\t92x110%\r\nLv2 Charge\t112x120%\r\nLv3 Charge\t156x130%\r\nUpswing Lv1\t99\r\nUpswing Lv2\t119x110%\r\nUpswing Lv3\t167x120%\r\nUpswing Lv4\t213x130%\r\nShining Sword (Fencing Disabled)\t40x17 (680)\r\nCharge Attack Up+2\r\nLv1 Charge\t95x110%\r\nLv2 Charge\t115x120%\r\nLv3 Charge\t161.5x130%\r\nUpswing Lv1\t102\r\nUpswing Lv2\t122x110%\r\nUpswing Lv3\t172.5x120%\r\nUpswing Lv4\t220x130%\r\nShining Sword (Fencing Disabled)\t47x17 (799)\r\nReflect (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nReflect +1\t24\r\nReflect +2\t36\r\nReflect +3\t48\r\nReflect Up\t68\r\nPerfect Guard\t72\r\nPerfect Guard Up\t92\r\nStylish Up (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nStylish Up\t30\r\n";
+            }
+        }
+
+        public string GetGameMotionValuesLS
+        {
+            get
+            {
+                return "Down Slash\t40\r\nDownslash 2\t33\r\nThrust\t25\r\nRising Slash\t28\r\nRising Slash (Sigil)\t42\r\nEvade Slash\t30\r\nSpirit 1 (0% Bar)\t17\r\nSpirit 1\t37\r\nSpirit 2\t39\r\nSpirit 3\t21･21･46\r\nSidehop Slash\t26\r\nPiercing Stab\t26･13･13\r\nPiercing Stab (Sigil)\t35･17･17\r\nStrong Piercing Stab\t25･12x5･31\r\nStrong Piercing Stab (Sigil)\t33･16x5･41\r\nBlade Release [<50%]\t5\r\nBlade Release [>50%]\t5･5\r\nBlade Release [100%]\t5･5･5\r\nRelease Blast [<50%] (No Fencing)\t10\r\nRelease Blast [>50%] (No Fencing)\t60\r\nRelease Blast [100%] (No Fencing)\t180\r\nDash: Charge (No Spirit use)\t18\r\nDash: Charge (Spirit use)\t70\r\nGuard: Teleport\t30･15\r\nGuard: Piercing Stab\t25･12x5･31\r\nSpirit Release\t40･※･※\r\nRelease [Spirit 1]\t60･※･※\r\nRelease [Spirit 2]\t70･※･※\r\nRelease [Spirit 3]\t90･※･※\r\n※ at 100% Spirit Bar\t35\r\n※ at 80% Spirit Bar\t26\r\n※ at 50% Spirit Bar\t20\r\nCharge Attack Up+1\r\nPiercing Stab\t29･15x2\r\nPiercing Stab (Sigil)\t38･19x2\r\nStrong Piercing Stab\t28･13x5･35\r\nStrong Piercing Stab (Sigil)\t36･17x5･45\r\nDash: Charge (No Spirit use)\t23\r\nDash: Charge (Spirit use)\t80\r\nSpirit Release\t49･※･※\r\nRelease [Spirit 1]\t71･※･※\r\nRelease [Spirit 2]\t82･※･※\r\nRelease [Spirit 3]\t105･※･※\r\n※ at 100% Spirit Bar\t41\r\n※ at 80% Spirit Bar\t32\r\n※ at 50% Spirit Bar\t26\r\nCharge Attack Up+2\r\nPiercing Stab\t30･16x2\r\nPiercing Stab (Sigil)\t39･20x2\r\nStrong Piercing Stab\t33･16x5･41\r\nStrong Piercing Stab (Sigil)\t38･18x5･47\r\nDash: Charge (No Spirit use)\t26\r\nDash: Charge (Spirit use)\t86\r\nSpirit Release\t54･※･※\r\nRelease [Spirit 1]\t76･※･※\r\nRelease [Spirit 2]\t88･※･※\r\nRelease [Spirit 3]\t112･※･※\r\n※ at 100% Spirit Bar\t44\r\n※ at 80% Spirit Bar\t35\r\n※ at 50% Spirit Bar\t29\r\nReflect (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nReflect +1\t24\r\nReflect +2\t36\r\nReflect +3\t48\r\nReflect Up\t68\r\nPerfect Guard\t72\r\nPerfect Guard Up\t92\r\nStylish Up (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nStylish Up\t30\r\n";
+            }
+        }
+
+        public string GetGameMotionValuesHA
+        {
+            get
+            {
+                return "Unsheathe\t32(24)\r\nUnsheathe (Sigil)\t48(24)\r\nQuick Smash\t60(50)\r\nBaseball Swing\t100(50)\r\nBaseball Swing (Sigil)\t130(50)\r\nSmash 1\t52(25)\r\nSmash 2\t38(25)\r\nUpswing\t100(80)\r\nHorizontal Swing\t30(35)\r\nCharge Upswing\t45(30)\r\nCharge Lv1\t52(20)\r\nCharge Lv2\t52(20)･35(20)\r\nCharge Lv3\t40(20)･100(60)\r\nCharge Lv4 (Shoryuken)\t40(30)･30(30)･120(80)\r\nCharge Lv5 (Flip)\t60(60)･45(40)･145(115)\r\nSwipes Start\t60(15)\r\nSwipes Combo\t45(15)xn\r\nSwinging\t20(12)\r\nSwinging Slam Lv1\t30(20)･40(30)･10(10)\r\nSwinging Slam Lv2\t30(20)･40(30)･70(50)\r\nSwinging Slam Lv3\t30(20)･40(30)･160(130)\r\nCharge Attack Up +1\r\nCharge Upswing\t52(30)\r\nCharge Lv1\t56(20)\r\nCharge Lv2\t56(20)･36(20)\r\nCharge Lv3\t44(20)･109(60)\r\nCharge Lv4 (Shoryuken)\t41(30)･35(30)･128(80)\r\nCharge Lv5 (Flip)\t63(60)･47(40)･153(115)\r\nSwipes Start\t64(15)\r\nSwipes Combo\t48(15)xn\r\nSwinging Slam Lv1\t32(20)･43(30)･13(10)\r\nSwinging Slam Lv2\t32(20)･43(30)･75(50)\r\nSwinging Slam Lv3\t32(20)･43(30)･167(130)\r\nCharge Attack Up +2\r\nCharge Upswing\t55(30)\r\nCharge Lv1\t58(20)\r\nCharge Lv2\t58(20)･37(20)\r\nCharge Lv3\t46(20)･114(60)\r\nCharge Lv4 (Shoryuken)\t41(30)･35(30)･128(80)\r\nCharge Lv5 (Flip)\t64(60)･48(40)･157(115)\r\nSwipes Start\t66(15)\r\nSwipes Combo\t49(15)xn\r\nSwinging Slam Lv1\t33(20)･44(30)･15(10)\r\nSwinging Slam Lv2\t33(20)･44(30)･77(50)\r\nSwinging Slam Lv3\t33(20)･44(30)･170(130)\r\nStylish Up (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nStylish Up\t30";
+            }
+        }
+
+        public string GetGameMotionValuesHH
+        {
+            get
+            {
+                return "Slam Attack (to Note 2)\t18(8)･57(30)\r\nUpthrust Start\t60(24)\r\nUpthrust (to Note 2)\t30(24)xn\r\nUpthrust End\t39(30)\r\nUpswings (to Note 3)\t40(20)\r\nPoke (to Note 1)\t16\r\nPoke (to Note 1) (Sigil)\t27\r\nStart Playing\t26(26)\r\nStart Playing (Sigil)\t39(26)\r\nNote 1 (L/R Face Button)\t50(26)\r\nNote 1 (L/R Face Button) (Sigil)\t75(26)\r\nNote 2 (Top Face Button)\t43(26)\r\nNote 2 (Top Face Button) (Sigil)\t64(26)\r\nNote 3 (T+R Face Buttons)\t49(26)\r\nNote 3 (T+R Face Buttons) (Sigil)\t73(26)\r\nStop Playing\t31(30)\r\nStop Playing (Sigil)\t46(30)\r\nDash: Turning Point\t40(20)･40(20)\r\nSonic Bomb Debuff\t30 Fixed\r\nStylish Up (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nStylish Up\t30";
+            }
+        }
+
+        public string GetGameMotionValuesLA
+        {
+            get
+            {
+                return "Unsheathe Stabs\t36\r\nThrust 1 - 3\t32\r\nThrust 4\t38\r\nThrust 4 (Hiden)\t48\r\nUpthrust 1 - 3\t35\r\nUpthrust 4\t38\r\nUpthrust 4 (Hiden)\t48\r\nSky Stab 1 - 3\t38\r\nSky Stab 4\t43\r\nSky Stab 4 (Hiden)\t53\r\nShield Rush ※ White Sharp\t3(5)･25(10) ※ Impact\r\nShield Rush (Sigil) ※ White Sharp\t4(5)･37(10) ※ Impact\r\nYellow Charge\t50\r\nRed Charge\t78\r\nEvade Thrust\t24\r\nFinishing Thrust\t91\r\nDash: Heavy Thrust\t50\r\nDash: Guard ※ White Sharp\t25(13) ※ Impact\r\nCharge Attack Up +1\r\nYellow Charge\t55\r\nRed Charge\t89\r\nCharge Attack Up +2\r\nYellow Charge\t58\r\nRed Charge\t94\r\nReflect (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nReflect +1\t24\r\nReflect +2\t36\r\nReflect +3\t48\r\nReflect Up\t68\r\nPerfect Guard\t72\r\nPerfect Guard Up\t92\r\nStylish Up (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nStylish Up\t30";
+            }
+        }
+
+        public string GetGameMotionValuesGL
+        {
+            get
+            {
+                return "Rush Thrust (Unsheathe)\t38\r\nRush Thrust (Unsheathe) (Sigil)\t57\r\nHorizontal Sweep\t34\r\nHorizontal Sweep (Sigil)\t51\r\nBackhop Slash\t18 + Shelling\r\nThrust 1-2\t33\r\nThrust 3\t34\r\nUpswing\t42\r\nUpthrusts\t30\r\nBombardment Boost: Dash Cleave\t58\r\nHeatblade (Elemental)\t5 + Element\r\nHeatblade (Raw)\t9\r\nHeatblade Slam\t62\r\nEle Shell Charge Up\t25\r\nReflect (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nReflect +1\t24\r\nReflect +2\t36\r\nReflect +3\t48\r\nReflect Up\t68\r\nPerfect Guard\t72\r\nPerfect Guard Up\t92\r\nStylish Up (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nStylish Up\t30";
+            }
+        }
+
+        public string GetGameMotionValuesTO
+        {
+            get
+            {
+                return "Long Mode\r\nUnsheathe\t28(12)\r\nStandard 1\t14(6)\r\nStandard 2 Lv1\t11(8)\r\nStandard 2 Lv2\t38(22)\r\nStandard 2 Lv3\t58(32)\r\nEX Pursuit 1\t8(7)\r\nEX Pursuit 2\t23(20)\r\nEX Pursuit 3\t33(30)\r\nStandard 2 & EX Lv1\t11(8)･8(7)\r\nStandard 2 & EX Lv2\t38(8)･23(20)\r\nStandard 2 & EX Lv3\t58(8)･33(30)\r\nStandard 3\t18(6)\r\nStandard 4\t9x2(7)\r\nStandard 5 Lv1\t16(20)\r\nStandard 5 Lv2\t50(60)\r\nStandard 5 Lv3\t110(110)\r\nEX Evade (Back)\t34(20)\r\nEX Evade (Side)\t20(20)･20(10)\r\nEX Evade (Forward)\t24(15)\r\nAerial EX Evade\t16(8)･16(8)\r\nDash Stab\t12(10)･20(15)\r\nDash Kick\t7x2(3)[K]･12(4)･20(4)\r\nSpecial 1\t11x2(2)[K]\r\nSpecial 2\t10(10)\r\nSpecial 3\t9(6)･12(8)\r\nSpecial 4\t26(24)\r\nSpecial 5\t16(15)･11x4(13)･24(20)\r\nSpecial 6\t19x2(2)[K]\r\nJump Evasion\t5x2(2)[K]\r\nAerial 1\t15(14)\r\nAerial 2\t10x2(13)\r\nAerial 3\t15(11)[K]･16(11)\r\nAerial 1-3 Combo\t66 (5 hits)\r\nLanding Kick\t12x2(12)\r\nRyuuki\t1x2･40(2)\r\nAerial Ryuuki\t1x2･30(2)\r\nBoxing Dance 4 Hits\t12(2)\r\nBoxing Dance 8 Hits\t14(2)\r\nBoxing Dance 12 Hits\t16(2)\r\nBoxing Dance 12 Hit Combo\t168(24)\r\nBoxing Dance 13 Hits ~\t28(2)\r\nRelease\t30(10)\r\n~ Burst ~ 3 Hits\tBomb 50(5)\r\n~ Burst ~ 11 Hits\tBomb 100(5)\r\n~ Burst ~ 12 Hits+\tBomb 200(5)\r\nCharge Attack Up +2 & Gunnery God\r\nStandard 2 & EX Lv1\t13(8)･11(7)\r\nStandard 2 & EX Lv2\t42(22)･32(20)\r\nStandard 2 & EX Lv3\t65(32)･48(30)\r\nCharge Attack Up +1\r\nStandard 2 Lv1\t12(8)\r\nStandard 2 Lv2\t41(22)\r\nStandard 2 Lv3\t62(32)\r\nStandard 5 Lv1\t18(20)\r\nStandard 5 Lv2\t55(60)\r\nStandard 5 Lv3\t119(110)\r\nCharge Attack Up +2\r\nStandard 2 Lv1\t13(8)\r\nStandard 2 Lv2\t42(22)\r\nStandard 2 Lv3\t65(32)\r\nStandard 5 Lv1\t20(20)\r\nStandard 5 Lv2\t61(60)\r\nStandard 5 Lv3\t131(110)\r\nGunnery\r\nEX Pursuit 1 (G. God)\t11(7)\r\nEX Pursuit 2 (G. God)\t32(20)\r\nEX Pursuit 3 (G. God)\t48(30)\r\nEX Pursuit 1 (G. Expert)\t10(7)\r\nEX Pursuit 2 (G. Expert)\t29(20)\r\nEX Pursuit 3 (G. Expert)\t43(30)\r\nEX Pursuit 1 (G. Novice)\t9(7)\r\nEX Pursuit 2 (G. Novice)\t26(20)\r\nEX Pursuit 3 (G. Novice)\t38(30)\r\nRyuuki (G. Novice)\t8x2･40(2)\r\nRyuuki (G. Expert)\t10x2･40(2)\r\nRyuuki (G. God)\t15x2･40(2)\r\nAerial Ryuuki (G. Novice)\t7x2･30(2)\r\nAerial Ryuuki (G. Expert)\t9x2･30(2)\r\nAerial Ryuuki (G. God)\t12x2･30(2)\r\nMartial Arts +1\r\nDash Kick\t11x2(3)[K]･15(4)･25(4)\r\nJump Evasion\t6x2(2)[K]\r\nSpecial 1\t16x2(2)[K]\r\nSpecial 6\t28x2(2)[K]\r\nAerial 1 - 3\t74 (5 hits) (Orig: 116)\r\nMartial Arts +2\r\nDash Kick\t15x2(3)[K]･15(4)･25(4)\r\nJump Evasion\t7x2(2)[K]\r\nSpecial 1\t18x2(2)[K]\r\nSpecial 6\t33x2(2)[K]\r\nAerial 3\t23(11)[K]･25(11) (Orig: 31･33)\r\nAerial 1-3 Combo\t83 (5 hits) (Orig: 116)\r\nReflect (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nReflect +1\t24\r\nReflect +2\t36\r\nReflect +3\t48\r\nReflect Up\t68\r\nPerfect Guard\t72\r\nPerfect Guard Up\t92\r\nStylish Up (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nStylish Up\t30";
+            }
+        }
+
+        public string GetGameMotionValuesSAF
+        {
+            get
+            {
+                return "Axe Mode\r\nVertical Slash\t46\r\nUpslash\t35\r\nHorizontal Slash\t34\r\nRush Slash\t33\r\nHack 'n' Slash\t35\r\nEle, Status, Stun Phials Sword Mode\r\nRunning Rotation Slash\t32･41 (15･0)\r\nRunning Upslash\t29 (14)\r\nSlash Evasion\t21 (6)\r\nS Evasion into Thrust\t33\r\nS Evasion Charged Upslash\t75 (38)\r\nCharge Infinite Slash\t33 (5)\r\nCharged Upslash\t75 (38)\r\nCharge Attack Up +1\r\nS Evasion Charged Upslash\t81 (38)\r\nCharge Infinite Slash\t35 (5)\r\nCharged Upslash\t81 (38)\r\nCharge Attack Up +2\r\nS Evasion Charged Upslash\t83 (38)\r\nCharge Infinite Slash\t37 (5)\r\nCharged Upslash\t83 (38)\r\nEle, Status, Stun Phials Lightsword Mode\r\nLight Sword Transformation\t46 (19)\r\nVertical Slash\t46 (19)\r\nUpslash\t48 (15)\r\nSide Slash\t41 (15)\r\nRunning Rotation Slash\t33･45 (21･21)\r\nRunning Upslash\t31 (15)\r\nSlash Evasion\t22 (7)\r\nS Evasion Upslash\t48 (15)\r\nS Evasion Charged Upslash\t79 (40)\r\nCharged Upslash\t79 (38)\r\nOvercharged Downslash\t46 (19)\r\nCharge Infinite Slash\t35 (6)\r\nContinuous Slash\t53･53 (19･19)\r\nContinuous Slash Finisher\t42･73 (26･35)\r\nDischarge [Start]\t19 (8)\r\nDischarge [Ticks]\t13 (0)\r\nDischarge [Early Blast]\t160 (20) (40 Sigil)\r\nDischarge [Blast]\t270 (50) (80 Sigil)\r\nAbs. Release [Ticks]\t13･13･13 (4･4･4)\r\nAbs. Release [Early Finisher]\t9･9 (5･5)\r\nAbs. Release [Early Blast]\t125 (40) (50 sigil)\r\nAbs. Release [1~2 Ticks Finisher]\t18･18 (5･5)\r\nAbs. Release [1~2 Ticks Blast]\t280 (130) (150 Sigil)\r\nAbs. Release [Finisher]\t27･27 (5･5)\r\nAbs. Release [Blast]\t375 (150) (220 Sigil)\r\nCharge Attack Up +1\r\nS Evasion Charged Upslash\t85 (40)\r\nCharged Upslash\t85 (38)\r\nCharge Infinite Slash\t37 (6)\r\nCharge Attack Up +2\r\nS Evasion Charged Upslash\t87 (40)\r\nCharged Upslash\t87 (38)\r\nCharge Infinite Slash\t39 (6)\r\nPower Phial Sword Mode\r\nRunning Rotation Slash\t35･41 (15･0)\r\nRunning Upslash\t31\r\nSlash Evasion\t23\r\nS Evasion into Thrust\t33\r\nS Evasion Charged Upslash\t82\r\nCharge Infinite Slash\t36\r\nCharged Upslash\t82\r\nCharge Attack Up +1\r\nS Evasion Charged Upslash\t89\r\nCharge Infinite Slash\t38\r\nCharged Upslash\t89\r\nCharge Attack Up +2\r\nS Evasion Charged Upslash\t89\r\nCharge Infinite Slash\t38\r\nCharged Upslash\t89\r\nPower Phial Lightsword Mode\r\nLight Sword Transformation\t50\r\nVertical Slash\t50\r\nUpslash\t52\r\nSide Slash\t45\r\nRunning Rotation Slash\t36･45\r\nRunning Upslash\t34\r\nSlash Evasion\t24\r\nS Evasion Upslash\t52\r\nS Evasion Charged Upslash\t86\r\nCharged Upslash\t86\r\nOvercharged Downslash\t50\r\nCharge Infinite Slash\t38\r\nContinuous Slash\t58･58\r\nContinuous Slash Finisher\t46･80\r\nDischarge [Start]\t20\r\nDischarge [Ticks]\t14\r\nDischarge [Early Blast]\t176\r\nDischarge [Blast]\t297\r\nAbs. Release [Ticks]\t14･14･14\r\nAbs. Release [Early Finisher]\t9･9\r\nAbs. Release [Early Blast]\t125\r\nAbs. Release [1~2 Ticks Finisher]\t19･19\r\nAbs. Release [1~2 Ticks Blast]\t280\r\nAbs. Release [Finisher]\t29･29\r\nAbs. Release [Blast]\t375\r\nCharge Attack Up +1\r\nS Evasion Charged Upslash\t85\r\nCharged Upslash\t85\r\nCharge Infinite Slash\t37\r\nCharge Attack Up +2\r\nS Evasion Charged Upslash\t87\r\nCharged Upslash\t87\r\nCharge Infinite Slash\t39\r\nReflect (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nReflect +1\t24\r\nReflect +2\t36\r\nReflect +3\t48\r\nReflect Up\t68\r\nPerfect Guard\t72\r\nPerfect Guard Up\t92\r\nStylish Up (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nStylish Up\t30";
+            }
+        }
+
+        public string GetGameMotionValuesMS
+        {
+            get
+            {
+                return "Cutting Mode\r\nUnsheathe Vertical\t61\r\nVertical 1\t43\r\nUpslash\t35\r\nVertical 2\t46\r\nHorizontal 1\t56\r\nHorizontal 2\t46\r\nHorizontal 3\t64\r\nFinishing Slash\t120\r\nFinishing Slash [Magnetised]\t120‧10x3\r\nGuard Counter\t30\r\nGuard Counter [Success]\t30‧80\r\nMagnetic Double Slash\t44‧54\r\nMagnetic Evade Upslash\t55\r\nRetreat Slash\t20‧20\r\nMagnetic Assault (Leap)\t80\r\nFalling Downslash\t200\r\nMagnetic Pin\t1\r\nMagnetic Pin Finisher\t600\r\nMagnetic Pin Finisher [Feature]\t750\r\nImpact Mode\r\nHorizontal 1\t44 (30)\r\nHorizontal 2\t53 (30)\r\nOverhead Horizontal\t100 (45)\r\nDown Swipe\t46 (25)\r\nTriple Strike 1\t51 (10)\r\nTriple Strike 2\t58 (20)\r\nTriple Strike 3\t130 (50)\r\nCharged Strike\t338 (190)\r\nCharged Strike [Charge UP+1]\t363 (190)\r\nCharged Strike [Charge UP+2]\t373 (190)\r\nSupplex\t96 ‧ 121 (50 ‧ 65)\r\nGuard Assault\t73 ‧ 90 (35 ‧ 45)\r\nMagnetic Double Swipe\t42 ‧ 52 (30 ‧ 35)\r\nMagnetic Shock (Whiff)\t75 (30)\r\nMagnetic Shock (Iframes Used)\t125 ‧ 5x3 (60 ‧ 5x3)\r\nMagnetic Assault (Leap)\t40 ‧ 50 (35 ‧ 35)\r\nFalling Swings\t25 ‧ 80 ‧ 120 (20 ‧ 35 ‧ 75)\r\nMagnetic Pin\t1\r\nMagnetic Pin Finisher\t600\r\nMagnetic Pin Finisher [Feature]\t750\r\nReflect (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nReflect +1\t24\r\nReflect +2\t36\r\nReflect +3\t48\r\nReflect Up\t68\r\nPerfect Guard\t72\r\nPerfect Guard Up\t92\r\nStylish Up (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\nStylish Up\t30";
+            }
+        }
+
+        public string GetGameMotionValuesLBG
+        {
+            get
+            {
+                return "Melee\r\nMelee Attacks\t5･5･10\r\nShots\r\nLV1 Norm S.\t6\r\nLV2 Norm S.\t12\r\nLV3 Norm S.\t12xn\r\nLV1 Pierce S. (1 Hit)\t10x3\r\nLV2 Pierce S. (1 Hit)\t9x4\r\nLV3 Pierce S. (1 Hit)\t7x6\r\nLV1 Pierce S. (3 Hit)\t10x3\r\nLV2 Pierce S. (4 Hit)\t9x4\r\nLV3 Pierce S. (6 Hit)\t7x6\r\nLV1 Pellet S.\t5x3, Water 50\r\nLV2 Pellet S.\t5x4, Water 40\r\nLV3 Pellet S.\t5x5, Water 40\r\nLV1 Impact Pellet (Sigil)\t10(4)x2\r\nLV2 Impact Pellet (Sigil)\t9(4)x3\r\nLV3 Impact Pellet (Sigil)\t7(4)x5\r\nLV1 Crag S.\t3, Bomb 30, Fire 400\r\nLV2 Crag S.\t3, Bomb 40, Fire 600\r\nLV3 Crag S.\t3, Bomb 50, Fire 800\r\nLV1 Cluster S.\t(6 + Bomb 32 + Fire 20) x 3\r\nLV2 Cluster S.\t(6 + Bomb 32 + Fire 20) x 4\r\nLV3 Cluster S.\t(6 + Bomb 32 + Fire 20) x 5\r\nFire Shot\t1 + (Attack x 0.4 Fire)\r\nWater Shot\t(1 + (Attack x 0.2 Water)) x 3\r\nThunder Shot\t(1 + (Attack x 0.2 Thunder)) x 3\r\nIce Shot\t(1 + (Attack x 0.2 Ice)) x 3\r\nDragon Shot\t750 Dragon\r\nLV1 Recovery Shot\t1 (30 Healing)\r\nLv2 Recovery Shot\t1 (50 Healing)\r\nLV1 Poison\t10 (25 Status)\r\nLv2 Poison\t15 (50 Status)\r\nLV1 Para\t10 (25 Status)\r\nLV2 Para\t15 (50 Status)\r\nLV1 Sleep\t1 (25 Status)\r\nLV2 Sleep\t1 (50 Status)\r\nTranq Shot\t1 (80 Cap Value)\r\nPaint Shot\t1 (Paintball)\r\nDemon Shot\t1 (Attack +3)\r\nArmour Shot\t1 (Defense +6)\r\nAcid Shot\t1 (Raw Weakness +10)\r\nEle Acid Shot\t1 (Ele Weakness +10)\r\nStylish Up (No Criticals, Impact Damage)\r\nStylish Up\t30";
+            }
+        }
+
+        public string GetGameMotionValuesHBG
+        {
+            get
+            {
+                return "Shots\r\nLV1 Norm S.\t6x1\r\nLV2 Norm S.\t12x1\r\nLV3 Norm S.\t12xn\r\nLV1 Pierce S. (1 Hit)\t12\r\nLV2 Pierce S. (1 Hit)\t11\r\nLV3 Pierce S. (1 Hit)\t10\r\nLV1 Pierce S. (3 Hit)\t12x3\r\nLV2 Pierce S. (4 Hit)\t11x4\r\nLV3 Pierce S. (6 Hit)\t10x6\r\nLV1 Pellet S.\t5x3, Water 50\r\nLV2 Pellet S.\t5x4, Water 40\r\nLV3 Pellet S.\t5x5, Water 40\r\nLV1 Impact Pellet (Sigil)\t10x2 (8x2 KO)\r\nLV2 Impact Pellet (Sigil)\t9x3 (8x3 KO)\r\nLV3 Impact Pellet (Sigil)\t7x5 (8x5 KO)\r\nLV1 Crag S.\t3, Bomb 30, Fire 400\r\nLV2 Crag S.\t3, Bomb 40, Fire 600\r\nLV3 Crag S.\t3, Bomb 50, Fire 800\r\nLV1 Cluster S.\t6, Bomb 32, Fire 20x3\r\nLV2 Cluster S.\t6, Bomb 32, Fire 20x4\r\nLV3 Cluster S.\t6, Bomb 32, Fire 20x5\r\nFire Shot\t1 + (Attack x 0.5 Fire)\r\nWater Shot\t1 + (Attack x 0.25 Water) x 3\r\nThunder Shot\t1 + (Attack x 0.27 Thunder) x 3\r\nIce Shot\t1 + (Attack x 0.25 Ice) x 3\r\nDragon Shot\t900 Dragon x 6\r\nLV1 Recov\t1 (30 Healing)\r\nLv2 Recov\t1 (50 Healing)\r\nLV1 Poison\t10 (25 Status)\r\nLv2 Poison\t15 (50 Status)\r\nLV1 Para\t10 (25 Status)\r\nLV2 Para\t15 (50 Status)\r\nLV1 Sleep\t1 (25 Status)\r\nLV2 Sleep\t1 (50 Status)\r\nTranq Shot\t1 (80 Cap Value)\r\nPaint Shot\t1 (Paintball)\r\nDemon Shot\t1 (Attack +3)\r\nArmour Shot\t1 (Defense +6)\r\nCompression Shots\r\nCompressed Shot Motion\t0\r\nCompressed Elemental Shot\t0\r\nStylish Up (No Criticals, Impact Damage)\r\nStylish Up\t30";
+            }
+        }
+
+        public string GetGameMotionValuesBow
+        {
+            get
+            {
+                return "Melee\r\nMelee Attacks\t10･10･18\r\nShoryuken\t12x2･10x2･31･10\r\nShoryuken (Sigil)\t17x2･15x2･41･15\r\nShots\r\nRapid LV1\t14\r\nRapid LV2\t14･6\r\nRapid LV3\t14･6･5\r\nRapid LV4\t14･6･5･3\r\nScatter LV1\t4･6･4\r\nScatter LV2\t6･7･6\r\nScatter LV3\t4･6･6･6･4\r\nScatter LV4\t4･6･7･6･4\r\nPierce LV1\t7x3\r\nPierce LV2\t7x4\r\nPierce LV3\t7x5\r\nPierce LV4\t7x6\r\nUncharged Horizontal Rising Shot\t4\r\nUncharged Vertical Rising Shot\t40 (0.4x Raw, 1.0x Elemental)\r\nCharged Horizontal Rising Shot\t4 (1.0x Raw, 1.5x Elemental)\r\nCharged Vertical Rising Shot\t40 (1.0x Raw, 1.5x Elemental)\r\nBow Raw Sigil (Added to every hit of all motions)\r\nSigil Additional\t0\r\nArc Shots\r\nWide Pellet Arc\t18(3)x7\r\nNarrow Pellet Arc\t16x5\r\nExplosive Shell Arc\t15(30) 19 Bomb\r\nArrow Rain Arc (Cutting, Shot HB)\t12x7\r\nCrouch Shots\r\nSniper Shot Lv4\t12x5\r\nPiercing Sniper Shot Lv4\t10x5･25･10･5･4･2\r\nSniper Shot Lv5\t12x5\r\nPiercing Sniper Shot Lv4\t10x5･25･10･5･4･2\r\nStylish Up (No Criticals, Impact Damage)\r\nStylish Up\t30";
+            }
+        }
+
+        public string GetGameMotionValues
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                return s.MotionValuesInfo switch
+                {
+                    "Sword and Shield" => GetGameMotionValuesSnS,
+                    "Dual Swords" => GetGameMotionValuesDS,
+                    "Great Sword" => GetGameMotionValuesGS,
+                    "Long Sword" => GetGameMotionValuesLS,
+                    "Hammer" => GetGameMotionValuesHA,
+                    "Hunting Horn" => GetGameMotionValuesHH,
+                    "Lance" => GetGameMotionValuesLA,
+                    "Gunlance" => GetGameMotionValuesGL,
+                    "Tonfa" => GetGameMotionValuesTO,
+                    "Switch Axe F" => GetGameMotionValuesSAF,
+                    "Magnet Spike" => GetGameMotionValuesMS,
+                    "Light Bowgun" => GetGameMotionValuesLBG,
+                    "Heavy Bowgun" => GetGameMotionValuesHBG,
+                    "Bow" => GetGameMotionValuesBow,
+                    _ => GetGameArmorSkillsPriority,
+                };
+            }
+        }
+
         public string GetGameCaravanInfo
         {
             get

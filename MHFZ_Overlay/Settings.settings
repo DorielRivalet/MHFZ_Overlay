@@ -350,5 +350,8 @@
     <Setting Name="ArmorSkillsInfo" Type="System.String" Scope="User">
       <Value Profile="(Default)">Priority</Value>
     </Setting>
+    <Setting Name="MotionValuesInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Sword and Shield</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

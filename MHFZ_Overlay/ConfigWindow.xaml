@@ -605,7 +605,34 @@
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
                                             <ScrollViewer VerticalScrollBarVisibility="Visible">
-                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                                <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="MotionValuesGrid" Margin="5,5,5,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="2*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="40"/>
+                                                        <RowDefinition Height="1*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Margin="5,5,5,5" ToolTip="Select Weapon Type" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Weapon Type"/>
+                                                    <ComboBox Grid.Column="1" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=MotionValuesInfo}">
+                                                        <ComboBoxItem>Sword and Shield</ComboBoxItem>
+                                                        <ComboBoxItem>Dual Swords</ComboBoxItem>
+                                                        <ComboBoxItem>Great Sword</ComboBoxItem>
+                                                        <ComboBoxItem>Long Sword</ComboBoxItem>
+                                                        <ComboBoxItem>Hammer</ComboBoxItem>
+                                                        <ComboBoxItem>Hunting Horn</ComboBoxItem>
+                                                        <ComboBoxItem>Lance</ComboBoxItem>
+                                                        <ComboBoxItem>Gunlance</ComboBoxItem>
+                                                        <ComboBoxItem>Tonfa</ComboBoxItem>
+                                                        <ComboBoxItem>Switch Axe F</ComboBoxItem>
+                                                        <ComboBoxItem>Magnet Spike</ComboBoxItem>
+                                                        <ComboBoxItem>Light Bowgun</ComboBoxItem>
+                                                        <ComboBoxItem>Heavy Bowgun</ComboBoxItem>
+                                                        <ComboBoxItem>Bow</ComboBoxItem>
+                                                    </ComboBox>
+                                                    <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Motion Values" Text="{Binding GetGameMotionValues}" TextWrapping="Wrap"/>
+                                                </Grid>
                                             </ScrollViewer>
                                         </DockPanel>
                                     </Grid>

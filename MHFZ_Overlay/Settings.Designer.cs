@@ -1414,5 +1414,17 @@ namespace MHFZ_Overlay {
                 this["ArmorSkillsInfo"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sword and Shield")]
+        public string MotionValuesInfo {
+            get {
+                return ((string)(this["MotionValuesInfo"]));
+            }
+            set {
+                this["MotionValuesInfo"] = value;
+            }
+        }
     }
 }
