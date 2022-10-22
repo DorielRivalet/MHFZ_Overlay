@@ -1402,5 +1402,17 @@ namespace MHFZ_Overlay {
                 this["MapY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Priority")]
+        public string ArmorSkillsInfo {
+            get {
+                return ((string)(this["ArmorSkillsInfo"]));
+            }
+            set {
+                this["ArmorSkillsInfo"] = value;
+            }
+        }
     }
 }

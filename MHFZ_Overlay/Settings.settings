@@ -347,5 +347,8 @@
     <Setting Name="MapY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">410</Value>
     </Setting>
+    <Setting Name="ArmorSkillsInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Priority</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
