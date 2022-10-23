@@ -8430,7 +8430,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return string.Format("The order of the skills are G.Failure/Failure/Success/G.Success\n\n" +
+                return string.Format("Guild Cooking\r\nGuild cooking is available at guild rank 15, it is a mini-game performed by up to four people.\r\nCooking has the following menu items, which can activate effects separate from armor skills.\r\n■The skill effect gained by cooking lasts for 90 minutes. However, if a new skill is obtained by cooking, the effect is overwritten.\r\n■Up to 6 dishes can be \"left over\". The leftover dishes will be stored for 1 hour.\r\nHow to cook\r\n[Select the menu]\r\n　　　　　　　　　　※Note, however, that the selections here are only a guide for selecting ingredients.\r\n[Selecting] yellow ingredients are \"base ingredients\" and pink ingredients are \"Auxiliary\". These allow you to create dishes via the menu.\r\n　　　　　　　　　　※If you select any other option, it will be a Guild's Yaminabe.\r\n[How to cook] By repeatedly pressing the confirm button, the cursor on the gauge will move to the right.\r\n　　　　　　　　　　By hovering the cursor over the green \"Success Area\" or blue \"Great Success Area,\" a stamp will accumulate directly below the food meter.\r\nWhen the color of the stamp turns green, the dish is a success, and when it turns blue, it is a great success.\r\n　　　　　　　　　　※The more people that participate, the higher the chance the dish will be a great success.\r\nChef Cat's Wisdom\r\nSecret of success\t10 tickets\tGreen area expanded.\r\nNo failure allowed\t10 tickets\tRed areas removed\r\nUltimate Success\t10 tickets\tBlue area gets doubled.\r\nCooking Technique\t10 tickets\tCursors return speed is slower\r\nSecret seasoning\t20 tickets\tResult will be one rank higher.\r\nMystery seasoning\t5 tickets\tResult is randomized\n\nThe order of the skills are G.Failure/Failure/Success/G.Success\n\n" +
                     "Easiest way to cook is selecting Secret Seasoning from Chef's Wisdom before cooking. What it does is raise the success level by one. \n\n" +
                     "Page 1\n" +
                     "1: Explosive Rice [Snow Powder, Whole Vanilla, Wabisabi Wasabi, Deep Sea Chub] (Hunger Increased [Lg] / Health+30 / Rage+1 / Rage+2)\n\n"+
@@ -8466,6 +8466,194 @@ namespace MHFZ_Overlay.addresses
                     "Page 4\n"+
                     "(Recommended) 22: Blast Steak [Gutsy Meat, Magma Mango, Snow Kiwi, Star Pineapple] (Blue Soul, Blue Soul, Incitement, Red Soul)\n\n" +
                     "0: Guild's Yaminabe [Any, Any, Any, Any] (Hunger Increased [Lg], Random, Random, Random)");
+            }
+        }
+
+        public string GetGameSnSInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameDSInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameGSInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameLSInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameHAInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameHHInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameLAInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameGLInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameTOInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameSAFInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameMSInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameLBGInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameHBGInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameBowInfo
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string GetGameStatusEleInfo
+        {
+            get
+            {
+                return "Status Immunities\n" +
+                    "Kirin: Paralysis\n" +
+                    "Lao-Shan Lung: Poison, Paralysis, Sleep\n" +
+                    "Yian Garuga: Poison" +
+                    "\n" +
+                    "Shen Gaoren: Poison, Paralysis, Sleep\n" +
+                    "Yama Tsukami: Poison, Paralysis, Sleep\n" +
+                    "Espinas**: Poison\n" +
+                    "Akura Vashimu**: Poison, Paralysis, Sleep\n" +
+                    "Akura Jebia: Poison, Paralysis, Sleep\n" +
+                    "Berukyurosu: Paralysis, Sleep\n" +
+                    "Pariapuria: Poison, Paralysis, Sleep\n" +
+                    "Raviente: Paralysis, Sleep, Blast\n" +
+                    "Doragyurosu*: Paralysis, Sleep\n" +
+                    "Baruragaru**: Poison, Paralysis\n" +
+                    "Inagami**: Sleep\n" +
+                    "Duremudira: Poison, Paralysis, Sleep\n" +
+                    "Varusaburosu: Sleep\n" +
+                    "Gasurabazura**: Poison\n" +
+                    "Yama Kurai: Poison, Paralysis, Sleep\n" +
+                    "Keoaruboru: Sleep\n\n" +
+                    "Subspecies and Zeniths are covered where applicable.\n" +
+                    "Raviente is immune to normal poison effects. But support can invoke a DOT effect if slayers have poison. This is considered lowest priority and is never invoked until the final phase, if it can be fired off at all.\n" +
+                    "A seldom few monsters are immune to Magnet Spike pin, notably Zenith Rukodiora, Musous and some siege monsters. Those otherwise immune to paralysis or traps interestingly still have paralyzed animations.\n" +
+                    "*Doragyurosu is immune to these statuses only in G Rank, and also as a Zenith.\n" +
+                    "**Is also part of Zenith content, and their same immunities apply.\n\n" +
+                    "Combo Elements\n" +
+                    "Blaze (Varusaburosu) : 70% Fire / 70% Dragon.\n" +
+                    "Light (Zerureusu): 70% Fire / 70% Thunder.\n" +
+                    "Lightning Rod (Rebidiora): 70% Thunder / 70% Dragon.\n" +
+                    "Tenshou (Shantien): 30% Fire / 100% Water / 70% Thunder\n" +
+                    "Okiko (Disufiroa): 80% Fire / 40% Dragon / 805 Ice\n" +
+                    "Black Flame (Fatalis): 50% Fire / 150% Dragon\n" +
+                    "Music (Poborubarumu): 100% Water / 100% Ice\n" +
+                    "Dark (Meraginasu): 80% Dragon / 80% Ice\n" +
+                    "Crimson Demon (Crimson Fatalis): 150% Fire / 50% Dragon\n" +
+                    "Wind (Garuba Daora): 80% Thunder / 80% Ice\n" +
+                    "Sound (Diva): 100% Water / 100% Dragon\n" +
+                    "(Recommended) Burning Zero (Elzelion): 125% Fire / 125% Ice\n" +
+                    "Emperor's Roar (White Fatalis): 150% Thunder / 50% Dragon\n\n" +
+                    "Combo elements are equivalent to having 2-3 of them but at a percentage of your elemental power value. For visual effects, the element that deals the most damage will take precedence (Gunlance's Heatblade Mode alternates). With Transcendence bursts, there is a hierarchy on which elements take precedence first. Fire is at the top. Negative elemental hitzones will still apply their raw penalty normally";
+            }
+        }
+
+
+        public string GetGameWeaponInformation
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                return s.WeaponTypeInfo switch
+                {
+                    "Sword and Shield" => GetGameSnSInfo,
+                    "Dual Swords" => GetGameDSInfo,
+                    "Great Sword" => GetGameGSInfo,
+                    "Long Sword" => GetGameLSInfo,
+                    "Hammer" => GetGameHAInfo,
+                    "Hunting Horn" => GetGameHHInfo,
+                    "Lance" => GetGameLAInfo,
+                    "Gunlance" => GetGameGLInfo,
+                    "Tonfa" => GetGameTOInfo,
+                    "Switch Axe F" => GetGameSAFInfo,
+                    "Magnet Spike" => GetGameMSInfo,
+                    "Light Bowgun" => GetGameLBGInfo,
+                    "Heavy Bowgun" => GetGameHBGInfo,
+                    "Bow" => GetGameBowInfo,
+                    _ => GetGameStatusEleInfo,
+                };
             }
         }
 

@@ -15,6 +15,11 @@ using System.Threading;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Forms;
+using Application = System.Windows.Application;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+using Clipboard = System.Windows.Clipboard;
 
 namespace MHFZ_Overlay
 {
@@ -44,182 +49,182 @@ namespace MHFZ_Overlay
         public Monster[] Monsters = new Monster[]
         {
           new Monster(0, "None","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/none.png",0),
-          new Monster(1, "Rathian","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rathian.png",0),
-          new Monster(2, "Fatalis","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/fatalis.png",0),
+          new Monster(1, "Rathian","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rathian.png",0,true),
+          new Monster(2, "Fatalis","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/fatalis.png",0,true),
           new Monster(3, "Kelbi","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kelbi.png",0),
           new Monster(4, "Mosswine","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/mosswine.png",0),
           new Monster(5, "Bullfango","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/bullfango.png",0),
-          new Monster(6, "Yian Kut-Ku","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yian_kut-ku.png",0),
-          new Monster(7, "Lao-Shan Lung","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/lao-shan_lung.png",0),
-          new Monster(8, "Cephadrome","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/cephadrome.png",0),
+          new Monster(6, "Yian Kut-Ku","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yian_kut-ku.png",0,true),
+          new Monster(7, "Lao-Shan Lung","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/lao-shan_lung.png",0,true),
+          new Monster(8, "Cephadrome","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/cephadrome.png",0,true),
           new Monster(9, "Felyne","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/felyne.png",0),
           new Monster(10, "Veggie Elder","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
-          new Monster(11, "Rathalos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rathalos.png",0),
+          new Monster(11, "Rathalos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rathalos.png",0,true),
           new Monster(12, "Aptonoth","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/aptonoth.png",0),
           new Monster(13, "Genprey","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/genprey.png",0),
-          new Monster(14, "Diablos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/diablos.png",0),
-          new Monster(15, "Khezu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/khezu.png",0),
+          new Monster(14, "Diablos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/diablos.png",0,true),
+          new Monster(15, "Khezu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/khezu.png",0,true),
           new Monster(16, "Velociprey","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/velociprey.png",0),
-          new Monster(17, "Gravios","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gravios.png",0),
+          new Monster(17, "Gravios","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gravios.png",0,true),
           new Monster(18, "Felyne?","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/felyne.png",0),
           new Monster(19, "Vespoid","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/vespoid.png",0),
-          new Monster(20, "Gypceros","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gypceros.png",0),
-          new Monster(21, "Plesioth","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/plesioth.png",0),
-          new Monster(22, "Basarios","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/basarios.png",0),
+          new Monster(20, "Gypceros","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gypceros.png",0,true),
+          new Monster(21, "Plesioth","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/plesioth.png",0,true),
+          new Monster(22, "Basarios","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/basarios.png",0,true),
           new Monster(23, "Melynx","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/melynx.png",0),
           new Monster(24, "Hornetaur","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/hornetaur.png",0),
           new Monster(25, "Apceros","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/apceros.png",0),
-          new Monster(26, "Monoblos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/monoblos.png",0),
-          new Monster(27, "Velocidrome","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/velocidrome.png",0),
-          new Monster(28, "Gendrome","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gendrome.png",0),
+          new Monster(26, "Monoblos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/monoblos.png",0,true),
+          new Monster(27, "Velocidrome","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/velocidrome.png",0,true),
+          new Monster(28, "Gendrome","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gendrome.png",0,true),
           new Monster(29, "Rocks","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
           new Monster(30, "Ioprey","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/ioprey.png",0),
-          new Monster(31, "Iodrome","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/iodrome.png",0),
+          new Monster(31, "Iodrome","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/iodrome.png",0,true),
           new Monster(32, "Pugis","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
-          new Monster(33, "Kirin","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kirin.png",0),
+          new Monster(33, "Kirin","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kirin.png",0,true),
           new Monster(34, "Cephalos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/cephalos.png",0),
           new Monster(35, "Giaprey / Giadrome","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/giaprey.png",0),
-          new Monster(36, "Crimson Fatalis","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/crimson_fatalis.png",0),
-          new Monster(37, "Pink Rathian","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pink_rathian.png",0),
-          new Monster(38, "Blue Yian Kut-Ku","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blue_yian_kut-ku.png",0),
-          new Monster(39, "Purple Gypceros","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/purple_gypceros.png",0),
-          new Monster(40, "Yian Garuga","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yian_garuga.png",0),
-          new Monster(41, "Silver Rathalos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/silver_rathalos.png",0),
-          new Monster(42, "Gold Rathian","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gold_rathian.png",0),
-          new Monster(43, "Black Diablos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/black_diablos.png",0),
-          new Monster(44, "White Monoblos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/white_monoblos.png",0),
-          new Monster(45, "Red Khezu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/red_khezu.png",0),
-          new Monster(46, "Green Plesioth","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/green_plesioth.png",0),
-          new Monster(47, "Black Gravios","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/black_gravios.png",0),
-          new Monster(48, "Daimyo Hermitaur","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/daimyo_hermitaur.png",0),
-          new Monster(49, "Azure Rathalos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/azure_rathalos.png",0),
-          new Monster(50, "Ashen Lao-Shan Lung","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/ashen_lao-shan_lung.png",0),
-          new Monster(51, "Blangonga","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blangonga.png",0),
-          new Monster(52, "Congalala","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/congalala.png",0),
-          new Monster(53, "Rajang","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rajang.png",0),
-          new Monster(54, "Kushala Daora","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kushala_daora.png",0),
-          new Monster(55, "Shen Gaoren","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shen_gaoren.png",0),
+          new Monster(36, "Crimson Fatalis","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/crimson_fatalis.png",0,true),
+          new Monster(37, "Pink Rathian","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pink_rathian.png",0,true),
+          new Monster(38, "Blue Yian Kut-Ku","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blue_yian_kut-ku.png",0,true),
+          new Monster(39, "Purple Gypceros","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/purple_gypceros.png",0,true),
+          new Monster(40, "Yian Garuga","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yian_garuga.png",0,true),
+          new Monster(41, "Silver Rathalos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/silver_rathalos.png",0,true),
+          new Monster(42, "Gold Rathian","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gold_rathian.png",0,true),
+          new Monster(43, "Black Diablos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/black_diablos.png",0,true),
+          new Monster(44, "White Monoblos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/white_monoblos.png",0,true),
+          new Monster(45, "Red Khezu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/red_khezu.png",0,true),
+          new Monster(46, "Green Plesioth","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/green_plesioth.png",0,true),
+          new Monster(47, "Black Gravios","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/black_gravios.png",0,true),
+          new Monster(48, "Daimyo Hermitaur","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/daimyo_hermitaur.png",0,true),
+          new Monster(49, "Azure Rathalos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/azure_rathalos.png",0,true),
+          new Monster(50, "Ashen Lao-Shan Lung","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/ashen_lao-shan_lung.png",0,true),
+          new Monster(51, "Blangonga","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blangonga.png",0,true),
+          new Monster(52, "Congalala","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/congalala.png",0,true),
+          new Monster(53, "Rajang","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rajang.png",0,true),
+          new Monster(54, "Kushala Daora","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kushala_daora.png",0,true),
+          new Monster(55, "Shen Gaoren","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shen_gaoren.png",0,true),
           new Monster(56, "Great Thunderbug","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/great_thunderbug.png",0),
           new Monster(57, "Shakalaka","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shakalaka.png",0),
-          new Monster(58, "Yama Tsukami","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yama_tsukami.png",0),
-          new Monster(59, "Chameleos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/chameleos.png",0),
-          new Monster(60, "Rusted Kushala Daora","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rusted_kushala_daora.png",0),
+          new Monster(58, "Yama Tsukami","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yama_tsukami.png",0,true),
+          new Monster(59, "Chameleos","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/chameleos.png",0,true),
+          new Monster(60, "Rusted Kushala Daora","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rusted_kushala_daora.png",0,true),
           new Monster(61, "Blango","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blango.png",0),
           new Monster(62, "Conga","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/conga.png",0),
           new Monster(63, "Remobra","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/remobra.png",0),
-          new Monster(64, "Lunastra","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/lunastra.png",0),
-          new Monster(65, "Teostra","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/teostra.png",0),
+          new Monster(64, "Lunastra","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/lunastra.png",0,true),
+          new Monster(65, "Teostra","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/teostra.png",0,true),
           new Monster(66, "Hermitaur","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/hermitaur.png",0),
-          new Monster(67, "Shogun Ceanataur","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shogun_ceanataur.png",0),
-          new Monster(68, "Bulldrome","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/bulldrome.png",0),
+          new Monster(67, "Shogun Ceanataur","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shogun_ceanataur.png",0,true),
+          new Monster(68, "Bulldrome","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/bulldrome.png",0,true),
           new Monster(69, "Anteka","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/anteka.png",0),
           new Monster(70, "Popo","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/popo.png",0),
-          new Monster(71, "White Fatalis","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/white_fatalis.png",0),
-          new Monster(72, "Yama Tsukami","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yama_tsukami.png",0),
+          new Monster(71, "White Fatalis","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/white_fatalis.png",0,true),
+          new Monster(72, "Yama Tsukami","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yama_tsukami.png",0,true),
           new Monster(73, "Ceanataur","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/ceanataur.png",0),
-          new Monster(74, "Hypnocatrice","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/hypnocatrice.png",0),
-          new Monster(75, "Lavasioth","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/lavasioth.png",0),
-          new Monster(76, "Tigrex","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/tigrex.png",0),
-          new Monster(77, "Akantor","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/akantor.png",0),
-          new Monster(78, "Bright Hypnoc","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/bright_hypnoc.png",0),
-          new Monster(79, "Red Lavasioth","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/red_lavasioth.png",0),
-          new Monster(80, "Espinas","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/espinas.png",0),
-          new Monster(81, "Orange Espinas","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/orange_espinas.png",0),
-          new Monster(82, "Silver Hypnoc","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/silver_hypnoc.png",0),
-          new Monster(83, "Akura Vashimu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/akura_vashimu.png",0),
-          new Monster(84, "Akura Jebia","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/akura_jebia.png",0),
-          new Monster(85, "Berukyurosu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/berukyurosu.png",0),
+          new Monster(74, "Hypnocatrice","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/hypnocatrice.png",0,true),
+          new Monster(75, "Lavasioth","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/lavasioth.png",0,true),
+          new Monster(76, "Tigrex","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/tigrex.png",0,true),
+          new Monster(77, "Akantor","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/akantor.png",0,true),
+          new Monster(78, "Bright Hypnoc","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/bright_hypnoc.png",0,true),
+          new Monster(79, "Red Lavasioth","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/red_lavasioth.png",0,true),
+          new Monster(80, "Espinas","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/espinas.png",0,true),
+          new Monster(81, "Orange Espinas","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/orange_espinas.png",0,true),
+          new Monster(82, "Silver Hypnoc","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/silver_hypnoc.png",0,true),
+          new Monster(83, "Akura Vashimu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/akura_vashimu.png",0,true),
+          new Monster(84, "Akura Jebia","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/akura_jebia.png",0,true),
+          new Monster(85, "Berukyurosu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/berukyurosu.png",0,true),
           new Monster(86, "Cactus","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/cactus.png",0),
           new Monster(87, "Gorge Objects","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
           new Monster(88, "Gorge Rocks","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
-          new Monster(89, "Pariapuria","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pariapuria.png",0),
-          new Monster(90, "White Espinas","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/white_espinas.png",0),
-          new Monster(91, "Kamu Orugaron","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kamu_orugaron.png",0),
-          new Monster(92, "Nono Orugaron","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/nono_orugaron.png",0),
-          new Monster(93, "Raviente","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/raviente.png",0),
-          new Monster(94, "Dyuragaua","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/dyuragaua.png",0),
-          new Monster(95, "Doragyurosu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/doragyurosu.png",0),
-          new Monster(96, "Gurenzeburu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gurenzeburu.png",0),
+          new Monster(89, "Pariapuria","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pariapuria.png",0,true),
+          new Monster(90, "White Espinas","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/white_espinas.png",0,true),
+          new Monster(91, "Kamu Orugaron","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kamu_orugaron.png",0,true),
+          new Monster(92, "Nono Orugaron","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/nono_orugaron.png",0,true),
+          new Monster(93, "Raviente","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/raviente.png",0,true),
+          new Monster(94, "Dyuragaua","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/dyuragaua.png",0,true),
+          new Monster(95, "Doragyurosu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/doragyurosu.png",0,true),
+          new Monster(96, "Gurenzeburu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gurenzeburu.png",0,true),
           new Monster(97, "Burukku","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/burukku.png",0),
           new Monster(98, "Erupe","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/erupe.png",0),
-          new Monster(99, "Rukodiora","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rukodiora.png",0),
-          new Monster(100, "UNKNOWN","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/unknown.png",0),
-          new Monster(101, "Gogomoa","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gogomoa.png",0),
+          new Monster(99, "Rukodiora","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rukodiora.png",0,true),
+          new Monster(100, "UNKNOWN","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/unknown.png",0,true),
+          new Monster(101, "Gogomoa","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gogomoa.png",0,true),
           new Monster(102, "Kokomoa","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gogomoa.png",0),
-          new Monster(103, "Taikun Zamuza","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/taikun_zamuza.png",0),
-          new Monster(104, "Abiorugu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/abiorugu.png",0),
-          new Monster(105, "Kuarusepusu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kuarusepusu.png",0),
-          new Monster(106, "Odibatorasu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/odibatorasu.png",0),
-          new Monster(107, "Disufiroa","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/disufiroa.png",0),
-          new Monster(108, "Rebidiora","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rebidiora.png",0),
-          new Monster(109, "Anorupatisu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/anorupatisu.png",0),
-          new Monster(110, "Hyujikiki","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/hyujikiki.png",0),
-          new Monster(111, "Midogaron","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/midogaron.png",0),
-          new Monster(112, "Giaorugu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/giaorugu.png",0),
-          new Monster(113, "Mi Ru","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/mi_ru.png",0),
-          new Monster(114, "Farunokku","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/farunokku.png",0),
-          new Monster(115, "Pokaradon","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pokaradon.png",0),
-          new Monster(116, "Shantien","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shantien.png",0),
+          new Monster(103, "Taikun Zamuza","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/taikun_zamuza.png",0,true),
+          new Monster(104, "Abiorugu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/abiorugu.png",0,true),
+          new Monster(105, "Kuarusepusu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kuarusepusu.png",0,true),
+          new Monster(106, "Odibatorasu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/odibatorasu.png",0,true),
+          new Monster(107, "Disufiroa","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/disufiroa.png",0,true),
+          new Monster(108, "Rebidiora","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rebidiora.png",0,true),
+          new Monster(109, "Anorupatisu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/anorupatisu.png",0,true),
+          new Monster(110, "Hyujikiki","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/hyujikiki.png",0,true),
+          new Monster(111, "Midogaron","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/midogaron.png",0,true),
+          new Monster(112, "Giaorugu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/giaorugu.png",0,true),
+          new Monster(113, "Mi Ru","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/mi_ru.png",0,true),
+          new Monster(114, "Farunokku","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/farunokku.png",0,true),
+          new Monster(115, "Pokaradon","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pokaradon.png",0,true),
+          new Monster(116, "Shantien","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shantien.png",0,true),
           new Monster(117, "Pokara","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pokara.png",0),
           new Monster(118, "Dummy","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
-          new Monster(119, "Goruganosu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/goruganosu.png",0),
-          new Monster(120, "Aruganosu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/aruganosu.png",0),
-          new Monster(121, "Baruragaru","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/baruragaru.png",0),
-          new Monster(122, "Zerureusu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/zerureusu.png",0),
-          new Monster(123, "Gougarf","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gougarf.png",0),
+          new Monster(119, "Goruganosu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/goruganosu.png",0,true),
+          new Monster(120, "Aruganosu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/aruganosu.png",0,true),
+          new Monster(121, "Baruragaru","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/baruragaru.png",0,true),
+          new Monster(122, "Zerureusu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/zerureusu.png",0,true),
+          new Monster(123, "Gougarf","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gougarf.png",0,true),
           new Monster(124, "Uruki","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/uruki.png",0),
-          new Monster(125, "Forokururu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/forokururu.png",0),
-          new Monster(126, "Meraginasu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/meraginasu.png",0),
-          new Monster(127, "Diorex","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/diorex.png",0),
-          new Monster(128, "Garuba Daora","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/garuba_daora.png",0),
-          new Monster(129, "Inagami","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/inagami.png",0),
-          new Monster(130, "Varusaburosu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/varusaburosu.png",0),
-          new Monster(131, "Poborubarumu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/poborubarumu.png",0),
-          new Monster(132, "1st District Duremudira","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/duremudira.png",0),
+          new Monster(125, "Forokururu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/forokururu.png",0,true),
+          new Monster(126, "Meraginasu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/meraginasu.png",0,true),
+          new Monster(127, "Diorex","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/diorex.png",0,true),
+          new Monster(128, "Garuba Daora","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/garuba_daora.png",0,true),
+          new Monster(129, "Inagami","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/inagami.png",0,true),
+          new Monster(130, "Varusaburosu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/varusaburosu.png",0,true),
+          new Monster(131, "Poborubarumu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/poborubarumu.png",0,true),
+          new Monster(132, "1st District Duremudira","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/duremudira.png",0,true),
           new Monster(133, "UNK","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
           new Monster(134, "Felyne","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/felyne.png",0),
           new Monster(135, "Blue NPC","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
           new Monster(136, "UNK","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
           new Monster(137, "Cactus","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/cactus.png",0),
           new Monster(138, "Veggie Elders","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
-          new Monster(139, "Gureadomosu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gureadomosu.png",0),
-          new Monster(140, "Harudomerugu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/harudomerugu.png",0),
-          new Monster(141, "Toridcless","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/toridcless.png",0),
-          new Monster(142, "Gasurabazura","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gasurabazura.png",0),
+          new Monster(139, "Gureadomosu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gureadomosu.png",0,true),
+          new Monster(140, "Harudomerugu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/harudomerugu.png",0,true),
+          new Monster(141, "Toridcless","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/toridcless.png",0,true),
+          new Monster(142, "Gasurabazura","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gasurabazura.png",0,true),
           new Monster(143, "Kusubami","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kusubami.png",0),
-          new Monster(144, "Yama Kurai","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yama_kurai.png",0),
-          new Monster(145, "2nd District Duremudira","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/duremudira.png",0),
-          new Monster(146, "Zinogre","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/zinogre.png",0),
-          new Monster(147, "Deviljho","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/deviljho.png",0),
-          new Monster(148, "Brachydios","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/brachydios.png",0),
-          new Monster(149, "Berserk Raviente","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/berserk_raviente.png",0),
-          new Monster(150, "Toa Tesukatora","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/toa_tesukatora.png",0),
-          new Monster(151, "Barioth","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/barioth.png",0),
-          new Monster(152, "Uragaan","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/uragaan.png",0),
-          new Monster(153, "Stygian Zinogre","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/stygian_zinogre.png",0),
-          new Monster(154, "Guanzorumu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/guanzorumu.png",0),
-          new Monster(155, "Starving Deviljho","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/starving_deviljho.png",0),
+          new Monster(144, "Yama Kurai","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yama_kurai.png",0,true),
+          new Monster(145, "2nd District Duremudira","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/duremudira.png",0,true),
+          new Monster(146, "Zinogre","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/zinogre.png",0,true),
+          new Monster(147, "Deviljho","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/deviljho.png",0,true),
+          new Monster(148, "Brachydios","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/brachydios.png",0,true),
+          new Monster(149, "Berserk Raviente","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/berserk_raviente.png",0,true),
+          new Monster(150, "Toa Tesukatora","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/toa_tesukatora.png",0,true),
+          new Monster(151, "Barioth","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/barioth.png",0,true),
+          new Monster(152, "Uragaan","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/uragaan.png",0,true),
+          new Monster(153, "Stygian Zinogre","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/stygian_zinogre.png",0,true),
+          new Monster(154, "Guanzorumu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/guanzorumu.png",0,true),
+          new Monster(155, "Starving Deviljho","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/starving_deviljho.png",0,true),
           new Monster(156, "UNK","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
           new Monster(157, "Egyurasu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
-          new Monster(158, "Voljang","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/voljang.png",0),
-          new Monster(159, "Nargacuga","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/nargacuga.png",0),
-          new Monster(160, "Keoaruboru","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/keoaruboru.png",0),
-          new Monster(161, "Zenaserisu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/zenaserisu.png",0),
-          new Monster(162, "Gore Magala","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gore_magala.png",0),
-          new Monster(163, "Blinking Nargacuga","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blinking_nargacuga.png",0),
-          new Monster(164, "Shagaru Magala","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shagaru_magala.png",0),
-          new Monster(165, "Amatsu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/amatsu.png",0),
-          new Monster(166, "Elzelion","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/elzelion.png",0),
-          new Monster(167, "Arrogant Duremudira","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/arrogant.png",0),
+          new Monster(158, "Voljang","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/voljang.png",0,true),
+          new Monster(159, "Nargacuga","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/nargacuga.png",0,true),
+          new Monster(160, "Keoaruboru","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/keoaruboru.png",0,true),
+          new Monster(161, "Zenaserisu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/zenaserisu.png",0,true),
+          new Monster(162, "Gore Magala","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gore_magala.png",0,true),
+          new Monster(163, "Blinking Nargacuga","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blinking_nargacuga.png",0,true),
+          new Monster(164, "Shagaru Magala","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shagaru_magala.png",0,true),
+          new Monster(165, "Amatsu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/amatsu.png",0,true),
+          new Monster(166, "Elzelion","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/elzelion.png",0,true),
+          new Monster(167, "Arrogant Duremudira","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/arrogant_duremudira.png",0,true),
           new Monster(168, "Rocks","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
-          new Monster(169, "Seregios","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/seregios.png",0),
-          new Monster(170, "Bogabadorumu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/bogabadorumu.png",0),
+          new Monster(169, "Seregios","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/seregios.png",0,true),
+          new Monster(170, "Bogabadorumu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/bogabadorumu.png",0,true),
           new Monster(171, "Unknown Blue Barrel","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png",0),
-          new Monster(172, "Blitzkrieg Bogabadorumu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blitzkrieg_bogabadorumu.png",0),
+          new Monster(172, "Blitzkrieg Bogabadorumu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blitzkrieg_bogabadorumu.png",0,true),
           new Monster(173, "Costumed Uruki","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/uruki.png",0),
-          new Monster(174, "Sparkling Zerureusu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/sparkling_zerureusu.png",0),
+          new Monster(174, "Sparkling Zerureusu","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/sparkling_zerureusu.png",0,true),
           new Monster(175, "PSO2 Rappy","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pso2_rappy.png",0),
-          new Monster(176, "King Shakalaka","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/king_shakalaka.png",0)
+          new Monster(176, "King Shakalaka","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/king_shakalaka.png",0,true)
         };
 
         public int GetHuntedCount(int id)
@@ -457,6 +462,12 @@ namespace MHFZ_Overlay
             //this.DataContext = this;
             //MyTitle = FullCurrentProgramVersion();
 
+            for (int i = 0; i < Monsters.Length; i++)
+            {
+                Monsters[i].Hunted = GetHuntedCount(Monsters[i].ID);
+                //Monsters[i].Image = "icons/armor_skills.png";
+            }
+
             MyList.ItemsSource = Monsters;
             SortBy.ItemsSource = new string[] { "ID", "Name", "Hunted" };
             SortDir.ItemsSource = Enum.GetNames<ListSortDirection>();
@@ -467,12 +478,84 @@ namespace MHFZ_Overlay
             MyList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
             //Monsters[1].Hunted = GetHuntedCount(Monsters[1].ID);
-            for (int i = 0; i < Monsters.Length; i++)
+
+
+            //var view = CollectionViewSource.GetDefaultView(MyList.Items);
+            //view.Filter = i => ((MyType)i).IsDeleted != 1;
+            //MyListView.DataSource = view;
+
+            //FilterBox.ItemsSource = typeof(Monster).GetProperties().Select((o) => o.Name);
+            FilterBox.ItemsSource = new string[] { "All", "Large Monster", "Small Monster" };
+
+            MyList.Items.Filter = MonsterFilterAll;
+        }
+
+        private bool MonsterFilterAll(object obj)
+        {
+            var FilterObj = obj as Monster;
+            return FilterObj.IsLarge == true || FilterObj.IsLarge == false;
+        }
+
+        private bool MonsterFilterLarge(object obj)
+        {
+            var FilterObj = obj as Monster;
+            return FilterObj.IsLarge == true;
+        }
+
+        private bool MonsterFilterSmall(object obj)
+        {
+            var FilterObj = obj as Monster;
+            return FilterObj.IsLarge == false;
+        }
+
+
+        public Predicate<object> GetFilter()
+        {
+            switch (FilterBox.SelectedItem as string)
             {
-                Monsters[i].Hunted = GetHuntedCount(Monsters[i].ID);
-                //Monsters[i].Image = "icons/armor_skills.png";
+                default:
+                    return MonsterFilterAll;
+                case "Large Monster":
+                    return MonsterFilterLarge;
+                case "Small Monster":
+                    return MonsterFilterSmall;
             }
         }
+
+        //public bool IsLargeMonster(int id)
+        //{
+        //    switch (id)
+        //    {
+        //        default: return false;
+        //            case 0: return true;
+        //            case 1: return true;
+        //        case 2: return true;
+        //        case 3: return true;
+        //        case 4: return true;
+        //        case 5: return true;
+        //        case 6: return true;
+        //        case 7: return true;
+        //        case 8: return true;
+        //    }
+        //}
+
+        //public bool MonsterFilter(object item)
+        //{
+        //    var view = CollectionViewSource.GetDefaultView(MyList.Items);
+        //    //var monsters = (Monster)item;
+        //    Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+        //    if (s.HuntedMonsterFilter == "All")
+        //        view.Filter = i => ((Monster)i).IsLarge == true || ((Monster)i).IsLarge == false;
+        //    else if (s.HuntedMonsterFilter == "Large Monster")
+        //        view.Filter = i => ((Monster)i).IsLarge == true;
+        //    else if (s.HuntedMonsterFilter == "Small Monster")
+        //        view.Filter = i => ((Monster)i).IsLarge == false;
+
+        //    MyList.View = (ViewBase)view;
+
+        //    return (s.)
+        //}
 
         /// <summary>
         /// Handles the PreviewTextInput event of the RoadOverrideTextBox control.
@@ -706,6 +789,10 @@ namespace MHFZ_Overlay
             return;
         }
 
+        private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MyList.Items.Filter = GetFilter();
+        }
     };
 
 

@@ -38,6 +38,7 @@
     <None Remove="Fonts\SourceCodePro-SemiBoldItalic.ttf" />
     <None Remove="Fonts\SourceCodePro-VariableFont_wght.ttf" />
     <None Remove="icons\armor_skills.png" />
+    <None Remove="icons\attack.png" />
     <None Remove="icons\boggers.png" />
     <None Remove="icons\bone.png" />
     <None Remove="icons\book.png" />
@@ -45,6 +46,7 @@
     <None Remove="icons\description_FILL0_wght400_GRAD0_opsz48.png" />
     <None Remove="icons\diva_prayer_gems.png" />
     <None Remove="icons\dure2.png" />
+    <None Remove="icons\fire.png" />
     <None Remove="icons\guild_food.png" />
     <None Remove="icons\helm.png" />
     <None Remove="icons\knife.png" />
@@ -160,6 +162,7 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="icons\armor_skills.png" />
+    <Resource Include="icons\attack.png" />
     <Resource Include="icons\boggers.png" />
     <Resource Include="icons\bone.png" />
     <Resource Include="icons\book.png">
@@ -175,6 +178,7 @@
     <Resource Include="icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
+    <Resource Include="icons\fire.png" />
     <Resource Include="icons\guild_food.png" />
     <Resource Include="icons\helm.png">
       <Generator></Generator>

@@ -1426,5 +1426,29 @@ namespace MHFZ_Overlay {
                 this["MotionValuesInfo"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sword and Shield")]
+        public string WeaponTypeInfo {
+            get {
+                return ((string)(this["WeaponTypeInfo"]));
+            }
+            set {
+                this["WeaponTypeInfo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("All")]
+        public string HuntedMonsterFilter {
+            get {
+                return ((string)(this["HuntedMonsterFilter"]));
+            }
+            set {
+                this["HuntedMonsterFilter"] = value;
+            }
+        }
     }
 }
