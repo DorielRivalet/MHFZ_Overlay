@@ -65,6 +65,7 @@
     <Page Remove="icons\Cancel.xaml" />
     <Page Remove="icons\Close.xaml" />
     <Page Remove="icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Page Remove="icons\description_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="icons\Done.xaml" />
     <Page Remove="icons\DragDropControl.xaml" />
     <Page Remove="icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml" />
@@ -173,6 +174,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Resource>
     <Resource Include="icons\description_FILL0_wght400_GRAD0_opsz48.png" />
+    <Resource Include="icons\description_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="icons\diva_prayer_gems.png" />
     <Resource Include="icons\dure2.png" />
     <Resource Include="icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml">

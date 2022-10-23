@@ -356,8 +356,8 @@
     <Setting Name="WeaponTypeInfo" Type="System.String" Scope="User">
       <Value Profile="(Default)">Sword and Shield</Value>
     </Setting>
-    <Setting Name="HuntedMonsterFilter" Type="System.String" Scope="User">
-      <Value Profile="(Default)">All</Value>
+    <Setting Name="GuildOptionInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">About</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -58,7 +58,7 @@ namespace MHFZ_Overlay.addresses
         public bool ShowTimerInfo { get; set; } = true;
         public bool ShowHitCountInfo { get; set; } = true;
         public bool ShowPlayerAtkInfo { get; set; } = true;
-       
+
 
 
         public bool ShowMonsterHPBars { get; set; } = true;
@@ -99,48 +99,48 @@ namespace MHFZ_Overlay.addresses
         abstract public int UrukiPachinkoFish();
         abstract public int UrukiPachinkoMushroom();
         abstract public int UrukiPachinkoSeed();
-        abstract public int UrukiPachinkoMeat() ;
-        abstract public int UrukiPachinkoChain() ;
+        abstract public int UrukiPachinkoMeat();
+        abstract public int UrukiPachinkoChain();
         abstract public int UrukiPachinkoScore();
-        abstract public int NyanrendoScore() ;
-        abstract public int DokkanBattleCatsScore() ;
+        abstract public int NyanrendoScore();
+        abstract public int DokkanBattleCatsScore();
         abstract public int DokkanBattleCatsScale();
-        abstract public int DokkanBattleCatsShell() ;
+        abstract public int DokkanBattleCatsShell();
         abstract public int DokkanBattleCatsCamp();
-        abstract public int GuukuScoopSmall() ;
-        abstract public int GuukuScoopMedium() ;
-        abstract public int GuukuScoopLarge() ;
-        abstract public int GuukuScoopGolden() ;
-        abstract public int GuukuScoopScore() ;
-        abstract public int PanicHoneyScore() ;
+        abstract public int GuukuScoopSmall();
+        abstract public int GuukuScoopMedium();
+        abstract public int GuukuScoopLarge();
+        abstract public int GuukuScoopGolden();
+        abstract public int GuukuScoopScore();
+        abstract public int PanicHoneyScore();
         abstract public int Sharpness();
-        abstract public int CaravanPoints() ;
+        abstract public int CaravanPoints();
         abstract public int MezeportaFestivalPoints();
-        abstract public int DivaBond() ;
-        abstract public int DivaItemsGiven() ;
+        abstract public int DivaBond();
+        abstract public int DivaItemsGiven();
         abstract public int GCP();
-        abstract public int RoadPoints() ;
-        abstract public int ArmorColor() ;
-        abstract public int RaviGg() ;
-        abstract public int Ravig() ;
+        abstract public int RoadPoints();
+        abstract public int ArmorColor();
+        abstract public int RaviGg();
+        abstract public int Ravig();
         abstract public int GZenny();
-        abstract public int GuildFoodSkill() ;
+        abstract public int GuildFoodSkill();
         abstract public int GalleryEvaluationScore();
-        abstract public int PoogiePoints() ;
-        abstract public int PoogieItemUseID() ;
+        abstract public int PoogiePoints();
+        abstract public int PoogieItemUseID();
         abstract public int PoogieCostume();
         //zero-indexed
-        abstract public int CaravenGemLevel() ;
+        abstract public int CaravenGemLevel();
         abstract public int RoadMaxStagesMultiplayer();
-        abstract public int RoadTotalStagesMultiplayer() ;
+        abstract public int RoadTotalStagesMultiplayer();
         abstract public int RoadTotalStagesSolo();
-        abstract public int RoadMaxStagesSolo() ;
-        abstract public int RoadFatalisSlain()  ;
-        abstract public int RoadFatalisEncounters() ;
+        abstract public int RoadMaxStagesSolo();
+        abstract public int RoadFatalisSlain();
+        abstract public int RoadFatalisEncounters();
         abstract public int FirstDistrictDuremudiraEncounters();
         abstract public int FirstDistrictDuremudiraSlays();
-        abstract public int SecondDistrictDuremudiraEncounters() ;
-        abstract public int SecondDistrictDuremudiraSlays() ;
+        abstract public int SecondDistrictDuremudiraEncounters();
+        abstract public int SecondDistrictDuremudiraSlays();
         abstract public int DeliveryQuestPoints(); //doesn't seem to work
 
 
@@ -760,14 +760,14 @@ namespace MHFZ_Overlay.addresses
         ///<para>int number: The part number from 1 to 10</para>
         ///<para>int monsterID: the monsterID</para>
         ///</summary>
-        public string GetPartName(int number,int monsterID)
+        public string GetPartName(int number, int monsterID)
         {
             //keep in mind this has the null
             if (roadOverride() == false)
                 monsterID = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
             else if (CaravanOverride())
                 monsterID = CaravanMonster1ID();
-            
+
             if (getDureName() != "None")
             {
                 //switch(getDureName)
@@ -925,7 +925,7 @@ namespace MHFZ_Overlay.addresses
                     Monster1Part5Name = "L. Leg";
                     Monster1Part6Name = "R. Leg";
                     Monster1Part7Name = "Tail";
-                    Monster1Part8Name = "Back"; 
+                    Monster1Part8Name = "Back";
                     Monster1Part9Name = "Tail Tip";
                     Monster1Part10Name = "None";
                     break;
@@ -955,7 +955,7 @@ namespace MHFZ_Overlay.addresses
                     Monster1Part5Name = "R. Foreleg";
                     Monster1Part6Name = "L. Foreleg";
                     Monster1Part7Name = "R.Forewing";
-                    Monster1Part8Name = "L.Forewing"; 
+                    Monster1Part8Name = "L.Forewing";
                     Monster1Part9Name = "Back";//unsure
                     Monster1Part10Name = "None";
                     break;
@@ -1013,7 +1013,7 @@ namespace MHFZ_Overlay.addresses
                 case 154://Guanzorumu
                     Monster1Part1Name = "Head";
                     Monster1Part2Name = "Wings";
-                    Monster1Part3Name = "L. Foreleg"; 
+                    Monster1Part3Name = "L. Foreleg";
                     Monster1Part4Name = "R. Foreleg";
                     Monster1Part5Name = "L. Hindleg";
                     Monster1Part6Name = "R. Hindleg";
@@ -1588,7 +1588,7 @@ namespace MHFZ_Overlay.addresses
                 10 => Monster1Part10Name,
                 _ => "None",
             };
-            return string.Format("{0}: ",partName);
+            return string.Format("{0}: ", partName);
         }
 
         public string Monster1Part1Number
@@ -1598,7 +1598,7 @@ namespace MHFZ_Overlay.addresses
                 int currentPartHP = Monster1Part1();
                 //if (currentPartHP > 0)
                 //{
-                    return GetPartName(1, LargeMonster1ID()) + currentPartHP.ToString();
+                return GetPartName(1, LargeMonster1ID()) + currentPartHP.ToString();
                 //}
                 //return "0";
             }
@@ -1985,18 +1985,18 @@ namespace MHFZ_Overlay.addresses
                         TimeLeftPercent = "";
                     }
 
-                    if ((time / 30) / 60 < 10) 
+                    if ((time / 30) / 60 < 10)
                     {
                         if ((time / 30) % 60 < 10)
                         {
-                            return string.Format("{0:00}:{1:00}.{2}",(time / 30) / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3)) + TimeLeftPercent;
+                            return string.Format("{0:00}:{1:00}.{2}", (time / 30) / 60, time / 30 % 60, (int)Math.Round((float)((time % 30 * 100)) / 3)) + TimeLeftPercent;
                         } else
                         {
                             return string.Format("{0:00}:{1}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3)) + TimeLeftPercent;
                         }
                     } else
                     {
-                        if ((time / 30) % 60 < 10) 
+                        if ((time / 30) % 60 < 10)
                         {
                             return string.Format("{0}:{1:00}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3)) + TimeLeftPercent;
                         }
@@ -2009,38 +2009,38 @@ namespace MHFZ_Overlay.addresses
                 {
                     return string.Format("{0:00}:{1:00}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3)) + TimeLeftPercent;
                 }
-        //        if frame > 0 {
-        //            if err == nil
-        //            {
-        //                  sendServerChatMessage(s, fmt.Sprintf("Quest Name : %s.", name))
+                //        if frame > 0 {
+                //            if err == nil
+                //            {
+                //                  sendServerChatMessage(s, fmt.Sprintf("Quest Name : %s.", name))
 
-        //                  sendServerChatMessage(s, fmt.Sprintf("Target Monster : %s", monster))
-        //                  if frame / 30 / 60 < 10
-        //                  {
-        //                      if frame / 30 % 60 < 10
-        //                      {
-        //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : 0%d:0%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
-        //                      }
-        //                      else
-        //                      {
-        //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : 0%d:%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
-        //                      }
-        //                  }
-        //                  else
-        //                  {
-        //                      if frame / 30 % 60 < 10
-        //                      {
-        //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : %d:0%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
-        //                      }
-        //                      else
-        //                      {
-        //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : %d:%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
-        //                      }
-        //                  }
-        //              }
-                    //return string.Format("{0}:{}.{}0:00.##}", minutes, seconds % 60);
-               }
+                //                  sendServerChatMessage(s, fmt.Sprintf("Target Monster : %s", monster))
+                //                  if frame / 30 / 60 < 10
+                //                  {
+                //                      if frame / 30 % 60 < 10
+                //                      {
+                //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : 0%d:0%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
+                //                      }
+                //                      else
+                //                      {
+                //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : 0%d:%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
+                //                      }
+                //                  }
+                //                  else
+                //                  {
+                //                      if frame / 30 % 60 < 10
+                //                      {
+                //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : %d:0%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
+                //                      }
+                //                      else
+                //                      {
+                //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : %d:%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
+                //                      }
+                //                  }
+                //              }
+                //return string.Format("{0}:{}.{}0:00.##}", minutes, seconds % 60);
             }
+        }
 
         //per quest
         public int HighestAtk = 0;
@@ -2136,9 +2136,9 @@ namespace MHFZ_Overlay.addresses
                 int currentSharpness = Sharpness();
                 if (currentSharpness > 0)
                 {
-                    return currentSharpness.ToString()+SharpnessPercentNumber;
+                    return currentSharpness.ToString() + SharpnessPercentNumber;
                 }
-                return "0"+SharpnessPercentNumber;
+                return "0" + SharpnessPercentNumber;
             }
         }
 
@@ -2166,7 +2166,7 @@ namespace MHFZ_Overlay.addresses
         /// The name of the current weapon.
         /// </value>
         public string CurrentWeaponName
-        { 
+        {
             get
             {
                 int weaponType = WeaponType();
@@ -2235,7 +2235,7 @@ namespace MHFZ_Overlay.addresses
                 //        return (int)(monsterhp / float.Parse(monsterdefrate, CultureInfo.InvariantCulture.NumberFormat));
                 //    }
                 //}
-                
+
                 return (int)(monsterhp / float.Parse(monsterdefrate, CultureInfo.InvariantCulture.NumberFormat));
             }
             return 0;
@@ -2266,7 +2266,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                
+
                 switch (SelectedMonster)
                 {
                     case 0:
@@ -2513,7 +2513,7 @@ namespace MHFZ_Overlay.addresses
                 return "4th District Duremudira";
             else if (QuestID() == 23648 || QuestID() == 23649)
                 return "Arrogant Duremudira";
-            else 
+            else
                 return "None";
         }
 
@@ -2585,9 +2585,9 @@ namespace MHFZ_Overlay.addresses
         }
 
         public string Monster1Name => getDureName() != "None" ? getDureName() : getRaviName() != "None" ? getRaviName() : getMonsterName(GetNotRoad() || RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID()); //monster 1 is used for the first display and road uses 2nd choice to store 2nd monster
-        public string Monster2Name => CaravanOverride() ? getMonsterName(CaravanMonster2ID(),false) : getMonsterName(LargeMonster2ID(),false);
-        public string Monster3Name => getMonsterName(LargeMonster3ID(),false);
-        public string Monster4Name => getMonsterName(LargeMonster4ID(),false);
+        public string Monster2Name => CaravanOverride() ? getMonsterName(CaravanMonster2ID(), false) : getMonsterName(LargeMonster2ID(), false);
+        public string Monster3Name => getMonsterName(LargeMonster3ID(), false);
+        public string Monster4Name => getMonsterName(LargeMonster4ID(), false);
 
         /// <summary>
         /// Gets the name of the rank.
@@ -3271,7 +3271,7 @@ namespace MHFZ_Overlay.addresses
             Dictionary.List.MonsterID.TryGetValue(id, out string? monstername);
 
             if (monstername != null && monstername != RealMonsterName && isFirstMonster)
-                return string.Format("{0}{1}",GetRankName(RankBand()), RealMonsterName);
+                return string.Format("{0}{1}", GetRankName(RankBand()), RealMonsterName);
             else
                 return string.Format("{0}{1}", GetRankName(RankBand()), monstername); ;
         }
@@ -3297,8 +3297,8 @@ namespace MHFZ_Overlay.addresses
 
                 }
                 if (SavedMonster1ID > 0)
-         
-                SavedMonster1ID = LargeMonster1ID();
+
+                    SavedMonster1ID = LargeMonster1ID();
 
                 if (GetNotRoad() || RoadSelectedMonster() == 0)
                 {
@@ -3445,7 +3445,7 @@ namespace MHFZ_Overlay.addresses
 
         #region monster icon
 
-        
+
 
         /// <summary>
         /// Gets the current monster1 icon.
@@ -3501,7 +3501,7 @@ namespace MHFZ_Overlay.addresses
                     case 9:
                         return baseAddress + "felyne" + extension1;
                     case 10: //veggie elder
-                        return baseAddress + "random" + extension1; 
+                        return baseAddress + "random" + extension1;
                     case 11:
                         if (RankBand() >= 64 && RankBand() <= 67)
                             return baseAddress + "zenith_rathalos" + extension2;
@@ -4320,7 +4320,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         public string GetWeaponClass()
         {
-            
+
             if (CurrentWeaponName == "Light Bowgun" || CurrentWeaponName == "Heavy Bowgun" || CurrentWeaponName == "Bow")
                 return "Gunner";
             else
@@ -4372,7 +4372,7 @@ namespace MHFZ_Overlay.addresses
                 if (GetTextFormat() == "Markdown")
                 {
                     if (lv == " Lv. 50" || lv == " Lv. 100")
-                        lv = string.Format("**{0}**",lv);
+                        lv = string.Format("**{0}**", lv);
                 }
 
                 var style = WeaponStyle() switch
@@ -4390,7 +4390,7 @@ namespace MHFZ_Overlay.addresses
                     //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
 
-                    return string.Format("{0}{1} ({2}) | {3} | {4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(),1), GetDecoName(WeaponDeco2ID(),2), GetDecoName(WeaponDeco3ID(),3));
+                    return string.Format("{0}{1} ({2}) | {3} | {4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
 
                 }
                 else if (className == "Gunner")
@@ -4398,7 +4398,7 @@ namespace MHFZ_Overlay.addresses
                     Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
                     //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
-                    return string.Format("{0}{1} ({2}) | {3} | {4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(),1), GetDecoName(WeaponDeco2ID(),2), GetDecoName(WeaponDeco3ID(),3));
+                    return string.Format("{0}{1} ({2}) | {3} | {4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
                 }
                 else
                 {
@@ -4776,7 +4776,7 @@ namespace MHFZ_Overlay.addresses
             {
                 Dictionary.ArmorHeads.ArmorHeadIDs.TryGetValue(ArmorHeadID(), out string? piecename);
 
-                if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename) )
+                if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
                     piecename = string.Format("**{0}**", piecename);
 
                 //string address = Convert.ToString(ArmorHeadID(), 16).ToUpper();
@@ -4906,7 +4906,7 @@ namespace MHFZ_Overlay.addresses
             //string address = Convert.ToString(ArmorLegsID(), 16).ToUpper();
             string address = id.ToString("X4").ToUpper();
             return string.Format("{0} ({1})", DecoName, address);
-        }   
+        }
 
         /// <summary>
         /// Gets the sigils.
@@ -4995,7 +4995,7 @@ namespace MHFZ_Overlay.addresses
 
                         type3 = Sigil1Type3 + ": ";
                     }
-                    
+
                     break;
 
                 case 2:
@@ -5142,7 +5142,7 @@ namespace MHFZ_Overlay.addresses
                 string cuff2 = GetCuff2Name;
 
                 if (IsMetaItem(Cuff1ID()))
-                    cuff1 = string.Format("**{0}**",cuff1);
+                    cuff1 = string.Format("**{0}**", cuff1);
 
                 if (IsMetaItem(Cuff2ID()))
                     cuff2 = string.Format("**{0}**", cuff2);
@@ -5160,7 +5160,7 @@ namespace MHFZ_Overlay.addresses
         /// </returns>
         public bool IsMaxCaravanSkill(int id)
         {
-            
+
             switch (id)
             {
                 default:
@@ -5231,7 +5231,7 @@ namespace MHFZ_Overlay.addresses
 
                     if (IsMaxCaravanSkill(id3))
                         caravanSkillName3 = String.Format("**{0}**", caravanSkillName3);
-                }   
+                }
 
                 if (caravanSkillName1 == "" || caravanSkillName1 == "None")
                     return "None";
@@ -5298,7 +5298,7 @@ namespace MHFZ_Overlay.addresses
         {
             switch (id)
             {
-                default: 
+                default:
                     return false;
                 case 2:
                 case 5:
@@ -5582,7 +5582,7 @@ namespace MHFZ_Overlay.addresses
                 Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill5(), out string? SkillName5);
                 Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill6(), out string? SkillName6);
                 Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill7(), out string? SkillName7);
-                
+
                 //todo: refactor pls
                 if (GetTextFormat() == "Markdown")
                 {
@@ -6707,8 +6707,8 @@ namespace MHFZ_Overlay.addresses
 
             if (GSR() >= 999)
                 ConquestAtk += 4;
-                //AllRes += 1;/
-                //ConquestDef = 300;
+            //AllRes += 1;/
+            //ConquestDef = 300;
 
             var GSRSkillAddition = GetTotalGSRWeaponUnlocks() switch
             {
@@ -6775,13 +6775,13 @@ namespace MHFZ_Overlay.addresses
                     guildName = s.GuildName;
                 else
                     guildName = "Guild Name";
-                    
+
                 if (s.HunterName.Length >= 1)
                     hunterName = s.HunterName;
                 else
                     hunterName = "Hunter Name";
 
-                return string.Format("\n{0} | {1} | {2}",hunterName,guildName,DateAndTime);
+                return string.Format("\n{0} | {1} | {2}", hunterName, guildName, DateAndTime);
             }
         }
 
@@ -6799,7 +6799,7 @@ namespace MHFZ_Overlay.addresses
 
                 if (s.GearDescriptionExport != null || s.GearDescriptionExport != "")
                     return string.Format("{0}\n", s.GearDescriptionExport);
-                else 
+                else
                     return "";
             }
         }
@@ -7433,7 +7433,7 @@ namespace MHFZ_Overlay.addresses
             //zp in bold for markdown
             //fruits and speedrunner items also in bold
             SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
-            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n\n**Road/Duremudira Skills:**\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()),GetRoadDureSkills);
+            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n\n**Road/Duremudira Skills:**\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
             return string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
         }
 
@@ -7670,7 +7670,7 @@ namespace MHFZ_Overlay.addresses
 
         public string GetGameArmorSkills
         {
-            get 
+            get
             {
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
@@ -7798,15 +7798,15 @@ namespace MHFZ_Overlay.addresses
                 return "KO indicates impact portions which use white sharpness as max multi\r\n" +
                     "Jump Slash (Unsheathe)\t13(5)･21\r\n" +
                     "Slide Slash\t21\r\n" +
-                    "Slash 1\t20\r\n"+
+                    "Slash 1\t20\r\n" +
                     "Slash 2\t26\r\n" +
                     "Slash 3\t10(5)･16\r\n" +
-                    "Horizontal Slash\t31\r\n"+
+                    "Horizontal Slash\t31\r\n" +
                     "Vacuum Slash Sigil\t31･16\r\n" +
-                    "Jump Slash 2\t26･24\r\n"+
+                    "Jump Slash 2\t26･24\r\n" +
                     "Upslash\t20\r\n" +
                     "Infinite Slash\t25\r\n" +
-                    "Infinite Slash Sigil\t28\r\n"+
+                    "Infinite Slash Sigil\t28\r\n" +
                     "Shield Bash\t13(5)\r\n" +
                     "Shield Bash 2\t18(10)\r\n" +
                     "Shield Bash Sigil\t19(5)\r\n" +
@@ -7967,142 +7967,188 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return string.Format("If your caravan gem is below level 8 you will have less pages. The skills will however be in the same order.\n\n"+
-                    "Page 1\n"+
-                    "Cafeteria Regular\n"+
-                    "Chance to not consume food when preparing buffs for a quest.\n\n"+
-                    "Negotiation\n"+
+                return string.Format("If your caravan gem is below level 8 you will have less pages. The skills will however be in the same order.\n\n" +
+                    "Page 1\n" +
+                    "Cafeteria Regular\n" +
+                    "Chance to not consume food when preparing buffs for a quest.\n\n" +
+                    "Negotiation\n" +
                     "1/8th chance to get a 10%/15%/25% discount on buying things.\n\n"
-                    +"My Tore Celebrity\n"+
+                    + "My Tore Celebrity\n" +
                     "Garden managers affection goes up 1.5x/2x/3x usual values.\n\n"
-                    +"Gallery Celebrity\n"+
+                    + "Gallery Celebrity\n" +
                     "5000/7000/10000 extra Gallery Points on evaluations.\n\n"
-                    +"Garden Celebrity\n"+
-                    "1.2x/1.3x/1.5x items received from garden tools.\n\n"+
-                    "Recovery Items Up\n"+
-                    "Herb, Potion, Mega Potion and Lifepowder effect 1.1x. 100% Bitterbug and Antidote Herb effectiveness.\n\n"+
-                    "Blunt Striker\n"+
-                    "Bowgun Melee damage up (3.0x).\n\n"+
-                    "Courage\n"+
-                    "No inching upon being spotted by monsters.\n\n"+
-                    "Combination Technique [Small]\n"+
-                    "10% additional combination success rate.\n\n"+
-                    "Riser [Small]\n"+
-                    "1.5x iframes during the rising animation after taking a hit.\n\n"+
-                    "Page 2\n"+
-                    "Perfect Defense [Small]\n"+
-                    "Blocking within 3 frames of an attack hitting you will cause no stamina or sharpness decrease and prevent knockback and allow you to immediately evade after the block.\n\n"+
-                    "Lander\n"+
-                    "No recovery time after falling, no egg loss on falling.\n\n"+
-                    "Vine Superhero\n"+
-                    "No stamina is consumed while climbing.\n\n"+
-                    "Vine Master\n"+
-                    "Getting hurt while climbing will not cause you to fall\n\n"+
-                    "Art of Dancing\n"+
-                    "Using the 'Dance' action will give +10 attack for one minute. Uses the same buff slot as Power Seeds etc.\n\n"+
-                    "Combination Celebrity\n"+
-                    "Combining items has a chance to produce double the usual results quantity wise.\n\n"+
-                    "Combination Technique [Medium]\n"+
-                    "15% additional combination success rate.\n\n"+
-                    "Riser [Medium]\n"+
-                    "2.0x iframes during the rising animation after taking a hit.\n\n"+
-                    "Perfect Defense [Medium]\n"+
-                    "Blocking within 4 frames of an attack hitting you will cause no stamina or sharpness loss and prevent knockback and allow you to immediately evade after the block.\n\n"+
-                    "Elite Flame\n"+
-                    "Increases the Friendly Fire (heat up) meter over time instead of by friendly fire when on caravan quests.\n\n"+
-                    "Page 3\n"+
-                    "Mine Expert\n"+
-                    "Pickaxes are less likely to break after use.\n\n"+
-                    "Insect Expert\n"+
-                    "Bug nets are less likely to break after use.\n\n"+
+                    + "Garden Celebrity\n" +
+                    "1.2x/1.3x/1.5x items received from garden tools.\n\n" +
+                    "Recovery Items Up\n" +
+                    "Herb, Potion, Mega Potion and Lifepowder effect 1.1x. 100% Bitterbug and Antidote Herb effectiveness.\n\n" +
+                    "Blunt Striker\n" +
+                    "Bowgun Melee damage up (3.0x).\n\n" +
+                    "Courage\n" +
+                    "No inching upon being spotted by monsters.\n\n" +
+                    "Combination Technique [Small]\n" +
+                    "10% additional combination success rate.\n\n" +
+                    "Riser [Small]\n" +
+                    "1.5x iframes during the rising animation after taking a hit.\n\n" +
+                    "Page 2\n" +
+                    "Perfect Defense [Small]\n" +
+                    "Blocking within 3 frames of an attack hitting you will cause no stamina or sharpness decrease and prevent knockback and allow you to immediately evade after the block.\n\n" +
+                    "Lander\n" +
+                    "No recovery time after falling, no egg loss on falling.\n\n" +
+                    "Vine Superhero\n" +
+                    "No stamina is consumed while climbing.\n\n" +
+                    "Vine Master\n" +
+                    "Getting hurt while climbing will not cause you to fall\n\n" +
+                    "Art of Dancing\n" +
+                    "Using the 'Dance' action will give +10 attack for one minute. Uses the same buff slot as Power Seeds etc.\n\n" +
+                    "Combination Celebrity\n" +
+                    "Combining items has a chance to produce double the usual results quantity wise.\n\n" +
+                    "Combination Technique [Medium]\n" +
+                    "15% additional combination success rate.\n\n" +
+                    "Riser [Medium]\n" +
+                    "2.0x iframes during the rising animation after taking a hit.\n\n" +
+                    "Perfect Defense [Medium]\n" +
+                    "Blocking within 4 frames of an attack hitting you will cause no stamina or sharpness loss and prevent knockback and allow you to immediately evade after the block.\n\n" +
+                    "Elite Flame\n" +
+                    "Increases the Friendly Fire (heat up) meter over time instead of by friendly fire when on caravan quests.\n\n" +
+                    "Page 3\n" +
+                    "Mine Expert\n" +
+                    "Pickaxes are less likely to break after use.\n\n" +
+                    "Insect Expert\n" +
+                    "Bug nets are less likely to break after use.\n\n" +
                     "(Recommended) KO Technique\n+" +
-                    "Increases stun damage dealt by 1.1x. Stacks with Sigil.\n\n"+
-                    "Combination Technique [Large]\n"+
-                    "20% additional combination success rate.\n\n"+
-                    "Riser [Large]\n"+
-                    "2.0x iframes during the rising animation after taking a hit.\n\n"+
-                    "Secret Healing Technique [Small]\n"+
-                    "1/12th chance of not consuming healing items when used. (Up to 5 times a quest)\n\n"+
-                    "(Recommended) Perfect Defense [Large]\n"+
-                    "Blocking within 4 frames of an attack hitting you will cause no stamina or sharpness loss and prevent knockback and allow you to immediately evade after the block. Perfectly timed blocks also cause a Reflect effect which deals 72 motion (no critical hits, no elemental).\n\n"+
-                    "Unstable Defender [Small]\n"+
-                    "90% reduction of damage and 20% chance of no damage while blocking\n\n"+
-                    "Rousing Attacker [Small]\n"+
-                    "Attacking a monster while you have 50 or lower health a 40% chance to cause you to regain 10 HP. Cannot trigger more than once every 10 seconds. Can trigger up to 10 times in a quest.\n\n"+
-                    "Revenge![Small]\n"+
-                    "After getting up from a hit there's a chance (1 x Health Loss % chance) to gain 25 attack, 50 defense and no minor knockback for 20 seconds. Counted as a Power Pill for terms of buff effects and does not overlap\n\n"+
-                    "Page 4\n"+
-                    "Hot Master\n"+
-                    "Grants the effects of Heat Cancel\n\n"+
-                    "Cold Master\n"+
-                    "Grants the effects of Cold Cancel\n\n"+
-                    "Prepared Stance\n"+
-                    "If you perform the gesture 應戰準備 <act20> for around 30 seconds the attack ceiling on your currently equipped weapon type increases for a fixed duration.\n\n"+
-                    "Shield Angel\n"+
-                    "Decreases the amount of damage taken when on support quests on Berserk Raviente.\n\n"+
-                    "Spear Angel\n"+
-                    "Increases the amount of damage dealt by Ballistae when playing support on Berserk Raviente.\n\n"+
-                    "Secret Healing Technique [Medium]\n"+
-                    "1/11th chance of not consuming healing items when used. (Up to 5 times a quest)\n\n"+
-                    "Unstable Defender [Medium]\n"+
-                    "90% reduction of damage and 25% chance of no damage while blocking\n\n"+
-                    "Rousing Attacker [Medium]\n"+
-                    "Attacking a monster while you have 50 or lower health a 40% chance to cause you to regain 10 HP. Cannot trigger more than once every 10 seconds. Can trigger up to 15 times in a quest.\n\n"+
-                    "Revenge! [Medium]\n"+
-                    "After getting up from a hit there's a chance (1.5 x Health Loss % chance) to gain 25 attack, 50 defense and no minor knockback for 20 seconds. Counted as a Power Pill for terms of buff effects and does not overlap\n\n"+
-                    "Weapon Art [Small]\n"+
-                    "Increases the True Raw of your equipped weapon by 1.01x of its base True Raw on all weapon types.\n\n"+
-                    "Page 5\n"+
-                    "Bonus Art\n"+
-                    "Food Effect is not lost after fainting.\n\n"+
-                    "Secret Healing Technique [Large]\n"+
-                    "1/10th chance of not consuming healing items when used. (Up to 5 times a quest)\n\n"+
-                    "Last Minute Ace [Small]\n"+
-                    "In the last 5 minutes of a quest you get 80% affinity but take 1.3x damage\n\n"+
-                    "Unstable Defender [Large]\n"+
-                    "90% reduction of damage and 50% chance of no damage while blocking\n\n"+
-                    "Rousing Attacker [Large]\n"+
-                    "Attacking a monster while you have 50 or lower health a 40% chance to cause you to regain 10 HP. Cannot trigger more than once every 10 seconds. Can trigger up to 20 times in a quest.\n\n"+
-                    "Revenge! [Large]\n"+
-                    "After getting up from a hit there's a chance (2 x Health Loss % chance) to gain 25 attack, 50 defense and no minor knockback for 20 seconds. Counted as a Power Pill for terms of buff effects and does not overlap\n\n"+
-                    "Last Minute Ace [Medium]\n"+
-                    "In the last 5 minutes of a quest you get 90% affinity but take 1.3x damage\n\n"+
-                    "Weapon Art [Medium]\n"+
-                    "Increases the True Raw of your equipped weapon by 1.025x of its base True Raw on all weapon types.\n\n"+
-                    "Wild Awakening\n"+
-                    "Combination of both Hot and Cold Master skills.\n\n"+
-                    "Instant Guard Stance\n"+
-                    "Combination of Weapon Art [Med] and Perfect Defense [Med]\n\n"+
-                    "Page 6\n"+
-                    "(Recommended) Shooting Rampage\n"+
-                    "Increases the True Raw of your equipped ranged weapon by 1.1x of its base True Raw. If using a bowguns your accuracy immediately after shooting is lowered by 1.5x.\n\n"+
-                    "Natural Recovery [Small]\n"+
-                    "Using the 'Sleep' gesture will cause your red health to refill up to 5 times.\n\n"+
-                    "Master Carver [Small]\n"+
-                    "While carving if you roll the top item in the carve table and it is below 51% you have a 1/10th chance of rerolling with that item removed from the carving pool up to a maximum of 10 times in a quest.\n\n"+
-                    "Last Minute Ace [Large]\n"+
-                    "In the last 5 minutes of a quest you get 100% affinity but take 1.3x damage\n\n"+
-                    "(Recommended) Weapon Art [Large]\n"+
-                    "Increases the True Raw of your equipped weapon by 1.05x of its base True Raw on all weapon types.\n\n"+
-                    "Decisive Hunter\n"+
-                    "Combination of Weapon Art [Med] and KO Technique\n\n"+
-                    "Natural Recovery [Medium]\n"+
-                    "Using the 'Sleep' gesture will cause your red health to refill up to 10 times.\n\n"+
-                    "Master Carver [Medium]\n"+
-                    "While carving if you roll the top item in the carve table and it is below 51% you have a 1/9th chance of rerolling with that item removed from the carving pool up to a maximum of 15 times in a quest.\n\n"+
-                    "Goddess of Luck [Small]\n"+
-                    "1/10th chance to take no damage on up to 5 hits in a quest (Stacks with Divine Protection, Diva Buff and Girly Charms).\n\n"+
-                    "Self-Defense\n"+
-                    "Combination of Weapon Art [Med] and Unstable Defender [Med]\n\n"+
-                    "Page 7\n"+
-                    "Natural Recovery [Large]\n"+
-                    "Using the 'Sleep' gesture will cause your red health to refill up to 15 times.\n\n"+
-                    "(Recommended) Master Carver [Large]\n"+
-                    "While carving if you roll the top item in the carve table and it is below 51% you have a 1/8th chance of rerolling with that item removed from the carving pool up to a maximum of 20 times in a quest.\n\n"+
-                    "Goddess of Luck [Medium]\n"+
-                    "1/9th chance to take no damage on up to 10 hits in a quest (Stacks with Divine Protection, Diva Buff and Girly Charms).\n\n"+
-                    "Goddess of Luck [Large]\n"+
+                    "Increases stun damage dealt by 1.1x. Stacks with Sigil.\n\n" +
+                    "Combination Technique [Large]\n" +
+                    "20% additional combination success rate.\n\n" +
+                    "Riser [Large]\n" +
+                    "2.0x iframes during the rising animation after taking a hit.\n\n" +
+                    "Secret Healing Technique [Small]\n" +
+                    "1/12th chance of not consuming healing items when used. (Up to 5 times a quest)\n\n" +
+                    "(Recommended) Perfect Defense [Large]\n" +
+                    "Blocking within 4 frames of an attack hitting you will cause no stamina or sharpness loss and prevent knockback and allow you to immediately evade after the block. Perfectly timed blocks also cause a Reflect effect which deals 72 motion (no critical hits, no elemental).\n\n" +
+                    "Unstable Defender [Small]\n" +
+                    "90% reduction of damage and 20% chance of no damage while blocking\n\n" +
+                    "Rousing Attacker [Small]\n" +
+                    "Attacking a monster while you have 50 or lower health a 40% chance to cause you to regain 10 HP. Cannot trigger more than once every 10 seconds. Can trigger up to 10 times in a quest.\n\n" +
+                    "Revenge![Small]\n" +
+                    "After getting up from a hit there's a chance (1 x Health Loss % chance) to gain 25 attack, 50 defense and no minor knockback for 20 seconds. Counted as a Power Pill for terms of buff effects and does not overlap\n\n" +
+                    "Page 4\n" +
+                    "Hot Master\n" +
+                    "Grants the effects of Heat Cancel\n\n" +
+                    "Cold Master\n" +
+                    "Grants the effects of Cold Cancel\n\n" +
+                    "Prepared Stance\n" +
+                    "If you perform the gesture 應戰準備 <act20> for around 30 seconds the attack ceiling on your currently equipped weapon type increases for a fixed duration.\n\n" +
+                    "Shield Angel\n" +
+                    "Decreases the amount of damage taken when on support quests on Berserk Raviente.\n\n" +
+                    "Spear Angel\n" +
+                    "Increases the amount of damage dealt by Ballistae when playing support on Berserk Raviente.\n\n" +
+                    "Secret Healing Technique [Medium]\n" +
+                    "1/11th chance of not consuming healing items when used. (Up to 5 times a quest)\n\n" +
+                    "Unstable Defender [Medium]\n" +
+                    "90% reduction of damage and 25% chance of no damage while blocking\n\n" +
+                    "Rousing Attacker [Medium]\n" +
+                    "Attacking a monster while you have 50 or lower health a 40% chance to cause you to regain 10 HP. Cannot trigger more than once every 10 seconds. Can trigger up to 15 times in a quest.\n\n" +
+                    "Revenge! [Medium]\n" +
+                    "After getting up from a hit there's a chance (1.5 x Health Loss % chance) to gain 25 attack, 50 defense and no minor knockback for 20 seconds. Counted as a Power Pill for terms of buff effects and does not overlap\n\n" +
+                    "Weapon Art [Small]\n" +
+                    "Increases the True Raw of your equipped weapon by 1.01x of its base True Raw on all weapon types.\n\n" +
+                    "Page 5\n" +
+                    "Bonus Art\n" +
+                    "Food Effect is not lost after fainting.\n\n" +
+                    "Secret Healing Technique [Large]\n" +
+                    "1/10th chance of not consuming healing items when used. (Up to 5 times a quest)\n\n" +
+                    "Last Minute Ace [Small]\n" +
+                    "In the last 5 minutes of a quest you get 80% affinity but take 1.3x damage\n\n" +
+                    "Unstable Defender [Large]\n" +
+                    "90% reduction of damage and 50% chance of no damage while blocking\n\n" +
+                    "Rousing Attacker [Large]\n" +
+                    "Attacking a monster while you have 50 or lower health a 40% chance to cause you to regain 10 HP. Cannot trigger more than once every 10 seconds. Can trigger up to 20 times in a quest.\n\n" +
+                    "Revenge! [Large]\n" +
+                    "After getting up from a hit there's a chance (2 x Health Loss % chance) to gain 25 attack, 50 defense and no minor knockback for 20 seconds. Counted as a Power Pill for terms of buff effects and does not overlap\n\n" +
+                    "Last Minute Ace [Medium]\n" +
+                    "In the last 5 minutes of a quest you get 90% affinity but take 1.3x damage\n\n" +
+                    "Weapon Art [Medium]\n" +
+                    "Increases the True Raw of your equipped weapon by 1.025x of its base True Raw on all weapon types.\n\n" +
+                    "Wild Awakening\n" +
+                    "Combination of both Hot and Cold Master skills.\n\n" +
+                    "Instant Guard Stance\n" +
+                    "Combination of Weapon Art [Med] and Perfect Defense [Med]\n\n" +
+                    "Page 6\n" +
+                    "(Recommended) Shooting Rampage\n" +
+                    "Increases the True Raw of your equipped ranged weapon by 1.1x of its base True Raw. If using a bowguns your accuracy immediately after shooting is lowered by 1.5x.\n\n" +
+                    "Natural Recovery [Small]\n" +
+                    "Using the 'Sleep' gesture will cause your red health to refill up to 5 times.\n\n" +
+                    "Master Carver [Small]\n" +
+                    "While carving if you roll the top item in the carve table and it is below 51% you have a 1/10th chance of rerolling with that item removed from the carving pool up to a maximum of 10 times in a quest.\n\n" +
+                    "Last Minute Ace [Large]\n" +
+                    "In the last 5 minutes of a quest you get 100% affinity but take 1.3x damage\n\n" +
+                    "(Recommended) Weapon Art [Large]\n" +
+                    "Increases the True Raw of your equipped weapon by 1.05x of its base True Raw on all weapon types.\n\n" +
+                    "Decisive Hunter\n" +
+                    "Combination of Weapon Art [Med] and KO Technique\n\n" +
+                    "Natural Recovery [Medium]\n" +
+                    "Using the 'Sleep' gesture will cause your red health to refill up to 10 times.\n\n" +
+                    "Master Carver [Medium]\n" +
+                    "While carving if you roll the top item in the carve table and it is below 51% you have a 1/9th chance of rerolling with that item removed from the carving pool up to a maximum of 15 times in a quest.\n\n" +
+                    "Goddess of Luck [Small]\n" +
+                    "1/10th chance to take no damage on up to 5 hits in a quest (Stacks with Divine Protection, Diva Buff and Girly Charms).\n\n" +
+                    "Self-Defense\n" +
+                    "Combination of Weapon Art [Med] and Unstable Defender [Med]\n\n" +
+                    "Page 7\n" +
+                    "Natural Recovery [Large]\n" +
+                    "Using the 'Sleep' gesture will cause your red health to refill up to 15 times.\n\n" +
+                    "(Recommended) Master Carver [Large]\n" +
+                    "While carving if you roll the top item in the carve table and it is below 51% you have a 1/8th chance of rerolling with that item removed from the carving pool up to a maximum of 20 times in a quest.\n\n" +
+                    "Goddess of Luck [Medium]\n" +
+                    "1/9th chance to take no damage on up to 10 hits in a quest (Stacks with Divine Protection, Diva Buff and Girly Charms).\n\n" +
+                    "Goddess of Luck [Large]\n" +
                     "1/8th chance to take no damage on up to 20 hits in a quest (Stacks with Divine Protection, Diva Buff and Girly Charms).");
+            }
+        }
+
+        public string GetGameGuildAbout
+        {
+            get
+            {
+                return "Create/Join a Guild\r\n・Guilds can be created at HR5 or higher\r\n・You cannot create a guild with the same name as another.\r\n・Creation of a guild and application for membership are carried out by the guild receptionist in Mezeporta.\r\n\r\nMaintaining a Guild\r\n・There are 4 or more characters of Hunter Rank (HR) 3 or higher who have played MHF within the past month in the guild.\r\n・Inactive guilds will be disbanded, checked at the time of maintanence each Wednesday.\r\n・If the conditions are not met at that point, the guild association will send mail to the guild leader.\r\n1st: Attention mail\r\n2nd: Warning mail\r\n3rd: Forced disband mail\r\n・The third time, the group is forcibly disbanded and a disbandment mail is sent to all guild members.\r\n\r\nChanging Guild Leaders\r\nIf the Guild Leader does not log in for 2 consecutive weeks, the second in command will become the new Guild Leader.\r\nThe third player in the guild list will then be made the new second in command.\r\n\r\nRestrictions on disbanding or leaving a guild\r\nGuild leader (disbanded): Cannot create or apply to join a guild for 5 days (120 hours) after disbandment.\r\nGuild member (kicked): Cannot create a guild or apply for membership for 3 days (72 hours) after being kicked out.\r\nGuild members (leave): cannot create a guild or apply for membership for 10 days (240 hours) after leaving a guild.\r\n\r\nAlliance\r\nAlliances can be joined by up to three guilds.\r\nOnce an alliance is formed, the use of alliance chat is enabled.\r\nRegistration for the Hunters' Festival will be on an alliance basis and all guilds will be on the same team.\r\n\r\nGuild Rank\r\nBonuses for increasing hunting party ranks will be available after each scheduled maintenance.\r\nHunting points (RP) will accumulate 1P after logging in for a total of 30 minutes. (15 minutes/1P at authorized NetCafes)\r\nOther RPs can be obtained through official hunting competitions.\r\n\r\nRank\tRP\tCapacity\tFeatures\r\n0\t0\t30\tJump from guild chat / guild list\r\n1\t24\t30\tAlliances, Motto, Guild icon\r\n2\t48\t30\tTent hall, Item box, Rasta, Change Room\r\n3\t96\t40\tGuild Shop, +10 members\r\n4\t144\t40\tGuild Quests, Meals\r\n5\t192\t40\tGuild Pugi +1, Store discount, Pet pugi\r\n6\t240\t40\tPugi shop, Change pugi, Feed pugi\r\n7\t288\t50\tSmall hall, Item box +1pg, +10 members, +10 stamps\r\n8\t360\t50\tAdd 4 types of clothes for Guild Poogie\r\n9\t432\t50\tAdd 2 types of clothes for Guild Poogie\r\n10\t504\t60\tLarge hall, Item box +1pg\r\n+10 members, Bonus menu, +10 stamps\r\n11\t600\t60\tAdd 2nd Guild Poogie\r\n12\t696\t60\tAdd 3rd Guild Poogie\r\n13\t792\t60\tLimited time quests, Tournament quests\r\n14\t888\t60\tG-rank quests\r\n15\t984\t60\tGuild Cooking\r\n16\t1080\t60\tAdventure Cat\r\n17\t1200\t60\tBonus menu slots, Hunting road quests\r\nWeekly Bonus\r\nDepending on the number of logins in the previous week, the following effects will be triggered on partnya\r\nThe guild leader can also spend RP to add more logins.\r\n\r\nGuild Rank\tEffect Name\tEffect\r\n10\tPartnya attack power UP\tAffects the attack power of partnyas during a quest.\r\n10\tPartnya Defense UP\tAffects the amount of damage done to partnyas during a quest.\r\n10\tPartnya Health UP\tAffects the frequency of partnyas withdrawaling during a quest.\r\n17\tPartnya Courage UP\tAffects the frequency of use of partnyas using strong attacks during a quest.\r\n17\tPartnya Reflexes UP\tAffects how often your partnya guards during quests.";
+            }
+        }
+
+        public string GetGameGuildPoogies
+        {
+            get
+            {
+                return "Poogie\r\nGuild store discount (from guild rank 5)\r\nThe discount is activated by successfully completing the \"pat on the head\" and \"it seems pretty happy\" responses a specified number of times.\r\n\r\n5 times successful\tGuild shop 5% discount\r\n10 times successful\tGuild shop 10% discount\r\n15 times successful\tGuild shop 15% discount\r\nThe effect disappears in any of [12 hours passed / logout / petting for a long time and getting angry] occur.\r\nPoogie Skill (Unlocked at Guild Rank 6)\r\nGiving food and \"seems to love it!\" will activate a skill according to Poogie's clothes with a probability. Only one type of skill can be activated.\r\nOnly the guild leader can purchase and change clothes.\n\n" +
+                    "Rank 6\n" +
+                    "Red & White (Poogie Thrift): Flute, Pickaxe and Bugnet 1/4 less likely to break (stacks with Whim)\n" +
+                    "Naked Emperor (Poogie Discount): Furniture store purchase price (Material/Zenny) 10% discount. Needs Wht Durable Fabricx45, Appropriate Partsx15\n" +
+                    "(Recommended) Soporific White (Poogie Taijutsu): Halves stamina consumption when evading and guarding. Needs Wht Durable Fabricx75, Flexible Medicinex22, Appropriate Partsx30\n" +
+                    "(Recommended) Black Green Clash (Poogie Status Attack): 1.125x attribute value for status attacks (Can be used with status skills). Needs Striped Fabricx45, Green Fabricx30\n\n" +
+                    "Rank 8\n" +
+                    "Silent Suit (Poogie Reward Technique): 1/8 chance that the next reward won't be given as a quest reward. In addition, the maximum reward frame will also be increased. Needs Wht Durable Fabricx30, Black Fabricx50, Appropriate Partsx20\n" +
+                    "Bewitching Pink (Poogie Defense): When attacked, 1/4 chance to reduce damage taken by 30% (Can be used with the Protection skill). Needs Wht Durable Fabricx20, Peach Fabricx45\n" +
+                    "Nostalgic Stripe (Poogie Escape Technique): Halves stamina when running away. Needs Striped Fabricx45, Blue Fabrix25\n" +
+                    "Soothing Sky (Poogie Transportation): Halves stamina consumption while running while transporting (Can be used with Marathon Runner skill). Needs Wht Durable Fabricx40, Blue Fabricx35, Appropriate Partsx10\n\n" +
+                    "Rank 9\n" +
+                    "Gentle Green (Poogie Trap Mastery): 100% success in combining pitfall and shock traps. Needs Green Fabricx35, Blue Fabricx20, Appropriate Partsx20\n" +
+                    "Restless Brown (Poogie Patience): When attacked, 1/6 chance of gaining super armor (no knockback). Needs Brown Fabricx30, Black Fabricx10, Appropriate Partsx10\n\n" +
+                    "Clothing material is RARE2 and can be put in the guild box.\r\n\r\nClothing Material\tProduction Materials\r\nWht Tough Fabric\tAnteka Peltx3、W.Velociprey Hidex2、Blangonga Peltx2\r\nAppropriate Parts\tSunstonex2、Sticky Caterpillarx1、Sm Monster Bonex1、Machalite Orex3\r\nStriped Fabric\tHigh Qual Peltx3、Striped Skinx2、Blk Rajang Peltx1、Carpenterbugx2\r\nGreen Fabric\tBuruku Hidex2、Rathian Scalex3、Gendrome Hidex3、Festi Tktx1\r\nFlexible Medicine\tBomb Arrowanax3、Firecell Stonex1、Fire Herbx5、Monster Fluidx2\r\nBlk Fabric\tRemobra Skin+x2、High Qual Peltx3、B.Gravios Shellx1\r\nPeach Fabric\tIoprey Hide+x1、Teostra Shlx1、W.Velociprey Hidex3\r\nBlue Fabric\tVelociprey Scalex3、B.Kut-Ku Scalex2、Rubbery Hidex1\r\nBrown Fabric\tGenprey Hidex4、Diablos Shlx1、Gluehopperx2";
+            }
+        }
+
+        public string GetGameGuildInfo
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                return s.GuildOptionInfo switch
+                {
+                    "About" => GetGameGuildAbout,
+                    "Guild Food" => GetGameGuildFood,
+                    "Guild Poogies" => GetGameGuildPoogies,
+                    _ => GetGameGuildAbout,
+                };
             }
         }
 
@@ -8473,7 +8519,9 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return "";
+                return "This weapon is for certain far more easier to operate than Dual Swords, it however also has notoriously long hitlag effects. It is also arguably the highest benefactor of Determination's effects.\n" +
+                    "It has some of the best paralysis weapons in the game, playing a large part in multiplayer road runs.\n" +
+                    "Hiden Skill Effects\nSnS obtains a larger 1.30x raw modifier rather than the usual 1.20x Blademaster weapons usually get. It can also use all elemental and status sword crystals, and has slightly faster movement speed.\nNotes\nThe slide attack has a few i-frames (~9 with E+2) and can do a 180° turning slash at the end.\r\nLong length is generally a flat upgrade with its reach. Very Long is usable if you're just going to spam roundslashes but may want some spacing management.\nSnS has a very lenient hit requirement to ready the Transcend burst attack.\nYou can technically manipulate a transcend burst to any element you want by using the sword crystal compatibility from the hiden skill.\r\nShield attacks do impact damage and can stun, but they use white sharpness values at best.\r\nThe vacuum slash has no hitlag or sharpness cost on the extra hit it adds to the roundslash. It isn't as a big deal today, but can be nice to have.\r\nUsing items unsheathed resets Rush.\r\nOf note, some time attack players have had success with dropping Fencing +2 for the sake of reducing hitlag.\r\nSnS's blocking isn't good, but the Perfect Defense caravan skill can technically be used with Obscurity Up to amass 300 raw in two blocks cleanly if you have good timing, keeping it until you take knockback.\r\nGalatine Z is the best overall SnS in the game when poison is not necessary.";
             }
         }
 
@@ -8481,7 +8529,9 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return "";
+                return "One of the best weapons in the game, but with a higher skill ceiling due to its unique sharpen motion. Compatibility with Vampirism has made it drastically more accessible to pick up, however.\r\nDuals have some of the fastest clear times against musous, competing with Tonfa.\r\nHiden Skill Effects\r\nAttacks in any Demon mode restore 3 stamina per hit. Compatible with Combat Supremacy.\r\nNotes\r\nLike SnS, long length is pretty much an upgrade and often a common find on modern weapons.\r\nToday, there is no reason to use any demonization that isn't Extreme Demon Mode. However, you cannot receive any healing other than from Vampirism in this state.\r\nEach sharpen in a combo adds 1.05x raw, stackable four times for up to a 1.20x raw bonus. The attacking evades in True/Extreme Demon modes continue this combo state.\n" +
+                    "You can't receive any healing when demonized, Vampirism leeching is the only exception. This is made much more apparent on road.\n" +
+                    "Dainsleif Z is the best DS in the game.";
             }
         }
 
@@ -8489,7 +8539,9 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return "";
+                return "A weapon balanced around premium gear and Raviente, with standard content only getting harder for it. Still, it can hit really fucking hard, but it's a matter of when it's allowed to do so.\r\nIronically the hardest weapon to play properly on Raviente, but a good GS player makes a world of difference.\r\nHiden Skill Effects\r\nFaster charging that stacks with Focus, and a wider window before the charged upswing attack overcharges down to Lv2. Timed parries can recover some sharpness, being a net gain with Sharp Sword +2.\r\nOther effects for non-Extreme styles have been truncated.\r\nNotes\r\nYou are a friendly fire liability.\r\nHold R1 before unsheathing to do a regular overhead attack, as you'll otherwise do a special wide slash (although it does combo into any charged slash). You can also do upswing charges and parries (Storm, Extreme) from a sheathed state.\r\nVery Long length is the most popular due to the most-used attacks being vertical slices and overall more leniency with keeping a distance. Long is plenty usable, though.\r\nCombat Supremacy is the Frontier equivalent of Critical Draw on GS, pairing very well with hit & run strategies with the stamina drain and 1.20x raw increase. Starving Wolf +2 w/ Rush is an alternative for unsheathed play.\r\nGS gets the best mileage out of Raviente power crystals. They do not work on the shining attack however, but at least they don't get used up.\r\nThe unsheathed running hop attack has a few i-frames at the start, but it's rarely used.\r\nWell-timed parries with GS Hiden and Obscurity Up greatly manage sharpness when using Lavish Attack.\r\nLarge amounts of hitstop is a valid way of avoiding some attacks.\n" +
+                    "If you have 30 power crystals with a Raviente GS and if the hunt isn't over by the time they're all used up, you are doing something wrong.\n" +
+                    "Z100 element is technically the best option, but needs good sigils + 1x ";
             }
         }
 
@@ -8625,7 +8677,7 @@ namespace MHFZ_Overlay.addresses
                     "Sound (Diva): 100% Water / 100% Dragon\n" +
                     "(Recommended) Burning Zero (Elzelion): 125% Fire / 125% Ice\n" +
                     "Emperor's Roar (White Fatalis): 150% Thunder / 50% Dragon\n\n" +
-                    "Combo elements are equivalent to having 2-3 of them but at a percentage of your elemental power value. For visual effects, the element that deals the most damage will take precedence (Gunlance's Heatblade Mode alternates). With Transcendence bursts, there is a hierarchy on which elements take precedence first. Fire is at the top. Negative elemental hitzones will still apply their raw penalty normally";
+                    "Combo elements are equivalent to having 2-3 of them but at a percentage of your elemental power value. For visual effects, the element that deals the most damage will take precedence (Gunlance's Heatblade Mode alternates). With Transcendence bursts, there is a hierarchy on which elements take precedence first. Fire is at the top. Negative elemental hitzones will still apply their raw penalty normally if the \"wrong\" element is involved. Owning Determination will brute force all elements involved, using the weapon's Dissolver modifier.";
             }
         }
 

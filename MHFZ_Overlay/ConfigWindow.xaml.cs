@@ -793,6 +793,11 @@ namespace MHFZ_Overlay
         {
             MyList.Items.Filter = GetFilter();
         }
+
+        private void BtnLogFile_Click(object sender, RoutedEventArgs e)
+        {
+            return;
+        }
     };
 
 

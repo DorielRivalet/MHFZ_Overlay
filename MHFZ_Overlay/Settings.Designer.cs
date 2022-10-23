@@ -1441,13 +1441,13 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("All")]
-        public string HuntedMonsterFilter {
+        [global::System.Configuration.DefaultSettingValueAttribute("About")]
+        public string GuildOptionInfo {
             get {
-                return ((string)(this["HuntedMonsterFilter"]));
+                return ((string)(this["GuildOptionInfo"]));
             }
             set {
-                this["HuntedMonsterFilter"] = value;
+                this["GuildOptionInfo"] = value;
             }
         }
     }
