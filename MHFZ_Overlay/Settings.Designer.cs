@@ -1450,5 +1450,29 @@ namespace MHFZ_Overlay {
                 this["GuildOptionInfo"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("About")]
+        public string CaravanOptionInfo {
+            get {
+                return ((string)(this["CaravanOptionInfo"]));
+            }
+            set {
+                this["CaravanOptionInfo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Partner")]
+        public string CompanionInfo {
+            get {
+                return ((string)(this["CompanionInfo"]));
+            }
+            set {
+                this["CompanionInfo"] = value;
+            }
+        }
     }
 }

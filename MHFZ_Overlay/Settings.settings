@@ -359,5 +359,11 @@
     <Setting Name="GuildOptionInfo" Type="System.String" Scope="User">
       <Value Profile="(Default)">About</Value>
     </Setting>
+    <Setting Name="CaravanOptionInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">About</Value>
+    </Setting>
+    <Setting Name="CompanionInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Partner</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
