@@ -646,6 +646,14 @@ namespace MHFZ_Overlay.addresses
         public bool HasMonster3 => ShowHPBar(LargeMonster3ID(), Monster3HPInt());
         public bool HasMonster4 => ShowHPBar(LargeMonster4ID(), Monster4HPInt());
 
+        public string FullCurrentProgramVersion
+        {
+            get
+            {
+                return string.Format("Monster Hunter Frontier Z Overlay {0}", MainWindow.CurrentProgramVersion);
+            }
+        }
+
         public int HitCount => HitCountInt();
 
         public bool _configuring = false;
@@ -9208,6 +9216,46 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 return "Calculation formula: Basic weapon multiplier = attack power ÷ (Great Sword/Long Sword: 4.8, SnS/dual sword: 1.4, hammer/hunting horn: 5.2, lance/gunlance: 2.3, bowgun/bow: 1.2)\r\nWeapon Magnification = [[[ ([Basic Weapon Magnification x Weapon Technique] + Powercharm + Powertalon + Meal/Demon Medicine + Demon Flute/Strength Class + Attack Power Up Skill + SR Correction + Sigil + SP Correction)\r\n　　　　　　　　　　×Melody Effect]×Real Power]×Secret] + Bonds + Tenran/Supremacy/G-class Armor Correction\r\n　　　　Attribute value = [(weapon attribute value + sigil) x ○ attribute enhancement x attribute attack x supremacy armor correction] x serious drink\r\n　　　　 Abnormal status value = Abnormal weapon status value x Abnormal status enhancement x Supreme armor correction\r\nAffinity rate = (weapon criticality + criticality UP skill + SR correction + sigil)  *if positive up to this point + sharpness bonus\r\n+ SP Correction + HC Gun Correction + Fatal Fury + Serious + Critical Whetstone\r\n①Slash/Strike\r\nPhysical Damage = Weapon Magnification x Motion Value x Sharpness Magnification x Cutting Method x Weapon Modification x Flesh Quality x Critical Hit Modification\r\nAttribute damage = attribute value x sharpness multiplier x meat quality x attribute melody\r\n② Shots\r\n　Physical Damage = Weapon Magnification x Ammo x Distance Modification x Power UP Skill x Weapon Modification x Flesh Quality x Critical Hit Modification\r\nAttribute damage = attribute value x flesh quality x attribute melody\r\n　　　　　　The power of the bow will also be corrected by charging\r\nTotal\r\nFinal damage = (physical damage + elemental damage) x total defense rate x anger multiplier x HC correction x HC anger correction\r\n　　　　　　　　　　　　　※A minimum of 1 physical damage is included\r\nNotation Gray: Bounced, Green: small hitstop, Blue: large hitstop";
+            }
+        }
+
+        public string GetWeaponIcon
+        {
+            get
+            {
+                switch (GetWeaponNameFromType(WeaponType()))
+                {
+                    default:
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/sns.png";
+                    case "Sword and Shield":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/sns.png";
+                    case "Dual Swords":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/ds.png";
+                    case "Great Sword":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/gs.png";
+                    case "Long Sword":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/ls.png";
+                    case "Hammer":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/hammer.png";
+                    case "Hunting Horn":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/hh.png";
+                    case "Lance":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/lance.png";
+                    case "Gunlance":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/gl.png";
+                    case "Tonfa":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/tonfa.png";
+                    case "Switch Axe F":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/saf.png";
+                    case "Magnet Spike":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/ms.png";
+                    case "Heavy Bowgun":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/hbg.png";
+                    case "Light Bowgun":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/lbg.png";
+                    case "Bow":
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/bow.png";
+                }
             }
         }
 

@@ -51,11 +51,6 @@ namespace MHFZ_Overlay
         /// </value>
         private MainWindow MainWindow { get; set; }
 
-        public string FullCurrentProgramVersion()
-        {
-            return string.Format("Monster Hunter Frontier Z Overlay {0}", MainWindow.CurrentProgramVersion);
-        }
-
         public Uri MonsterImage
         {
             get { return new Uri("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png", UriKind.RelativeOrAbsolute); }
@@ -816,7 +811,9 @@ namespace MHFZ_Overlay
                 textToSave = MainWindow.DataLoader.model.MarkdownSavedGearStats;
             else if (GetTextFormatMode() == "Image")
             {
+                GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
                 CopyUIElementToClipboard(GearTextGrid);
+                GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
                 return;
             }
 
@@ -839,8 +836,10 @@ namespace MHFZ_Overlay
 
             if (savefile.ShowDialog() == true)
             {
-                CreateBitmapFromVisual(GearTextGrid, savefile.FileName);
-                CopyUIElementToClipboard(GearTextGrid);
+                GearImageGrid.Background = new SolidColorBrush(Color.FromArgb(0x00,0x1E,0x1E,0x2E));
+                CreateBitmapFromVisual(GearImageGrid, savefile.FileName);
+                CopyUIElementToClipboard(GearImageGrid);
+                GearImageGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
             }
         }
 
@@ -891,7 +890,9 @@ namespace MHFZ_Overlay
             using (DrawingContext context = visual.RenderOpen())
             {
                 VisualBrush visualBrush = new VisualBrush(target);
+                visualBrush.Stretch = Stretch.None;
                 context.DrawRectangle(visualBrush, null, new Rect(new Point(), bounds.Size));
+
             }
 
             renderTarget.Render(visual);
@@ -924,6 +925,7 @@ namespace MHFZ_Overlay
             savefile.Filter = "CSV files (*.csv)|*.csv";
             savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HuntedLogs\";
 
+            //https://stackoverflow.com/questions/11776781/savefiledialog-make-problems-with-streamwriter-in-c-sharp
             if (savefile.ShowDialog() == true)
             {
                 //using (StreamWriter sw = new StreamWriter(savefile.FileName,

@@ -417,7 +417,49 @@
                                     </TabItem.Header>
                                     <ScrollViewer VerticalScrollBarVisibility="Visible">
                                         <Grid Margin="5,5,5,5">
-                                            <TextBlock Text="test"></TextBlock>
+                                            <Grid x:Name="GearImageGrid" Background="#1e1e2e">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="40"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="40"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="40"/>
+                                                </Grid.RowDefinitions>
+                                                <Image Grid.Row="0" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/mhfzoverlayicon256.png"/>
+                                                <Image Grid.Row="1" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/transcend.png"/>
+                                                <Image Grid.Row="2" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/page.png"/>
+                                                <Image Grid.Row="3" Grid.Column="0" Source="{Binding GetWeaponIcon}"/>
+                                                <Image Grid.Row="4" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/helm.png"/>
+                                                <Image Grid.Row="5" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/chest.png"/>
+                                                <Image Grid.Row="6" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/arms.png"/>
+                                                <Image Grid.Row="7" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/waist.png"/>
+                                                <Image Grid.Row="8" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/legs.png"/>
+                                                <Image Grid.Row="9" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/decoration.png"/>
+                                                <Image Grid.Row="0" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/attack.png"/>
+                                                <Image Grid.Row="1" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/zenith.png"/>
+                                                <Image Grid.Row="2" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/blacksmith.png"/>
+                                                <Image Grid.Row="3" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/pvp.png" Grid.RowSpan="2"/>
+                                                <!--<Image Grid.Row="4" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/book.png"/>-->
+                                                <Image Grid.Row="5" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/caravan_skills.png"/>
+                                                <Image Grid.Row="6" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/diva_prayer_gem.png"/>
+                                                <Image Grid.Row="7" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/guild_food.png"/>
+                                                <Image Grid.Row="8" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/burst.png"/>
+                                                <Image Grid.Row="9" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/my_tore.png"/>
+
+                                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding FullCurrentProgramVersion}"/>
+
+                                            </Grid>
                                         </Grid>
                                     </ScrollViewer>
                                 </TabItem>
