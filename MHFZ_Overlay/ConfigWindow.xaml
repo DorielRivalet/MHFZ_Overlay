@@ -347,7 +347,7 @@
                                 <Button Background="Transparent" Grid.Row="0" x:Name="BtnSaveFile" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/file_download_FILL0_wght400_GRAD0_opsz48.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="40" Width="40" ToolTip="Save gear to text file" Click="BtnSaveFile_Click"/>
                                 <Button Background="Transparent" Grid.Row="1" x:Name="BtnCopyFile" ToolTip="Copy gear to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/content_copy_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnCopyFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
                                 <Button Background="Transparent" Grid.Row="2" x:Name="BtnImageFile" ToolTip="Export image" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/image_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnImageFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
-                                <Button Background="Transparent" Grid.Row="3" x:Name="BtnLogFile" ToolTip="Export Hunted Monsters Log" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/description_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnLogFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
+                                <Button Background="Transparent" Grid.Row="3" x:Name="BtnLogFile" ToolTip="Export Hunted Monsters Log (overwrites existing file)" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/description_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnLogFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
                             </Grid>
 
                             
@@ -470,7 +470,7 @@
                                                         </Style>
                                                     </ListView.Resources>-->
                                                     <ListView.View>
-                                                            <GridView>
+                                                            <GridView x:Name="GridViewElement">
                                                             
                                                             <GridView.Columns>
                                                                 <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}"/>

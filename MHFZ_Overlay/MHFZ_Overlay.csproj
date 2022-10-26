@@ -38,6 +38,7 @@
     <None Remove="Fonts\SourceCodePro-SemiBold.ttf" />
     <None Remove="Fonts\SourceCodePro-SemiBoldItalic.ttf" />
     <None Remove="Fonts\SourceCodePro-VariableFont_wght.ttf" />
+    <None Remove="HuntedLogs\EXAMPLE.csv" />
     <None Remove="icons\armor_skills.png" />
     <None Remove="icons\attack.png" />
     <None Remove="icons\boggers.png" />
@@ -81,6 +82,7 @@
 
   <ItemGroup>
     <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
+    <PackageReference Include="CsvHelper" Version="29.0.0" />
     <PackageReference Include="DiscordRichPresence" Version="1.0.175" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.4.0" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.1.1" />
@@ -161,6 +163,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Fonts\SourceCodePro-VariableFont_wght.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="HuntedLogs\EXAMPLE.csv">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="icons\armor_skills.png" />

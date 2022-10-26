@@ -1,0 +1,178 @@
+﻿Name,ID,Hunted,IsLarge,MonsterImage
+None,0,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/none.png
+Rathian,1,26,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rathian.png
+Fatalis,2,21,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/fatalis.png
+Kelbi,3,91,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kelbi.png
+Mosswine,4,124,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/mosswine.png
+Bullfango,5,176,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/bullfango.png
+Yian Kut-Ku,6,35,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yian_kut-ku.png
+Lao-Shan Lung,7,9,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/lao-shan_lung.png
+Cephadrome,8,19,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/cephadrome.png
+Felyne,9,265,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/felyne.png
+Veggie Elder,10,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Rathalos,11,51,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rathalos.png
+Aptonoth,12,118,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/aptonoth.png
+Genprey,13,172,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/genprey.png
+Diablos,14,11,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/diablos.png
+Khezu,15,66,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/khezu.png
+Velociprey,16,861,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/velociprey.png
+Gravios,17,49,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gravios.png
+Felyne?,18,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/felyne.png
+Vespoid,19,296,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/vespoid.png
+Gypceros,20,36,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gypceros.png
+Plesioth,21,41,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/plesioth.png
+Basarios,22,35,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/basarios.png
+Melynx,23,226,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/melynx.png
+Hornetaur,24,120,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/hornetaur.png
+Apceros,25,173,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/apceros.png
+Monoblos,26,11,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/monoblos.png
+Velocidrome,27,651,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/velocidrome.png
+Gendrome,28,49,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gendrome.png
+Rocks,29,15,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Ioprey,30,274,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/ioprey.png
+Iodrome,31,22,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/iodrome.png
+Pugis,32,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Kirin,33,10,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kirin.png
+Cephalos,34,38,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/cephalos.png
+Giaprey / Giadrome,35,172,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/giaprey.png
+Crimson Fatalis,36,9,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/crimson_fatalis.png
+Pink Rathian,37,22,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pink_rathian.png
+Blue Yian Kut-Ku,38,31,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blue_yian_kut-ku.png
+Purple Gypceros,39,22,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/purple_gypceros.png
+Yian Garuga,40,27,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yian_garuga.png
+Silver Rathalos,41,27,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/silver_rathalos.png
+Gold Rathian,42,52,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gold_rathian.png
+Black Diablos,43,9,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/black_diablos.png
+White Monoblos,44,15,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/white_monoblos.png
+Red Khezu,45,17,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/red_khezu.png
+Green Plesioth,46,28,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/green_plesioth.png
+Black Gravios,47,14,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/black_gravios.png
+Daimyo Hermitaur,48,109,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/daimyo_hermitaur.png
+Azure Rathalos,49,13,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/azure_rathalos.png
+Ashen Lao-Shan Lung,50,46,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/ashen_lao-shan_lung.png
+Blangonga,51,65,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blangonga.png
+Congalala,52,30,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/congalala.png
+Rajang,53,38,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rajang.png
+Kushala Daora,54,3,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kushala_daora.png
+Shen Gaoren,55,4,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shen_gaoren.png
+Great Thunderbug,56,422,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/great_thunderbug.png
+Shakalaka,57,351,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shakalaka.png
+Yama Tsukami,58,17,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yama_tsukami.png
+Chameleos,59,8,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/chameleos.png
+Rusted Kushala Daora,60,3,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rusted_kushala_daora.png
+Blango,61,515,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blango.png
+Conga,62,104,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/conga.png
+Remobra,63,67,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/remobra.png
+Lunastra,64,6,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/lunastra.png
+Teostra,65,19,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/teostra.png
+Hermitaur,66,285,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/hermitaur.png
+Shogun Ceanataur,67,49,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shogun_ceanataur.png
+Bulldrome,68,42,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/bulldrome.png
+Anteka,69,50,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/anteka.png
+Popo,70,49,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/popo.png
+White Fatalis,71,23,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/white_fatalis.png
+Yama Tsukami,72,17,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yama_tsukami.png
+Ceanataur,73,151,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/ceanataur.png
+Hypnocatrice,74,68,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/hypnocatrice.png
+Lavasioth,75,43,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/lavasioth.png
+Tigrex,76,205,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/tigrex.png
+Akantor,77,17,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/akantor.png
+Bright Hypnoc,78,32,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/bright_hypnoc.png
+Red Lavasioth,79,18,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/red_lavasioth.png
+Espinas,80,91,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/espinas.png
+Orange Espinas,81,20,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/orange_espinas.png
+Silver Hypnoc,82,30,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/silver_hypnoc.png
+Akura Vashimu,83,57,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/akura_vashimu.png
+Akura Jebia,84,34,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/akura_jebia.png
+Berukyurosu,85,22,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/berukyurosu.png
+Cactus,86,24,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/cactus.png
+Gorge Objects,87,84,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Gorge Rocks,88,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Pariapuria,89,180,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pariapuria.png
+White Espinas,90,35,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/white_espinas.png
+Kamu Orugaron,91,22,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kamu_orugaron.png
+Nono Orugaron,92,21,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/nono_orugaron.png
+Raviente,93,0,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/raviente.png
+Dyuragaua,94,258,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/dyuragaua.png
+Doragyurosu,95,45,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/doragyurosu.png
+Gurenzeburu,96,27,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gurenzeburu.png
+Burukku,97,49,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/burukku.png
+Erupe,98,71,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/erupe.png
+Rukodiora,99,36,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rukodiora.png
+UNKNOWN,100,24,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/unknown.png
+Gogomoa,101,18,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gogomoa.png
+Kokomoa,102,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gogomoa.png
+Taikun Zamuza,103,48,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/taikun_zamuza.png
+Abiorugu,104,23,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/abiorugu.png
+Kuarusepusu,105,35,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kuarusepusu.png
+Odibatorasu,106,8,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/odibatorasu.png
+Disufiroa,107,32,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/disufiroa.png
+Rebidiora,108,19,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/rebidiora.png
+Anorupatisu,109,27,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/anorupatisu.png
+Hyujikiki,110,50,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/hyujikiki.png
+Midogaron,111,25,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/midogaron.png
+Giaorugu,112,42,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/giaorugu.png
+Mi Ru,113,54,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/mi_ru.png
+Farunokku,114,15,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/farunokku.png
+Pokaradon,115,30,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pokaradon.png
+Shantien,116,5,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shantien.png
+Pokara,117,159,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pokara.png
+Dummy,118,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Goruganosu,119,7,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/goruganosu.png
+Aruganosu,120,7,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/aruganosu.png
+Baruragaru,121,37,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/baruragaru.png
+Zerureusu,122,40,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/zerureusu.png
+Gougarf,123,57,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gougarf.png
+Uruki,124,14,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/uruki.png
+Forokururu,125,11,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/forokururu.png
+Meraginasu,126,33,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/meraginasu.png
+Diorex,127,47,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/diorex.png
+Garuba Daora,128,32,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/garuba_daora.png
+Inagami,129,13,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/inagami.png
+Varusaburosu,130,7,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/varusaburosu.png
+Poborubarumu,131,12,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/poborubarumu.png
+1st District Duremudira,132,5,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/duremudira.png
+UNK,133,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Felyne,134,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/felyne.png
+Blue NPC,135,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+UNK,136,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Cactus,137,24,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/cactus.png
+Veggie Elders,138,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Gureadomosu,139,24,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gureadomosu.png
+Harudomerugu,140,56,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/harudomerugu.png
+Toridcless,141,43,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/toridcless.png
+Gasurabazura,142,31,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gasurabazura.png
+Kusubami,143,24,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/kusubami.png
+Yama Kurai,144,5,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/yama_kurai.png
+2nd District Duremudira,145,49,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/duremudira.png
+Zinogre,146,74,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/zinogre.png
+Deviljho,147,47,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/deviljho.png
+Brachydios,148,31,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/brachydios.png
+Berserk Raviente,149,0,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/berserk_raviente.png
+Toa Tesukatora,150,28,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/toa_tesukatora.png
+Barioth,151,20,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/barioth.png
+Uragaan,152,36,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/uragaan.png
+Stygian Zinogre,153,22,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/stygian_zinogre.png
+Guanzorumu,154,8,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/guanzorumu.png
+Starving Deviljho,155,29,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/starving_deviljho.png
+UNK,156,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Egyurasu,157,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Voljang,158,11,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/voljang.png
+Nargacuga,159,70,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/nargacuga.png
+Keoaruboru,160,2,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/keoaruboru.png
+Zenaserisu,161,12,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/zenaserisu.png
+Gore Magala,162,21,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/gore_magala.png
+Blinking Nargacuga,163,157,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blinking_nargacuga.png
+Shagaru Magala,164,9,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/shagaru_magala.png
+Amatsu,165,10,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/amatsu.png
+Elzelion,166,43,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/elzelion.png
+Arrogant Duremudira,167,8,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/arrogant_duremudira.png
+Rocks,168,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Seregios,169,18,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/seregios.png
+Bogabadorumu,170,22,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/bogabadorumu.png
+Unknown Blue Barrel,171,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png
+Blitzkrieg Bogabadorumu,172,36,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/blitzkrieg_bogabadorumu.png
+Costumed Uruki,173,0,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/uruki.png
+Sparkling Zerureusu,174,31,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/sparkling_zerureusu.png
+PSO2 Rappy,175,12,False,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/pso2_rappy.png
+King Shakalaka,176,26,True,https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/king_shakalaka.png

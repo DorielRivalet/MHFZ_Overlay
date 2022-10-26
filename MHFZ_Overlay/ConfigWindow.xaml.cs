@@ -20,6 +20,18 @@ using System.Windows.Forms;
 using Application = System.Windows.Application;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Clipboard = System.Windows.Clipboard;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Data;
+using ListViewItem = System.Windows.Controls.ListViewItem;
+using ListView = System.Windows.Controls.ListView;
+using System.Runtime.Intrinsics.X86;
+using System.Text;
+using System.Reflection;
+using Binding = System.Windows.Data.Binding;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using Window = System.Windows.Window;
+using CsvHelper;
+using MaterialDesignThemes.Wpf.Converters;
 
 namespace MHFZ_Overlay
 {
@@ -755,6 +767,7 @@ namespace MHFZ_Overlay
         private void BtnSaveFile_Click(object sender, RoutedEventArgs e)
         {
             string textToSave = GearStats.Text;
+            
 
             if (GetTextFormatMode() == "Code Block")
                 textToSave = string.Format("```text\n{0}\n```", textToSave);
@@ -762,8 +775,18 @@ namespace MHFZ_Overlay
                 textToSave = MainWindow.DataLoader.model.MarkdownSavedGearStats;
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
+            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory+@"USERDATA\HunterSets\";
+            string dateTime = DateTime.Now.ToString();
+            dateTime = dateTime.Replace("/", "-");
+            dateTime = dateTime.Replace(" ", "_");
+            dateTime = dateTime.Replace(":", "-");
+            saveFileDialog.FileName = "Set-" + dateTime;
             if (saveFileDialog.ShowDialog() == true)
+            {
                 File.WriteAllText(saveFileDialog.FileName, textToSave);
+            }
+
         }
 
         /// <summary>
@@ -794,10 +817,21 @@ namespace MHFZ_Overlay
             MyList.Items.Filter = GetFilter();
         }
 
-        private void BtnLogFile_Click(object sender, RoutedEventArgs e)
+
+
+        // on generate csv button click
+        protected void BtnLogFile_Click(object sender, EventArgs e)
         {
-            return;
+            string dir = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HuntedLogs\log.csv";
+
+            using (var writer = new StreamWriter(dir))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(Monsters);
+            }
         }
+
+
     };
 
 
