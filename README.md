@@ -48,7 +48,7 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 
 Additionally, if information from the overlay is wrong or inaccurate (e.g. monster parts labels), feel free to send an issue.
 
-If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load.
+If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If issue still occurs, disable Effective HP, otherwise send a bug report if there isn't already one.
 
 ## Features
 

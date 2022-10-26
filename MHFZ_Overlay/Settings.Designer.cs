@@ -1429,7 +1429,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Sword and Shield")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Element/Status")]
         public string WeaponTypeInfo {
             get {
                 return ((string)(this["WeaponTypeInfo"]));

@@ -354,7 +354,7 @@
       <Value Profile="(Default)">Sword and Shield</Value>
     </Setting>
     <Setting Name="WeaponTypeInfo" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Sword and Shield</Value>
+      <Value Profile="(Default)">Element/Status</Value>
     </Setting>
     <Setting Name="GuildOptionInfo" Type="System.String" Scope="User">
       <Value Profile="(Default)">About</Value>

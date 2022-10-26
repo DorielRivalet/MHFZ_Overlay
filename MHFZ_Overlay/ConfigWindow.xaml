@@ -440,7 +440,7 @@
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="icons/bone.png" Width="32" Height="32"/>
-                                            <TextBlock Text="Hunted Monsters" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                            <TextBlock Text="Hunt Log" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
                                     <Grid>
@@ -564,7 +564,7 @@
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="icons/dure2.png" Width="32" Height="32"/>
-                                            <TextBlock Text="Road/Duremudira Skills" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                            <TextBlock Text="Road/Duremudira" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
                                     <Grid>
@@ -579,7 +579,7 @@
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="icons/armor_skills.png" Width="32" Height="32"/>
-                                            <TextBlock Text="Armor Skills" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                            <TextBlock Text="Armor" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
                                     <Grid>
@@ -594,7 +594,7 @@
                                                         <RowDefinition Height="40"/>
                                                         <RowDefinition Height="1*"/>
                                                     </Grid.RowDefinitions>
-                                                    <TextBlock Margin="5,5,5,5" ToolTip="Select Armor Skills Type" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Armor Skill Type"/>
+                                                    <TextBlock Margin="5,5,5,5" ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Option (○ = Affected by Goushou Armor buffs)"/>
                                                     <ComboBox Grid.Column="1" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=ArmorSkillsInfo}">
                                                         <ComboBoxItem>Priority</ComboBoxItem>
                                                         <ComboBoxItem>Health and Stamina</ComboBoxItem>
@@ -610,6 +610,8 @@
                                                         <ComboBoxItem>Gathering/Transport Skills</ComboBoxItem>
                                                         <ComboBoxItem>Reward Skills</ComboBoxItem>
                                                         <ComboBoxItem>Other Skills</ComboBoxItem>
+                                                        <ComboBoxItem>Colors</ComboBoxItem>
+                                                        <ComboBoxItem>Types</ComboBoxItem>
                                                     </ComboBox>
                                                     <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="(○ = Affected by Goushou Armor buffs)" Text="{Binding GetGameArmorSkills}" TextWrapping="Wrap"/>
                                                 </Grid>
@@ -708,8 +710,9 @@
                                                         <RowDefinition Height="40"/>
                                                         <RowDefinition Height="1*"/>
                                                     </Grid.RowDefinitions>
-                                                    <TextBlock Margin="5,5,5,5" ToolTip="Select Weapon Type" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Weapon Type"/>
+                                                    <TextBlock Margin="5,5,5,5" ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Option"/>
                                                     <ComboBox Grid.Column="1" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=WeaponTypeInfo}">
+                                                        <ComboBoxItem>Element/Status/Bloat</ComboBoxItem>
                                                         <ComboBoxItem>Sword and Shield</ComboBoxItem>
                                                         <ComboBoxItem>Dual Swords</ComboBoxItem>
                                                         <ComboBoxItem>Great Sword</ComboBoxItem>
