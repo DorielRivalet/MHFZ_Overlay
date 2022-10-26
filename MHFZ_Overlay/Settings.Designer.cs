@@ -1429,7 +1429,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Element/Status")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Element/Status/Bloat")]
         public string WeaponTypeInfo {
             get {
                 return ((string)(this["WeaponTypeInfo"]));
@@ -1466,12 +1466,12 @@ namespace MHFZ_Overlay {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Partner")]
-        public string CompanionInfo {
+        public string CompanionOptionInfo {
             get {
-                return ((string)(this["CompanionInfo"]));
+                return ((string)(this["CompanionOptionInfo"]));
             }
             set {
-                this["CompanionInfo"] = value;
+                this["CompanionOptionInfo"] = value;
             }
         }
     }

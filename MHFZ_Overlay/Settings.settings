@@ -354,7 +354,7 @@
       <Value Profile="(Default)">Sword and Shield</Value>
     </Setting>
     <Setting Name="WeaponTypeInfo" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Element/Status</Value>
+      <Value Profile="(Default)">Element/Status/Bloat</Value>
     </Setting>
     <Setting Name="GuildOptionInfo" Type="System.String" Scope="User">
       <Value Profile="(Default)">About</Value>
@@ -362,7 +362,7 @@
     <Setting Name="CaravanOptionInfo" Type="System.String" Scope="User">
       <Value Profile="(Default)">About</Value>
     </Setting>
-    <Setting Name="CompanionInfo" Type="System.String" Scope="User">
+    <Setting Name="CompanionOptionInfo" Type="System.String" Scope="User">
       <Value Profile="(Default)">Partner</Value>
     </Setting>
   </Settings>

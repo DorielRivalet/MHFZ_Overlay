@@ -727,6 +727,14 @@
                                                         <ComboBoxItem>Light Bowgun</ComboBoxItem>
                                                         <ComboBoxItem>Heavy Bowgun</ComboBoxItem>
                                                         <ComboBoxItem>Bow</ComboBoxItem>
+                                                        <ComboBoxItem>Melee Stats</ComboBoxItem>
+                                                        <ComboBoxItem>Bowgun Stats</ComboBoxItem>
+                                                        <ComboBoxItem>Bow Stats</ComboBoxItem>
+                                                        <ComboBoxItem>Active Feature</ComboBoxItem>
+                                                        <ComboBoxItem>Sword Crystals</ComboBoxItem>
+                                                        <ComboBoxItem>Types</ComboBoxItem>
+                                                        <ComboBoxItem>Sharpness</ComboBoxItem>
+                                                        <ComboBoxItem>Damage Formula</ComboBoxItem>
                                                     </ComboBox>
                                                     <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Weapon Information" Text="{Binding GetGameWeaponInformation}" TextWrapping="Wrap"/>
                                                 </Grid>
@@ -744,7 +752,7 @@
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
                                             <ScrollViewer VerticalScrollBarVisibility="Visible">
-                                                <TextBlock ToolTip="" Text="text" TextWrapping="Wrap"/>
+                                                <TextBlock ToolTip="" Text="{Binding GetGameSigilsInfo}" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
                                     </Grid>
@@ -775,6 +783,84 @@
                                         <DockPanel Margin="5,5,5,5">
                                             <ScrollViewer VerticalScrollBarVisibility="Visible">
                                                 <TextBlock ToolTip="" Text="{Binding GetGameStyleRankInfo}" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem ToolTip="View Companions" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/my_support.png" Width="32" Height="32"/>
+                                            <TextBlock Text="Companions" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="CompanionsGrid" Margin="5,5,5,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="2*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="40"/>
+                                                        <RowDefinition Height="1*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Margin="5,5,5,5" ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Option"/>
+                                                    <ComboBox Grid.Column="1" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=CompanionOptionInfo}">
+                                                        <ComboBoxItem>Partner</ComboBoxItem>
+                                                        <ComboBoxItem>Partnyaa</ComboBoxItem>
+                                                        <ComboBoxItem>Rasta</ComboBoxItem>
+                                                        <ComboBoxItem>Poogie</ComboBoxItem>
+                                                        <ComboBoxItem>Halk</ComboBoxItem>
+                                                    </ComboBox>
+                                                    <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Companion Information" Text="{Binding GetGameCompanionInfo}" TextWrapping="Wrap"/>
+                                                </Grid>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem ToolTip="View Item Info" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/item.png" Width="32" Height="32"/>
+                                            <TextBlock Text="Items" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="{Binding GetGameItemInfo}" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem ToolTip="View Monster Size Info" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/monster.png" Width="32" Height="32"/>
+                                            <TextBlock Text="Monster Size" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="{Binding GetGameMonsterSizeInfo}" TextWrapping="Wrap"/>
+                                            </ScrollViewer>
+                                        </DockPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem ToolTip="View Rewards Info" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/treasure.png" Width="32" Height="32"/>
+                                            <TextBlock Text="Rewards" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DockPanel Margin="5,5,5,5">
+                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                                <TextBlock ToolTip="" Text="{Binding GetGameRewardInfo}" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
                                     </Grid>

@@ -6011,6 +6011,11 @@ namespace MHFZ_Overlay.addresses
                 return skillname + "";
         }
 
+        /// <summary>
+        /// Gets the goushou boost skill
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public int GetGouBoostSkill(int id)
         {
             return id switch
@@ -6966,6 +6971,11 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        /// <summary>
+        /// Checks whether the gear is part of the meta
+        /// </summary>
+        /// <param name="piece"></param>
+        /// <returns></returns>
         public bool IsMetaGear(string piece)
         {
             if (piece.Contains("ZP") || piece.Contains("PZ") || piece.Contains("SnS・") || piece.Contains("DS・") || piece.Contains("GS・") || piece.Contains("LS・") || piece.Contains("Hammer・") || piece.Contains("HH・") || piece.Contains("Lance・") || piece.Contains("GL・") || piece.Contains("Swaxe・") || piece.Contains("Tonfa・") || piece.Contains("Magspike・") || piece.Contains("LBG・") || piece.Contains("HBG・") || piece.Contains("Bow・"))
@@ -6974,6 +6984,11 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
+        /// <summary>
+        /// gets the g rank weapon level
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
         public string GetGRWeaponLevel(int level)
         {
             if (level == 0)
@@ -6984,6 +6999,9 @@ namespace MHFZ_Overlay.addresses
 
         }
 
+        /// <summary>
+        /// gets the road/duremudira skills
+        /// </summary>
         public string GetRoadDureSkills
         {
             get
@@ -7834,8 +7852,9 @@ namespace MHFZ_Overlay.addresses
         {
             get 
             {
-                return "Sigils are similar to decorations but exclusively used in G Rank weaponry. They are crafted at theCat Smith who creates random Gou weapons.Sigil Slots are triangular slots that either replace decoration slots in standard G Rank weaponry or are part of hybrid slots that can take either decorations or a sigil.Weapons can have up to three sigils. Sigils with variable values will generally always stack but ones that add or enhance abilities and motions generally have a fixed effect regardless of the number slotted.\n" +
-                    "Although most weapons have dedicated sigils, many are far from optimal. You should carefully consider the frequency with which you will actually be using the attack. For an excellent example,the Dual Swords sigils for the Rush Slash and Frontip Slash have incredibly low viability for Extreme Style because of Extreme Demon Mode not having access to them and because of optimal play involving almost exclusive use of that mode. Similarly,the GS Guard Slash is outright unavailable for Extreme Style and Upswings will mostly be charged - which does not benet from the sigil - and so the sigils to buff those moves are mostly useless, especially compared to simply buffing raw. Realistically, if you want the best results you should really just be aiming almost entirely to get Attack or Elemental on sigils and one or more of your weapon's specific sigils. For Gunlance you should always aim to have Lv9 shelling if you are utilizing Shelling and Wyvern Fires.\n\n" +
+                return "Sigils are similar to decorations but exclusively used in G Rank weaponry. They are crafted at theCat Smith who creates random Gou weapons.Sigil Slots are triangular slots that either replace decoration slots in standard G Rank weaponry or are part of hybrid slots that can take either decorations or a sigil.Weapons can have up to three sigils. Sigils with variable values will generally always stack but ones that add or enhance abilities and motions generally have a fixed effect regardless of the number slotted.\n\n" +
+                    "Although most weapons have dedicated sigils, many are far from optimal. You should carefully consider the frequency with which you will actually be using the attack. For an excellent example,the Dual Swords sigils for the Rush Slash and Frontip Slash have incredibly low viability for Extreme Style because of Extreme Demon Mode not having access to them and because of optimal play involving almost exclusive use of that mode. Similarly,the GS Guard Slash is outright unavailable for Extreme Style and Upswings will mostly be charged - which does not benefit from the sigil - and so the sigils to buff those moves are mostly useless, especially compared to simply buffing raw. Realistically, if you want the best results you should really just be aiming almost entirely to get Attack or Elemental on sigils and one or more of your weapon's specific sigils. For Gunlance you should always aim to have Lv9 shelling if you are utilizing Shelling and Wyvern Fires.\n\n" +
+                    "Optimal sigil build is 15/15/15 Attack/Element Adv Shiten, 15/15/15 Attack/Element UL Sigil, 15/12(Duration)/20(Cooldown) Attack/Element Zenith Sigil (for multiplayer: Z Area of Effect)\n\n"+
                     "Health and Stamina\n" +
                     "Sleeping: Recover gear by using the gesture 「睡覺」 (does not stack)\n\n" +
                     "Offensive\n" +
@@ -7892,10 +7911,35 @@ namespace MHFZ_Overlay.addresses
                     "Experience Expert: +1 / +10. Increases Ranking Points received from quest by 1.01x Defined Value. Additive 1.10x, 1.20x and 1.30x on three separate sigils would be 1.50x, not 1.71x. Does not affect GSRP, only GRP.\n\n" +
                     "Miscellaneous\n" +
                     "Manager's Friend: +1 / +10. Increased chance of Farm Waifu appearing during quests.\n\n" +
-                    "Flying Wyvern Slayer: -10 / +15. Adjusts the true raw value stated while in an area containing the specific defined species.\n" +
-                    "Flying Wyvern Slayer: -10 / +15. Adjusts the true raw value stated while in an area containing the specific defined species.\n" +
-
-                    "";   
+                    "Gook's Friend: +1 / +10. Increases chance of Rare Gooks on Gook Quests.\n\n" +
+                    "Halk's Friend: Increased chance of Halk dropping an egg at quest completion. Does not stack.\n\n" +
+                    "Cat Breeder: Partnyaa mood is more likely to increase.\n\n" +
+                    "Daddy's Influence: Perform「耍賴/ SpoiledBrat」action to get a 10% discount in stores.\n\n" +
+                    "Sonic Bomb Range: Increases the range of sonic bomb effect.\n\n" +
+                    "Weapon Movement Speed: Movement Speed will increase after unsheathing a weapon. Speed increase is between 1.13x to 1.20x. Does not stack or overlap with most similar armour skills. Overlaps with Hammer Charge Speed, SnS Hiden, Hunting Horn Movement Speed Song, Dual Swords Demon Mode and possibly MS Hiden speed buffs.\n\n" +
+                    "Rarity 1-12: Changes the rarity of a G Rank Weapon to be the defined value at the cost of lowering Raw, Elemental and Status values.\n\n" +
+                    "Zenith Sigil\n" +
+                    "Duration: +1 / +12. Dictates the effect of the Zenith Sigil, duration is 15 seconds plus the value of the sigil.\n\n" +
+                    "Cooldown: +1 / +20. Dictates the recharge duration of the sigil, cooldown is 120 seconds minus the value of the sigil.\n\n" +
+                    "[Zenith] Fire Res: +4 / +20. Increases the associated elemental resistance and removes any active blights of that element.\n\n" +
+                    "[Zenith] Water Res: +1 / +10. Increases the associated elemental resistance and removes any active blights of that element.\n\n" +
+                    "[Zenith] Thunder Res: +1 / +10. Increases the associated elemental resistance and removes any active blights of that element.\n\n" +
+                    "[Zenith] Ice Res: +1 / +10. Increases the associated elemental resistance and removes any active blights of that element.\n\n" +
+                    "[Zenith] Dragon Res: +1 / +10. Increases the associated elemental resistance and removes any active blights of that element.\n\n" +
+                    "[Zenith] Healing: +1 / +5. Recovers health over time while active. Can survive Rukodioras' nuke, Zinogres' nuke and Guanzorumus' nuke.\n\n" +
+                    "[Zenith] Heroics: Causes a single hit to deal 0damage.Reactions to the hit such as launching still occur.\n\n" +
+                    "[Zenith] Attack: +1 / +15. Increases raw values for its duration by 30+20x Value (e.g. for +8 it would be 20 * 8 = 160 + 30 = 190 True Raw.\n\n" +
+                    "[Zenith] Elemental: +1 / +15. Multiplies elemental values for its duration by 1.3 + Value * 0.1 (e.g. for +8 it would be 0.1 * 8 = 0.8 + 1.3 = 2.1x Elemental)\n\n" +
+                    "[Zenith] Movement Speed: +1 / +5. Increases movement speed for its duration.\n\n" +
+                    "Area of Effect Sigil\n" +
+                    "[Ranged] Attack: +1 / +15. Increases Attack Value while in the radius of the dome. Dome is coloured Red. Value for each roll is 25 + (Value * 5) (e.g. for +8 it would be 8 * 5 = 45 + 25 = 70 Attack Value)\n\n" +
+                    "[Ranged] Elemental: +1 / +15. Increases Elemental Value while in the radius of the dome. Dome is coloured Pink. Value for each roll is 50 + (Value * 50) (e.g. for +8 it would be 8 * 50 = 400 + 50 = 450 Elemental Value)\n\n" +
+                    "[Ranged] Affinity: +1 / +15. Increases Affinity Value while in the radius of the dome. Dome is coloured Blue. Value for each roll is 20+(Value *2)(e.g. for +8 it would be 8 * 2 = 16 + 20 = +36% Affinity\n\n" +
+                    "[Ranged] Status: Increases Status values by 1.50x while in the radius of the dome. Dome is coloured Purple. Does not stack.\n\n" +
+                    "[Ranged] Stun: Increases Stun values while in the radius of the dome. Dome is coloured Yellow.\n\n" +
+                    "[Ranged] Healing: Recovers Health while in the radius of the dome. Dome is coloured Green.\n\n" +
+                    "[Ranged] All Res: +1 / +15. Increases All Resistances while in the radius of the dome. Dome is coloured Black. Resistance is increased by roll x 2.\n\n"
+                    ;
             }
         }
 
@@ -8066,7 +8110,25 @@ namespace MHFZ_Overlay.addresses
                     "Light Bowgun" => GetGameMotionValuesLBG,
                     "Heavy Bowgun" => GetGameMotionValuesHBG,
                     "Bow" => GetGameMotionValuesBow,
-                    _ => GetGameArmorSkillsPriority,
+                    _ => GetGameMotionValuesSnS,
+                };
+            }
+        }
+
+        public string GetGameCompanionInfo
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                return s.CompanionOptionInfo switch
+                {
+                    "Partner" => GetGamePartnerInfo,
+                    "Rasta" => GetGameRastaInfo,
+                    "Poogie" => GetGamePoogieInfo,
+                    "Halk" => GetGameHalkInfo,
+                    "Partnyaa" => GetGamePartnyaaInfo,
+                    _ => GetGamePartnerInfo,
                 };
             }
         }
@@ -8921,6 +8983,14 @@ namespace MHFZ_Overlay.addresses
                     "Heavy Bowgun" => GetGameHBGInfo,
                     "Bow" => GetGameBowInfo,
                     "Element/Status/Bloat" => GetGameStatusEleBloatInfo,
+                    "Melee Stats" => GetGameMeleeStats,
+                    "Bowgun Stats" => GetGameBowgunStats,
+                    "Bow Stats" => GetGameBowStats,
+                    "Active Feature" => GetGameActiveFeature,
+                    "Sword Crystals" => GetGameSwordCrystalSkills,
+                    "Types" => GetGameWeaponTypesInfo,
+                    "Sharpness" => GetGameSharpnessInfo,
+                    "Damage Formula" => GetGameDamageInfo,
                     _ => GetGameStatusEleBloatInfo,
                 };
             }
@@ -9043,7 +9113,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMonsterSize
+        public string GetGameMonsterSizeInfo
         {
             get
             {
@@ -9059,17 +9129,13 @@ namespace MHFZ_Overlay.addresses
                     "・The top three rows (red boxes) are the basic reward slots you will receive when you achieve the main target.\r\n・The four left frames in the middle row (green frames) are the reward frames you will receive for achieving Sub-Target A.\r\n・The four right frames in the middle row (blue frames) are the reward frames you will receive when you achieve Sub-Target B.\r\n・The bottom two rows (white frame) are the reward frames received for achieving capture and site destruction.\r\n・The bottom three right frames (yellow frames) are, from left to right, NetCafe rewards, premium SR book, and regular SR book frames.\r\n\r\n※Attention\r\nIf more than one of the same monster the target, the reward for capturing and destroying parts of the monster will only be for one monster.\r\nIn addition, the following monsters will be added to the basic reward frame depending on their status\r\n・Additional rewards for making Pariapuria vomit\r\n・Additional reward for tripping White Espinas while in flame circle.\r\n・Additional reward for hunting HC Red Rajang\r\n・HC tickets, souls of each weapon\r\n\r\n２．Legendary Poogie Reward Frame\n\n" +
                     "・The three slots on the first tier (red slots) are the boss monster's stripped reward slots.\r\n・The second row of four frames (white frames) are the collection reward frames for that location and season.\r\n\r\n※Attention\r\nThe maximum number of stripped reward slots is 3, even if you hunt multiple boss monsters.\n\n" +
                     "※Attention\r\n・When Guild Poogie's \"Poogie Reward Technique\" is activated, the basic reward frame may exceed the upper limit and all 3 rows (24 frames) may become reward frames.\r\n・When a PT (2-4 people) of the same hunting party goes on a quest with different street name titles set for each other, the \"Street Name Title Skill (equivalent to Luck)\" will be activated with a certain probability. (Priority is given to the \"Great Luck\" skill.)\r\n・If you have a Super Lucky Charm, a Large Lucky Charm, or have purchased the Assist Course, it has the same effect as the Great Luck Skill.\r\n・Some quest rewards have fixed slots, in which case only the specified amount of reward slots will appear, regardless of luck skill, etc.\n\n" +
-                    "●　Obtaining Reward Materials\r\nOnce the number of frames has been determined, reward materials will be picked via RNG from a list according to the probability, and will be placed in order from the first frame.\r\nQuest rewards may have a fixed item, and always only the first slot will have a fixed item, not a RNG.\r\nFinally, each reward is sorted by item code.\r\nAdditional rewards for hunting HC Red Rajang, HC tickets and souls for each weapon will be added afterwards.\r\n\r\nIf you have the following charms, the number of materials obtained will be increased.\r\n・Super Lucky Charm：There is a 50% chance that the materials obtained will be doubled.\r\n・Large Lucky Charm：There is a 15% chance that the materials obtained will be doubled.\r\n\r\nThe \"Super Lucky Charm\" and the \"Large Lucky Charm\" can be used together. When they are used together, the \"Super Lucky Charm\" will activate the \"Super Luck\" skill, and then the \"Large Lucky Charm\" will activate the \"Great Luck\" skill.\r\n\r\n※Attention\r\n・In the case of practice quests, when \"no items\" is selected, the drawing ends there and no further drawings will be made.\r\n・Some quests have a fixed quota of rewards, in which case you only get the specified number of rewards, regardless of your charms, skills, etc.";
+                    "●　Obtaining Reward Materials\r\nOnce the number of frames has been determined, reward materials will be picked via RNG from a list according to the probability, and will be placed in order from the first frame.\r\nQuest rewards may have a fixed item, and always only the first slot will have a fixed item, not a RNG.\r\nFinally, each reward is sorted by item code.\r\nAdditional rewards for hunting HC Red Rajang, HC tickets and souls for each weapon will be added afterwards.\r\n\r\nIf you have the following charms, the number of materials obtained will be increased.\r\n・Super Lucky Charm：There is a 50% chance that the materials obtained will be doubled.\r\n・Large Lucky Charm：There is a 15% chance that the materials obtained will be doubled.\r\n\r\nThe \"Super Lucky Charm\" and the \"Large Lucky Charm\" can be used together. When they are used together, the \"Super Lucky Charm\" will activate the \"Super Luck\" skill, and then the \"Large Lucky Charm\" will activate the \"Great Luck\" skill.\r\n\r\n※Attention\r\n・In the case of practice quests, when \"no items\" is selected, the drawing ends there and no further drawings will be made.\r\n・Some quests have a fixed quota of rewards, in which case you only get the specified number of rewards, regardless of your charms, skills, etc.\n\n" +
+                    "Daily Special\r\nThe following benefits are available once a day (updated at 12:00) in the \"Daily Special\" section of the General Shop.\r\nThe maximum N-point limit is 60,000 P. Others are overwritten each time they are received.\r\n\r\nN points\tTrial course: 1 point\r\nHunter Life Course: +3 points\r\nExtra course: +1 point\r\nPoint Bonus Rights\t3x\r\nGet Halk Pot\t5x\r\nDaily Quest Rights\t1x";
+                ;
+
             }
         }
 
-        public string GetGameDailySpecial
-        {
-            get
-            {
-                return "Daily Special\r\nThe following benefits are available once a day (updated at 12:00) in the \"Daily Special\" section of the General Shop.\r\nThe maximum N-point limit is 60,000 P. Others are overwritten each time they are received.\r\n\r\nN points\tTrial course: 1 point\r\nHunter Life Course: +3 points\r\nExtra course: +1 point\r\nPoint Bonus Rights\t3x\r\nGet Halk Pot\t5x\r\nDaily Quest Rights\t1x";
-            }
-        }
 
         public string GetGamePartnerInfo
         {
