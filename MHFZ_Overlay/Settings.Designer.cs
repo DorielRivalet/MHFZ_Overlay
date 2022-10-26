@@ -1261,7 +1261,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Code Block")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Image")]
         public string TextFormatExport {
             get {
                 return ((string)(this["TextFormatExport"]));

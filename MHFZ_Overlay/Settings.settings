@@ -312,7 +312,7 @@
       <Value Profile="(Default)">160</Value>
     </Setting>
     <Setting Name="TextFormatExport" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Code Block</Value>
+      <Value Profile="(Default)">Image</Value>
     </Setting>
     <Setting Name="GenderExport" Type="System.String" Scope="User">
       <Value Profile="(Default)">Male</Value>

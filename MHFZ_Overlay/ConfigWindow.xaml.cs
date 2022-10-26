@@ -32,6 +32,9 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using Window = System.Windows.Window;
 using CsvHelper;
 using MaterialDesignThemes.Wpf.Converters;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Command;
 
 namespace MHFZ_Overlay
 {
@@ -500,6 +503,10 @@ namespace MHFZ_Overlay
             FilterBox.ItemsSource = new string[] { "All", "Large Monster", "Small Monster" };
 
             MyList.Items.Filter = MonsterFilterAll;
+
+            //// See: https://stackoverflow.com/questions/22285866/why-relaycommand
+            //// Or use MVVM Light to obtain RelayCommand.
+            //this.ScreenShotCommand = new RelayCommand<FrameworkElement>(this.OnScreenShotCommandAsync);
         }
 
         private bool MonsterFilterAll(object obj)
@@ -773,6 +780,11 @@ namespace MHFZ_Overlay
                 textToSave = string.Format("```text\n{0}\n```", textToSave);
             else if (GetTextFormatMode() == "Markdown")
                 textToSave = MainWindow.DataLoader.model.MarkdownSavedGearStats;
+            //else if (GetTextFormatMode() == "Image")
+            //{
+            //    CopyUIElementToClipboard(GearTextGrid);
+            //    return;
+            //}
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
@@ -802,6 +814,11 @@ namespace MHFZ_Overlay
                 textToSave = string.Format("```text\n{0}\n```", textToSave);
             else if (GetTextFormatMode() == "Markdown")
                 textToSave = MainWindow.DataLoader.model.MarkdownSavedGearStats;
+            else if (GetTextFormatMode() == "Image")
+            {
+                CopyUIElementToClipboard(GearTextGrid);
+                return;
+            }
 
             //https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
             Clipboard.SetText(textToSave);
@@ -809,7 +826,59 @@ namespace MHFZ_Overlay
 
         private void BtnImageFile_Click(object sender, RoutedEventArgs e)
         {
-            return;
+            string dir = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\currentSet.png";
+
+            CreateBitmapFromVisual(GearTextGrid, dir);
+            CopyUIElementToClipboard(GearTextGrid);
+        }
+
+        /// <summary>
+        /// Copies a UI element to the clipboard as an image.
+        /// </summary>
+        /// <param name="element">The element to copy.</param>
+        public static void CopyUIElementToClipboard(FrameworkElement element)
+        {
+            double width = element.ActualWidth;
+            double height = element.ActualHeight;
+            if (width <= 0 || height <= 0)
+                return;
+            RenderTargetBitmap bmpCopied = new RenderTargetBitmap((int)Math.Round(width), (int)Math.Round(height), 96, 96, PixelFormats.Default);
+            DrawingVisual dv = new DrawingVisual();
+            using (DrawingContext dc = dv.RenderOpen())
+            {
+                VisualBrush vb = new VisualBrush(element);
+                dc.DrawRectangle(vb, null, new Rect(new Point(), new Size(width, height)));
+            }
+            bmpCopied.Render(dv);
+            Clipboard.SetImage(bmpCopied);
+        }
+
+        public static void CreateBitmapFromVisual(Visual target, string fileName)
+        {
+            if (target == null || string.IsNullOrEmpty(fileName))
+            {
+                return;
+            }
+
+            Rect bounds = VisualTreeHelper.GetDescendantBounds(target);
+
+            RenderTargetBitmap renderTarget = new RenderTargetBitmap((Int32)bounds.Width, (Int32)bounds.Height, 96, 96, PixelFormats.Pbgra32);
+
+            DrawingVisual visual = new DrawingVisual();
+
+            using (DrawingContext context = visual.RenderOpen())
+            {
+                VisualBrush visualBrush = new VisualBrush(target);
+                context.DrawRectangle(visualBrush, null, new Rect(new Point(), bounds.Size));
+            }
+
+            renderTarget.Render(visual);
+            PngBitmapEncoder bitmapEncoder = new PngBitmapEncoder();
+            bitmapEncoder.Frames.Add(BitmapFrame.Create(renderTarget));
+            using (Stream stm = File.Create(fileName))
+            {
+                bitmapEncoder.Save(stm);
+            }
         }
 
         private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -830,7 +899,6 @@ namespace MHFZ_Overlay
                 csv.WriteRecords(Monsters);
             }
         }
-
 
     };
 
