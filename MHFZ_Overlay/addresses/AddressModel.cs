@@ -1,4 +1,5 @@
-﻿using Dictionary;
+﻿using CsvHelper.Configuration.Attributes;
+using Dictionary;
 using Memory;
 using Newtonsoft.Json.Linq;
 using System;
@@ -4883,7 +4884,7 @@ namespace MHFZ_Overlay.addresses
         /// <value>
         /// The decos.
         /// </value>
-        public string GetDecoName(int id, int slot = 0)
+        public string GetDecoName(int id, int slot = 0, bool isForImage = false)
         {
             Dictionary.Items.ItemIDs.TryGetValue(id, out string? DecoName);
 
@@ -4912,8 +4913,13 @@ namespace MHFZ_Overlay.addresses
             //    piecename = string.Format("**{0}**", piecename);
 
             //string address = Convert.ToString(ArmorLegsID(), 16).ToUpper();
-            string address = id.ToString("X4").ToUpper();
-            return string.Format("{0} ({1})", DecoName, address);
+            string address;
+            if (!(isForImage))
+                address = " ("+id.ToString("X4").ToUpper()+")";
+            else
+                address = "";
+
+            return string.Format("{0}{1}", DecoName, address);
         }
 
         /// <summary>
@@ -9269,6 +9275,195 @@ namespace MHFZ_Overlay.addresses
 
 
         #endregion
+
+        #region gear image stats
+
+        //            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
+
+        public string GetMetadataForImage
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                string metadata = "";
+
+                if (!(s.EnableMetadataExport))
+                    metadata = "";
+                else
+                {
+                    string guildName;
+                    string hunterName;
+                    string DateAndTime = DateTime.Now.ToString();
+
+                    if (s.GuildName.Length >= 1)
+                        guildName = s.GuildName;
+                    else
+                        guildName = "Guild Name";
+
+                    if (s.HunterName.Length >= 1)
+                        hunterName = s.HunterName;
+                    else
+                        hunterName = "Hunter Name";
+
+                    metadata = " | " + hunterName + " | " + guildName + " | " + DateAndTime;
+                }
+
+                return string.Format("{0}({1}){2}", GetWeaponClass(), GetGender(), metadata);
+            }
+        }
+
+        public string GetWeaponForImage
+        {
+            get
+            {
+                string className = GetWeaponClass();
+                string lv = GetGRWeaponLevel(GRWeaponLv());
+
+                //var style = WeaponStyle() switch
+                //{
+                //    0 => "Earth Style",
+                //    1 => "Heaven Style",
+                //    2 => "Storm Style",
+                //    3 => "Extreme Style",
+                //    _ => "Earth Style"
+                //};
+
+                if (className == "Blademaster")
+                {
+                    Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
+                    //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
+                    string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
+
+                    return string.Format("{0}{1} | {2} | {3} | {4}", wepname, lv, GetDecoName(WeaponDeco1ID(), 1, true), GetDecoName(WeaponDeco2ID(), 2, true), GetDecoName(WeaponDeco3ID(), 3, true));
+
+                }
+                else if (className == "Gunner")
+                {
+                    Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
+                    //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
+                    string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
+                    return string.Format("{0}{1} | {2} | {3} | {4}", wepname, lv, GetDecoName(WeaponDeco1ID(), 1, true), GetDecoName(WeaponDeco2ID(), 2, true), GetDecoName(WeaponDeco3ID(), 3, true));
+                }
+                else
+                {
+                    return "None";
+                }
+            }
+        }
+
+        public string GetArmorHeadNameForImage
+        {
+            get
+            {
+                Dictionary.ArmorHeads.ArmorHeadIDs.TryGetValue(ArmorHeadID(), out string? piecename);
+                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorHeadDeco1ID(),0,true), GetDecoName(ArmorHeadDeco2ID(),0,true), GetDecoName(ArmorHeadDeco3ID(),0,true));
+            }
+        }
+
+        public string GetArmorChestNameForImage
+        {
+            get
+            {
+                Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(ArmorChestID(), out string? piecename);
+                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorChestDeco1ID(),0,true), GetDecoName(ArmorChestDeco2ID(),0,true), GetDecoName(ArmorChestDeco3ID(),0,true));
+            }
+        }
+
+        public string GetArmorArmNameForImage
+        {
+            get
+            {
+                Dictionary.ArmorArms.ArmorArmIDs.TryGetValue(ArmorArmsID(), out string? piecename);
+                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorArmsDeco1ID(),0,true), GetDecoName(ArmorArmsDeco2ID(),0,true), GetDecoName(ArmorArmsDeco3ID(),0,true));
+            }
+        }
+
+        public string GetArmorWaistNameForImage
+        {
+            get
+            {
+                Dictionary.ArmorWaists.ArmorWaistIDs.TryGetValue(ArmorWaistID(), out string? piecename);
+                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorWaistDeco1ID(),0,true), GetDecoName(ArmorWaistDeco2ID(),0,true), GetDecoName(ArmorWaistDeco3ID(),0,true));
+            }
+        }
+
+        public string GetArmorLegNameForImage
+        {
+            get
+            {
+                Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(ArmorLegsID(), out string? piecename);
+                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorLegsDeco1ID(),0,true), GetDecoName(ArmorLegsDeco2ID(),0,true), GetDecoName(ArmorLegsDeco3ID(),0,true));
+            }
+        }
+
+        public string GetAtkDefForImage
+        {
+            get
+            {
+                return string.Format("Bloat Attack: {0} | Total Defense: {1}", BloatedWeaponAttack().ToString(), TotalDefense().ToString());
+            }
+        }
+
+        public string GetZenithSkillsForImage
+        {
+            get
+            {
+                string zenithSkills = GetZenithSkills;
+                zenithSkills = zenithSkills.Replace("\n", ", ");
+                return zenithSkills;
+            }
+        }
+
+        public string GetAutomaticSkillsForImage
+        {
+            get
+            {
+                string automaticSkills = GetAutomaticSkills;
+                automaticSkills = automaticSkills.Replace("\n", ", ");
+                return automaticSkills;
+            }
+        }
+
+        public string GetActiveSkillsForImage
+        {
+            get
+            {
+                string activeSkills = GetArmorSkills;
+                activeSkills = activeSkills.Replace("\n", ", ");
+                return activeSkills;
+            }
+        }
+
+        public string GetDivaSkillForImage
+        {
+            get
+            {
+                Dictionary.DivaSkillList.DivaSkillID.TryGetValue(DivaSkill(), out string? divaskillaname);
+                return divaskillaname + "";
+            }
+
+        }
+
+        //GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills
+        public string GetGuildFoodForImage
+        {
+            get
+            {
+                return GetArmorSkill(GuildFoodSkill());
+            }
+        }
+
+        public string GetPoogieItemForImage
+        {
+            get
+            {
+                return GetItemName(PoogieItemUseID());
+            }
+        }
+
+        #endregion
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

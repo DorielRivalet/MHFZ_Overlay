@@ -417,7 +417,7 @@
                                     </TabItem.Header>
                                     <ScrollViewer VerticalScrollBarVisibility="Visible">
                                         <Grid Margin="5,5,5,5">
-                                            <Grid x:Name="GearImageGrid" Background="#1e1e2e">
+                                            <Grid x:Name="GearImageGrid">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="40"/>
                                                     <ColumnDefinition Width="1*"/>
@@ -436,29 +436,59 @@
                                                     <RowDefinition Height="40"/>
                                                     <RowDefinition Height="40"/>
                                                 </Grid.RowDefinitions>
-                                                <Image Grid.Row="0" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/mhfzoverlayicon256.png"/>
-                                                <Image Grid.Row="1" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/transcend.png"/>
-                                                <Image Grid.Row="2" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/page.png"/>
-                                                <Image Grid.Row="3" Grid.Column="0" Source="{Binding GetWeaponIcon}"/>
-                                                <Image Grid.Row="4" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/helm.png"/>
-                                                <Image Grid.Row="5" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/chest.png"/>
-                                                <Image Grid.Row="6" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/arms.png"/>
-                                                <Image Grid.Row="7" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/waist.png"/>
-                                                <Image Grid.Row="8" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/legs.png"/>
-                                                <Image Grid.Row="9" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/decoration.png"/>
-                                                <Image Grid.Row="0" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/attack.png"/>
-                                                <Image Grid.Row="1" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/zenith.png"/>
-                                                <Image Grid.Row="2" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/blacksmith.png"/>
-                                                <Image Grid.Row="3" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/pvp.png" Grid.RowSpan="2"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Program" Grid.Row="0" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/mhfzoverlayicon256.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Metadata" Grid.Row="1" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/transcend.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Gear Description" Grid.Row="2" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/page.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Weapon" Grid.Row="3" Grid.Column="0" Source="{Binding GetWeaponIcon}"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Head" Grid.Row="4" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/helm.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Chest" Grid.Row="5" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/chest.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Arms" Grid.Row="6" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/arms.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Waist" Grid.Row="7" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/waist.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Legs" Grid.Row="8" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/legs.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Cuffs" Grid.Row="9" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/decoration.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Attack/Defense" Grid.Row="0" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/attack.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Zenith Skills" Grid.Row="1" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/zenith.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Automatic Skills" Grid.Row="2" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/blacksmith.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Active Skills" Grid.Row="3" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/pvp.png" Grid.RowSpan="2"/>
                                                 <!--<Image Grid.Row="4" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/book.png"/>-->
-                                                <Image Grid.Row="5" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/caravan_skills.png"/>
-                                                <Image Grid.Row="6" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/diva_prayer_gem.png"/>
-                                                <Image Grid.Row="7" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/guild_food.png"/>
-                                                <Image Grid.Row="8" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/burst.png"/>
-                                                <Image Grid.Row="9" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/my_tore.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Caravan" Grid.Row="5" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/caravan_skills.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Diva" Grid.Row="6" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/diva_prayer_gem.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Guild" Grid.Row="7" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/guild_food.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Style Rank" Grid.Row="8" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/burst.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Poogie Item" Grid.Row="9" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/my_tore.png"/>
 
-                                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding FullCurrentProgramVersion}"/>
+                                                <Border Background="#1e1e2e" Grid.ColumnSpan="4"/>
+                                                <Border Grid.Row="1" Background="#181825" Grid.ColumnSpan="4"/>
+                                                <Border Grid.Row="2" Background="#1e1e2e" Grid.ColumnSpan="4"/>
+                                                <Border Grid.Row="3" Background="#181825" Grid.ColumnSpan="4"/>
+                                                <Border Grid.Row="4" Background="#1e1e2e" Grid.ColumnSpan="4"/>
+                                                <Border Grid.Row="5" Background="#181825" Grid.ColumnSpan="4"/>
+                                                <Border Grid.Row="6" Background="#1e1e2e" Grid.ColumnSpan="4"/>
+                                                <Border Grid.Row="7" Background="#181825" Grid.ColumnSpan="4"/>
+                                                <Border Grid.Row="8" Background="#1e1e2e" Grid.ColumnSpan="4"/>
+                                                <Border Grid.Row="9" Background="#181825" Grid.ColumnSpan="4"/>
 
+
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="0" Grid.Column="1" Text="{Binding FullCurrentProgramVersion}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="1" Grid.Column="1" Text="{Binding GetMetadataForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="2" Grid.Column="1" Text="{Binding GetGearDescription}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="3" Grid.Column="1" Text="{Binding GetWeaponForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="4" Grid.Column="1" Text="{Binding GetArmorHeadNameForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="5" Grid.Column="1" Text="{Binding GetArmorChestNameForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="6" Grid.Column="1" Text="{Binding GetArmorArmNameForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="7" Grid.Column="1" Text="{Binding GetArmorWaistNameForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="8" Grid.Column="1" Text="{Binding GetArmorLegNameForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="9" Grid.Column="1" Text="{Binding GetCuffs}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="0" Grid.Column="3" Text="{Binding GetAtkDefForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="1" Grid.Column="3" Text="{Binding GetZenithSkillsForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="2" Grid.Column="3" Text="{Binding GetAutomaticSkillsForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="3" Grid.Column="3" Text="{Binding GetActiveSkillsForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap" Grid.RowSpan="2"/>
+                                                <!--<TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding FullCurrentProgramVersion}" FontSize="12" VerticalAlignment="Center"/>-->
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="5" Grid.Column="3" Text="{Binding GetCaravanSkills}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="6" Grid.Column="3" Text="{Binding GetDivaSkillForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="7" Grid.Column="3" Text="{Binding GetGuildFoodForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="8" Grid.Column="3" Text="{Binding GetGSRSkills}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="9" Grid.Column="3" Text="{Binding GetPoogieItemForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                             </Grid>
                                         </Grid>
                                     </ScrollViewer>
