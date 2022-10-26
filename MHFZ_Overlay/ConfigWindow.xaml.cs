@@ -826,12 +826,22 @@ namespace MHFZ_Overlay
 
         private void BtnImageFile_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Overwrite current file?", "Gear Stats", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); if (messageBoxResult.ToString() == "No") { return; }
+            //System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Overwrite current file?", "Gear Stats", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); if (messageBoxResult.ToString() == "No") { return; }
 
-            string dir = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\currentSet.png";
+            SaveFileDialog savefile = new SaveFileDialog();
+            string dateTime = DateTime.Now.ToString();
+            dateTime = dateTime.Replace("/", "-");
+            dateTime = dateTime.Replace(" ", "_");
+            dateTime = dateTime.Replace(":", "-");
+            savefile.FileName = "HuntedLog-" + dateTime + ".png";
+            savefile.Filter = "PNG files (*.png)|*.png";
+            savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
 
-            CreateBitmapFromVisual(GearTextGrid, dir);
-            CopyUIElementToClipboard(GearTextGrid);
+            if (savefile.ShowDialog() == true)
+            {
+                CreateBitmapFromVisual(GearTextGrid, savefile.FileName);
+                CopyUIElementToClipboard(GearTextGrid);
+            }
         }
 
         /// <summary>
@@ -843,7 +853,11 @@ namespace MHFZ_Overlay
             double width = element.ActualWidth;
             double height = element.ActualHeight;
             if (width <= 0 || height <= 0)
+            {
+                System.Windows.MessageBox.Show("Please load the gear stats by visiting the text tab in the configuration window", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return;
+            }
+            
             RenderTargetBitmap bmpCopied = new RenderTargetBitmap((int)Math.Round(width), (int)Math.Round(height), 96, 96, PixelFormats.Default);
             DrawingVisual dv = new DrawingVisual();
             using (DrawingContext dc = dv.RenderOpen())
@@ -863,6 +877,12 @@ namespace MHFZ_Overlay
             }
 
             Rect bounds = VisualTreeHelper.GetDescendantBounds(target);
+
+            if (bounds.Width <= 0 || bounds.Height <= 0)
+            {
+                System.Windows.MessageBox.Show("Please load the gear stats by visiting the text tab in the configuration window", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                return;
+            }
 
             RenderTargetBitmap renderTarget = new RenderTargetBitmap((Int32)bounds.Width, (Int32)bounds.Height, 96, 96, PixelFormats.Pbgra32);
 
@@ -893,14 +913,31 @@ namespace MHFZ_Overlay
         // on generate csv button click
         protected void BtnLogFile_Click(object sender, EventArgs e)
         {
-            System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Overwrite current file?", "Gear Stats", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); if (messageBoxResult.ToString() == "No") { return; }
+            //System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Overwrite current file?", "Gear Stats", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); if (messageBoxResult.ToString() == "No") { return; }
 
-            string dir = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HuntedLogs\log.csv";
+            SaveFileDialog savefile = new SaveFileDialog();
+            string dateTime = DateTime.Now.ToString();
+            dateTime = dateTime.Replace("/", "-");
+            dateTime = dateTime.Replace(" ", "_");
+            dateTime = dateTime.Replace(":", "-");
+            savefile.FileName = "HuntedLog-"+dateTime+".csv";
+            savefile.Filter = "CSV files (*.csv)|*.csv";
+            savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HuntedLogs\";
 
-            using (var writer = new StreamWriter(dir))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            if (savefile.ShowDialog() == true)
             {
-                csv.WriteRecords(Monsters);
+                //using (StreamWriter sw = new StreamWriter(savefile.FileName,
+                //          false, System.Text.Encoding.Unicode))
+                //{
+                //    sw.WriteLine("Test line");
+                //    sw.WriteLine("Test line2");
+                //    sw.WriteLine("Test line3");
+                //}
+                using (var writer = new StreamWriter(savefile.FileName))
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    csv.WriteRecords(Monsters);
+                }
             }
         }
     };
