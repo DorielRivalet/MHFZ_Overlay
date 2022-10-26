@@ -826,6 +826,8 @@ namespace MHFZ_Overlay
 
         private void BtnImageFile_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Overwrite current file?", "Gear Stats", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); if (messageBoxResult.ToString() == "No") { return; }
+
             string dir = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\currentSet.png";
 
             CreateBitmapFromVisual(GearTextGrid, dir);
@@ -891,6 +893,8 @@ namespace MHFZ_Overlay
         // on generate csv button click
         protected void BtnLogFile_Click(object sender, EventArgs e)
         {
+            System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Overwrite current file?", "Gear Stats", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); if (messageBoxResult.ToString() == "No") { return; }
+
             string dir = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HuntedLogs\log.csv";
 
             using (var writer = new StreamWriter(dir))
@@ -899,7 +903,6 @@ namespace MHFZ_Overlay
                 csv.WriteRecords(Monsters);
             }
         }
-
     };
 
 
