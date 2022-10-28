@@ -35,6 +35,8 @@ using MaterialDesignThemes.Wpf.Converters;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Web.WebView2.Core;
+
 
 namespace MHFZ_Overlay
 {
@@ -463,6 +465,9 @@ namespace MHFZ_Overlay
             MonsterStatusContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/4.png")));
             DiscordRPCContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/5.png")));
             CreditsContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/6.png")));
+            MonsterInfoContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/7.png")));
+            //QuestInfoContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/8.png")));
+
             //GlobalHotKey.RegisterHotKey("Alt+Shift+a", () => SaveKey_Press());
             //GlobalHotKey.RegisterHotKey("Alt+Shift+b", () => CancelKey_Press());
             //GlobalHotKey.RegisterHotKey("Alt+Shift+c", () => DefaultKey_Press());
@@ -502,6 +507,9 @@ namespace MHFZ_Overlay
             //// See: https://stackoverflow.com/questions/22285866/why-relaycommand
             //// Or use MVVM Light to obtain RelayCommand.
             //this.ScreenShotCommand = new RelayCommand<FrameworkElement>(this.OnScreenShotCommandAsync);
+            //webViewFerias.Style = 
+
+
         }
 
         private bool MonsterFilterAll(object obj)
@@ -602,6 +610,8 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Save();
+            webViewFerias.Dispose();
+            webView.Dispose();
             Close();
         }
 
@@ -614,6 +624,8 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Save();
+            webViewFerias.Dispose();
+            webView.Dispose();
             Close();
         }
 
@@ -624,6 +636,8 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Reload();
+            webViewFerias.Dispose();
+            webView.Dispose();
             Close();
         }
 
@@ -635,6 +649,8 @@ namespace MHFZ_Overlay
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            webViewFerias.Dispose();
+            webView.Dispose();
             s.Reload();
             Close();
         }
@@ -657,6 +673,8 @@ namespace MHFZ_Overlay
         public void DefaultKey_Press()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            webViewFerias.Dispose();
+            webView.Dispose();
             s.Reset();
         }
 
@@ -668,6 +686,8 @@ namespace MHFZ_Overlay
         private void DefaultButton_Click(object sender, RoutedEventArgs e)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            webViewFerias.Dispose();
+            webView.Dispose();
             s.Reset();
         }
 
@@ -678,6 +698,8 @@ namespace MHFZ_Overlay
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ConfigureButton_Click(object sender, RoutedEventArgs e)
         {
+            //webViewFerias.Dispose();
+            //webView.Dispose();
             MainWindow.EnableDragAndDrop();
         }
 
@@ -941,6 +963,18 @@ namespace MHFZ_Overlay
                     csv.WriteRecords(Monsters);
                 }
             }
+        }
+
+
+        private void Config_Closed(object sender, EventArgs e)
+        {
+            webViewFerias.Dispose();
+            webView.Dispose();
+        }
+
+        private void Config_Closing(object sender, EventArgs e)
+        {
+            return;
         }
     };
 

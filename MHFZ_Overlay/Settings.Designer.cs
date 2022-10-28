@@ -1474,5 +1474,41 @@ namespace MHFZ_Overlay {
                 this["CompanionOptionInfo"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Low Rank")]
+        public string RankBandOptionInfo {
+            get {
+                return ((string)(this["RankBandOptionInfo"]));
+            }
+            set {
+                this["RankBandOptionInfo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Taikun Zamuza")]
+        public string MonsterNameOptionInfo {
+            get {
+                return ((string)(this["MonsterNameOptionInfo"]));
+            }
+            set {
+                this["MonsterNameOptionInfo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sword and Shield")]
+        public string WeaponMatchupOptionInfo {
+            get {
+                return ((string)(this["WeaponMatchupOptionInfo"]));
+            }
+            set {
+                this["WeaponMatchupOptionInfo"] = value;
+            }
+        }
     }
 }

@@ -657,6 +657,14 @@ namespace MHFZ_Overlay.addresses
 
         public int HitCount => HitCountInt();
 
+        public string LoremImpsum
+        {
+            get
+            {
+                return "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor neque vitae tempus quam pellentesque. Nisl pretium fusce id velit ut tortor pretium. Sit amet massa vitae tortor. Justo donec enim diam vulputate. Mauris ultrices eros in cursus turpis massa. Rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant. Sed id semper risus in hendrerit gravida rutrum quisque. Vulputate enim nulla aliquet porttitor lacus luctus accumsan tortor posuere. In est ante in nibh. Fringilla est ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar mattis nunc sed blandit libero volutpat sed cras ornare. Ac auctor augue mauris augue neque gravida in fermentum et. Eget nunc scelerisque viverra mauris in.\r\n\r\nDapibus ultrices in iaculis nunc sed augue. Euismod quis viverra nibh cras pulvinar mattis nunc sed. Iaculis urna id volutpat lacus laoreet. Neque ornare aenean euismod elementum nisi quis eleifend quam adipiscing. Consequat nisl vel pretium lectus quam id. Lacinia at quis risus sed vulputate odio. Euismod nisi porta lorem mollis. Dui vivamus arcu felis bibendum ut. Gravida arcu ac tortor dignissim convallis aenean et tortor. Sed velit dignissim sodales ut eu sem. Sed sed risus pretium quam. Urna molestie at elementum eu facilisis sed odio morbi. Ac tortor vitae purus faucibus ornare suspendisse sed nisi. Est velit egestas dui id ornare arcu odio ut. Condimentum mattis pellentesque id nibh tortor. Volutpat maecenas volutpat blandit aliquam etiam erat. Nunc sed blandit libero volutpat sed cras. Donec massa sapien faucibus et molestie ac. Venenatis urna cursus eget nunc scelerisque viverra.\r\n\r\nFacilisis gravida neque convallis a cras semper auctor neque. Ullamcorper malesuada proin libero nunc consequat interdum varius. Et sollicitudin ac orci phasellus. Netus et malesuada fames ac turpis egestas maecenas pharetra. Vulputate sapien nec sagittis aliquam malesuada bibendum. Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec. Non odio euismod lacinia at quis. Et netus et malesuada fames. Quam viverra orci sagittis eu volutpat odio. Turpis egestas maecenas pharetra convallis posuere morbi leo urna molestie. Nulla malesuada pellentesque elit eget gravida. Iaculis at erat pellentesque adipiscing commodo elit at imperdiet dui. Ipsum consequat nisl vel pretium lectus quam id leo. Quisque non tellus orci ac auctor. Aliquet bibendum enim facilisis gravida neque. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Molestie at elementum eu facilisis sed odio. A lacus vestibulum sed arcu non odio euismod lacinia. Pretium fusce id velit ut. Adipiscing commodo elit at imperdiet.\r\n\r\nPretium lectus quam id leo. Nulla pharetra diam sit amet. Elementum integer enim neque volutpat. Amet mattis vulputate enim nulla. Leo vel orci porta non. Arcu odio ut sem nulla pharetra diam sit amet nisl. Dignissim convallis aenean et tortor at risus viverra adipiscing at. Nibh venenatis cras sed felis. Integer feugiat scelerisque varius morbi. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae. Elementum pulvinar etiam non quam lacus suspendisse faucibus. Amet nulla facilisi morbi tempus iaculis urna id volutpat. Vel fringilla est ullamcorper eget nulla. Sit amet nisl purus in mollis nunc sed id semper. Sit amet aliquam id diam. Blandit volutpat maecenas volutpat blandit. Fermentum leo vel orci porta. Imperdiet proin fermentum leo vel orci porta non pulvinar. Odio euismod lacinia at quis risus sed vulputate.\r\n\r\nDolor sed viverra ipsum nunc. In nibh mauris cursus mattis molestie. Lacus viverra vitae congue eu consequat ac felis donec. Mauris sit amet massa vitae tortor. Arcu vitae elementum curabitur vitae nunc. In hac habitasse platea dictumst. Viverra tellus in hac habitasse platea dictumst vestibulum. Vel orci porta non pulvinar. Tincidunt lobortis feugiat vivamus at. Faucibus ornare suspendisse sed nisi lacus sed. Etiam dignissim diam quis enim lobortis scelerisque. Faucibus nisl tincidunt eget nullam non nisi. Tincidunt eget nullam non nisi est sit amet facilisis. Vivamus arcu felis bibendum ut tristique et. Arcu non odio euismod lacinia. Ultrices mi tempus imperdiet nulla malesuada. Venenatis a condimentum vitae sapien pellentesque habitant. Laoreet suspendisse interdum consectetur libero id faucibus nisl.\r\n\r\nUltricies mi quis hendrerit dolor. Nisi lacus sed viverra tellus. Integer feugiat scelerisque varius morbi enim. Tristique nulla aliquet enim tortor at auctor urna nunc. Pellentesque habitant morbi tristique senectus et netus et malesuada. Id velit ut tortor pretium viverra suspendisse potenti nullam ac. Sit amet volutpat consequat mauris nunc congue nisi vitae. Pharetra diam sit amet nisl suscipit adipiscing. In hac habitasse platea dictumst vestibulum rhoncus. Gravida arcu ac tortor dignissim convallis. Vitae ultricies leo integer malesuada nunc vel. A diam sollicitudin tempor id. Eu nisl nunc mi ipsum. Facilisis volutpat est velit egestas dui id ornare.\r\n\r\nIn fermentum et sollicitudin ac orci. Non consectetur a erat nam at lectus urna duis. A diam sollicitudin tempor id eu nisl nunc. Lorem mollis aliquam ut porttitor leo a diam. Amet porttitor eget dolor morbi non arcu risus quis varius. Faucibus vitae aliquet nec ullamcorper sit. Lacinia quis vel eros donec ac odio tempor orci. Laoreet non curabitur gravida arcu. Sed euismod nisi porta lorem mollis aliquam ut porttitor leo. Amet facilisis magna etiam tempor orci eu. Eu sem integer vitae justo eget magna fermentum. Consectetur lorem donec massa sapien faucibus. Metus aliquam eleifend mi in. Tellus molestie nunc non blandit massa enim nec. Sit amet purus gravida quis blandit turpis. Odio facilisis mauris sit amet massa vitae tortor condimentum. Posuere ac ut consequat semper viverra. Ultricies tristique nulla aliquet enim tortor. Etiam tempor orci eu lobortis elementum. Maecenas accumsan lacus vel facilisis.\r\n\r\nNisl purus in mollis nunc sed id semper risus in. Sit amet est placerat in egestas erat imperdiet. Dolor magna eget est lorem. Ac felis donec et odio. Turpis egestas sed tempus urna et. Massa tempor nec feugiat nisl pretium. Magnis dis parturient montes nascetur ridiculus mus mauris vitae. In ornare quam viverra orci sagittis eu. Faucibus in ornare quam viverra orci sagittis. Porta nibh venenatis cras sed felis eget velit aliquet sagittis.";
+            }
+        }
+
         public bool _configuring = false;
 
         /// <summary>
@@ -9405,6 +9413,23 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string GetStyleRankForImage
+        {
+            get
+            {
+                var style = WeaponStyle() switch
+                {
+                    0 => "Earth Style",
+                    1 => "Heaven Style",
+                    2 => "Storm Style",
+                    3 => "Extreme Style",
+                    _ => "Earth Style"
+                };
+
+                return string.Format("{0} | {1}", style, GetGSRSkills);
+            }
+        }
+
         public string GetZenithSkillsForImage
         {
             get
@@ -9464,6 +9489,28 @@ namespace MHFZ_Overlay.addresses
 
         #endregion
 
+        #region monster stats info
+
+        public string GetGameMonsterInfo
+        {
+            get
+            {
+                return "monster";
+            }
+        }
+
+        public string GetGameHZVInfo
+        {
+            get
+            {
+                return "hzv";
+            }
+        }
+
+
+
+
+        #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

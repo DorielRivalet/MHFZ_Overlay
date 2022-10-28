@@ -20,6 +20,7 @@
     <None Remove="Background\4.png" />
     <None Remove="Background\5.png" />
     <None Remove="Background\6.png" />
+    <None Remove="Background\7.png" />
     <None Remove="Fonts\SourceCodePro-Black.ttf" />
     <None Remove="Fonts\SourceCodePro-BlackItalic.ttf" />
     <None Remove="Fonts\SourceCodePro-Bold.ttf" />
@@ -88,6 +89,7 @@
     <PackageReference Include="FontAwesome.Sharp" Version="6.1.1" />
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
     <PackageReference Include="Memory.dll.x86" Version="1.2.24" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1370.28" />
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
@@ -110,6 +112,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Background\6.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Background\7.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Fonts\SourceCodePro-Black.ttf">

@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
 
         xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
@@ -13,6 +14,7 @@
         Title="Monster Hunter Frontier Z Overlay v0.4.0"
         Height="720" Width="1280" ResizeMode="CanResize"
         Foreground="#cdd6f4" 
+            Closing="Config_Closing" Closed="Config_Closed"
         
                 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -456,7 +458,7 @@
                                                 <Image Panel.ZIndex="1" ToolTip="Guild" Grid.Row="7" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/guild_food.png"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Style Rank" Grid.Row="8" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/burst.png"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Poogie Item" Grid.Row="9" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/my_tore.png"/>
-
+                                                <!--https://stackoverflow.com/questions/11244457/how-to-set-row-border-and-background-color-in-wpf-grid-->
                                                 <Border Background="#1e1e2e" Grid.ColumnSpan="4"/>
                                                 <Border Grid.Row="1" Background="#181825" Grid.ColumnSpan="4"/>
                                                 <Border Grid.Row="2" Background="#1e1e2e" Grid.ColumnSpan="4"/>
@@ -487,7 +489,7 @@
                                                 <TextBlock Panel.ZIndex="1" Grid.Row="5" Grid.Column="3" Text="{Binding GetCaravanSkills}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                                 <TextBlock Panel.ZIndex="1" Grid.Row="6" Grid.Column="3" Text="{Binding GetDivaSkillForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                                 <TextBlock Panel.ZIndex="1" Grid.Row="7" Grid.Column="3" Text="{Binding GetGuildFoodForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="8" Grid.Column="3" Text="{Binding GetGSRSkills}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="8" Grid.Column="3" Text="{Binding GetStyleRankForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                                 <TextBlock Panel.ZIndex="1" Grid.Row="9" Grid.Column="3" Text="{Binding GetPoogieItemForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                             </Grid>
                                         </Grid>
@@ -1418,27 +1420,67 @@
                     <TextBlock Foreground="#fab387" Text="Monster Info" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
-            <Grid x:Name="MonsterInformationContent"  Height="Auto"  Width="Auto">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions >
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="MonsterInformation" Margin="20,20,20,20" Grid.ColumnSpan="9">
+            <Grid x:Name="MonsterInfoContent" Width="Auto" Height="Auto">
+                <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="MonsterInfoGrid" Margin="5,5,5,5">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="427"/>
+                        <ColumnDefinition Width="427"/>
                         <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="128"/>
-                        <RowDefinition Height="128"/>
-                        <RowDefinition Height="128"/>
-                        <RowDefinition Height="128"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="480"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Foreground="#89dceb" Margin="10,0,0,10" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="text"  FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="5,5,5,5" ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Option"/>
+                    <ComboBox Margin="5,5,5,5" Grid.Column="1" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=MonsterNameOptionInfo}"/>
+                    <ComboBox Margin="5,5,5,5" Grid.Column="2" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=RankBandOptionInfo}"/>
+                    <ComboBox Margin="5,5,5,5" Grid.Column="3" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=WeaponMatchupOptionInfo}"/>
+
+                    <DockPanel Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                        <wv2:WebView2 Name="webView"
+                  					Source="https://www.youtube.com/embed/wgR1Bf-kApo"
+  							/>
+                    </DockPanel>
+                    <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                        <ScrollViewer>
+                            <TextBlock Margin="5,5,5,5"  ToolTip="Hitzone Values Information" Text="{Binding LoremImpsum}" TextWrapping="Wrap"/>
+                        </ScrollViewer>
+                    </Grid>
+                    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                        <ScrollViewer>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Monster Information" Text="{Binding LoremImpsum}" TextWrapping="Wrap"/>
+                        </ScrollViewer>
+                    </Grid>
                 </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem ToolTip="Game Information" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/mantle.png" Width="32" Height="32"/>
+                    <TextBlock Foreground="#cdd6f4" Text="Game Info" Margin="4,0,0,0" VerticalAlignment="Center" />
+                </StackPanel>
+            </TabItem.Header>
+            <Grid>
+                <DockPanel Margin="5,5,5,5">
+                    <ScrollViewer VerticalScrollBarVisibility="Visible">
+                        <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="GameInfoGrid" Margin="5,5,5,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+
+                            <DockPanel Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                                <wv2:WebView2 Name="webViewFerias"
+                  					Source="https://xl3lackout.github.io/MHFZ-Ferias-English-Project/" DefaultBackgroundColor="#f5e0dc"/>
+                            </DockPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </DockPanel>
             </Grid>
         </TabItem>
         <TabItem ToolTip="Authors and developers information" Background="#11111b" Foreground="#cdd6f4">
