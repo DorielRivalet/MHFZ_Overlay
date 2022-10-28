@@ -1438,7 +1438,7 @@
                     <ComboBox Margin="5,5,5,5" Grid.Column="2" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=RankBandOptionInfo}"/>
                     <ComboBox Margin="5,5,5,5" Grid.Column="3" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=WeaponMatchupOptionInfo}"/>
 
-                    <DockPanel Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                    <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
                         <wv2:WebView2 Name="webView"
                   					Source="https://www.youtube.com/embed/wgR1Bf-kApo"
   							/>
@@ -1473,8 +1473,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
-
-                            <DockPanel Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                            <DockPanel Margin="5,5,5,5">
                                 <wv2:WebView2 Name="webViewFerias"
                   					Source="https://xl3lackout.github.io/MHFZ-Ferias-English-Project/" DefaultBackgroundColor="#f5e0dc"/>
                             </DockPanel>
