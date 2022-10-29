@@ -1510,5 +1510,17 @@ namespace MHFZ_Overlay {
                 this["WeaponMatchupOptionInfo"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ashen Lao-Shan Lung")]
+        public string GuildCardBackground {
+            get {
+                return ((string)(this["GuildCardBackground"]));
+            }
+            set {
+                this["GuildCardBackground"] = value;
+            }
+        }
     }
 }

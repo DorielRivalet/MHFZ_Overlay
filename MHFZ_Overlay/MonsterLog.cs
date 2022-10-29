@@ -1,6 +1,6 @@
 ﻿namespace MHFZ_Overlay
 {
-    public class Monster
+    public class MonsterLog
     {
 
         public string Name { get; set; }
@@ -10,7 +10,7 @@
         public bool IsLarge { get; set; }
         public string MonsterImage { get; set; }
 
-        public Monster(int id, string name, string image, int hunted, bool islarge = false)
+        public MonsterLog(int id, string name, string image, int hunted, bool islarge = false)
         {
             ID = id;
             Name = name;

@@ -9512,6 +9512,20 @@ namespace MHFZ_Overlay.addresses
 
         #endregion
 
+        
+        public string GetGuildCardBackground
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                string optionChosen = s.GuildCardBackground.ToLower();
+                optionChosen = optionChosen.Replace(" ", "_");
+
+                return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/guild_card/" + optionChosen + ".png";
+            }
+        }
+        
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>

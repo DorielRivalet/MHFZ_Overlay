@@ -374,5 +374,8 @@
     <Setting Name="WeaponMatchupOptionInfo" Type="System.String" Scope="User">
       <Value Profile="(Default)">Sword and Shield</Value>
     </Setting>
+    <Setting Name="GuildCardBackground" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ashen Lao-Shan Lung</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

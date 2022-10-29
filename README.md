@@ -150,6 +150,8 @@ If the HP shows 0/1 then change area for it to load.
 - Armor Set Website links
 - Sky Corridor
 - Drag and Drop multiple selection
+- FPS counter
+- Sharpness tables
 
 [Check more possible future features here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 

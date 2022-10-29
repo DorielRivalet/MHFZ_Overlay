@@ -62,7 +62,7 @@ namespace MHFZ_Overlay
         {
             tools.SetProcessAppUserModelId();
             // show a welcome message when the app is first installed
-            if (firstRun) MessageBox.Show("【MHF-Z】Overlay is now running! Thanks for installing【MHF-Z】Overlay");
+            if (firstRun) MessageBox.Show("【MHF-Z】Overlay is now running! Thanks for installing【MHF-Z】Overlay.\nHotkeys: Shift+F1 (Configuration) | Shift+F5 (Restart) | Shift+F6 (Close)\nPress Alt+Enter if your game resolution changed.");
         }
 
         /// <summary>
