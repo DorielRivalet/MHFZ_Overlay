@@ -639,6 +639,9 @@ namespace MHFZ_Overlay.addresses
         abstract public int PartySize();
         abstract public int PartySizeMax();
 
+        abstract public uint GSRP();
+        abstract public uint GRP();
+
 
         #endregion
 
@@ -652,6 +655,14 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 return string.Format("Monster Hunter Frontier Z Overlay {0}", MainWindow.CurrentProgramVersion);
+            }
+        }
+
+        public string SimplifiedCurrentProgramVersion
+        {
+            get
+            {
+                return string.Format("MHF-Z Overlay {0}", MainWindow.CurrentProgramVersion);
             }
         }
 
@@ -6809,6 +6820,145 @@ namespace MHFZ_Overlay.addresses
                     hunterName = "Hunter Name";
 
                 return string.Format("\n{0} | {1} | {2}", hunterName, guildName, DateAndTime);
+            }
+        }
+
+        public string GetHunterName
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                return s.HunterName;
+            }
+        }
+
+        public string GetGuildName
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                return s.GuildName;
+            }
+        }
+
+        public string GetGZenny
+        {
+            get
+            {
+                return GZenny().ToString() + " Gz";
+            }
+        }
+
+        public string GetCaravanLevel
+        {
+            get
+            {
+                return "Lv. " + (CaravenGemLevel()+1).ToString();
+            }
+        }
+
+        public string GetGSRLevel
+        {
+            get
+            {
+                return GSR().ToString();
+            }
+        }
+
+        public string GetGSRP
+        {
+            get
+            {
+                return GSRP().ToString();
+            }
+        }
+
+        public string GetGRLevel
+        {
+            get
+            {
+                return GRankNumber().ToString();
+            }
+        }
+
+        public string GetGRP
+        {
+            get
+            {
+                return GRP().ToString();
+            }
+        }
+
+        public string GetSR
+        {
+            get
+            {
+                var style = WeaponStyle() switch
+                {
+                    0 => "Earth Style",
+                    1 => "Heaven Style",
+                    2 => "Storm Style",
+                    3 => "Extreme Style",
+                    _ => "Earth Style"
+                };
+
+                return string.Format("{0}", style);
+            }
+        }
+
+        public string GetRP
+        {
+            get
+            {
+                return GSR().ToString();
+            }
+        }
+
+        public string GetBloatAtk
+        {
+            get
+            {
+                return BloatedWeaponAttack().ToString();
+            }
+        }
+
+        public string GetTotalDef
+        {
+            get
+            {
+                return TotalDefense().ToString();
+            }
+        }
+
+        public string GetGenderName
+        {
+            get
+            {
+                return GetGender();
+            }
+        }
+
+        public string GetGCP
+        {
+            get
+            {
+                return GCP().ToString();
+            }
+        }
+
+        public string GetGSRLevelString
+        {
+            get
+            {
+                return GSR().ToString();
+            }
+        }
+
+        public string GetWeaponClassName
+        {
+            get
+            {
+                return GetWeaponClass();
             }
         }
 

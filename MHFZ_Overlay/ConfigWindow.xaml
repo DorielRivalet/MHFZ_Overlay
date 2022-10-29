@@ -417,7 +417,91 @@
                                     </TabItem.Header>
                                     <Grid Margin="5,5,5,5">
                                         <Grid x:Name="GuildCardGrid">
-                                            <Image ToolTip="Guild Card Background" Source="{Binding GetGuildCardBackground}" Width="544" Height="400"/>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="544"/>
+                                                <ColumnDefinition Width="544"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                            </Grid.RowDefinitions>
+                                            <Image HorizontalAlignment="Left" ToolTip="Guild Card Background" Source="{Binding GetGuildCardBackground}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="20"/>
+                                            <Image HorizontalAlignment="Right" ToolTip="Guild Card Background" Source="{Binding GetGuildCardBackground}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="20"/>
+                                            
+                                            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding SimplifiedCurrentProgramVersion}" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,2,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetHunterName}" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,2,0,0"/>
+
+
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Held:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGZenny}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Top" Text="GSR:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGSRLevelString}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Top" Text="GSRP:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGSRP}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Top" Text="GR:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGRLevel}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Top" Text="GRP:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGRP}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Caravan:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetCaravanLevel}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Text="G.Food:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGuildFoodForImage}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Diva:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetDivaSkillForImage}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" Text="SR:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetSR}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Poogie:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetPoogieItemForImage}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Restri.:" FontFamily="MS Gothic Bold" FontSize="16" Margin="280,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Don't Limit" FontFamily="MS Gothic Bold" FontSize="16" Margin="350,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Status:" FontFamily="MS Gothic Bold" FontSize="16" Margin="280,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Member" FontFamily="MS Gothic Bold" FontSize="16" Margin="350,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Guild Name:" FontFamily="MS Gothic Bold" FontSize="16" Margin="280,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Top" Text="" FontFamily="MS Gothic Bold" FontSize="16" Margin="350,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGuildName}" FontFamily="MS Gothic Bold" FontSize="16" Margin="280,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Held RP:" FontFamily="MS Gothic Bold" FontSize="16" Margin="280,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetRP}" FontFamily="MS Gothic Bold" FontSize="16" Margin="350,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Attack:" FontFamily="MS Gothic Bold" FontSize="16" Margin="280,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetBloatAtk}" FontFamily="MS Gothic Bold" FontSize="16" Margin="350,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Defense:" FontFamily="MS Gothic Bold" FontSize="16" Margin="280,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetTotalDef}" FontFamily="MS Gothic Bold" FontSize="16" Margin="350,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Gender:" FontFamily="MS Gothic Bold" FontSize="16" Margin="280,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGenderName}" FontFamily="MS Gothic Bold" FontSize="16" Margin="350,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Class:" FontFamily="MS Gothic Bold" FontSize="16" Margin="280,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetWeaponClassName}" FontFamily="MS Gothic Bold" FontSize="16" Margin="350,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Top" Text="GCP:" FontFamily="MS Gothic Bold" FontSize="16" Margin="280,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGCP}" FontFamily="MS Gothic Bold" FontSize="16" Margin="350,0,0,0"/>
+
+                                            <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="15" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Comment:" FontFamily="MS Gothic Bold" FontSize="16" Margin="160,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="16" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.RowSpan="2" Text="{Binding GetGearDescription}" FontFamily="MS Gothic Bold" FontSize="16" Margin="160,0,0,0" TextWrapping="Wrap"/>
+
+
+
+
+
+
+
+
+
                                         </Grid>
                                     </Grid>
                                 </TabItem>

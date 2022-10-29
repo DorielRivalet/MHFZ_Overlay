@@ -607,5 +607,8 @@ namespace MHFZ_Overlay.addresses
         public override int PartySize() => M.ReadByte("mhfo.dll+57967C8");
         public override int PartySizeMax() => M.ReadByte("mhfo.dll+61B6088");
 
+        public override uint GSRP() => (uint)M.ReadInt("mhfo.dll+61041C8");
+        public override uint GRP() => (uint)M.ReadInt("mhfo.dll+5BC82F8");
+
     }
 }

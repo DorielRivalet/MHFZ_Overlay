@@ -666,5 +666,8 @@ namespace MHFZ_Overlay.addresses
         public override int PartySize() => 1;
         public override int PartySizeMax() => 1;
 
+        public override uint GSRP() => 1;
+        public override uint GRP() => 1;
+
     }
 }
