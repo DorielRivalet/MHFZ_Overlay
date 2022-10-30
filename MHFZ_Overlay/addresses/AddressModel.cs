@@ -9471,21 +9471,140 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetWeaponForImage
+        public string GetWeaponForGuildCard
         {
             get
             {
                 string className = GetWeaponClass();
                 string lv = GetGRWeaponLevel(GRWeaponLv());
 
-                //var style = WeaponStyle() switch
-                //{
-                //    0 => "Earth Style",
-                //    1 => "Heaven Style",
-                //    2 => "Storm Style",
-                //    3 => "Extreme Style",
-                //    _ => "Earth Style"
-                //};
+                if (className == "Blademaster")
+                {
+                    Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
+                    //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
+                    string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
+
+                    return string.Format("{0}{1} ({2})", wepname, lv, address);
+
+                }
+                else if (className == "Gunner")
+                {
+                    Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
+                    //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
+                    string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
+                    return string.Format("{0}{1} ({2})", wepname, lv, address);
+                }
+                else
+                {
+                    return "None";
+                }
+            }
+        }
+
+        public string GetWeaponDecos
+        {
+            get
+            {
+                return string.Format("{0}, {1}, {2}", GetDecoName(WeaponDeco1ID(), 1,true), GetDecoName(WeaponDeco2ID(), 2,true), GetDecoName(WeaponDeco3ID(), 3,true));
+            }
+        }
+
+        public string GetArmorHeadNameForGuildCard
+        {
+            get
+            {
+                Dictionary.ArmorHeads.ArmorHeadIDs.TryGetValue(ArmorHeadID(), out string? piecename);
+                string address = ArmorHeadID().ToString("X4").ToUpper();
+                return string.Format("{0} ({1})", piecename, address);
+            }
+        }
+
+        public string GetArmorChestNameForGuildCard
+        {
+            get
+            {
+                Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(ArmorChestID(), out string? piecename);
+                string address = ArmorChestID().ToString("X4").ToUpper();
+                return string.Format("{0} ({1})", piecename, address);
+            }
+        }
+
+        public string GetArmorArmNameForGuildCard
+        {
+            get
+            {
+                Dictionary.ArmorArms.ArmorArmIDs.TryGetValue(ArmorArmsID(), out string? piecename);
+                string address = ArmorArmsID().ToString("X4").ToUpper();
+                return string.Format("{0} ({1})", piecename, address);
+            }
+        }
+
+        public string GetArmorWaistNameForGuildCard
+        {
+            get
+            {
+                Dictionary.ArmorWaists.ArmorWaistIDs.TryGetValue(ArmorWaistID(), out string? piecename);
+                string address = ArmorWaistID().ToString("X4").ToUpper();
+                return string.Format("{0} ({1})", piecename, address);
+            }
+        }
+
+        public string GetArmorLegNameForGuildCard
+        {
+            get
+            {
+                Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(ArmorLegsID(), out string? piecename);
+                string address = ArmorLegsID().ToString("X4").ToUpper();
+                return string.Format("{0} ({1})", piecename, address);
+            }
+        }
+
+        public string GetArmorHeadDecos
+        {
+            get
+            {
+                return string.Format("{0}, {1}, {2}",GetItemName(ArmorHeadDeco1ID()), GetItemName(ArmorHeadDeco2ID()), GetItemName(ArmorHeadDeco3ID()));
+            }
+        }
+
+        public string GetArmorChestDecos
+        {
+            get
+            {
+                return string.Format("{0}, {1}, {2}", GetItemName(ArmorChestDeco1ID()), GetItemName(ArmorChestDeco2ID()), GetItemName(ArmorChestDeco3ID()));
+            }
+        }
+
+        public string GetArmorArmDecos
+        {
+            get
+            {
+                return string.Format("{0}, {1}, {2}", GetItemName(ArmorArmsDeco1ID()), GetItemName(ArmorArmsDeco2ID()), GetItemName(ArmorArmsDeco3ID()));
+            }
+        }
+
+        public string GetArmorWaistDecos
+        {
+            get
+            {
+                return string.Format("{0}, {1}, {2}", GetItemName(ArmorWaistDeco1ID()), GetItemName(ArmorWaistDeco2ID()), GetItemName(ArmorWaistDeco3ID()));
+            }
+        }
+
+        public string GetArmorLegDecos
+        {
+            get
+            {
+                return string.Format("{0}, {1}, {2}", GetItemName(ArmorLegsDeco1ID()), GetItemName(ArmorLegsDeco2ID()), GetItemName(ArmorLegsDeco3ID()));
+            }
+        }
+
+        public string GetWeaponForImage
+        {
+            get
+            {
+                string className = GetWeaponClass();
+                string lv = GetGRWeaponLevel(GRWeaponLv());
 
                 if (className == "Blademaster")
                 {
