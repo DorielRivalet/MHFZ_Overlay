@@ -852,7 +852,7 @@ namespace MHFZ_Overlay
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
-            savefile.FileName = "HuntedLog-" + dateTime + ".png";
+            savefile.FileName = "HunterSet-" + dateTime + ".png";
             savefile.Filter = "PNG files (*.png)|*.png";
             savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
 
@@ -976,9 +976,27 @@ namespace MHFZ_Overlay
         {
             return;
         }
+
+        private void BtnGuildCardFile_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog savefile = new SaveFileDialog();
+            string dateTime = DateTime.Now.ToString();
+            dateTime = dateTime.Replace("/", "-");
+            dateTime = dateTime.Replace(" ", "_");
+            dateTime = dateTime.Replace(":", "-");
+            savefile.FileName = "GuildCard-" + dateTime + ".png";
+            savefile.Filter = "PNG files (*.png)|*.png";
+            savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
+
+            if (savefile.ShowDialog() == true)
+            {
+                CreateBitmapFromVisual(GuildCardGrid, savefile.FileName);
+                CopyUIElementToClipboard(GuildCardGrid);
+            }
+        }
     };
 
-
+    
     /* LoadConfig on startup
      * Load Config on window open to have extra copy
      * On Save -> Window close -> tell program to use new copy instead of current -> Save Config File

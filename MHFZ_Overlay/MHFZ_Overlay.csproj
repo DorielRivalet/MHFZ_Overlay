@@ -65,6 +65,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="icons\badge.xaml" />
     <Page Remove="icons\Cancel.xaml" />
     <Page Remove="icons\Close.xaml" />
     <Page Remove="icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml" />
@@ -183,6 +184,10 @@
     </Resource>
     <Resource Include="icons\caravan_skills.png" />
     <Resource Include="icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="icons\badge.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
     <Resource Include="icons\description_FILL0_wght400_GRAD0_opsz48.png" />
