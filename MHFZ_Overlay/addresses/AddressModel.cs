@@ -9760,28 +9760,73 @@ namespace MHFZ_Overlay.addresses
 
         #region monster stats info
 
-        public string GetGameMonsterInfo
+        //public string GetMonsterInfo
+        //{
+        //    get
+        //    {
+        //        Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+        //        if (s.MonsterNameOptionInfo == "")
+        //            return "monster info";
+        //        else
+        //            return "";
+        //    }
+        //}
+
+        public string GetMonsterElements
         {
             get
             {
-                return "monster";
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                return "";
             }
         }
 
-        public string GetGameHZVInfo
+        public string GetMonsterAilments
         {
             get
             {
-                return "hzv";
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                return "";
             }
         }
 
+        public string GetMonsterHitzones
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
+                return "";
+            }
+        }
+
+        public string GetMonsterInfoLinks
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                return "";
+            }
+        }
+
+        public string GetMonsterWeaknesses
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                return "";
+            }
+        }
 
 
         #endregion
 
-        
+
         public string GetGuildCardBackground
         {
             get

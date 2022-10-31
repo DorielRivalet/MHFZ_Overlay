@@ -365,15 +365,6 @@
     <Setting Name="CompanionOptionInfo" Type="System.String" Scope="User">
       <Value Profile="(Default)">Partner</Value>
     </Setting>
-    <Setting Name="RankBandOptionInfo" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Low Rank</Value>
-    </Setting>
-    <Setting Name="MonsterNameOptionInfo" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Taikun Zamuza</Value>
-    </Setting>
-    <Setting Name="WeaponMatchupOptionInfo" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Sword and Shield</Value>
-    </Setting>
     <Setting Name="GuildCardBackground" Type="System.String" Scope="User">
       <Value Profile="(Default)">Ashen Lao-Shan Lung</Value>
     </Setting>

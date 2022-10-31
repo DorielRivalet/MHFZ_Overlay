@@ -6,24 +6,28 @@ namespace MHFZ_Overlay
     {
 
         public string Name { get; set; }
-        public int ID { get; set; }
         public string Title { get; set; }
         public string Weakness { get; set; }
         public string Ailments { get; set; }
         public string Elements { get; set; }
         public Dictionary<string, string> Hitzones { get; set; }
-        public string InfoLink { get; set; }
+        public Dictionary<string, string> InfoLinks { get; set; }
+        public Dictionary<string, string> WeaponMatchups { get; set; }
 
-        public MonsterInfo(int id, string name, string title, string weakness, string ailments, string elements, string infolink, Dictionary<string, string> hitzones)
+        public string Description { get; set; }
+
+        public MonsterInfo(string name, string title, string weakness, string ailments, string elements, Dictionary<string, string> infolinks, Dictionary<string, string> hitzones, Dictionary<string, string> matchups, string description)
         {
-            ID = id;
             Name = name;
             Title = title;
             Weakness = weakness;
             Ailments = ailments;
             Elements = elements;
             Hitzones = hitzones;
-            InfoLink = infolink;
+            InfoLinks = infolinks;
+            WeaponMatchups = matchups;
+            Description = description;
+            
         }
     }
 }

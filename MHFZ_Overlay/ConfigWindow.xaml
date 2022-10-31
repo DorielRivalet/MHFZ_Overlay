@@ -1682,24 +1682,48 @@
                         <RowDefinition Height="480"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Margin="5,5,5,5" ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Option"/>
-                    <ComboBox Margin="5,5,5,5" Grid.Column="1" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=MonsterNameOptionInfo}"/>
-                    <ComboBox Margin="5,5,5,5" Grid.Column="2" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=RankBandOptionInfo}"/>
-                    <ComboBox Margin="5,5,5,5" Grid.Column="3" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=WeaponMatchupOptionInfo}"/>
+                    <!--<TextBlock Margin="5,5,5,5" ToolTip="Select option. Image based on cutting damage" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Option"/>-->
+                    <ComboBox SelectedIndex="0" SelectionChanged="MonsterViewInfoOption_SelectionChanged" Name="MonsterViewInfoListBox" Margin="5,5,5,5" Grid.Column="0" Grid.Row="0">
+                        <ComboBoxItem>Hitzone Values (based on Cutting Damage)</ComboBoxItem>
+                        <ComboBoxItem>Weapon Matchups (Hardest monsters only)</ComboBoxItem>
+                    </ComboBox>
+                    <ComboBox SelectedIndex="0" SelectionChanged="MonsterNameListBox_SelectionChanged" Name="MonsterNameListBox" Margin="5,5,5,5" Grid.Column="1" Grid.Row="0"/>
+                    <ComboBox SelectedIndex="0" SelectionChanged="RankBandListBox_SelectionChanged" Name="RankBandListBox" Margin="5,5,5,5" Grid.Column="2" Grid.Row="0">
+                        <ComboBoxItem>Normal</ComboBoxItem>
+                        <ComboBoxItem>HR5</ComboBoxItem>
+                        <ComboBoxItem>GR</ComboBoxItem>
+                        <ComboBoxItem>Zenith</ComboBoxItem>
+                    </ComboBox>
+                    <ComboBox Name="WeaponMatchupListBox" SelectedIndex="0" SelectionChanged="WeaponMatchupListBox_SelectionChanged" Margin="5,5,5,5" Grid.Column="3" Grid.Row="0">
+                        <ComboBoxItem>Sword and Shield</ComboBoxItem>
+                        <ComboBoxItem>Dual Swords</ComboBoxItem>
+                        <ComboBoxItem>Great Sword</ComboBoxItem>
+                        <ComboBoxItem>Long Sword</ComboBoxItem>
+                        <ComboBoxItem>Hammer</ComboBoxItem>
+                        <ComboBoxItem>Hunting Horn</ComboBoxItem>
+                        <ComboBoxItem>Lance</ComboBoxItem>
+                        <ComboBoxItem>Gunlance</ComboBoxItem>
+                        <ComboBoxItem>Tonfa</ComboBoxItem>
+                        <ComboBoxItem>Switch Axe F</ComboBoxItem>
+                        <ComboBoxItem>Magnet Spike</ComboBoxItem>
+                        <ComboBoxItem>Light Bowgun</ComboBoxItem>
+                        <ComboBoxItem>Heavy Bowgun</ComboBoxItem>
+                        <ComboBoxItem>Bow</ComboBoxItem>
+                    </ComboBox>
 
                     <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-                        <wv2:WebView2 Name="webView"
-                  					Source="https://www.youtube.com/embed/wgR1Bf-kApo"
+                        <wv2:WebView2 Name="webView" ToolTip="Image based on cutting damage"
+                  					Source="https://xl3lackout.github.io/MHFZ-Ferias-English-Project/img/monszones/rathaloshr5.png"
   							/>
                     </DockPanel>
                     <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
                         <ScrollViewer>
-                            <TextBlock Margin="5,5,5,5"  ToolTip="Hitzone Values Information" Text="{Binding LoremImpsum}" TextWrapping="Wrap"/>
+                            <TextBlock Name="MonsterHitzoneTextBlock" Margin="5,5,5,5"  ToolTip="Hitzone Values Information" Text="" TextWrapping="Wrap"/>
                         </ScrollViewer>
                     </Grid>
                     <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                         <ScrollViewer>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Monster Information" Text="{Binding LoremImpsum}" TextWrapping="Wrap"/>
+                            <TextBlock Name="MonsterInfoTextBlock" Margin="5,5,5,5" ToolTip="Monster Information" Text="" TextWrapping="Wrap"/>
                         </ScrollViewer>
                     </Grid>
                 </Grid>

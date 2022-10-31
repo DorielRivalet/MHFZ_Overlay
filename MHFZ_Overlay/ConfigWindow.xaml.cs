@@ -36,7 +36,8 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Web.WebView2.Core;
-
+using System.Collections.Generic;
+using Dictionary;
 
 namespace MHFZ_Overlay
 {
@@ -52,6 +53,62 @@ namespace MHFZ_Overlay
         /// The main window.
         /// </value>
         private MainWindow MainWindow { get; set; }
+
+        public Uri MonsterInfoLink
+        {
+            get { return new Uri("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png", UriKind.RelativeOrAbsolute);}
+        }
+
+        public MonsterInfo[] monsterInfos = new MonsterInfo[]
+        {
+            new MonsterInfo("Rathian","Rioreia","Dragon","Poison","Fire",
+                new System.Collections.Generic.Dictionary<string, string>()
+                {
+                    {"Normal","https://xl3lackout.github.io/MHFZ-Ferias-English-Project/img/monszones/rathian.png" },
+                    {"GR","https://xl3lackout.github.io/MHFZ-Ferias-English-Project/img/monszones/rathiang.png" }
+                },
+                new System.Collections.Generic.Dictionary<string, string>()
+                {
+                    {"Normal","normal hitzones rathian" },
+                    {"GR","grank hitzones rathian" }
+                },
+                new System.Collections.Generic.Dictionary<string, string>()
+                {
+                    {"","" },
+                },
+                "desc1"
+                ),
+            new MonsterInfo("Rathalos","Rioreusu","Dragon","","Fire",
+                new System.Collections.Generic.Dictionary<string, string>()
+                {
+                    {"Normal","https://xl3lackout.github.io/MHFZ-Ferias-English-Project/img/monszones/rathalos.png" },
+                    {"GR","https://xl3lackout.github.io/MHFZ-Ferias-English-Project/img/monszones/rathalosg.png" }
+                },
+                new System.Collections.Generic.Dictionary<string, string>()
+                {
+                    {"Normal","normal hitzones rathalos" },
+                    {"GR","grank hitzones rathalos" }
+                },
+                new System.Collections.Generic.Dictionary<string, string>()
+                {
+                    {"Sword and Shield","https://www.youtube.com/embed/pGqYN1ks5AQ" },
+                    {"Dual Swords","" },
+                    {"Great Sword","https://www.youtube.com/embed/LQra_886zSA" },
+                    {"Long Sword","https://www.youtube.com/embed/2rKIOjUx1wU" },
+                    {"Hammer","https://www.youtube.com/embed/Dmmr6rrRkXg" },
+                    {"Hunting Horn","https://www.youtube.com/embed/cKe1_xqLGm8" },
+                    {"Lance","" },
+                    {"Gunlance","" },
+                    {"Tonfa","https://www.youtube.com/embed/Xt96sulv-Wc" },
+                    {"Switch Axe F","https://www.youtube.com/embed/mI2WKvwVKXU" },
+                    {"Magnet Spike","https://www.youtube.com/embed/gQT9DiO7BJ4" },
+                    {"Light Bowgun","https://www.youtube.com/embed/R9kK5AmjcHk" },
+                    {"Heavy Bowgun","" },
+                    {"Bow","https://www.youtube.com/embed/bsQ-skmpe4Q" },
+                },
+                "desc2"
+                ),
+        };
 
         public Uri MonsterImage
         {
@@ -509,7 +566,14 @@ namespace MHFZ_Overlay
             //this.ScreenShotCommand = new RelayCommand<FrameworkElement>(this.OnScreenShotCommandAsync);
             //webViewFerias.Style = 
 
+            List<string> MonsterNameList = new List<string>();
 
+            for (int i = 0; i < monsterInfos.Length; i++)
+            {
+                MonsterNameList.Add(monsterInfos[i].Name);
+            }
+
+            MonsterNameListBox.ItemsSource = MonsterNameList;
         }
 
         private bool MonsterFilterAll(object obj)
@@ -931,8 +995,6 @@ namespace MHFZ_Overlay
             MyList.Items.Filter = GetFilter();
         }
 
-
-
         // on generate csv button click
         protected void BtnLogFile_Click(object sender, EventArgs e)
         {
@@ -993,6 +1055,120 @@ namespace MHFZ_Overlay
                 CreateBitmapFromVisual(GuildCardGrid, savefile.FileName);
                 CopyUIElementToClipboard(GuildCardGrid);
             }
+        }
+
+        private void ChangeMonsterInfo()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            if (MonsterHitzoneTextBlock == null || MonsterInfoTextBlock == null || webView == null || MonsterViewInfoListBox == null)
+                return;
+
+            Dictionary<string, string> MonsterHitzoneOptionDictionary = new Dictionary<string, string>();
+            Dictionary<string, string> MonsterDescriptionOptionDictionary = new Dictionary<string, string>();
+            Dictionary<string, string> MonsterInfoLinkOptionDictionary = new Dictionary<string, string>();
+            Dictionary<string, string> MonsterVideoLinkOptionDictionary = new Dictionary<string, string>();
+
+
+            for (int i = 0; i < monsterInfos.Length; i++)
+            {
+
+                foreach (var hitzonePerRankBand in monsterInfos[i].Hitzones)
+                {
+                    MonsterHitzoneOptionDictionary.Add(hitzonePerRankBand.Key + " " + monsterInfos[i].Name, hitzonePerRankBand.Value);
+                }
+
+                foreach (var infolinkPerRankBand in monsterInfos[i].InfoLinks)
+                {
+                    MonsterInfoLinkOptionDictionary.Add(infolinkPerRankBand.Key + " " + monsterInfos[i].Name, infolinkPerRankBand.Value);
+                }
+
+                foreach (var videolinkPerRankBand in monsterInfos[i].WeaponMatchups)
+                {
+                    MonsterVideoLinkOptionDictionary.Add(videolinkPerRankBand.Key + " " + monsterInfos[i].Name, videolinkPerRankBand.Value);
+                }
+
+                MonsterDescriptionOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].Description);
+            }
+
+            string selectedInfo = RankBandListBox.SelectedItem.ToString() + " " + MonsterNameListBox.SelectedItem.ToString();
+            selectedInfo = selectedInfo.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+
+            string selectedName = MonsterNameListBox.SelectedItem.ToString()+"";
+            selectedName = selectedName.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+
+            string selectedMatchup = WeaponMatchupListBox.SelectedItem.ToString() + " " + MonsterNameListBox.SelectedItem.ToString();
+            selectedMatchup = selectedMatchup.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+
+            //if (selectedInfo == " " ||)
+            //    return;
+
+            if (!MonsterHitzoneOptionDictionary.TryGetValue(selectedInfo, out string? val1) || !MonsterInfoLinkOptionDictionary.TryGetValue(selectedInfo, out string? val2) || !MonsterDescriptionOptionDictionary.TryGetValue(selectedName, out string? val3))
+                return;
+
+            if (webView.CoreWebView2 == null)
+                return;
+
+            MonsterHitzoneTextBlock.Text = MonsterHitzoneOptionDictionary[selectedInfo];
+
+            if (MonsterViewInfoListBox.SelectedIndex == 0)
+            {
+                if (MonsterInfoLinkOptionDictionary.TryGetValue(selectedInfo, out string? infoval))
+                    webView.CoreWebView2.Navigate(MonsterInfoLinkOptionDictionary[selectedInfo]);
+            }
+
+            else
+            {
+                if (MonsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out string? videoval))
+                    webView.CoreWebView2.Navigate(MonsterVideoLinkOptionDictionary[selectedMatchup]);
+            }
+                
+
+            MonsterInfoTextBlock.Text = MonsterDescriptionOptionDictionary[MonsterNameListBox.SelectedItem.ToString()+""];
+
+
+            //for (int i = 0; i < MonsterDescriptionOptionDictionary.Count; i++)
+            //{
+            //    string selectedInfo = MonsterNameListBox.SelectedItem.ToString()+"";
+
+            //    MonsterDescriptionOptionDictionary.TryGetValue(selectedInfo, out string? desc);
+
+            //    if (desc != null)
+            //}
+        }
+
+            //switch (s.RankBandOptionInfo)
+            //{
+            //    default:
+            //        return;
+            //    case "HR5":
+            //        switch (s.MonsterNameOptionInfo)
+            //        {
+            //            default:
+            //                return;
+            //            case "Rathian":
+            //                webView.Source =
+            //        }
+            //}
+
+        private void MonsterNameListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ChangeMonsterInfo();
+        }
+
+        private void RankBandListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ChangeMonsterInfo();
+        }
+
+        private void WeaponMatchupListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ChangeMonsterInfo();
+        }
+
+        private void MonsterViewInfoOption_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ChangeMonsterInfo();
         }
     };
 
