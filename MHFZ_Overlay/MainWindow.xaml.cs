@@ -1,4 +1,5 @@
 ﻿using DiscordRPC;
+using Memory;
 using MHFZ_Overlay.addresses;
 using System;
 using System.Drawing;
@@ -6,6 +7,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -380,6 +382,8 @@ namespace MHFZ_Overlay
         int counter = 0;
         int prevTime = 0;
 
+        private bool showedNullError = false;
+
         //
         public void Timer_Tick(object? obj, EventArgs e)
         {
@@ -403,6 +407,11 @@ namespace MHFZ_Overlay
 
             // Debug.WriteLine("Monster1 SEL=" + DataLoader.model.RoadSelectedMonster() + " ID=" + DataLoader.model.LargeMonster1ID() + " HP=" + DataLoader.model.Monster1HPInt() + "/" + DataLoader.model.SavedMonster1MaxHP);
             //Debug.WriteLine("Monster2 SEL=" + DataLoader.model.RoadSelectedMonster() + " ID=" + DataLoader.model.LargeMonster2ID() + " HP=" + DataLoader.model.Monster2HPInt() + "/" + DataLoader.model.SavedMonster2MaxHP);
+            if (isInLauncher() == "NULL" && !showedNullError)
+            {
+                showedNullError = true;
+                //System.Windows.MessageBox.Show("Incorrect values detected, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            }
         }
 
         int curNum = 0;
@@ -2198,6 +2207,30 @@ namespace MHFZ_Overlay
                 return "";
         }
 
+        readonly Mem m = new();
+
+        public string isInLauncher()
+        {
+            int pidToSearch = m.GetProcIdFromName("mhf");
+            //Init a condition indicating that you want to search by process id.
+            var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
+                pidToSearch);
+            //Find the automation element matching the criteria
+            AutomationElement element = AutomationElement.RootElement.FindFirst(
+                TreeScope.Children, condition);
+
+            if (element == null || pidToSearch == 0)
+                return "NULL";
+
+            //get the classname
+            var className = element.Current.ClassName;
+
+            if (className == "MHFLAUNCH")
+                return "Yes";
+            else
+                return "No";
+        }
+
         /// <summary>
         /// Gets the overlay mode.
         /// </summary>
@@ -2208,10 +2241,16 @@ namespace MHFZ_Overlay
 
             if (DataLoader.model.Configuring)
                 return "(Configuring) ";
-            else if (DataLoader.isInLauncher) //works?
+            else if (DataLoader.closedGame)
+                return "(Closed Game) ";
+            else if (DataLoader.isInLauncher || isInLauncher() == "Yes") //works?
                 return "(Launcher) ";
-            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.AreaID() == 0)
+            else if (isInLauncher() == "NULL")
+                return "(No game detected) ";
+            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.AreaID() == 0 && DataLoader.model.MeleeWeaponID() == 0 && DataLoader.model.RangedWeaponID() == 0)
                 return "(Main Menu) ";
+            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.AreaID() == 200 && DataLoader.model.MeleeWeaponID() == 0 && DataLoader.model.RangedWeaponID() == 0)
+                return "(World Select) ";
             else if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown)
                 return "";
             else if (s.TimerInfoShown)
@@ -3175,7 +3214,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetPartySize()
         {
-            if (DataLoader.model.PartySize() == 0)
+            if (DataLoader.model.QuestID() == 0 || DataLoader.model.PartySize() == 0 || isInLauncher() == "NULL" || isInLauncher() == "Yes")
             {
                 return "";
             }
