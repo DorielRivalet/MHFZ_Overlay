@@ -59,7 +59,7 @@ namespace MHFZ_Overlay
             get { return new Uri("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/random.png", UriKind.RelativeOrAbsolute);}
         }
 
-        public static string RickRoll = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+        public static string RickRoll = "https://www.youtube.com/embed/dQw4w9WgXcQ";
 
         public MonsterInfo[] monsterInfos = new MonsterInfo[]
         {
@@ -146,7 +146,7 @@ namespace MHFZ_Overlay
                 {
                     {"","" },
                 },
-                "https://monsterhunter.fandom.com/wiki/Duremudira"
+                "https://monsterhunter.fandom.com/wiki/Arrogant_Duremudira"
                 ),            new MonsterInfo("Aruganosu",
                 "https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/volgin_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
@@ -245,7 +245,7 @@ namespace MHFZ_Overlay
                 {
                     {"","" },
                 },
-                "https://monsterhunter.fandom.com/wiki/Blitzkrieg_Bogabadorumu"
+                "https://monsterhunter.fandom.com/wiki/Bombardier_Bogabadorumu"
                 ),new MonsterInfo("Blue Yian Kut-Ku",
                 "https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/kukkuao_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
@@ -610,13 +610,6 @@ namespace MHFZ_Overlay
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Hypnocatrice"
-                ),new MonsterInfo("Rathian",
-                "",
-                new System.Collections.Generic.Dictionary<string, string>()
-                {
-                    {"","" },
-                },
-                "https://monsterhunter.fandom.com/wiki/Rathian"
                 ),new MonsterInfo("Hyujikiki",
                 "https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/hyuji_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
@@ -1185,29 +1178,6 @@ namespace MHFZ_Overlay
                 },
                 "https://monsterhunter.fandom.com/wiki/Zinogre"
                 ),
-            
-            new MonsterInfo("Zenith Akura Vashimu",
-                "https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/aqura_n.htm",
-                new System.Collections.Generic.Dictionary<string, string>()
-                {
-                    {"Sword and Shield","" },
-                    {"Dual Swords","" },
-                    {"Great Sword","" },
-                    {"Long Sword","" },
-                    {"Hammer","" },
-                    {"Hunting Horn","" },
-                    {"Lance","" },
-                    {"Gunlance","" },
-                    {"Tonfa","" },
-                    {"Switch Axe F","" },
-                    {"Magnet Spike","" },
-                    {"Light Bowgun","" },
-                    {"Heavy Bowgun","" },
-                    {"Bow","" },
-                },
-                "https://monsterhunter.fandom.com/wiki/Zenith_Akura_Vashimu"
-                ),
-
 
             new MonsterInfo("Zenith Akura Vashimu",
                 "https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/aqura_ni.htm",
@@ -2778,7 +2748,7 @@ namespace MHFZ_Overlay
                     webViewMonsterInfo.CoreWebView2.Navigate(MonsterWikiOptionDictionary[MonsterNameListBox.SelectedItem.ToString() + ""]);
                     return;
                 case 2://youtube
-                    if (MonsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out string? videoval))
+                    if (MonsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out string? videoval) && MonsterVideoLinkOptionDictionary[selectedMatchup] != "")
                     {
                         DockPanelMonsterInfo.Width = 854;
                         DockPanelMonsterInfo.Height = 480;
