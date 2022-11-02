@@ -91,7 +91,7 @@ namespace MHFZ_Overlay.addresses
         public override int Monster3HPInt() => M.Read2Byte("0043C608");
         public override int Monster4HPInt() => M.Read2Byte("0043C60C");
         public override string Monster1AtkMult() => M.ReadFloat("mhfo.dll+60A3E58,898").ToString();
-        public override string Monster1DefMult() => M.ReadFloat("mhfo.dll+60A3E58,89C").ToString();
+        public override decimal Monster1DefMult() => (decimal)M.ReadFloat("mhfo.dll+60A3E58,89C","",false);
         public override int Monster1Poison() => M.Read2Byte("mhfo.dll+60A3E58,88A");
         public override int Monster1PoisonNeed() => M.Read2Byte("mhfo.dll+60A3E58,888");
         public override int Monster1Sleep() => M.Read2Byte("mhfo.dll+60A3E58,86C");
@@ -104,7 +104,7 @@ namespace MHFZ_Overlay.addresses
         public override int Monster1StunNeed() => M.Read2Byte("mhfo.dll+60A3E58,A74");
         public override string Monster1Size() => M.Read2Byte("mhfo.dll+2AFA784").ToString() + "%";
         public override string Monster2AtkMult() => M.ReadFloat("mhfo.dll+60A3E58,1788").ToString();
-        public override string Monster2DefMult() => M.ReadFloat("mhfo.dll+60A3E58,178C").ToString();
+        public override decimal Monster2DefMult() => (decimal)M.ReadFloat("mhfo.dll+60A3E58,178C","",false);
         public override int Monster2Poison() => M.Read2Byte("mhfo.dll+60A3E58,177A");
         public override int Monster2PoisonNeed() => M.Read2Byte("mhfo.dll+60A3E58,1778");
         public override int Monster2Sleep() => M.Read2Byte("mhfo.dll+60A3E58,175C");

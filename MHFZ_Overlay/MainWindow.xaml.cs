@@ -2802,7 +2802,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public int GetMonster1EHP()
         {
-            return DataLoader.model.DisplayMonsterEHP(float.Parse(DataLoader.model.Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), DataLoader.model.Monster1HPInt(), DataLoader.model.Monster1DefMult());
+            return DataLoader.model.DisplayMonsterEHP(DataLoader.model.Monster1DefMult(), DataLoader.model.Monster1HPInt(), DataLoader.model.Monster1DefMult());
         }
 
         /// <summary>

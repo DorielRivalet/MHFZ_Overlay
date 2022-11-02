@@ -134,7 +134,7 @@ namespace MHFZ_Overlay.addresses
         public override int Monster3HPInt() => M.Read2Byte("0043C608");
         public override int Monster4HPInt() => M.Read2Byte("0043C60C");
         public override string Monster1AtkMult() { return GetNotRoad() ? M.ReadFloat("mhfo-hd.dll+0E37DD38,898").ToString() : Monster1RoadAtkMult(); }
-        public override string Monster1DefMult() { return GetNotRoad() ? M.ReadFloat("mhfo-hd.dll+0E37DD38,89C").ToString() : Monster1RoadDefMult(); }
+        public override decimal Monster1DefMult() { return GetNotRoad() ? (decimal)M.ReadFloat("mhfo-hd.dll+0E37DD38,89C", "", false) : Monster1RoadDefMult(); }
         public override int Monster1Poison() { return GetNotRoad() ? M.Read2Byte("mhfo-hd.dll+0E37DD38,88A") : Monster1RoadPoison(); }
         public override int Monster1PoisonNeed() { return GetNotRoad() ? M.Read2Byte("mhfo-hd.dll+0E37DD38,888") : Monster1RoadPoisonNeed(); }
         public override int Monster1Sleep() { return GetNotRoad() ? M.Read2Byte("mhfo-hd.dll+0E37DD38,86C") : Monster1RoadSleep(); }
@@ -147,7 +147,7 @@ namespace MHFZ_Overlay.addresses
         public override int Monster1StunNeed() { return GetNotRoad() ? M.Read2Byte("mhfo-hd.dll+0E37DD38,A74") : Monster1RoadStunNeed(); }
         public override string Monster1Size() { return GetNotRoad() ? M.Read2Byte("mhfo-hd.dll+2AFA784").ToString() + "%" : Monster1RoadSize(); }
         public override string Monster2AtkMult() { return GetNotRoad() ? M.ReadFloat("mhfo-hd.dll+0E37DD38,1788").ToString() : Monster2RoadAtkMult(); }
-        public override string Monster2DefMult() { return GetNotRoad() ? M.ReadFloat("mhfo-hd.dll+0E37DD38,178C").ToString() : Monster2RoadDefMult(); }
+        public override decimal Monster2DefMult() { return GetNotRoad() ? (decimal)M.ReadFloat("mhfo-hd.dll+0E37DD38,178C", "", false) : Monster2RoadDefMult(); }
         public override int Monster2Poison() { return GetNotRoad() ? M.Read2Byte("mhfo-hd.dll+0E37DD38,177A") : Monster2RoadPoison(); }
         public override int Monster2PoisonNeed() { return GetNotRoad() ? M.Read2Byte("mhfo-hd.dll+0E37DD38,1778") : Monster2RoadPoisonNeed(); }
         public override int Monster2Sleep() { return GetNotRoad() ? M.Read2Byte("mhfo-hd.dll+0E37DD38,175C") : Monster2RoadSleep(); }
@@ -160,7 +160,7 @@ namespace MHFZ_Overlay.addresses
         public override int Monster2StunNeed() { return GetNotRoad() ? M.Read2Byte("mhfo-hd.dll+0E37DD38,1964") : Monster2RoadStunNeed(); }
         public override string Monster2Size() { return GetNotRoad() ? M.Read2Byte("mhfo-hd.dll+2AFA784").ToString() + "%" : Monster2RoadSize(); }
         public string Monster1RoadAtkMult() => M.ReadFloat("mhfo-hd.dll+E37DF18,898").ToString();
-        public string Monster1RoadDefMult() => M.ReadFloat("mhfo-hd.dll+E37DF18,89C").ToString();
+        public decimal Monster1RoadDefMult() => (decimal)M.ReadFloat("mhfo-hd.dll+E37DF18,89C", "", false);
         public int Monster1RoadPoison() => M.Read2Byte("mhfo-hd.dll+E37DF18,88A");
         public int Monster1RoadPoisonNeed() => M.Read2Byte("mhfo-hd.dll+E37DF18,888");
         public int Monster1RoadSleep() => M.Read2Byte("mhfo-hd.dll+E37DF18,86C");
@@ -173,7 +173,7 @@ namespace MHFZ_Overlay.addresses
         public int Monster1RoadStunNeed() => M.Read2Byte("mhfo-hd.dll+E37DF18,A74");
         public string Monster1RoadSize() => M.Read2Byte("mhfo-hd.dll+2AFA784").ToString() + "%";
         public string Monster2RoadAtkMult() => M.ReadFloat("mhfo-hd.dll+E37DF18,1788").ToString();
-        public string Monster2RoadDefMult() => M.ReadFloat("mhfo-hd.dll+E37DF18,178C").ToString();
+        public decimal Monster2RoadDefMult() => (decimal)M.ReadFloat("mhfo-hd.dll+E37DF18,178C", "", false);
         public int Monster2RoadPoison() => M.Read2Byte("mhfo-hd.dll+E37DF18,177A");
         public int Monster2RoadPoisonNeed() => M.Read2Byte("mhfo-hd.dll+E37DF18,1778");
         public int Monster2RoadSleep() => M.Read2Byte("mhfo-hd.dll+E37DF18,175C");
