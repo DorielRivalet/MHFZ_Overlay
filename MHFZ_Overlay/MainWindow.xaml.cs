@@ -1,4 +1,5 @@
 ﻿using DiscordRPC;
+using MHFZ_Overlay.addresses;
 using System;
 using System.Drawing;
 using System.Globalization;
@@ -2204,7 +2205,14 @@ namespace MHFZ_Overlay
         public string GetOverlayMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown)
+
+            if (DataLoader.model.Configuring)
+                return "(Configuring) ";
+            else if (DataLoader.isInLauncher) //works?
+                return "(Launcher) ";
+            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.AreaID() == 0)
+                return "(Main Menu) ";
+            else if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown)
                 return "";
             else if (s.TimerInfoShown)
                 return "(Speedrun) ";
@@ -3145,6 +3153,9 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetQuestState()
         {
+            if (DataLoader.isInLauncher) //works?
+                return "";
+
             switch (DataLoader.model.QuestState())
             {
                 default:
@@ -3823,6 +3834,10 @@ namespace MHFZ_Overlay
         private void OpenConfigButton_Key()
         {
             if (IsDragConfigure) return;
+
+            if (DataLoader.isInLauncher)
+                System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+
             if (configWindow == null || !configWindow.IsLoaded)
                 configWindow = new(this);
             configWindow.Show();

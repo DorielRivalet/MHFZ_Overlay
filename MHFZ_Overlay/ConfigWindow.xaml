@@ -1720,7 +1720,7 @@
   							    />
                         </DockPanel>
                         <DockPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
-                            <wv2:WebView2 Name="webView" ToolTip="Image based on cutting damage"
+                            <wv2:WebView2 Name="webViewVideo" ToolTip="Image based on cutting damage"
                   					    Source="https://xl3lackout.github.io/MHFZ-Ferias-English-Project/img/monszones/rathianhr5.png"
   							    />
                         </DockPanel>

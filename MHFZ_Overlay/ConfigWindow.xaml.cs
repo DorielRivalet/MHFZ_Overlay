@@ -61,6 +61,2868 @@ namespace MHFZ_Overlay
 
         public MonsterInfo[] monsterInfos = new MonsterInfo[]
         {
+                //        new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),            new MonsterInfo("Rathian",
+                //"https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                //new System.Collections.Generic.Dictionary<string, string>()
+                //{
+                //    {"","" },
+                //},
+                //"https://monsterhunter.fandom.com/wiki/Rathian"
+                //),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             new MonsterInfo("Rathian",
                 "https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
@@ -659,7 +3521,7 @@ namespace MHFZ_Overlay
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
             webViewFeriasInfo.Dispose();
-            webView.Dispose();
+            webViewVideo.Dispose();
             Close();
         }
 
@@ -675,7 +3537,7 @@ namespace MHFZ_Overlay
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
             webViewFeriasInfo.Dispose();
-            webView.Dispose();
+            webViewVideo.Dispose();
             Close();
         }
 
@@ -689,7 +3551,7 @@ namespace MHFZ_Overlay
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
             webViewFeriasInfo.Dispose();
-            webView.Dispose();
+            webViewVideo.Dispose();
             Close();
         }
 
@@ -704,7 +3566,7 @@ namespace MHFZ_Overlay
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
             webViewFeriasInfo.Dispose();
-            webView.Dispose();
+            webViewVideo.Dispose();
             s.Reload();
             Close();
         }
@@ -730,7 +3592,7 @@ namespace MHFZ_Overlay
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
             webViewFeriasInfo.Dispose();
-            webView.Dispose();
+            webViewVideo.Dispose();
             s.Reset();
         }
 
@@ -743,7 +3605,7 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             webViewFerias.Dispose();
-            webView.Dispose();
+            webViewVideo.Dispose();
             webViewMonsterInfo.Dispose();
             webViewFeriasInfo.Dispose();
             s.Reset();
@@ -1025,7 +3887,7 @@ namespace MHFZ_Overlay
         private void Config_Closed(object sender, EventArgs e)
         {
             webViewFerias.Dispose();
-            webView.Dispose();
+            webViewVideo.Dispose();
             webViewMonsterInfo.Dispose();
             webViewFeriasInfo.Dispose();
         }
@@ -1057,7 +3919,7 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-            if (webViewFeriasInfo == null || webViewMonsterInfo == null || webView == null)
+            if (webViewFeriasInfo == null || webViewMonsterInfo == null || webViewVideo == null)
                 return;
 
             Dictionary<string, string> MonsterFeriasOptionDictionary = new Dictionary<string, string>();
@@ -1085,50 +3947,18 @@ namespace MHFZ_Overlay
             string selectedMatchup = WeaponMatchupListBox.SelectedItem.ToString() + " " + MonsterNameListBox.SelectedItem.ToString();
             selectedMatchup = selectedMatchup.Replace("System.Windows.Controls.ComboBoxItem: ", "");
 
-            //if (selectedInfo == " " ||)
-            //    return;
-
             if (!MonsterFeriasOptionDictionary.TryGetValue(selectedName, out string? val1) || !MonsterWikiOptionDictionary.TryGetValue(selectedName, out string? val2))
                 return;
 
-            if (webView.CoreWebView2 == null)
+            if (webViewVideo.CoreWebView2 == null)
                 return;
 
-
-            //    if (MonsterInfoLinkOptionDictionary.TryGetValue(selectedInfo, out string? infoval))
-            //        webView.CoreWebView2.Navigate(MonsterInfoLinkOptionDictionary[selectedInfo]);
-            //}
-
             if (MonsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out string? videoval))
-                webView.CoreWebView2.Navigate(MonsterVideoLinkOptionDictionary[selectedMatchup]);
+                webViewVideo.CoreWebView2.Navigate(MonsterVideoLinkOptionDictionary[selectedMatchup]);
 
             webViewMonsterInfo.CoreWebView2.Navigate(MonsterWikiOptionDictionary[MonsterNameListBox.SelectedItem.ToString() + ""]);
             webViewFeriasInfo.CoreWebView2.Navigate(MonsterFeriasOptionDictionary[MonsterNameListBox.SelectedItem.ToString() + ""]);
-
-
-            //for (int i = 0; i < MonsterDescriptionOptionDictionary.Count; i++)
-            //{
-            //    string selectedInfo = MonsterNameListBox.SelectedItem.ToString()+"";
-
-            //    MonsterDescriptionOptionDictionary.TryGetValue(selectedInfo, out string? desc);
-
-            //    if (desc != null)
-            //}
         }
-
-        //switch (s.RankBandOptionInfo)
-        //{
-        //    default:
-        //        return;
-        //    case "HR5":
-        //        switch (s.MonsterNameOptionInfo)
-        //        {
-        //            default:
-        //                return;
-        //            case "Rathian":
-        //                webView.Source =
-        //        }
-        //}
 
         private void MonsterNameListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

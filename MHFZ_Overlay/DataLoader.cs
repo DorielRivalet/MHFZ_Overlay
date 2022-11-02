@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 
 namespace MHFZ_Overlay
 {
@@ -19,6 +20,7 @@ namespace MHFZ_Overlay
         //needed for getting data
         readonly Mem m = new();
         public bool isHighGradeEdition;
+        public bool isInLauncher;
         int index;
         /// <summary>
         /// Gets the model.
@@ -111,11 +113,42 @@ namespace MHFZ_Overlay
                     model = new AddressModelNotHGE(m);
                 else
                     model = new AddressModelHGE(m);
+
+                //Process[] processes = Process.GetProcesses();
+                //foreach (var process in processes)
+                //{
+                //    if (process.MainWindowTitle.Contains("Launcher") && process.Id == PID)
+                //    {
+                //        isInLauncher = true;
+                //    }
+                //    else
+                //    {
+                //        isInLauncher = false;
+
+                //    }
+                //}
+                int pidToSearch = PID;
+                //Init a condition indicating that you want to search by process id.
+                var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
+                    pidToSearch);
+                //Find the automation element matching the criteria
+                AutomationElement element = AutomationElement.RootElement.FindFirst(
+                    TreeScope.Children, condition);
+
+                //get the classname
+                var className = element.Current.ClassName;
+
+                if (className == "MHFLAUNCH")
+                    isInLauncher = true;
+                else
+                    isInLauncher = false;
+
+                //Clipboard.SetText(String.Format("isInLauncher : {0}. title: {1}", isInLauncher, className));
             }
             else
             {
                 System.Windows.MessageBox.Show("Launch game first");
-                
+
                 App.Current.Shutdown();
             }
         }
