@@ -61,34 +61,16 @@ namespace MHFZ_Overlay
 
         public MonsterInfo[] monsterInfos = new MonsterInfo[]
         {
-            new MonsterInfo("Rathian","Rioreia","Dragon","Poison","Fire",
-                new System.Collections.Generic.Dictionary<string, string>()
-                {
-                    {"Normal","https://xl3lackout.github.io/MHFZ-Ferias-English-Project/img/monszones/rathian.png" },
-                    {"GR","https://xl3lackout.github.io/MHFZ-Ferias-English-Project/img/monszones/rathiang.png" }
-                },
-                new System.Collections.Generic.Dictionary<string, string>()
-                {
-                    {"Normal","normal hitzones rathian" },
-                    {"GR","grank hitzones rathian" }
-                },
+            new MonsterInfo("Rathian",
+                "https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
-                "desc1"
+                "https://monsterhunter.fandom.com/wiki/Rathian"
                 ),
-            new MonsterInfo("Rathalos","Rioreusu","Dragon","","Fire",
-                new System.Collections.Generic.Dictionary<string, string>()
-                {
-                    {"Normal","https://xl3lackout.github.io/MHFZ-Ferias-English-Project/img/monszones/rathalos.png" },
-                    {"GR","https://xl3lackout.github.io/MHFZ-Ferias-English-Project/img/monszones/rathalosg.png" }
-                },
-                new System.Collections.Generic.Dictionary<string, string>()
-                {
-                    {"Normal","normal hitzones rathalos" },
-                    {"GR","grank hitzones rathalos" }
-                },
+            new MonsterInfo("Rathalos",
+                "https://xl3lackout.github.io/MHFZ-Ferias-English-Project/mons/reusu_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","https://www.youtube.com/embed/pGqYN1ks5AQ" },
@@ -106,7 +88,7 @@ namespace MHFZ_Overlay
                     {"Heavy Bowgun","" },
                     {"Bow","https://www.youtube.com/embed/bsQ-skmpe4Q" },
                 },
-                "desc2"
+                "https://monsterhunter.fandom.com/wiki/Rathalos"
                 ),
         };
 
@@ -675,6 +657,8 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Save();
             webViewFerias.Dispose();
+            webViewMonsterInfo.Dispose();
+            webViewFeriasInfo.Dispose();
             webView.Dispose();
             Close();
         }
@@ -689,6 +673,8 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Save();
             webViewFerias.Dispose();
+            webViewMonsterInfo.Dispose();
+            webViewFeriasInfo.Dispose();
             webView.Dispose();
             Close();
         }
@@ -701,6 +687,8 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Reload();
             webViewFerias.Dispose();
+            webViewMonsterInfo.Dispose();
+            webViewFeriasInfo.Dispose();
             webView.Dispose();
             Close();
         }
@@ -714,6 +702,8 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             webViewFerias.Dispose();
+            webViewMonsterInfo.Dispose();
+            webViewFeriasInfo.Dispose();
             webView.Dispose();
             s.Reload();
             Close();
@@ -738,6 +728,8 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             webViewFerias.Dispose();
+            webViewMonsterInfo.Dispose();
+            webViewFeriasInfo.Dispose();
             webView.Dispose();
             s.Reset();
         }
@@ -752,6 +744,8 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             webViewFerias.Dispose();
             webView.Dispose();
+            webViewMonsterInfo.Dispose();
+            webViewFeriasInfo.Dispose();
             s.Reset();
         }
 
@@ -1032,6 +1026,8 @@ namespace MHFZ_Overlay
         {
             webViewFerias.Dispose();
             webView.Dispose();
+            webViewMonsterInfo.Dispose();
+            webViewFeriasInfo.Dispose();
         }
 
         private void Config_Closing(object sender, EventArgs e)
@@ -1061,34 +1057,23 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-            if (MonsterHitzoneTextBlock == null || MonsterInfoTextBlock == null || webView == null || MonsterViewInfoListBox == null)
+            if (webViewFeriasInfo == null || webViewMonsterInfo == null || webView == null)
                 return;
 
-            Dictionary<string, string> MonsterHitzoneOptionDictionary = new Dictionary<string, string>();
-            Dictionary<string, string> MonsterDescriptionOptionDictionary = new Dictionary<string, string>();
-            Dictionary<string, string> MonsterInfoLinkOptionDictionary = new Dictionary<string, string>();
+            Dictionary<string, string> MonsterFeriasOptionDictionary = new Dictionary<string, string>();
+            Dictionary<string, string> MonsterWikiOptionDictionary = new Dictionary<string, string>();
             Dictionary<string, string> MonsterVideoLinkOptionDictionary = new Dictionary<string, string>();
 
 
             for (int i = 0; i < monsterInfos.Length; i++)
             {
-
-                foreach (var hitzonePerRankBand in monsterInfos[i].Hitzones)
-                {
-                    MonsterHitzoneOptionDictionary.Add(hitzonePerRankBand.Key + " " + monsterInfos[i].Name, hitzonePerRankBand.Value);
-                }
-
-                foreach (var infolinkPerRankBand in monsterInfos[i].InfoLinks)
-                {
-                    MonsterInfoLinkOptionDictionary.Add(infolinkPerRankBand.Key + " " + monsterInfos[i].Name, infolinkPerRankBand.Value);
-                }
-
                 foreach (var videolinkPerRankBand in monsterInfos[i].WeaponMatchups)
                 {
                     MonsterVideoLinkOptionDictionary.Add(videolinkPerRankBand.Key + " " + monsterInfos[i].Name, videolinkPerRankBand.Value);
                 }
 
-                MonsterDescriptionOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].Description);
+                MonsterWikiOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].Description);
+                MonsterFeriasOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].FeriasLink);
             }
 
             string selectedInfo = RankBandListBox.SelectedItem.ToString() + " " + MonsterNameListBox.SelectedItem.ToString();
@@ -1103,28 +1088,22 @@ namespace MHFZ_Overlay
             //if (selectedInfo == " " ||)
             //    return;
 
-            if (!MonsterHitzoneOptionDictionary.TryGetValue(selectedInfo, out string? val1) || !MonsterInfoLinkOptionDictionary.TryGetValue(selectedInfo, out string? val2) || !MonsterDescriptionOptionDictionary.TryGetValue(selectedName, out string? val3))
+            if (!MonsterFeriasOptionDictionary.TryGetValue(selectedName, out string? val1) || !MonsterWikiOptionDictionary.TryGetValue(selectedName, out string? val2))
                 return;
 
             if (webView.CoreWebView2 == null)
                 return;
 
-            MonsterHitzoneTextBlock.Text = MonsterHitzoneOptionDictionary[selectedInfo];
 
-            if (MonsterViewInfoListBox.SelectedIndex == 0)
-            {
-                if (MonsterInfoLinkOptionDictionary.TryGetValue(selectedInfo, out string? infoval))
-                    webView.CoreWebView2.Navigate(MonsterInfoLinkOptionDictionary[selectedInfo]);
-            }
+            //    if (MonsterInfoLinkOptionDictionary.TryGetValue(selectedInfo, out string? infoval))
+            //        webView.CoreWebView2.Navigate(MonsterInfoLinkOptionDictionary[selectedInfo]);
+            //}
 
-            else
-            {
-                if (MonsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out string? videoval))
-                    webView.CoreWebView2.Navigate(MonsterVideoLinkOptionDictionary[selectedMatchup]);
-            }
-                
+            if (MonsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out string? videoval))
+                webView.CoreWebView2.Navigate(MonsterVideoLinkOptionDictionary[selectedMatchup]);
 
-            MonsterInfoTextBlock.Text = MonsterDescriptionOptionDictionary[MonsterNameListBox.SelectedItem.ToString()+""];
+            webViewMonsterInfo.CoreWebView2.Navigate(MonsterWikiOptionDictionary[MonsterNameListBox.SelectedItem.ToString() + ""]);
+            webViewFeriasInfo.CoreWebView2.Navigate(MonsterFeriasOptionDictionary[MonsterNameListBox.SelectedItem.ToString() + ""]);
 
 
             //for (int i = 0; i < MonsterDescriptionOptionDictionary.Count; i++)
@@ -1137,19 +1116,19 @@ namespace MHFZ_Overlay
             //}
         }
 
-            //switch (s.RankBandOptionInfo)
-            //{
-            //    default:
-            //        return;
-            //    case "HR5":
-            //        switch (s.MonsterNameOptionInfo)
-            //        {
-            //            default:
-            //                return;
-            //            case "Rathian":
-            //                webView.Source =
-            //        }
-            //}
+        //switch (s.RankBandOptionInfo)
+        //{
+        //    default:
+        //        return;
+        //    case "HR5":
+        //        switch (s.MonsterNameOptionInfo)
+        //        {
+        //            default:
+        //                return;
+        //            case "Rathian":
+        //                webView.Source =
+        //        }
+        //}
 
         private void MonsterNameListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
