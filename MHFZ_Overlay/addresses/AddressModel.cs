@@ -4418,7 +4418,7 @@ namespace MHFZ_Overlay.addresses
                     //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
 
-                    return string.Format("{0}{1} ({2}) | {3} | {4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
+                    return string.Format("{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
 
                 }
                 else if (className == "Gunner")
@@ -4426,7 +4426,7 @@ namespace MHFZ_Overlay.addresses
                     Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
                     //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
-                    return string.Format("{0}{1} ({2}) | {3} | {4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
+                    return string.Format("{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
                 }
                 else
                 {
@@ -9612,7 +9612,7 @@ namespace MHFZ_Overlay.addresses
                     //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
 
-                    return string.Format("{0}{1} | {2} | {3} | {4}", wepname, lv, GetDecoName(WeaponDeco1ID(), 1, true), GetDecoName(WeaponDeco2ID(), 2, true), GetDecoName(WeaponDeco3ID(), 3, true));
+                    return string.Format("{0}{1}", wepname, lv);
 
                 }
                 else if (className == "Gunner")
@@ -9620,12 +9620,25 @@ namespace MHFZ_Overlay.addresses
                     Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
                     //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
-                    return string.Format("{0}{1} | {2} | {3} | {4}", wepname, lv, GetDecoName(WeaponDeco1ID(), 1, true), GetDecoName(WeaponDeco2ID(), 2, true), GetDecoName(WeaponDeco3ID(), 3, true));
+                    return string.Format("{0}{1}", wepname, lv);
                 }
                 else
                 {
                     return "None";
                 }
+            }
+        }
+
+        public string GetWeaponDecosForImage
+        {
+            get
+            {
+                string className = GetWeaponClass();
+
+                if (className == "Blademaster" || className == "Gunner")
+                    return string.Format("{0} | {1} | {2}", GetDecoName(WeaponDeco1ID(), 1, true), GetDecoName(WeaponDeco2ID(), 2, true), GetDecoName(WeaponDeco3ID(), 3, true));
+                else 
+                    return "None";
             }
         }
 

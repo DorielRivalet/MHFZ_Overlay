@@ -152,6 +152,7 @@ If the HP shows 0/1 then change area for it to load.
 - Drag and Drop multiple selection
 - FPS counter
 - Sharpness tables
+- Gear rarity colors in hunter info stats
 
 [Check more possible future features here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 
