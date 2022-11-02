@@ -3520,8 +3520,6 @@ namespace MHFZ_Overlay
             s.Save();
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
-            webViewFeriasInfo.Dispose();
-            webViewVideo.Dispose();
             Close();
         }
 
@@ -3536,8 +3534,6 @@ namespace MHFZ_Overlay
             s.Save();
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
-            webViewFeriasInfo.Dispose();
-            webViewVideo.Dispose();
             Close();
         }
 
@@ -3550,8 +3546,6 @@ namespace MHFZ_Overlay
             s.Reload();
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
-            webViewFeriasInfo.Dispose();
-            webViewVideo.Dispose();
             Close();
         }
 
@@ -3565,8 +3559,6 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
-            webViewFeriasInfo.Dispose();
-            webViewVideo.Dispose();
             s.Reload();
             Close();
         }
@@ -3591,8 +3583,6 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
-            webViewFeriasInfo.Dispose();
-            webViewVideo.Dispose();
             s.Reset();
         }
 
@@ -3605,9 +3595,7 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             webViewFerias.Dispose();
-            webViewVideo.Dispose();
             webViewMonsterInfo.Dispose();
-            webViewFeriasInfo.Dispose();
             s.Reset();
         }
 
@@ -3887,9 +3875,7 @@ namespace MHFZ_Overlay
         private void Config_Closed(object sender, EventArgs e)
         {
             webViewFerias.Dispose();
-            webViewVideo.Dispose();
             webViewMonsterInfo.Dispose();
-            webViewFeriasInfo.Dispose();
         }
 
         private void Config_Closing(object sender, EventArgs e)
@@ -3919,13 +3905,12 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-            if (webViewFeriasInfo == null || webViewMonsterInfo == null || webViewVideo == null)
+            if (webViewMonsterInfo == null)
                 return;
 
             Dictionary<string, string> MonsterFeriasOptionDictionary = new Dictionary<string, string>();
             Dictionary<string, string> MonsterWikiOptionDictionary = new Dictionary<string, string>();
             Dictionary<string, string> MonsterVideoLinkOptionDictionary = new Dictionary<string, string>();
-
 
             for (int i = 0; i < monsterInfos.Length; i++)
             {
@@ -3934,12 +3919,12 @@ namespace MHFZ_Overlay
                     MonsterVideoLinkOptionDictionary.Add(videolinkPerRankBand.Key + " " + monsterInfos[i].Name, videolinkPerRankBand.Value);
                 }
 
-                MonsterWikiOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].Description);
+                MonsterWikiOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].WikiLink);
                 MonsterFeriasOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].FeriasLink);
             }
 
-            string selectedInfo = RankBandListBox.SelectedItem.ToString() + " " + MonsterNameListBox.SelectedItem.ToString();
-            selectedInfo = selectedInfo.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+            //string selectedInfo = RankBandListBox.SelectedItem.ToString() + " " + MonsterNameListBox.SelectedItem.ToString();
+            //selectedInfo = selectedInfo.Replace("System.Windows.Controls.ComboBoxItem: ", "");
 
             string selectedName = MonsterNameListBox.SelectedItem.ToString()+"";
             selectedName = selectedName.Replace("System.Windows.Controls.ComboBoxItem: ", "");
@@ -3950,14 +3935,33 @@ namespace MHFZ_Overlay
             if (!MonsterFeriasOptionDictionary.TryGetValue(selectedName, out string? val1) || !MonsterWikiOptionDictionary.TryGetValue(selectedName, out string? val2))
                 return;
 
-            if (webViewVideo.CoreWebView2 == null)
+            if (webViewMonsterInfo.CoreWebView2 == null)
                 return;
 
-            if (MonsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out string? videoval))
-                webViewVideo.CoreWebView2.Navigate(MonsterVideoLinkOptionDictionary[selectedMatchup]);
-
-            webViewMonsterInfo.CoreWebView2.Navigate(MonsterWikiOptionDictionary[MonsterNameListBox.SelectedItem.ToString() + ""]);
-            webViewFeriasInfo.CoreWebView2.Navigate(MonsterFeriasOptionDictionary[MonsterNameListBox.SelectedItem.ToString() + ""]);
+            switch (MonsterInfoViewOptionComboBox.SelectedIndex)
+            {
+                default:
+                    return;
+                case 0://ferias
+                    //https://stackoverflow.com/questions/1265812/howto-define-the-auto-width-of-the-wpf-gridview-column-in-code
+                    DockPanelMonsterInfo.Width = Double.NaN;//Auto
+                    DockPanelMonsterInfo.Height = Double.NaN;//Auto
+                    webViewMonsterInfo.CoreWebView2.Navigate(MonsterFeriasOptionDictionary[MonsterNameListBox.SelectedItem.ToString() + ""]);
+                    return;
+                case 1://wiki
+                    DockPanelMonsterInfo.Width = Double.NaN;//Auto
+                    DockPanelMonsterInfo.Height = Double.NaN;//Auto
+                    webViewMonsterInfo.CoreWebView2.Navigate(MonsterWikiOptionDictionary[MonsterNameListBox.SelectedItem.ToString() + ""]);
+                    return;
+                case 2://youtube
+                    if (MonsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out string? videoval))
+                    {
+                        DockPanelMonsterInfo.Width = 854;
+                        DockPanelMonsterInfo.Height = 480;
+                        webViewMonsterInfo.CoreWebView2.Navigate(MonsterVideoLinkOptionDictionary[selectedMatchup]);
+                    }
+                    return;
+            }
         }
 
         private void MonsterNameListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

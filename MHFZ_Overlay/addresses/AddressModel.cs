@@ -4934,7 +4934,7 @@ namespace MHFZ_Overlay.addresses
             //string address = Convert.ToString(ArmorLegsID(), 16).ToUpper();
             string address;
             if (!(isForImage))
-                address = " ("+id.ToString("X4").ToUpper()+")";
+                address = " (" + id.ToString("X4").ToUpper() + ")";
             else
                 address = "";
 
@@ -9636,7 +9636,7 @@ namespace MHFZ_Overlay.addresses
                 string className = GetWeaponClass();
 
                 if (className == "Blademaster" || className == "Gunner")
-                    return string.Format("{0} | {1} | {2}", GetDecoName(WeaponDeco1ID(), 1, true), GetDecoName(WeaponDeco2ID(), 2, true), GetDecoName(WeaponDeco3ID(), 3, true));
+                    return string.Format("{0} | {1} | {2}", GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
                 else 
                     return "None";
             }
