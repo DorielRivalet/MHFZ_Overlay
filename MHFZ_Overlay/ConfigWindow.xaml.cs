@@ -1045,7 +1045,20 @@ namespace MHFZ_Overlay
                 "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/disf_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
-                    {"","" },
+                    {"Sword and Shield","https://www.youtube.com/embed/leNWg4HoAbQ" },
+                    {"Dual Swords","https://www.youtube.com/embed/obcm9-ebei8" },
+                    {"Great Sword","https://www.youtube.com/embed/obcm9-ebei8" },
+                    {"Long Sword","https://www.youtube.com/embed/3dJR6YqTZcM" },
+                    {"Hammer","" },
+                    {"Hunting Horn","" },
+                    {"Lance","https://www.youtube.com/embed/TTj9T6Tskcg" },
+                    {"Gunlance","https://www.youtube.com/embed/wgR1Bf-kApo" },
+                    {"Tonfa","https://www.youtube.com/embed/1sjynMO0CJk" },
+                    {"Switch Axe F","" },
+                    {"Magnet Spike","https://www.youtube.com/embed/FYS_yi7EQmA" },
+                    {"Light Bowgun","https://www.youtube.com/embed/TPR4nYlWFgY" },
+                    {"Heavy Bowgun","https://www.youtube.com/embed/MHf2R504_xc" },
+                    {"Bow","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Disufiroa"
                 ),new MonsterInfo("Doragyurosu",
@@ -1710,7 +1723,20 @@ namespace MHFZ_Overlay
                 "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/ra-ro_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
-                    {"","" },
+                    {"Sword and Shield","https://www.youtube.com/embed/REF3OBNu4Wo" },
+                    {"Dual Swords","https://www.youtube.com/embed/fAremzgKfos" },
+                    {"Great Sword","https://www.youtube.com/embed/xX7KH0r68f4" },
+                    {"Long Sword","https://www.youtube.com/embed/6G8865fllSo" },
+                    {"Hammer","https://www.youtube.com/embed/A6pqZgrA-9o" },
+                    {"Hunting Horn","https://www.youtube.com/embed/-qMOOTOOnrw" },
+                    {"Lance","https://www.youtube.com/embed/m66unQSZzIc" },
+                    {"Gunlance","https://www.youtube.com/embed/yCz_sigKiGs" },
+                    {"Tonfa","https://www.youtube.com/embed/sj_jMp0T3Pc" },
+                    {"Switch Axe F","https://www.youtube.com/embed/hZvxtDsqSf4" },
+                    {"Magnet Spike","https://www.youtube.com/embed/FLmxy-xCoqM" },
+                    {"Light Bowgun","https://www.youtube.com/embed/xTvTlPkIp3w" },
+                    {"Heavy Bowgun","" },
+                    {"Bow","https://www.youtube.com/embed/gp48Gk-y_JY" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Unknown_(Black_Flying_Wyvern)"
                 ),new MonsterInfo("Uragaan",
