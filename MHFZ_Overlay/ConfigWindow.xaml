@@ -1711,7 +1711,7 @@
                         </ComboBox>
                         <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" x:Name="DockPanelMonsterInfo" Width="Auto" Height="Auto">
                             <wv2:WebView2 Name="webViewMonsterInfo" ToolTip="Monster info"
-                  					    Source="https://xl3lackout.github.io/MHFZ-Ferias-English-Project/img/monszones/rathianhr5.png"
+                  					    Source="https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/img/monszones/rathianhr5.png"
   							    />
                         </DockPanel>
                     </Grid>
@@ -1737,7 +1737,7 @@
                             </Grid.RowDefinitions>
                             <DockPanel Margin="5,5,5,5">
                                 <wv2:WebView2 Name="webViewFerias"
-                  					Source="https://xl3lackout.github.io/MHFZ-Ferias-English-Project/" DefaultBackgroundColor="#f5e0dc"/>
+                  					Source="https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/" DefaultBackgroundColor="#f5e0dc"/>
                             </DockPanel>
                         </Grid>
                     </ScrollViewer>

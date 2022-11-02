@@ -7644,7 +7644,7 @@ namespace MHFZ_Overlay.addresses
         #region get game info
 
         /// <summary>
-        /// https://xl3lackout.github.io/MHFZ-Ferias-English-Project/
+        /// https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/
         /// </summary>
         public string GetGameArmorSkillsPriority
         {
