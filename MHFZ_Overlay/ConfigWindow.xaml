@@ -11,7 +11,7 @@
         xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
             x:Name="Config"
-        Title="Monster Hunter Frontier Z Overlay v0.5.3"
+        Title="Monster Hunter Frontier Z Overlay v0.6.2"
         Height="720" Width="1280" ResizeMode="CanResize"
         Foreground="#cdd6f4" 
             Closing="Config_Closing" Closed="Config_Closed"
