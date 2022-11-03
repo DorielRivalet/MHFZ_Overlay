@@ -2,6 +2,7 @@
 using Memory;
 using MHFZ_Overlay.addresses;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Runtime.InteropServices;
@@ -376,6 +377,84 @@ namespace MHFZ_Overlay
             LoadDictionaries();
             InitializeDiscordRPC();
             //DataLoader.model.GenerateGearStats();
+            CheckGameState();
+        }
+
+        public void CheckGameState()
+        {
+            int PID = m.GetProcIdFromName("mhf");
+            //Process[] processes = Process.GetProcesses();
+            //foreach (var process in processes)
+            //{
+            //    if (process.MainWindowTitle.Contains("Launcher") && process.Id == PID)
+            //    {
+            //        isInLauncher = true;
+            //    }
+            //    else
+            //    {
+            //        isInLauncher = false;
+
+            //    }
+            //}
+            //https://stackoverflow.com/questions/12372534/how-to-get-a-process-window-class-name-from-c
+            int pidToSearch = PID;
+            //Init a condition indicating that you want to search by process id.
+            var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
+                pidToSearch);
+            //Find the automation element matching the criteria
+            AutomationElement element = AutomationElement.RootElement.FindFirst(
+                TreeScope.Children, condition);
+
+            //get the classname
+            if (element != null)
+            {
+                var className = element.Current.ClassName;
+
+                if (className == "MHFLAUNCH")
+                {
+                    System.Windows.MessageBox.Show("Detected launcher, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    DataLoader.isInLauncher = true;
+                }
+                else
+                {
+                    DataLoader.isInLauncher = false;
+                }
+
+                //var processExists = Process.GetProcesses().Any(p => p.ProcessName.Contains("mhf"));
+                //https://stackoverflow.com/questions/51148/how-do-i-find-out-if-a-process-is-already-running-using-c
+                //https://stackoverflow.com/questions/12273825/c-sharp-process-start-how-do-i-know-if-the-process-ended
+                Process mhfProcess = Process.GetProcessById(pidToSearch);
+
+                mhfProcess.EnableRaisingEvents = true;
+                //Clipboard.SetText(String.Format("isInLauncher : {0}. title: {1}", isInLauncher, className));
+                mhfProcess.Exited += (sender, e) =>
+                {
+                    //int pidToSearch = m.GetProcIdFromName("mhf");
+                    ////Init a condition indicating that you want to search by process id.
+                    //var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
+                    //    pidToSearch);
+                    ////Find the automation element matching the criteria
+                    //AutomationElement element = AutomationElement.RootElement.FindFirst(
+                    //    TreeScope.Children, condition);
+
+                    //string state;
+
+                    //if (element == null || pidToSearch == 0)
+                    //    state = "NULL";
+
+                    ////get the classname
+                    //var className = element.Current.ClassName;
+
+                    //if (className == "MHFLAUNCH")
+                    //    state = "Yes";
+                    //else
+                    //    state = "No";
+
+                    //if (state == "NULL")
+                    DataLoader.closedGame = true;
+                    System.Windows.MessageBox.Show("Detected closed game, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                };
+            };
         }
 
 
