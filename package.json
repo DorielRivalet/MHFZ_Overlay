@@ -47,6 +47,30 @@
               "type": "fix",
               "section": "Bug Fixes"
             },
+            {
+              "type": "refactor",
+              "section": "For Developers"
+            },
+            {
+              "type": "ci",
+              "section": "For Developers"
+            },
+            {
+              "type": "docs",
+              "section": "For Developers"
+            },
+            {
+              "type": "style",
+              "section": "For Developers"
+            },
+            {
+              "type": "test",
+              "section": "For Developers"
+            },
+            {
+              "type": "perf",
+              "section": "For Developers"
+            },
             {}
           ]
         }
