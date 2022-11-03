@@ -21,7 +21,7 @@
 
 [The design and icons used in this project are part of the *Material Design Icons* and related components](https://fonts.google.com/icons)
 
-The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced.
+The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced. This project also uses Font Awesome's fonts.
 
 ## Requirements
 
@@ -32,8 +32,8 @@ The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospac
 
 1. [Get **ALL** of the requirements](#requirements)
 2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest)
-3. Make sure Windows or your antivirus did not delete the `MHFZOverlay.dll` file (because it reads the games memory windows might detect it as a trojan so you might have to get it out of quarantine)
-4. Run `MHFZ_Overlay.exe`
+3. Make sure Windows or your antivirus did not delete the files (because it reads the games memory windows might detect it as a trojan so you might have to get it out of quarantine)
+4. Run `MHFZ_OverlaySetup.exe` **as Administrator**
 5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
 
 ## Hotkeys
@@ -48,7 +48,7 @@ If the overlay doesn't seem to load values properly, restart it. If that didn't 
 
 Additionally, if information from the overlay is wrong or inaccurate (e.g. monster parts labels), feel free to send an issue.
 
-If the monster HP shown is less than what its actual values should be, restart both the game and the overlay.
+If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If issue still occurs, disable Effective HP, otherwise send a bug report if there isn't already one.
 
 ## Features
 
@@ -91,6 +91,11 @@ If the monster HP shown is less than what its actual values should be, restart b
 - [x] [Discord Rich Presence](#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area, [speedrun mode, zen mode](#how-to-enable-speedrun--zen-modes), and more!)
 
 ![Discord Rich Presence](./demo/discord5.png)
+![Discord Rich Presence](./demo/discord10.png)
+
+![Discord Rich Presence](./demo/discord9.png)
+
+![Discord Rich Presence](./demo/discord9.gif)
 
 ## Bugs
 
@@ -98,12 +103,21 @@ If the monster HP shown is less than what its actual values should be, restart b
 - With Monster EHP enabled, if you cart, the max EHP turns into the current EHP, along with some other info max values
 - Sometimes when exiting Drag and Drop the monster HP information disappears
 - Spawning in the same area as the monster doesn't load the information properly. Fix: re-enter area
-- Duremudira HP not showing. Fix: enable *Always Show Monster Info*, load another quest showing the HP bars (not just the numbers), then retry.
+- Duremudira/Road/Raviente HP not showing. Fix: enable *Always Show Monster Info*, load another quest showing the HP bars (not just the numbers), then retry.
 - Monster size values not shown correctly
 - Monster HP values are less than the actual values when not loading properly
 - Damage numbers over 1000 not working
 - Yamas and Berukyurosu information not working
-- Daily quests not working
+
+Fully reinstalling the game or .NET dependencies may fix some bugs.
+
+Starting the overlay may take a bit of time because of the dictionaries (*i.e.* **all** in-game gear and items) and other features.
+
+Press `Alt+Enter` twice if your screen resolution got lowered.
+
+If the HP shows 0/1 then change area for it to load.
+
+[Check more bugs here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
 
 ## Features not yet implemented
 
@@ -126,10 +140,21 @@ If the monster HP shown is less than what its actual values should be, restart b
 - Sharpness graph
 - Language options
 - PvP addresses
-- Better Hunter's Road icon
 - Handle multiple objectives information
 - Zenith information in Road
 - Settings import/export
+- Raviente Support Part Info
+- Detect UL/HC
+- Guild Pugi address
+- Performance improvements
+- Armor Set Website links
+- Sky Corridor
+- Drag and Drop multiple selection
+- FPS counter
+- Sharpness tables
+- Gear rarity colors in hunter info stats
+
+[Check more possible future features here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 
 ## How to Enable Discord Rich Presence
 
@@ -149,7 +174,7 @@ If the monster HP shown is less than what its actual values should be, restart b
 
 ![Discord](./demo/discord4.png)
 
-![Discord Rich Presence](./demo/discord6.png)
+![Discord Rich Presence](./demo/discord6.gif)
 
 ## How to Enable Speedrun & Zen Modes
 

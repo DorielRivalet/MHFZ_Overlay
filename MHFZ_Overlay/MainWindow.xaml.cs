@@ -1,27 +1,23 @@
 ﻿using DiscordRPC;
+using Memory;
 using MHFZ_Overlay.addresses;
-using MHFZ_Overlay.controls;
-using Microsoft.VisualBasic;
 using System;
-using System.Diagnostics.Metrics;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
+using System.Windows.Navigation;
 using System.Windows.Threading;
-using static System.Net.WebRequestMethods;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
-using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 using DataFormats = System.Windows.DataFormats;
 using DataObject = System.Windows.DataObject;
@@ -31,6 +27,7 @@ using Label = System.Windows.Controls.Label;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
 //using static System.Globalization.CultureInfo;
+
 
 namespace MHFZ_Overlay
 {
@@ -89,6 +86,8 @@ namespace MHFZ_Overlay
 
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
+        //set version here
+        public const string CurrentProgramVersion = "v0.5.3";
 
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);
@@ -225,7 +224,7 @@ namespace MHFZ_Overlay
         /// </summary>
         public static RichPresence presenceTemplate = new RichPresence()
         {
-            Details = "【MHF-Z】Overlay v0.3.0",
+            Details = "【MHF-Z】Overlay "+CurrentProgramVersion,
             State = "Loading...",
             //check img folder
             Assets = new Assets()
@@ -237,7 +236,7 @@ namespace MHFZ_Overlay
             },
             Buttons = new DiscordRPC.Button[]
                 {
-                    new DiscordRPC.Button() {Label = "Overlay Repository", Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
+                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
                     new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
                 }
         };
@@ -279,7 +278,7 @@ namespace MHFZ_Overlay
                 presenceTemplate.Buttons = new DiscordRPC.Button[] { }; ;
                 presenceTemplate.Buttons = new DiscordRPC.Button[]
                 {
-                    new DiscordRPC.Button() {Label = "Overlay Repository", Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
+                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
                     new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
                 };
                 //}
@@ -289,7 +288,7 @@ namespace MHFZ_Overlay
                     presenceTemplate.Buttons = new DiscordRPC.Button[] { }; ;
                     presenceTemplate.Buttons = new DiscordRPC.Button[]
                     {
-                    new DiscordRPC.Button() {Label = "Overlay Repository", Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
+                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
                     new DiscordRPC.Button() { Label = "Join Discord Server", Url = String.Format("https://discord.com/invite/{0}",GetDiscordServerInvite)}
                     };
                 }
@@ -302,6 +301,44 @@ namespace MHFZ_Overlay
         #endregion
 
         #region main
+
+        public bool itemsLoaded = false;
+        public bool questsLoaded = false;
+        public bool gearLoaded = false;
+
+        /// <summary>
+        /// Loads the dictionaries
+        /// </summary>
+        private void LoadDictionaries()
+        {
+            if (!(questsLoaded && ShowDiscordQuestNames))
+            {
+                questsLoaded = true;
+                Dictionary.Quests.Initiate();
+            }
+
+            if (!(itemsLoaded))
+            {
+                itemsLoaded = true;
+                //load item list
+                Dictionary.Items.initiate();
+            }
+
+            if (!(gearLoaded))
+            {
+                gearLoaded = true;
+                //load all gear lists
+                Dictionary.MeleeWeapons.Initiate();
+                Dictionary.RangedWeapons.Initiate();
+                Dictionary.ArmorHeads.Initiate();
+                Dictionary.ArmorChests.Initiate();
+                Dictionary.ArmorArms.Initiate();
+                Dictionary.ArmorWaists.Initiate();
+                Dictionary.ArmorLegs.Initiate();
+            }
+        }
+
+
 
         //Main entry point?        
         /// <summary>
@@ -337,12 +374,94 @@ namespace MHFZ_Overlay
 
             //Console.WriteLine("Press any key to terminate");
             //onsole.ReadKey();
+            LoadDictionaries();
             InitializeDiscordRPC();
+            //DataLoader.model.GenerateGearStats();
+            CheckGameState();
+        }
+
+        public void CheckGameState()
+        {
+            int PID = m.GetProcIdFromName("mhf");
+            //Process[] processes = Process.GetProcesses();
+            //foreach (var process in processes)
+            //{
+            //    if (process.MainWindowTitle.Contains("Launcher") && process.Id == PID)
+            //    {
+            //        isInLauncher = true;
+            //    }
+            //    else
+            //    {
+            //        isInLauncher = false;
+
+            //    }
+            //}
+            //https://stackoverflow.com/questions/12372534/how-to-get-a-process-window-class-name-from-c
+            int pidToSearch = PID;
+            //Init a condition indicating that you want to search by process id.
+            var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
+                pidToSearch);
+            //Find the automation element matching the criteria
+            AutomationElement element = AutomationElement.RootElement.FindFirst(
+                TreeScope.Children, condition);
+
+            //get the classname
+            if (element != null)
+            {
+                var className = element.Current.ClassName;
+
+                if (className == "MHFLAUNCH")
+                {
+                    System.Windows.MessageBox.Show("Detected launcher, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    DataLoader.isInLauncher = true;
+                }
+                else
+                {
+                    DataLoader.isInLauncher = false;
+                }
+
+                //var processExists = Process.GetProcesses().Any(p => p.ProcessName.Contains("mhf"));
+                //https://stackoverflow.com/questions/51148/how-do-i-find-out-if-a-process-is-already-running-using-c
+                //https://stackoverflow.com/questions/12273825/c-sharp-process-start-how-do-i-know-if-the-process-ended
+                Process mhfProcess = Process.GetProcessById(pidToSearch);
+
+                mhfProcess.EnableRaisingEvents = true;
+                //Clipboard.SetText(String.Format("isInLauncher : {0}. title: {1}", isInLauncher, className));
+                mhfProcess.Exited += (sender, e) =>
+                {
+                    //int pidToSearch = m.GetProcIdFromName("mhf");
+                    ////Init a condition indicating that you want to search by process id.
+                    //var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
+                    //    pidToSearch);
+                    ////Find the automation element matching the criteria
+                    //AutomationElement element = AutomationElement.RootElement.FindFirst(
+                    //    TreeScope.Children, condition);
+
+                    //string state;
+
+                    //if (element == null || pidToSearch == 0)
+                    //    state = "NULL";
+
+                    ////get the classname
+                    //var className = element.Current.ClassName;
+
+                    //if (className == "MHFLAUNCH")
+                    //    state = "Yes";
+                    //else
+                    //    state = "No";
+
+                    //if (state == "NULL")
+                    DataLoader.closedGame = true;
+                    System.Windows.MessageBox.Show("Detected closed game, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                };
+            };
         }
 
 
         int counter = 0;
         int prevTime = 0;
+
+        private bool showedNullError = false;
 
         //
         public void Timer_Tick(object? obj, EventArgs e)
@@ -367,6 +486,11 @@ namespace MHFZ_Overlay
 
             // Debug.WriteLine("Monster1 SEL=" + DataLoader.model.RoadSelectedMonster() + " ID=" + DataLoader.model.LargeMonster1ID() + " HP=" + DataLoader.model.Monster1HPInt() + "/" + DataLoader.model.SavedMonster1MaxHP);
             //Debug.WriteLine("Monster2 SEL=" + DataLoader.model.RoadSelectedMonster() + " ID=" + DataLoader.model.LargeMonster2ID() + " HP=" + DataLoader.model.Monster2HPInt() + "/" + DataLoader.model.SavedMonster2MaxHP);
+            if (isInLauncher() == "NULL" && !showedNullError)
+            {
+                showedNullError = true;
+                //System.Windows.MessageBox.Show("Incorrect values detected, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            }
         }
 
         int curNum = 0;
@@ -581,6 +705,11 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowMonsterStun = v && s.MonsterStunShown;
 
             DataLoader.model.ShowMonsterHPBars = v && s.HealthBarsShown;
+            DataLoader.model.ShowMonster1HPBar = v && s.Monster1HealthBarShown;
+            DataLoader.model.ShowMonster2HPBar = v && s.Monster2HealthBarShown;
+            DataLoader.model.ShowMonster3HPBar = v && s.Monster3HealthBarShown;
+            DataLoader.model.ShowMonster4HPBar = v && s.Monster4HealthBarShown;
+
             DataLoader.model.ShowMonsterPartHP = v && s.PartThresholdShown;
             DataLoader.model.ShowMonster1Icon = v && s.Monster1IconShown;
         }
@@ -604,6 +733,8 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowHitCountInfo = v && s.HitCountShown;
             DataLoader.model.ShowPlayerAtkInfo = v && s.PlayerAtkShown;
             DataLoader.model.ShowSharpness = v && s.EnableSharpness;
+
+            DataLoader.model.ShowMap = v && s.EnableMap;
         }
 
         #endregion
@@ -615,12 +746,75 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string getAreaName(int id)
+        public string GetAreaName(int id)
         {
             if (id == 0)
                 return "Loading...";
             Dictionary.MapAreaList.MapAreaID.TryGetValue(id, out string? areaname);
-            return areaname + "";
+            Dictionary.MapAreaList.MapAreaID.TryGetValue(DataLoader.model.RavienteAreaID(), out string? raviareaname);
+
+            switch (DataLoader.model.getRaviName())
+            {
+                default://or None
+                    return areaname + "";
+                case "Raviente":
+                case "Violent Raviente":
+                    return raviareaname + "";
+                case "Berserk Raviente Practice":
+                case "Berserk Raviente":
+                case "Extreme Raviente":
+                    if (DataLoader.model.QuestID() != 55796 || DataLoader.model.QuestID() != 55807 || DataLoader.model.QuestID() != 54751 || DataLoader.model.QuestID() != 54761 || DataLoader.model.QuestID() != 55596 || DataLoader.model.QuestID() != 55607)
+                        return areaname + "";
+                    else
+                        return raviareaname + "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the caravan score.
+        /// </summary>
+        /// <returns></returns>
+        public string GetCaravanScore()
+        {
+            if (DataLoader.model.ShowCaravanScore())
+                return string.Format("Caravan Score: {0} | ", DataLoader.model.CaravanScore());
+            else
+                return "";
+        }
+
+        /// <summary>
+        /// Gets the caravan skills.
+        /// </summary>
+        /// <returns></returns>
+        public string GetCaravanSkills()
+        {
+            int id1 = DataLoader.model.CaravanSkill1();
+            int id2 = DataLoader.model.CaravanSkill2();
+            int id3 = DataLoader.model.CaravanSkill3();
+
+            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id1, out string? caravanSkillName1);
+            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id2, out string? caravanSkillName2);
+            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id3, out string? caravanSkillName3);
+
+            if (caravanSkillName1 == "" || caravanSkillName1 == "None")
+                return "None";
+            else if (caravanSkillName2 == "" || caravanSkillName2 == "None")
+                return caravanSkillName1 + "";
+            else if (caravanSkillName3 == "" || caravanSkillName3 == "None")
+                return caravanSkillName1 + ", " + caravanSkillName2;
+            else
+                return caravanSkillName1 + ", " + caravanSkillName2 + ", " + caravanSkillName3;
+        }
+
+        /// <summary>
+        /// Gets the diva skill name from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetDivaSkillNameFromID(int id)
+        {
+            Dictionary.DivaSkillList.DivaSkillID.TryGetValue(id, out string? divaskillaname);
+            return divaskillaname + "";
         }
 
         /// <summary>
@@ -675,7 +869,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string getItemName(int id)
+        public string GetItemName(int id)
         {
             string itemValue1;
             bool isItemExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out itemValue1);  //returns true
@@ -684,7 +878,20 @@ namespace MHFZ_Overlay
             return itemValue1 + "";
         }
 
-        public bool itemsLoaded = false;
+        /// <summary>
+        /// Gets the name of the quest.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetQuestNameFromID(int id)
+        {
+            if (!(ShowDiscordQuestNames)) return "";
+            string QuestValue1;
+            bool isQuestExists1 = Dictionary.Quests.QuestIDs.TryGetValue(id, out QuestValue1);  //returns true
+            //Console.WriteLine(itemValue1); //Print "First"
+            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
+            return QuestValue1 + "";
+        }
 
         /// <summary>
         /// Gets the weapon name from identifier.
@@ -999,8 +1206,9 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="iconName">Name of the icon.</param>
         /// <returns></returns>
-        public string GetRealMonsterName(string iconName)
+        public string GetRealMonsterName(string iconName, bool isLargeImageText = false)
         {
+            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             //quest ids:
             //mp road: 23527
             //solo road: 23628
@@ -1016,22 +1224,520 @@ namespace MHFZ_Overlay
             //3rd district dure 2: 21734
             //UNUSED sky corridor: 21730
             //sky corridor prologue: 21729
-            string RealMonsterName = iconName.Replace("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/", "");
-            RealMonsterName = RealMonsterName.Replace(".gif", "");
-            RealMonsterName = RealMonsterName.Replace(".png", "");
-            RealMonsterName = RealMonsterName.Replace("zenith_", "");
-            RealMonsterName = RealMonsterName.Replace("_", " ");
+            //string RealMonsterName = iconName.Replace("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/", "");
+            //RealMonsterName = RealMonsterName.Replace(".gif", "");
+            //RealMonsterName = RealMonsterName.Replace(".png", "");
+            //RealMonsterName = RealMonsterName.Replace("zenith_", "");
+            //RealMonsterName = RealMonsterName.Replace("_", " ");
 
-            //https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
-            RealMonsterName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(RealMonsterName);
+            ////https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
+            //RealMonsterName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(RealMonsterName);
+
+            int id;
+
+            if (DataLoader.model.roadOverride() == false)
+                id = DataLoader.model.RoadSelectedMonster() == 0 ? DataLoader.model.LargeMonster1ID() : DataLoader.model.LargeMonster2ID();
+            else if (DataLoader.model.CaravanOverride())
+                id = DataLoader.model.CaravanMonster1ID();
+            else
+                id = DataLoader.model.LargeMonster1ID();
 
             //dure
             if (DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750)
                 return "Duremudira";
             else if (DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649)
                 return "Arrogant Duremudira";
-            else
-                return RealMonsterName;
+
+            //ravi
+            if (DataLoader.model.getRaviName() != "None")
+            {
+                switch (DataLoader.model.getRaviName())
+                {
+                    case "Raviente":
+                        return "Raviente";
+                    case "Violent Raviente":
+                        return "Violent Raviente";
+                    case "Berserk Raviente Practice":
+                        return "Berserk Raviente (Practice)";
+                    case "Berserk Raviente":
+                        return "Berserk Raviente";
+                    case "Extreme Raviente":
+                        return "Extreme Raviente";
+                    default:
+                        return "Raviente";
+                }
+            }
+
+
+            switch (id)
+            {
+                case 0: //none
+                    return "None";
+                case 1:
+                    return "Rathian";
+                case 2:
+                    if (DataLoader.model.RankBand() == 53)
+                        return "Fatalis";
+                    else
+                        return "Fatalis";
+                case 3:
+                    return "Kelbi";
+                case 4:
+                    return "Mosswine";
+                case 5:
+                    return "Bullfango";
+                case 6:
+                    return "Yian Kut-Ku";
+                case 7:
+                    return "Lao-Shan Lung";
+                case 8:
+                    return "Cephadrome";
+                case 9:
+                    return "Felyne";
+                case 10: //veggie elder
+                    return "Veggie Elder";
+                case 11:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Rathalos";
+                    else
+                        return "Rathalos";
+                case 12:
+                    return "Aptonoth";
+                case 13:
+                    return "Genprey";
+                case 14:
+                    return "Diablos";
+                case 15:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Khezu";
+                    else
+                        return "Khezu";
+                case 16:
+                    return "Velociprey";
+                case 17:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Gravios";
+                    else
+                        return "Gravios";
+                case 18:
+                    return "Felyne";
+                case 19:
+                    return "Vespoid";
+                case 20:
+                    return "Gypceros";
+                case 21:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Plesioth";
+                    else
+                        return "Plesioth";
+                case 22:
+                    return "Basarios";
+                case 23:
+                    return "Melynx";
+                case 24:
+                    return "Hornetaur";
+                case 25:
+                    return "Apceros";
+                case 26:
+                    return "Monoblos";
+                case 27:
+                    return "Velocidrome";
+                case 28:
+                    return "Gendrome";
+                case 29://rocks
+                    return "Rocks";
+                case 30:
+                    return "Ioprey";
+                case 31:
+                    return "Iodrome";
+                case 32://pugis
+                    return "Poogie";
+                case 33:
+                    return "Kirin";
+                case 34:
+                    return "Cephalos";
+                case 35:
+                    return "Giaprey";
+                case 36:
+                    if (DataLoader.model.RankBand() == 53)
+                        return "Crimson Fatalis";
+                    else
+                        return "Crimson Fatalis";
+                case 37:
+                    return "Pink Rathian";
+                case 38:
+                    return "Blue Yian Kut-Ku";
+                case 39:
+                    return "Purple Gypceros";
+                case 40:
+                    return "Yian Garuga";
+                case 41:
+                    return "Silver Rathalos";
+                case 42:
+                    return "Gold Rathian";
+                case 43:
+                    return "Black Diablos";
+                case 44:
+                    return "White Monoblos";
+                case 45:
+                    return "Red Khezu";
+                case 46:
+                    return "Green Plesioth";
+                case 47:
+                    return "Black Gravios";
+                case 48:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Daimyo Hermitaur";
+                    else
+                        return "Daimyo Hermitaur";
+                case 49:
+                    return "Azure Rathalos";
+                case 50:
+                    return "Ashen Lao-Shan Lung";
+                case 51:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Blangonga";
+                    else
+                        return "Blangonga";
+                case 52:
+                    return "Congalala";
+                case 53:
+                    if (DataLoader.model.RankBand() == 56 || DataLoader.model.RankBand() == 57)
+                        return "Rajang";
+                    else
+                        return "Rajang";
+                case 54:
+                    return "Kushala Daora";
+                case 55:
+                    return "Shen Gaoren";
+                case 56:
+                    return "Great Thunderbug";
+                case 57:
+                    return "Shakalaka";
+                case 58:
+                    return "Yama Tsukami";
+                case 59:
+                    return "Chameleos";
+                case 60:
+                    return "Rusted Kushala Daora";
+                case 61:
+                    return "Blango";
+                case 62:
+                    return "Conga";
+                case 63:
+                    return "Remobra";
+                case 64:
+                    return "Lunastra";
+                case 65:
+                    if (DataLoader.model.RankBand() == 32)
+                        return "Supremacy Teostra";
+                    else
+                        return "Teostra";
+                case 66:
+                    return "Hermitaur";
+                case 67:
+                    return "Shogun Ceanataur";
+                case 68:
+                    return "Bulldrome";
+                case 69:
+                    return "Anteka";
+                case 70:
+                    return "Popo";
+                case 71:
+                    if (DataLoader.model.RankBand() == 53)
+                        return "White Fatalis";
+                    else
+                        return "White Fatalis";
+                case 72:
+                    return "Yama Tsukami";
+                case 73:
+                    return "Ceanataur";
+                case 74:
+                    return "Hypnoc";
+                case 75:
+                    return "Lavasioth";
+                case 76:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Zenith Tigrex";
+                    else
+                        return "Tigrex";
+                case 77:
+                    return "Akantor";
+                case 78:
+                    return "Bright Hypnoc";
+                case 79:
+                    return "Red Lavasioth";
+                case 80:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Espinas";
+                    else
+                        return "Espinas";
+                case 81:
+                    return "Orange Espinas";
+                case 82:
+                    return "Silver Hypnoc";
+                case 83:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Akura Vashimu";
+                    else
+                        return "Akura Vashimu";
+                case 84:
+                    return "Akura Jebia";
+                case 85:
+                    return "Berukyurosu";
+                case 86://cactus
+                    return "Cactus";
+                case 87://gorge objects
+                    return "Gorge Object";
+                case 88://gorge rocks
+                    return "Gorge Rock";
+                case 89:
+                    if (DataLoader.model.RankBand() == 32 || DataLoader.model.RankBand() == 54)
+                        return "Thirsty Pariapuria";
+                    else
+                        return "Pariapuria";
+                case 90:
+                    return "White Espinas";
+                case 91:
+                    return "Kamu Orugaron";
+                case 92:
+                    return "Nono Orugaron";
+                case 93:
+                    return "Raviente";
+                case 94:
+                    return "Dyuragaua";
+                case 95:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Doragyurosu";
+                    else if (DataLoader.model.RankBand() == 32)
+                        return "Supremacy Doragyurosu";
+                    else
+                        return "Doragyurosu";
+                case 96:
+                    return "Gurenzeburu";
+                case 97:
+                    return "Burukku";
+                case 98:
+                    return "Erupe";
+                case 99:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Rukodiora";
+                    else
+                        return "Rukodiora";
+                case 100:
+                    if (DataLoader.model.RankBand() == 70 || DataLoader.model.RankBand() == 54)
+                        return "Unknown";
+                    else
+                        return "Unknown";
+                case 101:
+                    return "Gogomoa";
+                case 102://kokomoa
+                    return "Kokomoa";
+                case 103:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Taikun Zamuza";
+                    else
+                        return "Taikun Zamuza";
+                case 104:
+                    return "Abiorugu";
+                case 105:
+                    return "Kuarusepusu";
+                case 106:
+                    if (DataLoader.model.RankBand() == 32)
+                        return "Supremacy Odibatorasu";
+                    else
+                        return "Odibatorasu";
+                case 107:
+                    if (DataLoader.model.RankBand() == 54 || DataLoader.model.RankBand() == 55)
+                        return "Disufiroa";
+                    else
+                        return "Disufiroa";
+                case 108:
+                    return "Rebidiora";
+                case 109:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Anorupatisu";
+                    else
+                        return "Anorupatisu";
+                case 110:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Hyujikiki";
+                    else
+                        return "Hyujikiki";
+                case 111:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Midogaron";
+                    else
+                        return "Midogaron";
+                case 112:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Giaorugu";
+                    else
+                        return "Giaorugu";
+                case 113:
+                    if (DataLoader.model.RankBand() == 55)
+                        return "Shifting Mi Ru";
+                    else
+                        return "Mi Ru";
+                case 114:
+                    return "Farunokku";
+                case 115:
+                    return "Pokaradon";
+                case 116:
+                    if (DataLoader.model.RankBand() == 53)
+                        return "Shantien";
+                    else
+                        return "Shantien";
+                case 117:
+                    return "Pokara";
+                case 118://dummy
+                    return "Dummy";
+                case 119:
+                    return "Goruganosu";
+                case 120:
+                    return "Aruganosu";
+                case 121:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Baruragaru";
+                    else
+                        return "Baruragaru";
+                case 122:
+                    return "Zerureusu";
+                case 123:
+                    return "Gougarf";
+                case 124:
+                    return "Uruki";
+                case 125:
+                    return "Forokururu";
+                case 126:
+                    return "Meraginasu";
+                case 127:
+                    return "Diorex";
+                case 128:
+                    return "Garuba Daora";
+                case 129:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Inagami";
+                    else
+                        return "Inagami";
+                case 130:
+                    return "Varusaburosu";
+                case 131:
+                    return "Poborubarumu";
+                case 132:
+                    return "Duremudira";
+                case 133://UNK
+                    return "UNK";
+                case 134:
+                    return "Felyne";
+                case 135://blue npc
+                    return "Blue NPC";
+                case 136://UNK
+                    return "UNK";
+                case 137://cactus
+                    return "Cactus";
+                case 138://veggie elders
+                    return "Veggie Elder";
+                case 139:
+                    return "Gureadomosu";
+                case 140:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Harudomerugu";
+                    else
+                        return "Harudomerugu";
+                case 141:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Toridcless";
+                    else
+                        return "Toridcless";
+                case 142:
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "Gasurabazura";
+                    else
+                        return "Gasurabazura";
+                case 143:
+                    return "Kusubami";
+                case 144:
+                    return "Yama Kurai";
+                case 145://3rd phase duremudira
+                    return "Duremudira";
+                case 146:
+                    if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
+                        return "Howling Zinogre";
+                    else
+                        return "Zinogre";
+                case 147:
+                    return "Deviljho";
+                case 148:
+                    return "Brachydios";
+                case 149:
+                    return "Berserk Raviente";
+                case 150:
+                    return "Toa Tesukatora";
+                case 151:
+                    return "Barioth";
+                case 152:
+                    return "Uragaan";
+                case 153:
+                    return "Stygian Zinogre";
+                case 154:
+                    if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
+                        return "Ruling Guanzorumu";
+                    else
+                        return "Guanzorumu";
+                case 155:
+                    if (DataLoader.model.RankBand() == 55)
+                        return "Golden Deviljho";
+                    else
+                        return "Starving Deviljho";
+                case 156://UNK
+                    return "UNK";
+                case 157://egyurasu
+                    return "Egyurasu";
+                case 158:
+                    return "Voljang";
+                case 159:
+                    return "Nargacuga";
+                case 160:
+                    return "Keoaruboru";
+                case 161:
+                    return "Zenaserisu";
+                case 162:
+                    return "Gore Magala";
+                case 163:
+                    return "Blinking Nargacuga";
+                case 164:
+                    return "Shagaru Magala";
+                case 165:
+                    return "Amatsu";
+                case 166:
+                    if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
+                        return "Burning Freezing Elzelion";
+                    else
+                        return "Elzelion";
+                case 167:
+                    return "Arrogant Duremudira";
+                case 168://rocks
+                    return "Rock";
+                case 169:
+                    return "Seregios";
+                case 170:
+                    return "Bogabadorumu";
+                case 171://unknown blue barrel
+                    return "Blue Barrel";
+                case 172:
+                    return "Blitzkrieg Bogabadorumu";
+                case 173://costumed uruki
+                    return "Uruki";
+                case 174:
+                    return "Sparkling Zerureusu";
+                case 175://PSO2 Rappy
+                    return "PSO2 Rappy";
+                case 176:
+                    return "King Shakalaka";
+                default:
+                    return "Loading...";
+            }
         }
 
         /// <summary>
@@ -1039,8 +1745,9 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetRankNameFromID(int id)
+        public string GetRankNameFromID(int id, bool isLargeImageText = false)
         {
+            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             switch (id)
             {
                 case 0:
@@ -1073,14 +1780,14 @@ namespace MHFZ_Overlay
                 case 42:
                     return "HR5 ";
                 case 32:
-                case 46:
-                    if (GetRealMonsterName(DataLoader.model.CurrentMonster1Icon).Contains("Supremacy"))
-                    {
+                case 46://supremacies
+                    //if (GetRealMonsterName(DataLoader.model.CurrentMonster1Icon).Contains("Supremacy"))
+                    //{
                         return "";
-                    } else
-                    {
-                        return "Supremacy ";
-                    }
+                    //} else
+                    //{
+                     //   return "";
+                    //}
                 case 53://: conquest levels via quest id
                     //shantien
                     //lv1 23585
@@ -1161,13 +1868,13 @@ namespace MHFZ_Overlay
                 case 57://twinhead mi ru / white and brown espi / unknown and zeru / rajang and dorag
                     return "Twinhead ";
                 case 64:
-                    return "Z1 ";
+                    return "Zenith★1 ";
                 case 65:
-                    return "Z2 ";
+                    return "Zenith★2 ";
                 case 66:
-                    return "Z3 ";
+                    return "Zenith★3 ";
                 case 67:
-                    return "Z4 ";
+                    return "Zenith★4 ";
                 case 70://unknown
                     return "Upper Shiten ";
                 case 71:
@@ -1184,8 +1891,9 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetObjectiveNameFromID(int id)
+        public string GetObjectiveNameFromID(int id, bool isLargeImageText = false)
         {
+            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             return id switch
             {
                 0 => "Nothing ",
@@ -1209,7 +1917,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string getAreaIconFromID(int id) //TODO: are highlands, tidal island or painted falls icons correct?
+        public string GetAreaIconFromID(int id) //TODO: are highlands, tidal island or painted falls icons correct?
         {
             switch (id)
             {
@@ -1454,11 +2162,12 @@ namespace MHFZ_Overlay
                 case 392:
                 case 393:
                 case 394:
-                case 399://dure doorway
-                case 414://dure door
                 case 415:
                 case 416:
                     return "https://i.imgur.com/Kq8qx0P.png";
+                case 399://dure doorway
+                case 414://dure door
+                    return "https://i.imgur.com/ylzLXo8.gif";
                 case 400://White Lake areas
                 case 401:
                 case 402:
@@ -1490,7 +2199,7 @@ namespace MHFZ_Overlay
                 case 436:
                     return "https://i.imgur.com/36TTe1a.png";
                 case 459://Hunter's Road Base Camp
-                    return "https://i.imgur.com/Jr8q9av.png";//TODO test
+                    return "https://i.imgur.com/MEPAa5x.png";//TODO test
                 case 288://Gorge areas
                 case 289:
                 case 290:
@@ -1569,7 +2278,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="isHighGradeEdition">if set to <c>true</c> [is high grade edition].</param>
         /// <returns></returns>
-        public string getGameMode(bool isHighGradeEdition)
+        public string GetGameMode(bool isHighGradeEdition)
         {
             if (isHighGradeEdition)
                 return " [High-Grade Edition]";
@@ -1577,14 +2286,51 @@ namespace MHFZ_Overlay
                 return "";
         }
 
+        readonly Mem m = new();
+
+        public string isInLauncher()
+        {
+            int pidToSearch = m.GetProcIdFromName("mhf");
+            //Init a condition indicating that you want to search by process id.
+            var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
+                pidToSearch);
+            //Find the automation element matching the criteria
+            AutomationElement element = AutomationElement.RootElement.FindFirst(
+                TreeScope.Children, condition);
+
+            if (element == null || pidToSearch == 0)
+                return "NULL";
+
+            //get the classname
+            var className = element.Current.ClassName;
+
+            if (className == "MHFLAUNCH")
+                return "Yes";
+            else
+                return "No";
+        }
+
         /// <summary>
         /// Gets the overlay mode.
         /// </summary>
         /// <returns></returns>
-        public string getOverlayMode()
+        public string GetOverlayMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown)
+
+            if (DataLoader.model.Configuring)
+                return "(Configuring) ";
+            else if (DataLoader.closedGame)
+                return "(Closed Game) ";
+            else if (DataLoader.isInLauncher || isInLauncher() == "Yes") //works?
+                return "(Launcher) ";
+            else if (isInLauncher() == "NULL")
+                return "(No game detected) ";
+            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.AreaID() == 0 && DataLoader.model.MeleeWeaponID() == 0 && DataLoader.model.RangedWeaponID() == 0)
+                return "(Main Menu) ";
+            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.AreaID() == 200 && DataLoader.model.MeleeWeaponID() == 0 && DataLoader.model.RangedWeaponID() == 0)
+                return "(World Select) ";
+            else if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown)
                 return "";
             else if (s.TimerInfoShown)
                 return "(Speedrun) ";
@@ -1616,7 +2362,8 @@ namespace MHFZ_Overlay
             //sky corridor prologue: 21729
             if (DataLoader.model.roadOverride() == false)
                 id = DataLoader.model.RoadSelectedMonster() == 0 ? DataLoader.model.LargeMonster1ID() : DataLoader.model.LargeMonster2ID();
-
+            else if (DataLoader.model.CaravanOverride())
+                id = DataLoader.model.CaravanMonster1ID();
             //Duremudira Arena
             if (DataLoader.model.AreaID() == 398 && (DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750)) 
                 id = 132;//duremudira
@@ -1625,204 +2372,219 @@ namespace MHFZ_Overlay
 
             switch (id)
             {
-                case 0: //none (fatalis)
+                case 0: //none (fatalis/random)
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 1:
+                case 1://rathian
                     return "https://i.imgur.com/uW1PHeW.png";
-                case 2:
-                    return "https://i.imgur.com/3pQEtzw.png";
-                case 3:
+                case 2://fatalis
+                    if (DataLoader.model.RankBand() == 53)
+                        return "https://i.imgur.com/VJNLFWf.png";
+                    else
+                        return "https://i.imgur.com/Fht5iyz.png";
+                case 3://kelbi
                     return "https://i.imgur.com/Ad5xCF6.png";
-                case 4:
+                case 4://mosswine
                     return "https://i.imgur.com/qWSVddC.png";
-                case 5:
+                case 5://bullfango
                     return "https://i.imgur.com/qz7CynW.png";
-                case 6:
+                case 6://kutku
                     return "https://i.imgur.com/TtJ7KPw.png";
-                case 7:
+                case 7://lao
                     return "https://i.imgur.com/ZW43PS5.png";
-                case 8:
+                case 8://cephadrome
                     return "https://i.imgur.com/RwkhTLJ.png";
-                case 9:
+                case 9://felyne
                     return "https://i.imgur.com/Ry2zu5r.png";
                 case 10: //veggie elder
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 11:
+                case 11://rathalos
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/o8bJZUN.gif";
                     else
                         return "https://i.imgur.com/suPp2tU.png";
-                case 12:
+                case 12://aptonoth
                     return "https://i.imgur.com/15KEndF.png";
-                case 13:
+                case 13://genprey
                     return "https://i.imgur.com/ChQomJ4.png";
-                case 14:
+                case 14://diablos
                     return "https://i.imgur.com/XZaYYFL.png";
-                case 15:
+                case 15://khezu
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/t58j2Zm.gif";
                     else
                         return "https://i.imgur.com/f8rLuGe.png";
-                case 16:
+                case 16://velociprey
                     return "https://i.imgur.com/WGrl1DY.png";
-                case 17:
+                case 17://gravios
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/PGkduy9.gif";
                     else
                         return "https://i.imgur.com/Sj4SsYR.png";
-                case 18:
+                case 18://felyne
                     return "https://i.imgur.com/Ry2zu5r.png";
-                case 19:
+                case 19://vespoid
                     return "https://i.imgur.com/dhiIvMc.png";
-                case 20:
+                case 20://gypceros
                     return "https://i.imgur.com/vovKgVw.png";
-                case 21:
+                case 21://plesioth
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/bsHESxp.gif";
                     else
                         return "https://i.imgur.com/BQUAjEf.png";
-                case 22:
+                case 22://basarios
                     return "https://i.imgur.com/y86jUp6.png";
-                case 23:
+                case 23://melynx
                     return "https://i.imgur.com/LoqmciT.png";
-                case 24:
+                case 24://hornetaur
                     return "https://i.imgur.com/uXam7c6.png";
-                case 25:
+                case 25://apceros
                     return "https://i.imgur.com/Y2ovscJ.png";
-                case 26:
+                case 26://monoblos
                     return "https://i.imgur.com/bJt02Qe.png";
-                case 27:
+                case 27://velocidrome
                     return "https://i.imgur.com/6HMWaGt.png";
-                case 28:
+                case 28://gendrome
                     return "https://i.imgur.com/XBWX8Wm.png";
                 case 29://rocks
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 30:
+                case 30://ioprey
                     return "https://i.imgur.com/KDxPzPs.png";
-                case 31:
+                case 31://iodrome
                     return "https://i.imgur.com/QsyXEmc.png";
-                case 32://pugis
+                case 32://pugis/poogies
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 33:
+                case 33://kirin
                     return "https://i.imgur.com/5s4ToRS.png";
-                case 34:
+                case 34://cephalos
                     return "https://i.imgur.com/3n7NQG9.png";
-                case 35:
+                case 35://giaprey
                     return "https://i.imgur.com/QPl1AEF.png";
-                case 36:
-                    return "https://i.imgur.com/Aid5Hia.png";
-                case 37:
+                case 36://crimson fatalis
+                    if (DataLoader.model.RankBand() == 53)
+                        return "https://i.imgur.com/PRFnN10.png";
+                    else
+                        return "https://i.imgur.com/T36zMrZ.png";
+                case 37://pink rathian
                     return "https://i.imgur.com/yn3uMc2.png";
-                case 38:
+                case 38://blue kutku
                     return "https://i.imgur.com/NmRxU2H.png";
-                case 39:
+                case 39://purple gypceros
                     return "https://i.imgur.com/eDiBAxX.png";
-                case 40:
+                case 40://garuga
                     return "https://i.imgur.com/ApZmoUv.png";
-                case 41:
+                case 41://silverlos
                     return "https://i.imgur.com/mYY8y19.png";
-                case 42:
+                case 42://goldian
                     return "https://i.imgur.com/xe8nLNM.png";
-                case 43:
+                case 43://black diablos
                     return "https://i.imgur.com/IVXcxRD.png";
-                case 44:
+                case 44://white monoblos
                     return "https://i.imgur.com/BQ9FJBB.png";
-                case 45:
+                case 45://red khezu
                     return "https://i.imgur.com/Cmb6AYd.png";
-                case 46:
+                case 46://green plesioth
                     return "https://i.imgur.com/LQnA7d6.png";
-                case 47:
+                case 47://black gravios
                     return "https://i.imgur.com/Fmw5Etb.png";
-                case 48:
-                    return "https://i.imgur.com/WDe9OJl.png";
-                case 49:
+                case 48://zenith daimyo
+                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
+                        return "https://i.imgur.com/AO0Olia.gif";
+                    else
+                        return "https://i.imgur.com/WDe9OJl.png";
+                case 49://azurelos
                     return "https://i.imgur.com/gSCligX.png";
-                case 50:
+                case 50://ashen lao
                     return "https://i.imgur.com/fHPx16u.png";
-                case 51:
+                case 51://blangonga
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/YiyBzoU.gif";
                     else
                         return "https://i.imgur.com/Di3LdOq.png";
-                case 52:
+                case 52://congalala
                     return "https://i.imgur.com/qxaMV1h.png";
-                case 53:
-                    return "https://i.imgur.com/R1dDHaQ.png";
-                case 54:
+                case 53://rajang
+                    if (DataLoader.model.RankBand() == 56 || DataLoader.model.RankBand() == 57)
+                        return "https://i.imgur.com/HRMmhW1.png";
+                    else
+                        return "https://i.imgur.com/R1dDHaQ.png";
+                case 54://kushala
                     return "https://i.imgur.com/uAyaJ9z.png";
-                case 55:
+                case 55://shen
                     return "https://i.imgur.com/pgKJuGj.png";
-                case 56:
+                case 56://great thunderbug
                     return "https://i.imgur.com/u0M5jXA.png";
-                case 57:
+                case 57://shakalaka
                     return "https://i.imgur.com/UaZkOgY.png";
-                case 58:
+                case 58://yama tsukami
                     return "https://i.imgur.com/suHOj84.png";
-                case 59:
+                case 59://chammy
                     return "https://i.imgur.com/TXmNN2X.png";
-                case 60:
+                case 60://rusted kushala
                     return "https://i.imgur.com/4hNQwSU.png";
-                case 61:
+                case 61://blango
                     return "https://i.imgur.com/3hBdp8b.png";
-                case 62:
+                case 62://conga
                     return "https://i.imgur.com/zxQcbQD.png";
-                case 63:
+                case 63://remobra
                     return "https://i.imgur.com/kewyYlK.png";
-                case 64:
+                case 64://lunastra
                     return "https://i.imgur.com/8OvYfy6.png";
-                case 65:
+                case 65://teostra
                     if (DataLoader.model.RankBand() == 32)
-                        return "https://i.imgur.com/l1zOESv.png";
+                        return "https://i.imgur.com/H3zUhEw.png";
                     else
                         return "https://i.imgur.com/dgq8E90.png";
-                case 66:
+                case 66://hermitaur
                     return "https://i.imgur.com/l2SOZee.png";
-                case 67:
+                case 67://shogun
                     return "https://i.imgur.com/lEcEWZ6.png";
-                case 68:
+                case 68://bulldrome
                     return "https://i.imgur.com/AxBWXBC.png";
-                case 69:
+                case 69://anteka
                     return "https://i.imgur.com/QxGg3Np.png";
-                case 70:
+                case 70://popo
                     return "https://i.imgur.com/jTFVi1A.png";
-                case 71:
-                    return "https://i.imgur.com/LC5OZmo.png";
-                case 72:
+                case 71://white fatalis
+                    if (DataLoader.model.RankBand() == 53)
+                        return "https://i.imgur.com/OAbx9JC.png";
+                    else
+                        return "https://i.imgur.com/z2QtMnG.png";
+                case 72://yama tsukami
                     return "https://i.imgur.com/suHOj84.png";
-                case 73:
+                case 73://ceanataur
                     return "https://i.imgur.com/2PbL0oE.png";
-                case 74:
+                case 74://hypnoc
                     return "https://i.imgur.com/tkYXFBc.png";
-                case 75:
+                case 75://lavasioth
                     return "https://i.imgur.com/ZSgmzGi.png";
-                case 76:
+                case 76://tigrex
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/K7qTAoa.gif";
                     else
                         return "https://i.imgur.com/QKw3HSE.png";
-                case 77:
+                case 77://akantor
                     return "https://i.imgur.com/CKY7zkV.png";
-                case 78:
+                case 78://bright hypnoc
                     return "https://i.imgur.com/fhF6yZY.png";
-                case 79:
+                case 79://red lavasioth
                     return "https://i.imgur.com/AzfTTSq.png";
-                case 80:
+                case 80://espinas
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/sMr1oCg.gif";
                     else
                         return "https://i.imgur.com/cx07Z7B.png";
-                case 81:
+                case 81://orange espi
                     return "https://i.imgur.com/m8DhwiJ.png";
-                case 82:
+                case 82://silver hypnoc
                     return "https://i.imgur.com/WZkQYDL.png";
-                case 83:
+                case 83://akura vashimu
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/jdy96PH.gif";
                     else
                         return "https://i.imgur.com/QiRd5dc.png";
-                case 84:
+                case 84://akura jebia
                     return "https://i.imgur.com/hOfRrph.png";
-                case 85:
+                case 85://beru
                     return "https://i.imgur.com/KBCnVhH.png";
                 case 86://cactus
                     return "https://i.imgur.com/3pQEtzw.png";
@@ -1830,132 +2592,144 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/3pQEtzw.png";
                 case 88://gorge rocks
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 89:
+                case 89://pariapuria
                     if (DataLoader.model.RankBand() == 32 || DataLoader.model.RankBand() == 54)
-                        return "https://i.imgur.com/yDk0aha.png";
+                        return "https://i.imgur.com/rskDsju.png";
                     else
                         return "https://i.imgur.com/eXaT0PD.png";
-                case 90:
+                case 90://white espi
                     return "https://i.imgur.com/Uc5mTQi.png";
-                case 91:
+                case 91://kamu orugaron
                     return "https://i.imgur.com/L9naUDO.png";
-                case 92:
+                case 92://nono orugaron
                     return "https://i.imgur.com/klyXxuc.png";
-                case 93:
+                case 93://raviente
                     return "https://i.imgur.com/blsy8Rx.png";
-                case 94:
+                case 94://dyuragaua
                     return "https://i.imgur.com/dxEtSjL.png";
-                case 95:
+                case 95://dorag
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/qirZmdn.gif";
                     else if (DataLoader.model.RankBand() == 32)
-                        return "https://i.imgur.com/Rk7FKxS.png";
+                        return "https://i.imgur.com/orniFm3.png";
                     else
                         return "https://i.imgur.com/HmNSD8G.png";
-                case 96:
+                case 96://gurenzeburu
                     return "https://i.imgur.com/gLA5gdi.png";
-                case 97:
+                case 97://burukku
                     return "https://i.imgur.com/6RIoFpM.png";
-                case 98:
+                case 98://erupe
                     return "https://i.imgur.com/R3xnyMd.png";
-                case 99:
+                case 99://ruko
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/BhbCOWn.gif";
                     else
                         return "https://i.imgur.com/84ZBXjW.png";
-                case 100:
-                    return "https://i.imgur.com/ssuzTlK.png";
-                case 101:
+                case 100://unknown
+                    if (DataLoader.model.RankBand() == 70 || DataLoader.model.RankBand() == 54)
+                        return "https://i.imgur.com/fplk67z.png";
+                    else
+                        return "https://i.imgur.com/ssuzTlK.png";
+                case 101://gogomoa
                     return "https://i.imgur.com/HBYZoa0.png";
                 case 102://kokomoa
                     return "https://i.imgur.com/HBYZoa0.png";
-                case 103:
+                case 103://taikun
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/FbfYG4P.gif";
                     else
                         return "https://i.imgur.com/CACFYGy.png";
-                case 104:
+                case 104://abio
                     return "https://i.imgur.com/dxkeQcm.png";
-                case 105:
+                case 105://kuaru
                     return "https://i.imgur.com/PqTQLGE.png";
-                case 106:
-                    return "https://i.imgur.com/KvC12wl.png";
-                case 107:
-                    return "https://i.imgur.com/eQnTB2u.png";
-                case 108:
+                case 106://odiba
+                    if (DataLoader.model.RankBand() == 32)
+                        return "https://i.imgur.com/zqvxw7m.png";
+                    else
+                        return "https://i.imgur.com/KvC12wl.png";
+                case 107://disu
+                    if (DataLoader.model.RankBand() == 54 || DataLoader.model.RankBand() == 55)
+                        return "https://i.imgur.com/S8kiGS3.png";
+                    else
+                        return "https://i.imgur.com/eQnTB2u.png";
+                case 108://rebi
                     return "https://i.imgur.com/fdFZFKe.png";
-                case 109:
+                case 109://anoru
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/LUXuyEi.gif";
                     else
                         return "https://i.imgur.com/XKot29j.png";
-                case 110:
+                case 110://hyuji
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/jKcdja3.gif";
                     else
                         return "https://i.imgur.com/YqZLy2J.png";
-                case 111:
+                case 111://mido
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/YJWD5xy.gif";
                     else
                         return "https://i.imgur.com/WvHY8Lf.png";
-                case 112:
+                case 112://giao
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/oTBfALR.gif";
                     else
                         return "https://i.imgur.com/ZFsUNTL.png";
-                case 113:
+                case 113://mi ru
                     if (DataLoader.model.RankBand() == 55)
-                        return "https://i.imgur.com/Zv4TyA6.png";
+                        return "https://i.imgur.com/FWPACuf.png";
                     else
                         return "https://i.imgur.com/e3l7mhh.png";
-                case 114:
+                case 114://faru
                     return "https://i.imgur.com/cBHzq5t.png";
-                case 115:
+                case 115://pokaradon
                     return "https://i.imgur.com/OpYh7mb.png";
-                case 116:
-                    return "https://i.imgur.com/Ib4dmgd.png";
-                case 117:
+                case 116://shantien
+                    if (DataLoader.model.RankBand() == 53)
+                        return "https://i.imgur.com/y0b0y7G.png";
+                    else
+                        return "https://i.imgur.com/Ib4dmgd.png";
+                case 117://pokara
                     return "https://i.imgur.com/jaKE3QM.png";
                 case 118://dummy
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 119:
-                    return "https://i.imgur.com/lhWI52f.png";
-                case 120:
-                    return "https://i.imgur.com/89UGYzZ.png";
-                case 121:
+                case 119://goruganosu
+                    return "https://i.imgur.com/jwR2xoG.png";
+                case 120://aruganosu
+                    return "https://i.imgur.com/d9K9HlH.png";
+                case 121://baru
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/2WKXvPn.gif";
                     else
                         return "https://i.imgur.com/AvO02Ri.png";
-                case 122:
+                case 122://zeru
                     return "https://i.imgur.com/XOEGJRu.png";
-                case 123:
+                case 123://gougarf
                     return "https://i.imgur.com/0TeOdn4.png";
-                case 124:
+                case 124://uruki
                     return "https://i.imgur.com/fQPpwGE.png";
-                case 125:
+                case 125://foro
                     return "https://i.imgur.com/p7LWhIe.png";
-                case 126:
+                case 126://mera
                     return "https://i.imgur.com/iQMDmCN.png";
-                case 127:
+                case 127://diorex
                     return "https://i.imgur.com/4zi1Kva.png";
-                case 128:
+                case 128://garuba
                     return "https://i.imgur.com/NHyezpo.png";
-                case 129:
+                case 129://inagami
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/yDF4h6I.gif";
                     else
                         return "https://i.imgur.com/bioZ1Rx.png";
-                case 130:
+                case 130://varusaburosu
                     return "https://i.imgur.com/KXLFD8f.png";
-                case 131:
+                case 131://pobo
                     return "https://i.imgur.com/56tHHHc.png";
-                case 132:
+                case 132://dure
                     return "https://i.imgur.com/fKVoJ3m.png";
                 case 133://UNK
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 134:
+                case 134://felyne
                     return "https://i.imgur.com/Ry2zu5r.png";
                 case 135://blue npc
                     return "https://i.imgur.com/3pQEtzw.png";
@@ -1967,102 +2741,102 @@ namespace MHFZ_Overlay
                     return "https://i.imgur.com/3pQEtzw.png";
                 case 139:
                     return "https://i.imgur.com/JntsUFx.png";
-                case 140:
+                case 140://harudo
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/5NPChxD.gif";
                     else
                         return "https://i.imgur.com/daI89CT.png";
-                case 141:
+                case 141://torid
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/Z5BuMEZ.gif";
                     else
                         return "https://i.imgur.com/1Ru7AMQ.png";
-                case 142:
+                case 142://gasura
                     if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
                         return "https://i.imgur.com/vwkiFLs.gif";
                     else
                         return "https://i.imgur.com/OtU0yAB.png";
-                case 143:
+                case 143://kusubami
                     return "https://i.imgur.com/EMWA1p7.png";
-                case 144:
-                    return "https://i.imgur.com/rzHoBt7.png";
+                case 144://yama kurai
+                    return "https://i.imgur.com/qy7yTjz.png";
                 case 145://3rd phase duremudira
                     return "https://i.imgur.com/fKVoJ3m.png";
-                case 146:
+                case 146://zinogre
                     if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
-                        return "https://i.imgur.com/nqtgjY2.png";
+                        return "https://i.imgur.com/bcx6HGf.png";
                     else
                         return "https://i.imgur.com/hU4lRx3.png";
-                case 147:
+                case 147://jho
                     return "https://i.imgur.com/eGsb66E.png";
-                case 148:
+                case 148://brachy
                     return "https://i.imgur.com/XrYCP6k.png";
-                case 149:
+                case 149://berserk
                     return "https://i.imgur.com/HDkGUQL.png";
-                case 150:
+                case 150://toa
                     return "https://i.imgur.com/muRi2Yz.png";
-                case 151:
+                case 151://barioth
                     return "https://i.imgur.com/OE88eb9.png";
-                case 152:
+                case 152://uragaan
                     return "https://i.imgur.com/K3vqmPA.png";
-                case 153:
+                case 153://styggy
                     return "https://i.imgur.com/oz11SGA.png";
-                case 154:
+                case 154://guanzorumu
                     if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
-                        return "https://i.imgur.com/fQgQEUT.png";
+                        return "https://i.imgur.com/kBMkdfr.png";
                     else
                         return "https://i.imgur.com/ZaCyD6O.png";
-                case 155:
+                case 155://starving jho
                     if (DataLoader.model.RankBand() == 55)
-                        return "https://i.imgur.com/zqvdQbw.png";
+                        return "https://i.imgur.com/HZc9wjS.png";
                     else
                         return "https://i.imgur.com/OYIaUWR.png";
                 case 156://UNK
                     return "https://i.imgur.com/3pQEtzw.png";
                 case 157://egyurasu
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 158:
+                case 158://voljang
                     return "https://i.imgur.com/WgzdVtV.png";
-                case 159:
+                case 159://narga
                     return "https://i.imgur.com/Xi9lXsZ.png";
-                case 160:
+                case 160://keo
                     return "https://i.imgur.com/tHCL5U3.png";
-                case 161:
+                case 161://zena
                     return "https://i.imgur.com/cLOEjlO.png";
-                case 162:
+                case 162://gore
                     return "https://i.imgur.com/Lq6kNtM.png";
-                case 163:
-                    return "https://i.imgur.com/WS7SNx5.png";
-                case 164:
+                case 163://blinking nargacuga
+                    return "https://i.imgur.com/ossvc1M.png";
+                case 164://shaggy
                     return "https://i.imgur.com/15V9po1.png";
-                case 165:
+                case 165://amatsu
                     return "https://i.imgur.com/z5E7rSP.png";
-                case 166:
+                case 166://elzelion
                     if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
-                        return "https://i.imgur.com/oTxCKYd.png";
+                        return "https://i.imgur.com/HX8b8EB.png";
                     else
                         return "https://i.imgur.com/CxoXy9E.png";
-                case 167:
-                    return "https://i.imgur.com/3FILchg.png";
+                case 167://arrogant dure
+                    return "https://i.imgur.com/HrSImCm.png";
                 case 168://rocks
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 169:
+                case 169://steve
                     return "https://i.imgur.com/BEeL8xd.png";
-                case 170:
+                case 170://boggy
                     return "https://i.imgur.com/tbV6QPE.gif";
                 case 171://unknown blue barrel
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 172:
-                    return "https://i.imgur.com/oA3v6df.png";
+                case 172://blitzkrieg boga
+                    return "https://i.imgur.com/vd6Y06a.png";
                 case 173://costumed uruki
                     return "https://i.imgur.com/fQPpwGE.png";
-                case 174:
-                    return "https://i.imgur.com/2RPa7HB.png";
+                case 174://sparkling zeru
+                    return "https://i.imgur.com/3c8kwQD.png";
                 case 175://PSO2 Rappy
                     return "https://i.imgur.com/3pQEtzw.png";
-                case 176:
+                case 176://king shakalaka
                     return "https://i.imgur.com/UXi0TEu.png";
-                default:
+                default:// "?" icon
                     return "https://i.imgur.com/3pQEtzw.png"; //fatalis
             }
         }
@@ -2107,7 +2881,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public int GetMonster1EHP()
         {
-            return DataLoader.model.DisplayMonsterEHP(float.Parse(DataLoader.model.Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), DataLoader.model.Monster1HPInt(), DataLoader.model.Monster1DefMult());
+            return DataLoader.model.DisplayMonsterEHP(DataLoader.model.Monster1DefMult(), DataLoader.model.Monster1HPInt(), DataLoader.model.Monster1DefMult());
         }
 
         /// <summary>
@@ -2125,8 +2899,9 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetObjective1Name(int id)
+        public string GetObjective1Name(int id, bool isLargeImageText = false)
         {
+            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             string? objValue1;
             bool isNameExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out objValue1);  //returns true
             //Console.WriteLine(itemValue1); //Print "First"
@@ -2152,23 +2927,37 @@ namespace MHFZ_Overlay
         /// Gets the objective1 quantity.
         /// </summary>
         /// <returns></returns>
-        public string GetObjective1Quantity()
+        public string GetObjective1Quantity(bool isLargeImageText = false)
         {
+            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             if (DataLoader.model.Objective1Quantity() <= 1)
                 return "";
             // hunt / capture / slay
             else if (DataLoader.model.ObjectiveType() == 0x1 || DataLoader.model.ObjectiveType() == 0x101 || DataLoader.model.ObjectiveType() == 0x201)
                 return DataLoader.model.Objective1Quantity().ToString() + " ";
-            else 
-                return "";
+            else if (DataLoader.model.ObjectiveType() == 0x8004 || DataLoader.model.ObjectiveType() == 0x18004)
+                return string.Format("({0} True HP) ",DataLoader.model.Objective1Quantity()*100);
+            else
+                return DataLoader.model.Objective1Quantity().ToString() + " ";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string GetRepelDamage()
+        {
+            //1 qty is 100 true hp
+            return "";
         }
 
         /// <summary>
         /// Gets the objective1 current quantity.
         /// </summary>
         /// <returns></returns>
-        public string GetObjective1CurrentQuantity()
+        public string GetObjective1CurrentQuantity(bool isLargeImageText = false)
         {
+            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             if (DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002)
             {
                 if (DataLoader.model.Objective1Quantity() <= 1)
@@ -2184,6 +2973,71 @@ namespace MHFZ_Overlay
                     //increases when u hit a dead large monster
                     return DataLoader.model.Objective1CurrentQuantityMonster().ToString() + "/";
             }  
+        }
+
+        /// <summary>
+        /// Gets the max faints
+        /// </summary>
+        /// <returns></returns>
+        public string GetMaxFaints()
+        {
+            if (
+                (
+                    DataLoader.model.CaravanOverride() && !
+                    (
+                        DataLoader.model.QuestID() == 23603 ||
+                        DataLoader.model.RankBand() == 70 ||
+                        DataLoader.model.QuestID() == 23602 ||
+                        DataLoader.model.QuestID() == 23604 ||
+                        DataLoader.model.QuestID() == 23588 ||
+                        DataLoader.model.QuestID() == 23592 ||
+                        DataLoader.model.QuestID() == 23596 ||
+                        DataLoader.model.QuestID() == 23601 ||
+                        DataLoader.model.QuestID() == 23599 ||
+                        DataLoader.model.QuestID() == 23595 ||
+                        DataLoader.model.QuestID() == 23591 ||
+                        DataLoader.model.QuestID() == 23587 ||
+                        DataLoader.model.QuestID() == 23598 ||
+                        DataLoader.model.QuestID() == 23594 ||
+                        DataLoader.model.QuestID() == 23590 ||
+                        DataLoader.model.QuestID() == 23586 ||
+                        DataLoader.model.QuestID() == 23597 ||
+                        DataLoader.model.QuestID() == 23593 ||
+                        DataLoader.model.QuestID() == 23589 ||
+                        DataLoader.model.QuestID() == 23585
+                    )
+                )
+                
+                ||
+
+                DataLoader.model.QuestID() == 23603 ||
+                DataLoader.model.RankBand() == 70 ||
+                DataLoader.model.QuestID() == 23602 ||
+                DataLoader.model.QuestID() == 23604 ||
+                DataLoader.model.QuestID() == 23588 ||
+                DataLoader.model.QuestID() == 23592 ||
+                DataLoader.model.QuestID() == 23596 ||
+                DataLoader.model.QuestID() == 23601 ||
+                DataLoader.model.QuestID() == 23599 ||
+                DataLoader.model.QuestID() == 23595 ||
+                DataLoader.model.QuestID() == 23591 ||
+                DataLoader.model.QuestID() == 23587 ||
+                DataLoader.model.QuestID() == 23598 ||
+                DataLoader.model.QuestID() == 23594 ||
+                DataLoader.model.QuestID() == 23590 ||
+                DataLoader.model.QuestID() == 23586 ||
+                DataLoader.model.QuestID() == 23597 ||
+                DataLoader.model.QuestID() == 23593 ||
+                DataLoader.model.QuestID() == 23589 ||
+                DataLoader.model.QuestID() == 23585
+                )
+            {
+                return DataLoader.model.AlternativeMaxFaints().ToString(); ;
+            }
+            else
+            {
+                return DataLoader.model.MaxFaints().ToString();
+            }
         }
 
         #endregion
@@ -2220,6 +3074,68 @@ namespace MHFZ_Overlay
                 return false;
         }
 
+        /// <summary>
+        /// Determines whether [is toggeable difficulty].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is toggeable difficulty]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsToggeableDifficulty()
+        {
+            if (!(IsDure()) && !(IsRavi()) && !(IsRoad()) && DataLoader.model.QuestID() != 0)
+            {
+                switch (DataLoader.model.RankBand())
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                    case 11:
+                    case 12:
+                    case 13:
+                    case 14:
+                    case 15:
+                    case 16:
+                    case 17:
+                    case 18:
+                    case 19:
+                    case 20:
+                    case 26:
+                    case 31:
+                    case 42:
+                    case 53:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+            else
+            { 
+                return false; 
+            }
+        }
+
+        /// <summary>
+        /// Determines whether this instance is ravi.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is ravi; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsRavi()
+        {
+            if (DataLoader.model.getRaviName() != "None")
+                return true;
+            else
+                return false;
+        }
+
         //dure and road        
         /// <summary>
         /// In the arena?
@@ -2242,6 +3158,153 @@ namespace MHFZ_Overlay
         private bool inDuremudiraDoorway = false;
 
         /// <summary>
+        /// Gets a value indicating whether [show discord quest names].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [show discord quest names]; otherwise, <c>false</c>.
+        /// </value>
+        public bool ShowDiscordQuestNames
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                if (s.DiscordQuestNameShown == true)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets the star grade.
+        /// </summary>
+        /// <param name="isLargeImageText">if set to <c>true</c> [is large image text].</param>
+        /// <returns></returns>
+        public string GetStarGrade(bool isLargeImageText = false)
+        {
+            if ((ShowDiscordQuestNames && !(isLargeImageText)) || DataLoader.model.CaravanOverride()) 
+                return "";
+
+            if (IsToggeableDifficulty())
+                return string.Format("★{0} ", DataLoader.model.StarGrades().ToString());
+            else
+                return "";
+        }
+
+        /// <summary>
+        /// Gets the quest information.
+        /// </summary>
+        /// <returns></returns>
+        public string GetQuestInformation()
+        {
+            if (ShowDiscordQuestNames)
+            {
+                switch (DataLoader.model.QuestID())
+                {
+                    case 23648://arrogant repel
+                        return "Repel Arrogant Duremudira | ";
+                    case 23649://arrogant slay
+                        return "Slay Arrogant Duremudira | ";
+                    case 23527:// Hunter's Road Multiplayer
+                        return "";                    
+                   case 23628://solo road
+                        return "";
+                    case 21731://1st district dure
+                    case 21749://sky corridor version
+                        //return string.Format("{0}{1} | ", DataLoader.model.FirstDistrictDuremudiraSlays(), DataLoader.model.FirstDistrictDuremudiraEncounters());
+                        return "Slay 1st District Duremudira | "; ;
+                    case 21746://2nd district dure
+                    case 21750://sky corridor version
+                        return "Slay 2nd District Duremudira | ";
+                        //return string.Format("{0}{1} | ", DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
+                    default:
+                        if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
+                            return string.Format("{0}{1}{2}{3}{4}{5} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(),true), GetObjective1CurrentQuantity(true), GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(),true),GetStarGrade(true), GetObjective1Name(DataLoader.model.Objective1ID(),true));
+                        else
+                            return string.Format("{0}{1}{2}{3}{4}{5} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(),true), "", GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(),true), GetStarGrade(true), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon,true));
+                }
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the raviente event.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetRavienteEvent(int id)
+        {
+            //if (!(ShowDiscordQuestNames)) return "";
+            //string EventValue1;
+            Dictionary.RavienteTriggerEvents.RavienteTriggerEventIDs.TryGetValue(id, out string? EventValue1);
+            Dictionary.ViolentRavienteTriggerEvents.ViolentRavienteTriggerEventIDs.TryGetValue(id, out string? EventValue2);
+            Dictionary.BerserkRavienteTriggerEvents.BerserkRavienteTriggerEventIDs.TryGetValue(id, out string? EventValue3);
+            Dictionary.BerserkRavientePracticeTriggerEvents.BerserkRavientePracticeTriggerEventIDs.TryGetValue(id, out string? EventValue4);
+            //Console.WriteLine(itemValue1); //Print "First"
+            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
+            //return EventValue1 + "";
+
+            switch (DataLoader.model.getRaviName())
+            {
+                default:
+                    return "";
+                case "Raviente":
+                    return EventValue1+"";
+                case "Violent Raviente":
+                    return EventValue2+"";
+                case "Berserk Raviente Practice":
+                    return EventValue4+"";
+                case "Berserk Raviente":
+                    return EventValue3+"";
+                case "Extreme Raviente":
+                    return EventValue3+"";
+            }
+        }
+
+
+        /// <summary>
+        /// Get quest state
+        /// </summary>
+        /// <returns></returns>
+        public string GetQuestState()
+        {
+            if (DataLoader.isInLauncher) //works?
+                return "";
+
+            switch (DataLoader.model.QuestState())
+            {
+                default:
+                    return "";
+                case 0:
+                    return "";
+                case 1:
+                    return String.Format("Achieved Main Objective | {0} | ", DataLoader.model.Time);
+                case 129:
+                    return String.Format("Quest Clear! | {0} | ",DataLoader.model.Time);
+            }
+        }
+
+        /// <summary>
+        /// Gets the size of the party.
+        /// </summary>
+        /// <returns></returns>
+        public string GetPartySize()
+        {
+            if (DataLoader.model.QuestID() == 0 || DataLoader.model.PartySize() == 0 || isInLauncher() == "NULL" || isInLauncher() == "Yes")
+            {
+                return "";
+            }
+            else
+            {
+                return string.Format("Party: {0}/{1} | ", DataLoader.model.PartySize(), DataLoader.model.PartySizeMax());
+            }
+        }
+       
+
+        /// <summary>
         /// Updates the discord RPC.
         /// </summary>
         private void UpdateDiscordRPC()
@@ -2251,7 +3314,7 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            presenceTemplate.Details = string.Format("{0}{1}{2}", getOverlayMode(), getAreaName(DataLoader.model.AreaID()), getGameMode(DataLoader.isHighGradeEdition));
+            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(),GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
 
             //quest ids:
             //mp road: 23527
@@ -2268,6 +3331,31 @@ namespace MHFZ_Overlay
             //3rd district dure 2: 21734
             //UNUSED sky corridor: 21730
             //sky corridor prologue: 21729
+            //raviente 62105
+            //raviente carve 62108
+            ///violent raviente 62101
+            ///violent carve 62104
+            //berserk slay practice 55796
+            //berserk support practice 1 55802
+            //berserk support practice 2 55803
+            //berserk support practice 3 55804
+            //berserk support practice 4 55805
+            //berserk support practice 5 55806
+            //berserk practice carve 55807
+            //berserk slay  54751
+            //berserk support 1 54756
+            //berserk support 2 54757
+            //berserk support 3 54758
+            //berserk support 4 54759
+            //berserk support 5 54760
+            //berserk carve 54761
+            //extreme slay (musou table 54) 55596 
+            //extreme support 1 55602
+            //extreme support 2 55603
+            //extreme support 3 55604
+            //extreme support 4 55605
+            //extreme support 5 55606
+            //extreme carve 55607
 
             //DataLoader.model.DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat)
 
@@ -2299,64 +3387,91 @@ namespace MHFZ_Overlay
                         break;
                     case 21731://1st district dure
                     case 21749://sky corridor version
-                        presenceTemplate.State = String.Format("Slay 1st District Duremudira | Slain: {0} | Encounters: {1}",DataLoader.model.FirstDistrictDuremudiraSlays(),DataLoader.model.FirstDistrictDuremudiraEncounters());
+                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.FirstDistrictDuremudiraSlays(),DataLoader.model.FirstDistrictDuremudiraEncounters());
                         break;
                     case 21746://2nd district dure
                     case 21750://sky corridor version
-                        presenceTemplate.State = String.Format("Slay 2nd District Duremudira | Slain: {0} | Encounters: {1}", DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
+                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
+                        break;
+                    case 62105://raviente quests
+                    case 62108:
+                    case 62101:
+                    case 62104:
+                    case 55796:
+                    case 55802:
+                    case 55803:
+                    case 55804:
+                    case 55805:
+                    case 55806:
+                    case 55807:
+                    case 54751:
+                    case 54756:
+                    case 54757:
+                    case 54758:
+                    case 54759:
+                    case 54760:
+                    case 54761:
+                    case 55596://extreme
+                    case 55602:
+                    case 55603:
+                    case 55604:
+                    case 55605:
+                    case 55606:
+                    case 55607:
+                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetStarGrade(), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
                         break;
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4} | True Raw: {5} (Max {6}) | Hits: {7}", GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}",GetQuestNameFromID(DataLoader.model.QuestID()),GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetStarGrade(), GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
                         else
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4} | True Raw: {5} (Max {6}) | Hits: {7}",GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(),GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.ATK,DataLoader.model.HighestAtk,DataLoader.model.HitCount);
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}",GetQuestNameFromID(DataLoader.model.QuestID()),GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(),GetRankNameFromID(DataLoader.model.RankBand()), GetStarGrade(),GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.ATK,DataLoader.model.HighestAtk,DataLoader.model.HitCount);
                         break;
                 }
 
                 //Gathering/etc
                 if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
                 {
-                    presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageKey = GetAreaIconFromID(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}",GetQuestInformation(),GetAreaName(DataLoader.model.AreaID()));
                 }
                 //Tenrou Sky Corridor areas
                 else if (DataLoader.model.AreaID() == 391 || DataLoader.model.AreaID() == 392 || DataLoader.model.AreaID() == 394 || DataLoader.model.AreaID() == 415 || DataLoader.model.AreaID() == 416) 
                 {
-                    presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageKey = GetAreaIconFromID(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), GetAreaName(DataLoader.model.AreaID()));
                 }
                 //Duremudira Doors
                 else if (DataLoader.model.AreaID() == 399 || DataLoader.model.AreaID() == 414) 
                 {
-                    presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageKey = GetAreaIconFromID(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), GetAreaName(DataLoader.model.AreaID()));
                 }
                 //Duremudira Arena
                 else if (DataLoader.model.AreaID() == 398) 
                 {
                     presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}/{1}{2}", GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
                 }
                 //Hunter's Road Base Camp
                 else if (DataLoader.model.AreaID() == 459) 
                 {
-                    presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageKey = GetAreaIconFromID(DataLoader.model.AreaID());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1} | Faints: {2}/{3}", GetQuestInformation(), GetAreaName(DataLoader.model.AreaID()),DataLoader.model.CurrentFaints(),GetMaxFaints());
+                }
+                //Raviente
+                else if (DataLoader.model.AreaID() == 309 || (DataLoader.model.AreaID() >= 311 && DataLoader.model.AreaID() <= 321) || (DataLoader.model.AreaID() >= 417 && DataLoader.model.AreaID() <= 422) || DataLoader.model.AreaID() == 437 || (DataLoader.model.AreaID() >= 440 && DataLoader.model.AreaID() <= 444))
+                {
+                    presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5} | Points: {6} | {7}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), GetMaxFaints(), DataLoader.model.GreatSlayingPoints(), GetRavienteEvent(DataLoader.model.RavienteTriggeredEvent()));
                 }
                 else
                 {
                     presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}/{1}{2}", GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
+                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), GetMaxFaints());
                 }
             }
             else if (DataLoader.model.QuestID() == 0)
             {
-                if (!(itemsLoaded))
-                { 
-                    //load item list
-                    Dictionary.Items.initiate();
-                    itemsLoaded = true;
-                }
                 //inQuest = false;
 
                 switch(DataLoader.model.AreaID())
@@ -2382,7 +3497,7 @@ namespace MHFZ_Overlay
                     case 340://SR Rooms
                     case 341:
                     case 397://Mezeporta Dupe(non-HD)
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Diva Skill: {3} ({4} Left) | Poogie Item: {5}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetDivaSkillNameFromID(DataLoader.model.DivaSkill()), DataLoader.model.DivaSkillUsesLeft(), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 173:// My House (original)
@@ -2393,11 +3508,11 @@ namespace MHFZ_Overlay
                     case 202://Guild Halls
                     case 203:
                     case 204:
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 205://Pugi Farm
-                        presenceTemplate.State = string.Format("GR: {0} | Poogie Points: {1} | Poogie Clothes: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.PoogiePoints(), GetPoogieClothes(DataLoader.model.PoogieCostume()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | Poogie Points: {1} | Poogie Clothes: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.PoogiePoints(), GetPoogieClothes(DataLoader.model.PoogieCostume()), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 256://Caravan Areas
@@ -2405,7 +3520,7 @@ namespace MHFZ_Overlay
                     case 261:
                     case 262:
                     case 263:
-                        presenceTemplate.State = string.Format("CP: {0} | Gg: {1} | g: {2} | Gem Lv: {3}", DataLoader.model.CaravanPoints(), DataLoader.model.RaviGg(), DataLoader.model.Ravig(), DataLoader.model.CaravenGemLevel()+1);
+                        presenceTemplate.State = string.Format("CP: {0} | Gg: {1} | g: {2} | Gem Lv: {3} | Great Slaying Points: {4}", DataLoader.model.CaravanPoints(), DataLoader.model.RaviGg(), DataLoader.model.Ravig(), DataLoader.model.CaravenGemLevel()+1, DataLoader.model.GreatSlayingPointsSaved());
                         break;
 
                     case 257://Blacksmith
@@ -2417,7 +3532,7 @@ namespace MHFZ_Overlay
                         break;
 
                     case 265://Guuku Farm
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 283://Halk Area TODO partnya lv
@@ -2425,12 +3540,12 @@ namespace MHFZ_Overlay
                         break;
 
                     case 286://PvP Room
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 379://Diva Hall
                     case 445:
-                        presenceTemplate.State = string.Format("GR: {0} | Diva Bond: {1} | Items Given: {2} | Diva Skills Left: {3}", DataLoader.model.GRankNumber(), DataLoader.model.DivaBond(), DataLoader.model.DivaItemsGiven(), DataLoader.model.DivaSkillUsesLeft());
+                        presenceTemplate.State = string.Format("GR: {0} | Diva Skill: {1} ({2} Left) | Diva Bond: {3} | Items Given: {4}", DataLoader.model.GRankNumber(), GetDivaSkillNameFromID(DataLoader.model.DivaSkill()),DataLoader.model.DivaSkillUsesLeft(),DataLoader.model.DivaBond(), DataLoader.model.DivaItemsGiven());
                         break;
 
                     // case 458:// "Hunter's Road 1 Area 1" },
@@ -2439,7 +3554,7 @@ namespace MHFZ_Overlay
                     case 462://MezFez Entrance
                     case 463: //Volpkun Together
                     case 465://MezFez Minigame
-                        presenceTemplate.State = string.Format("GR: {0} | MezFes Points: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.MezeportaFestivalPoints(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | MezFes Points: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.MezeportaFestivalPoints(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
 
                     case 464://Uruki Pachinko
@@ -2463,12 +3578,12 @@ namespace MHFZ_Overlay
                         break;
 
                     default: //same as Mezeporta
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), getItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
                         break;
                 }
 
-                presenceTemplate.Assets.LargeImageKey = getAreaIconFromID(DataLoader.model.AreaID());
-                presenceTemplate.Assets.LargeImageText = getAreaName(DataLoader.model.AreaID());
+                presenceTemplate.Assets.LargeImageKey = GetAreaIconFromID(DataLoader.model.AreaID());
+                presenceTemplate.Assets.LargeImageText = GetAreaName(DataLoader.model.AreaID());
             }
 
             //Timer
@@ -2638,7 +3753,7 @@ namespace MHFZ_Overlay
 
             if (GetHunterName != "" && GetGuildName != "")
             {
-                presenceTemplate.Assets.SmallImageText = String.Format("{0} | {1} | GSR: {2} | {3} Style", GetHunterName, GetGuildName, DataLoader.model.GSR(), GetWeaponStyleFromID(DataLoader.model.WeaponStyle()));
+                presenceTemplate.Assets.SmallImageText = String.Format("{0} | {1} | GSR: {2} | {3} Style | Caravan Skills: {4}", GetHunterName, GetGuildName, DataLoader.model.GSR(), GetWeaponStyleFromID(DataLoader.model.WeaponStyle()),GetCaravanSkills());
             }
             //string currentState = presenceTemplate.State;
             //DiscordRPC.Timestamps currentTimestamps = presenceTemplate.Timestamps;
@@ -2687,9 +3802,25 @@ namespace MHFZ_Overlay
                     s.PlayerAtkX = (double)(pos.X - XOffset);
                     s.PlayerAtkY = (double)(pos.Y - YOffset);
                     break;
-                case "MonsterHpBars":
-                    s.HealthBarsX = (double)(pos.X - XOffset);
-                    s.HealthBarsY = (double)(pos.Y - YOffset);
+                //case "MonsterHpBars":
+                //    s.HealthBarsX = (double)(pos.X - XOffset);
+                //    s.HealthBarsY = (double)(pos.Y - YOffset);
+                //    break;
+                case "Monster1HpBar":
+                    s.Monster1HealthBarX = (double)(pos.X - XOffset);
+                    s.Monster1HealthBarY = (double)(pos.Y - YOffset);
+                    break;
+                case "Monster2HpBar":
+                    s.Monster2HealthBarX = (double)(pos.X - XOffset);
+                    s.Monster2HealthBarY = (double)(pos.Y - YOffset);
+                    break;
+                case "Monster3HpBar":
+                    s.Monster3HealthBarX = (double)(pos.X - XOffset);
+                    s.Monster3HealthBarY = (double)(pos.Y - YOffset);
+                    break;
+                case "Monster4HpBar":
+                    s.Monster4HealthBarX = (double)(pos.X - XOffset);
+                    s.Monster4HealthBarY = (double)(pos.Y - YOffset);
                     break;
                 //case "MonsterStatusInfo":
                 //    s.MonsterStatusInfoX = (double)(pos.X - XOffset);
@@ -2739,10 +3870,18 @@ namespace MHFZ_Overlay
                     s.Monster1IconX = (double)(pos.X - XOffset);
                     s.Monster1IconY = (double)(pos.Y - YOffset);
                     break;
+                case "MapImage":
+                    s.MapX = (double)(pos.X - XOffset);
+                    s.MapY = (double)(pos.Y - YOffset);
+                    break;
             }
 
         }
 
+        /// <summary>
+        /// Does the drag drop.
+        /// </summary>
+        /// <param name="item">The item.</param>
         private void DoDragDrop(FrameworkElement? item)
         {
             if (item == null)
@@ -2750,6 +3889,11 @@ namespace MHFZ_Overlay
             DragDrop.DoDragDrop(item, new DataObject(DataFormats.Xaml, item), DragDropEffects.Move);
         }
 
+        /// <summary>
+        /// Handles the Drop event of the MainGrid control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="DragEventArgs"/> instance containing the event data.</param>
         private void MainGrid_Drop(object sender, DragEventArgs e)
         {
             if (MovingObject != null)
@@ -2757,7 +3901,11 @@ namespace MHFZ_Overlay
             MovingObject = null;
         }
 
-
+        /// <summary>
+        /// Elements the mouse left button down.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
         private void ElementMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!IsDragConfigure)
@@ -2804,6 +3952,10 @@ namespace MHFZ_Overlay
         private void OpenConfigButton_Key()
         {
             if (IsDragConfigure) return;
+
+            if (DataLoader.isInLauncher)
+                System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+
             if (configWindow == null || !configWindow.IsLoaded)
                 configWindow = new(this);
             configWindow.Show();
@@ -2883,6 +4035,9 @@ namespace MHFZ_Overlay
         {
 
         }
+
+        
+
     }
 }
 /// <TODO>

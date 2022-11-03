@@ -27,7 +27,7 @@
       <Value Profile="(Default)">#cba6f7</Value>
     </Setting>
     <Setting Name="MonsterBlastBarColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#fab387</Value>
+      <Value Profile="(Default)">#a6e3a1</Value>
     </Setting>
     <Setting Name="MonsterSleepBarColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#74c7ec</Value>
@@ -120,7 +120,7 @@
       <Value Profile="(Default)">685</Value>
     </Setting>
     <Setting Name="AlwaysShowPlayerInfo" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="EnableSharpnessPercentage" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -262,6 +262,111 @@
     </Setting>
     <Setting Name="DiscordRoadTimerReset" Type="System.String" Scope="User">
       <Value Profile="(Default)">Never</Value>
+    </Setting>
+    <Setting Name="DiscordQuestNameShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DiscordArmorSetShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableCaravanOverride" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="EnableCaravanScore" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Monster1HealthBarShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Monster1HealthBarX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">800</Value>
+    </Setting>
+    <Setting Name="Monster1HealthBarY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">40</Value>
+    </Setting>
+    <Setting Name="Monster2HealthBarShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Monster2HealthBarX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">800</Value>
+    </Setting>
+    <Setting Name="Monster2HealthBarY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
+    <Setting Name="Monster3HealthBarShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Monster3HealthBarX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">800</Value>
+    </Setting>
+    <Setting Name="Monster3HealthBarY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">120</Value>
+    </Setting>
+    <Setting Name="Monster4HealthBarShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Monster4HealthBarX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">800</Value>
+    </Setting>
+    <Setting Name="Monster4HealthBarY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">160</Value>
+    </Setting>
+    <Setting Name="TextFormatExport" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Image</Value>
+    </Setting>
+    <Setting Name="GenderExport" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Male</Value>
+    </Setting>
+    <Setting Name="GouBoostExport" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="GSRUnlocksExport" Type="System.String" Scope="User">
+      <Value Profile="(Default)">11</Value>
+    </Setting>
+    <Setting Name="Enable11GSR999" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="EnableMetadataExport" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="GearDescriptionExport" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="EnableMap" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MapAreaWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="MapAreaHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="MapX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="MapY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">410</Value>
+    </Setting>
+    <Setting Name="ArmorSkillsInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Priority</Value>
+    </Setting>
+    <Setting Name="MotionValuesInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Sword and Shield</Value>
+    </Setting>
+    <Setting Name="WeaponTypeInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Element/Status/Bloat</Value>
+    </Setting>
+    <Setting Name="GuildOptionInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">About</Value>
+    </Setting>
+    <Setting Name="CaravanOptionInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">About</Value>
+    </Setting>
+    <Setting Name="CompanionOptionInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Partner</Value>
+    </Setting>
+    <Setting Name="GuildCardBackground" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ashen Lao-Shan Lung</Value>
     </Setting>
   </Settings>
 </SettingsFile>

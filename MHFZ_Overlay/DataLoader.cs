@@ -1,9 +1,14 @@
 ﻿using Memory;
 using MHFZ_Overlay.addresses;
+using Squirrel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Automation;
 
 namespace MHFZ_Overlay
 {
@@ -16,16 +21,98 @@ namespace MHFZ_Overlay
         //needed for getting data
         readonly Mem m = new();
         public bool isHighGradeEdition;
+        public bool isInLauncher;
+        public bool closedGame;
         int index;
+        /// <summary>
+        /// Gets the model.
+        /// </summary>
+        /// <value>
+        /// The model.
+        /// </value>
         public AddressModel model { get; }
 
         #endregion
+
+        /// <summary>
+        /// Called when [application install].
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="tools">The tools.</param>
+        private static void OnAppInstall(SemanticVersion version, IAppTools tools)
+        {
+            MessageBox.Show("【MHF-Z】Overlay is now installed. Creating a shortcut.");
+            tools.CreateShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
+        }
+
+        /// <summary>
+        /// Called when [application uninstall].
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="tools">The tools.</param>
+        private static void OnAppUninstall(SemanticVersion version, IAppTools tools)
+        {
+            MessageBox.Show("【MHF-Z】Overlay has been uninstalled. Removing shortcut.");
+            tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
+        }
+
+        /// <summary>
+        /// Called when [application run].
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="tools">The tools.</param>
+        /// <param name="firstRun">if set to <c>true</c> [first run].</param>
+        private static void OnAppRun(SemanticVersion version, IAppTools tools, bool firstRun)
+        {
+            tools.SetProcessAppUserModelId();
+            // show a welcome message when the app is first installed
+            if (firstRun) MessageBox.Show("【MHF-Z】Overlay is now running! Thanks for installing【MHF-Z】Overlay.\nHotkeys: Shift+F1 (Configuration) | Shift+F5 (Restart) | Shift+F6 (Close)\nPress Alt+Enter if your game resolution changed.");
+        }
+
+        /// <summary>
+        /// Updates my application.
+        /// </summary>
+        private static async Task UpdateMyApp()
+        {
+            using var mgr = new UpdateManager("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest");
+            var newVersion = await mgr.UpdateApp();
+
+            // optionally restart the app automatically, or ask the user if/when they want to restart
+            if (newVersion != null)
+            {
+                //https://stackoverflow.com/questions/14819426/how-to-create-hyperlink-in-messagebox-show#14820039
+                System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("New version available on GitHub, would you like to download?", "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); if (messageBoxResult.ToString() == "Yes") { System.Diagnostics.Process.Start("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest"); }
+                //UpdateManager.RestartApp();
+            }
+        }
+
+        /// <summary>
+        /// run main updater
+        /// </summary>
+        /// <returns></returns>
+        private static async Task Main()
+        {
+            using (var mgr = UpdateManager.GitHubUpdateManager("https://github.com/DorielRivalet/MHFZ_Overlay"))
+            {
+                await mgr.Result.UpdateApp();
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLoader"/> class.
         /// </summary>
         public DataLoader()
         {
+            // run Squirrel first, as the app may exit after these run
+            SquirrelAwareApp.HandleEvents(
+                onInitialInstall: OnAppInstall,
+                onAppUninstall: OnAppUninstall,
+                onEveryRun: OnAppRun);
+
+            _ = Main();
+            _ = UpdateMyApp();
+            // ... other app init code after ...
+
             int PID = m.GetProcIdFromName("mhf");
             if (PID > 0)
             {
@@ -42,8 +129,8 @@ namespace MHFZ_Overlay
             }
             else
             {
-                System.Windows.MessageBox.Show("Launch game first");
-                
+                System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+
                 App.Current.Shutdown();
             }
         }
@@ -57,7 +144,7 @@ namespace MHFZ_Overlay
             Process? proc = LoadMHFODLL(PID);
             if (proc == null)
             {
-                System.Windows.MessageBox.Show("Launch game first");
+                System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 App.Current.Shutdown();
                 return;
             }

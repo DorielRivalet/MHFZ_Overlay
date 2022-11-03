@@ -55,8 +55,8 @@
 - 1st District Dure Slain "mhfo-hd.dll"+E87FB64
 - 2nd District Dure Encounters "mhfo-hd.dll"+ED3EBB8
 - 2nd District Dure Slain "mhfo-hd.dll"+E87FB68
-- Road Fatalis Encounters "mhfo-hd.dll"+ECD71C4
-- Road Fatalis Slain "mhfo-hd.dll"+E87FB60
+- Road Fatalis Encounters mhfo-hd.dll+ED3EBBC
+- Road Fatalis Slain mhfo-hd.dll+E87FB60
 - Delivery Quests Points "mhfo-hd.dll"+ED3B212
 - Partner Level "mhfo-hd.dll"+E378E3E
 - Sharpness Level, zero-indexed "mhfo-hd.dll"+DC6C27F
@@ -70,6 +70,105 @@
 - Objective 1 Quantity mhfo-hd.dll+2AFA836
 - Objective 1 Current Quantity Monster mhfo-hd.dll+ECB2A38
 - Objective 1 Current Quantity Item "mhfo-hd.dll"+DC6C2F2
+- Diva Skill mhfo-hd.dll+ED3EB08
+- Star Grades mhfo-hd.dll+E774CAE
+- Current Faints mhfo-hd.dll+DC6C35B
+- Max Faints mhfo-hd.dll+C4C8FE8
+- Alternative Max Faints mhfo-hd.dll+2AFA814
+- Caravan Skill 1 mhfo-hd.dll+DC6C448
+- Caravan Skill 2 mhfo-hd.dll+DC6C44A
+- Caravan Skill 3 mhfo-hd.dll+DC6C44C
+- Caravan Score mhfo-hd.dll+ED8F764
+- Caravan Monster 1 ID mhfo-hd.dll+2AFA834
+- Caravan Monster 2 ID mhfo-hd.dll+1C41D12
+- MeleeWeaponID() => 1;
+- RangedWeaponID() => 1;
+- WeaponDeco1ID() => 1;
+- WeaponDeco2ID() => 1;
+- WeaponDeco3ID() => 1;
+- ArmorHeadID() => 1;
+- ArmorHeadDeco1ID() => 1;
+- ArmorHeadDeco2ID() => 1;
+- ArmorHeadDeco3ID() => 1;
+- ArmorChestID() => 1;
+- ArmorChestDeco1ID() => 1;
+- ArmorChestDeco2ID() => 1;
+- ArmorChestDeco3ID() => 1;
+- ArmorArmsID() => 1;
+- ArmorArmsDeco1ID() => 1;
+- ArmorArmsDeco2ID() => 1;
+- ArmorArmsDeco3ID() => 1;
+- ArmorWaistID() => 1;
+- ArmorWaistDeco1ID() => 1;
+- ArmorWaistDeco2ID() => 1;
+- ArmorWaistDeco3ID() => 1;
+- ArmorLegsID() => 1;
+- ArmorLegsDeco1ID() => 1;
+- ArmorLegsDeco2ID() => 1;
+- ArmorLegsDeco3ID() => 1;
+- Cuff1ID() => 1;
+- Cuff2ID() => 1;
+- TotalDefense() => 1;
+- PouchItem1ID() => 1;
+- PouchItem1Qty() => 1;
+- PouchItem2ID() => 1;
+- PouchItem2Qty() => 1;
+- PouchItem3ID() => 1;
+- PouchItem3Qty() => 1;
+- PouchItem4ID() => 1;
+- PouchItem4Qty() => 1;
+- PouchItem5ID() => 1;
+- PouchItem5Qty() => 1;
+- PouchItem6ID() => 1;
+- PouchItem6Qty() => 1;
+- PouchItem7ID() => 1;
+- PouchItem7Qty() => 1;
+- PouchItem8ID() => 1;
+- PouchItem8Qty() => 1;
+- PouchItem9ID() => 1;
+- PouchItem9Qty() => 1;
+- PouchItem10ID() => 1;
+- PouchItem10Qty() => 1;
+- PouchItem11ID() => 1;
+- PouchItem11Qty() => 1;
+- PouchItem12ID() => 1;
+- PouchItem12Qty() => 1;
+- PouchItem13ID() => 1;
+- PouchItem13Qty() => 1;
+- PouchItem14ID() => 1;
+- PouchItem14Qty() => 1;
+- PouchItem15ID() => 1;
+- PouchItem15Qty() => 1;
+- PouchItem16ID() => 1;
+- PouchItem16Qty() => 1;
+- PouchItem17ID() => 1;
+- PouchItem17Qty() => 1;
+- PouchItem18ID() => 1;
+- PouchItem18Qty() => 1;
+- PouchItem19ID() => 1;
+- PouchItem19Qty() => 1;
+- PouchItem20ID() => 1;
+- PouchItem20Qty() => 1;
+- AmmoPouchItem1ID() => 1;
+- AmmoPouchItem1Qty() => 1;
+- AmmoPouchItem2ID() => 1;
+- AmmoPouchItem2Qty() => 1;
+- AmmoPouchItem3ID() => 1;
+- AmmoPouchItem3Qty() => 1;
+- AmmoPouchItem4ID() => 1;
+- AmmoPouchItem4Qty() => 1;
+- AmmoPouchItem5ID() => 1;
+- AmmoPouchItem5Qty() => 1;
+- AmmoPouchItem6ID() => 1;
+- AmmoPouchItem6Qty() => 1;
+- AmmoPouchItem7ID() => 1;
+- AmmoPouchItem7Qty() => 1;
+- AmmoPouchItem8ID() => 1;
+- AmmoPouchItem8Qty() => 1;
+- AmmoPouchItem9ID() => 1;
+- AmmoPouchItem9Qty() => 1;
+- AmmoPouchItem10ID() => 1;
+- AmmoPouchItem10Qty() => 1;
 
 ## Not HGE
 
@@ -142,10 +241,109 @@
 - Objective 1 Quantity mhfo.dll+28C2C86
 - Objective 1 Current Quantity Monster mhfo.dll+60792E6
 - Objective 1 Current Quantity Item mhfo.dll+5034732
+- Diva Skill mhfo.dll+6104368
+- Star Grades mhfo.dll+5B3D086
+- Current Faints mhfo.dll+503479B
+- Max Faints mhfo.dll+1AA899C
+- Alternative Max Faints mhfo.dll+28C2C64
+- Caravan Skill 1 mhfo.dll+5034888
+- Caravan Skill 2 mhfo.dll+503488A
+- Caravan Skill 3 mhfo.dll+503488C
+- Caravan Score mhfo.dll+6154FC4
+- Caravan Monster 1 ID mhfo.dll+28C2C84
+- Caravan Monster 2 ID mhfo.dll+28C2C8C
+- MeleeWeaponID mhfo.dll+4FCA1A2
+- RangedWeaponID mhfo.dll+4FCA1A2
+- WeaponDeco1ID() => 1;
+- WeaponDeco2ID() => 1;
+- WeaponDeco3ID() => 1;
+- ArmorHeadID mhfo.dll+4FCA162
+- ArmorHeadDeco1ID() => 1;
+- ArmorHeadDeco2ID() => 1;
+- ArmorHeadDeco3ID() => 1;
+- ArmorChestID mhfo.dll+4FCA172
+- ArmorChestDeco1ID() => 1;
+- ArmorChestDeco2ID() => 1;
+- ArmorChestDeco3ID() => 1;
+- ArmorArmsID mhfo.dll+4FCA182
+- ArmorArmsDeco1ID() => 1;
+- ArmorArmsDeco2ID() => 1;
+- ArmorArmsDeco3ID() => 1;
+- ArmorWaistID mhfo.dll+4FCA192
+- ArmorWaistDeco1ID() => 1;
+- ArmorWaistDeco2ID() => 1;
+- ArmorWaistDeco3ID() => 1;
+- ArmorLegsID mhfo.dll+4FCA142
+- ArmorLegsDeco1ID() => 1;
+- ArmorLegsDeco2ID() => 1;
+- ArmorLegsDeco3ID() => 1;
+- Cuff1ID mhfo.dll+50348C2
+- Cuff2ID mhfo.dll+50348C4
+- TotalDefense mhfo.dll+5034338
+- PouchItem1ID mhfo.dll+50345A8
+- PouchItem1Qty mhfo.dll+50345AA
+- PouchItem2ID mhfo.dll+50345B0
+- PouchItem2Qty mhfo.dll+50345B2
+- PouchItem3ID mhfo.dll+50345B8
+- PouchItem3Qty mhfo.dll+50345BA
+- PouchItem4ID mhfo.dll+50345C0
+- PouchItem4Qty mhfo.dll+50345C2
+- PouchItem5ID mhfo.dll+50345C8
+- PouchItem5Qty mhfo.dll+50345CA
+- PouchItem6ID mhfo.dll+50345D0
+- PouchItem6Qty mhfo.dll+50345D2
+- PouchItem7ID mhfo.dll+50345D8
+- PouchItem7Qty mhfo.dll+610445A
+- PouchItem8ID mhfo.dll+50345E0
+- PouchItem8Qty mhfo.dll+50345E2
+- PouchItem9ID mhfo.dll+50345E8
+- PouchItem9Qty mhfo.dll+610446A
+- PouchItem10ID mhfo.dll+50345F0
+- PouchItem10Qty mhfo.dll+50345F2
+- PouchItem11ID mhfo.dll+50345F8
+- PouchItem11Qty mhfo.dll+50345FA
+- PouchItem12ID mhfo.dll+5034600
+- PouchItem12Qty mhfo.dll+5034602
+- PouchItem13ID mhfo.dll+5034608
+- PouchItem13Qty mhfo.dll+503460A
+- PouchItem14ID mhfo.dll+5034610
+- PouchItem14Qty mhfo.dll+5034612
+- PouchItem15ID mhfo.dll+5034618
+- PouchItem15Qty mhfo.dll+503461A
+- PouchItem16ID mhfo.dll+5034620
+- PouchItem16Qty mhfo.dll+5034622
+- PouchItem17ID mhfo.dll+5034628
+- PouchItem17Qty mhfo.dll+503462A
+- PouchItem18ID mhfo.dll+5034630
+- PouchItem18Qty mhfo.dll+5034632
+- PouchItem19ID mhfo.dll+5034638
+- PouchItem19Qty mhfo.dll+61044BA
+- PouchItem20ID mhfo.dll+5034640
+- PouchItem20Qty mhfo.dll+5034642
+- AmmoPouchItem1ID mhfo.dll+5034648
+- AmmoPouchItem1Qty mhfo.dll+503464A
+- AmmoPouchItem2ID mhfo.dll+5034650
+- AmmoPouchItem2Qty mhfo.dll+5034652
+- AmmoPouchItem3ID mhfo.dll+5034658
+- AmmoPouchItem3Qty mhfo.dll+503465A
+- AmmoPouchItem4ID mhfo.dll+5034660
+- AmmoPouchItem4Qty mhfo.dll+5034662
+- AmmoPouchItem5ID mhfo.dll+5034668
+- AmmoPouchItem5Qty mhfo.dll+503466A
+- AmmoPouchItem6ID mhfo.dll+5034670
+- AmmoPouchItem6Qty mhfo.dll+5034672
+- AmmoPouchItem7ID mhfo.dll+5034678
+- AmmoPouchItem7Qty mhfo.dll+503467A
+- AmmoPouchItem8ID mhfo.dll+5034680
+- AmmoPouchItem8Qty mhfo.dll+5034682
+- AmmoPouchItem9ID mhfo.dll+5034688
+- AmmoPouchItem9Qty mhfo.dll+503468A
+- AmmoPouchItem10ID mhfo.dll+5034690
+- AmmoPouchItem10Qty mhfo.dll+5034692
 
 ## IDs
 
-### Rank Bands
+### Rank Bands / Stat Tables
 
 | ID | Rank Band|
 |----|------|
@@ -156,7 +354,7 @@
 | 4  | Lower    |
 | 5  | Lower     |
 | 6  |  Lower    |
-| 7  |  Lower    |
+| 7  |  Lower (also Raviente)   |
 | 8  | Lower    |
 | 9  | Lower    |
 |10  | Lower    |
@@ -202,7 +400,7 @@
 |50  ||
 |51  ||
 |52  ||
-|53  | G Rank    |
+|53  | G Rank (also Berserk Raviente)   |
 |54  | Musou 1 (Repel/20m/Lower Shiten)|
 |55  | Musou 2 (Slay/10m/Upper Shiten)|
 |56  | Twinhead (Rajang+Voljang)|
@@ -783,6 +981,13 @@
 |4098 |0x1002| Deliver Flag |
 |16 |0x10| Esoteric Action |
 
+### Quest State
+| ID | State|
+|----|------|
+|0||
+|1|Complete (waiting)|
+|129|Complete (rewards)|
+
 ### Weapon Type
 
 | ID | Weapon Type|
@@ -946,7 +1151,7 @@
 |136 | Dundorma Grand Priest|
 |137 | Broken|
 |138 | Tower 2|
-|139 | Tower 1 Area 9/Tower with Nesthole|
+|139 | Tower 1 Area 9 (Nest Hole)|
 |140 | Desert Day Base Camp|
 |141 | Desert Day Area 2|
 |142 | Desert Day Area 7|
@@ -1116,19 +1321,19 @@
 |306 | Highlands Night Area 6|
 |307 | Highlands Day Area 7|
 |308 | Highlands Night Area 7|
-|309 |  Solitude Island|
+|309 |  Solitude Island 9 (Area 3)|
 |310 |Campaign Tent|
-|311 | Raviente Balloon|
-|312 | Raviente Balloon|
-|313 | Solitude Island|
-|314 | Solitude Isle 1|
-|315 |Solitude Island|
-|316 | Solitude Island|
-|317 | Solitude Isle 2|
-|318 |  Solitude Island|
-|319 |  Solitude Island|
-|320 | Solitude Isle 3|
-|321 | Solitude Island|
+|311 | Raviente Balloon (Day)|
+|312 | Raviente Balloon (Sunset)|
+|313 | Solitude Island (Night)|
+|314 | Solitude Island 1 (Area 1)|
+|315 |Solitude Island 2 (Area 1) |
+|316 | Solitude Island 3 (Area 1)|
+|317 | Solitude Island 4 (Area 2)|
+|318 |  Solitude Island 5 (Area 2)|
+|319 |  Solitude Island 6 (Area 2)|
+|320 | Solitude Island 7 (Area 3)|
+|321 | Solitude Island 8 (Area 3)|
 |322 | Tidal Island Day Base Camp|
 |323 | Tidal Island Day Area 1|
 |324 | Tidal Island Day Area 2|
@@ -1224,12 +1429,12 @@
 |414 |  Duremudira Door|
 |415 | Urgent Tower|
 |416 | 4th District Tower|
-|417 | Berserk Raviente Base Camp Slay 1|
-|418 |Berserk Raviente Combat 01|
-|419 | Berserk Raviente Combat 02|
-|420 | Berserk Raviente Combat 03|
-|421 | Berserk Raviente Combat 04|
-|422 |Berserk Raviente Combat 05|
+|417 | Berserk Raviente Base Camp|
+|418 |Berserk Raviente Combat Phase 1|
+|419 | Berserk Raviente Combat Phase 2|
+|420 | Berserk Raviente Combat Phase 3|
+|421 | Berserk Raviente Combat Phase 4|
+|422 |Berserk Raviente Combat Phase 5|
 |423 |Painted Falls Day Base Camp|
 |424 | Painted Falls Night Base Camp|
 |425 | Painted Falls Day Area 1|
@@ -1244,14 +1449,14 @@
 |434 | Painted Falls Night Area 5|
 |435 |Painted Falls Day Area 6|
 |436 | Painted Falls Night Area 6|
-|437 |  Guanzorumu Arena 01|
-|438 | Berserk Raviente Base Camp|
-|439 |  Guanzorumu Arena 02|
-|440 | Berserk Raviente Support 01|
-|441 | Berserk Raviente Support 02|
-|442 | Berserk Raviente Support 03|
-|443 | Berserk Raviente Support 04|
-|444 | Berserk Raviente Support 05|
+|437 |  Berserk Raviente Base Camp (Support)|
+|438 | Cloud Viewing Fortress Arena 1|
+|439 |  Cloud Viewing Fortress Arena 2|
+|440 | Berserk Raviente Support Phase 1|
+|441 | Berserk Raviente Support Phase 2|
+|442 | Berserk Raviente Support Phase 3|
+|443 | Berserk Raviente Support Phase 4|
+|444 | Berserk Raviente Support Phase 5|
 |445 |  Diva Hall|
 |446 |  Amatsu Arena 1|
 |447 |  Amatsu Arena 2|
@@ -1443,6 +1648,7 @@
 
 | ID | Skill|
 |----|-----|
+|0|None|
 |1|Large Monster Priority|
 |2|Small Monster Priority|
 |3|Near Hunter Priority|
@@ -1529,6 +1735,7 @@
 
 |ID| Skill| Sub1| Sub2| Sub3|
 |--|------|-----|-----|-----|
+|0|None||||
 |1|Attack Slayer||||
 |2|Elemental Slayer||||
 |3|Status Attack Slayer||||
@@ -1663,3 +1870,461 @@
 |1|Heaven|
 |2|Storm|
 |3|Extreme|
+
+### Diva Skill
+
+|ID| Skill|
+|--|------|
+|0|None|
+|1|High Speed Gathering|
+|2|Weapon Handling|
+|3|Focus+2|
+|4|Hunter Valhalla|
+|5|Status Immunity|
+|6|S. Immunity (Myriad)|
+|7|Starving Wolf+2|
+|8|Imperturbable|
+|9|Lone Wolf|
+|10|Vampirism+2|
+|11|Evade Distance Up|
+|12|Combination Expert|
+|13|Stylish|
+|14|Good Luck|
+|15|Great Luck|
+|16|Carving Expert|
+|17||
+|18||
+|19||
+|20|Relief|
+|20|Recovery Items UP|
+|21|Hunger Negated|
+|22|Sharpening Artisan|
+|23|Recovery Speed+2|
+|24|Guard+2|
+|25|Speed Eating|
+|26|Encourage+2|
+|27|Evasion+2|
+|28|True Guts|
+|29|Magnetic Res|
+|30|Crystal Res|
+|31|Honed Blade+3|
+
+### Zenith Skill
+
+|ID| Skill|
+|--|------|
+|0|None|
+|1|Skill Slots Up+1|
+|2|Skill Slots Up+2|
+|3|Skill Slots Up+3|
+|4|Skill Slots Up+4|
+|5|Skill Slots Up+5|
+|6|Skill Slots Up+6|
+|7|Skill Slots Up+7|
+|8|Flash Conversion Up+1|
+|9|Flash Conversion Up+2|
+|10|Stylish Assault Up+1|
+|11|Stylish Assault Up+2|
+|12|Dissolver Up|
+|13|Thunder Clad Up+1|
+|14|Thunder Clad Up+2|
+|15|Ice Age Up|
+|16||
+|17|Hearing Protection Up+1|
+|18|Hearing Protection Up+2|
+|19|Hearing Protection Up+3|
+|20|Wind Res Up+1|
+|21|Wind Res Up+2|
+|22|Wind Res Up+3|
+|23|Wind Res Up+4|
+|24|Quake Res Up+1|
+|25|Quake Res Up+2|
+|26|Poison Res Up+1|
+|27|Poison Res Up+2|
+|28|Para Res Up+1|
+|29|Para Res Up+2|
+|30|Sleep Res Up+1|
+|31|Sleep Res Up+2|
+|32|Vampirism Up|
+|33||
+|34|Drug Knowledge Up|
+|35|Assistance Up|
+|36|Bullet Saver Up+1|
+|37|Bullet Saver Up+2|
+|38|Guard Up+1|
+|39|Guard Up+2|
+|40|Adaptation Up+1|
+|41|Adaptation Up+2|
+|42|Encourage Up+1|
+|43|Encourage Up+2|
+|44|Reflect Up+1|
+|45|Reflect Up+2|
+|46|Reflect Up+3|
+|47|Stylish Up|
+|48|Vigorous Up|
+|49|Obscurity Up|
+|50|Soul Up|
+|51|Ceaseless Up|
+|52|Rush Up|
+
+### Caravan Skill
+
+|ID| Skill|
+|--|------|
+|0|None|
+|1|Courage|
+|2|Lander|
+|3|Vine Superhero|
+|4|Mining Expert|
+|5|Insect Expert|
+|6|Vine Master|
+|7|Hot Master|
+|8|Cold Master|
+|9|Bonus Art|
+|10|Combo Tech (Sm)|
+|11|Combo Tech (Med)|
+|12|Combo Tech (Lg)|
+|13|Riser (Sm)|
+|14|Riser (Med)|
+|15|Riser (Lg)|
+|16|Carving Expert|
+|17||
+|18||
+|19|Natural Recovery (Sm)|
+|20|Natural Recovery (Med)|
+|21|Natural Recovery (Lg)|
+|22|Master Carver (Sm)|
+|23|Master Carver (Med)|
+|24|Master Carver (Lg)|
+|25|Healing Technique (Sm)|
+|26|Healing Technique (Med)|
+|27|Healing Technique (Lg)|
+|28||
+|29||
+|30||
+|31||
+|32||
+|33||
+|34||
+|35||
+|36||
+|37|Last Minute Ace (Sm)|
+|38|Last Minute Ace (Med)|
+|39|Last Minute Ace (Lg)|
+|40|Goddess of Luck (Sm)|
+|41|Goddess of Luck (Med)|
+|42|Goddess of Luck (Lg)|
+|43||
+|44||
+|45||
+|46||
+|47||
+|48||
+|49||
+|50||
+|51||
+|52||
+|53||
+|54||
+|55||
+|56||
+|57||
+|58||
+|59||
+|60||
+|61||
+|62||
+|63||
+|64||
+|65||
+|66||
+|67||
+|68||
+|69||
+|70||
+|71||
+|72||
+|73||
+|74||
+|75||
+|76|Recovery Items Up|
+|77|Blunt Striker|
+|78|KO Technique|
+|79|Shooting Rampage|
+|80|Art of Dancing|
+|81|Unstable Defender (Sm)|
+|82|Unstable Defender (Med)|
+|83|Unstable Defender (Lg)|
+|84|Rousing Attacker (Sm)|
+|85|Rousing Attacker (Med)|
+|86|Rousing Attacker (Lg)|
+|87|Perfect Defense (Sm)|
+|88|Perfect Defense (Med)|
+|89|Perfect Defense (Lg)|
+|90|Revenge! (Sm)|
+|91|Revenge! (Med)|
+|92|Revenge! (Lg)|
+|93||
+|94||
+|95||
+|96|Combination Celebrity|
+|97||
+|98|Weapon Art (Sm)|
+|99|Weapon Art (Med)|
+|100|Weapon Art (Lg)|
+|101|Wild Awakening|
+|102|Decisive Hunter|
+|103|Instant Guard Stance|
+|104|Self-Defense|
+|105|Prepared Stance|
+|106|Shield Angel|
+|107|Spear Angel|
+|108|Elite Flame|
+
+### Raviente Trigger Events
+
+|ID| Event|
+|--|------|
+|0|Slay 1|
+|1|Sedation 1|
+|2|Destruction 1|
+|3|Slay 2|
+|4|Sedation 2|
+|5|Sedation 3|
+|6|Slay 4|
+|7|Slay 5|
+|8|Sedation 5|
+|9|Slay 6|
+|10|Slay 7|
+|11|Sedation 7|
+|12|Sedation 8|
+|13|Slay 9|
+
+### Violent Raviente Trigger Events
+
+|ID| Event|
+|--|------|
+|0|Slay 1|
+|1|Sedation 1|
+|2|Destruction 1|
+|3|Slay 2|
+|4|Sedation 2|
+|5|Sedation 3|
+|6|Slay 4|
+|7|Slay 5|
+|8|Sedation 5|
+|9|Slay 6|
+|10|Slay 7|
+|11|Slay 8|
+|12|Sedation 7|
+|13|Slay 9|
+
+### Berserk Raviente (Practice) Trigger Events
+
+|ID| Event|
+|--|------|
+|0|Slay 1|
+|1|Sedation 1|
+|2|Support and Combat 1|
+|3|Destruction 2|
+|4|Destruction 3|
+|5|Destruction 4|
+|6|Support 2|
+|7|Sedation 4|
+|8|Sedation 5|
+|9|Sedation 6|
+
+### Berserk Raviente Trigger Events
+
+|ID| Event|
+|--|------|
+|0|Slay 1|
+|1|Destruction 1|
+|2|Sedation 2|
+|3|Destruction 2|
+|4|Support 1 Done|
+|5|Support 2|
+|6|Destruction 3|
+|7|Part Break|
+|8|Destruction 4|
+|9|Destruction 5|
+|10|Support 2 Done|
+|11|Destruction 6|
+|12|Destruction 7|
+|13|Slay Done|
+
+### Extreme Berserk Raviente Trigger Events
+
+|ID| Event|
+|--|------|
+|0|Slay 1|
+|1|Destruction 1|
+|2|Sedation 2|
+|3|Destruction 2|
+|4|Support 1 Done|
+|5|Support 2|
+|6|Destruction 3|
+|7|Part Break|
+|8|Destruction 4|
+|9|Destruction 5|
+|10|Support 2 Done|
+|11|Destruction 6|
+|12|Destruction 7|
+|13|Slay Done|
+
+### Special Effects (G Style Rank)
+
+|GSR| Effect|
+|--|------|
+|0|Def+100, Ele Res+20, All Res+10, Affinity+20|
+|10|Def+1|
+|20|Fire Res+2|
+|30|Conquest Def+10|
+|40|Water Res+2|
+|50|Conquest Atk+2|
+|60|Def+1|
+|70|Conquest Def+10|
+|80|Thunder Res+2|
+|90|Def+1|
+|100|Conquest Atk+2, 2 special effects can be set|
+|110|Def+1|
+|120|Ice Res+2|
+|130|Conquest Def+10|
+|140|Dragon Res+2|
+|150|Conquest Atk+2|
+|160|Def+1|
+|170|Conquest Def+10|
+|180|All Res+1|
+|190|Def+1|
+|200|Conquest Atk+2|
+|210|Def+1|
+|220|Fire Res+2|
+|230|Conquest Def+10|
+|240|Water Res+2|
+|250|Conquest Atk+2|
+|260|Def+1|
+|270|Conquest Def+10|
+|280|Thunder Res+2|
+|290|Def+1|
+|300|Conquest Atk+2|
+|310|Def+1|
+|320|Ice Res+2|
+|330|Conquest Def+10|
+|340|Dragon Res+2|
+|350|Conquest Atk+2|
+|360|Def+2|
+|370|Conquest Def+10|
+|380|All Res+1|
+|390|Def+2|
+|400|Conquest Atk+2|
+|410|Def+2|
+|420|Fire Res+2|
+|430|Conquest Def+10|
+|440|Water Res+2|
+|450|Conquest Atk+2|
+|460|Def+2|
+|470|Conquest Def+10|
+|480|Thunder Res+2|
+|490|Def+2|
+|500|Conquest Atk+2|
+|510|Def+2|
+|520|Ice Res+2|
+|530|Conquest Def+10|
+|540|Dragon Res+2|
+|550|Conquest Atk+2|
+|560|Def+2|
+|570|Conquest Def+10|
+|580|All Res+1|
+|590|Def+2|
+|600|Conquest Atk+2|
+|610|Def+2|
+|620|Fire Res+2|
+|630|Conquest Def+10|
+|640|Water Res+2|
+|650|Conquest Atk+2|
+|660|Def+2|
+|670|Conquest Def+10|
+|680|Thunder Res+2|
+|690|Def+2|
+|700|Conquest Atk+2|
+|710|Def+2|
+|720|Ice Res+2|
+|730|Conquest Def+10|
+|740|Ice Res+2|
+|750|Conquest Atk+2|
+|760|Def+2|
+|770|Conquest Def+10|
+|780|All Res+1|
+|790|Def+2|
+|800|Conquest Atk+4|
+|810|Def+2|
+|820|Fire Res+2|
+|830|Conquest Def+10|
+|840|Water Res+2|
+|850|Conquest Atk+4|
+|860|Def+2|
+|870|Conquest Def+10|
+|880|Thunder Res+2|
+|890|Def+2|
+|900|Conquest Atk+4|
+|910|Def+2|
+|920|Ice Res+2|
+|930|Conquest Defense+10|
+|940|Dragon Res+2|
+|950|Conquest Atk+4|
+|960|Def+2|
+|970|Conquest Def+10|
+|980|All Res+1|
+|990|Def+2|
+|999|Passive Master, Conquest Atk+4|
+|x11 GSR999|Soul Revival, Conquest Atk Base 100, Conquest Def Base 300, G Rank Weapon unlock bonuses for conquest skills (+10 Def, +5 Atk each)|
+
+### GSR Weapon Unlock Bonus
+
+|Unlocks| Bonus|
+|--|------|
+|11|None|
+|12|Affinity+2, Ele Res+2, All Res+2, Def+10, Conquest Atk Base 100+5, Conquest Def Base 300+10|
+|13|Affinity+2, Ele Res+2, All Res+2, Def+10, Conquest Atk Base 100+5, Conquest Def Base 300+10|
+|14|Affinity+2, Ele Res+1, All Res+1, Def+10, Conquest Atk Base 100+5, Conquest Def Base 300+10|
+
+### Road and Duremudira Skills
+
+|ID| Skill|
+|--|------|
+|0|None|
+|1|Attack|
+|2|Defense|
+|3||
+|4||
+|5|Recovery|
+|6||
+|7||
+|8||
+|9||
+|10||
+|11||
+|12||
+|13||
+|14|Care|
+|15|Pharmacist|
+|16||
+|17||
+|18|Virus Res.|
+|19|Guardian Offense|
+|20|Guardian Defense|
+|21||
+|22|Frost Res.|
+|23|Fire Res|
+|24|Water Res|
+|25|Ice Res|
+|26|Thunder Res|
+|27|Dragon Res|
+|28|Starting Gm Up|
+|29|Rd P Up|
+|30|Revival Sage|
+|31|Advancement Guru|
+|32|Last Stand|
+|33|Bonus Encounter|
+|34|All Res|
+|35|Rewards Up|

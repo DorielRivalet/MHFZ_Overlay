@@ -10,9 +10,17 @@
     <UseWindowsForms>True</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>mhfzoverlayicon256.ico</ApplicationIcon>
+    <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Background\1.png" />
+    <None Remove="Background\2.png" />
+    <None Remove="Background\3.png" />
+    <None Remove="Background\4.png" />
+    <None Remove="Background\5.png" />
+    <None Remove="Background\6.png" />
+    <None Remove="Background\7.png" />
     <None Remove="Fonts\SourceCodePro-Black.ttf" />
     <None Remove="Fonts\SourceCodePro-BlackItalic.ttf" />
     <None Remove="Fonts\SourceCodePro-Bold.ttf" />
@@ -31,17 +39,41 @@
     <None Remove="Fonts\SourceCodePro-SemiBold.ttf" />
     <None Remove="Fonts\SourceCodePro-SemiBoldItalic.ttf" />
     <None Remove="Fonts\SourceCodePro-VariableFont_wght.ttf" />
+    <None Remove="HuntedLogs\EXAMPLE.csv" />
+    <None Remove="icons\armor_skills.png" />
+    <None Remove="icons\attack.png" />
+    <None Remove="icons\boggers.png" />
+    <None Remove="icons\bone.png" />
     <None Remove="icons\book.png" />
+    <None Remove="icons\caravan_skills.png" />
+    <None Remove="icons\description_FILL0_wght400_GRAD0_opsz48.png" />
+    <None Remove="icons\diva_prayer_gems.png" />
+    <None Remove="icons\dure2.png" />
+    <None Remove="icons\fire.png" />
+    <None Remove="icons\guild_food.png" />
     <None Remove="icons\helm.png" />
+    <None Remove="icons\knife.png" />
     <None Remove="icons\monster.png" />
+    <None Remove="icons\monster_info.png" />
+    <None Remove="icons\note_pink.png" />
+    <None Remove="icons\page.png" />
+    <None Remove="icons\photo.png" />
     <None Remove="icons\poison.png" />
+    <None Remove="icons\quest_info.png" />
+    <None Remove="icons\sigils.png" />
+    <None Remove="icons\unknown.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="icons\badge.xaml" />
     <Page Remove="icons\Cancel.xaml" />
     <Page Remove="icons\Close.xaml" />
+    <Page Remove="icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Page Remove="icons\description_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="icons\Done.xaml" />
     <Page Remove="icons\DragDropControl.xaml" />
+    <Page Remove="icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Page Remove="icons\image_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="icons\Refresh.xaml" />
     <Page Remove="icons\Settings.xaml" />
   </ItemGroup>
@@ -51,16 +83,41 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
+    <PackageReference Include="CsvHelper" Version="29.0.0" />
     <PackageReference Include="DiscordRichPresence" Version="1.0.175" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.4.0" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.1.1" />
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
     <PackageReference Include="Memory.dll.x86" Version="1.2.24" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1370.28" />
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Background\1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Background\2.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Background\3.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Background\4.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Background\5.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Background\6.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Background\7.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Fonts\SourceCodePro-Black.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -115,14 +172,47 @@
     <Resource Include="Fonts\SourceCodePro-VariableFont_wght.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="HuntedLogs\EXAMPLE.csv">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\armor_skills.png" />
+    <Resource Include="icons\attack.png" />
+    <Resource Include="icons\boggers.png" />
+    <Resource Include="icons\bone.png" />
     <Resource Include="icons\book.png">
       <Generator></Generator>
     </Resource>
+    <Resource Include="icons\caravan_skills.png" />
+    <Resource Include="icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="icons\badge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="icons\description_FILL0_wght400_GRAD0_opsz48.png" />
+    <Resource Include="icons\description_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Resource Include="icons\diva_prayer_gems.png" />
+    <Resource Include="icons\dure2.png" />
+    <Resource Include="icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="icons\fire.png" />
+    <Resource Include="icons\guild_food.png" />
     <Resource Include="icons\helm.png">
       <Generator></Generator>
     </Resource>
+    <Resource Include="icons\image_FILL0_wght400_GRAD0_opsz48.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="icons\knife.png" />
     <Resource Include="icons\monster.png" />
+    <Resource Include="icons\monster_info.png" />
+    <Resource Include="icons\note_pink.png" />
+    <Resource Include="icons\page.png" />
+    <Resource Include="icons\photo.png" />
     <Resource Include="icons\poison.png" />
+    <Resource Include="icons\quest_info.png" />
     <Resource Include="icons\Refresh.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,6 +233,8 @@
     <Resource Include="icons\Settings.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
+    <Resource Include="icons\sigils.png" />
+    <Resource Include="icons\unknown.png" />
   </ItemGroup>
 
   <ItemGroup>
