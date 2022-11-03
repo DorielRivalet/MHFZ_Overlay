@@ -2,6 +2,9 @@
 
 namespace MHFZ_Overlay
 {
+    /// <summary>
+    /// unaffected by player stats
+    /// </summary>
     public class MonsterInfo
     {
 
