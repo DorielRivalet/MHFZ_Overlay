@@ -1,5 +1,22 @@
 
 
+## [0.6.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.5.1...v0.6.0) (2022-11-03)
+
+
+### Features
+
+* add github updater ([6fbcac2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/6fbcac25c848bedd5ee55c230b1e175c8aecab06))
+
+
+### Bug Fixes
+
+* dataloader startup ([1d334ed](https://github.com/DorielRivalet/MHFZ_Overlay/commit/1d334edc89603de9af67176ae858055122a0754b))
+
+
+### For Developers
+
+* bump version ([9573ddb](https://github.com/DorielRivalet/MHFZ_Overlay/commit/9573ddb387710b3232e004cf5ea4173d7287e568))
+
 ## [0.5.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.5.0...v0.5.1) (2022-11-03)
 
 
