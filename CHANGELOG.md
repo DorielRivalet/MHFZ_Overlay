@@ -1,5 +1,14 @@
 
 
+## [0.5.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.5.0...v0.5.1) (2022-11-03)
+
+
+### For Developers
+
+* update commit configs ([c08fe08](https://github.com/DorielRivalet/MHFZ_Overlay/commit/c08fe08ee2279a18de9a25513ebf37584c489cfa))
+* update package.json ([cce3975](https://github.com/DorielRivalet/MHFZ_Overlay/commit/cce3975eaab0e8bfeac772b5adf730b4e06ab708))
+* update README.md ([724199a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/724199a277cee64dc856b71e101291a45d7c1294))
+
 ## [0.5.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.2.0...v0.5.0) (2022-11-03)
 
 
