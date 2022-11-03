@@ -71,6 +71,14 @@
               "type": "perf",
               "section": "For Developers"
             },
+            {
+              "type": "build",
+              "section": "For Developers"
+            },
+            {
+              "type": "chore",
+              "section": "For Developers"
+            },
             {}
           ]
         }
