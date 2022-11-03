@@ -6,7 +6,7 @@ defaults:
 
 jobs:
   setup:
-    <<: *defaults
+    
     steps:
     - checkout
     - restore_cache:
@@ -24,7 +24,7 @@ jobs:
         - node_modules
 
   lint_commit_message:
-    <<: *defaults
+    
     steps:
     - checkout
     - attach_workspace:
