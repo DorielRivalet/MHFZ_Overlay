@@ -87,6 +87,18 @@ namespace MHFZ_Overlay
         }
 
         /// <summary>
+        /// run main updater
+        /// </summary>
+        /// <returns></returns>
+        private static async Task Main()
+        {
+            using (var mgr = UpdateManager.GitHubUpdateManager("https://github.com/DorielRivalet/MHFZ_Overlay"))
+            {
+                await mgr.Result.UpdateApp();
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DataLoader"/> class.
         /// </summary>
         public DataLoader()
@@ -97,6 +109,7 @@ namespace MHFZ_Overlay
                 onAppUninstall: OnAppUninstall,
                 onEveryRun: OnAppRun);
 
+            _ = Main();
             _ = UpdateMyApp();
             // ... other app init code after ...
 
