@@ -1,5 +1,12 @@
 
 
+## [0.6.4](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.6.3...v0.6.4) (2022-11-04)
+
+
+### For Developers
+
+* bump version ([74ea73d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/74ea73d2a863bd35f89b440451af17a684a8c294))
+
 ## [0.6.3](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.6.3b...v0.6.3) (2022-11-04)
 
 
