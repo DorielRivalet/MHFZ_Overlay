@@ -1,5 +1,12 @@
 
 
+## [0.8.4](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.8.3...v0.8.4) (2022-11-04)
+
+
+### Bug Fixes
+
+* road max faints ([dd4a21c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/dd4a21cd50f3a9c5bb6098b30824bbbe3ec250bf))
+
 ## [0.8.3](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.8.2...v0.8.3) (2022-11-04)
 
 
