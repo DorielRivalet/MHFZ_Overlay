@@ -1486,5 +1486,17 @@ namespace MHFZ_Overlay {
                 this["GuildCardBackground"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableUpdateNotifier {
+            get {
+                return ((bool)(this["EnableUpdateNotifier"]));
+            }
+            set {
+                this["EnableUpdateNotifier"] = value;
+            }
+        }
     }
 }

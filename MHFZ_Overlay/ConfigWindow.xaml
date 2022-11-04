@@ -11,7 +11,7 @@
         xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
             x:Name="Config"
-        Title="Monster Hunter Frontier Z Overlay v0.6.4"
+        Title="Monster Hunter Frontier Z Overlay"
         Height="720" Width="1280" ResizeMode="CanResize"
         Foreground="#cdd6f4" 
             Closing="Config_Closing" Closed="Config_Closed"
@@ -256,6 +256,9 @@
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="18" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaWidth}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Map Area Height"/>
                         <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="19" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaHeight}"  PreviewTextInput="ValidateNumber"/>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Enable Update Notifier" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Show Update Notifier at Startup"/>
+                        <ToggleButton Grid.Row="20" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableUpdateNotifier}"/>
                     </Grid>
                 </ScrollViewer>
                 <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">
@@ -1826,7 +1829,7 @@
                         </Grid>
                         <!--https://stackoverflow.com/questions/19694640/animating-gif-in-wpf-->
                         <MediaElement MediaEnded="Fumo_MediaEnded" Grid.Row="6" Grid.Column="2" x:Name="myFumo" Width="Auto" Height="Auto" UnloadedBehavior="Manual"     Source="https://cdn.discordapp.com/attachments/324875367418429441/1032217078750531584/zenith_fumo.gif" LoadedBehavior="Play"/>
-                        <TextBlock Grid.Row="7" Grid.ColumnSpan="3" Text="Loading..." x:Name="OctokitInfo"/>
+                        <TextBlock TextWrapping="Wrap" Grid.Row="7" FontSize="24" Grid.ColumnSpan="3" Text="Loading..." x:Name="OctokitInfo"/>
                     </Grid>
                 </ScrollViewer>
             </Grid>

@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
         x:Name="Window"
-        Title="MHF-Z Overlay v0.6.4" Height="2160" Width="3840 " Background="Transparent" AllowsTransparency="True" WindowStyle="None" FontFamily="{StaticResource Source Code Pro Bold}"
+        Title="MHF-Z Overlay" Height="2160" Width="3840 " Background="Transparent" AllowsTransparency="True" WindowStyle="None" FontFamily="{StaticResource Source Code Pro Bold}"
         Style="{StaticResource WinAll}" Loaded="Window_Loaded">
     <Window.Resources>
         <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>

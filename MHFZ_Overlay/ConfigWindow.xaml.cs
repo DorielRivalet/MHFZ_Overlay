@@ -2912,6 +2912,8 @@ namespace MHFZ_Overlay
         //    }
         //}
 
+        //private static DateTimeOffset dtoffset = new DateTimeOffset();
+
         private async Task GetRepoStats()
         {
             var info = client.GetLastApiInfo();
@@ -2937,13 +2939,13 @@ namespace MHFZ_Overlay
 
             //StargazerTextBlock.Text = "";
 
-            //for (int i = 0; i < stargazers.Count; i++)
-            //{
-            //    var name = await stargazers[i].Name;
-            //    StargazerTextBlock.Text += stargazers[i].Name + ", ";
-            //}
+            for (int i = 0; i < stargazers.Count; i++)
+            {
+                if (stargazers[i].Name.Length >= 1 && stargazers[i].Name != null)
+                    StargazerTextBlock.Text += stargazers[i].Name + ", ";
+            }
 
-            StargazerTextBlock.Text = stargazers.Count.ToString() + " Stargazers(s)";
+            //StargazerTextBlock.Text = stargazers.Count.ToString() + " Stargazers(s)";
 
             info = client.GetLastApiInfo();
 

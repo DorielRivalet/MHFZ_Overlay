@@ -368,5 +368,8 @@
     <Setting Name="GuildCardBackground" Type="System.String" Scope="User">
       <Value Profile="(Default)">Ashen Lao-Shan Lung</Value>
     </Setting>
+    <Setting Name="EnableUpdateNotifier" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
