@@ -2,13 +2,16 @@
 using Dictionary;
 using Memory;
 using Newtonsoft.Json.Linq;
+using Octokit;
 using System;
 using System.CodeDom;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using Application = System.Windows.Application;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -9852,7 +9855,9 @@ namespace MHFZ_Overlay.addresses
                 return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/guild_card/" + optionChosen + ".png";
             }
         }
-        
+
+
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>

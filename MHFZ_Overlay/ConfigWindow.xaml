@@ -1758,46 +1758,77 @@
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="Credits" Margin="20,20,20,20" Grid.ColumnSpan="9">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="128"/>
-                        <RowDefinition Height="128"/>
-                        <RowDefinition Height="128"/>
-                        <RowDefinition Height="128"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Foreground="#89dceb" Margin="10,0,0,10" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="Imulion"  FontSize="18" HorizontalAlignment="Center"/>
-                    <TextBlock Foreground="#89b4fa" Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="suzaku01"  FontSize="18" HorizontalAlignment="Center"/>
-                    <TextBlock Foreground="#f38ba8" Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="Doriel Rivalet"  FontSize="18" HorizontalAlignment="Center"/>
-                    <Image Width="128" Height="128" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" x:Name="myImg" Source="https://avatars.githubusercontent.com/u/27354834?v=4" Margin="10,0,0,10"/>
-                    <Image Width="128" Height="128" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" x:Name="myImg3"  Source="https://avatars.githubusercontent.com/u/89909040?v=4" Margin="10,0,0,10"/>
-                    <Image Width="128" Height="128" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" x:Name="myImg2" Source="https://avatars.githubusercontent.com/u/100863878?v=4" Margin="10,0,0,10"/>
-                    <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" Name="txtbFooterRight">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="Credits" Margin="20,20,20,20" Grid.ColumnSpan="9">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="128"/>
+                            <RowDefinition Height="128"/>
+                            <RowDefinition Height="128"/>
+                            <RowDefinition Height="128"/>
+                            <RowDefinition Height="128"/>
+                            <RowDefinition Height="128"/>
+                            <RowDefinition Height="128"/>
+                            <RowDefinition Height="128"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock FontSize="32" Foreground="#89dceb" Margin="10,0,0,10" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="Imulion"  HorizontalAlignment="Center"/>
+                        <TextBlock FontSize="32" Foreground="#89b4fa" Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="suzaku01"   HorizontalAlignment="Center"/>
+                        <TextBlock FontSize="32" Foreground="#f38ba8" Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="Doriel Rivalet"   HorizontalAlignment="Center"/>
+                        <Image Width="128" Height="128" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" x:Name="myImg" Source="https://avatars.githubusercontent.com/u/27354834?v=4" Margin="10,0,0,10"/>
+                        <Image Width="128" Height="128" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" x:Name="myImg3"  Source="https://avatars.githubusercontent.com/u/89909040?v=4" Margin="10,0,0,10"/>
+                        <Image Width="128" Height="128" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" x:Name="myImg2" Source="https://avatars.githubusercontent.com/u/100863878?v=4" Margin="10,0,0,10"/>
+                        <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" Name="txtbFooterRight">
                         <Hyperlink Name="lnkImg" TextDecorations="None" 
                             NavigateUri="https://github.com/Imulion" 
                             ToolTip="Navigate to GitHub profile" RequestNavigate="lnkImg_RequestNavigate">
                             <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
                         </Hyperlink>
-                    </TextBlock>
-                    <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" Name="txtbFooterRight2">
+                        </TextBlock>
+                        <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" Name="txtbFooterRight2">
                         <Hyperlink Name="lnkImg2" TextDecorations="None" 
                             NavigateUri="https://github.com/suzaku01"
                             ToolTip="Navigate to GitHub profile" RequestNavigate="lnkImg_RequestNavigate">
                             <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
                         </Hyperlink>
-                    </TextBlock>
-                    <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Name="txtbFooterRight3">
+                        </TextBlock>
+                        <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Name="txtbFooterRight3">
                         <Hyperlink Name="lnkImg3" TextDecorations="None" 
                             NavigateUri="https://github.com/DorielRivalet"
                             ToolTip="Navigate to GitHub profile" RequestNavigate="lnkImg_RequestNavigate">
                             <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
                         </Hyperlink>
-                    </TextBlock>
-                </Grid>
+                        </TextBlock>
+
+                        <Button ToolTip="Stargazers" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/star.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
+                        <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1">
+                            <ScrollViewer>
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Text="Loading..." x:Name="StargazerTextBlock"/>
+                            </ScrollViewer>
+                        </Grid>
+                        <MediaElement Grid.Row="3" Grid.Column="2"  MediaEnded="Stars_MediaEnded" x:Name="myAnime" UnloadedBehavior="Manual" Source="https://media.tenor.com/uMRSXoUOwpYAAAAC/anime-girl.gif" LoadedBehavior="Play"/>
+                        <Button ToolTip="Watchers" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/watch.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
+                        <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1">
+                            <TextBlock FontSize="32" Text="Loading..." x:Name="WatchersTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <MediaElement Grid.Row="4" Grid.Column="2"  MediaEnded="Watcher_MediaEnded" x:Name="myWatcher" UnloadedBehavior="Manual" Source="https://media.tenor.com/IMNDZBkct8gAAAAC/anime-girl.gif" LoadedBehavior="Play"/>
+                        <Button ToolTip="Issues" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/issues.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
+                        <Grid Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="1">
+                            <TextBlock FontSize="32" Text="Loading..." x:Name="IssuesTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <MediaElement Grid.Row="5" Grid.Column="2"  MediaEnded="Krill_MediaEnded" x:Name="myKrill" UnloadedBehavior="Manual" Source="https://media.tenor.com/S5IodS2Ms_IAAAAC/krill-issue.gif" LoadedBehavior="Play"/>
+                        <Button ToolTip="Thank You!" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/heart.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
+                        <Grid Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="1">
+                            <TextBlock FontSize="32" Text="Thanks for using the overlay!" x:Name="ThankYouTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <!--https://stackoverflow.com/questions/19694640/animating-gif-in-wpf-->
+                        <MediaElement MediaEnded="Fumo_MediaEnded" Grid.Row="6" Grid.Column="2" x:Name="myFumo" Width="Auto" Height="Auto" UnloadedBehavior="Manual"     Source="https://cdn.discordapp.com/attachments/324875367418429441/1032217078750531584/zenith_fumo.gif" LoadedBehavior="Play"/>
+                        <TextBlock Grid.Row="7" Grid.ColumnSpan="3" Text="Loading..." x:Name="OctokitInfo"/>
+                    </Grid>
+                </ScrollViewer>
             </Grid>
         </TabItem>
     </TabControl>

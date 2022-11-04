@@ -73,9 +73,13 @@
     <Page Remove="icons\Done.xaml" />
     <Page Remove="icons\DragDropControl.xaml" />
     <Page Remove="icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Page Remove="icons\heart.xaml" />
     <Page Remove="icons\image_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Page Remove="icons\issues.xaml" />
     <Page Remove="icons\Refresh.xaml" />
     <Page Remove="icons\Settings.xaml" />
+    <Page Remove="icons\Star.xaml" />
+    <Page Remove="icons\Watch.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -182,6 +186,22 @@
     <Resource Include="icons\bone.png" />
     <Resource Include="icons\book.png">
       <Generator></Generator>
+    </Resource>
+    <Resource Include="icons\heart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="icons\issues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="icons\watch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="icons\star.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Resource>
     <Resource Include="icons\caravan_skills.png" />
     <Resource Include="icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml">

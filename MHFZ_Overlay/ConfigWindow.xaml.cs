@@ -38,6 +38,7 @@ using GalaSoft.MvvmLight.Command;
 using Microsoft.Web.WebView2.Core;
 using System.Collections.Generic;
 using Dictionary;
+using Octokit;
 
 namespace MHFZ_Overlay
 {
@@ -2325,6 +2326,9 @@ namespace MHFZ_Overlay
             }
 
             MonsterNameListBox.ItemsSource = MonsterNameList;
+
+
+            _ = GetRepoStats();
         }
 
         private bool MonsterFilterAll(object obj)
@@ -2890,7 +2894,92 @@ namespace MHFZ_Overlay
         {
             ChangeMonsterInfo();
         }
+
+        #region repository stats
+
+        GitHubClient client = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
+
+        //public int issuesCountInt
+        //{
+        //    get
+        //    {
+        //        var issues = GetIssuesCount();
+        //        if (issues.IsCompletedSuccessfully)
+        //        {
+        //            return issuesCount;
+        //        }
+        //        else return issuesCount;
+        //    }
+        //}
+
+        private async Task GetRepoStats()
+        {
+            var info = client.GetLastApiInfo();
+
+            if (info != null)
+                OctokitInfo.Text = String.Format("Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}",info.ServerTimeDifference,info.RateLimit.Limit,info.RateLimit.Remaining);
+
+
+
+            var issuesForOctokit = await client.Issue.GetAllForRepository("DorielRivalet", "MHFZ_Overlay");
+
+            IssuesTextBlock.Text = issuesForOctokit.Count.ToString()+" Issue(s)";
+
+            var watchers = await client.Activity.Watching.GetAllWatchers("DorielRivalet", "MHFZ_Overlay");
+            WatchersTextBlock.Text = watchers.Count.ToString()+" Watcher(s)";
+
+            info = client.GetLastApiInfo();
+
+            if (info != null)
+                OctokitInfo.Text = String.Format("Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining);
+
+            var stargazers = await client.Activity.Starring.GetAllStargazers(client.Repository.Get("DorielRivalet", "MHFZ_Overlay").Id);
+
+            //StargazerTextBlock.Text = "";
+
+            //for (int i = 0; i < stargazers.Count; i++)
+            //{
+            //    var name = await stargazers[i].Name;
+            //    StargazerTextBlock.Text += stargazers[i].Name + ", ";
+            //}
+
+            StargazerTextBlock.Text = stargazers.Count.ToString() + " Stargazers(s)";
+
+            info = client.GetLastApiInfo();
+
+            if (info != null)
+                OctokitInfo.Text = String.Format("Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Reset Time: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining,info.RateLimit.Reset);
+
+        }
+
+        #endregion
+
+        private void Fumo_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            myFumo.Position = new TimeSpan(0, 0, 1);
+            myFumo.Play();
+        }
+
+        private void Krill_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            myKrill.Position = new TimeSpan(0, 0, 1);
+            myKrill.Play();
+        }
+
+        private void Stars_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            myAnime.Position = new TimeSpan(0, 0, 1);
+            myAnime.Play();
+        }
+
+        private void Watcher_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            myWatcher.Position = new TimeSpan(0, 0, 1);
+            myWatcher.Play();
+        }
     };
+
+
 
     
     /* LoadConfig on startup

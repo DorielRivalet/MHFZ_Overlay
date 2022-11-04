@@ -382,9 +382,11 @@ namespace MHFZ_Overlay
             //DataLoader.model.GenerateGearStats();
             CheckGameState();
             _ = LoadOctoKit();
+            //_ = GetRepoStats();
         }
 
         GitHubClient client = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
+
 
         private async Task LoadOctoKit()
         {
@@ -404,12 +406,15 @@ namespace MHFZ_Overlay
                 { 
                     OpenLink("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest"); 
                 }
-
             }
             else
                 isLatestRelease = true;
         }
 
+        /// <summary>
+        /// Opens the link. https://stackoverflow.com/a/60221582/18859245
+        /// </summary>
+        /// <param name="destinationurl">The destinationurl.</param>
         private void OpenLink(string destinationurl)
         {
             var sInfo = new System.Diagnostics.ProcessStartInfo(destinationurl)
