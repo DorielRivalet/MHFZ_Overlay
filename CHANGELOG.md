@@ -1,5 +1,18 @@
 
 
+## [0.8.3](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.8.2...v0.8.3) (2022-11-04)
+
+
+### Bug Fixes
+
+* gr weapon level for bowguns ([07b85f5](https://github.com/DorielRivalet/MHFZ_Overlay/commit/07b85f5e1b42dab5949bd7be93896052664143d9))
+* unlink hp bar options ([1e69d6e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/1e69d6e43470079e1b82c1cf5c4c0d7c04bb23d4))
+
+
+### For Developers
+
+* bump version ([906d3a2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/906d3a231489e7f355bf874852ebaa5546c0b130))
+
 ## [0.8.2](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.8.1...v0.8.2) (2022-11-04)
 
 
