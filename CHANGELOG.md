@@ -1,5 +1,13 @@
 
 
+## [0.8.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.7.0...v0.8.0) (2022-11-04)
+
+
+### Features
+
+* add repository stats ([7e9cd2f](https://github.com/DorielRivalet/MHFZ_Overlay/commit/7e9cd2fbe6eeeb0c85094074e033fabd7fb267e6))
+* add update notifier toggle ([3ccd76a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/3ccd76aefbf0457582f9f94ec9e1840ca353bca8))
+
 ## [0.7.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.6.4...v0.7.0) (2022-11-04)
 
 
