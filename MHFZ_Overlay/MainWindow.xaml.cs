@@ -87,7 +87,7 @@ namespace MHFZ_Overlay
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
         //set version here
-        public const string CurrentProgramVersion = "v0.6.2";
+        public const string CurrentProgramVersion = "v0.6.3";
 
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);
@@ -224,7 +224,7 @@ namespace MHFZ_Overlay
         /// </summary>
         public static RichPresence presenceTemplate = new RichPresence()
         {
-            Details = "【MHF-Z】Overlay "+CurrentProgramVersion,
+            Details = "【MHF-Z】Overlay " + CurrentProgramVersion,
             State = "Loading...",
             //check img folder
             Assets = new Assets()
@@ -1781,13 +1781,13 @@ namespace MHFZ_Overlay
                     return "HR5 ";
                 case 32:
                 case 46://supremacies
-                    //if (GetRealMonsterName(DataLoader.model.CurrentMonster1Icon).Contains("Supremacy"))
-                    //{
-                        return "";
-                    //} else
-                    //{
-                     //   return "";
-                    //}
+                        //if (GetRealMonsterName(DataLoader.model.CurrentMonster1Icon).Contains("Supremacy"))
+                        //{
+                    return "";
+                //} else
+                //{
+                //   return "";
+                //}
                 case 53://: conquest levels via quest id
                     //shantien
                     //lv1 23585
@@ -1863,7 +1863,7 @@ namespace MHFZ_Overlay
                     }
                 //10m upper shiten/musou true slay
 
-                
+
                 case 56://twinhead rajang / voljang and rajang
                 case 57://twinhead mi ru / white and brown espi / unknown and zeru / rajang and dorag
                     return "Twinhead ";
@@ -2365,7 +2365,7 @@ namespace MHFZ_Overlay
             else if (DataLoader.model.CaravanOverride())
                 id = DataLoader.model.CaravanMonster1ID();
             //Duremudira Arena
-            if (DataLoader.model.AreaID() == 398 && (DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750)) 
+            if (DataLoader.model.AreaID() == 398 && (DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750))
                 id = 132;//duremudira
             else if (DataLoader.model.AreaID() == 398 && (DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649))
                 id = 167;//arrogant duremudira
@@ -2936,7 +2936,7 @@ namespace MHFZ_Overlay
             else if (DataLoader.model.ObjectiveType() == 0x1 || DataLoader.model.ObjectiveType() == 0x101 || DataLoader.model.ObjectiveType() == 0x201)
                 return DataLoader.model.Objective1Quantity().ToString() + " ";
             else if (DataLoader.model.ObjectiveType() == 0x8004 || DataLoader.model.ObjectiveType() == 0x18004)
-                return string.Format("({0} True HP) ",DataLoader.model.Objective1Quantity()*100);
+                return string.Format("({0} True HP) ", DataLoader.model.Objective1Quantity() * 100);
             else
                 return DataLoader.model.Objective1Quantity().ToString() + " ";
         }
@@ -2972,7 +2972,7 @@ namespace MHFZ_Overlay
                 else
                     //increases when u hit a dead large monster
                     return DataLoader.model.Objective1CurrentQuantityMonster().ToString() + "/";
-            }  
+            }
         }
 
         /// <summary>
@@ -3007,7 +3007,7 @@ namespace MHFZ_Overlay
                         DataLoader.model.QuestID() == 23585
                     )
                 )
-                
+
                 ||
 
                 DataLoader.model.QuestID() == 23603 ||
@@ -3056,7 +3056,7 @@ namespace MHFZ_Overlay
                 return true;
             else if (DataLoader.model.roadOverride() != null && DataLoader.model.roadOverride() == true)
                 return false;
-            else 
+            else
                 return false;
         }
 
@@ -3117,8 +3117,8 @@ namespace MHFZ_Overlay
                 }
             }
             else
-            { 
-                return false; 
+            {
+                return false;
             }
         }
 
@@ -3182,7 +3182,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetStarGrade(bool isLargeImageText = false)
         {
-            if ((ShowDiscordQuestNames && !(isLargeImageText)) || DataLoader.model.CaravanOverride()) 
+            if ((ShowDiscordQuestNames && !(isLargeImageText)) || DataLoader.model.CaravanOverride())
                 return "";
 
             if (IsToggeableDifficulty())
@@ -3206,8 +3206,8 @@ namespace MHFZ_Overlay
                     case 23649://arrogant slay
                         return "Slay Arrogant Duremudira | ";
                     case 23527:// Hunter's Road Multiplayer
-                        return "";                    
-                   case 23628://solo road
+                        return "";
+                    case 23628://solo road
                         return "";
                     case 21731://1st district dure
                     case 21749://sky corridor version
@@ -3216,12 +3216,12 @@ namespace MHFZ_Overlay
                     case 21746://2nd district dure
                     case 21750://sky corridor version
                         return "Slay 2nd District Duremudira | ";
-                        //return string.Format("{0}{1} | ", DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
+                    //return string.Format("{0}{1} | ", DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
-                            return string.Format("{0}{1}{2}{3}{4}{5} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(),true), GetObjective1CurrentQuantity(true), GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(),true),GetStarGrade(true), GetObjective1Name(DataLoader.model.Objective1ID(),true));
+                            return string.Format("{0}{1}{2}{3}{4}{5} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(), true), GetObjective1CurrentQuantity(true), GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(), true), GetStarGrade(true), GetObjective1Name(DataLoader.model.Objective1ID(), true));
                         else
-                            return string.Format("{0}{1}{2}{3}{4}{5} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(),true), "", GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(),true), GetStarGrade(true), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon,true));
+                            return string.Format("{0}{1}{2}{3}{4}{5} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(), true), "", GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(), true), GetStarGrade(true), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon, true));
                 }
             }
             else
@@ -3252,15 +3252,15 @@ namespace MHFZ_Overlay
                 default:
                     return "";
                 case "Raviente":
-                    return EventValue1+"";
+                    return EventValue1 + "";
                 case "Violent Raviente":
-                    return EventValue2+"";
+                    return EventValue2 + "";
                 case "Berserk Raviente Practice":
-                    return EventValue4+"";
+                    return EventValue4 + "";
                 case "Berserk Raviente":
-                    return EventValue3+"";
+                    return EventValue3 + "";
                 case "Extreme Raviente":
-                    return EventValue3+"";
+                    return EventValue3 + "";
             }
         }
 
@@ -3283,7 +3283,7 @@ namespace MHFZ_Overlay
                 case 1:
                     return String.Format("Achieved Main Objective | {0} | ", DataLoader.model.Time);
                 case 129:
-                    return String.Format("Quest Clear! | {0} | ",DataLoader.model.Time);
+                    return String.Format("Quest Clear! | {0} | ", DataLoader.model.Time);
             }
         }
 
@@ -3299,8 +3299,16 @@ namespace MHFZ_Overlay
             }
             else
             {
-                return string.Format("Party: {0}/{1} | ", DataLoader.model.PartySize(), DataLoader.model.PartySizeMax());
+                return string.Format("Party: {0}/{1} | ", DataLoader.model.PartySize(), GetPartySizeMax());
             }
+        }
+
+        public int GetPartySizeMax()
+        {
+            if (DataLoader.model.PartySize() >= DataLoader.model.PartySizeMax())
+                return DataLoader.model.PartySize();
+            else
+                return DataLoader.model.PartySizeMax();
         }
        
 

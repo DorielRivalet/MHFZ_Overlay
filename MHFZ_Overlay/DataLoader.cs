@@ -75,7 +75,7 @@ namespace MHFZ_Overlay
         private static async Task UpdateMyApp()
         {
             using var mgr = new UpdateManager("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest");
-            var newVersion = await mgr.UpdateApp();
+            var newVersion = await mgr.UpdateApp().ConfigureAwait(false);
 
             // optionally restart the app automatically, or ask the user if/when they want to restart
             if (newVersion != null)
@@ -94,7 +94,7 @@ namespace MHFZ_Overlay
         {
             using (var mgr = UpdateManager.GitHubUpdateManager("https://github.com/DorielRivalet/MHFZ_Overlay"))
             {
-                await mgr.Result.UpdateApp();
+                await mgr.Result.UpdateApp().ConfigureAwait(false);
             }
         }
 
