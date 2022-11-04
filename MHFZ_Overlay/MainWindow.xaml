@@ -132,7 +132,7 @@
         </Grid>
 
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster4HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster4HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster4HealthBarY}" Width="500" Height="40" MouseLeftButtonDown="ElementMouseLeftButtonDown"
-              Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonster1HPBar, Converter={StaticResource BoolToVis}}">
+              Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonster4HPBar, Converter={StaticResource BoolToVis}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
