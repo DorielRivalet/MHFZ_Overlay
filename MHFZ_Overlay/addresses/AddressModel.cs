@@ -425,6 +425,7 @@ namespace MHFZ_Overlay.addresses
         abstract public int StyleRank2();
 
         abstract public int GRWeaponLv();
+        abstract public int GRWeaponLvBowguns();
 
         abstract public int Sigil1Name1();
         abstract public int Sigil1Value1();
@@ -4398,7 +4399,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 string className = GetWeaponClass();
-                string lv = GetGRWeaponLevel(GRWeaponLv());
+                string lv = GetWeaponNameFromType(WeaponType()).Contains("Bowgun") ? GetGRWeaponLevel(GRWeaponLvBowguns()) : GetGRWeaponLevel(GRWeaponLv());
 
                 if (GetTextFormat() == "Markdown")
                 {
@@ -9479,7 +9480,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 string className = GetWeaponClass();
-                string lv = GetGRWeaponLevel(GRWeaponLv());
+                string lv = GetWeaponNameFromType(WeaponType()).Contains("Bowgun") ? GetGRWeaponLevel(GRWeaponLvBowguns()) : GetGRWeaponLevel(GRWeaponLv());
 
                 if (className == "Blademaster")
                 {
@@ -9607,7 +9608,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 string className = GetWeaponClass();
-                string lv = GetGRWeaponLevel(GRWeaponLv());
+                string lv = GetWeaponNameFromType(WeaponType()).Contains("Bowgun") ? GetGRWeaponLevel(GRWeaponLvBowguns()) : GetGRWeaponLevel(GRWeaponLv());
 
                 if (className == "Blademaster")
                 {

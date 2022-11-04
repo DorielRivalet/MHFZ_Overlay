@@ -389,6 +389,7 @@ namespace MHFZ_Overlay.addresses
         public override int StyleRank2() => M.ReadByte("mhfo.dll+503499F");
 
         public override int GRWeaponLv() => M.Read2Byte("mhfo.dll+5033F94");
+        public override int GRWeaponLvBowguns() => M.Read2Byte("mhfo.dll+5033F95");
 
         public override int Sigil1Name1() => M.ReadByte("mhfo.dll+5BF91E4");
         public override int Sigil1Value1() => M.ReadByte("mhfo.dll+5BF91EA");
