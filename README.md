@@ -187,3 +187,7 @@ If the HP shows 0/1 then change area for it to load.
 ![Discord Rich Presence](./demo/discord8.png)
 
 ~~Congrats now you won't be accused of cheating~~
+
+## How to Manually update with Update.exe
+
+`update.exe --update https://www.github.com/DorielRivalet/MHFZ_Overlay/releases/download/ENTER VERSION NUMBER (E.G. v0.6.4)`
