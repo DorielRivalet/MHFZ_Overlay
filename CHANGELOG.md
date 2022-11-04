@@ -1,5 +1,22 @@
 
 
+## [0.7.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.6.4...v0.7.0) (2022-11-04)
+
+
+### Features
+
+* add octokit updater ([a7e275d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/a7e275d9c3a0eee243d37c3262096b412cb57c79))
+
+
+### Bug Fixes
+
+* releases updater ([b8d63d0](https://github.com/DorielRivalet/MHFZ_Overlay/commit/b8d63d08d9b0276d629d29ee61ce49a298e1b60f))
+
+
+### For Developers
+
+* update README.md ([45e34b9](https://github.com/DorielRivalet/MHFZ_Overlay/commit/45e34b934d8e337878f2d80b89e9471d4bc78b78))
+
 ## [0.6.4](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.6.3...v0.6.4) (2022-11-04)
 
 
