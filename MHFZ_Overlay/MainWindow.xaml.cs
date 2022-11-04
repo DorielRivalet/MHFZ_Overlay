@@ -3033,6 +3033,9 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetMaxFaints()
         {
+            if (DataLoader.model.roadOverride() != null && DataLoader.model.roadOverride() == false)
+                return DataLoader.model.MaxFaints().ToString();
+
             if (
                 (
                     DataLoader.model.CaravanOverride() && !
