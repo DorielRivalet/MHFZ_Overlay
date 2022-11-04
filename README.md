@@ -97,6 +97,34 @@ If the monster HP shown is less than what its actual values should be, restart b
 
 ![Discord Rich Presence](./demo/discord9.gif)
 
+## Configuration Preview
+
+These images don't show everything, find out what's missing by pressing `Shift+F1`!
+
+### Hunter Sets (Text)
+
+![Config1](./demo/config1.png)
+
+### Hunted Logs
+
+![Config2](./demo/config2.png)
+
+### Monster Speedruns, Hitzones and Wiki
+
+![Config3](./demo/config3.png)
+
+### Ferias
+
+![Config4](./demo/config4.png)
+
+### Guild Card
+
+![Config5](./demo/config5.png)
+
+### Hunter Sets (Image)
+
+![Config6](./demo/config6.png)
+
 ## Bugs
 
 - Monster Infos are sometimes outside of the screen (if they don't show at all even if you open the config menu, this is probably your issue)
