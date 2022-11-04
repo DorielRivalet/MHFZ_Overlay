@@ -1,8 +1,10 @@
 ﻿using Memory;
 using MHFZ_Overlay.addresses;
+using Octokit;
 using Squirrel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -109,8 +111,8 @@ namespace MHFZ_Overlay
                 onAppUninstall: OnAppUninstall,
                 onEveryRun: OnAppRun);
 
-            _ = Main();
-            _ = UpdateMyApp();
+            //_ = Main();
+            //_ = UpdateMyApp();
             // ... other app init code after ...
 
             int PID = m.GetProcIdFromName("mhf");

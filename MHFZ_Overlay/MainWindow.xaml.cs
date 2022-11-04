@@ -1,12 +1,14 @@
 ﻿using DiscordRPC;
 using Memory;
 using MHFZ_Overlay.addresses;
+using Octokit;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
@@ -88,7 +90,7 @@ namespace MHFZ_Overlay
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
         //set version here
-        public const string CurrentProgramVersion = "v0.6.4";
+        public const string CurrentProgramVersion = "v0.6.5";
 
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);
@@ -379,7 +381,47 @@ namespace MHFZ_Overlay
             InitializeDiscordRPC();
             //DataLoader.model.GenerateGearStats();
             CheckGameState();
+            _ = LoadOctoKit();
         }
+
+        GitHubClient client = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
+
+        private async Task LoadOctoKit()
+        {
+            var releases = await client.Repository.Release.GetAll("DorielRivalet", "MHFZ_Overlay");
+            var latest = releases[0];
+            releaseInfo = string.Format(
+               "The latest release is tagged at {0} and is named {1}. Go to download page?",
+                latest.TagName,
+                latest.Name);
+            latestRelease = latest.TagName;
+            if (latestRelease != MainWindow.CurrentProgramVersion)
+            {
+                isLatestRelease = false;
+                System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(String.Format("Detected different version ({0}) from latest ({1}). Go to download page?", CurrentProgramVersion, latest.TagName), "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); 
+                
+                if (messageBoxResult.ToString() == "Yes") 
+                { 
+                    OpenLink("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest"); 
+                }
+
+            }
+            else
+                isLatestRelease = true;
+        }
+
+        private void OpenLink(string destinationurl)
+        {
+            var sInfo = new System.Diagnostics.ProcessStartInfo(destinationurl)
+            {
+                UseShellExecute = true,
+            };
+            System.Diagnostics.Process.Start(sInfo);
+        }
+
+        private string releaseInfo;
+        public string latestRelease;
+        public bool isLatestRelease;
 
         public void CheckGameState()
         {
