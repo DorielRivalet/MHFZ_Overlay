@@ -1,5 +1,7 @@
 
 
+* fix: party size max count (27fcfb7)
+
 * chore: bump version (8b840a9)
 
 ## [0.6.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.5.1...v0.6.0) (2022-11-03)
