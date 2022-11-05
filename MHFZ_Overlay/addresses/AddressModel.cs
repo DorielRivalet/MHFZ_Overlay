@@ -3988,7 +3988,7 @@ namespace MHFZ_Overlay.addresses
                 switch (id)
                 {
                     case 0://Loading
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";//transparent pixel
                     case 1://Jungle areas
                     case 2:
                     case 3:
@@ -4232,7 +4232,7 @@ namespace MHFZ_Overlay.addresses
                     case 414://dure door
                     case 415:
                     case 416:
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 400://White Lake areas
                     case 401:
                     case 402:
@@ -4290,40 +4290,40 @@ namespace MHFZ_Overlay.addresses
                         return "https://i.imgur.com/60XYso8.png"; //cattleya
                     case 173://My Houses
                     case 175:
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 201://Hairdresser
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 202: //Guild Halls
                     case 203:
                     case 204:
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 205://Pugi Farm
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 210://Private Bar
                     case 211://Rasta Bar
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 256://Caravan Areas
                     case 260:
                     case 261:
                     case 262:
                     case 263:
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 257://Blacksmith
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 264://Gallery
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 265://Guuku Farm
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 283://Halk Area
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 286://PvP Room
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 340: //SR Rooms
                     case 341:
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     case 379://Diva Halls
                     case 445:
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     //case road?
                     case 462: //MezFes areas
                     case 463:
@@ -4333,9 +4333,9 @@ namespace MHFZ_Overlay.addresses
                     case 467:
                     case 468:
                     case 469:
-                        return "";
+                        return "https://i.imgur.com/aAcPJGb.png";
                     default:
-                        return "";//cattleya
+                        return "https://i.imgur.com/aAcPJGb.png";
                 }
             }
         }

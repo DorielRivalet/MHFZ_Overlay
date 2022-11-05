@@ -355,6 +355,7 @@ namespace MHFZ_Overlay
             Topmost = true;
             DispatcherTimer timer = new();
             timer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 30);
+            //memory leak?
             timer.Tick += Timer_Tick;
             timer.Start();
             DataContext = DataLoader.model;
@@ -722,6 +723,7 @@ namespace MHFZ_Overlay
         {
             DispatcherTimer timer = new();
             timer.Interval = new TimeSpan(0, 0, 0, 1);
+            //memory leak?
             timer.Tick += (o, e) => { DamageNumbers.Children.Remove(tb); };
             timer.Start();
         }

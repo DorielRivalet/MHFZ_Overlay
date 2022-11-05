@@ -2802,6 +2802,7 @@ namespace MHFZ_Overlay
             webViewMonsterInfo.Dispose();
             s.Reload();
             Close();
+            DeletexNames_OnClosed();
             GC.Collect(); // find finalizable objects
             GC.WaitForPendingFinalizers(); // wait until finalizers executed
             GC.Collect(); // collect finalized objects
@@ -2982,28 +2983,48 @@ namespace MHFZ_Overlay
         #endregion
 
         private void Fumo_MediaEnded(object sender, RoutedEventArgs e)
-        {
+        {if (myFumo == null)
+                return;
             myFumo.Position = new TimeSpan(0, 0, 1);
             myFumo.Play();
         }
 
         private void Krill_MediaEnded(object sender, RoutedEventArgs e)
-        {
+        {if (myKrill == null)
+                return;
             myKrill.Position = new TimeSpan(0, 0, 1);
             myKrill.Play();
         }
 
         private void Stars_MediaEnded(object sender, RoutedEventArgs e)
         {
+            if (myAnime == null) return;
             myAnime.Position = new TimeSpan(0, 0, 1);
             myAnime.Play();
         }
 
         private void Watcher_MediaEnded(object sender, RoutedEventArgs e)
         {
+            if (myWatcher == null) return;
             myWatcher.Position = new TimeSpan(0, 0, 1);
             myWatcher.Play();
         }
+
+        /// <summary>
+        /// might need to work on? is the memory reduction worth it?
+        /// </summary>
+        private void DeletexNames_OnClosed()
+        {
+            if (myWatcher != null)
+            {
+                this.UnregisterName("myWatcher");
+                //CaravanInfoGrid.Children.Remove(myWatcher);
+                myWatcher = null;
+            }
+        }
+
+
+
     };
 
 
