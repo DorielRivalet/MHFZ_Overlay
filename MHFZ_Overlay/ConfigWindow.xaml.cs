@@ -2432,6 +2432,9 @@ namespace MHFZ_Overlay
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
             Close();
+            GC.Collect(); // find finalizable objects
+            GC.WaitForPendingFinalizers(); // wait until finalizers executed
+            GC.Collect(); // collect finalized objects
         }
 
         /// <summary>
@@ -2446,6 +2449,9 @@ namespace MHFZ_Overlay
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
             Close();
+            GC.Collect(); // find finalizable objects
+            GC.WaitForPendingFinalizers(); // wait until finalizers executed
+            GC.Collect(); // collect finalized objects
         }
 
         /// <summary>
@@ -2458,6 +2464,9 @@ namespace MHFZ_Overlay
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
             Close();
+            GC.Collect(); // find finalizable objects
+            GC.WaitForPendingFinalizers(); // wait until finalizers executed
+            GC.Collect(); // collect finalized objects
         }
 
         /// <summary>
@@ -2472,6 +2481,9 @@ namespace MHFZ_Overlay
             webViewMonsterInfo.Dispose();
             s.Reload();
             Close();
+            GC.Collect(); // find finalizable objects
+            GC.WaitForPendingFinalizers(); // wait until finalizers executed
+            GC.Collect(); // collect finalized objects
         }
 
         /// <summary>
@@ -2785,8 +2797,14 @@ namespace MHFZ_Overlay
 
         private void Config_Closed(object sender, EventArgs e)
         {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
+            s.Reload();
+            Close();
+            GC.Collect(); // find finalizable objects
+            GC.WaitForPendingFinalizers(); // wait until finalizers executed
+            GC.Collect(); // collect finalized objects
         }
 
         private void Config_Closing(object sender, EventArgs e)
@@ -2939,11 +2957,18 @@ namespace MHFZ_Overlay
 
             //StargazerTextBlock.Text = "";
 
-            for (int i = 0; i < stargazers.Count; i++)
-            {
-                if (stargazers[i].Name.Length >= 1 && stargazers[i].Name != null)
-                    StargazerTextBlock.Text += stargazers[i].Name + ", ";
-            }
+            //WIP
+            //for (int i = 0; i < stargazers.Count; i++)
+            //{
+            //    if (stargazers[i] != null)
+            //    {
+            //        if (stargazers[i].Name != null || stargazers[i].Name != "")
+            //        {
+            //            if (stargazers[i].Name.Length >= 1)
+            //                StargazerTextBlock.Text += stargazers[i].Name + ", ";
+            //        }
+            //    }
+            //}
 
             //StargazerTextBlock.Text = stargazers.Count.ToString() + " Stargazers(s)";
 

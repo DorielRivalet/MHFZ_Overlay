@@ -230,32 +230,32 @@
                         <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="6" Text="Damage Numbers Color" Style="{StaticResource ConfigTextBox}"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=DamageNumbersColor}"></xctk:ColorPicker>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Damage Numbers Area X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Damage Numbers Area Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Damage Numbers Area Width"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Damage Numbers Area Height"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Monster 1 Icon"/>
                         <ToggleButton Grid.Row="11" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=Monster1IconShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Monster 1 Icon X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster 1 Icon Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan, Pioneer, Raviente, Cities, Guild Hall, Tavern, Interception or Daily quests to display the correct information. You may have to do a normal quest first in order to load the correct values." Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Caravan/Pioneer/Raviente/Interception/Cities/Tavern/Guild Hall/Daily Quest Override"/>
                         <ToggleButton Grid.Row="14" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Map" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Location Map"/>
                         <ToggleButton Grid.Row="15" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMap}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Map X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Map Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Map Area Width"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="18" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaWidth}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="18" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaWidth}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Map Area Height"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="19" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaHeight}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="19" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaHeight}"  PreviewTextInput="ValidateNumber"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Enable Update Notifier" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Show Update Notifier at Startup"/>
                         <ToggleButton Grid.Row="20" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableUpdateNotifier}"/>
@@ -348,15 +348,16 @@
                                     <RowDefinition Height="80"/>
                                     <RowDefinition Height="80"/>
                                     <RowDefinition Height="80"/>
+                                    <RowDefinition Height="80"/>
                                 </Grid.RowDefinitions>
                                 <Button Background="Transparent" Grid.Row="0" x:Name="BtnSaveFile" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/file_download_FILL0_wght400_GRAD0_opsz48.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="40" Width="40" ToolTip="Save gear to text file" Click="BtnSaveFile_Click"/>
                                 <Button Background="Transparent" Grid.Row="1" x:Name="BtnCopyFile" ToolTip="Copy gear to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/content_copy_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnCopyFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
                                 <Button Background="Transparent" Grid.Row="2" x:Name="BtnImageFile" ToolTip="Save gear image to disk and copy to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/image_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40" Click="BtnImageFile_Click"/>
                                 <Button Background="Transparent" Grid.Row="3" x:Name="BtnLogFile" ToolTip="Export hunted monsters log as Comma Separated Values" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/description_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnLogFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
                                 <Button Background="Transparent" Grid.Row="4" x:Name="BtnGuildCardFile" ToolTip="Save guild card image to disk and copy to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/badge.xaml'}"  Click="BtnGuildCardFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
+                                <TextBlock Foreground="#cdd6f4" Margin="5,5,5,5"  Text="Reopen config. to update gear" TextWrapping="Wrap" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Grid>
 
-                            
                             <TabControl Margin="5" BorderBrush="Transparent" Background="Transparent" Grid.Row="0" Grid.Column="1">
                                 <TabControl.Resources>
                                     <Style TargetType="TabItem">
@@ -447,75 +448,75 @@
                                                 <RowDefinition Height="20"/>
                                                 <RowDefinition Height="20"/>
                                             </Grid.RowDefinitions>
-                                            <Image HorizontalAlignment="Left" ToolTip="Guild Card Background" Source="{Binding GetGuildCardBackground}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="20"/>
-                                            <Image HorizontalAlignment="Right" ToolTip="Guild Card Background" Source="{Binding GetGuildCardBackground}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="20"/>
-                                            
-                                            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding SimplifiedCurrentProgramVersion}" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,2,0,0"/>
-                                            <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetHunterName}" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,2,0,0"/>
+                                            <Image HorizontalAlignment="Left" ToolTip="Guild Card Background" Source="{Binding GetGuildCardBackground, Mode=OneTime}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="20"/>
+                                            <Image HorizontalAlignment="Right" ToolTip="Guild Card Background" Source="{Binding GetGuildCardBackground, Mode=OneTime}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="20"/>
+
+                                            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding SimplifiedCurrentProgramVersion, Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,2,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetHunterName, Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,2,0,0"/>
 
 
                                             <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Active:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
-                                            <TextBlock Grid.RowSpan="5" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding GetActiveSkillsForImage}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0" Width="400" TextWrapping="Wrap"/>
+                                            <TextBlock Grid.RowSpan="5" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0" Width="400" TextWrapping="Wrap"/>
 
                                             <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Autom.:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
-                                            <TextBlock Grid.RowSpan="2" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetAutomaticSkillsForImage}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0" Width="400" TextWrapping="Wrap"/>
+                                            <TextBlock Grid.RowSpan="2" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetAutomaticSkillsForImage,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0" Width="400" TextWrapping="Wrap"/>
 
                                             <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Zenith:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
-                                            <TextBlock Grid.RowSpan="2" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetZenithSkillsForImage}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0" Width="400" TextWrapping="Wrap"/>
+                                            <TextBlock Grid.RowSpan="2" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetZenithSkillsForImage,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0" Width="400" TextWrapping="Wrap"/>
 
                                             <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Caravan:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
-                                            <TextBlock Grid.Column="0" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetCaravanSkills}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetCaravanSkills,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
                                             <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Top" Text="G.Food:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
-                                            <TextBlock Grid.Column="0" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGuildFoodForImage}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGuildFoodForImage,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
                                             <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="15" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Diva:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
-                                            <TextBlock Grid.Column="0" Grid.Row="15" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetDivaSkillForImage}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="15" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetDivaSkillForImage,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
                                             <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="16" HorizontalAlignment="Left" VerticalAlignment="Top" Text="SR:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
-                                            <TextBlock Grid.Column="0" Grid.Row="16" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetStyleRankForImage}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="16" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetStyleRankForImage,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0"/>
                                             <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="17" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Comment:" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,0,0,0"/>
-                                            <TextBlock Grid.Column="0" Grid.Row="17" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGearDescription}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0" TextWrapping="Wrap" Width="400"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="17" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetGearDescription,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="115,0,0,0" TextWrapping="Wrap" Width="400"/>
 
 
-                                            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding SimplifiedCurrentProgramVersion}" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,2,0,0"/>
-                                            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetHunterName}" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,2,0,0"/>
+                                            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding SimplifiedCurrentProgramVersion,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,2,0,0"/>
+                                            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetHunterName,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="45,2,0,0"/>
 
-                                            <Image Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="{Binding GetWeaponIcon}" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding GetWeaponForGuildCard}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
+                                            <Image Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="{Binding GetWeaponIcon,Mode=OneTime}" Margin="35,0,0,0" Width="20" Height="20"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding GetWeaponForGuildCard,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
 
                                             <Image Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/decoration.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetWeaponDecos}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0" TextWrapping="Wrap" Width="450"/>
+                                            <TextBlock Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetWeaponDecos,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0" TextWrapping="Wrap" Width="450"/>
                                             
                                             <Image Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/helm.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorHeadNameForGuildCard}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorHeadNameForGuildCard,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
 
                                             <Image Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/decoration.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorHeadDecos}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
+                                            <TextBlock Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorHeadDecos,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
 
                                             <Image Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/chest.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorChestNameForGuildCard}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorChestNameForGuildCard,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
 
                                             <Image Grid.Column="1" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/decoration.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Grid.Column="1" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorChestDecos}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
+                                            <TextBlock Grid.Column="1" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorChestDecos,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
 
                                             <Image Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/arms.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorArmNameForGuildCard}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorArmNameForGuildCard,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
 
                                             <Image Grid.Column="1" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/decoration.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Grid.Column="1" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorArmDecos}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
+                                            <TextBlock Grid.Column="1" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorArmDecos,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
 
                                             <Image Grid.Column="1" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/waist.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorWaistNameForGuildCard}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorWaistNameForGuildCard,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
 
                                             <Image Grid.Column="1" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/decoration.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Grid.Column="1" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorWaistDecos}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
+                                            <TextBlock Grid.Column="1" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorWaistDecos,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
 
                                             <Image Grid.Column="1" Grid.Row="15" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/legs.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="15" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorLegNameForGuildCard}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="15" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorLegNameForGuildCard,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
 
                                             <Image Grid.Column="1" Grid.Row="16" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/decoration.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Grid.Column="1" Grid.Row="16" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorLegDecos}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
+                                            <TextBlock Grid.Column="1" Grid.Row="16" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorLegDecos,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
                                             
                                             <Image Grid.Column="1" Grid.Row="17" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/my_tore.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="17" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetCuffs}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
+                                            <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="17" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetCuffs,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
                                         </Grid>
                                     </Grid>
                                 </TabItem>
@@ -552,7 +553,7 @@
                                                 <Image Panel.ZIndex="1" ToolTip="Program" Grid.Row="0" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/mhfzoverlayicon256.png"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Metadata" Grid.Row="1" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/transcend.png"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Gear Description" Grid.Row="2" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/page.png"/>
-                                                <Image Panel.ZIndex="1" ToolTip="Weapon" Grid.Row="3" Grid.Column="0" Source="{Binding GetWeaponIcon}"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Weapon" Grid.Row="3" Grid.Column="0" Source="{Binding GetWeaponIcon, Mode=OneTime}"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Head" Grid.Row="4" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/helm.png"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Chest" Grid.Row="5" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/chest.png"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Arms" Grid.Row="6" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/arms.png"/>
@@ -569,7 +570,7 @@
                                                 <Image Panel.ZIndex="1" ToolTip="Guild" Grid.Row="7" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/guild_food.png"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Style Rank" Grid.Row="8" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/burst.png"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Poogie Item" Grid.Row="9" Grid.Column="2" Source="https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/icon/my_tore.png"/>
-                                                <Image Panel.ZIndex="1" ToolTip="Weapon Decorations or Sigils" Grid.Row="10" Grid.Column="0" Source="{Binding GetWeaponIcon}"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Weapon Decorations or Sigils" Grid.Row="10" Grid.Column="0" Source="{Binding GetWeaponIcon,Mode=OneTime}"/>
                                                 <!--https://stackoverflow.com/questions/11244457/how-to-set-row-border-and-background-color-in-wpf-grid-->
                                                 <Border Background="#1e1e2e" Grid.ColumnSpan="4"/>
                                                 <Border Grid.Row="1" Background="#181825" Grid.ColumnSpan="4"/>
@@ -584,27 +585,27 @@
                                                 <Border Grid.Row="10" Background="#1e1e2e" Grid.ColumnSpan="4"/>
 
 
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="0" Grid.Column="1" Text="{Binding FullCurrentProgramVersion}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="1" Grid.Column="1" Text="{Binding GetMetadataForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="2" Grid.Column="1" Text="{Binding GetGearDescription}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="3" Grid.Column="1" Text="{Binding GetWeaponForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="4" Grid.Column="1" Text="{Binding GetArmorHeadNameForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="5" Grid.Column="1" Text="{Binding GetArmorChestNameForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="6" Grid.Column="1" Text="{Binding GetArmorArmNameForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="7" Grid.Column="1" Text="{Binding GetArmorWaistNameForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="8" Grid.Column="1" Text="{Binding GetArmorLegNameForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="9" Grid.Column="1" Text="{Binding GetCuffs}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="0" Grid.Column="3" Text="{Binding GetAtkDefForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="1" Grid.Column="3" Text="{Binding GetZenithSkillsForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="2" Grid.Column="3" Text="{Binding GetAutomaticSkillsForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="3" Grid.Column="3" Text="{Binding GetActiveSkillsForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap" Grid.RowSpan="2"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="0" Grid.Column="1" Text="{Binding FullCurrentProgramVersion,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="1" Grid.Column="1" Text="{Binding GetMetadataForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="2" Grid.Column="1" Text="{Binding GetGearDescription,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="3" Grid.Column="1" Text="{Binding GetWeaponForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="4" Grid.Column="1" Text="{Binding GetArmorHeadNameForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="5" Grid.Column="1" Text="{Binding GetArmorChestNameForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="6" Grid.Column="1" Text="{Binding GetArmorArmNameForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="7" Grid.Column="1" Text="{Binding GetArmorWaistNameForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="8" Grid.Column="1" Text="{Binding GetArmorLegNameForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="9" Grid.Column="1" Text="{Binding GetCuffs,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="0" Grid.Column="3" Text="{Binding GetAtkDefForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="1" Grid.Column="3" Text="{Binding GetZenithSkillsForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="2" Grid.Column="3" Text="{Binding GetAutomaticSkillsForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="3" Grid.Column="3" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap" Grid.RowSpan="2"/>
                                                 <!--<TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding FullCurrentProgramVersion}" FontSize="12" VerticalAlignment="Center"/>-->
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="5" Grid.Column="3" Text="{Binding GetCaravanSkills}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="6" Grid.Column="3" Text="{Binding GetDivaSkillForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="7" Grid.Column="3" Text="{Binding GetGuildFoodForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="8" Grid.Column="3" Text="{Binding GetStyleRankForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="9" Grid.Column="3" Text="{Binding GetPoogieItemForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Panel.ZIndex="1" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding GetWeaponDecosForImage}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="5" Grid.Column="3" Text="{Binding GetCaravanSkills,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="6" Grid.Column="3" Text="{Binding GetDivaSkillForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="7" Grid.Column="3" Text="{Binding GetGuildFoodForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="8" Grid.Column="3" Text="{Binding GetStyleRankForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="9" Grid.Column="3" Text="{Binding GetPoogieItemForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Panel.ZIndex="1" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding GetWeaponDecosForImage,Mode=OneTime}" FontSize="16" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                             </Grid>
                                         </Grid>
                                     </ScrollViewer>
@@ -619,7 +620,7 @@
                                     <Grid x:Name="GearTextGrid">
                                         <DockPanel Margin="5,5,5,5">
                                             <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
-                                                <TextBlock ToolTip="If the values are incorrect, double check your settings, check your guild card and change gear either from sets or manually" Text="{Binding GetGearStats}" Name="GearStats" TextWrapping="Wrap"/>
+                                                <TextBlock ToolTip="If the values are incorrect, double check your settings, check your guild card and change gear either from sets or manually" Text="{Binding GetGearStats,Mode=OneTime}" Name="GearStats" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
                                     </Grid>
@@ -1206,7 +1207,7 @@
                         </ComboBox>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Enter a custom gear title or description" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Gear Description"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GearDescriptionExport}" MaxLength="32"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GearDescriptionExport}" MaxLength="32"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Select Gender" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Gender"/>
                         <ComboBox Grid.Column="1" Grid.Row="15" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=GenderExport}">
@@ -1243,10 +1244,10 @@
                         <ToggleButton Grid.Row="21" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=TimerInfoShown}"/>
 
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Quest Timer X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="22" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=TimerX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="22" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=TimerX}"  PreviewTextInput="ValidateNumber"/>
 
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Quest Timer Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="23" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=TimerY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="23" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=TimerY}"  PreviewTextInput="ValidateNumber"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Select Timing Mode (In-Game Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Timing Mode"/>
                         <!--https://stackoverflow.com/questions/43807345/binding-wpf-combobox-to-a-user-settings-property-->
@@ -1262,10 +1263,10 @@
                         <ToggleButton Grid.Row="26" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=HitCountShown}"/>
 
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Hit Count X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="27" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HitCountX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="27" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HitCountX}"  PreviewTextInput="ValidateNumber"/>
 
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0"  Text="Hit Count Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="28" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HitCountY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="28" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HitCountY}"  PreviewTextInput="ValidateNumber"/>
 
                         <!--        ///<summary>
         		///<para>Player true raw</para>
@@ -1291,10 +1292,10 @@
                         <ToggleButton Grid.Row="29" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAtkShown}"/>
 
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0"  Text="Attack X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="30" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAtkX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="30" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAtkX}"  PreviewTextInput="ValidateNumber"/>
 
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="31" Grid.Column="0"  Text="Attack Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="31" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAtkY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="31" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAtkY}"  PreviewTextInput="ValidateNumber"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Highest Attack Color (resets per quest)" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0"  Text="Highest Attack Color"/>
                         <ToggleButton Grid.Row="32" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestAtkColor}"/>
@@ -1303,10 +1304,10 @@
                         <ToggleButton Grid.Row="33" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
 
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0"  Text="Total Sharpness Info X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="34" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="34" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
 
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0"  Text="Total Sharpness Info Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="35" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="35" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0"  Text="Current Sharpness as Percentage"/>
                         <ToggleButton Grid.Row="36" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
@@ -1388,9 +1389,9 @@
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Part Hit Points (reach threshold a 2nd time to break a part)" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Monster 1 Part Threshold"/>
                     <ToggleButton Grid.Row="4" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PartThresholdShown}"/>
                     <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Monster 1 Part Threshold X Coordinate"/>
-                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartX}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartX}"  PreviewTextInput="ValidateNumber"/>
                     <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Monster 1 Part Threshold Y Coordinate"/>
-                    <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartY}"  PreviewTextInput="ValidateNumber"/>
+                    <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartY}"  PreviewTextInput="ValidateNumber"/>
 
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Monster 1 HP Bar"/>
@@ -1398,36 +1399,36 @@
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0" Text="Monster 1 HP Bar Color"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="8" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarColor}"></xctk:ColorPicker>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Monster 1 HP Bar X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1HealthBarX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1HealthBarX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Monster 1 HP Bar Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1HealthBarY}"  PreviewTextInput="ValidateNumber"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 2 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Monster 2 HP Bar"/>
                         <ToggleButton Grid.Row="11" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=Monster2HealthBarShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0" Text="Monster 2 HP Bar Color"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="12" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarColor}"></xctk:ColorPicker>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster 2 HP Bar X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster2HealthBarX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster2HealthBarX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Monster 2 HP Bar Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster2HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster2HealthBarY}"  PreviewTextInput="ValidateNumber"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 3 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster 3 HP Bar"/>
                         <ToggleButton Grid.Row="15" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=Monster3HealthBarShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="Monster 3 HP Bar Color"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="16" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarColor}"></xctk:ColorPicker>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster 3 HP Bar X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster3HealthBarX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster3HealthBarX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Monster 3 HP Bar Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="18" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster3HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="18" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster3HealthBarY}"  PreviewTextInput="ValidateNumber"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 4 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Monster 4 HP Bar"/>
                         <ToggleButton Grid.Row="19" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=Monster4HealthBarShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0" Text="Monster 4 HP Bar Color"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="20" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarColor}"></xctk:ColorPicker>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Monster 4 HP Bar X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="21" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster4HealthBarX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="21" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster4HealthBarX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Monster 4 HP Bar Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="22" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster4HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="22" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster4HealthBarY}"  PreviewTextInput="ValidateNumber"/>
                     </Grid>
                 </ScrollViewer>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">
@@ -1497,63 +1498,63 @@
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Attack Multiplier" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Monster Attack Multiplier"/>
                         <ToggleButton Grid.Row="0" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterAtkMultShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Monster Attack Multiplier X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Monster Attack Multiplier Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Defense Rate (lower = tankier)" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Monster Defense Rate"/>
                         <ToggleButton Grid.Row="3" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterDefrateShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Monster Defense Rate X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterDefrateX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterDefrateX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Monster Defense Rate Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterDefrateY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterDefrateY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Size" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Monster Size"/>
                         <ToggleButton Grid.Row="6" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSizeShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Monster Size X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Monster Size Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Poison Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Monster Poison Threshold"/>
                         <ToggleButton Grid.Row="9" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterPoisonShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Monster Poison Threshold X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterPoisonX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterPoisonX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Monster Poison Threshold Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterPoisonY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterPoisonY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0" Text="Poison Bar Color"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="12" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonBarColor}"></xctk:ColorPicker>
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Sleep Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster Sleep Threshold"/>
                         <ToggleButton Grid.Row="13" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSleepShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Monster Sleep Threshold X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster Sleep Threshold Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="15" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="15" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="Sleep Bar Color"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="16" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarColor}"></xctk:ColorPicker>
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Paralysis Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster Paralysis Threshold"/>
                         <ToggleButton Grid.Row="17" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterParaShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Monster Paralysis Threshold X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="18" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterParaX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="18" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterParaX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Monster Paralysis Threshold Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="19" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterParaY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="19" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterParaY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0" Text="Para Bar Color"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="20" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}"></xctk:ColorPicker>
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Blast Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Monster Blast Threshold"/>
                         <ToggleButton Grid.Row="21" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBlastShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Monster Blast Threshold X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="22" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="22" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Monster Blast Threshold Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="23" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="23" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0" Text="Blast Bar Color"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="24" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarColor}"></xctk:ColorPicker>
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Stun Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Monster Stun Threshold"/>
                         <ToggleButton Grid.Row="25" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStunShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Monster Stun Threshold X Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="26" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStunX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="26" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStunX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Monster Stun Threshold Y Coordinate"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="27" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStunY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="27" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStunY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0" Text="Stun Bar Color"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="28" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}"></xctk:ColorPicker>
@@ -1632,13 +1633,13 @@
                                </StackPanel>
                             </ToolTipService.ToolTip>
                         </TextBlock>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordClientID}"  PreviewTextInput="ValidateNumber" MaxLength="19"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordClientID}"  PreviewTextInput="ValidateNumber" MaxLength="19"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="The server you play on (e.g. https://discord.gg/y8mF6amH, enter only the ID, not the whole link)" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="(Optional) Frontier Discord Server Invite Link"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordServerInvite}"  PreviewTextInput="ValidateName" MaxLength="10"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordServerInvite}"  PreviewTextInput="ValidateName" MaxLength="10"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Your hunter name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="(Optional) Hunter Name"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HunterName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HunterName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Your guild (in-game) name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="(Optional) Guild Name"/>
-                        <TextBox TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GuildName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
+                        <TextBox UndoLimit="0" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GuildName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Select Quest Timing Mode (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Quest Timing Mode"/>
                         <ComboBox Grid.Column="1" Grid.Row="7" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordTimerMode}">
                             <ComboBoxItem>Time Left</ComboBoxItem>
