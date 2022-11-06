@@ -1,5 +1,12 @@
 
 
+## [0.10.3](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.10.2...v0.10.3) (2022-11-06)
+
+
+### Bug Fixes
+
+* splash screen properties ([afa8450](https://github.com/DorielRivalet/MHFZ_Overlay/commit/afa8450f177fe17f587fe7d018e7b0ad137ef080))
+
 ## [0.10.2](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.10.1...v0.10.2) (2022-11-06)
 
 
