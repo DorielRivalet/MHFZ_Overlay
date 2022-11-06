@@ -1,5 +1,12 @@
 
 
+## [0.10.2](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.10.1...v0.10.2) (2022-11-06)
+
+
+### Bug Fixes
+
+* message boxes skip ([3dedc5a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/3dedc5a18f76aa1992825949c4faafff86e3262a))
+
 ## [0.10.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.10.0...v0.10.1) (2022-11-06)
 
 
