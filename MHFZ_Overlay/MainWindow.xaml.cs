@@ -346,6 +346,10 @@ namespace MHFZ_Overlay
         /// </summary>
         public MainWindow()
         {
+            //var splashScreen = new SplashScreen("icons/loading.png");
+            
+            //splashScreen.Show(false);
+
             InitializeComponent();
             Left = 0;
             Top = 0;
@@ -379,6 +383,8 @@ namespace MHFZ_Overlay
             CheckGameState();
             _ = LoadOctoKit();
             //_ = GetRepoStats();
+            //splashScreen.Close(TimeSpan.FromSeconds(3));
+
         }
 
         GitHubClient client = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));

@@ -53,6 +53,7 @@
     <None Remove="icons\guild_food.png" />
     <None Remove="icons\helm.png" />
     <None Remove="icons\knife.png" />
+    <None Remove="icons\loading.png" />
     <None Remove="icons\monster.png" />
     <None Remove="icons\monster_info.png" />
     <None Remove="icons\note_pink.png" />
@@ -195,6 +196,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
+    <SplashScreen Include="icons\loading.png" />
     <Resource Include="icons\watch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
