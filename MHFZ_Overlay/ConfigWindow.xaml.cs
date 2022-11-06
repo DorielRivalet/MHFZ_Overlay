@@ -62,6 +62,12 @@ namespace MHFZ_Overlay
 
         public static string RickRoll = "https://www.youtube.com/embed/dQw4w9WgXcQ";
 
+        public string getFeriasLink()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            return s.FeriasVersionLink;
+        }
+
         public MonsterInfo[] monsterInfos = new MonsterInfo[]
         {
             new MonsterInfo("[Musou] Arrogant Duremudira",
@@ -2048,6 +2054,18 @@ namespace MHFZ_Overlay
           new MonsterLog(176, "King Shakalaka","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/king_shakalaka.png",0,true)
         };
 
+        public string ReplaceFeriasVersion(string link)
+        {
+            string separator = "MHFZ-Ferias-English-Project";
+
+            string dir = link.Split(separator)[1];
+
+            string ReplaceSettingsLink = getFeriasLink();
+            ReplaceSettingsLink = ReplaceSettingsLink.Replace(separator, "");
+            
+            return string.Format("{0}{1}{2}",ReplaceSettingsLink,separator,dir);
+        }
+
         public int GetHuntedCount(int id)
         {
             var dl = MainWindow.DataLoader;
@@ -2329,6 +2347,12 @@ namespace MHFZ_Overlay
 
 
             _ = GetRepoStats();
+
+            for (int i = 0; i < monsterInfos.Length; i++)
+            {
+                monsterInfos[i].FeriasLink = ReplaceFeriasVersion(monsterInfos[i].FeriasLink);
+                //Monsters[i].Image = "icons/armor_skills.png";
+            }
         }
 
         private bool MonsterFilterAll(object obj)
@@ -3023,8 +3047,13 @@ namespace MHFZ_Overlay
             }
         }
 
-
-
+        //private void webViewFerias_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
+        //{
+        //    if (webViewFerias != null && webViewFerias.CoreWebView2 != null)
+        //    {
+        //        webViewFerias.CoreWebView2.Navigate(getFeriasLink());
+        //    }
+        //}
     };
 
 

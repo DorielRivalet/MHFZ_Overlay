@@ -259,6 +259,12 @@
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Enable Update Notifier" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Show Update Notifier at Startup"/>
                         <ToggleButton Grid.Row="20" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableUpdateNotifier}"/>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select ferias version (re-open configuration window)" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Ferias Version"/>
+                        <ComboBox Grid.Column="1" Grid.Row="21" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=FeriasVersionLink}">
+                            <ComboBoxItem>https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/</ComboBoxItem>
+                            <ComboBoxItem>https://xl3lackout.github.io/MHFZ-Ferias-English-Project/</ComboBoxItem>
+                        </ComboBox>
                     </Grid>
                 </ScrollViewer>
                 <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">
@@ -1741,7 +1747,7 @@
                             </Grid.RowDefinitions>
                             <DockPanel Margin="5,5,5,5">
                                 <wv2:WebView2 Name="webViewFerias"
-                  					Source="https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/" DefaultBackgroundColor="#f5e0dc"/>
+                  					Source="{Binding GetCurrentFeriasVersion, Mode=OneTime}" DefaultBackgroundColor="#f5e0dc"/>
                             </DockPanel>
                         </Grid>
                     </ScrollViewer>

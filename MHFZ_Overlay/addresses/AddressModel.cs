@@ -9857,6 +9857,14 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string GetCurrentFeriasVersion
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                return s.FeriasVersionLink;
+            }
+        }
 
 
         public event PropertyChangedEventHandler? PropertyChanged;

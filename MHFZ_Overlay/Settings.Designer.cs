@@ -1498,5 +1498,17 @@ namespace MHFZ_Overlay {
                 this["EnableUpdateNotifier"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/")]
+        public string FeriasVersionLink {
+            get {
+                return ((string)(this["FeriasVersionLink"]));
+            }
+            set {
+                this["FeriasVersionLink"] = value;
+            }
+        }
     }
 }

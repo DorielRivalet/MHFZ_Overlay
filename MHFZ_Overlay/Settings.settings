@@ -371,5 +371,8 @@
     <Setting Name="EnableUpdateNotifier" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="FeriasVersionLink" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
