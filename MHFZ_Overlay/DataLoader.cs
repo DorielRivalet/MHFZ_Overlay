@@ -76,14 +76,14 @@ namespace MHFZ_Overlay
         /// </summary>
         private static async Task UpdateMyApp()
         {
-            using var mgr = new UpdateManager("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest");
+            using var mgr = new UpdateManager("https://github.com/DorielRivalet/MHFZ_Overlay/mains/latest");
             var newVersion = await mgr.UpdateApp().ConfigureAwait(false);
 
             // optionally restart the app automatically, or ask the user if/when they want to restart
             if (newVersion != null)
             {
                 //https://stackoverflow.com/questions/14819426/how-to-create-hyperlink-in-messagebox-show#14820039
-                System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("New version available on GitHub, would you like to download?", "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); if (messageBoxResult.ToString() == "Yes") { System.Diagnostics.Process.Start("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest"); }
+                System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("New version available on GitHub, would you like to download?", "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); if (messageBoxResult.ToString() == "Yes") { System.Diagnostics.Process.Start("https://github.com/DorielRivalet/MHFZ_Overlay/mains/latest"); }
                 //UpdateManager.RestartApp();
             }
         }

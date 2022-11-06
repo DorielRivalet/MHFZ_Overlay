@@ -408,7 +408,7 @@ namespace MHFZ_Overlay
 
                     if (messageBoxResult.ToString() == "Yes")
                     {
-                        OpenLink("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest");
+                        OpenLink("https://github.com/DorielRivalet/MHFZ_Overlay/mains/latest");
                     }
                 }
             }

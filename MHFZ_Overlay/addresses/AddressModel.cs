@@ -3489,7 +3489,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {//TODO: rework this
-                string baseAddress = "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/monster/";
+                string baseAddress = "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/";
                 string extension1 = ".png";
                 string extension2 = ".gif"; //zeniths and rainbow color
                 int id;
@@ -9394,35 +9394,35 @@ namespace MHFZ_Overlay.addresses
                 switch (GetWeaponNameFromType(WeaponType()))
                 {
                     default:
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/sns.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/sns.png";
                     case "Sword and Shield":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/sns.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/sns.png";
                     case "Dual Swords":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/ds.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/ds.png";
                     case "Great Sword":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/gs.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/gs.png";
                     case "Long Sword":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/ls.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/ls.png";
                     case "Hammer":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/hammer.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/hammer.png";
                     case "Hunting Horn":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/hh.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/hh.png";
                     case "Lance":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/lance.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/lance.png";
                     case "Gunlance":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/gl.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/gl.png";
                     case "Tonfa":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/tonfa.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/tonfa.png";
                     case "Switch Axe F":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/saf.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/saf.png";
                     case "Magnet Spike":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/ms.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/ms.png";
                     case "Heavy Bowgun":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/hbg.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/hbg.png";
                     case "Light Bowgun":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/lbg.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/lbg.png";
                     case "Bow":
-                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/weapon/bow.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/weapon/bow.png";
                 }
             }
         }
@@ -9853,7 +9853,7 @@ namespace MHFZ_Overlay.addresses
                 string optionChosen = s.GuildCardBackground.ToLower();
                 optionChosen = optionChosen.Replace(" ", "_");
 
-                return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/release/img/guild_card/" + optionChosen + ".png";
+                return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/guild_card/" + optionChosen + ".png";
             }
         }
 
