@@ -1,5 +1,13 @@
 
 
+## [0.10.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.9.0...v0.10.0) (2022-11-06)
+
+
+### Features
+
+* add missing information to message alerts ([6020088](https://github.com/DorielRivalet/MHFZ_Overlay/commit/60200886fcf0e92b867169a5ee36a6e3dddbc672))
+* create splashscreen ([ed38c3a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ed38c3aad6e2579fad3deb5b232b15edfd62de37))
+
 ## [0.9.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.8.6...v0.9.0) (2022-11-06)
 
 
