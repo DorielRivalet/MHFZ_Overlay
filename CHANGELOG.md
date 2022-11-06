@@ -1,5 +1,12 @@
 
 
+## [0.11.2](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.11.1...v0.11.2) (2022-11-06)
+
+
+### Bug Fixes
+
+* broken links ([fb53548](https://github.com/DorielRivalet/MHFZ_Overlay/commit/fb535482dc67e5aebc5c60c55133ca9e98d983da))
+
 ## [0.11.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.11.0...v0.11.1) (2022-11-06)
 
 
