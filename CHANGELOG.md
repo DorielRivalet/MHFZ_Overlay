@@ -1,5 +1,17 @@
 
 
+## [0.11.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.10.3...v0.11.0) (2022-11-06)
+
+
+### Features
+
+* migrate to main branch links and adjust ferias interface ([9da48e2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/9da48e206c3872367187dc13144695b2a2a9946f))
+
+
+### For Developers
+
+* bump version ([ac8fd2b](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ac8fd2b0eab8bf86180887842794654573a6babe))
+
 ## [0.10.3](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.10.2...v0.10.3) (2022-11-06)
 
 
