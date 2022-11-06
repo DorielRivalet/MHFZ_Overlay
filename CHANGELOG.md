@@ -1,5 +1,22 @@
 
 
+## [0.9.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.8.6...v0.9.0) (2022-11-06)
+
+
+### Features
+
+* implement ferias version option ([f59205e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f59205eed754f38844de5019712d22f32c2f42b5))
+
+
+### Bug Fixes
+
+* map data binding error ([26b2586](https://github.com/DorielRivalet/MHFZ_Overlay/commit/26b258688fbf8d3fd130f6aedf8b3c4b95129e5c))
+
+
+### For Developers
+
+* reduce memory consumption ([64f1dae](https://github.com/DorielRivalet/MHFZ_Overlay/commit/64f1dae8e2e3f653fc046cd00b9c5e545a537eaf))
+
 ## [0.8.6](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.8.3...v0.8.6) (2022-11-04)
 
 
