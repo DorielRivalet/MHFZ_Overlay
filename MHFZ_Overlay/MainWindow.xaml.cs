@@ -30,7 +30,6 @@ using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
 //using static System.Globalization.CultureInfo;
 
-
 namespace MHFZ_Overlay
 {
     /// <summary>
@@ -341,8 +340,6 @@ namespace MHFZ_Overlay
             }
         }
 
-
-
         //Main entry point?        
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -367,8 +364,6 @@ namespace MHFZ_Overlay
             ReloadButton.Visibility = Visibility.Hidden;
             CloseButton.Visibility = Visibility.Hidden;
 
-
-
             ////Main Loop
             //Setting a random details to test the update rate of the presence
             //Program.startRichPresence("");
@@ -387,7 +382,6 @@ namespace MHFZ_Overlay
         }
 
         GitHubClient client = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
-
 
         private async Task LoadOctoKit()
         {
@@ -4100,9 +4094,6 @@ namespace MHFZ_Overlay
         {
 
         }
-
-        
-
     }
 }
 /// <TODO>
