@@ -43,7 +43,7 @@ namespace MHFZ_Overlay
         /// <param name="tools">The tools.</param>
         private static void OnAppInstall(SemanticVersion version, IAppTools tools)
         {
-            MessageBox.Show("【MHF-Z】Overlay is now installed. Creating a shortcut.","MHF-Z Overlay Installation");
+            MessageBox.Show("【MHF-Z】Overlay is now installed. Creating a shortcut.","MHF-Z Overlay Installation",MessageBoxButton.OK,MessageBoxImage.Information);
             tools.CreateShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
         }
 
@@ -54,7 +54,7 @@ namespace MHFZ_Overlay
         /// <param name="tools">The tools.</param>
         private static void OnAppUninstall(SemanticVersion version, IAppTools tools)
         {
-            MessageBox.Show("【MHF-Z】Overlay has been uninstalled. Removing shortcut.", "MHF-Z Overlay Installation");
+            MessageBox.Show("【MHF-Z】Overlay has been uninstalled. Removing shortcut.", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
             tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
         }
 
@@ -68,7 +68,7 @@ namespace MHFZ_Overlay
         {
             tools.SetProcessAppUserModelId();
             // show a welcome message when the app is first installed
-            if (firstRun) MessageBox.Show("【MHF-Z】Overlay is now running! Thanks for installing【MHF-Z】Overlay.\n\nHotkeys: Shift+F1 (Configuration) | Shift+F5 (Restart) | Shift+F6 (Close)\n\nPress Alt+Enter if your game resolution changed.","MHF-Z Overlay Installation");
+            if (firstRun) MessageBox.Show("【MHF-Z】Overlay is now running! Thanks for installing【MHF-Z】Overlay.\n\nHotkeys: Shift+F1 (Configuration) | Shift+F5 (Restart) | Shift+F6 (Close)\n\nPress Alt+Enter if your game resolution changed.","MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         /// <summary>

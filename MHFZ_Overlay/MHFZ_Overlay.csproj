@@ -196,7 +196,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <SplashScreen Include="icons\loading.png" />
+    <Resource Include="icons\loading.png" />
     <Resource Include="icons\watch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

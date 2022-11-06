@@ -89,7 +89,7 @@ namespace MHFZ_Overlay
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
         //set version here
-        public const string CurrentProgramVersion = "v0.10.2";
+        public const string CurrentProgramVersion = "v0.10.3";
 
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);
@@ -346,9 +346,9 @@ namespace MHFZ_Overlay
         /// </summary>
         public MainWindow()
         {
-            //var splashScreen = new SplashScreen("icons/loading.png");
+            var splashScreen = new SplashScreen("icons/loading.png");
             
-            //splashScreen.Show(false);
+            splashScreen.Show(false);
 
             InitializeComponent();
             Left = 0;
@@ -383,7 +383,7 @@ namespace MHFZ_Overlay
             CheckGameState();
             _ = LoadOctoKit();
             //_ = GetRepoStats();
-            //splashScreen.Close(TimeSpan.FromSeconds(3));
+            splashScreen.Close(TimeSpan.FromSeconds(0.1));
 
         }
 
