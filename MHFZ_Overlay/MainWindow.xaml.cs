@@ -89,7 +89,7 @@ namespace MHFZ_Overlay
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
         //set version here
-        public const string CurrentProgramVersion = "v0.11.1";
+        public const string CurrentProgramVersion = "v0.11.2";
 
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);
@@ -408,7 +408,7 @@ namespace MHFZ_Overlay
 
                     if (messageBoxResult.ToString() == "Yes")
                     {
-                        OpenLink("https://github.com/DorielRivalet/MHFZ_Overlay/mains/latest");
+                        OpenLink("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest");
                     }
                 }
             }
