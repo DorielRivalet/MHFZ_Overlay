@@ -89,7 +89,7 @@ namespace MHFZ_Overlay
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
         //set version here
-        public const string CurrentProgramVersion = "v0.14.0";
+        public const string CurrentProgramVersion = "v0.15.0";
 
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);
@@ -404,11 +404,11 @@ namespace MHFZ_Overlay
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 if (s.EnableUpdateNotifier)
                 {
-                    System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(String.Format("Detected different version ({0}) from latest ({1}). Go to download page?", CurrentProgramVersion, latest.TagName), "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No);
+                    System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(String.Format("Detected different version ({0}) from latest ({1}). Do you want to download the file?", CurrentProgramVersion, latest.TagName), "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No);
 
                     if (messageBoxResult.ToString() == "Yes")
                     {
-                        OpenLink("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest");
+                        OpenLink("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest/download/Releases.7z");
                     }
                 }
             }

@@ -2974,9 +2974,7 @@ namespace MHFZ_Overlay
             var info = client.GetLastApiInfo();
 
             if (info != null)
-                OctokitInfo.Text = String.Format("Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}",info.ServerTimeDifference,info.RateLimit.Limit,info.RateLimit.Remaining);
-
-
+                OctokitInfo.Text = String.Format("Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference,info.RateLimit.Limit,info.RateLimit.Remaining, info.RateLimit.Reset);
 
             var issuesForOctokit = await client.Issue.GetAllForRepository("DorielRivalet", "MHFZ_Overlay");
 
@@ -2988,7 +2986,7 @@ namespace MHFZ_Overlay
             info = client.GetLastApiInfo();
 
             if (info != null)
-                OctokitInfo.Text = String.Format("Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining);
+                OctokitInfo.Text = String.Format("Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
 
             var stargazers = await client.Activity.Starring.GetAllStargazers(client.Repository.Get("DorielRivalet", "MHFZ_Overlay").Id);
 
@@ -3058,6 +3056,19 @@ namespace MHFZ_Overlay
                 myWatcher = null;
             }
         }
+
+        //private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        //{
+        //    var sInfo = new System.Diagnostics.ProcessStartInfo(e.ToString())
+        //    {
+        //        UseShellExecute = true,
+        //    };
+        //    //System.Diagnostics.Process.Start(sInfo);
+        //    //// for .NET Core you need to add UseShellExecute = true
+        //    //// see https://learn.microsoft.com/dotnet/api/system.diagnostics.processstartinfo.useshellexecute#property-value
+        //    //Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+        //    e.Handled = true;
+        //}
 
         //private void webViewFerias_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
         //{
