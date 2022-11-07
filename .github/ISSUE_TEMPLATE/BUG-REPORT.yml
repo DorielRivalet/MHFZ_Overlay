@@ -5,10 +5,6 @@ labels: ["bug"]
 assignees:
   - DorielRivalet
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Thanks for taking the time to fill out this bug report!
   - type: textarea
     id: what-happened
     attributes:
@@ -35,3 +31,7 @@ body:
       options:
         - High-Grade Edition
         - Non High-Grade Edition
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
