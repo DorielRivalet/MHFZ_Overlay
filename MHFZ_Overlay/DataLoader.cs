@@ -83,7 +83,10 @@ namespace MHFZ_Overlay
             if (newVersion != null)
             {
                 //https://stackoverflow.com/questions/14819426/how-to-create-hyperlink-in-messagebox-show#14820039
-                System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("New version available on GitHub, would you like to download?", "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); if (messageBoxResult.ToString() == "Yes") { System.Diagnostics.Process.Start("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest"); }
+                System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("New version available on GitHub, would you like to download?", "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); 
+                if (messageBoxResult.ToString() == "Yes") {
+                    System.Diagnostics.Process.Start("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest"); 
+                }
                 //UpdateManager.RestartApp();
             }
         }

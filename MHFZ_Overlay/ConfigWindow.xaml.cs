@@ -80,7 +80,7 @@ namespace MHFZ_Overlay
                     {"Long Sword","https://www.youtube.com/embed/8letGMGpjbU" },
                     {"Hammer","https://www.youtube.com/embed/Z2OwUAWROio" },
                     {"Hunting Horn","" },
-                    {"Lance","https://www.youtube.com/embed/laa4x-V_qrQ&t=49s" },
+                    {"Lance","https://www.youtube.com/embed/laa4x-V_qrQ" },
                     {"Gunlance","https://www.youtube.com/embed/68WK1F69fMo" },
                     {"Tonfa","https://www.youtube.com/embed/ry1faWMTdtQ" },
                     {"Switch Axe F","https://www.youtube.com/embed/HV8qzOGYEoM" },
@@ -2913,6 +2913,18 @@ namespace MHFZ_Overlay
                         DockPanelMonsterInfo.Width = 854;
                         DockPanelMonsterInfo.Height = 480;
                         webViewMonsterInfo.CoreWebView2.Navigate(MonsterVideoLinkOptionDictionary[selectedMatchup]);
+                    }
+                    else
+                    {
+                        System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Video not found. Go to issues page?", "【MHF-Z】Overlay Information Missing", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning, MessageBoxResult.No);
+                        if (messageBoxResult.ToString() == "Yes")
+                        {
+                            var sInfo = new System.Diagnostics.ProcessStartInfo("https://github.com/DorielRivalet/MHFZ_Overlay/issues/26")
+                            {
+                                UseShellExecute = true,
+                            };
+                            System.Diagnostics.Process.Start(sInfo);
+                        }
                     }
                     return;
             }
