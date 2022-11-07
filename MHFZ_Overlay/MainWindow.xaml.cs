@@ -120,7 +120,7 @@ namespace MHFZ_Overlay
             get
             {
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
-                if (s.EnableRichPresence == true)
+                if (s.EnableRichPresence)
                     return true;
                 else
                     return false;
@@ -603,7 +603,7 @@ namespace MHFZ_Overlay
         public bool ShowDamageNumbersMulticolor()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableDamageNumbersMulticolor == true)
+            if (s.EnableDamageNumbersMulticolor)
                 return true;
             else
                 return false;
@@ -2902,7 +2902,7 @@ namespace MHFZ_Overlay
         public bool ShowCurrentHPPercentage()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableCurrentHPPercentage == true)
+            if (s.EnableCurrentHPPercentage)
                 return true;
             else
                 return false;
@@ -3237,7 +3237,7 @@ namespace MHFZ_Overlay
             get
             {
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
-                if (s.DiscordQuestNameShown == true)
+                if (s.DiscordQuestNameShown)
                     return true;
                 else
                     return false;

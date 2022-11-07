@@ -698,7 +698,7 @@ namespace MHFZ_Overlay.addresses
         public bool ShowCaravanScore()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableCaravanScore == true)
+            if (s.EnableCaravanScore)
                 return true;
             else
                 return false;
@@ -1892,7 +1892,7 @@ namespace MHFZ_Overlay.addresses
         public bool ShowSharpnessPercentage()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableSharpnessPercentage == true)
+            if (s.EnableSharpnessPercentage)
                 return true;
             else
                 return false;
@@ -1905,7 +1905,7 @@ namespace MHFZ_Overlay.addresses
         public bool ShowTimeLeftPercentage()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableTimeLeftPercentage == true)
+            if (s.EnableTimeLeftPercentage)
                 return true;
             else
                 return false;
@@ -2084,7 +2084,7 @@ namespace MHFZ_Overlay.addresses
         public bool ShowHighestAtkColor()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableHighestAtkColor == true)
+            if (s.EnableHighestAtkColor)
                 return true;
             else
                 return false;
@@ -5709,7 +5709,7 @@ namespace MHFZ_Overlay.addresses
         public bool GetGouBoostMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.GouBoostExport == true)
+            if (s.GouBoostExport)
                 return true;
             else
                 return false;
