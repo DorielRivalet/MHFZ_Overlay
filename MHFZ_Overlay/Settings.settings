@@ -374,5 +374,8 @@
     <Setting Name="FeriasVersionLink" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/</Value>
     </Setting>
+    <Setting Name="MaxFaintsOverride" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Automatic</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

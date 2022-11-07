@@ -3035,13 +3035,49 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetMaxFaints()
         {
-            if (DataLoader.model.roadOverride() != null && DataLoader.model.roadOverride() == false)
-                return DataLoader.model.MaxFaints().ToString();
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-            if (
-                (
-                    DataLoader.model.CaravanOverride() && !
-                    (
+            switch (s.MaxFaintsOverride)
+            {
+                default:
+                    return DataLoader.model.MaxFaints().ToString();
+                case "Normal Quests":
+                    return DataLoader.model.MaxFaints().ToString();
+                case "Shiten/Conquest/Pioneer/Daily/Caravan/Interception Quests":
+                    return DataLoader.model.AlternativeMaxFaints().ToString();
+                case "Automatic":
+                    if (DataLoader.model.roadOverride() != null && DataLoader.model.roadOverride() == false)
+                        return DataLoader.model.MaxFaints().ToString();
+
+                    if (
+                        (
+                            DataLoader.model.CaravanOverride() && !
+                            (
+                                DataLoader.model.QuestID() == 23603 ||
+                                DataLoader.model.RankBand() == 70 ||
+                                DataLoader.model.QuestID() == 23602 ||
+                                DataLoader.model.QuestID() == 23604 ||
+                                DataLoader.model.QuestID() == 23588 ||
+                                DataLoader.model.QuestID() == 23592 ||
+                                DataLoader.model.QuestID() == 23596 ||
+                                DataLoader.model.QuestID() == 23601 ||
+                                DataLoader.model.QuestID() == 23599 ||
+                                DataLoader.model.QuestID() == 23595 ||
+                                DataLoader.model.QuestID() == 23591 ||
+                                DataLoader.model.QuestID() == 23587 ||
+                                DataLoader.model.QuestID() == 23598 ||
+                                DataLoader.model.QuestID() == 23594 ||
+                                DataLoader.model.QuestID() == 23590 ||
+                                DataLoader.model.QuestID() == 23586 ||
+                                DataLoader.model.QuestID() == 23597 ||
+                                DataLoader.model.QuestID() == 23593 ||
+                                DataLoader.model.QuestID() == 23589 ||
+                                DataLoader.model.QuestID() == 23585
+                            )
+                        )
+
+                        ||
+
                         DataLoader.model.QuestID() == 23603 ||
                         DataLoader.model.RankBand() == 70 ||
                         DataLoader.model.QuestID() == 23602 ||
@@ -3062,38 +3098,14 @@ namespace MHFZ_Overlay
                         DataLoader.model.QuestID() == 23593 ||
                         DataLoader.model.QuestID() == 23589 ||
                         DataLoader.model.QuestID() == 23585
-                    )
-                )
-
-                ||
-
-                DataLoader.model.QuestID() == 23603 ||
-                DataLoader.model.RankBand() == 70 ||
-                DataLoader.model.QuestID() == 23602 ||
-                DataLoader.model.QuestID() == 23604 ||
-                DataLoader.model.QuestID() == 23588 ||
-                DataLoader.model.QuestID() == 23592 ||
-                DataLoader.model.QuestID() == 23596 ||
-                DataLoader.model.QuestID() == 23601 ||
-                DataLoader.model.QuestID() == 23599 ||
-                DataLoader.model.QuestID() == 23595 ||
-                DataLoader.model.QuestID() == 23591 ||
-                DataLoader.model.QuestID() == 23587 ||
-                DataLoader.model.QuestID() == 23598 ||
-                DataLoader.model.QuestID() == 23594 ||
-                DataLoader.model.QuestID() == 23590 ||
-                DataLoader.model.QuestID() == 23586 ||
-                DataLoader.model.QuestID() == 23597 ||
-                DataLoader.model.QuestID() == 23593 ||
-                DataLoader.model.QuestID() == 23589 ||
-                DataLoader.model.QuestID() == 23585
-                )
-            {
-                return DataLoader.model.AlternativeMaxFaints().ToString(); ;
-            }
-            else
-            {
-                return DataLoader.model.MaxFaints().ToString();
+                        )
+                    {
+                        return DataLoader.model.AlternativeMaxFaints().ToString();
+                    }
+                    else
+                    {
+                        return DataLoader.model.MaxFaints().ToString();
+                    }
             }
         }
 

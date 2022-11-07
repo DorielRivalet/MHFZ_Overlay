@@ -1510,5 +1510,17 @@ namespace MHFZ_Overlay {
                 this["FeriasVersionLink"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Automatic")]
+        public string MaxFaintsOverride {
+            get {
+                return ((string)(this["MaxFaintsOverride"]));
+            }
+            set {
+                this["MaxFaintsOverride"] = value;
+            }
+        }
     }
 }

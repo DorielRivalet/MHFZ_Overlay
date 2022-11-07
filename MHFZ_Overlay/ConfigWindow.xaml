@@ -213,6 +213,8 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="0" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
@@ -264,6 +266,13 @@
                         <ComboBox Grid.Column="1" Grid.Row="21" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=FeriasVersionLink}">
                             <ComboBoxItem>https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/</ComboBoxItem>
                             <ComboBoxItem>https://xl3lackout.github.io/MHFZ-Ferias-English-Project/</ComboBoxItem>
+                        </ComboBox>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Max carts override" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Max Faints Override"/>
+                        <ComboBox Grid.Column="1" Grid.Row="22" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=MaxFaintsOverride}">
+                            <ComboBoxItem>Automatic</ComboBoxItem>
+                            <ComboBoxItem>Normal Quests</ComboBoxItem>
+                            <ComboBoxItem>Shiten/Conquest/Pioneer/Daily/Caravan/Interception Quests</ComboBoxItem>
                         </ComboBox>
                     </Grid>
                 </ScrollViewer>

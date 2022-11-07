@@ -689,7 +689,7 @@ namespace MHFZ_Overlay.addresses
         public bool ShowMonsterEHP()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableEHPNumbers == true)
+            if (s.EnableEHPNumbers)
                 return true;
             else
                 return false;
@@ -715,7 +715,7 @@ namespace MHFZ_Overlay.addresses
         public bool IsAlwaysShowingMonsterInfo()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.AlwaysShowMonsterInfo == true)
+            if (s.AlwaysShowMonsterInfo)
                 return true;
             else
                 return false;
@@ -746,7 +746,7 @@ namespace MHFZ_Overlay.addresses
         public bool CaravanOverride()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableCaravanOverride == true)
+            if (s.EnableCaravanOverride)
                 return true;
             else
                 return false;
