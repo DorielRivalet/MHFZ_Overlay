@@ -1,4 +1,4 @@
-# MHFZ_Overlay
+# Monster Hunter Frontier Z Overlay
 
 [![Preview](https://res.cloudinary.com/marcomontalbano/image/upload/v1664306592/video_to_markdown/images/youtube--_6hHiRHTt_U-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/_6hHiRHTt_U "Preview")
 
@@ -223,3 +223,9 @@ If the HP shows 0/1 then change area for it to load.
 ## How to Manually update with Update.exe
 
 `update.exe --update https://www.github.com/DorielRivalet/MHFZ_Overlay/releases/download/ENTER VERSION NUMBER (E.G. v0.6.4)`
+
+## How to Uninstall
+
+1. Go to Apps & Features
+2. Search Monster Hunter Frontier Z Overlay
+3. Click Uninstall. You can also delete the Desktop shortcut and Start Menu icon after uninstalling.
