@@ -1,5 +1,12 @@
 
 
+## [0.14.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.13.1...v0.14.0) (2022-11-07)
+
+
+### Features
+
+* implement splash screen during installation ([0867330](https://github.com/DorielRivalet/MHFZ_Overlay/commit/08673300f9b2cb63e7745b54ce401ce4d2f84231))
+
 ## [0.13.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.13.0...v0.13.1) (2022-11-07)
 
 
