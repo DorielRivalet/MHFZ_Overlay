@@ -1,5 +1,19 @@
 
 
+## [0.12.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.11.2...v0.12.0) (2022-11-07)
+
+
+### Features
+
+* add max faints override option ([d0924fa](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d0924faacb8f88a9481a7d7e0e1b9a76379f37da))
+
+
+### For Developers
+
+* bump version ([bcb63d0](https://github.com/DorielRivalet/MHFZ_Overlay/commit/bcb63d0ea86ef6787de31aa2ca5fb4ca51b3c937))
+* change to release ([199b653](https://github.com/DorielRivalet/MHFZ_Overlay/commit/199b6534fd39fc31716cba3ae9204c68e29ca15e))
+* update config demo image ([952a038](https://github.com/DorielRivalet/MHFZ_Overlay/commit/952a03886ec6c13e89882b8452f0f3c0c59403ed))
+
 ## [0.11.2](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.11.1...v0.11.2) (2022-11-06)
 
 
