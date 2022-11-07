@@ -1,5 +1,19 @@
 
 
+## [0.13.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.12.0...v0.13.0) (2022-11-07)
+
+
+### Features
+
+* add missing video linking issue ([08f3f28](https://github.com/DorielRivalet/MHFZ_Overlay/commit/08f3f28644e0e3f3a767b607f4c2406f4274646f))
+
+
+### For Developers
+
+* add issues forms templates ([4c35c93](https://github.com/DorielRivalet/MHFZ_Overlay/commit/4c35c93582ea4de4356ccd607ff43c70ef5942a4))
+* update github issue template ([0d12a86](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0d12a865266a2016f09ab179a4d035a181435af0))
+* update github issue templates ([fef75e5](https://github.com/DorielRivalet/MHFZ_Overlay/commit/fef75e51906a6cf179c0bd020493ca24b8661cea))
+
 ## [0.12.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.11.2...v0.12.0) (2022-11-07)
 
 
