@@ -1,5 +1,14 @@
 
 
+## [0.13.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.13.0...v0.13.1) (2022-11-07)
+
+
+### For Developers
+
+* bump version ([80155ed](https://github.com/DorielRivalet/MHFZ_Overlay/commit/80155ed7a25ad2f15ebcc45ca576717eac4230af))
+* update deployment process ([2c9db83](https://github.com/DorielRivalet/MHFZ_Overlay/commit/2c9db83e3b2e16ccb4cce0bd934f34b60f3f5626))
+* update splash image during installation ([bd69acc](https://github.com/DorielRivalet/MHFZ_Overlay/commit/bd69acc31aa61fd77a9a4f966128c339d8bebcd9))
+
 ## [0.13.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.12.0...v0.13.0) (2022-11-07)
 
 
