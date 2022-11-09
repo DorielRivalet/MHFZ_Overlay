@@ -1,9 +1,8 @@
-name: build
-
+name: Github Status
 on: push
 
 jobs:
-  build:
+  github-status:
     runs-on: ubuntu-latest
     steps:
       -
