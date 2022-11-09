@@ -1,14 +1,17 @@
-- name: GitHub Status
-  uses: crazy-max/ghaction-github-status@v3.1.0
+name: build
 
-- name: Has Changes
-  uses: UnicornGlobal/has-changes-action@v1.0.11
+on: push
 
-- name: Highlight new NPM Dependencies
-  uses: hiwelo/new-dependencies-action@1.0.1
-
-- name: PR Lint GitHub Action
-  uses: seferov/pr-lint-action@v1.2.0
-
-- name: npm update checker
-  uses: MeilCli/npm-update-check-action@v4.0.0
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Check GitHub Status
+        uses: crazy-max/ghaction-github-status@v3
+        with:
+          overall_threshold: minor
+          pages_threshold: partial_outage
+      -
+        name: Checkout
+        uses: actions/checkout@v3

@@ -1,4 +1,6 @@
 name: Has Changes
+on: push
+
 jobs:
   has-changes:
     runs-on: ubuntu-latest
