@@ -95,7 +95,7 @@ namespace MHFZ_Overlay
         /// run main updater
         /// </summary>
         /// <returns></returns>
-        private static async Task Main()
+        private static async Task MainUpdater()
         {
             using (var mgr = UpdateManager.GitHubUpdateManager("https://github.com/DorielRivalet/MHFZ_Overlay"))
             {

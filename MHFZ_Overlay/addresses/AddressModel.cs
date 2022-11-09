@@ -9866,7 +9866,6 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>

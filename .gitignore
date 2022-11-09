@@ -1,3 +1,4 @@
+.sonarqube/
 node_modules
 .pyperf
 Performance.pyperf

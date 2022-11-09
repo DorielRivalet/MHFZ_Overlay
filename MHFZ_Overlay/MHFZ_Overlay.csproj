@@ -10,7 +10,7 @@
     <UseWindowsForms>True</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>mhfzoverlayicon256.ico</ApplicationIcon>
-    <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
+    <RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
   </PropertyGroup>
 
   <ItemGroup>
