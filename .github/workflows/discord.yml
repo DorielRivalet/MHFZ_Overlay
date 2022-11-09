@@ -1,0 +1,12 @@
+- uses: sarisia/actions-status-discord@v1
+  if: success()
+  with:
+    webhook: ${{ secrets.DISCORD_WEBHOOK }}
+    title: "`MHF-Z Overlay` Status"
+    description: |
+      New commit
+      Click [here](https://github.com/DorielRivalet/MHFZ_Overlay/blob/main/CHANGELOG.md) to view changelog!
+    image: ${{ secrets.EMBED_IMAGE }}
+    color: 0xff435d
+    username: GitHub Actions
+    avatar_url: ${{ secrets.AVATAR_URL }}

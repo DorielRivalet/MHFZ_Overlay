@@ -1,5 +1,11 @@
 # Monster Hunter Frontier Z Overlay
 
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FDorielRivalet%2FMHFZ_Overlay%2Fbadge%3Fref%3Dmain&style=for-the-badge)](https://actions-badge.atrox.dev/DorielRivalet/MHFZ_Overlay/goto?ref=main)
+![CircleCI](https://img.shields.io/circleci/build/github/DorielRivalet/MHFZ_Overlay?label=Circleci&style=for-the-badge)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DorielRivalet/MHFZ_Overlay?style=for-the-badge)
+![GitHub repo size](https://img.shields.io/github/repo-size/DorielRivalet/MHFZ_Overlay?style=for-the-badge)
+![GitHub all releases](https://img.shields.io/github/downloads/DorielRivalet/MHFZ_Overlay/total?style=for-the-badge)
+
 [![Preview](https://res.cloudinary.com/marcomontalbano/image/upload/v1664306592/video_to_markdown/images/youtube--_6hHiRHTt_U-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/_6hHiRHTt_U "Preview")
 
 <div align = center>
@@ -218,7 +224,7 @@ If the HP shows 0/1 then change area for it to load.
 
 ![Discord Rich Presence](./demo/discord8.png)
 
-~~Congrats now you won't be accused of cheating~~
+~~Congrats, now you won't be accused of cheating~~
 
 ## How to Manually update with Update.exe
 
@@ -229,3 +235,11 @@ If the HP shows 0/1 then change area for it to load.
 1. Go to Apps & Features
 2. Search Monster Hunter Frontier Z Overlay
 3. Click Uninstall. You can also delete the Desktop shortcut and Start Menu icon after uninstalling.
+
+## Changelog
+
+[CHANGELOG](https://github.com/DorielRivalet/MHFZ_Overlay/blob/main/CHANGELOG.md)
+
+## License
+
+[MIT](https://github.com/DorielRivalet/MHFZ_Overlay/blob/main/LICENSE.md)
