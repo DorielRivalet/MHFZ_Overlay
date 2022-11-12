@@ -377,5 +377,8 @@
     <Setting Name="MaxFaintsOverride" Type="System.String" Scope="User">
       <Value Profile="(Default)">Automatic</Value>
     </Setting>
+    <Setting Name="EnableAutoClose" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

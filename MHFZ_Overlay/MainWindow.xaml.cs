@@ -505,7 +505,19 @@ namespace MHFZ_Overlay
 
                     //if (state == "NULL")
                     DataLoader.closedGame = true;
-                    System.Windows.MessageBox.Show("Detected closed game, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                    if (s.EnableAutoClose)
+                    {
+                        System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                        //https://stackoverflow.com/a/9050477/18859245
+                        Cleanup();
+                        Environment.Exit(0);
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("Detected closed game, please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                    }
                 };
             };
         }
@@ -3999,7 +4011,7 @@ namespace MHFZ_Overlay
         private void ReloadButton_Click(object sender, RoutedEventArgs e)
         {
             Cleanup();
-            Application.Current.Shutdown();
+            Environment.Exit(0);
             System.Windows.Forms.Application.Restart();
         }
 
@@ -4016,13 +4028,13 @@ namespace MHFZ_Overlay
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Cleanup();
-            Application.Current.Shutdown();
+            Environment.Exit(0);
         }
 
         private void ReloadButton_Key()
         {
             Cleanup();
-            Application.Current.Shutdown();
+            Environment.Exit(0);
             System.Windows.Forms.Application.Restart();
         }
 
@@ -4042,7 +4054,7 @@ namespace MHFZ_Overlay
         private void CloseButton_Key()
         {
             Cleanup();
-            Application.Current.Shutdown();
+            Environment.Exit(0);
         }
 
         private void MainGrid_MouseMove(object sender, MouseEventArgs e)

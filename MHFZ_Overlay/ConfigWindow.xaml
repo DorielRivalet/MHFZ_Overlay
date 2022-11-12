@@ -215,6 +215,8 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="0" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
@@ -274,6 +276,9 @@
                             <ComboBoxItem>Normal Quests</ComboBoxItem>
                             <ComboBoxItem>Shiten/Conquest/Pioneer/Daily/Caravan/Interception Quests</ComboBoxItem>
                         </ComboBox>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Close overlay when closing game" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Close overlay when closing game"/>
+                        <ToggleButton Grid.Row="23" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAutoClose}"/>
                     </Grid>
                 </ScrollViewer>
                 <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">

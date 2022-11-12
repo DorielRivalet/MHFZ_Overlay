@@ -1522,5 +1522,17 @@ namespace MHFZ_Overlay {
                 this["MaxFaintsOverride"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableAutoClose {
+            get {
+                return ((bool)(this["EnableAutoClose"]));
+            }
+            set {
+                this["EnableAutoClose"] = value;
+            }
+        }
     }
 }
