@@ -11,6 +11,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>mhfzoverlayicon256.ico</ApplicationIcon>
     <RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
+	<EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 
   <ItemGroup>
