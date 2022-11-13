@@ -802,15 +802,6 @@ namespace MHFZ_Overlay.addresses
 
             if (getDureName() != "None")
             {
-                //switch(getDureName)
-                //{
-                //    case "1st District Duremudira":
-                //    case "2nd District Duremudira":
-                //    case "3rd District Duremudira":
-                //    case "4th District Duremudira":
-                //    case "Arrogant Duremudira":
-                //        return 
-                //}
                 monsterID = 132;
             }
 
@@ -1628,11 +1619,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster1Part1();
-                //if (currentPartHP > 0)
-                //{
                 return GetPartName(1, LargeMonster1ID()) + currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1641,11 +1628,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster1Part2();
-                //if (currentPartHP > 0)
-                //{
                 return GetPartName(2, LargeMonster1ID()) + currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1654,11 +1637,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster1Part3();
-                //if (currentPartHP > 0)
-                //{
                 return GetPartName(3, LargeMonster1ID()) + currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1667,11 +1646,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster1Part4();
-                //if (currentPartHP > 0)
-                //{
                 return GetPartName(4, LargeMonster1ID()) + currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1680,11 +1655,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster1Part5();
-                //if (currentPartHP > 0)
-                //{
                 return GetPartName(5, LargeMonster1ID()) + currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1693,11 +1664,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster1Part6();
-                //if (currentPartHP > 0)
-                //{
                 return GetPartName(6, LargeMonster1ID()) + currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1706,11 +1673,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster1Part7();
-                //if (currentPartHP > 0)
-                //{
                 return GetPartName(7, LargeMonster1ID()) + currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1719,11 +1682,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster1Part8();
-                //if (currentPartHP > 0)
-                //{
                 return GetPartName(8, LargeMonster1ID()) + currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1732,11 +1691,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster1Part9();
-                //if (currentPartHP > 0)
-                //{
                 return GetPartName(9, LargeMonster1ID()) + currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1745,11 +1700,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster1Part10();
-                //if (currentPartHP > 0)
-                //{
                 return GetPartName(10, LargeMonster1ID()) + currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1758,11 +1709,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster2Part1();
-                //if (currentPartHP > 0)
-                //{
                 return currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1771,11 +1718,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster2Part2();
-                //if (currentPartHP > 0)
-                //{
                 return currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1784,11 +1727,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster2Part3();
-                //if (currentPartHP > 0)
-                //{
                 return currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1797,11 +1736,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster2Part4();
-                //if (currentPartHP > 0)
-                //{
                 return currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1810,11 +1745,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster2Part5();
-                //if (currentPartHP > 0)
-                //{
                 return currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1823,11 +1754,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster2Part6();
-                //if (currentPartHP > 0)
-                //{
                 return currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1836,11 +1763,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster2Part7();
-                //if (currentPartHP > 0)
-                //{
                 return currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1849,11 +1772,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster2Part8();
-                //if (currentPartHP > 0)
-                //{
                 return currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1862,11 +1781,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster2Part9();
-                //if (currentPartHP > 0)
-                //{
                 return currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -1875,11 +1790,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int currentPartHP = Monster2Part10();
-                //if (currentPartHP > 0)
-                //{
                 return currentPartHP.ToString();
-                //}
-                //return "0";
             }
         }
 
@@ -2001,7 +1912,7 @@ namespace MHFZ_Overlay.addresses
                     time = TimeInt();
                 }
 
-                double seconds = time / 30;
+                double seconds = (double)time / 30;
                 double minutes = seconds / 60;
                 double centiseconds = seconds / 100;
 
@@ -2041,36 +1952,6 @@ namespace MHFZ_Overlay.addresses
                 {
                     return string.Format("{0:00}:{1:00}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)(((time % 30) * 100)) / 3)) + TimeLeftPercent;
                 }
-                //        if frame > 0 {
-                //            if err == nil
-                //            {
-                //                  sendServerChatMessage(s, fmt.Sprintf("Quest Name : %s.", name))
-
-                //                  sendServerChatMessage(s, fmt.Sprintf("Target Monster : %s", monster))
-                //                  if frame / 30 / 60 < 10
-                //                  {
-                //                      if frame / 30 % 60 < 10
-                //                      {
-                //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : 0%d:0%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
-                //                      }
-                //                      else
-                //                      {
-                //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : 0%d:%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
-                //                      }
-                //                  }
-                //                  else
-                //                  {
-                //                      if frame / 30 % 60 < 10
-                //                      {
-                //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : %d:0%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
-                //                      }
-                //                      else
-                //                      {
-                //                          sendServerChatMessage(s, fmt.Sprintf("Quest Time : %d:%d.%03d (%d frames)\n", frame / 30 / 60, frame / 30 % 60, int(math.Round(float64(frame % 30 * 100) / 3)), frame))
-                //                      }
-                //                  }
-                //              }
-                //return string.Format("{0}:{}.{}0:00.##}", minutes, seconds % 60);
             }
         }
 
@@ -2186,7 +2067,6 @@ namespace MHFZ_Overlay.addresses
             {
                 int weaponRaw = WeaponRaw();
                 int weaponType = WeaponType();
-                //return ((int)(GetMultFromWeaponType(weaponType) * weaponRaw)).ToString();
                 return GetMultFromWeaponType(weaponType);
             }
         }
@@ -2258,17 +2138,10 @@ namespace MHFZ_Overlay.addresses
         {
             if (defrate > 0)
             {
-                //    if (isMonsterFocused == false && debounce == true)
-                //    {
-                //        isMonsterFocused = true;
-                //        return (int)(monsterhp / float.Parse(monsterdefrate, CultureInfo.InvariantCulture.NumberFormat));
-                //    } else if (isMonsterFocused == true && debounce == false)
-                //    {
-                //        return (int)(monsterhp / float.Parse(monsterdefrate, CultureInfo.InvariantCulture.NumberFormat));
-                //    }
-                //}
 
+#pragma warning disable CS8629 // Nullable value type may be null.
                 return (int)(monsterhp / monsterdefrate);
+#pragma warning restore CS8629 // Nullable value type may be null.
             }
             return 0;
         }
@@ -2302,14 +2175,10 @@ namespace MHFZ_Overlay.addresses
                 switch (SelectedMonster)
                 {
                     case 0:
-                        //showMonsterEHP(ShowMonsterEHP, float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult(),true);
-                        //SavedMonster1MaxHP = (int)(Monster1HPInt() / float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat));
                         return string.Format("{0:0.0000}",Monster1DefMult());
                     case 1:
-                        //showMonsterEHP(ShowMonsterEHP, float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster2HPInt(), Monster2DefMult(),false);
                         return Monster2DefMult().ToString();
                     default:
-                        //showMonsterEHP(ShowMonsterEHP, float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult(),false);
                         return string.Format("{0:0.0000}", Monster1DefMult());
                 }
             }
@@ -2806,10 +2675,7 @@ namespace MHFZ_Overlay.addresses
                     case 1:
                         return "Rathian";
                     case 2:
-                        if (RankBand() == 53)
-                            return "Fatalis";
-                        else
-                            return "Fatalis";
+                        return "Fatalis";
                     case 3:
                         return "Kelbi";
                     case 4:
@@ -2827,10 +2693,7 @@ namespace MHFZ_Overlay.addresses
                     case 10: //veggie elder
                         return "Veggie Elder";
                     case 11:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Rathalos";
-                        else
-                            return "Rathalos";
+                        return "Rathalos";
                     case 12:
                         return "Aptonoth";
                     case 13:
@@ -2838,17 +2701,11 @@ namespace MHFZ_Overlay.addresses
                     case 14:
                         return "Diablos";
                     case 15:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Khezu";
-                        else
-                            return "Khezu";
+                        return "Khezu";
                     case 16:
                         return "Velociprey";
                     case 17:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Gravios";
-                        else
-                            return "Gravios";
+                        return "Gravios";
                     case 18:
                         return "Felyne";
                     case 19:
@@ -2856,10 +2713,7 @@ namespace MHFZ_Overlay.addresses
                     case 20:
                         return "Gypceros";
                     case 21:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Plesioth";
-                        else
-                            return "Plesioth";
+                        return "Plesioth";
                     case 22:
                         return "Basarios";
                     case 23:
@@ -2889,10 +2743,7 @@ namespace MHFZ_Overlay.addresses
                     case 35:
                         return "Giaprey";
                     case 36:
-                        if (RankBand() == 53)
-                            return "Crimson Fatalis";
-                        else
-                            return "Crimson Fatalis";
+                        return "Crimson Fatalis";
                     case 37:
                         return "Pink Rathian";
                     case 38:
@@ -2916,25 +2767,16 @@ namespace MHFZ_Overlay.addresses
                     case 47:
                         return "Black Gravios";
                     case 48:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Daimyo Hermitaur";
-                        else
                             return "Daimyo Hermitaur";
                     case 49:
                         return "Azure Rathalos";
                     case 50:
                         return "Ashen Lao-Shan Lung";
                     case 51:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Blangonga";
-                        else
                             return "Blangonga";
                     case 52:
                         return "Congalala";
                     case 53:
-                        if (RankBand() == 56 || RankBand() == 57)
-                            return "Rajang";
-                        else
                             return "Rajang";
                     case 54:
                         return "Kushala Daora";
@@ -2959,9 +2801,6 @@ namespace MHFZ_Overlay.addresses
                     case 64:
                         return "Lunastra";
                     case 65:
-                        if (RankBand() == 32)
-                            return "Teostra";
-                        else
                             return "Teostra";
                     case 66:
                         return "Hermitaur";
@@ -2974,9 +2813,6 @@ namespace MHFZ_Overlay.addresses
                     case 70:
                         return "Popo";
                     case 71:
-                        if (RankBand() == 53)
-                            return "White Fatalis";
-                        else
                             return "White Fatalis";
                     case 72:
                         return "Yama Tsukami";
@@ -2987,9 +2823,6 @@ namespace MHFZ_Overlay.addresses
                     case 75:
                         return "Lavasioth";
                     case 76:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Tigrex";
-                        else
                             return "Tigrex";
                     case 77:
                         return "Akantor";
@@ -2998,18 +2831,12 @@ namespace MHFZ_Overlay.addresses
                     case 79:
                         return "Red Lavasioth";
                     case 80:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Espinas";
-                        else
                             return "Espinas";
                     case 81:
                         return "Orange Espinas";
                     case 82:
                         return "Silver Hypnoc";
                     case 83:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Akura Vashimu";
-                        else
                             return "Akura Vashimu";
                     case 84:
                         return "Akura Jebia";
@@ -3024,8 +2851,6 @@ namespace MHFZ_Overlay.addresses
                     case 89:
                         if (RankBand() == 54)
                             return "Thirsty Pariapuria";
-                        else if (RankBand() == 32)//supremacy
-                            return "Pariapuria";
                         else
                             return "Pariapuria";
                     case 90:
@@ -3039,11 +2864,6 @@ namespace MHFZ_Overlay.addresses
                     case 94:
                         return "Dyuragaua";
                     case 95:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Doragyurosu";
-                        else if (RankBand() == 32)
-                            return "Doragyurosu";
-                        else
                             return "Doragyurosu";
                     case 96:
                         return "Gurenzeburu";
@@ -3052,59 +2872,32 @@ namespace MHFZ_Overlay.addresses
                     case 98:
                         return "Erupe";
                     case 99:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Rukodiora";
-                        else
                             return "Rukodiora";
                     case 100:
-                        if (RankBand() == 70 || RankBand() == 54)
-                            return "Unknown";
-                        else
                             return "Unknown";
                     case 101:
                         return "Gogomoa";
                     case 102://kokomoa
                         return "Kokomoa";
                     case 103:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Taikun Zamuza";
-                        else
                             return "Taikun Zamuza";
                     case 104:
                         return "Abiorugu";
                     case 105:
                         return "Kuarusepusu";
                     case 106:
-                        if (RankBand() == 32)
-                            return "Odibatorasu";
-                        else
                             return "Odibatorasu";
                     case 107:
-                        if (RankBand() == 54 || RankBand() == 55)
-                            return "Disufiroa";
-                        else
                             return "Disufiroa";
                     case 108:
                         return "Rebidiora";
                     case 109:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Anorupatisu";
-                        else
                             return "Anorupatisu";
                     case 110:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Zenith Hyujikiki";
-                        else
                             return "Hyujikiki";
                     case 111:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Midogaron";
-                        else
                             return "Midogaron";
                     case 112:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Giaorugu";
-                        else
                             return "Giaorugu";
                     case 113:
                         if (RankBand() == 55)
@@ -3116,9 +2909,6 @@ namespace MHFZ_Overlay.addresses
                     case 115:
                         return "Pokaradon";
                     case 116:
-                        if (RankBand() == 53)
-                            return "Shantien";
-                        else
                             return "Shantien";
                     case 117:
                         return "Pokara";
@@ -3129,9 +2919,6 @@ namespace MHFZ_Overlay.addresses
                     case 120:
                         return "Aruganosu";
                     case 121:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Baruragaru";
-                        else
                             return "Baruragaru";
                     case 122:
                         return "Zerureusu";
@@ -3148,9 +2935,6 @@ namespace MHFZ_Overlay.addresses
                     case 128:
                         return "Garuba Daora";
                     case 129:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Inagami";
-                        else
                             return "Inagami";
                     case 130:
                         return "Varusaburosu";
@@ -3173,19 +2957,10 @@ namespace MHFZ_Overlay.addresses
                     case 139:
                         return "Gureadomosu";
                     case 140:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Harudomerugu";
-                        else
                             return "Harudomerugu";
                     case 141:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Toridcless";
-                        else
                             return "Toridcless";
                     case 142:
-                        if (RankBand() >= 64 && RankBand() <= 67)
-                            return "Gasurabazura";
-                        else
                             return "Gasurabazura";
                     case 143:
                         return "Kusubami";
@@ -6028,7 +5803,9 @@ namespace MHFZ_Overlay.addresses
         public string GetItemName(int id)
         {
             string itemValue1;
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             bool isItemExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out itemValue1);  //returns true
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
             //Console.WriteLine(itemValue1); //Print "First"
             //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
             return itemValue1 + "";

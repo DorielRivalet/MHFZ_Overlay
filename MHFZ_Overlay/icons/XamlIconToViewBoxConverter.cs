@@ -14,7 +14,9 @@ namespace MHFZ_Overlay
 
             // Optional:
             // we set Height and Width to "Auto" to let an icon scale, because in the <icon>.xaml file its size is explicitly specified as 16x16
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             viewBox.Height = double.NaN;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             viewBox.Width = double.NaN;
 
             return viewBox;

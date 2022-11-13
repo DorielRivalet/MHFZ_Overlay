@@ -55,14 +55,14 @@ namespace MHFZ_Overlay
         /// </value>
         private MainWindow MainWindow { get; set; }
 
-        public Uri MonsterInfoLink
+        public static Uri MonsterInfoLink
         {
             get { return new Uri("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/random.png", UriKind.RelativeOrAbsolute);}
         }
 
-        public static string RickRoll = "https://www.youtube.com/embed/dQw4w9WgXcQ";
+        public static readonly string RickRoll = "https://www.youtube.com/embed/dQw4w9WgXcQ";
 
-        public string getFeriasLink()
+        public static string getFeriasLink()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             return s.FeriasVersionLink;
@@ -1868,7 +1868,7 @@ namespace MHFZ_Overlay
                 )
         };
 
-        public Uri MonsterImage
+        public static Uri MonsterImage
         {
             get { return new Uri("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/random.png", UriKind.RelativeOrAbsolute); }
         }
@@ -2293,21 +2293,14 @@ namespace MHFZ_Overlay
             DiscordRPCContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/5.png")));
             CreditsContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/6.png")));
             MonsterInfoContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/7.png")));
-            //QuestInfoContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/8.png")));
-
-            //GlobalHotKey.RegisterHotKey("Alt+Shift+a", () => SaveKey_Press());
-            //GlobalHotKey.RegisterHotKey("Alt+Shift+b", () => CancelKey_Press());
-            //GlobalHotKey.RegisterHotKey("Alt+Shift+c", () => DefaultKey_Press());
 
             //todo: test this
             DataContext = MainWindow.DataLoader.model;
             //this.DataContext = this;
-            //MyTitle = FullCurrentProgramVersion();
 
             for (int i = 0; i < Monsters.Length; i++)
             {
                 Monsters[i].Hunted = GetHuntedCount(Monsters[i].ID);
-                //Monsters[i].Image = "icons/armor_skills.png";
             }
 
             MyList.ItemsSource = Monsters;
@@ -2319,14 +2312,6 @@ namespace MHFZ_Overlay
 
             MyList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
-            //Monsters[1].Hunted = GetHuntedCount(Monsters[1].ID);
-
-
-            //var view = CollectionViewSource.GetDefaultView(MyList.Items);
-            //view.Filter = i => ((MyType)i).IsDeleted != 1;
-            //MyListView.DataSource = view;
-
-            //FilterBox.ItemsSource = typeof(Monster).GetProperties().Select((o) => o.Name);
             FilterBox.ItemsSource = new string[] { "All", "Large Monster", "Small Monster" };
 
             MyList.Items.Filter = MonsterFilterAll;
@@ -2351,26 +2336,31 @@ namespace MHFZ_Overlay
             for (int i = 0; i < monsterInfos.Length; i++)
             {
                 monsterInfos[i].FeriasLink = ReplaceFeriasVersion(monsterInfos[i].FeriasLink);
-                //Monsters[i].Image = "icons/armor_skills.png";
             }
         }
 
         private bool MonsterFilterAll(object obj)
         {
             var FilterObj = obj as MonsterLog;
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             return FilterObj.IsLarge == true || FilterObj.IsLarge == false;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
         private bool MonsterFilterLarge(object obj)
         {
             var FilterObj = obj as MonsterLog;
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             return FilterObj.IsLarge == true;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
         private bool MonsterFilterSmall(object obj)
         {
             var FilterObj = obj as MonsterLog;
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             return FilterObj.IsLarge == false;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
 
@@ -2387,41 +2377,6 @@ namespace MHFZ_Overlay
             }
         }
 
-        //public bool IsLargeMonster(int id)
-        //{
-        //    switch (id)
-        //    {
-        //        default: return false;
-        //            case 0: return true;
-        //            case 1: return true;
-        //        case 2: return true;
-        //        case 3: return true;
-        //        case 4: return true;
-        //        case 5: return true;
-        //        case 6: return true;
-        //        case 7: return true;
-        //        case 8: return true;
-        //    }
-        //}
-
-        //public bool MonsterFilter(object item)
-        //{
-        //    var view = CollectionViewSource.GetDefaultView(MyList.Items);
-        //    //var monsters = (Monster)item;
-        //    Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
-        //    if (s.HuntedMonsterFilter == "All")
-        //        view.Filter = i => ((Monster)i).IsLarge == true || ((Monster)i).IsLarge == false;
-        //    else if (s.HuntedMonsterFilter == "Large Monster")
-        //        view.Filter = i => ((Monster)i).IsLarge == true;
-        //    else if (s.HuntedMonsterFilter == "Small Monster")
-        //        view.Filter = i => ((Monster)i).IsLarge == false;
-
-        //    MyList.View = (ViewBase)view;
-
-        //    return (s.)
-        //}
-
         /// <summary>
         /// Handles the PreviewTextInput event of the RoadOverrideTextBox control.
         /// </summary>
@@ -2437,15 +2392,6 @@ namespace MHFZ_Overlay
 
         }
 
-        //private void RoadOverrideTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        //{
-        //    if (RoadOverrideTextBox.Text.Length > 1)
-        //    {
-        //        RoadOverrideTextBox.Text = RoadOverrideTextBox.Text.Remove(0, 1);
-        //        RoadOverrideTextBox.CaretIndex = 1;
-        //    }
-        //}
-
         /// <summary>
         /// Saves the key press.
         /// </summary>
@@ -2456,9 +2402,6 @@ namespace MHFZ_Overlay
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
             Close();
-            GC.Collect(); // find finalizable objects
-            GC.WaitForPendingFinalizers(); // wait until finalizers executed
-            GC.Collect(); // collect finalized objects
         }
 
         /// <summary>
@@ -2473,9 +2416,6 @@ namespace MHFZ_Overlay
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
             Close();
-            GC.Collect(); // find finalizable objects
-            GC.WaitForPendingFinalizers(); // wait until finalizers executed
-            GC.Collect(); // collect finalized objects
         }
 
         /// <summary>
@@ -2488,9 +2428,6 @@ namespace MHFZ_Overlay
             webViewFerias.Dispose();
             webViewMonsterInfo.Dispose();
             Close();
-            GC.Collect(); // find finalizable objects
-            GC.WaitForPendingFinalizers(); // wait until finalizers executed
-            GC.Collect(); // collect finalized objects
         }
 
         /// <summary>
@@ -2505,9 +2442,6 @@ namespace MHFZ_Overlay
             webViewMonsterInfo.Dispose();
             s.Reload();
             Close();
-            GC.Collect(); // find finalizable objects
-            GC.WaitForPendingFinalizers(); // wait until finalizers executed
-            GC.Collect(); // collect finalized objects
         }
 
         /// <summary>
@@ -2553,8 +2487,6 @@ namespace MHFZ_Overlay
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ConfigureButton_Click(object sender, RoutedEventArgs e)
         {
-            //webViewFerias.Dispose();
-            //webView.Dispose();
             MainWindow.EnableDragAndDrop();
         }
 
@@ -2582,8 +2514,6 @@ namespace MHFZ_Overlay
         //([a-zA-Z0-9_\s]+)
         //[^a-zA-Z_0-9]
 
-        //private string ValidateNamePattern = @"[^a-zA-Z_0-9]";
-
         /// <summary>
         /// Validates the name.
         /// </summary>
@@ -2591,27 +2521,16 @@ namespace MHFZ_Overlay
         /// <param name="e">The <see cref="TextCompositionEventArgs"/> instance containing the event data.</param>
         private void ValidateName(object sender, TextCompositionEventArgs e)
         {
-            // Create a Regex  
-            //Regex rg = new Regex(ValidateNamePattern);
+            // Create a Regex
 
             // Get all matches  
-            //MatchCollection matchedText = rg.Matches(e.Text);
             //https://stackoverflow.com/questions/1046740/how-can-i-validate-a-string-to-only-allow-alphanumeric-characters-in-it
             if (!(e.Text.All(char.IsLetterOrDigit)))
             {
                 //just letters and digits.
                 e.Handled = true;
             }
-
-            //if (matchedText.Count == 0 && e.Text.Length >= 12)
-             //   e.Handled = true;
         }
-
-        //private void ValidateDiscordInvite(object sender, TextCompositionEventArgs e)
-        //{
-        //    if (!(e.Text.Substring(0,27) == "https://discord.com/invite/") )
-        //        e.Handled = true;
-        //}
 
         /// <summary>
         /// Handles the RequestNavigate event of the lnkImg control.
@@ -2652,11 +2571,6 @@ namespace MHFZ_Overlay
                 textToSave = string.Format("```text\n{0}\n```", textToSave);
             else if (GetTextFormatMode() == "Markdown")
                 textToSave = MainWindow.DataLoader.model.MarkdownSavedGearStats;
-            //else if (GetTextFormatMode() == "Image")
-            //{
-            //    CopyUIElementToClipboard(GearTextGrid);
-            //    return;
-            //}
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
@@ -2700,8 +2614,6 @@ namespace MHFZ_Overlay
 
         private void BtnImageFile_Click(object sender, RoutedEventArgs e)
         {
-            //System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Overwrite current file?", "Gear Stats", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); if (messageBoxResult.ToString() == "No") { return; }
-
             SaveFileDialog savefile = new SaveFileDialog();
             string dateTime = DateTime.Now.ToString();
             dateTime = dateTime.Replace("/", "-");
@@ -2789,8 +2701,6 @@ namespace MHFZ_Overlay
         // on generate csv button click
         protected void BtnLogFile_Click(object sender, EventArgs e)
         {
-            //System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Overwrite current file?", "Gear Stats", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); if (messageBoxResult.ToString() == "No") { return; }
-
             SaveFileDialog savefile = new SaveFileDialog();
             string dateTime = DateTime.Now.ToString();
             dateTime = dateTime.Replace("/", "-");
@@ -2803,13 +2713,6 @@ namespace MHFZ_Overlay
             //https://stackoverflow.com/questions/11776781/savefiledialog-make-problems-with-streamwriter-in-c-sharp
             if (savefile.ShowDialog() == true)
             {
-                //using (StreamWriter sw = new StreamWriter(savefile.FileName,
-                //          false, System.Text.Encoding.Unicode))
-                //{
-                //    sw.WriteLine("Test line");
-                //    sw.WriteLine("Test line2");
-                //    sw.WriteLine("Test line3");
-                //}
                 using (var writer = new StreamWriter(savefile.FileName))
                 using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
@@ -2827,14 +2730,10 @@ namespace MHFZ_Overlay
             s.Reload();
             Close();
             DeletexNames_OnClosed();
-            GC.Collect(); // find finalizable objects
-            GC.WaitForPendingFinalizers(); // wait until finalizers executed
-            GC.Collect(); // collect finalized objects
         }
 
         private void Config_Closing(object sender, EventArgs e)
         {
-            return;
         }
 
         private void BtnGuildCardFile_Click(object sender, RoutedEventArgs e)
@@ -2857,8 +2756,6 @@ namespace MHFZ_Overlay
 
         private void ChangeMonsterInfo()
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
             if (webViewMonsterInfo == null)
                 return;
 
@@ -2876,9 +2773,6 @@ namespace MHFZ_Overlay
                 MonsterWikiOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].WikiLink);
                 MonsterFeriasOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].FeriasLink);
             }
-
-            //string selectedInfo = RankBandListBox.SelectedItem.ToString() + " " + MonsterNameListBox.SelectedItem.ToString();
-            //selectedInfo = selectedInfo.Replace("System.Windows.Controls.ComboBoxItem: ", "");
 
             string selectedName = MonsterNameListBox.SelectedItem.ToString()+"";
             selectedName = selectedName.Replace("System.Windows.Controls.ComboBoxItem: ", "");
@@ -2954,21 +2848,6 @@ namespace MHFZ_Overlay
 
         GitHubClient client = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
 
-        //public int issuesCountInt
-        //{
-        //    get
-        //    {
-        //        var issues = GetIssuesCount();
-        //        if (issues.IsCompletedSuccessfully)
-        //        {
-        //            return issuesCount;
-        //        }
-        //        else return issuesCount;
-        //    }
-        //}
-
-        //private static DateTimeOffset dtoffset = new DateTimeOffset();
-
         private async Task GetRepoStats()
         {
             var info = client.GetLastApiInfo();
@@ -2987,25 +2866,6 @@ namespace MHFZ_Overlay
 
             if (info != null)
                 OctokitInfo.Text = String.Format("Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
-
-            var stargazers = await client.Activity.Starring.GetAllStargazers(client.Repository.Get("DorielRivalet", "MHFZ_Overlay").Id);
-
-            //StargazerTextBlock.Text = "";
-
-            //WIP
-            //for (int i = 0; i < stargazers.Count; i++)
-            //{
-            //    if (stargazers[i] != null)
-            //    {
-            //        if (stargazers[i].Name != null || stargazers[i].Name != "")
-            //        {
-            //            if (stargazers[i].Name.Length >= 1)
-            //                StargazerTextBlock.Text += stargazers[i].Name + ", ";
-            //        }
-            //    }
-            //}
-
-            //StargazerTextBlock.Text = stargazers.Count.ToString() + " Stargazers(s)";
 
             info = client.GetLastApiInfo();
 
@@ -3052,35 +2912,10 @@ namespace MHFZ_Overlay
             if (myWatcher != null)
             {
                 this.UnregisterName("myWatcher");
-                //CaravanInfoGrid.Children.Remove(myWatcher);
                 myWatcher = null;
             }
         }
-
-        //private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-        //{
-        //    var sInfo = new System.Diagnostics.ProcessStartInfo(e.ToString())
-        //    {
-        //        UseShellExecute = true,
-        //    };
-        //    //System.Diagnostics.Process.Start(sInfo);
-        //    //// for .NET Core you need to add UseShellExecute = true
-        //    //// see https://learn.microsoft.com/dotnet/api/system.diagnostics.processstartinfo.useshellexecute#property-value
-        //    //Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
-        //    e.Handled = true;
-        //}
-
-        //private void webViewFerias_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
-        //{
-        //    if (webViewFerias != null && webViewFerias.CoreWebView2 != null)
-        //    {
-        //        webViewFerias.CoreWebView2.Navigate(getFeriasLink());
-        //    }
-        //}
     };
-
-
-
     
     /* LoadConfig on startup
      * Load Config on window open to have extra copy

@@ -9,9 +9,9 @@ namespace Dictionary
     ///<summary>
     ///The rank bands list
     ///</summary>
-    public class RanksBandsList
+    public static class RanksBandsList
     {
-        public static Dictionary<int, string> RankBandsID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> RankBandsID = new Dictionary<int, string>()
         {
             {1, "Lower"},
             {2, "Lower"},
@@ -57,9 +57,9 @@ namespace Dictionary
     ///<summary>
     ///The monster ID list
     ///</summary>
-    public class List
+    public static class List
     {
-        public static Dictionary<int, string> MonsterID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> MonsterID = new Dictionary<int, string>()
         {
             {0, "None"},//
             {1, "Rathian"},//
@@ -244,9 +244,9 @@ namespace Dictionary
     ///<summary>
     ///The weapon list
     ///</summary>
-    public class WeaponList
+    public static class WeaponList
     {
-        public static Dictionary<int, string> WeaponID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> WeaponID = new Dictionary<int, string>()
         {
             {0, "Great Sword"},
             {1, "Heavy Bowgun"},
@@ -269,10 +269,10 @@ namespace Dictionary
     ///<summary>
     ///The sharpness list
     ///</summary>
-    public class SharpnessList
+    public static class SharpnessList
     {
 
-        public static Dictionary<int, string> SharpnessID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> SharpnessID = new Dictionary<int, string>()
         {
             {0, "Red"},
             {1, "Orange"},
@@ -288,10 +288,10 @@ namespace Dictionary
     ///<summary>
     ///The poogie costumes list
     ///</summary>
-    public class PoogieCostumeList
+    public static class PoogieCostumeList
     {
 
-        public static Dictionary<int, string> PoogieCostumeID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> PoogieCostumeID = new Dictionary<int, string>()
         {
             {0, "First Costume"},
             {1, "Kirin Costume"},
@@ -332,9 +332,9 @@ namespace Dictionary
     ///<summary>
     ///The armor skills list
     ///</summary>
-    public class ArmorSkillList
+    public static class ArmorSkillList
     {
-        public static Dictionary<int, string> ArmorSkillID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> ArmorSkillID = new Dictionary<int, string>()
         {
             {0, "None"},
             {1, "Paralysis Halved"},
@@ -877,10 +877,10 @@ namespace Dictionary
     ///<summary>
     ///The objective type list
     ///</summary>
-    public class ObjectiveTypeList
+    public static class ObjectiveTypeList
     {
 
-        public static Dictionary<int, string> ObjectiveTypeID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> ObjectiveTypeID = new Dictionary<int, string>()
         {
             {0x0,"Nothing" },
             {0x1,"Hunt" },
@@ -900,10 +900,10 @@ namespace Dictionary
     ///<summary>
     ///The map areas list
     ///</summary>
-    public class MapAreaList
+    public static class MapAreaList
     {
 
-        public static Dictionary<int, string> MapAreaID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> MapAreaID = new Dictionary<int, string>()
         {
             {0,"Loading" },
             {1,"Jungle - Base Camp - Night" },
@@ -1381,10 +1381,10 @@ namespace Dictionary
     ///<summary>
     ///The armor colors list
     ///</summary>
-    public class ArmorColorList
+    public static class ArmorColorList
     {
 
-        public static Dictionary<int, string> ArmorColorID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> ArmorColorID = new Dictionary<int, string>()
         {
             {0, "Material Green 0"},
             {1, "Powerful Red 0"},
@@ -1498,10 +1498,10 @@ namespace Dictionary
     ///<summary>
     ///The diva skill list
     ///</summary>
-    public class DivaSkillList
+    public static class DivaSkillList
     {
 
-        public static Dictionary<int, string> DivaSkillID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> DivaSkillID = new Dictionary<int, string>()
         {
             {0, "None"},
             {1, "High Speed Gathering"},
@@ -1544,10 +1544,10 @@ namespace Dictionary
     ///<summary>
     ///The caravan skill list
     ///</summary>
-    public class CaravanSkillList
+    public static class CaravanSkillList
     {
 
-        public static Dictionary<int, string> CaravanSkillID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> CaravanSkillID = new Dictionary<int, string>()
         {
             {0, "None"},
             {1, "Courage"},
@@ -1663,10 +1663,10 @@ namespace Dictionary
     ///<summary>
     ///The sigil skill list
     ///</summary>
-    public class SigilSkillList
+    public static class SigilSkillList
     {
 
-        public static Dictionary<int, string> SigilSkillID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> SigilSkillID = new Dictionary<int, string>()
         {
             {0, "None"},
             {1, "Attack Slayer" },
@@ -1800,9 +1800,9 @@ namespace Dictionary
     ///<summary>
     ///The armor skills priority list
     ///</summary>
-    public class ArmorSkillPriorityList
+    public static class ArmorSkillPriorityList
     {
-        public static Dictionary<int, string> ArmorSkillPriorityID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> ArmorSkillPriorityID = new Dictionary<int, string>()
         {
             {0, "SnS Tech"},
             {1, "DS Tech"},
@@ -2006,9 +2006,9 @@ namespace Dictionary
     ///<summary>
     ///The zenith skills list
     ///</summary>
-    public class ZenithSkillList
+    public static class ZenithSkillList
     {
-        public static Dictionary<int, string> ZenithSkillID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> ZenithSkillID = new Dictionary<int, string>()
         {
             {0, "None"},
             {1, "Skill Slots Up+1"},
@@ -2069,9 +2069,9 @@ namespace Dictionary
     ///<summary>
     ///The SR skills list
     ///</summary>
-    public class StyleRankSkillList
+    public static class StyleRankSkillList
     {
-        public static Dictionary<int, string> StyleRankSkillID = new Dictionary<int, string>()
+        public static  Dictionary<int, string> StyleRankSkillID = new Dictionary<int, string>()
         {
             //the bonuses totals are:
             //defense+50
@@ -2244,9 +2244,9 @@ namespace Dictionary
     /// <summary>
     /// The Raviente Trigger Events list
     /// </summary>
-    public class RavienteTriggerEvents
+    public static class RavienteTriggerEvents
     {
-        public static Dictionary<int, string> RavienteTriggerEventIDs = new Dictionary<int, string>()
+        public static  Dictionary<int, string> RavienteTriggerEventIDs = new Dictionary<int, string>()
         {
             {0, "Slay 1"},
             {1, "Sedation 1"},
@@ -2268,9 +2268,9 @@ namespace Dictionary
     /// <summary>
     /// The Violent Raviente Trigger Events list
     /// </summary>
-    public class ViolentRavienteTriggerEvents
+    public static class ViolentRavienteTriggerEvents
     {
-        public static Dictionary<int, string> ViolentRavienteTriggerEventIDs = new Dictionary<int, string>()
+        public static  Dictionary<int, string> ViolentRavienteTriggerEventIDs = new Dictionary<int, string>()
         {
             {0, "Slay 1"},
             {1, "Sedation 1"},
@@ -2292,9 +2292,9 @@ namespace Dictionary
     /// <summary>
     /// The Berserk Raviente Practice Trigger Events list
     /// </summary>
-    public class BerserkRavientePracticeTriggerEvents
+    public static class BerserkRavientePracticeTriggerEvents
     {
-        public static Dictionary<int, string> BerserkRavientePracticeTriggerEventIDs = new Dictionary<int, string>()
+        public static  Dictionary<int, string> BerserkRavientePracticeTriggerEventIDs = new Dictionary<int, string>()
         {
             {0, "Slay 1"},
             {1, "Sedation 1"},
@@ -2312,9 +2312,9 @@ namespace Dictionary
     /// <summary>
     /// The Berserk Raviente Trigger Events list
     /// </summary>
-    public class BerserkRavienteTriggerEvents
+    public static class BerserkRavienteTriggerEvents
     {
-        public static Dictionary<int, string> BerserkRavienteTriggerEventIDs = new Dictionary<int, string>()
+        public static  Dictionary<int, string> BerserkRavienteTriggerEventIDs = new Dictionary<int, string>()
         {
             {0, "Slay 1"},
             {1, "Sedation 1"},  
@@ -2333,9 +2333,9 @@ namespace Dictionary
         };
     };
 
-    public class RoadDureSkills
+    public static class RoadDureSkills
     {
-        public static Dictionary<int, string> RoadDureSkillIDs = new Dictionary<int, string>()
+        public static  Dictionary<int, string> RoadDureSkillIDs = new Dictionary<int, string>()
         {
             {0, "None"},
             {1, "Attack"},

@@ -231,10 +231,6 @@ namespace MHFZ_Overlay.controls
                     return 0f;
                 return ((float)NumCurr / (float)NumMax) * 100f;
             }
-            set
-            {
-
-            }
         }
 
         /// <summary>

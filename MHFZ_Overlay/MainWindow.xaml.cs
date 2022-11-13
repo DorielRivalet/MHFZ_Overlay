@@ -224,7 +224,7 @@ namespace MHFZ_Overlay
         /// <summary>
         /// The current presence to send to discord.
         /// </summary>
-        public static RichPresence presenceTemplate = new RichPresence()
+        public RichPresence presenceTemplate = new RichPresence()
         {
             Details = "【MHF-Z】Overlay " + CurrentProgramVersion,
             State = "Loading...",
@@ -246,7 +246,7 @@ namespace MHFZ_Overlay
         /// <summary>
         /// Is the main loop currently running?
         /// </summary>
-        public static bool isDiscordRPCRunning = false;
+        public bool isDiscordRPCRunning = false;
 
         /// <summary>
         /// Initializes the discord RPC.
@@ -344,7 +344,13 @@ namespace MHFZ_Overlay
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
+#pragma warning disable CS8618 // Non-nullable property 'Client' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
+#pragma warning disable CS8618 // Non-nullable field 'latestRelease' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
+#pragma warning disable CS8618 // Non-nullable field 'releaseInfo' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
         public MainWindow()
+#pragma warning restore CS8618 // Non-nullable field 'releaseInfo' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
+#pragma warning restore CS8618 // Non-nullable field 'latestRelease' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
+#pragma warning restore CS8618 // Non-nullable property 'Client' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
         {
             var splashScreen = new SplashScreen("icons/loading.png");
             
@@ -436,19 +442,7 @@ namespace MHFZ_Overlay
         public void CheckGameState()
         {
             int PID = m.GetProcIdFromName("mhf");
-            //Process[] processes = Process.GetProcesses();
-            //foreach (var process in processes)
-            //{
-            //    if (process.MainWindowTitle.Contains("Launcher") && process.Id == PID)
-            //    {
-            //        isInLauncher = true;
-            //    }
-            //    else
-            //    {
-            //        isInLauncher = false;
-
-            //    }
-            //}
+            
             //https://stackoverflow.com/questions/12372534/how-to-get-a-process-window-class-name-from-c
             int pidToSearch = PID;
             //Init a condition indicating that you want to search by process id.
@@ -473,37 +467,14 @@ namespace MHFZ_Overlay
                     DataLoader.isInLauncher = false;
                 }
 
-                //var processExists = Process.GetProcesses().Any(p => p.ProcessName.Contains("mhf"));
                 //https://stackoverflow.com/questions/51148/how-do-i-find-out-if-a-process-is-already-running-using-c
                 //https://stackoverflow.com/questions/12273825/c-sharp-process-start-how-do-i-know-if-the-process-ended
                 Process mhfProcess = Process.GetProcessById(pidToSearch);
 
                 mhfProcess.EnableRaisingEvents = true;
-                //Clipboard.SetText(String.Format("isInLauncher : {0}. title: {1}", isInLauncher, className));
                 mhfProcess.Exited += (sender, e) =>
                 {
-                    //int pidToSearch = m.GetProcIdFromName("mhf");
-                    ////Init a condition indicating that you want to search by process id.
-                    //var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
-                    //    pidToSearch);
-                    ////Find the automation element matching the criteria
-                    //AutomationElement element = AutomationElement.RootElement.FindFirst(
-                    //    TreeScope.Children, condition);
-
-                    //string state;
-
-                    //if (element == null || pidToSearch == 0)
-                    //    state = "NULL";
-
-                    ////get the classname
-                    //var className = element.Current.ClassName;
-
-                    //if (className == "MHFLAUNCH")
-                    //    state = "Yes";
-                    //else
-                    //    state = "No";
-
-                    //if (state == "NULL")
+                    
                     DataLoader.closedGame = true;
                     Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
@@ -549,12 +520,9 @@ namespace MHFZ_Overlay
 
             UpdateDiscordRPC();
 
-            // Debug.WriteLine("Monster1 SEL=" + DataLoader.model.RoadSelectedMonster() + " ID=" + DataLoader.model.LargeMonster1ID() + " HP=" + DataLoader.model.Monster1HPInt() + "/" + DataLoader.model.SavedMonster1MaxHP);
-            //Debug.WriteLine("Monster2 SEL=" + DataLoader.model.RoadSelectedMonster() + " ID=" + DataLoader.model.LargeMonster2ID() + " HP=" + DataLoader.model.Monster2HPInt() + "/" + DataLoader.model.SavedMonster2MaxHP);
             if (isInLauncher() == "NULL" && !showedNullError)
             {
                 showedNullError = true;
-                //System.Windows.MessageBox.Show("Incorrect values detected, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
         }
 
@@ -938,7 +906,9 @@ namespace MHFZ_Overlay
         public string GetItemName(int id)
         {
             string itemValue1;
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             bool isItemExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out itemValue1);  //returns true
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
             //Console.WriteLine(itemValue1); //Print "First"
             //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
             return itemValue1 + "";
@@ -953,7 +923,9 @@ namespace MHFZ_Overlay
         {
             if (!(ShowDiscordQuestNames)) return "";
             string QuestValue1;
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             bool isQuestExists1 = Dictionary.Quests.QuestIDs.TryGetValue(id, out QuestValue1);  //returns true
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
             //Console.WriteLine(itemValue1); //Print "First"
             //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
             return QuestValue1 + "";
@@ -1342,9 +1314,6 @@ namespace MHFZ_Overlay
                 case 1:
                     return "Rathian";
                 case 2:
-                    if (DataLoader.model.RankBand() == 53)
-                        return "Fatalis";
-                    else
                         return "Fatalis";
                 case 3:
                     return "Kelbi";
@@ -1363,9 +1332,6 @@ namespace MHFZ_Overlay
                 case 10: //veggie elder
                     return "Veggie Elder";
                 case 11:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Rathalos";
-                    else
                         return "Rathalos";
                 case 12:
                     return "Aptonoth";
@@ -1374,16 +1340,10 @@ namespace MHFZ_Overlay
                 case 14:
                     return "Diablos";
                 case 15:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Khezu";
-                    else
                         return "Khezu";
                 case 16:
                     return "Velociprey";
                 case 17:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Gravios";
-                    else
                         return "Gravios";
                 case 18:
                     return "Felyne";
@@ -1392,9 +1352,6 @@ namespace MHFZ_Overlay
                 case 20:
                     return "Gypceros";
                 case 21:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Plesioth";
-                    else
                         return "Plesioth";
                 case 22:
                     return "Basarios";
@@ -1425,9 +1382,6 @@ namespace MHFZ_Overlay
                 case 35:
                     return "Giaprey";
                 case 36:
-                    if (DataLoader.model.RankBand() == 53)
-                        return "Crimson Fatalis";
-                    else
                         return "Crimson Fatalis";
                 case 37:
                     return "Pink Rathian";
@@ -1452,25 +1406,16 @@ namespace MHFZ_Overlay
                 case 47:
                     return "Black Gravios";
                 case 48:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Daimyo Hermitaur";
-                    else
                         return "Daimyo Hermitaur";
                 case 49:
                     return "Azure Rathalos";
                 case 50:
                     return "Ashen Lao-Shan Lung";
                 case 51:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Blangonga";
-                    else
                         return "Blangonga";
                 case 52:
                     return "Congalala";
                 case 53:
-                    if (DataLoader.model.RankBand() == 56 || DataLoader.model.RankBand() == 57)
-                        return "Rajang";
-                    else
                         return "Rajang";
                 case 54:
                     return "Kushala Daora";
@@ -1510,9 +1455,6 @@ namespace MHFZ_Overlay
                 case 70:
                     return "Popo";
                 case 71:
-                    if (DataLoader.model.RankBand() == 53)
-                        return "White Fatalis";
-                    else
                         return "White Fatalis";
                 case 72:
                     return "Yama Tsukami";
@@ -1523,9 +1465,6 @@ namespace MHFZ_Overlay
                 case 75:
                     return "Lavasioth";
                 case 76:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Zenith Tigrex";
-                    else
                         return "Tigrex";
                 case 77:
                     return "Akantor";
@@ -1534,18 +1473,12 @@ namespace MHFZ_Overlay
                 case 79:
                     return "Red Lavasioth";
                 case 80:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Espinas";
-                    else
                         return "Espinas";
                 case 81:
                     return "Orange Espinas";
                 case 82:
                     return "Silver Hypnoc";
                 case 83:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Akura Vashimu";
-                    else
                         return "Akura Vashimu";
                 case 84:
                     return "Akura Jebia";
@@ -1573,9 +1506,7 @@ namespace MHFZ_Overlay
                 case 94:
                     return "Dyuragaua";
                 case 95:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Doragyurosu";
-                    else if (DataLoader.model.RankBand() == 32)
+                    if (DataLoader.model.RankBand() == 32)
                         return "Supremacy Doragyurosu";
                     else
                         return "Doragyurosu";
@@ -1586,23 +1517,14 @@ namespace MHFZ_Overlay
                 case 98:
                     return "Erupe";
                 case 99:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Rukodiora";
-                    else
                         return "Rukodiora";
                 case 100:
-                    if (DataLoader.model.RankBand() == 70 || DataLoader.model.RankBand() == 54)
-                        return "Unknown";
-                    else
                         return "Unknown";
                 case 101:
                     return "Gogomoa";
                 case 102://kokomoa
                     return "Kokomoa";
                 case 103:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Taikun Zamuza";
-                    else
                         return "Taikun Zamuza";
                 case 104:
                     return "Abiorugu";
@@ -1614,31 +1536,16 @@ namespace MHFZ_Overlay
                     else
                         return "Odibatorasu";
                 case 107:
-                    if (DataLoader.model.RankBand() == 54 || DataLoader.model.RankBand() == 55)
-                        return "Disufiroa";
-                    else
                         return "Disufiroa";
                 case 108:
                     return "Rebidiora";
                 case 109:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Anorupatisu";
-                    else
                         return "Anorupatisu";
                 case 110:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Hyujikiki";
-                    else
                         return "Hyujikiki";
                 case 111:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Midogaron";
-                    else
                         return "Midogaron";
                 case 112:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Giaorugu";
-                    else
                         return "Giaorugu";
                 case 113:
                     if (DataLoader.model.RankBand() == 55)
@@ -1650,9 +1557,6 @@ namespace MHFZ_Overlay
                 case 115:
                     return "Pokaradon";
                 case 116:
-                    if (DataLoader.model.RankBand() == 53)
-                        return "Shantien";
-                    else
                         return "Shantien";
                 case 117:
                     return "Pokara";
@@ -1663,9 +1567,6 @@ namespace MHFZ_Overlay
                 case 120:
                     return "Aruganosu";
                 case 121:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Baruragaru";
-                    else
                         return "Baruragaru";
                 case 122:
                     return "Zerureusu";
@@ -1682,9 +1583,6 @@ namespace MHFZ_Overlay
                 case 128:
                     return "Garuba Daora";
                 case 129:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Inagami";
-                    else
                         return "Inagami";
                 case 130:
                     return "Varusaburosu";
@@ -1707,19 +1605,10 @@ namespace MHFZ_Overlay
                 case 139:
                     return "Gureadomosu";
                 case 140:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Harudomerugu";
-                    else
                         return "Harudomerugu";
                 case 141:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Toridcless";
-                    else
                         return "Toridcless";
                 case 142:
-                    if (DataLoader.model.RankBand() >= 64 && DataLoader.model.RankBand() <= 67)
-                        return "Gasurabazura";
-                    else
                         return "Gasurabazura";
                 case 143:
                     return "Kusubami";
@@ -2970,8 +2859,6 @@ namespace MHFZ_Overlay
             if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             string? objValue1;
             bool isNameExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out objValue1);  //returns true
-            //Console.WriteLine(itemValue1); //Print "First"
-            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
             return objValue1 + "";
         }
 
@@ -2984,8 +2871,6 @@ namespace MHFZ_Overlay
         {
             string? clothesValue1;
             _ = Dictionary.PoogieCostumeList.PoogieCostumeID.TryGetValue(id, out clothesValue1);  //returns true
-            //Console.WriteLine(itemValue1); //Print "First"
-            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
             return clothesValue1 + "";
         }
 
@@ -3318,15 +3203,10 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetRavienteEvent(int id)
         {
-            //if (!(ShowDiscordQuestNames)) return "";
-            //string EventValue1;
             Dictionary.RavienteTriggerEvents.RavienteTriggerEventIDs.TryGetValue(id, out string? EventValue1);
             Dictionary.ViolentRavienteTriggerEvents.ViolentRavienteTriggerEventIDs.TryGetValue(id, out string? EventValue2);
             Dictionary.BerserkRavienteTriggerEvents.BerserkRavienteTriggerEventIDs.TryGetValue(id, out string? EventValue3);
             Dictionary.BerserkRavientePracticeTriggerEvents.BerserkRavientePracticeTriggerEventIDs.TryGetValue(id, out string? EventValue4);
-            //Console.WriteLine(itemValue1); //Print "First"
-            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
-            //return EventValue1 + "";
 
             switch (DataLoader.model.getRaviName())
             {
@@ -3446,25 +3326,9 @@ namespace MHFZ_Overlay
             //extreme support 5 55606
             //extreme carve 55607
 
-            //DataLoader.model.DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat)
-
             //Info
             if ((DataLoader.model.QuestID() != 0 && DataLoader.model.TimeDefInt() != DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0) || ((DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750 || DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649 || DataLoader.model.QuestID() == 21748 || DataLoader.model.QuestID() == 21747 || DataLoader.model.QuestID() == 21734) && int.Parse(DataLoader.model.ATK) > 0))
             {
-                //inQuest = true;
-
-                //switch (GetDiscordTimerMode())
-                //{
-                //    case "Time Left":
-                //        presenceTemplate.Timestamps = Timestamps.FromTimeSpan((double)DataLoader.model.TimeDefInt() / 30.0);
-                //        break;
-                //    case "Time Elapsed":
-                //        presenceTemplate.Timestamps = Timestamps.Now;
-                //        break;
-                //    default:
-                //        presenceTemplate.Timestamps = Timestamps.FromTimeSpan((double)DataLoader.model.TimeDefInt() / 30.0);
-                //        break;
-                //}
 
                 switch (DataLoader.model.QuestID())
                 {
@@ -3561,7 +3425,6 @@ namespace MHFZ_Overlay
             }
             else if (DataLoader.model.QuestID() == 0)
             {
-                //inQuest = false;
 
                 switch(DataLoader.model.AreaID())
                 {
@@ -3637,9 +3500,6 @@ namespace MHFZ_Overlay
                         presenceTemplate.State = string.Format("GR: {0} | Diva Skill: {1} ({2} Left) | Diva Bond: {3} | Items Given: {4}", DataLoader.model.GRankNumber(), GetDivaSkillNameFromID(DataLoader.model.DivaSkill()),DataLoader.model.DivaSkillUsesLeft(),DataLoader.model.DivaBond(), DataLoader.model.DivaItemsGiven());
                         break;
 
-                    // case 458:// "Hunter's Road 1 Area 1" },
-                    //case 459:// "Hunter's Road 2 Base Camp" },
-
                     case 462://MezFez Entrance
                     case 463: //Volpkun Together
                     case 465://MezFez Minigame
@@ -3699,7 +3559,6 @@ namespace MHFZ_Overlay
                     case "Always":
                         if (DataLoader.model.AreaID() == 458)//Hunter's Road Area 1
                         {
-                            //previousRoadFloor = DataLoader.model.RoadFloor() + 1;
                             break;
                         }
 
@@ -3726,7 +3585,6 @@ namespace MHFZ_Overlay
                     case "Never":
                         if (DataLoader.model.AreaID() == 458)//Hunter's Road Area 1
                         {
-                            //previousRoadFloor = DataLoader.model.RoadFloor() + 1;
                             break;
                         }
 
@@ -3753,8 +3611,7 @@ namespace MHFZ_Overlay
                     default:
                         if (DataLoader.model.AreaID() == 458)//Hunter's Road Area 1
                         {
-                            //previousRoadFloor = DataLoader.model.RoadFloor() + 1;
-                            break;
+                                break;
                         }
 
                         else if (DataLoader.model.AreaID() == 459)//Hunter's Road Base Camp
@@ -3844,13 +3701,6 @@ namespace MHFZ_Overlay
             {
                 presenceTemplate.Assets.SmallImageText = String.Format("{0} | {1} | GSR: {2} | {3} Style | Caravan Skills: {4}", GetHunterName, GetGuildName, DataLoader.model.GSR(), GetWeaponStyleFromID(DataLoader.model.WeaponStyle()),GetCaravanSkills());
             }
-            //string currentState = presenceTemplate.State;
-            //DiscordRPC.Timestamps currentTimestamps = presenceTemplate.Timestamps;
-            //string currentLargeImageKey = presenceTemplate.Assets.LargeImageKey;
-            //string currentLargeImageText = presenceTemplate.Assets.LargeImageText;
-            //string currentSmallImageKey = presenceTemplate.Assets.SmallImageKey;
-            //string currentSmallImageText = presenceTemplate.Assets.SmallImageText;
-            //DiscordRPC.Button[] currentButtons = presenceTemplate.Buttons;
 
             Client.SetPresence(presenceTemplate);
         }

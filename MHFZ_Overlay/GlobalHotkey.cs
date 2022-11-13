@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 
-public class GlobalHotKey : IDisposable
+namespace MHFZ_Overlay {
+    public class GlobalHotKey : IDisposable
 {
     /// <summary>
     /// Registers a global hotkey
@@ -15,8 +16,12 @@ public class GlobalHotKey : IDisposable
     public static bool RegisterHotKey(string aKeyGestureString, Action aAction)
     {
         var c = new KeyGestureConverter();
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         KeyGesture aKeyGesture = (KeyGesture)c.ConvertFrom(aKeyGestureString);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         return RegisterHotKey(aKeyGesture.Modifiers, aKeyGesture.Key, aAction);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 
     public static bool RegisterHotKey(ModifierKeys aModifier, Key aKey, Action aAction)
@@ -98,7 +103,9 @@ public class GlobalHotKey : IDisposable
 
     private class InvisibleWindowForMessages : System.Windows.Forms.NativeWindow, IDisposable
     {
+#pragma warning disable CS8618 // Non-nullable event 'KeyPressed' must contain a non-null value when exiting constructor. Consider declaring the event as nullable.
         public InvisibleWindowForMessages()
+#pragma warning restore CS8618 // Non-nullable event 'KeyPressed' must contain a non-null value when exiting constructor. Consider declaring the event as nullable.
         {
             CreateHandle(new System.Windows.Forms.CreateParams());
         }
@@ -153,4 +160,5 @@ public class GlobalHotKey : IDisposable
 
         #endregion
     }
+}
 }

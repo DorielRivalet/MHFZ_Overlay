@@ -97,16 +97,20 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         private static async Task MainUpdater()
         {
+#pragma warning disable CS0618 // 'UpdateManager.GitHubUpdateManager(string, string, string, IFileDownloader, bool, string)' is obsolete: 'Use 'new UpdateManager(new GithubSource(...))' instead'
             using (var mgr = UpdateManager.GitHubUpdateManager("https://github.com/DorielRivalet/MHFZ_Overlay"))
             {
                 await mgr.Result.UpdateApp().ConfigureAwait(false);
             }
+#pragma warning restore CS0618 // 'UpdateManager.GitHubUpdateManager(string, string, string, IFileDownloader, bool, string)' is obsolete: 'Use 'new UpdateManager(new GithubSource(...))' instead'
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLoader"/> class.
         /// </summary>
+#pragma warning disable CS8618 // Non-nullable property 'model' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
         public DataLoader()
+#pragma warning restore CS8618 // Non-nullable property 'model' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
         {
             // run Squirrel first, as the app may exit after these run
             SquirrelAwareApp.HandleEvents(

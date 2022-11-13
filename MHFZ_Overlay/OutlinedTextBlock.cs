@@ -272,7 +272,13 @@ public class OutlinedTextBlock : FrameworkElement
         /// <summary>
         /// Initializes a new instance of the <see cref="OutlinedTextBlock"/> class.
         /// </summary>
+#pragma warning disable CS8618 // Non-nullable field '_Pen' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
+#pragma warning disable CS8618 // Non-nullable field '_TextGeometry' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
+#pragma warning disable CS8618 // Non-nullable field '_FormattedText' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
         public OutlinedTextBlock()
+#pragma warning restore CS8618 // Non-nullable field '_FormattedText' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
+#pragma warning restore CS8618 // Non-nullable field '_TextGeometry' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
+#pragma warning restore CS8618 // Non-nullable field '_Pen' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
     {
         UpdatePen();
         TextDecorations = new TextDecorationCollection();
@@ -328,7 +334,9 @@ public class OutlinedTextBlock : FrameworkElement
         _FormattedText.MaxTextHeight = Math.Max(0.0001d, finalSize.Height);
 
         // need to re-generate the geometry now that the dimensions have changed
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         _TextGeometry = null;
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         return finalSize;
     }
@@ -341,8 +349,12 @@ public class OutlinedTextBlock : FrameworkElement
       DependencyPropertyChangedEventArgs e)
     {
         var outlinedTextBlock = (OutlinedTextBlock)dependencyObject;
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         outlinedTextBlock._FormattedText = null;
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         outlinedTextBlock._TextGeometry = null;
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         outlinedTextBlock.InvalidateMeasure();
         outlinedTextBlock.InvalidateVisual();
@@ -356,7 +368,9 @@ public class OutlinedTextBlock : FrameworkElement
     {
         var outlinedTextBlock = (OutlinedTextBlock)dependencyObject;
         outlinedTextBlock.UpdateFormattedText();
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         outlinedTextBlock._TextGeometry = null;
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         outlinedTextBlock.InvalidateMeasure();
         outlinedTextBlock.InvalidateVisual();
@@ -371,6 +385,7 @@ public class OutlinedTextBlock : FrameworkElement
             return;
         }
 
+#pragma warning disable CS0618 // 'FormattedText.FormattedText(string, CultureInfo, FlowDirection, Typeface, double, Brush)' is obsolete: 'Use the PixelsPerDip override'
         _FormattedText = new FormattedText(
           Text ?? "",
           CultureInfo.CurrentUICulture,
@@ -378,6 +393,7 @@ public class OutlinedTextBlock : FrameworkElement
           new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
           FontSize,
           Brushes.Black);
+#pragma warning restore CS0618 // 'FormattedText.FormattedText(string, CultureInfo, FlowDirection, Typeface, double, Brush)' is obsolete: 'Use the PixelsPerDip override'
 
         UpdateFormattedText();
     }

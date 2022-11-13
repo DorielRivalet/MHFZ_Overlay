@@ -5,7 +5,7 @@ namespace Dictionary
     /// <summary>
     /// Items dictionary
     /// </summary>
-    public class ArmorLegs
+    public static class ArmorLegs
     {
         public static ConcurrentDictionary<int, string> ArmorLegIDs = new ConcurrentDictionary<int, string>();
 
