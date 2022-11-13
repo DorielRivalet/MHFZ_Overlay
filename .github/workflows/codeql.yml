@@ -55,7 +55,7 @@ jobs:
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
-    #- name: Autobuild
+    # - name: Autobuild
     #  uses: github/codeql-action/autobuild@v2
 
     # ℹ️ Command-line programs to run using the OS shell.
@@ -69,8 +69,7 @@ jobs:
     #   ./location_of_script_within_repo/buildscript.sh
     - if: matrix.language == 'csharp' 
     name: Autobuild
-    run: |
-      dotnet build /p:UseSharedCompilation=false
+    run: dotnet build /p:UseSharedCompilation=false
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
