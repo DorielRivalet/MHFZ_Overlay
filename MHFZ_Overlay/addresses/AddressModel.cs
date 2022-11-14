@@ -689,7 +689,7 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
-        public static bool ShowCaravanScore()
+        public bool ShowCaravanScore()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableCaravanScore)
@@ -737,7 +737,7 @@ namespace MHFZ_Overlay.addresses
             return null;
         }
 
-        public static bool CaravanOverride()
+        public bool CaravanOverride()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableCaravanOverride)
@@ -1830,7 +1830,7 @@ namespace MHFZ_Overlay.addresses
             else return "Time Left";
         }
 
-        public static string GetRoadTimerResetMode()
+        public string GetRoadTimerResetMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.DiscordRoadTimerReset == "Never")
@@ -2121,7 +2121,7 @@ namespace MHFZ_Overlay.addresses
         /// <param name="monsterhp">The monsterhp.</param>
         /// <param name="monsterdefrate">The monsterdefrate.</param>
         /// <returns></returns>
-        public static int DisplayMonsterEHP(decimal? defrate, int monsterhp, decimal? monsterdefrate)
+        public int DisplayMonsterEHP(decimal? defrate, int monsterhp, decimal? monsterdefrate)
         {
             if (defrate > 0)
             {
