@@ -1230,14 +1230,14 @@ namespace Dictionary
             {323,"Tidal Island - Area 1 - Day" },
             {324,"Tidal Island - Area 2 - Day" },
             {325,"Tidal Island - Area 3 - Day" },
-            {326,"Tidal Island - Day" },//todo
+            {326,"Tidal Island - Day" },//TODO
             {327,"Tidal Island - Day" },
             {328,"Tidal Island - Day" },
             {329,"Tidal Island - Day" },
-            {330,"Tidal Island Base Camp (Night)" },
-            {331,"Tidal Island Area 1 (Night)" },
-            {332,"Tidal Island Area 2 (Night)" },
-            {333,"Tidal Island Area 3 (Night)" },
+            {330,"Tidal Island - Base Camp - Night)" },
+            {331,"Tidal Island - Area 1 - Night)" },
+            {332,"Tidal Island - Area 2 - Night)" },
+            {333,"Tidal Island - Area 3 - Night)" },
             {334,"Tidal Island - Area 4 - Day" },
             {335,"Tidal Island - Area 5 - Day" },
             {336,"Tidal Island - Day" },
@@ -2122,7 +2122,7 @@ namespace Dictionary
             {42, ""},
             {43, ""},
             {44, "Fire Res+15"},//start
-            {45, ""},//todo
+            {45, ""},//TODO
             {46, ""},
             {47, ""},
             {48, "Fire Res+20"},//after hr6
@@ -2143,7 +2143,7 @@ namespace Dictionary
             {63, ""},
             {64, ""},
             {65, "Water Res+20"},//after nosus
-            {66, "Water Res+22"},//todo
+            {66, "Water Res+22"},//TODO
             {67, "Water Res+24"},
             {68, "Water Res+25"},
             {69, ""},

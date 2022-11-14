@@ -102,10 +102,6 @@ namespace MHFZ_Overlay.addresses
         public string Monster2BP10() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1280").ToString();
         public override int Monster2Part10() => M.Read2Byte("mhfo-hd.dll+0E37DD38,1280");
 
-
-
-
-        //TODO
         public string Monster1RoadBP1() => M.Read2Byte("mhfo-hd.dll+E37DF18,348").ToString();
         public string Monster1RoadBP2() => M.Read2Byte("mhfo-hd.dll+E37DF18,350").ToString();
         public string Monster1RoadBP3() => M.Read2Byte("mhfo-hd.dll+E37DF18,358").ToString();

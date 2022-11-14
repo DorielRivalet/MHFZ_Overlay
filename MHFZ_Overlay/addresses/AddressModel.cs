@@ -815,7 +815,7 @@ namespace MHFZ_Overlay.addresses
                 }
             }
 
-
+            //TODO: missing labels
             switch (monsterID)
             {
                 case 0: //None
@@ -1243,9 +1243,9 @@ namespace MHFZ_Overlay.addresses
                     Monster1Part2Name = "R. Leg";
                     Monster1Part3Name = "L. Leg";
                     Monster1Part4Name = "Arms";
-                    Monster1Part5Name = "?"; //TODO
+                    Monster1Part5Name = "?";
                     Monster1Part6Name = "Torso";
-                    Monster1Part7Name = "?"; //TODO
+                    Monster1Part7Name = "?";
                     Monster1Part8Name = "Tail";
                     Monster1Part9Name = "None";
                     Monster1Part10Name = "None";
@@ -7340,7 +7340,6 @@ namespace MHFZ_Overlay.addresses
 
             if (GetGouBoostMode())
                 showGouBoost = " (After Gou/Muscle Boost)";
-            //TODO: sr skill
             //zp in bold for markdown
             //fruits and speedrunner items also in bold
             SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
