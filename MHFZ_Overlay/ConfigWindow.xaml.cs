@@ -1871,7 +1871,7 @@ namespace MHFZ_Overlay
 
         public static Uri MonsterImage
         {
-            get { return new Uri("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/random.png", UriKind.RelativeOrAbsolute); }
+            get { return new Uri(randomMonsterImage, UriKind.RelativeOrAbsolute); }
         }
 
         public MonsterLog[] Monsters = new MonsterLog[]
@@ -2055,7 +2055,7 @@ namespace MHFZ_Overlay
           new MonsterLog(176, "King Shakalaka","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/king_shakalaka.png",0,true)
         };
 
-        public string ReplaceFeriasVersion(string link)
+        public static string ReplaceFeriasVersion(string link)
         {
             string separator = "MHFZ-Ferias-English-Project";
 
@@ -2349,7 +2349,7 @@ namespace MHFZ_Overlay
         {
             var FilterObj = obj as MonsterLog;
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-            return FilterObj.IsLarge == true || FilterObj.IsLarge == false;
+            return FilterObj.IsLarge || !FilterObj.IsLarge;
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
@@ -2357,7 +2357,7 @@ namespace MHFZ_Overlay
         {
             var FilterObj = obj as MonsterLog;
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-            return FilterObj.IsLarge == true;
+            return FilterObj.IsLarge;
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
@@ -2365,7 +2365,7 @@ namespace MHFZ_Overlay
         {
             var FilterObj = obj as MonsterLog;
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-            return FilterObj.IsLarge == false;
+            return !FilterObj.IsLarge;
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
@@ -2393,7 +2393,6 @@ namespace MHFZ_Overlay
             if (e.Text != "0" && e.Text != "1" && e.Text != "2")
             {
                 e.Handled = true;
-                return;
             }
 
         }
@@ -2554,7 +2553,7 @@ namespace MHFZ_Overlay
         /// Shows the text format mode
         /// </summary>
         /// <returns></returns>
-        public string GetTextFormatMode()
+        public static string GetTextFormatMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.TextFormatExport != null)
@@ -2815,7 +2814,8 @@ namespace MHFZ_Overlay
                         System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Video not found. Go to issues page?", "【MHF-Z】Overlay Information Missing", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning, MessageBoxResult.No);
                         if (messageBoxResult.ToString() == "Yes")
                         {
-                            var sInfo = new System.Diagnostics.ProcessStartInfo("https://github.com/DorielRivalet/MHFZ_Overlay/issues/26")
+                            string issueLink = "https://github.com/DorielRivalet/MHFZ_Overlay/issues/26";
+                            var sInfo = new System.Diagnostics.ProcessStartInfo(issueLink)
                             {
                                 UseShellExecute = true,
                             };

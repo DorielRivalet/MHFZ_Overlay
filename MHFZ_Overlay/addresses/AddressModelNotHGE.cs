@@ -17,11 +17,11 @@ namespace MHFZ_Overlay.addresses
         public override int TimeInt() => M.ReadInt("mhfo.dll+5BC6540");
         public override int WeaponRaw() => M.Read2Byte("mhfo.dll+503433A");
         //This is equipment slot number that goes from 0-255 repeatedly
-        //"mhfo.dll+60FFCC6");
+        //"mhfo.dll+60FFCC6
 
-        //"mhfo.dll+B7FF45");
-        //"mhfo.dll+182D3B93");
-        //"mhfo.dll+13E1FF45");
+        //"mhfo.dll+B7FF45
+        //"mhfo.dll+182D3B93
+        //"mhfo.dll+13E1FF45
         public override int WeaponType() => M.ReadByte("mhfo.dll+5033B93");
         public override bool IsNotRoad()
         {

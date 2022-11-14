@@ -300,33 +300,6 @@ namespace MHFZ_Overlay
 
         #region main
 
-        public bool itemsLoaded = false;
-        public bool questsLoaded = false;
-        public bool gearLoaded = false;
-
-        /// <summary>
-        /// Loads the dictionaries
-        /// </summary>
-        private void LoadDictionaries()
-        {
-            if (!(questsLoaded && ShowDiscordQuestNames))
-            {
-                questsLoaded = true;
-            }
-
-            if (!(itemsLoaded))
-            {
-                itemsLoaded = true;
-                //load item list
-            }
-
-            if (!(gearLoaded))
-            {
-                gearLoaded = true;
-                //load all gear lists
-            }
-        }
-
         //Main entry point?        
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -353,7 +326,6 @@ namespace MHFZ_Overlay
             timer.Tick += Timer_Tick;
             timer.Start();
             DataContext = DataLoader.model;
-            //GlobalHotKey.RegisterHotKey("Shift + Insert", () => ToggleVisibility());
             GlobalHotKey.RegisterHotKey("Shift + F1", () => OpenConfigButton_Key());
             GlobalHotKey.RegisterHotKey("Shift + F5", () => ReloadButton_Key());
             GlobalHotKey.RegisterHotKey("Shift + F6", () => CloseButton_Key());
@@ -361,7 +333,6 @@ namespace MHFZ_Overlay
             ReloadButton.Visibility = Visibility.Hidden;
             CloseButton.Visibility = Visibility.Hidden;
 
-            LoadDictionaries();
             InitializeDiscordRPC();
             CheckGameState();
             _ = LoadOctoKit();
@@ -375,7 +346,7 @@ namespace MHFZ_Overlay
         {
             var releases = await client.Repository.Release.GetAll("DorielRivalet", "MHFZ_Overlay");
             var latest = releases[0];
-            latestRelease = latest.TagName;
+            var latestRelease = latest.TagName;
             if (latestRelease != MainWindow.CurrentProgramVersion)
             {
                 isLatestRelease = false;
@@ -407,7 +378,6 @@ namespace MHFZ_Overlay
             System.Diagnostics.Process.Start(sInfo);
         }
 
-        public string latestRelease;
         public bool isLatestRelease;
 
         public void CheckGameState()
@@ -624,7 +594,6 @@ namespace MHFZ_Overlay
 
             if (!ShowDamageNumbersMulticolor())
             {
-                //damageLabel.Foreground = Brushes.Orange;
                 //https://stackoverflow.com/questions/14601759/convert-color-to-byte-value
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 System.Drawing.Color color = ColorTranslator.FromHtml(s.DamageNumbersColor);
@@ -674,7 +643,6 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.FindResource("Settings");
             bool v = s.AlwaysShowMonsterInfo || DataLoader.model.Configuring || counter < 60;
             //DL.m.?.Visibility = v && s.?.IsChecked
-            //DataLoader.model.ShowMonsterInfos = v && s.MonsterStatusInfoShown;
             DataLoader.model.ShowMonsterAtkMult = v && s.MonsterAtkMultShown;
             DataLoader.model.ShowMonsterDefrate = v && s.MonsterDefrateShown;
             DataLoader.model.ShowMonsterSize = v && s.MonsterSizeShown;
@@ -853,10 +821,9 @@ namespace MHFZ_Overlay
         {
             string itemValue1;
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            bool isItemExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out itemValue1);  //returns true
+            Dictionary.Items.ItemIDs.TryGetValue(id, out itemValue1);  //returns true
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-            //Console.WriteLine(itemValue1); //Print "First"
-            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
+
             return itemValue1 + "";
         }
 
@@ -865,15 +832,14 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetQuestNameFromID(int id)
+        public static string GetQuestNameFromID(int id)
         {
             if (!(ShowDiscordQuestNames)) return "";
             string QuestValue1;
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            bool isQuestExists1 = Dictionary.Quests.QuestIDs.TryGetValue(id, out QuestValue1);  //returns true
+            Dictionary.Quests.QuestIDs.TryGetValue(id, out QuestValue1);  //returns true
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-            //Console.WriteLine(itemValue1); //Print "First"
-            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
+
             return QuestValue1 + "";
         }
 
@@ -970,10 +936,7 @@ namespace MHFZ_Overlay
             {
                 weaponIconName += "red";
             }
-            //else if (colorName.Contains("White"))
-            //{
-            //    weaponIconName += weaponName;
-            //}
+
             else if (colorName.Contains("Pink"))
             {
                 weaponIconName += "pink";
@@ -1676,13 +1639,9 @@ namespace MHFZ_Overlay
                     return "HR5 ";
                 case 32:
                 case 46://supremacies
-                        //if (GetRealMonsterName(DataLoader.model.CurrentMonster1Icon).Contains("Supremacy"))
-                        //{
+
                     return "";
-                //} else
-                //{
-                //   return "";
-                //}
+
                 case 53://: conquest levels via quest id
                     //shantien
                     //lv1 23585
@@ -1785,7 +1744,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetObjectiveNameFromID(int id, bool isLargeImageText = false)
+        public static string GetObjectiveNameFromID(int id, bool isLargeImageText = false)
         {
             if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             return id switch
@@ -2793,11 +2752,11 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetObjective1Name(int id, bool isLargeImageText = false)
+        public static string GetObjective1Name(int id, bool isLargeImageText = false)
         {
             if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
             string? objValue1;
-            bool isNameExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out objValue1);  //returns true
+            Dictionary.Items.ItemIDs.TryGetValue(id, out objValue1);  //returns true
             return objValue1 + "";
         }
 
@@ -2829,16 +2788,6 @@ namespace MHFZ_Overlay
                 return string.Format("({0} True HP) ", DataLoader.model.Objective1Quantity() * 100);
             else
                 return DataLoader.model.Objective1Quantity().ToString() + " ";
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static string GetRepelDamage()
-        {
-            //1 qty is 100 true hp
-            return "";
         }
 
         /// <summary>
@@ -3662,10 +3611,7 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             switch (MovingObject.Name)
             {
-                //case "PlayerInfo":
-                //    s.PlayerInfoX = (double)(pos.X - XOffset);
-                //    s.PlayerInfoY = (double)(pos.Y - YOffset);
-                //    break;
+
                 case "TimerInfo":
                     s.TimerX = (double)(pos.X - XOffset);
                     s.TimerY = (double)(pos.Y - YOffset);
@@ -3678,10 +3624,7 @@ namespace MHFZ_Overlay
                     s.PlayerAtkX = (double)(pos.X - XOffset);
                     s.PlayerAtkY = (double)(pos.Y - YOffset);
                     break;
-                //case "MonsterHpBars":
-                //    s.HealthBarsX = (double)(pos.X - XOffset);
-                //    s.HealthBarsY = (double)(pos.Y - YOffset);
-                //    break;
+
                 case "Monster1HpBar":
                     s.Monster1HealthBarX = (double)(pos.X - XOffset);
                     s.Monster1HealthBarY = (double)(pos.Y - YOffset);
@@ -3698,10 +3641,7 @@ namespace MHFZ_Overlay
                     s.Monster4HealthBarX = (double)(pos.X - XOffset);
                     s.Monster4HealthBarY = (double)(pos.Y - YOffset);
                     break;
-                //case "MonsterStatusInfo":
-                //    s.MonsterStatusInfoX = (double)(pos.X - XOffset);
-                //    s.MonsterStatusInfoY = (double)(pos.Y - YOffset);
-                //    break;
+
                 case "MonsterAtkMultInfo":
                     s.MonsterAtkMultX = (double)(pos.X - XOffset);
                     s.MonsterAtkMultY = (double)(pos.Y - YOffset);

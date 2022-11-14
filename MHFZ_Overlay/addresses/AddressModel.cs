@@ -3058,9 +3058,7 @@ namespace MHFZ_Overlay.addresses
 
         #region monster hp
 
-        //DisplayMonsterEHP(float.Parse(Monster1DefMult(), CultureInfo.InvariantCulture.NumberFormat), Monster1HPInt(), Monster1DefMult()).ToString()
         public string Monster1HP => Configuring ? "0" : ShowMonsterEHP() ? DisplayMonsterEHP(Monster1DefMult(), Monster1HPInt(), Monster1DefMult()).ToString() : Monster1HPInt().ToString();
-
 
         public string Monster1MaxHP
         {
@@ -4211,7 +4209,7 @@ namespace MHFZ_Overlay.addresses
                 Dictionary.Items.ItemIDs.TryGetValue(Item9, out string? ItemName9);
                 Dictionary.Items.ItemIDs.TryGetValue(Item10, out string? ItemName10);
 
-                //TODO: refactor. also the values have to be skipped if item slot is empty
+                //. also the values have to be skipped if item slot is empty
                 if (ItemName1 == null || ItemName1 == "None" || ItemName1 == "" || AmmoPouchItem1Qty() == 0)
                     ItemName1 = "Empty, ";
                 else if (ItemName2 == null || ItemName2 == "None" || ItemName2 == "" || AmmoPouchItem2Qty() == 0)
@@ -4277,8 +4275,7 @@ namespace MHFZ_Overlay.addresses
 
                 if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0)
                     ItemName10 = "Empty";
-                //else if (ItemName6 == null || ItemName6 == "None")
-                //    ItemName5 = ItemName5 + "";
+
                 else
                     ItemName10 += "";
 
@@ -4332,7 +4329,7 @@ namespace MHFZ_Overlay.addresses
                 Dictionary.Items.ItemIDs.TryGetValue(Item19, out string? ItemName19);
                 Dictionary.Items.ItemIDs.TryGetValue(Item20, out string? ItemName20);
 
-                //TODO: refactor pls
+                // pls
                 if (GetTextFormat() == "Markdown")
                 {
                     if (IsMetaItem(Item1) && (ItemName1 != null || ItemName1 != "None" || ItemName1 != ""))
@@ -4396,7 +4393,7 @@ namespace MHFZ_Overlay.addresses
                         ItemName20 = string.Format("**{0}**", ItemName20);
                 }
 
-                //TODO: refactor. also the values have to be skipped if item slot is empty
+                //. also the values have to be skipped if item slot is empty
                 if (ItemName1 == null || ItemName1 == "None" || ItemName1 == "" || PouchItem1Qty() == 0)
                     ItemName1 = "Empty, ";
                 else if (ItemName2 == null || ItemName2 == "None" || ItemName2 == "" || PouchItem2Qty() == 0)
@@ -4532,8 +4529,7 @@ namespace MHFZ_Overlay.addresses
 
                 if (ItemName20 == null || ItemName20 == "None" || ItemName20 == "" || PouchItem20Qty() == 0)
                     ItemName20 = "Empty";
-                //else if (ItemName6 == null || ItemName6 == "None")
-                //    ItemName5 = ItemName5 + "";
+
                 else
                     ItemName20 += "";
 
@@ -4650,7 +4646,9 @@ namespace MHFZ_Overlay.addresses
         /// </value>
         public string GetDecoName(int id, int slot = 0, bool isForImage = false)
         {
-            bool keyFound = Dictionary.Items.ItemIDs.TryGetValue(id, out string? DecoName);
+            string? DecoName = "";
+
+            bool keyFound = Dictionary.Items.ItemIDs.TryGetValue(id, out DecoName);
 
             if (GetTextFormat() == "Markdown" && IsMetaItem(id) && (DecoName != null && DecoName == "None" && DecoName != "") && keyFound)
                 DecoName = string.Format("**{0}**", DecoName);//TODO: test
@@ -5347,7 +5345,7 @@ namespace MHFZ_Overlay.addresses
                 Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill6(), out string? SkillName6);
                 Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill7(), out string? SkillName7);
 
-                //TODO: refactor pls
+                // pls
                 if (GetTextFormat() == "Markdown")
                 {
                     if (IsMaxZenithSkill(ZenithSkill1()) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
@@ -5372,7 +5370,7 @@ namespace MHFZ_Overlay.addresses
                         SkillName7 = string.Format("**{0}**", SkillName7);
                 }
 
-                //TODO: refactor
+                //
                 if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
                     SkillName1 = "";
                 else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
@@ -5417,8 +5415,7 @@ namespace MHFZ_Overlay.addresses
 
                 if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
                     SkillName7 = "";
-                //else if (SkillName6 == null || SkillName6 == "None")
-                //    SkillName5 = SkillName5 + "";
+
                 else
                     SkillName7 += "";
 
@@ -5537,7 +5534,7 @@ namespace MHFZ_Overlay.addresses
                 Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill18, out string? SkillName18);
                 Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill19, out string? SkillName19);
 
-                //TODO: refactor pls
+                // pls
                 if (GetTextFormat() == "Markdown")
                 {
                     if (IsMaxSkillLevel(Skill1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
@@ -5598,7 +5595,7 @@ namespace MHFZ_Overlay.addresses
                         SkillName19 = string.Format("**{0}**", SkillName19);
                 }
 
-                //TODO: refactor
+                //
                 if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
                     SkillName1 = "";
                 else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
@@ -5727,8 +5724,7 @@ namespace MHFZ_Overlay.addresses
 
                 if (SkillName19 == null || SkillName19 == "None" || SkillName19 == "")
                     SkillName19 = "";
-                //else if (SkillName6 == null || SkillName6 == "None")
-                //    SkillName5 = SkillName5 + "";
+
                 else
                     SkillName19 += "";
 
@@ -5756,10 +5752,9 @@ namespace MHFZ_Overlay.addresses
         {
             string itemValue1;
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            bool isItemExists1 = Dictionary.Items.ItemIDs.TryGetValue(id, out itemValue1);  //returns true
+            Dictionary.Items.ItemIDs.TryGetValue(id, out itemValue1);  //returns true
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-            //Console.WriteLine(itemValue1); //Print "First"
-            //Dictionary.Items.ItemIDs.TryGetValue(1, out itemname);
+
             return itemValue1 + "";
         }
 
@@ -5929,7 +5924,7 @@ namespace MHFZ_Overlay.addresses
                 Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(AutomaticSkillWaist(), out string? SkillName5);
                 Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(AutomaticSkillLegs(), out string? SkillName6);
 
-                //TODO: refactor
+                //
                 if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
                     SkillName1 = "";
                 else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
@@ -5967,8 +5962,7 @@ namespace MHFZ_Overlay.addresses
 
                 if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
                     SkillName6 = "";
-                //else if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
-                //    SkillName6 += "";
+
                 else
                     SkillName6 += "";
 
@@ -6018,7 +6012,6 @@ namespace MHFZ_Overlay.addresses
         {
             return skillName switch
             {
-                //case "Defense+130":
                 "Passive Master" or "Soul Revival" or "Secret Tech" or "Max Sharpen" or "Sharpening Up" or "Affinity+26" or "Affinity+24" or "Affinity+22" or "Affinity+20" or "Nothing" => true,
                 _ => false,
             };
@@ -6035,7 +6028,6 @@ namespace MHFZ_Overlay.addresses
         {
             return skillName switch
             {
-                //case "Defense+130":
                 "Passive Master" or "Soul Revival" or "Secret Tech" or "Max Sharpen" or "Affinity+26" or "Conquest Def+330" or "Conquest Atk+115" or "Def+180" or "Fire Res+35" or "Water Res+35" or "Thunder Res+35" or "Ice Res+35" or "Dragon Res+35" or "All Res+20" => true,
                 _ => false,
             };
@@ -6072,7 +6064,7 @@ namespace MHFZ_Overlay.addresses
                 if (!(IsFixedGSRSkillValue(SkillName2)))
                     SkillName2 = GetGSRBonus(SkillName2);
 
-                //TODO: refactor pls
+                // pls
                 if (GetTextFormat() == "Markdown")
                 {
                     if (IsMaxGSRSkillValue(SkillName1) && (SkillName1 != null || SkillName1 != "Nothing" || SkillName1 != ""))
@@ -6091,8 +6083,7 @@ namespace MHFZ_Overlay.addresses
 
                 if (SkillName2 == null || SkillName2 == "Nothing" || SkillName2 == "")
                     SkillName2 = "";
-                //else if (SkillName6 == null || SkillName6 == "None")
-                //    SkillName5 = SkillName5 + "";
+
                 else
                     SkillName2 += "";
 
@@ -6898,8 +6889,7 @@ namespace MHFZ_Overlay.addresses
         {
             if (level == 0)
                 return "";
-            //else if (level % 50 == 0)
-            //    return "Lv. " + level;
+
             else return " Lv. " + level;
 
         }
@@ -6962,7 +6952,7 @@ namespace MHFZ_Overlay.addresses
                 string SkillLevel15 = RoadDureSkill15Level().ToString();
                 string SkillLevel16 = RoadDureSkill16Level().ToString();
 
-                //TODO: refactor pls
+                // pls
                 if (GetTextFormat() == "Markdown")
                 {
                     if (IsMaxRoadDureSkillLevel(Skill1, SkillLevel1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
@@ -7225,7 +7215,7 @@ namespace MHFZ_Overlay.addresses
                 }
 
 
-                //TODO: refactor
+                //
                 if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
                     SkillName1 = "";
                 else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
@@ -7333,8 +7323,6 @@ namespace MHFZ_Overlay.addresses
 
                 if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
                     SkillName16 = "";
-                //else if (SkillName6 == null || SkillName6 == "None")
-                //    SkillName5 = SkillName5 + "";
                 else
                     SkillLevel16 += "";
 
