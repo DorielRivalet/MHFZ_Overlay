@@ -12,17 +12,16 @@ namespace MHFZ_Overlay.addresses
         }
 
         
-        //public override int HitCountInt() => M.Read2Byte("mhfo.dll+5CA3430");
         public override int HitCountInt() => M.Read2Byte("mhfo.dll+60792E6");
         public override int TimeDefInt() => M.ReadInt("mhfo.dll+1B97780");
         public override int TimeInt() => M.ReadInt("mhfo.dll+5BC6540");
         public override int WeaponRaw() => M.Read2Byte("mhfo.dll+503433A");
         //This is equipment slot number that goes from 0-255 repeatedly
-        //public override int WeaponType() => M.ReadByte("mhfo.dll+60FFCC6");
+        //"mhfo.dll+60FFCC6");
 
-        //public override int WeaponType() => M.ReadByte("mhfo.dll+B7FF45");
-        //public override int WeaponType() => M.ReadByte("mhfo.dll+182D3B93");
-        //public override int WeaponType() => M.ReadByte("mhfo.dll+13E1FF45");
+        //"mhfo.dll+B7FF45");
+        //"mhfo.dll+182D3B93");
+        //"mhfo.dll+13E1FF45");
         public override int WeaponType() => M.ReadByte("mhfo.dll+5033B93");
         public override bool IsNotRoad()
         {
@@ -192,7 +191,6 @@ namespace MHFZ_Overlay.addresses
         public override int HalkFullness() => M.ReadByte("mhfo.dll+6101983");
         public override int RankBand() => M.ReadByte("mhfo.dll+28C2BD8");
 
-        //public override int PartnyaRank() => M.Read2Byte("mhfo.dll+5CA5520");
         public override int PartnyaRankPoints() => M.ReadInt("mhfo.dll+5919554");
 
         public override int Objective1ID() => M.Read2Byte("mhfo.dll+28C2C84");
@@ -256,7 +254,6 @@ namespace MHFZ_Overlay.addresses
         public override int MeleeWeaponID() => M.Read2Byte("mhfo.dll+5033F92");
         
         public override int RangedWeaponID() => M.Read2Byte("mhfo.dll+5033F92");
-            //TODO: Sigils
             //the deco addresses for the weapon includes the tower sigils
         public override int WeaponDeco1ID() => M.Read2Byte("mhfo.dll+5033F96");
         public override int WeaponDeco2ID() => M.Read2Byte("mhfo.dll+5033F98");
@@ -565,7 +562,6 @@ namespace MHFZ_Overlay.addresses
         public override int RocksHunted() => M.Read2Byte("mhfo.dll+6103A46");
         public override int UrukiHunted() => M.Read2Byte("mhfo.dll+6103B04");
         public override int GorgeObjectsHunted() => M.Read2Byte("mhfo.dll+6103ABA");
-        //public override int GorgeRocksHunted() => 
         public override int BlinkingNargacugaHunted() => M.Read2Byte("mhfo.dll+6103B52");
 
 

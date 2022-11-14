@@ -125,7 +125,7 @@ namespace MHFZ_Overlay.controls
         /// Shows the current hp percentage?
         /// </summary>
         /// <returns></returns>
-        public bool ShowCurrentHPPercentage()
+        public static bool ShowCurrentHPPercentage()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableCurrentHPPercentage)

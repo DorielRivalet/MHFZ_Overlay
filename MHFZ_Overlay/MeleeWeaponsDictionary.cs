@@ -15052,7 +15052,7 @@ namespace Dictionary
             {0x3895, "Imperial War Katana"},
             {0x3896, "Imperial Dynasty Katana"},
             {0x3897, "Imperial Hammer"},
-            {0x3898, "Imperial Commandment​ H."},
+            {0x3898, "Imperial Commandment\u200b H."},
             {0x3899, "Imperial Outbreak Hammer"},
             {0x389A, "Imperial Destruction H."},
             {0x389B, "Imperial Defeat Hammer"},

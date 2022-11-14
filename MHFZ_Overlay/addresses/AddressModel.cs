@@ -648,7 +648,7 @@ namespace MHFZ_Overlay.addresses
         public bool HasMonster3 => ShowHPBar(LargeMonster3ID(), Monster3HPInt());
         public bool HasMonster4 => ShowHPBar(LargeMonster4ID(), Monster4HPInt());
 
-        public string FullCurrentProgramVersion
+        public static string FullCurrentProgramVersion
         {
             get
             {
@@ -656,7 +656,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string SimplifiedCurrentProgramVersion
+        public static string SimplifiedCurrentProgramVersion
         {
             get
             {
@@ -666,7 +666,7 @@ namespace MHFZ_Overlay.addresses
 
         public int HitCount => HitCountInt();
 
-        public string LoremImpsum
+        public static string LoremImpsum
         {
             get
             {
@@ -680,7 +680,7 @@ namespace MHFZ_Overlay.addresses
         /// Shows the monster ehp.
         /// </summary>
         /// <returns></returns>
-        public bool ShowMonsterEHP()
+        public static bool ShowMonsterEHP()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableEHPNumbers)
@@ -689,7 +689,7 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
-        public bool ShowCaravanScore()
+        public static bool ShowCaravanScore()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableCaravanScore)
@@ -706,7 +706,7 @@ namespace MHFZ_Overlay.addresses
         /// </value>
         public bool Configuring { get { return _configuring; } set { _configuring = value; ReloadData(); } }
 
-        public bool IsAlwaysShowingMonsterInfo()
+        public static bool IsAlwaysShowingMonsterInfo()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.AlwaysShowMonsterInfo)
@@ -737,7 +737,7 @@ namespace MHFZ_Overlay.addresses
             return null;
         }
 
-        public bool CaravanOverride()
+        public static bool CaravanOverride()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableCaravanOverride)
@@ -1794,7 +1794,7 @@ namespace MHFZ_Overlay.addresses
         /// Shows the sharpness percentage.
         /// </summary>
         /// <returns></returns>
-        public bool ShowSharpnessPercentage()
+        public static bool ShowSharpnessPercentage()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableSharpnessPercentage)
@@ -1807,7 +1807,7 @@ namespace MHFZ_Overlay.addresses
         /// Shows the time left percentage.
         /// </summary>
         /// <returns></returns>
-        public bool ShowTimeLeftPercentage()
+        public static bool ShowTimeLeftPercentage()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableTimeLeftPercentage)
@@ -1820,7 +1820,7 @@ namespace MHFZ_Overlay.addresses
         /// Gets the timer mode.
         /// </summary>
         /// <returns></returns>
-        public string GetTimerMode()
+        public static string GetTimerMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.TimerMode == "Time Left")
@@ -1830,7 +1830,7 @@ namespace MHFZ_Overlay.addresses
             else return "Time Left";
         }
 
-        public string GetRoadTimerResetMode()
+        public static string GetRoadTimerResetMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.DiscordRoadTimerReset == "Never")
@@ -1952,7 +1952,7 @@ namespace MHFZ_Overlay.addresses
         /// Shows the color of the highest atk.
         /// </summary>
         /// <returns></returns>
-        public bool ShowHighestAtkColor()
+        public static bool ShowHighestAtkColor()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableHighestAtkColor)
@@ -2121,7 +2121,7 @@ namespace MHFZ_Overlay.addresses
         /// <param name="monsterhp">The monsterhp.</param>
         /// <param name="monsterdefrate">The monsterdefrate.</param>
         /// <returns></returns>
-        public int DisplayMonsterEHP(decimal? defrate, int monsterhp, decimal? monsterdefrate)
+        public static int DisplayMonsterEHP(decimal? defrate, int monsterhp, decimal? monsterdefrate)
         {
             if (defrate > 0)
             {
@@ -3180,7 +3180,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="weaponType">Type of the weapon.</param>
         /// <returns></returns>
-        public float GetMultFromWeaponType(int weaponType)
+        public static float GetMultFromWeaponType(int weaponType)
         {
             return weaponType switch
             {
@@ -3200,7 +3200,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="weaponType">Type of the weapon.</param>
         /// <returns></returns>
-        public string GetWeaponNameFromType(int weaponType)
+        public static string GetWeaponNameFromType(int weaponType)
         {
             return weaponType switch
             {
@@ -4110,7 +4110,7 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// Gets the text format
         /// </summary>
-        public string GetTextFormat()
+        public static string GetTextFormat()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.TextFormatExport != null)
@@ -4125,7 +4125,7 @@ namespace MHFZ_Overlay.addresses
         /// <value>
         /// The gender.
         /// </value>
-        public string GetGender()
+        public static string GetGender()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.GenderExport != null)
@@ -4652,8 +4652,8 @@ namespace MHFZ_Overlay.addresses
         {
             bool keyFound = Dictionary.Items.ItemIDs.TryGetValue(id, out string? DecoName);
 
-            if (GetTextFormat() == "Markdown" && IsMetaItem(id) && (DecoName != null || DecoName != "None" || DecoName != "") && keyFound)
-                DecoName = string.Format("**{0}**", DecoName);
+            if (GetTextFormat() == "Markdown" && IsMetaItem(id) && (DecoName != null && DecoName == "None" && DecoName != "") && keyFound)
+                DecoName = string.Format("**{0}**", DecoName);//TODO: test
 
             if (DecoName == null || DecoName == "None" || DecoName == "")
                 DecoName = "Empty";
@@ -4877,7 +4877,6 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.Items.ItemIDs.TryGetValue(Cuff1ID(), out string? cuffname);
-                //string address = Convert.ToString(Cuff1ID(), 16).ToUpper();
                 string address = Cuff1ID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", cuffname, address);
             }
@@ -4894,7 +4893,6 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.Items.ItemIDs.TryGetValue(Cuff2ID(), out string? cuffname);
-                //string address = Convert.ToString(Cuff2ID(), 16).ToUpper();
                 string address = Cuff2ID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", cuffname, address);
             }
@@ -4924,7 +4922,7 @@ namespace MHFZ_Overlay.addresses
         /// <returns>
         ///   <c>true</c> if [is maximum caravan skill] [the specified identifier]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsMaxCaravanSkill(int id)
+        public static bool IsMaxCaravanSkill(int id)
         {
 
             switch (id)
@@ -5017,7 +5015,7 @@ namespace MHFZ_Overlay.addresses
         /// <returns>
         ///   <c>true</c> if [is maximum zenith skill] [the specified identifier]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsMaxZenithSkill(int id)
+        public static bool IsMaxZenithSkill(int id)
         {
             switch (id)
             {
@@ -5060,7 +5058,7 @@ namespace MHFZ_Overlay.addresses
         /// <returns>
         ///   <c>true</c> if [is maximum skill level] [the specified identifier]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsMaxSkillLevel(int id)
+        public static bool IsMaxSkillLevel(int id)
         {
             switch (id)
             {
@@ -5285,7 +5283,7 @@ namespace MHFZ_Overlay.addresses
         /// <returns>
         ///   <c>true</c> if [is maximum road dure skill level] [the specified identifier]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsMaxRoadDureSkillLevel(int id, string level)
+        public static bool IsMaxRoadDureSkillLevel(int id, string level)
         {
             if (level == "0")
                 return false;
@@ -5435,7 +5433,7 @@ namespace MHFZ_Overlay.addresses
         /// Gets the gou boost mode.
         /// </summary>
         /// <returns></returns>
-        public bool GetGouBoostMode()
+        public static bool GetGouBoostMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.GouBoostExport)
@@ -5743,7 +5741,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetDivaSkillNameFromID(int id)
+        public static string GetDivaSkillNameFromID(int id)
         {
             Dictionary.DivaSkillList.DivaSkillID.TryGetValue(id, out string? divaskillaname);
             return divaskillaname + "";
@@ -5754,7 +5752,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetItemName(int id)
+        public static string GetItemName(int id)
         {
             string itemValue1;
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
@@ -5770,7 +5768,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetArmorSkill(int id)
+        public static string GetArmorSkill(int id)
         {
             Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(id, out string? skillname);
             if (skillname == "" || skillname == null)
@@ -5784,7 +5782,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public int GetGouBoostSkill(int id)
+        public static int GetGouBoostSkill(int id)
         {
             return id switch
             {
@@ -5985,7 +5983,7 @@ namespace MHFZ_Overlay.addresses
         /// Gets the total GSR weapon unlocks.
         /// </summary>
         /// <returns></returns>
-        public string GetTotalGSRWeaponUnlocks()
+        public static string GetTotalGSRWeaponUnlocks()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.GSRUnlocksExport != null)
@@ -5998,7 +5996,7 @@ namespace MHFZ_Overlay.addresses
         /// Is the gsr x11+ R999.
         /// </summary>
         /// <returns></returns>
-        public bool Is11GSR999()
+        public static bool Is11GSR999()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.Enable11GSR999)
@@ -6016,7 +6014,7 @@ namespace MHFZ_Overlay.addresses
         /// <returns>
         ///   <c>true</c> if [is fixed GSR skill value] [the specified skill name]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsFixedGSRSkillValue(string skillName)
+        public static bool IsFixedGSRSkillValue(string skillName)
         {
             return skillName switch
             {
@@ -6033,7 +6031,7 @@ namespace MHFZ_Overlay.addresses
         /// <returns>
         ///   <c>true</c> if [is maximum GSR skill value] [the specified skill name]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsMaxGSRSkillValue(string skillName)
+        public static bool IsMaxGSRSkillValue(string skillName)
         {
             return skillName switch
             {
@@ -6531,7 +6529,7 @@ namespace MHFZ_Overlay.addresses
         /// <value>
         /// The metadata.
         /// </value>
-        public string GetMetadata
+        public static string GetMetadata
         {
             get
             {
@@ -6558,7 +6556,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetHunterName
+        public static string GetHunterName
         {
             get
             {
@@ -6567,7 +6565,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGuildName
+        public static string GetGuildName
         {
             get
             {
@@ -6703,7 +6701,7 @@ namespace MHFZ_Overlay.addresses
         /// <value>
         /// The gear description.
         /// </value>
-        public string GetGearDescription
+        public static string GetGearDescription
         {
             get
             {
@@ -6722,7 +6720,7 @@ namespace MHFZ_Overlay.addresses
         /// <returns>
         ///   <c>true</c> if [is meta item]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsMetaItem(int id)
+        public static bool IsMetaItem(int id)
         {
             switch (id)
             {
@@ -6883,7 +6881,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="piece"></param>
         /// <returns></returns>
-        public bool IsMetaGear(string piece)
+        public static bool IsMetaGear(string piece)
         {
             if (piece.Contains("ZP") || piece.Contains("PZ") || piece.Contains("SnS・") || piece.Contains("DS・") || piece.Contains("GS・") || piece.Contains("LS・") || piece.Contains("Hammer・") || piece.Contains("HH・") || piece.Contains("Lance・") || piece.Contains("GL・") || piece.Contains("Swaxe・") || piece.Contains("Tonfa・") || piece.Contains("Magspike・") || piece.Contains("LBG・") || piece.Contains("HBG・") || piece.Contains("Bow・"))
                 return true;
@@ -6896,7 +6894,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="level"></param>
         /// <returns></returns>
-        public string GetGRWeaponLevel(int level)
+        public static string GetGRWeaponLevel(int level)
         {
             if (level == 0)
                 return "";
@@ -7381,7 +7379,7 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/
         /// </summary>
-        public string GetGameArmorSkillsPriority
+        public static string GetGameArmorSkillsPriority
         {
             get
             {
@@ -7587,7 +7585,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsHealthAndStamina
+        public static string GetGameArmorSkillsHealthAndStamina
         {
             get
             {
@@ -7624,7 +7622,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorColors
+        public static string GetGameArmorColors
         {
             get
             {
@@ -7659,7 +7657,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsAttackSkills
+        public static string GetGameArmorSkillsAttackSkills
         {
             get
             {
@@ -7667,7 +7665,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsDefensiveSkills
+        public static string GetGameArmorSkillsDefensiveSkills
         {
             get
             {
@@ -7675,7 +7673,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsBlademasterSkills
+        public static string GetGameArmorSkillsBlademasterSkills
         {
             get
             {
@@ -7683,7 +7681,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsGunnerSkills
+        public static string GetGameArmorSkillsGunnerSkills
         {
             get
             {
@@ -7691,7 +7689,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsResistanceSkills
+        public static string GetGameArmorSkillsResistanceSkills
         {
             get
             {
@@ -7699,7 +7697,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsAbnormalStatusSkills
+        public static string GetGameArmorSkillsAbnormalStatusSkills
         {
             get
             {
@@ -7707,7 +7705,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsOtherProtectionSkills
+        public static string GetGameArmorSkillsOtherProtectionSkills
         {
             get
             {
@@ -7715,7 +7713,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsItemComboSkills
+        public static string GetGameArmorSkillsItemComboSkills
         {
             get
             {
@@ -7723,7 +7721,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsMapDetectionSkills
+        public static string GetGameArmorSkillsMapDetectionSkills
         {
             get
             {
@@ -7731,7 +7729,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsGatheringTransportSkills
+        public static string GetGameArmorSkillsGatheringTransportSkills
         {
             get
             {
@@ -7739,7 +7737,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsRewardSkills
+        public static string GetGameArmorSkillsRewardSkills
         {
             get
             {
@@ -7747,7 +7745,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorSkillsOtherSkills
+        public static string GetGameArmorSkillsOtherSkills
         {
             get
             {
@@ -7755,7 +7753,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameSigilsInfo
+        public static string GetGameSigilsInfo
         {
             get 
             {
@@ -7850,7 +7848,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesSnS
+        public static string GetGameMotionValuesSnS
         {
             get
             {
@@ -7891,7 +7889,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesDS
+        public static string GetGameMotionValuesDS
         {
             get
             {
@@ -7899,7 +7897,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesGS
+        public static string GetGameMotionValuesGS
         {
             get
             {
@@ -7907,7 +7905,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesLS
+        public static string GetGameMotionValuesLS
         {
             get
             {
@@ -7915,7 +7913,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesHA
+        public static string GetGameMotionValuesHA
         {
             get
             {
@@ -7923,7 +7921,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesHH
+        public static string GetGameMotionValuesHH
         {
             get
             {
@@ -7931,7 +7929,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesLA
+        public static string GetGameMotionValuesLA
         {
             get
             {
@@ -7939,7 +7937,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesGL
+        public static string GetGameMotionValuesGL
         {
             get
             {
@@ -7947,7 +7945,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesTO
+        public static string GetGameMotionValuesTO
         {
             get
             {
@@ -7955,7 +7953,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesSAF
+        public static string GetGameMotionValuesSAF
         {
             get
             {
@@ -7963,7 +7961,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesMS
+        public static string GetGameMotionValuesMS
         {
             get
             {
@@ -7971,7 +7969,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesLBG
+        public static string GetGameMotionValuesLBG
         {
             get
             {
@@ -7979,7 +7977,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesHBG
+        public static string GetGameMotionValuesHBG
         {
             get
             {
@@ -7987,7 +7985,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMotionValuesBow
+        public static string GetGameMotionValuesBow
         {
             get
             {
@@ -8057,7 +8055,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameCaravanAbout
+        public static string GetGameCaravanAbout
         {
             get
             {
@@ -8066,7 +8064,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameCaravanQuests
+        public static string GetGameCaravanQuests
         {
             get
             {
@@ -8074,7 +8072,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameCaravanPioneer
+        public static string GetGameCaravanPioneer
         {
             get
             {
@@ -8082,7 +8080,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameCaravanSkills
+        public static string GetGameCaravanSkills
         {
             get
             {
@@ -8225,7 +8223,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameGuildAbout
+        public static string GetGameGuildAbout
         {
             get
             {
@@ -8233,7 +8231,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameGuildPoogies
+        public static string GetGameGuildPoogies
         {
             get
             {
@@ -8271,7 +8269,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameRoadDureInfo
+        public static string GetGameRoadDureInfo
         {
             get
             {
@@ -8371,7 +8369,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameZenithSkills
+        public static string GetGameZenithSkills
         {
             get
             {
@@ -8449,7 +8447,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameStyleRankInfo
+        public static string GetGameStyleRankInfo
         {
             get
             {
@@ -8467,7 +8465,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameDivaInfo
+        public static string GetGameDivaInfo
         {
             get
             {//TODO: missing gems?
@@ -8595,7 +8593,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameGuildFood
+        public static string GetGameGuildFood
         {
             get
             {
@@ -8638,7 +8636,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameSnSInfo
+        public static string GetGameSnSInfo
         {
             get
             {
@@ -8651,7 +8649,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameDSInfo
+        public static string GetGameDSInfo
         {
             get
             {
@@ -8664,7 +8662,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameGSInfo
+        public static string GetGameGSInfo
         {
             get
             {
@@ -8676,7 +8674,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameLSInfo
+        public static string GetGameLSInfo
         {
             get
             {
@@ -8688,7 +8686,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameHAInfo
+        public static string GetGameHAInfo
         {
             get
             {
@@ -8699,7 +8697,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameHHInfo
+        public static string GetGameHHInfo
         {
             get
             {
@@ -8711,7 +8709,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameLAInfo
+        public static string GetGameLAInfo
         {
             get
             {
@@ -8725,7 +8723,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameGLInfo
+        public static string GetGameGLInfo
         {
             get
             {
@@ -8737,7 +8735,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameTOInfo
+        public static string GetGameTOInfo
         {
             get
             {
@@ -8749,7 +8747,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameSAFInfo
+        public static string GetGameSAFInfo
         {
             get
             {
@@ -8761,7 +8759,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMSInfo
+        public static string GetGameMSInfo
         {
             get
             {
@@ -8773,7 +8771,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameLBGInfo
+        public static string GetGameLBGInfo
         {
             get
             {
@@ -8785,7 +8783,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameHBGInfo
+        public static string GetGameHBGInfo
         {
             get
             {
@@ -8798,7 +8796,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameBowInfo
+        public static string GetGameBowInfo
         {
             get
             {
@@ -8810,7 +8808,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameStatusEleBloatInfo
+        public static string GetGameStatusEleBloatInfo
         {
             get
             {
@@ -8903,7 +8901,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMeleeStats
+        public static string GetGameMeleeStats
         {
             get
             {
@@ -8921,7 +8919,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameBowgunStats
+        public static string GetGameBowgunStats
         {
             get
             {
@@ -8947,7 +8945,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameBowStats
+        public static string GetGameBowStats
         {
             get
             {
@@ -8970,7 +8968,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameSwordCrystalSkills
+        public static string GetGameSwordCrystalSkills
         {
             get
             {
@@ -8979,7 +8977,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameWeaponTypesInfo
+        public static string GetGameWeaponTypesInfo
         {
             get
             {
@@ -8988,7 +8986,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameArmorTypesInfo
+        public static string GetGameArmorTypesInfo
         {
             get 
             { 
@@ -8996,7 +8994,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameActiveFeature
+        public static string GetGameActiveFeature
         {
             get
             {
@@ -9004,7 +9002,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameItemInfo
+        public static string GetGameItemInfo
         {
             get
             {
@@ -9020,7 +9018,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameMonsterSizeInfo
+        public static string GetGameMonsterSizeInfo
         {
             get
             {
@@ -9028,7 +9026,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameRewardInfo
+        public static string GetGameRewardInfo
         {
             get
             {
@@ -9044,7 +9042,7 @@ namespace MHFZ_Overlay.addresses
         }
 
 
-        public string GetGamePartnerInfo
+        public static string GetGamePartnerInfo
         {
             get
             {
@@ -9053,7 +9051,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameRastaInfo
+        public static string GetGameRastaInfo
         {
             get
             {
@@ -9067,7 +9065,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameHalkInfo
+        public static string GetGameHalkInfo
         {
             get
             {
@@ -9076,7 +9074,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGamePartnyaaInfo
+        public static string GetGamePartnyaaInfo
         {
             get
             {
@@ -9089,7 +9087,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGamePoogieInfo
+        public static string GetGamePoogieInfo
         {
             get
             {
@@ -9110,7 +9108,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetGameDamageInfo
+        public static string GetGameDamageInfo
         {
             get
             {
@@ -9164,8 +9162,6 @@ namespace MHFZ_Overlay.addresses
 
         #region gear image stats
 
-        //            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
-
         public string GetMetadataForImage
         {
             get
@@ -9209,7 +9205,6 @@ namespace MHFZ_Overlay.addresses
                 if (className == "Blademaster")
                 {
                     Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
-                    //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
 
                     return string.Format("{0}{1} ({2})", wepname, lv, address);
@@ -9218,7 +9213,6 @@ namespace MHFZ_Overlay.addresses
                 else if (className == "Gunner")
                 {
                     Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
-                    //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
                     return string.Format("{0}{1} ({2})", wepname, lv, address);
                 }
@@ -9337,7 +9331,6 @@ namespace MHFZ_Overlay.addresses
                 if (className == "Blademaster")
                 {
                     Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
-                    //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
 
                     return string.Format("{0}{1}", wepname, lv);
@@ -9346,7 +9339,6 @@ namespace MHFZ_Overlay.addresses
                 else if (className == "Gunner")
                 {
                     Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
-                    //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
                     return string.Format("{0}{1}", wepname, lv);
                 }
@@ -9499,7 +9491,7 @@ namespace MHFZ_Overlay.addresses
 
         #endregion
 
-        public string GetGuildCardBackground
+        public static string GetGuildCardBackground
         {
             get
             {
@@ -9512,7 +9504,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string GetCurrentFeriasVersion
+        public static string GetCurrentFeriasVersion
         {
             get
             {

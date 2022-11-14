@@ -19,7 +19,7 @@ namespace MHFZ_Overlay.addresses
         public override int WeaponRaw() => M.Read2Byte("mhfo-hd.dll+DC6BEFA");
 
         //This is equipment slot number that goes from 0-255 repeatedly
-        //public override int WeaponType() => M.ReadByte("mhfo-hd.dll+ED3A466");
+        //"mhfo-hd.dll+ED3A466");
         public override int WeaponType() => M.ReadByte("mhfo-hd.dll+DC6B753");
         public override bool IsNotRoad()
         {
@@ -240,7 +240,6 @@ namespace MHFZ_Overlay.addresses
         public override int RoadTotalStagesSolo() => M.Read2Byte("mhfo-hd.dll+E87FB5C");
         public override int RoadMaxStagesSolo() => M.Read2Byte("mhfo-hd.dll+E87FB80");
         public override int RoadFatalisSlain() => M.Read2Byte("mhfo-hd.dll+E87FB60");
-        //public override int RoadFatalisEncounters() => M.Read2Byte("mhfo-hd.dll+ECD71C4");
         public override int RoadFatalisEncounters() => M.Read2Byte("mhfo-hd.dll+ED3EBBC");
         public override int FirstDistrictDuremudiraEncounters() => M.Read2Byte("mhfo-hd.dll+ED3EBB4");
         public override int FirstDistrictDuremudiraSlays() => M.Read2Byte("mhfo-hd.dll+E87FB64");
@@ -259,8 +258,6 @@ namespace MHFZ_Overlay.addresses
         public override int DivaSkillUsesLeft() => M.ReadByte("mhfo-hd.dll+ED3EB0A");
         public override int HalkFullness() => M.ReadByte("mhfo-hd.dll+ED3C123");
         public override int RankBand() => M.ReadByte("mhfo-hd.dll+2AFA788");
-
-        //public override int PartnyaRank() => M.Read2Byte("mhfo-hd.dll+E8DF010");
         public override int PartnyaRankPoints() => M.ReadInt("mhfo-hd.dll+E551114");
 
         public override int Objective1ID() => M.Read2Byte("mhfo-hd.dll+2AFA834");
@@ -483,7 +480,6 @@ namespace MHFZ_Overlay.addresses
         public override int LaoShanLungHunted() => M.Read2Byte("mhfo-hd.dll+ED3E1BA");
         public override int CephadromeHunted() => M.Read2Byte("mhfo-hd.dll+ED3E1BC");
         public override int FelyneHunted() => M.Read2Byte("mhfo-hd.dll+ED3E1BE");
-        //public override int VeggieElderHunted() => M.Read2Byte("");
         public override int RathalosHunted() => M.Read2Byte("mhfo-hd.dll+ED3E1C2");
         public override int AptonothHunted() => M.Read2Byte("mhfo-hd.dll+ED3E1C4");
         public override int GenpreyHunted() => M.Read2Byte("mhfo-hd.dll+ED3E1C6");
@@ -546,8 +542,7 @@ namespace MHFZ_Overlay.addresses
         public override int AntekaHunted() => M.Read2Byte("mhfo-hd.dll+ED3E236");
         public override int PopoHunted() => M.Read2Byte("mhfo-hd.dll+ED3E238");
         public override int WhiteFatalisHunted() => M.Read2Byte("mhfo-hd.dll+ED3E23A");
-        //public override int YamaTsukami2Hunted() =>
-        //{ 72, "Yama Tsukami"}
+
         public override int CeanataurHunted() => M.Read2Byte("mhfo-hd.dll+ED3E23E");
         public override int HypnocHunted() => M.Read2Byte("mhfo-hd.dll+ED3E240");
         public override int VolganosHunted() => M.Read2Byte("mhfo-hd.dll+ED3E242");
@@ -564,12 +559,10 @@ namespace MHFZ_Overlay.addresses
         public override int BerukyurosuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E256");
         public override int CactusHunted() => M.Read2Byte("mhfo-hd.dll+ED3E258");
         public override int GorgeObjectsHunted() => M.Read2Byte("mhfo-hd.dll+ED3E25A");
-        //public override int RocksHunted() => M.Read2Byte("");//swap?
         public override int PariapuriaHunted() => M.Read2Byte("mhfo-hd.dll+ED3E25E");
         public override int WhiteEspinasHunted() => M.Read2Byte("mhfo-hd.dll+ED3E260");
         public override int KamuOrugaronHunted() => M.Read2Byte("mhfo-hd.dll+ED3E262");
         public override int NonoOrugaronHunted() => M.Read2Byte("mhfo-hd.dll+ED3E264");
-        //public override int RavienteHunted() => M.Read2Byte("");
         public override int DyuragauaHunted() => M.Read2Byte("mhfo-hd.dll+ED3E268");
         public override int DoragyurosuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E26A");
         public override int GurenzeburuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E26C");
@@ -578,7 +571,6 @@ namespace MHFZ_Overlay.addresses
         public override int RukodioraHunted() => M.Read2Byte("mhfo-hd.dll+ED3E272");
         public override int UnknownHunted() => M.Read2Byte("mhfo-hd.dll+ED3E274");
         public override int GogomoaHunted() => M.Read2Byte("mhfo-hd.dll+ED3E276");
-        //public override int KokomoaHunted() => M.Read2Byte("");
         public override int TaikunZamuzaHunted() => M.Read2Byte("mhfo-hd.dll+ED3E27A");
         public override int AbioruguHunted() => M.Read2Byte("mhfo-hd.dll+ED3E27C");
         public override int KuarusepusuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E27E");
@@ -594,7 +586,6 @@ namespace MHFZ_Overlay.addresses
         public override int PokaradonHunted() => M.Read2Byte("mhfo-hd.dll+ED3E292");
         public override int ShantienHunted() => M.Read2Byte("mhfo-hd.dll+ED3E294");
         public override int PokaraHunted() => M.Read2Byte("mhfo-hd.dll+ED3E296");
-        //public override int DummyHunted() => M.Read2Byte("");
         public override int GoruganosuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E29A");
         public override int AruganosuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E29C");
         public override int BaruragaruHunted() => M.Read2Byte("mhfo-hd.dll+ED3E29E");
@@ -608,32 +599,22 @@ namespace MHFZ_Overlay.addresses
         public override int InagamiHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2AE");
         public override int VarusaburosuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2B0");
         public override int PoborubarumuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2B2");
-        //public override int DuremudiraHunted() => M.Read2Byte("");//check
-        //public override int UNKHunted() => M.Read2Byte("");
-        //public override int FelyneHunted() => M.Read2Byte("");
-        //public override int Blue NPCHunted() => M.Read2Byte("");
-        //public override int UNKHunted() => M.Read2Byte("");
-        //public override int CactusHunted() => M.Read2Byte("");
-        //public override int Veggie EldersHunted() => M.Read2Byte("");
+
         public override int GureadomosuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2C2");
         public override int HarudomeruguHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2C4");
         public override int ToridclessHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2C6");
         public override int GasurabazuraHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2C8");
         public override int KusubamiHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2CA");
         public override int YamaKuraiHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2CC");
-        //public override int 3rdPhaseDuremudiraHunted() => M.Read2Byte("");CE
         public override int ZinogreHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2D0");
         public override int DeviljhoHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2D2");
         public override int BrachydiosHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2D4");
-        //public override int BerserkRavienteHunted() => M.Read2Byte("");
         public override int ToaTesukatoraHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2D8");
         public override int BariothHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2DA");
         public override int UragaanHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2DC");
         public override int StygianZinogreHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2DE");
         public override int GuanzorumuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2E0");
         public override int StarvingDeviljhoHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2E2");
-        //public override int UNKHunted() => M.Read2Byte("");E4
-        //public override int EgyurasuHunted() => M.Read2Byte("");E6
         public override int VoljangHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2E8");
         public override int NargacugaHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2EA");
         public override int KeoaruboruHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2EC");
@@ -644,12 +625,9 @@ namespace MHFZ_Overlay.addresses
         public override int AmatsuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2F6");
         public override int ElzelionHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2F8");
         public override int ArrogantDuremudiraHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2FA");
-        //public override int RocksHunted() => M.Read2Byte("");//swap?
         public override int SeregiosHunted() => M.Read2Byte("mhfo-hd.dll+ED3E2FE");
         public override int BogabadorumuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E300");
-        //public override int Unknown Blue BarrelHunted() => M.Read2Byte("");2
         public override int BlitzkriegBogabadorumuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E304");
-        //public override int CostumedUrukiHunted() => M.Read2Byte("");6
         public override int SparklingZerureusuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E308");
         public override int PSO2RappyHunted() => M.Read2Byte("mhfo-hd.dll+ED3E30A");
         public override int KingShakalakaHunted() => M.Read2Byte("mhfo-hd.dll+ED3E30C");//
