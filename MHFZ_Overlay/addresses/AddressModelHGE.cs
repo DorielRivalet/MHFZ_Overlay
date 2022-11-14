@@ -315,7 +315,6 @@ namespace MHFZ_Overlay.addresses
 
         public override int MeleeWeaponID() => M.Read2Byte("mhfo-hd.dll+DC6BB52");
         public override int RangedWeaponID() => M.Read2Byte("mhfo-hd.dll+DC6BB52");
-        //TODO: Sigils
         public override int WeaponDeco1ID() => M.Read2Byte("mhfo-hd.dll+DC6BB56");
         public override int WeaponDeco2ID() => M.Read2Byte("mhfo-hd.dll+DC6BB58");
         public override int WeaponDeco3ID() => M.Read2Byte("mhfo-hd.dll+DC6BB5A");

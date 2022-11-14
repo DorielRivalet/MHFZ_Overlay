@@ -138,7 +138,7 @@ namespace MHFZ_Overlay
         /// <value>
         ///   <c>true</c> if [show discord RPC]; otherwise, <c>false</c>.
         /// </value>
-        public bool ShowDiscordRPC
+        public static bool ShowDiscordRPC
         {
             get
             {
@@ -156,7 +156,7 @@ namespace MHFZ_Overlay
         /// <value>
         /// The discord client identifier.
         /// </value>
-        public string GetDiscordClientID
+        public static string GetDiscordClientID
         {
             get
             {
@@ -174,7 +174,7 @@ namespace MHFZ_Overlay
         /// <value>
         /// The discord server invite.
         /// </value>
-        public string GetDiscordServerInvite
+        public static string GetDiscordServerInvite
         {
             get
             {
@@ -192,7 +192,7 @@ namespace MHFZ_Overlay
         /// <value>
         /// The name of the hunter.
         /// </value>
-        public string GetHunterName
+        public static string GetHunterName
         {
             get
             {
@@ -210,7 +210,7 @@ namespace MHFZ_Overlay
         /// <value>
         /// The name of the guild.
         /// </value>
-        public string GetGuildName
+        public static string GetGuildName
         {
             get
             {
@@ -238,7 +238,7 @@ namespace MHFZ_Overlay
         /// <summary>
         /// The current presence to send to discord.
         /// </summary>
-        public static RichPresence presenceTemplate = new RichPresence()
+        public RichPresence presenceTemplate = new RichPresence()
         {
             Details = "【MHF-Z】Overlay " + CurrentProgramVersion,
             State = "Loading...",
@@ -260,7 +260,7 @@ namespace MHFZ_Overlay
         /// <summary>
         /// Is the main loop currently running?
         /// </summary>
-        public static bool isDiscordRPCRunning = false;
+        public bool isDiscordRPCRunning = false;
 
         /// <summary>
         /// Initializes the discord RPC.
@@ -536,7 +536,7 @@ namespace MHFZ_Overlay
         /// Shows multicolor damage numbers?
         /// </summary>
         /// <returns></returns>
-        public bool ShowDamageNumbersMulticolor()
+        public static bool ShowDamageNumbersMulticolor()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableDamageNumbersMulticolor)
@@ -774,7 +774,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetDivaSkillNameFromID(int id)
+        public static string GetDivaSkillNameFromID(int id)
         {
             Dictionary.DivaSkillList.DivaSkillID.TryGetValue(id, out string? divaskillaname);
             return divaskillaname + "";
@@ -784,7 +784,7 @@ namespace MHFZ_Overlay
         /// Gets the discord timer mode.
         /// </summary>
         /// <returns></returns>
-        public string GetDiscordTimerMode()
+        public static string GetDiscordTimerMode()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.DiscordTimerMode == "Time Left")
@@ -801,7 +801,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetWeaponStyleFromID(int id)
+        public static string GetWeaponStyleFromID(int id)
         {
             return id switch
             {
@@ -818,7 +818,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string getArmorSkill(int id)
+        public static string getArmorSkill(int id)
         {
             Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(id, out string? skillname);
             if (skillname == "")
@@ -832,7 +832,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetItemName(int id)
+        public static string GetItemName(int id)
         {
             string itemValue1;
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
@@ -863,7 +863,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string getWeaponNameFromID(int id)
+        public static string getWeaponNameFromID(int id)
         {
             Dictionary.WeaponList.WeaponID.TryGetValue(id, out string? weaponname);
             return weaponname + "";
@@ -1785,7 +1785,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetAreaIconFromID(int id) //TODO: are highlands, tidal island or painted falls icons correct?
+        public static string GetAreaIconFromID(int id) //TODO: are highlands, tidal island or painted falls icons correct?
         {
             switch (id)
             {
@@ -2067,7 +2067,7 @@ namespace MHFZ_Overlay
                 case 436:
                     return "https://i.imgur.com/36TTe1a.png";
                 case 459://Hunter's Road Base Camp
-                    return "https://i.imgur.com/MEPAa5x.png";//TODO test
+                    return "https://i.imgur.com/MEPAa5x.png";
                 case 288://Gorge areas
                 case 289:
                 case 290:
@@ -2146,7 +2146,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="isHighGradeEdition">if set to <c>true</c> [is high grade edition].</param>
         /// <returns></returns>
-        public string GetGameMode(bool isHighGradeEdition)
+        public static string GetGameMode(bool isHighGradeEdition)
         {
             if (isHighGradeEdition)
                 return " [High-Grade Edition]";
@@ -2713,7 +2713,7 @@ namespace MHFZ_Overlay
         /// Shows the current hp percentage.
         /// </summary>
         /// <returns></returns>
-        public bool ShowCurrentHPPercentage()
+        public static bool ShowCurrentHPPercentage()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableCurrentHPPercentage)
@@ -2780,7 +2780,7 @@ namespace MHFZ_Overlay
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public string GetPoogieClothes(int id)
+        public static string GetPoogieClothes(int id)
         {
             string? clothesValue1;
             _ = Dictionary.PoogieCostumeList.PoogieCostumeID.TryGetValue(id, out clothesValue1);  //returns true
@@ -3032,7 +3032,7 @@ namespace MHFZ_Overlay
         /// <value>
         ///   <c>true</c> if [show discord quest names]; otherwise, <c>false</c>.
         /// </value>
-        public bool ShowDiscordQuestNames
+        public static bool ShowDiscordQuestNames
         {
             get
             {
@@ -3820,7 +3820,7 @@ namespace MHFZ_Overlay
 
         private void ToggleClickThrough()
         {
-            if(ClickThrough == false) 
+            if(!ClickThrough) 
             {
                 IsHitTestVisible = false;
                 Focusable = false;
