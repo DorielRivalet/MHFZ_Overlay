@@ -28,7 +28,6 @@ using DragEventArgs = System.Windows.DragEventArgs;
 using Label = System.Windows.Controls.Label;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
-//using static System.Globalization.CultureInfo;
 
 namespace MHFZ_Overlay
 {
@@ -316,27 +315,18 @@ namespace MHFZ_Overlay
             if (!(questsLoaded && ShowDiscordQuestNames))
             {
                 questsLoaded = true;
-                Dictionary.Quests.Initiate();
             }
 
             if (!(itemsLoaded))
             {
                 itemsLoaded = true;
                 //load item list
-                Dictionary.Items.initiate();
             }
 
             if (!(gearLoaded))
             {
                 gearLoaded = true;
                 //load all gear lists
-                Dictionary.MeleeWeapons.Initiate();
-                Dictionary.RangedWeapons.Initiate();
-                Dictionary.ArmorHeads.Initiate();
-                Dictionary.ArmorChests.Initiate();
-                Dictionary.ArmorArms.Initiate();
-                Dictionary.ArmorWaists.Initiate();
-                Dictionary.ArmorLegs.Initiate();
             }
         }
 

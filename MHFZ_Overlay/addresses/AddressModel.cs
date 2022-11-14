@@ -1906,8 +1906,6 @@ namespace MHFZ_Overlay.addresses
                     time = TimeInt();
                 }
 
-                double seconds = (double)time / 30;
-
                 if (time > 0)
                 {
 
@@ -4659,12 +4657,12 @@ namespace MHFZ_Overlay.addresses
         /// </value>
         public string GetDecoName(int id, int slot = 0, bool isForImage = false)
         {
-            Dictionary.Items.ItemIDs.TryGetValue(id, out string? DecoName);
+            bool keyFound = Dictionary.Items.ItemIDs.TryGetValue(id, out string? DecoName);
 
             //todo: refactor pls
             if (GetTextFormat() == "Markdown")
             {
-                if (IsMetaItem(id) && (DecoName != null || DecoName != "None" || DecoName != ""))
+                if (IsMetaItem(id) && (DecoName != null || DecoName != "None" || DecoName != "") && keyFound)
                     DecoName = string.Format("**{0}**", DecoName);
             }
 

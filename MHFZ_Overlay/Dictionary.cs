@@ -11,7 +11,7 @@ namespace Dictionary
     ///</summary>
     public static class RanksBandsList
     {
-        public static  Dictionary<int, string> RankBandsID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> RankBandsID { get; } = new Dictionary<int, string>
         {
             {1, "Lower"},
             {2, "Lower"},
@@ -59,7 +59,7 @@ namespace Dictionary
     ///</summary>
     public static class List
     {
-        public static  Dictionary<int, string> MonsterID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> MonsterID { get;} = new Dictionary<int, string>
         {
             {0, "None"},//
             {1, "Rathian"},//
@@ -246,7 +246,7 @@ namespace Dictionary
     ///</summary>
     public static class WeaponList
     {
-        public static  Dictionary<int, string> WeaponID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> WeaponID { get; } = new Dictionary<int, string>
         {
             {0, "Great Sword"},
             {1, "Heavy Bowgun"},
@@ -272,7 +272,7 @@ namespace Dictionary
     public static class SharpnessList
     {
 
-        public static  Dictionary<int, string> SharpnessID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> SharpnessID { get; } = new Dictionary<int, string>
         {
             {0, "Red"},
             {1, "Orange"},
@@ -291,7 +291,7 @@ namespace Dictionary
     public static class PoogieCostumeList
     {
 
-        public static  Dictionary<int, string> PoogieCostumeID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> PoogieCostumeID { get; } = new Dictionary<int, string>
         {
             {0, "First Costume"},
             {1, "Kirin Costume"},
@@ -334,7 +334,7 @@ namespace Dictionary
     ///</summary>
     public static class ArmorSkillList
     {
-        public static  Dictionary<int, string> ArmorSkillID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> ArmorSkillID { get; } = new Dictionary<int, string>
         {
             {0, "None"},
             {1, "Paralysis Halved"},
@@ -880,7 +880,7 @@ namespace Dictionary
     public static class ObjectiveTypeList
     {
 
-        public static  Dictionary<int, string> ObjectiveTypeID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> ObjectiveTypeID { get; } = new Dictionary<int, string>
         {
             {0x0,"Nothing" },
             {0x1,"Hunt" },
@@ -902,8 +902,7 @@ namespace Dictionary
     ///</summary>
     public static class MapAreaList
     {
-
-        public static  Dictionary<int, string> MapAreaID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> MapAreaID { get; } = new Dictionary<int, string>
         {
             {0,"Loading" },
             {1,"Jungle - Base Camp - Night" },
@@ -1383,8 +1382,7 @@ namespace Dictionary
     ///</summary>
     public static class ArmorColorList
     {
-
-        public static  Dictionary<int, string> ArmorColorID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> ArmorColorID { get; } = new Dictionary<int, string>
         {
             {0, "Material Green 0"},
             {1, "Powerful Red 0"},
@@ -1501,7 +1499,7 @@ namespace Dictionary
     public static class DivaSkillList
     {
 
-        public static  Dictionary<int, string> DivaSkillID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> DivaSkillID { get; } = new Dictionary<int, string>
         {
             {0, "None"},
             {1, "High Speed Gathering"},
@@ -1547,7 +1545,7 @@ namespace Dictionary
     public static class CaravanSkillList
     {
 
-        public static  Dictionary<int, string> CaravanSkillID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> CaravanSkillID { get; } = new Dictionary<int, string>
         {
             {0, "None"},
             {1, "Courage"},
@@ -1666,7 +1664,7 @@ namespace Dictionary
     public static class SigilSkillList
     {
 
-        public static  Dictionary<int, string> SigilSkillID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> SigilSkillID { get; } = new Dictionary<int, string>
         {
             {0, "None"},
             {1, "Attack Slayer" },
@@ -1802,7 +1800,7 @@ namespace Dictionary
     ///</summary>
     public static class ArmorSkillPriorityList
     {
-        public static  Dictionary<int, string> ArmorSkillPriorityID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> ArmorSkillPriorityID { get; } = new Dictionary<int, string>
         {
             {0, "SnS Tech"},
             {1, "DS Tech"},
@@ -2008,7 +2006,7 @@ namespace Dictionary
     ///</summary>
     public static class ZenithSkillList
     {
-        public static  Dictionary<int, string> ZenithSkillID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> ZenithSkillID { get; } = new Dictionary<int, string>
         {
             {0, "None"},
             {1, "Skill Slots Up+1"},
@@ -2071,7 +2069,7 @@ namespace Dictionary
     ///</summary>
     public static class StyleRankSkillList
     {
-        public static  Dictionary<int, string> StyleRankSkillID = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> StyleRankSkillID { get; } = new Dictionary<int, string>
         {
             //the bonuses totals are:
             //defense+50
@@ -2246,7 +2244,7 @@ namespace Dictionary
     /// </summary>
     public static class RavienteTriggerEvents
     {
-        public static  Dictionary<int, string> RavienteTriggerEventIDs = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> RavienteTriggerEventIDs { get; } = new Dictionary<int, string>
         {
             {0, "Slay 1"},
             {1, "Sedation 1"},
@@ -2270,7 +2268,7 @@ namespace Dictionary
     /// </summary>
     public static class ViolentRavienteTriggerEvents
     {
-        public static  Dictionary<int, string> ViolentRavienteTriggerEventIDs = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> ViolentRavienteTriggerEventIDs { get; } = new Dictionary<int, string>
         {
             {0, "Slay 1"},
             {1, "Sedation 1"},
@@ -2294,7 +2292,7 @@ namespace Dictionary
     /// </summary>
     public static class BerserkRavientePracticeTriggerEvents
     {
-        public static  Dictionary<int, string> BerserkRavientePracticeTriggerEventIDs = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> BerserkRavientePracticeTriggerEventIDs { get; } = new Dictionary<int, string>
         {
             {0, "Slay 1"},
             {1, "Sedation 1"},
@@ -2314,7 +2312,7 @@ namespace Dictionary
     /// </summary>
     public static class BerserkRavienteTriggerEvents
     {
-        public static  Dictionary<int, string> BerserkRavienteTriggerEventIDs = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> BerserkRavienteTriggerEventIDs { get; } = new Dictionary<int, string>
         {
             {0, "Slay 1"},
             {1, "Sedation 1"},  
@@ -2335,7 +2333,7 @@ namespace Dictionary
 
     public static class RoadDureSkills
     {
-        public static  Dictionary<int, string> RoadDureSkillIDs = new Dictionary<int, string>()
+        public static IReadOnlyDictionary<int, string> RoadDureSkillIDs { get; } = new Dictionary<int, string>
         {
             {0, "None"},
             {1, "Attack"},
