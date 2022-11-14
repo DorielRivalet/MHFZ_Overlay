@@ -54,9 +54,11 @@ namespace MHFZ_Overlay
         /// </value>
         private MainWindow MainWindow { get; set; }
 
+        private static string randomMonsterImage = "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/random.png";
+
         public static Uri MonsterInfoLink
         {
-            get { return new Uri("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/random.png", UriKind.RelativeOrAbsolute);}
+            get { return new Uri(randomMonsterImage, UriKind.RelativeOrAbsolute);}
         }
 
         public static readonly string RickRoll = "https://www.youtube.com/embed/dQw4w9WgXcQ";
@@ -2284,18 +2286,25 @@ namespace MHFZ_Overlay
             Topmost = true;
             MainWindow = mainWindow;
 
-            //https://stackoverflow.com/questions/30839173/change-background-image-in-wpf-using-c-sharp
-            GeneralContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/1.png")));
-            PlayerContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/2.png")));
-            MonsterHPContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/3.png")));
-            MonsterStatusContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/4.png")));
-            DiscordRPCContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/5.png")));
-            CreditsContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/6.png")));
-            MonsterInfoContent.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Background/7.png")));
+            string background1 = @"pack://application:,,,/MHFZ_Overlay;component/Background/1.png";
+            string background2 = @"pack://application:,,,/MHFZ_Overlay;component/Background/2.png";
+            string background3 = @"pack://application:,,,/MHFZ_Overlay;component/Background/3.png";
+            string background4 = @"pack://application:,,,/MHFZ_Overlay;component/Background/4.png";
+            string background5 = @"pack://application:,,,/MHFZ_Overlay;component/Background/5.png";
+            string background6 = @"pack://application:,,,/MHFZ_Overlay;component/Background/6.png";
+            string background7 = @"pack://application:,,,/MHFZ_Overlay;component/Background/7.png";
 
-            //todo: test this
+            //https://stackoverflow.com/questions/30839173/change-background-image-in-wpf-using-c-sharp
+            GeneralContent.Background = new ImageBrush(new BitmapImage(new Uri(background1)));
+            PlayerContent.Background = new ImageBrush(new BitmapImage(new Uri(background2)));
+            MonsterHPContent.Background = new ImageBrush(new BitmapImage(new Uri(background3)));
+            MonsterStatusContent.Background = new ImageBrush(new BitmapImage(new Uri(background4)));
+            DiscordRPCContent.Background = new ImageBrush(new BitmapImage(new Uri(background5)));
+            CreditsContent.Background = new ImageBrush(new BitmapImage(new Uri(background6)));
+            MonsterInfoContent.Background = new ImageBrush(new BitmapImage(new Uri(background7)));
+
+            //TODO: test this
             DataContext = MainWindow.DataLoader.model;
-            //this.DataContext = this;
 
             for (int i = 0; i < Monsters.Length; i++)
             {
@@ -2317,8 +2326,6 @@ namespace MHFZ_Overlay
 
             //// See: https://stackoverflow.com/questions/22285866/why-relaycommand
             //// Or use MVVM Light to obtain RelayCommand.
-            //this.ScreenShotCommand = new RelayCommand<FrameworkElement>(this.OnScreenShotCommandAsync);
-            //webViewFerias.Style = 
 
             List<string> MonsterNameList = new List<string>();
 
@@ -2729,10 +2736,6 @@ namespace MHFZ_Overlay
             s.Reload();
             Close();
             DeletexNames_OnClosed();
-        }
-
-        private void Config_Closing(object sender, EventArgs e)
-        {
         }
 
         private void BtnGuildCardFile_Click(object sender, RoutedEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -233,7 +234,7 @@ namespace MHFZ_Overlay.controls
             }
             set
             {
-
+                throw new InvalidOperationException();
             }
         }
 

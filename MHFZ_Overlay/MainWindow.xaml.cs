@@ -273,8 +273,6 @@ namespace MHFZ_Overlay
                     };
                 }
 
-                //if (GetDiscordServerInvite != "")
-                //{
                 //should work fine
                 presenceTemplate.Buttons = new DiscordRPC.Button[] { }; ;
                 presenceTemplate.Buttons = new DiscordRPC.Button[]
@@ -282,7 +280,6 @@ namespace MHFZ_Overlay
                     new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
                     new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
                 };
-                //}
 
                 if (GetDiscordServerInvite != "")
                 {
@@ -364,21 +361,10 @@ namespace MHFZ_Overlay
             ReloadButton.Visibility = Visibility.Hidden;
             CloseButton.Visibility = Visibility.Hidden;
 
-            ////Main Loop
-            //Setting a random details to test the update rate of the presence
-            //Program.startRichPresence("");
-            //Issue104();
-            //IssueMultipleSets();
-            //IssueJoinLogic();
-
-            //Console.WriteLine("Press any key to terminate");
-            //onsole.ReadKey();
             LoadDictionaries();
             InitializeDiscordRPC();
-            //DataLoader.model.GenerateGearStats();
             CheckGameState();
             _ = LoadOctoKit();
-            //_ = GetRepoStats();
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
 
         }
@@ -389,7 +375,7 @@ namespace MHFZ_Overlay
         {
             var releases = await client.Repository.Release.GetAll("DorielRivalet", "MHFZ_Overlay");
             var latest = releases[0];
-            releaseInfo = string.Format(
+            string releaseInfo = string.Format(
                "The latest release is tagged at {0} and is named {1}. Go to download page?",
                 latest.TagName,
                 latest.Name);
@@ -425,7 +411,6 @@ namespace MHFZ_Overlay
             System.Diagnostics.Process.Start(sInfo);
         }
 
-        private string releaseInfo;
         public string latestRelease;
         public bool isLatestRelease;
 
@@ -593,28 +578,7 @@ namespace MHFZ_Overlay
             {
                 Content = damage.ToString(),
                 FontFamily = new System.Windows.Media.FontFamily("MS Gothic Bold")
-                //BorderBrush = System.Windows.Media.Brushes.Black,
-                //BorderThickness = new Thickness(2.0)
-
-                //BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
             };
-            //damageLabel.
-            //        void CreateLabel(int damage)
-            //{
-            //    Label namelabel = new Label();
-            //    Random rnd = new Random();
-            //    int x = rnd.Next(centerx, centerx + width);
-            //    int y = rnd.Next(centery, centery + height);
-            //    namelabel.Location = new Point(x, y);
-            //    namelabel.BringToFront();
-            //    namelabel.Text = damage.ToString();
-            //    namelabel.Font = new Font(textfont, damageTextSize);
-            //    namelabel.ForeColor = Color.FromName(textcolor);
-            //    namelabel.BackColor = Color.Transparent;
-            //    namelabel.AutoSize = true;
-            //    this.Controls.Add(namelabel);
-            //    DeleteLabel(namelabel);
-            //}
 
             //does not alter actual number displayed, only the text style
             double damageModifier = damage / (DataLoader.model.CurrentWeaponMultiplier / 2);
@@ -673,10 +637,6 @@ namespace MHFZ_Overlay
 
             damageLabel.SetValue(Canvas.TopProperty, newPoint.Y);
             damageLabel.SetValue(Canvas.LeftProperty, newPoint.X);
-
-            //Point newPoint2 = DamageNumbers.TranslatePoint(new Point(x, newPoint.Y), DamageNumbers);
-            //damageLabelBorder1.SetValue(Canvas.TopProperty, newPoint.Y - 1);
-            //damageLabelBorder1.SetValue(Canvas.LeftProperty, newPoint.X - 1);
 
             DamageNumbers.Children.Add(damageLabel);
 
@@ -1252,14 +1212,8 @@ namespace MHFZ_Overlay
             //3rd district dure 2: 21734
             //UNUSED sky corridor: 21730
             //sky corridor prologue: 21729
-            //string RealMonsterName = iconName.Replace("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/", "");
-            //RealMonsterName = RealMonsterName.Replace(".gif", "");
-            //RealMonsterName = RealMonsterName.Replace(".png", "");
-            //RealMonsterName = RealMonsterName.Replace("zenith_", "");
-            //RealMonsterName = RealMonsterName.Replace("_", " ");
 
             ////https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
-            //RealMonsterName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(RealMonsterName);
 
             int id;
 
@@ -1797,7 +1751,6 @@ namespace MHFZ_Overlay
                         case 23602:
                             return "Lower Shiten ";
                     }
-                //return ""; //20m lower shiten/musou repel/musou lesser slay
                 case 55:
                     switch (DataLoader.model.QuestID())
                     {
@@ -3167,12 +3120,10 @@ namespace MHFZ_Overlay
                         return "";
                     case 21731://1st district dure
                     case 21749://sky corridor version
-                        //return string.Format("{0}{1} | ", DataLoader.model.FirstDistrictDuremudiraSlays(), DataLoader.model.FirstDistrictDuremudiraEncounters());
                         return "Slay 1st District Duremudira | "; ;
                     case 21746://2nd district dure
                     case 21750://sky corridor version
                         return "Slay 2nd District Duremudira | ";
-                    //return string.Format("{0}{1} | ", DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
                             return string.Format("{0}{1}{2}{3}{4}{5} | ", GetObjectiveNameFromID(DataLoader.model.ObjectiveType(), true), GetObjective1CurrentQuantity(true), GetObjective1Quantity(true), GetRankNameFromID(DataLoader.model.RankBand(), true), GetStarGrade(true), GetObjective1Name(DataLoader.model.Objective1ID(), true));

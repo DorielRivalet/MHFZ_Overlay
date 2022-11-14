@@ -1352,7 +1352,7 @@ namespace Dictionary
             {445,"Diva Hall" },
             {446,"Sacred Pinnacle - Base Camp" },
             {447,"Sacred Pinnacle - Area 1" },
-            {448,"Sanctuary - Base Camp" },//todo: test
+            {448,"Sanctuary - Base Camp" },//TODO: test
             {449,"Sanctuary - Area 1" },
             {450,"Interception/Fortress - Base Camp" },
             {451,"Interception/Fortress - Base Camp" },
@@ -2111,7 +2111,7 @@ namespace Dictionary
             {31, "Def+100"},//after nosus. no g rank weps
             {32, "Def+110"},//after swaxe?. 1 g rank wep.
             {33, "Def+120"},//120. then 121,... (from bonus) (+10 from magnet spike). 2 g rank weps.
-            {34, "Def+130"},//todo: needs testing. is at least 140 min. 3 g rank weps. max is 180.
+            {34, "Def+130"},//TODO: needs testing. is at least 140 min. 3 g rank weps. max is 180.
             {35, ""},
             {36, ""},
             {37, ""},

@@ -4167,7 +4167,6 @@ namespace MHFZ_Overlay.addresses
                 if (className == "Blademaster")
                 {
                     Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
-                    //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
 
                     return string.Format("{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
@@ -4176,7 +4175,6 @@ namespace MHFZ_Overlay.addresses
                 else if (className == "Gunner")
                 {
                     Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
-                    //string address = Convert.ToString(MeleeWeaponID(), 16).ToUpper();
                     string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
                     return string.Format("{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
                 }
@@ -4334,7 +4332,7 @@ namespace MHFZ_Overlay.addresses
                 Dictionary.Items.ItemIDs.TryGetValue(Item19, out string? ItemName19);
                 Dictionary.Items.ItemIDs.TryGetValue(Item20, out string? ItemName20);
 
-                //todo: refactor pls
+                //TODO: refactor pls
                 if (GetTextFormat() == "Markdown")
                 {
                     if (IsMetaItem(Item1) && (ItemName1 != null || ItemName1 != "None" || ItemName1 != ""))
@@ -4559,7 +4557,6 @@ namespace MHFZ_Overlay.addresses
                 if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
                     piecename = string.Format("**{0}**", piecename);
 
-                //string address = Convert.ToString(ArmorHeadID(), 16).ToUpper();
                 string address = ArmorHeadID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorHeadDeco1ID()), GetDecoName(ArmorHeadDeco2ID()), GetDecoName(ArmorHeadDeco3ID()));
             }
@@ -4580,7 +4577,6 @@ namespace MHFZ_Overlay.addresses
                 if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
                     piecename = string.Format("**{0}**", piecename);
 
-                //string address = Convert.ToString(ArmorChestID(), 16).ToUpper();
                 string address = ArmorChestID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorChestDeco1ID()), GetDecoName(ArmorChestDeco2ID()), GetDecoName(ArmorChestDeco3ID()));
             }
@@ -4601,7 +4597,6 @@ namespace MHFZ_Overlay.addresses
                 if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
                     piecename = string.Format("**{0}**", piecename);
 
-                //string address = Convert.ToString(ArmorArmsID(), 16).ToUpper();
                 string address = ArmorArmsID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorArmsDeco1ID()), GetDecoName(ArmorArmsDeco2ID()), GetDecoName(ArmorArmsDeco3ID()));
             }
@@ -4622,7 +4617,6 @@ namespace MHFZ_Overlay.addresses
                 if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
                     piecename = string.Format("**{0}**", piecename);
 
-                //string address = Convert.ToString(ArmorWaistID(), 16).ToUpper();
                 string address = ArmorWaistID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorWaistDeco1ID()), GetDecoName(ArmorWaistDeco2ID()), GetDecoName(ArmorWaistDeco3ID()));
             }
@@ -4643,7 +4637,6 @@ namespace MHFZ_Overlay.addresses
                 if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
                     piecename = string.Format("**{0}**", piecename);
 
-                //string address = Convert.ToString(ArmorLegsID(), 16).ToUpper();
                 string address = ArmorLegsID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorLegsDeco1ID()), GetDecoName(ArmorLegsDeco2ID()), GetDecoName(ArmorLegsDeco3ID()));
             }
@@ -4659,17 +4652,11 @@ namespace MHFZ_Overlay.addresses
         {
             bool keyFound = Dictionary.Items.ItemIDs.TryGetValue(id, out string? DecoName);
 
-            //todo: refactor pls
-            if (GetTextFormat() == "Markdown")
-            {
-                if (IsMetaItem(id) && (DecoName != null || DecoName != "None" || DecoName != "") && keyFound)
-                    DecoName = string.Format("**{0}**", DecoName);
-            }
+            if (GetTextFormat() == "Markdown" && IsMetaItem(id) && (DecoName != null || DecoName != "None" || DecoName != "") && keyFound)
+                DecoName = string.Format("**{0}**", DecoName);
 
             if (DecoName == null || DecoName == "None" || DecoName == "")
                 DecoName = "Empty";
-            //else if (ItemName6 == null || ItemName6 == "None")
-            //    ItemName5 = ItemName5 + "";
             else
                 DecoName += "";
 
@@ -4678,12 +4665,6 @@ namespace MHFZ_Overlay.addresses
                 return GetSigilName(slot);
             }
 
-            //Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(ArmorLegsID(), out string? piecename);
-
-            //if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
-            //    piecename = string.Format("**{0}**", piecename);
-
-            //string address = Convert.ToString(ArmorLegsID(), 16).ToUpper();
             string address;
             if (!(isForImage))
                 address = " (" + id.ToString("X4").ToUpper() + ")";
@@ -5368,7 +5349,7 @@ namespace MHFZ_Overlay.addresses
                 Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill6(), out string? SkillName6);
                 Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill7(), out string? SkillName7);
 
-                //todo: refactor pls
+                //TODO: refactor pls
                 if (GetTextFormat() == "Markdown")
                 {
                     if (IsMaxZenithSkill(ZenithSkill1()) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
@@ -5558,7 +5539,7 @@ namespace MHFZ_Overlay.addresses
                 Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill18, out string? SkillName18);
                 Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill19, out string? SkillName19);
 
-                //todo: refactor pls
+                //TODO: refactor pls
                 if (GetTextFormat() == "Markdown")
                 {
                     if (IsMaxSkillLevel(Skill1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
@@ -5921,7 +5902,7 @@ namespace MHFZ_Overlay.addresses
                 281 => 282,
                 282 => 283,
                 298 => 299,
-                303 => 302,//todo: test
+                303 => 302,//TODO: test
                 351 => 352,
                 357 => 356,
                 361 => 362,
@@ -6093,7 +6074,7 @@ namespace MHFZ_Overlay.addresses
                 if (!(IsFixedGSRSkillValue(SkillName2)))
                     SkillName2 = GetGSRBonus(SkillName2);
 
-                //todo: refactor pls
+                //TODO: refactor pls
                 if (GetTextFormat() == "Markdown")
                 {
                     if (IsMaxGSRSkillValue(SkillName1) && (SkillName1 != null || SkillName1 != "Nothing" || SkillName1 != ""))
@@ -6983,7 +6964,7 @@ namespace MHFZ_Overlay.addresses
                 string SkillLevel15 = RoadDureSkill15Level().ToString();
                 string SkillLevel16 = RoadDureSkill16Level().ToString();
 
-                //todo: refactor pls
+                //TODO: refactor pls
                 if (GetTextFormat() == "Markdown")
                 {
                     if (IsMaxRoadDureSkillLevel(Skill1, SkillLevel1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
@@ -7373,7 +7354,7 @@ namespace MHFZ_Overlay.addresses
 
             if (GetGouBoostMode())
                 showGouBoost = " (After Gou/Muscle Boost)";
-            //todo: sr skill
+            //TODO: sr skill
             //zp in bold for markdown
             //fruits and speedrunner items also in bold
             SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
@@ -8489,7 +8470,7 @@ namespace MHFZ_Overlay.addresses
         public string GetGameDivaInfo
         {
             get
-            {//todo: missing gems?
+            {//TODO: missing gems?
                 return string.Format("Prayer Gems\nRinging Prayer Gem\n"+
                     "Adds new items to the GCP store based on level.\n\n"+
                     "Elegance Prayer Gem\n"+
@@ -9179,13 +9160,6 @@ namespace MHFZ_Overlay.addresses
 
         #endregion
 
-        //void CopyToClipBoard(string data)
-        //{
-        //    Clipboard.SetText(data);
-        //}
-
-
-
         #endregion
 
         #region gear image stats
@@ -9524,75 +9498,6 @@ namespace MHFZ_Overlay.addresses
         }
 
         #endregion
-
-        #region monster stats info
-
-        //public string GetMonsterInfo
-        //{
-        //    get
-        //    {
-        //        Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
-        //        if (s.MonsterNameOptionInfo == "")
-        //            return "monster info";
-        //        else
-        //            return "";
-        //    }
-        //}
-
-        public string GetMonsterElements
-        {
-            get
-            {
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
-                return "";
-            }
-        }
-
-        public string GetMonsterAilments
-        {
-            get
-            {
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
-                return "";
-            }
-        }
-
-        public string GetMonsterHitzones
-        {
-            get
-            {
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
-                return "";
-            }
-        }
-
-        public string GetMonsterInfoLinks
-        {
-            get
-            {
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
-                return "";
-            }
-        }
-
-        public string GetMonsterWeaknesses
-        {
-            get
-            {
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
-                return "";
-            }
-        }
-
-
-        #endregion
-
 
         public string GetGuildCardBackground
         {

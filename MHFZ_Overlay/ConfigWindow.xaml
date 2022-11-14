@@ -14,7 +14,7 @@
         Title="Monster Hunter Frontier Z Overlay"
         Height="720" Width="1280" ResizeMode="CanResize"
         Foreground="#cdd6f4" 
-            Closing="Config_Closing" Closed="Config_Closed"
+        Closed="Config_Closed"
         
                 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"

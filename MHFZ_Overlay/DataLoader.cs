@@ -72,40 +72,6 @@ namespace MHFZ_Overlay
         }
 
         /// <summary>
-        /// Updates my application.
-        /// </summary>
-        private static async Task UpdateMyApp()
-        {
-            using var mgr = new UpdateManager("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest");
-            var newVersion = await mgr.UpdateApp().ConfigureAwait(false);
-
-            // optionally restart the app automatically, or ask the user if/when they want to restart
-            if (newVersion != null)
-            {
-                //https://stackoverflow.com/questions/14819426/how-to-create-hyperlink-in-messagebox-show#14820039
-                System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("New version available on GitHub, would you like to download?", "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No); 
-                if (messageBoxResult.ToString() == "Yes") {
-                    System.Diagnostics.Process.Start("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest"); 
-                }
-                //UpdateManager.RestartApp();
-            }
-        }
-
-        /// <summary>
-        /// run main updater
-        /// </summary>
-        /// <returns></returns>
-        private static async Task MainUpdater()
-        {
-#pragma warning disable CS0618 // 'UpdateManager.GitHubUpdateManager(string, string, string, IFileDownloader, bool, string)' is obsolete: 'Use 'new UpdateManager(new GithubSource(...))' instead'
-            using (var mgr = UpdateManager.GitHubUpdateManager("https://github.com/DorielRivalet/MHFZ_Overlay"))
-            {
-                await mgr.Result.UpdateApp().ConfigureAwait(false);
-            }
-#pragma warning restore CS0618 // 'UpdateManager.GitHubUpdateManager(string, string, string, IFileDownloader, bool, string)' is obsolete: 'Use 'new UpdateManager(new GithubSource(...))' instead'
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DataLoader"/> class.
         /// </summary>
 #pragma warning disable CS8618 // Non-nullable property 'model' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
@@ -118,8 +84,6 @@ namespace MHFZ_Overlay
                 onAppUninstall: OnAppUninstall,
                 onEveryRun: OnAppRun);
 
-            //_ = Main();
-            //_ = UpdateMyApp();
             // ... other app init code after ...
 
             int PID = m.GetProcIdFromName("mhf");
