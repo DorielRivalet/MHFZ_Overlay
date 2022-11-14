@@ -1,3 +1,4 @@
+.sonarlint/
 .sonarqube/
 node_modules
 .pyperf

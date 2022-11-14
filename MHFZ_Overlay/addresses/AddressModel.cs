@@ -34,9 +34,6 @@ namespace MHFZ_Overlay.addresses
 
         public int SelectedMonster = 0;
 
-        //public string SavedGender = "";
-        //public string SavedWeaponClass = "";
-        //public string SavedTextFormat = "";
         public string SavedGearStats = "";
 
         #endregion
@@ -158,7 +155,6 @@ namespace MHFZ_Overlay.addresses
         abstract public int HalkFullness();
         abstract public int RankBand();
 
-        //abstract public int PartnyaRank();
         abstract public int PartnyaRankPoints();
         //parts
         abstract public int Monster1Part1();
@@ -296,7 +292,6 @@ namespace MHFZ_Overlay.addresses
 
         abstract public int MeleeWeaponID();
         abstract public int RangedWeaponID();
-        //TODO: Sigils
         abstract public int WeaponDeco1ID();
         abstract public int WeaponDeco2ID();
         abstract public int WeaponDeco3ID();
@@ -593,7 +588,6 @@ namespace MHFZ_Overlay.addresses
         abstract public int WhiteFatalisHunted();
         abstract public int CactusHunted();
         abstract public int ArrogantDuremudiraHunted();//untested
-        //abstract public int KingShakalakaHunted() => 1;
         abstract public int MiRuHunted();
         abstract public int UnknownHunted();
         abstract public int GoruganosuHunted();
@@ -1913,8 +1907,6 @@ namespace MHFZ_Overlay.addresses
                 }
 
                 double seconds = (double)time / 30;
-                double minutes = seconds / 60;
-                double centiseconds = seconds / 100;
 
                 if (time > 0)
                 {
@@ -1993,7 +1985,6 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 int weaponRaw = WeaponRaw();
-                int weaponType = WeaponType();
 
                 if (QuestID() == 0) //should work fine
                 {
@@ -2005,7 +1996,7 @@ namespace MHFZ_Overlay.addresses
                     HighestAtk = weaponRaw;
                 }
 
-                return weaponRaw.ToString();// ((int)(GetMultFromWeaponType(weaponType) * weaponRaw)).ToString();
+                return weaponRaw.ToString();
             }
         }
 
@@ -2065,7 +2056,6 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                int weaponRaw = WeaponRaw();
                 int weaponType = WeaponType();
                 return GetMultFromWeaponType(weaponType);
             }
@@ -2083,7 +2073,6 @@ namespace MHFZ_Overlay.addresses
             {
                 int weaponType = WeaponType();
                 return GetWeaponNameFromType(weaponType);
-                //return WeaponType().ToString();
             }
         }
 
@@ -2530,13 +2519,7 @@ namespace MHFZ_Overlay.addresses
                     return "HR5 ";
                 case 32:
                 case 46://supremacies
-                        //if (GetRealMonsterName(DataLoader.model.CurrentMonster1Icon).Contains("Supremacy"))
-                        //{
                     return "Supremacy ";
-                //} else
-                //{
-                //   return "";
-                //}
                 case 53://: conquest levels via quest id
                         //shantien
                         //lv1 23585
@@ -2601,7 +2584,6 @@ namespace MHFZ_Overlay.addresses
                         case 23602:
                             return "Lower Shiten ";
                     }
-                //return ""; //20m lower shiten/musou repel/musou lesser slay
                 case 55:
                     switch (QuestID())
                     {
@@ -2644,15 +2626,8 @@ namespace MHFZ_Overlay.addresses
         public string RealMonsterName
         {
             get {
-                //string RealName = CurrentMonster1Icon.Replace("https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/", "");
-                //RealName = RealName.Replace(".gif", "");
-                //RealName = RealName.Replace(".png", "");
-                //RealName = RealName.Replace("zenith_", "Zenith ");
-                //RealName = RealName.Replace("_", " ");
 
                 ////https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
-                //RealName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(RealName);
-
                 int id;
 
                 if (roadOverride() == false)

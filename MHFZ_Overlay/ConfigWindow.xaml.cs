@@ -34,7 +34,6 @@ using CsvHelper;
 using MaterialDesignThemes.Wpf.Converters;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using GalaSoft.MvvmLight.Command;
 using Microsoft.Web.WebView2.Core;
 using System.Collections.Generic;
 using Dictionary;
