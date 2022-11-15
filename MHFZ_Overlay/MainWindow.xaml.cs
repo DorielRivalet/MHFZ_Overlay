@@ -1230,335 +1230,50 @@ namespace MHFZ_Overlay
                 }
             }
 
+            bool keyFound = MonsterName.MonsterNameID.TryGetValue(id, out string? link);
+            if (link == null)
+                link = "Loading...";
+            if (keyFound)
+                return link;
+            else
+                return GetAlternateMonsterName(id);
+        }
 
+
+        private string GetAlternateMonsterName(int id)
+        {
             switch (id)
             {
-                case 0: //none
-                    return "None";
-                case 1:
-                    return "Rathian";
-                case 2:
-                        return "Fatalis";
-                case 3:
-                    return "Kelbi";
-                case 4:
-                    return "Mosswine";
-                case 5:
-                    return "Bullfango";
-                case 6:
-                    return "Yian Kut-Ku";
-                case 7:
-                    return "Lao-Shan Lung";
-                case 8:
-                    return "Cephadrome";
-                case 9:
-                    return "Felyne";
-                case 10: //veggie elder
-                    return "Veggie Elder";
-                case 11:
-                        return "Rathalos";
-                case 12:
-                    return "Aptonoth";
-                case 13:
-                    return "Genprey";
-                case 14:
-                    return "Diablos";
-                case 15:
-                        return "Khezu";
-                case 16:
-                    return "Velociprey";
-                case 17:
-                        return "Gravios";
-                case 18:
-                    return "Felyne";
-                case 19:
-                    return "Vespoid";
-                case 20:
-                    return "Gypceros";
-                case 21:
-                        return "Plesioth";
-                case 22:
-                    return "Basarios";
-                case 23:
-                    return "Melynx";
-                case 24:
-                    return "Hornetaur";
-                case 25:
-                    return "Apceros";
-                case 26:
-                    return "Monoblos";
-                case 27:
-                    return "Velocidrome";
-                case 28:
-                    return "Gendrome";
-                case 29://rocks
-                    return "Rocks";
-                case 30:
-                    return "Ioprey";
-                case 31:
-                    return "Iodrome";
-                case 32://pugis
-                    return "Poogie";
-                case 33:
-                    return "Kirin";
-                case 34:
-                    return "Cephalos";
-                case 35:
-                    return "Giaprey";
-                case 36:
-                        return "Crimson Fatalis";
-                case 37:
-                    return "Pink Rathian";
-                case 38:
-                    return "Blue Yian Kut-Ku";
-                case 39:
-                    return "Purple Gypceros";
-                case 40:
-                    return "Yian Garuga";
-                case 41:
-                    return "Silver Rathalos";
-                case 42:
-                    return "Gold Rathian";
-                case 43:
-                    return "Black Diablos";
-                case 44:
-                    return "White Monoblos";
-                case 45:
-                    return "Red Khezu";
-                case 46:
-                    return "Green Plesioth";
-                case 47:
-                    return "Black Gravios";
-                case 48:
-                        return "Daimyo Hermitaur";
-                case 49:
-                    return "Azure Rathalos";
-                case 50:
-                    return "Ashen Lao-Shan Lung";
-                case 51:
-                        return "Blangonga";
-                case 52:
-                    return "Congalala";
-                case 53:
-                        return "Rajang";
-                case 54:
-                    return "Kushala Daora";
-                case 55:
-                    return "Shen Gaoren";
-                case 56:
-                    return "Great Thunderbug";
-                case 57:
-                    return "Shakalaka";
-                case 58:
-                    return "Yama Tsukami";
-                case 59:
-                    return "Chameleos";
-                case 60:
-                    return "Rusted Kushala Daora";
-                case 61:
-                    return "Blango";
-                case 62:
-                    return "Conga";
-                case 63:
-                    return "Remobra";
-                case 64:
-                    return "Lunastra";
                 case 65:
                     if (DataLoader.model.RankBand() == 32)
                         return "Supremacy Teostra";
                     else
                         return "Teostra";
-                case 66:
-                    return "Hermitaur";
-                case 67:
-                    return "Shogun Ceanataur";
-                case 68:
-                    return "Bulldrome";
-                case 69:
-                    return "Anteka";
-                case 70:
-                    return "Popo";
-                case 71:
-                        return "White Fatalis";
-                case 72:
-                    return "Yama Tsukami";
-                case 73:
-                    return "Ceanataur";
-                case 74:
-                    return "Hypnoc";
-                case 75:
-                    return "Lavasioth";
-                case 76:
-                        return "Tigrex";
-                case 77:
-                    return "Akantor";
-                case 78:
-                    return "Bright Hypnoc";
-                case 79:
-                    return "Red Lavasioth";
-                case 80:
-                        return "Espinas";
-                case 81:
-                    return "Orange Espinas";
-                case 82:
-                    return "Silver Hypnoc";
-                case 83:
-                        return "Akura Vashimu";
-                case 84:
-                    return "Akura Jebia";
-                case 85:
-                    return "Berukyurosu";
-                case 86://cactus
-                    return "Cactus";
-                case 87://gorge objects
-                    return "Gorge Object";
-                case 88://gorge rocks
-                    return "Gorge Rock";
                 case 89:
                     if (DataLoader.model.RankBand() == 32 || DataLoader.model.RankBand() == 54)
                         return "Thirsty Pariapuria";
                     else
                         return "Pariapuria";
-                case 90:
-                    return "White Espinas";
-                case 91:
-                    return "Kamu Orugaron";
-                case 92:
-                    return "Nono Orugaron";
-                case 93:
-                    return "Raviente";
-                case 94:
-                    return "Dyuragaua";
                 case 95:
                     if (DataLoader.model.RankBand() == 32)
                         return "Supremacy Doragyurosu";
                     else
                         return "Doragyurosu";
-                case 96:
-                    return "Gurenzeburu";
-                case 97:
-                    return "Burukku";
-                case 98:
-                    return "Erupe";
-                case 99:
-                        return "Rukodiora";
-                case 100:
-                        return "Unknown";
-                case 101:
-                    return "Gogomoa";
-                case 102://kokomoa
-                    return "Kokomoa";
-                case 103:
-                        return "Taikun Zamuza";
-                case 104:
-                    return "Abiorugu";
-                case 105:
-                    return "Kuarusepusu";
                 case 106:
                     if (DataLoader.model.RankBand() == 32)
                         return "Supremacy Odibatorasu";
                     else
                         return "Odibatorasu";
-                case 107:
-                        return "Disufiroa";
-                case 108:
-                    return "Rebidiora";
-                case 109:
-                        return "Anorupatisu";
-                case 110:
-                        return "Hyujikiki";
-                case 111:
-                        return "Midogaron";
-                case 112:
-                        return "Giaorugu";
                 case 113:
                     if (DataLoader.model.RankBand() == 55)
                         return "Shifting Mi Ru";
                     else
                         return "Mi Ru";
-                case 114:
-                    return "Farunokku";
-                case 115:
-                    return "Pokaradon";
-                case 116:
-                        return "Shantien";
-                case 117:
-                    return "Pokara";
-                case 118://dummy
-                    return "Dummy";
-                case 119:
-                    return "Goruganosu";
-                case 120:
-                    return "Aruganosu";
-                case 121:
-                        return "Baruragaru";
-                case 122:
-                    return "Zerureusu";
-                case 123:
-                    return "Gougarf";
-                case 124:
-                    return "Uruki";
-                case 125:
-                    return "Forokururu";
-                case 126:
-                    return "Meraginasu";
-                case 127:
-                    return "Diorex";
-                case 128:
-                    return "Garuba Daora";
-                case 129:
-                        return "Inagami";
-                case 130:
-                    return "Varusaburosu";
-                case 131:
-                    return "Poborubarumu";
-                case 132:
-                    return "Duremudira";
-                case 133://UNK
-                    return "UNK";
-                case 134:
-                    return "Felyne";
-                case 135://blue npc
-                    return "Blue NPC";
-                case 136://UNK
-                    return "UNK";
-                case 137://cactus
-                    return "Cactus";
-                case 138://veggie elders
-                    return "Veggie Elder";
-                case 139:
-                    return "Gureadomosu";
-                case 140:
-                        return "Harudomerugu";
-                case 141:
-                        return "Toridcless";
-                case 142:
-                        return "Gasurabazura";
-                case 143:
-                    return "Kusubami";
-                case 144:
-                    return "Yama Kurai";
-                case 145://3rd phase duremudira
-                    return "Duremudira";
                 case 146:
                     if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
                         return "Howling Zinogre";
                     else
                         return "Zinogre";
-                case 147:
-                    return "Deviljho";
-                case 148:
-                    return "Brachydios";
-                case 149:
-                    return "Berserk Raviente";
-                case 150:
-                    return "Toa Tesukatora";
-                case 151:
-                    return "Barioth";
-                case 152:
-                    return "Uragaan";
-                case 153:
-                    return "Stygian Zinogre";
                 case 154:
                     if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
                         return "Ruling Guanzorumu";
@@ -1569,51 +1284,11 @@ namespace MHFZ_Overlay
                         return "Golden Deviljho";
                     else
                         return "Starving Deviljho";
-                case 156://UNK
-                    return "UNK";
-                case 157://egyurasu
-                    return "Egyurasu";
-                case 158:
-                    return "Voljang";
-                case 159:
-                    return "Nargacuga";
-                case 160:
-                    return "Keoaruboru";
-                case 161:
-                    return "Zenaserisu";
-                case 162:
-                    return "Gore Magala";
-                case 163:
-                    return "Blinking Nargacuga";
-                case 164:
-                    return "Shagaru Magala";
-                case 165:
-                    return "Amatsu";
                 case 166:
                     if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
                         return "Burning Freezing Elzelion";
                     else
                         return "Elzelion";
-                case 167:
-                    return "Arrogant Duremudira";
-                case 168://rocks
-                    return "Rock";
-                case 169:
-                    return "Seregios";
-                case 170:
-                    return "Bogabadorumu";
-                case 171://unknown blue barrel
-                    return "Blue Barrel";
-                case 172:
-                    return "Blitzkrieg Bogabadorumu";
-                case 173://costumed uruki
-                    return "Uruki";
-                case 174:
-                    return "Sparkling Zerureusu";
-                case 175://PSO2 Rappy
-                    return "PSO2 Rappy";
-                case 176:
-                    return "King Shakalaka";
                 default:
                     return "Loading...";
             }
@@ -2245,6 +1920,8 @@ namespace MHFZ_Overlay
                 id = 167;//arrogant duremudira
             
             bool keyFound = MonsterImage.MonsterImageID.TryGetValue(id, out string? link);
+            if (link == null)
+                link = "https://i.imgur.com/3pQEtzw.png";
             if (keyFound)
                 return link;
             else

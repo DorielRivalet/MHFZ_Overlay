@@ -50,7 +50,7 @@ The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospac
 
 1. [Get **ALL** of the requirements](#requirements)
 2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest/download/Releases.7z)
-3. Make sure Windows or your antivirus did not delete the files (because it reads the games memory windows might detect it as a trojan so you might have to get it out of quarantine)
+3. Make sure Windows or your antivirus did not delete the files (because it reads the games memory, Windows might detect it as a trojan, so you might have to get it out of quarantine)
 4. Unzip it anywhere. Run `MHFZ_OverlaySetup.exe` **as Administrator**
 5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
 
@@ -238,7 +238,7 @@ If the HP shows 0/1 then change area for it to load.
 
 ~~Congrats, now you won't be accused of cheating~~
 
-## How to Manually update with Update.exe
+## How to Manually Update with Update.exe
 
 `update.exe --update https://www.github.com/DorielRivalet/MHFZ_Overlay/releases/download/ENTER VERSION NUMBER (E.G. v0.6.4)`
 

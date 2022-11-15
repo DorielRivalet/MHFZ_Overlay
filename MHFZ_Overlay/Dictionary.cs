@@ -38,7 +38,7 @@ namespace Dictionary
             {32, "Supremacy 1"}, //needs testing
             {42, "HR5"},
             {46, "Supremacy 2" }, //needs testing. unknown repel+slay uses this
-            {53, "G Rank"},
+            {53, "G Rank"},//conquest
             {54, "Musou 1"},//lower shiten unknown/disu. thirsty/starving.
             {55, "Musou 2"},//upper shiten disu. shifting/golden.
             {56, "Twinhead 1" },//twinhead rajang / voljang and rajang

@@ -3251,6 +3251,8 @@ namespace MHFZ_Overlay.addresses
                     id = 167;
 
                 bool keyFound = MonsterImage.MonsterImageID.TryGetValue(id, out string? link);
+                if (link == null)
+                    link = "https://i.imgur.com/3pQEtzw.png";
                 if (keyFound)
                     return link;
                 else
@@ -8956,208 +8958,214 @@ namespace MHFZ_Overlay.addresses
             switch (id)
             {
                 default:
-                    return "https://i.imgur.com/3pQEtzw.png";
+                    return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/random.png";
                 case 2:
                     if (RankBand() == 53)
-                        return "https://i.imgur.com/VJNLFWf.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/conquest_fatalis.png";
                     else
-                        return "https://i.imgur.com/Fht5iyz.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/fatalis.png";
                 case 11:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/o8bJZUN.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_rathalos.gif";
                     else
-                        return "https://i.imgur.com/suPp2tU.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/rathalos.png";
                 case 15:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/t58j2Zm.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_khezu.gif";
                     else
-                        return "https://i.imgur.com/f8rLuGe.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/khezu.png";
                 case 17:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/PGkduy9.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_gravios.gif";
                     else
-                        return "https://i.imgur.com/Sj4SsYR.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/gravios.png";
                 case 21:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/bsHESxp.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_plesioth.gif";
                     else
-                        return "https://i.imgur.com/BQUAjEf.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/plesioth.png";
                 case 36:
                     if (RankBand() == 53)
-                        return "https://i.imgur.com/PRFnN10.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/conquest_crimson_fatalis.png";
                     else
-                        return "https://i.imgur.com/T36zMrZ.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/crimson_fatalis.png";
 
                 case 48:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/AO0Olia.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_daimyo_hermitaur.gif";
                     else
-                        return "https://i.imgur.com/WDe9OJl.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/daimyo_hermitaur.png";
 
                 case 51:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/YiyBzoU.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_blangonga.gif";
                     else
-                        return "https://i.imgur.com/Di3LdOq.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/blangonga.png";
 
                 case 53:
                     if (RankBand() == 56 || RankBand() == 57)
-                        return "https://i.imgur.com/HRMmhW1.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/twinhead_rajang.png";
                     else
-                        return "https://i.imgur.com/R1dDHaQ.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/rajang.png";
 
                 case 65:
                     if (RankBand() == 32)
-                        return "https://i.imgur.com/H3zUhEw.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/supremacy_teostra.png";
                     else
-                        return "https://i.imgur.com/dgq8E90.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/teostra.png";
 
                 case 71:
                     if (RankBand() == 53)
-                        return "https://i.imgur.com/OAbx9JC.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/road_white_fatalis.png";
                     else
-                        return "https://i.imgur.com/z2QtMnG.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/white_fatalis.png";
+
+                case 74:
+                    if (RankBand() >= 64 && RankBand() <= 67)
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_hypnoc.gif";
+                    else
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/hypnoc.png";
 
                 case 76:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/K7qTAoa.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_tigrex.gif";
                     else
-                        return "https://i.imgur.com/QKw3HSE.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/tigrex.png";
 
                 case 80:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/sMr1oCg.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_espinas.gif";
                     else
-                        return "https://i.imgur.com/cx07Z7B.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/espinas.png";
 
                 case 83:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/jdy96PH.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_akura_vashimu.gif";
                     else
-                        return "https://i.imgur.com/QiRd5dc.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/akura_vashimu.png";
 
                 case 89:
                     if (RankBand() == 32 || RankBand() == 54)
-                        return "https://i.imgur.com/rskDsju.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/thirsty_pariapuria.png";
                     else
-                        return "https://i.imgur.com/eXaT0PD.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/pariapuria.png";
 
                 case 95:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/qirZmdn.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_doragyurosu.gif";
                     else if (RankBand() == 32)
-                        return "https://i.imgur.com/orniFm3.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/supremacy_doragyurosu.png";
                     else
-                        return "https://i.imgur.com/HmNSD8G.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/doragyurosu.png";
 
                 case 99:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/BhbCOWn.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_rukodiora.gif";
                     else
-                        return "https://i.imgur.com/84ZBXjW.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/rukodiora.png";
                 case 100:
                     if (RankBand() == 70 || RankBand() == 54)
-                        return "https://i.imgur.com/fplk67z.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/shiten_unknown.png";
                     else
-                        return "https://i.imgur.com/ssuzTlK.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/unknown.png";
 
                 case 103:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/FbfYG4P.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_taikun_zamuza.gif";
                     else
-                        return "https://i.imgur.com/CACFYGy.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/taikun_zamuza.png";
                 case 106:
                     if (RankBand() == 32)
-                        return "https://i.imgur.com/zqvxw7m.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/supremacy_odibatorasu.png";
                     else
-                        return "https://i.imgur.com/KvC12wl.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/odibatorasu.png";
                 case 107:
                     if (RankBand() == 54 || RankBand() == 55)
-                        return "https://i.imgur.com/S8kiGS3.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/shiten_disufiroa.png";
                     else
-                        return "https://i.imgur.com/eQnTB2u.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/disufiroa.png";
 
                 case 109:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/LUXuyEi.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_anorupatisu.gif";
                     else
-                        return "https://i.imgur.com/XKot29j.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/anorupatisu.png";
                 case 110:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/jKcdja3.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_hyujikiki.gif";
                     else
-                        return "https://i.imgur.com/YqZLy2J.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/hyujikiki.png";
                 case 111:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/YJWD5xy.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_midogaron.gif";
                     else
-                        return "https://i.imgur.com/WvHY8Lf.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/midogaron.png";
                 case 112:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/oTBfALR.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_giaorugu.gif";
                     else
-                        return "https://i.imgur.com/ZFsUNTL.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/giaorugu.png";
                 case 113:
                     if (RankBand() == 55)
-                        return "https://i.imgur.com/FWPACuf.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/shifting_mi_ru.png";
                     else
-                        return "https://i.imgur.com/e3l7mhh.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/mi_ru.png";
 
                 case 116:
                     if (RankBand() == 53)
-                        return "https://i.imgur.com/y0b0y7G.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/conquest_shantien.png";
                     else
-                        return "https://i.imgur.com/Ib4dmgd.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/shantien.png";
                 case 121:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/2WKXvPn.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_baruragaru.gif";
                     else
-                        return "https://i.imgur.com/AvO02Ri.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/baruragaru.png";
 
                 case 129:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/yDF4h6I.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_inagami.gif";
                     else
-                        return "https://i.imgur.com/bioZ1Rx.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/inagami.png";
 
                 case 140:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/5NPChxD.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_harudomerugu.gif";
                     else
-                        return "https://i.imgur.com/daI89CT.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/harudomerugu.png";
                 case 141:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/Z5BuMEZ.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_toridcless.gif";
                     else
-                        return "https://i.imgur.com/1Ru7AMQ.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/toridcless.png";
                 case 142:
                     if (RankBand() >= 64 && RankBand() <= 67)
-                        return "https://i.imgur.com/vwkiFLs.gif";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zenith_gasurabazura.gif";
                     else
-                        return "https://i.imgur.com/OtU0yAB.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/gasurabazura.png";
 
                 case 146:
                     if (RankBand() >= 54 && RankBand() <= 55)
-                        return "https://i.imgur.com/bcx6HGf.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/howling_zinogre.png";
                     else
-                        return "https://i.imgur.com/hU4lRx3.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/zinogre.png";
 
                 case 154:
                     if (RankBand() >= 54 && RankBand() <= 55)
-                        return "https://i.imgur.com/kBMkdfr.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/ruling_guanzorumu.png";
                     else
-                        return "https://i.imgur.com/ZaCyD6O.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/guanzorumu.png";
                 case 155:
                     if (RankBand() == 55)
-                        return "https://i.imgur.com/HZc9wjS.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/golden_deviljho.png";
                     else
-                        return "https://i.imgur.com/OYIaUWR.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/starving_deviljho.png";
 
                 case 166:
                     if (RankBand() >= 54 && RankBand() <= 55)
-                        return "https://i.imgur.com/HX8b8EB.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/burning_freezing_elzelion.png";
                     else
-                        return "https://i.imgur.com/CxoXy9E.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/elzelion.png";
             }
         }
 
