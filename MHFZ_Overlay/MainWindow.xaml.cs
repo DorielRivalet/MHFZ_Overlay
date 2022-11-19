@@ -1230,68 +1230,7 @@ namespace MHFZ_Overlay
                 }
             }
 
-            bool keyFound = MonsterName.MonsterNameID.TryGetValue(id, out string? link);
-            if (link == null)
-                link = "Loading...";
-            if (keyFound)
-                return link;
-            else
-                return GetAlternateMonsterName(id);
-        }
-
-
-        private string GetAlternateMonsterName(int id)
-        {
-            switch (id)
-            {
-                case 65:
-                    if (DataLoader.model.RankBand() == 32)
-                        return "Supremacy Teostra";
-                    else
-                        return "Teostra";
-                case 89:
-                    if (DataLoader.model.RankBand() == 32 || DataLoader.model.RankBand() == 54)
-                        return "Thirsty Pariapuria";
-                    else
-                        return "Pariapuria";
-                case 95:
-                    if (DataLoader.model.RankBand() == 32)
-                        return "Supremacy Doragyurosu";
-                    else
-                        return "Doragyurosu";
-                case 106:
-                    if (DataLoader.model.RankBand() == 32)
-                        return "Supremacy Odibatorasu";
-                    else
-                        return "Odibatorasu";
-                case 113:
-                    if (DataLoader.model.RankBand() == 55)
-                        return "Shifting Mi Ru";
-                    else
-                        return "Mi Ru";
-                case 146:
-                    if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
-                        return "Howling Zinogre";
-                    else
-                        return "Zinogre";
-                case 154:
-                    if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
-                        return "Ruling Guanzorumu";
-                    else
-                        return "Guanzorumu";
-                case 155:
-                    if (DataLoader.model.RankBand() == 55)
-                        return "Golden Deviljho";
-                    else
-                        return "Starving Deviljho";
-                case 166:
-                    if (DataLoader.model.RankBand() >= 54 && DataLoader.model.RankBand() <= 55)
-                        return "Burning Freezing Elzelion";
-                    else
-                        return "Elzelion";
-                default:
-                    return "Loading...";
-            }
+            return DataLoader.model.DetermineMonsterName(id);
         }
 
         /// <summary>
@@ -1919,13 +1858,7 @@ namespace MHFZ_Overlay
             else if (DataLoader.model.AreaID() == 398 && (DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649))
                 id = 167;//arrogant duremudira
             
-            bool keyFound = MonsterImage.MonsterImageID.TryGetValue(id, out string? link);
-            if (link == null)
-                link = "https://i.imgur.com/3pQEtzw.png";
-            if (keyFound)
-                return link;
-            else
-                return DataLoader.model.GetAlternateMonsterImage(id);
+            return DataLoader.model.DetermineMonsterImage(id);
         }
 
         /// <summary>

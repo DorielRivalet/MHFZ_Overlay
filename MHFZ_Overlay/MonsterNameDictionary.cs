@@ -11,7 +11,7 @@ namespace Dictionary
     ///<summary>
     ///The monster name list
     ///</summary>
-    public static class MonsterName
+    public static class MonsterNameDictionary
     {
         public static IReadOnlyDictionary<int, string> MonsterNameID { get; } = new Dictionary<int, string>
         {

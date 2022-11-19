@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using Octokit;
 using System;
 using System.CodeDom;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
@@ -757,27 +758,6 @@ namespace MHFZ_Overlay.addresses
 
         #region monster parts
 
-        public string Monster1Part1Name = "None";
-        public string Monster1Part2Name = "None";
-        public string Monster1Part3Name = "None";
-        public string Monster1Part4Name = "None";
-        public string Monster1Part5Name = "None";
-        public string Monster1Part6Name = "None";
-        public string Monster1Part7Name = "None";
-        public string Monster1Part8Name = "None";
-        public string Monster1Part9Name = "None";
-        public string Monster1Part10Name = "None";
-        public string Monster2Part1Name = "None";
-        public string Monster2Part2Name = "None";
-        public string Monster2Part3Name = "None";
-        public string Monster2Part4Name = "None";
-        public string Monster2Part5Name = "None";
-        public string Monster2Part6Name = "None";
-        public string Monster2Part7Name = "None";
-        public string Monster2Part8Name = "None";
-        public string Monster2Part9Name = "None";
-        public string Monster2Part10Name = "None";
-
         //assumption: it follows ferias' monster part order top to bottom, presumably (e.g. head is at the top, so part 0 is head, and so on)
         // grouping by skeleton too
 
@@ -815,797 +795,49 @@ namespace MHFZ_Overlay.addresses
                 }
             }
 
-            //TODO: missing labels
-            switch (monsterID)
+            if (monsterID > 176)
             {
-                case 0: //None
-                case 10: //Veggie Elder
-                case 18://Felyne?
-                case 23://Melynx
-                case 29: //Rocks
-                case 32: //Pugis
-                case 57://Shakalaka
-                case 63://Remobra
-                case 86: //Cactus
-                case 87: //Gorge Objects
-                case 88: //Gorge Rocks
-                case 118: //Dummy
-                case 124://Uruki
-                case 133: //UNK
-                case 134://Felyne
-                case 135: //Blue NPC
-                case 136: //UNK
-                case 137: //Cactus
-                case 138: //Veggie Elders
-                case 156: //UNK
-                case 157: //Egyurasu
-                case 168: //Rocks
-                case 171: //Unknown Blue Barrel
-                case 173://Costumed Uruki
-                case 175://PSO2 Rappy
-                case 176://King Shakalaka
-                case 19://Vespoid
-                case 24://Hornetaur
-                case 56: //Great Thunderbug
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                // Rath skeleton
-                case 1: //Rathian
-                case 11: //Rathalos
-                case 14: //Diablos
-                case 15://Khezu
-                case 26: //Monoblos 
-                case 37: //Pink Rathian
-                case 41: //Silver Rathalos
-                case 42: //Gold Rathian
-                case 43: //Black Diablos
-                case 44: //White Monoblos
-                case 45://Red Khezu
-                case 49: //Azure Rathalos
-                case 80: //Espinas
-                case 81: //Orange Espinas
-                case 90://White Espinas
-                case 96://Gurenzeburu
-                case 100://UNKNOWN
-                case 109: //Anorupatisu
-                case 122: //Zerureusu
-                case 126: //Meraginasu
-                case 130: //Varusaburosu
-                case 139://Gureadomosu
-                case 174: //Sparkling Zerureusu
-                    Monster1Part1Name = "Body";
-                    Monster1Part2Name = "L. Wing";
-                    Monster1Part3Name = "R. Wing";
-                    Monster1Part4Name = "L. Leg";
-                    Monster1Part5Name = "R. Leg";
-                    Monster1Part6Name = "Neck";
-                    Monster1Part7Name = "Head";
-                    Monster1Part8Name = "Tail Tip";
-                    Monster1Part9Name = "Tail";
-                    Monster1Part10Name = "None";
-                    break;
-
-                // Flying Wyvern Skeleton 2
-                case 17: //Gravios
-                case 22: //Basarios
-                case 47://Black Gravios
-                    Monster1Part1Name = "Body";
-                    Monster1Part2Name = "L. Wing";
-                    Monster1Part3Name = "R. Wing";
-                    Monster1Part4Name = "L. Leg";
-                    Monster1Part5Name = "R. Leg";
-                    Monster1Part6Name = "Head";
-                    Monster1Part7Name = "Belly";
-                    Monster1Part8Name = "Tail Tip";
-                    Monster1Part9Name = "Tail";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Rex Wyvern Skeleton 1
-                case 76://Tigrex
-                case 77://Akantor
-                case 110://Hyujikiki
-                case 127://Diorekkusu
-                case 151://Barioth
-                case 159://Nargacuga
-                case 163://Blinking Nargacuga
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "Back";
-                    Monster1Part4Name = "Tail";
-                    Monster1Part5Name = "L. Wing";
-                    Monster1Part6Name = "L. Leg";
-                    Monster1Part7Name = "R. Wing";
-                    Monster1Part8Name = "R. Leg"; //swap to back?
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Rex Wyvern Skeleton 2
-                case 89://Pariapuria
-                case 169://Seregios
-                case 141: //Toridcless
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "L. Wing";
-                    Monster1Part4Name = "R. Wing";
-                    Monster1Part5Name = "L. Leg";
-                    Monster1Part6Name = "R. Leg";
-                    Monster1Part7Name = "Tail";
-                    Monster1Part8Name = "Back";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Rex Wyvern Skeleton 3
-                case 113://Mi Ru
-                case 94://Dyuragaua
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "L. Wing";
-                    Monster1Part3Name = "R. Wing";
-                    Monster1Part4Name = "Hindlegs";
-                    Monster1Part5Name = "Body";
-                    Monster1Part6Name = "Belly";
-                    Monster1Part7Name = "Tail";
-                    Monster1Part8Name = "Tail Tip"; //swap to back?
-                    Monster1Part9Name = "Back";
-                    Monster1Part10Name = "None";
-                    break;
-
-
-                //Big Rex Wyvern Skeleton 1
-                case 131://Poborubarumu
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "Hindlegs";
-                    Monster1Part4Name = "Tail Tip";
-                    Monster1Part5Name = "R. Foreleg";
-                    Monster1Part6Name = "L. Foreleg";
-                    Monster1Part7Name = "R.Forewing";
-                    Monster1Part8Name = "L.Forewing";
-                    Monster1Part9Name = "Back";//unsure
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 106://Odibatorasu
-                    Monster1Part1Name = "L. Foreleg";
-                    Monster1Part2Name = "R. Foreleg";
-                    Monster1Part3Name = "L. Hindleg";
-                    Monster1Part4Name = "R. Hindleg";
-                    Monster1Part5Name = "Back";
-                    Monster1Part6Name = "Belly";
-                    Monster1Part7Name = "Body";
-                    Monster1Part8Name = "Head";
-                    Monster1Part9Name = "Back";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 160://Keoaruboru (sometimes doesn't load properly)
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "Back";
-                    Monster1Part4Name = "L. Hindleg";
-                    Monster1Part5Name = "R. Hindleg";
-                    Monster1Part6Name = "L. Foreleg";
-                    Monster1Part7Name = "R. Foreleg";
-                    Monster1Part8Name = "Tail";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Elder Skeleton (Teostra, Kushala, Chameleos)
-                case 54: //Kushala Daora
-                case 59: //Chameleos
-                case 60://Rusted Kushala Daora
-                case 64: //Lunastra
-                case 65://Teostra
-                case 99://Rukodiora
-                case 107://Disufiroa
-                case 108://Rebidiora
-                case 128://Garuba Daora
-                case 140://Harudomerugu
-                case 150://Toa Tesukatora
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "Belly"; //or back?
-                    Monster1Part4Name = "Forelegs";
-                    Monster1Part5Name = "Hindlegs";
-                    Monster1Part6Name = "Wings";
-                    Monster1Part7Name = "Tail";
-                    Monster1Part8Name = "Back";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 154://Guanzorumu
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Wings";
-                    Monster1Part3Name = "L. Foreleg";
-                    Monster1Part4Name = "R. Foreleg";
-                    Monster1Part5Name = "L. Hindleg";
-                    Monster1Part6Name = "R. Hindleg";
-                    Monster1Part7Name = "Tail";
-                    Monster1Part8Name = "Body";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Duremudira (doesn't load properly)
-                case 132://Duremudira
-                case 145://3rd Phase Duremudira (used on gathering quest)
-                case 167://Arrogant Duremudira
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Wings";
-                    Monster1Part3Name = "Tail";
-                    Monster1Part4Name = "Hindlegs";
-                    Monster1Part5Name = "Belly";
-                    Monster1Part6Name = "Forelegs";
-                    Monster1Part7Name = "Body";
-                    Monster1Part8Name = "Back";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Fatalis
-                case 2: //Fatalis
-                case 36: //Crimson Fatalis
-                case 71: //White Fatalis
-                    Monster1Part1Name = "Chest";
-                    Monster1Part2Name = "Belly";
-                    Monster1Part3Name = "L. Leg";
-                    Monster1Part4Name = "R. Leg";
-                    Monster1Part5Name = "Neck";
-                    Monster1Part6Name = "Face";
-                    Monster1Part7Name = "Tail/Back";
-                    Monster1Part8Name = "Wings";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-
-                //Magala
-                case 162: //Gore Magala
-                case 164: //Shagaru Magala
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Horn";
-                    Monster1Part3Name = "Body";
-                    Monster1Part4Name = "Wings";
-                    Monster1Part5Name = "Forelegs";
-                    Monster1Part6Name = "L. Hindleg";
-                    Monster1Part7Name = "R. Hindleg";
-                    Monster1Part8Name = "Tail";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Hervibore Skeleton
-                case 3: //Kelbi
-                case 4://Mosswine
-                case 5://Bullfango
-                case 12://Aptonoth
-                case 25://Apceros
-                case 68://Bulldrome
-                case 69://Anteka
-                case 70://Popo
-                case 97://Burukku
-                case 98://Erupe
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 33://Kirin
-                    Monster1Part1Name = "Body";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Bird Wyvern Skeleton
-                case 6://Yian Kut-Ku
-                case 20://Gypceros
-                case 38://Blue Yian Kut-Ku
-                case 39: //Purple Gypceros
-                case 40: //Yian Garuga
-                case 74://Hypnocatrice
-                case 78://Bright Hypnoc
-                case 82://Silver Hypnoc
-                case 114://Farunokku
-                    Monster1Part1Name = "Body";
-                    Monster1Part2Name = "L. Wing";
-                    Monster1Part3Name = "R. Wing";
-                    Monster1Part4Name = "L. Leg";
-                    Monster1Part5Name = "R. Leg";
-                    Monster1Part6Name = "Neck";
-                    Monster1Part7Name = "Head";
-                    Monster1Part8Name = "Tail";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Bird Wyvern Skeleton 2
-                case 13://Genprey
-                case 16://Velociprey
-                case 27://Velocidrome
-                case 28://Gendrome
-                case 30://Ioprey
-                case 31://Iodrome
-                case 35://Giaprey / Giadrome
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Fanged Beast Monkey Skeleton
-                case 51://Blangonga
-                case 53://Rajang
-                case 61://Blango
-                case 62://Conga
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "R. Side";
-                    Monster1Part3Name = "L. Side";
-                    Monster1Part4Name = "Body";
-                    Monster1Part5Name = "Tail";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "Chest";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 101://Gogomoa
-                case 102://Kokomoa
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "L. Foreleg";
-                    Monster1Part4Name = "R. Foreleg";
-                    Monster1Part5Name = "L. Hindleg";
-                    Monster1Part6Name = "R. Hindleg";
-                    Monster1Part7Name = "Tail";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 123://Gougarf (Lolo)
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "R. Hindleg";
-                    Monster1Part3Name = "L. Hindleg";
-                    Monster1Part4Name = "Body";
-                    Monster1Part5Name = "Tail";
-                    Monster1Part6Name = "L. Foreleg";
-                    Monster1Part7Name = "R. Foreleg";
-                    Monster1Part8Name = "Back";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 52://Congalala
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "Hindlegs";
-                    Monster1Part4Name = "Forelegs";
-                    Monster1Part5Name = "Tail";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 158://Voljang
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "R. Foreleg";
-                    Monster1Part3Name = "L. Foreleg";
-                    Monster1Part4Name = "Body";
-                    Monster1Part5Name = "R. Hindleg";
-                    Monster1Part6Name = "L. Hindleg";
-                    Monster1Part7Name = "Tail";
-                    Monster1Part8Name = "Back";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Brute Wyvern Skeleton
-                case 104://Abiorugu
-                case 112://Giaorugu
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "R. Leg";
-                    Monster1Part3Name = "L. Leg";
-                    Monster1Part4Name = "Arms";
-                    Monster1Part5Name = "?";
-                    Monster1Part6Name = "Torso";
-                    Monster1Part7Name = "?";
-                    Monster1Part8Name = "Tail";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 147://Deviljho
-                case 155://Starving Deviljho
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Chest";
-                    Monster1Part3Name = "Neck";
-                    Monster1Part4Name = "Arms";
-                    Monster1Part5Name = "R. Leg";
-                    Monster1Part6Name = "L. Leg";
-                    Monster1Part7Name = "Tail";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 142://Gasurabazura
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Belly"; //swap to back?
-                    Monster1Part3Name = "L. Arm";
-                    Monster1Part4Name = "R. Arm";
-                    Monster1Part5Name = "L. Leg";
-                    Monster1Part6Name = "R. Leg";
-                    Monster1Part7Name = "Back";
-                    Monster1Part8Name = "Tail";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 148://Brachydios
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Belly";
-                    Monster1Part3Name = "L. Arm";
-                    Monster1Part4Name = "R. Arm";
-                    Monster1Part5Name = "L. Leg";
-                    Monster1Part6Name = "R. Leg";
-                    Monster1Part7Name = "Tail";
-                    Monster1Part8Name = "Back";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 152://Uragaan
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "Belly";
-                    Monster1Part4Name = "Arms";
-                    Monster1Part5Name = "R. Leg";
-                    Monster1Part6Name = "L. Leg";
-                    Monster1Part7Name = "Tail";
-                    Monster1Part8Name = "Back";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Piscine Wyvern Skeleton
-                case 8://Cephadrome
-                case 21://Plesioth
-                case 34://Cephalos
-                case 46://Green Plesioth
-                case 75://Lavasioth
-                case 79://Red Lavasioth
-                case 119://Goruganosu
-                case 120://Aruganosu
-                    Monster1Part1Name = "Body";
-                    Monster1Part2Name = "L. Fin";
-                    Monster1Part3Name = "R. Fin";
-                    Monster1Part4Name = "L. Leg";
-                    Monster1Part5Name = "R. Leg";
-                    Monster1Part6Name = "Neck";
-                    Monster1Part7Name = "Head";
-                    Monster1Part8Name = "Tail";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Leviathan Skeleton
-                case 105://Kuarusepusu
-                case 115://Pokaradon
-                case 117://Poka
-                case 121://Baruragaru
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "R. Foreleg";
-                    Monster1Part4Name = "L. Foreleg";
-                    Monster1Part5Name = "Tail";
-                    Monster1Part6Name = "R. Hindleg";
-                    Monster1Part7Name = "L. Hindleg";
-                    Monster1Part8Name = "Back";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 165://Amatsu
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "Neck";
-                    Monster1Part4Name = "L. Wing";
-                    Monster1Part5Name = "R. Wing";
-                    Monster1Part6Name = "Hindlegs";
-                    Monster1Part7Name = "Tail";
-                    Monster1Part8Name = "Back";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 116://Shantien
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "L. Foreleg";
-                    Monster1Part4Name = "R. Foreleg";
-                    Monster1Part5Name = "Hindlegs";
-                    Monster1Part6Name = "Tail";
-                    Monster1Part7Name = "?";
-                    Monster1Part8Name = "?";
-                    Monster1Part9Name = "?";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Fanged Wyvern Skeleton
-                case 146://Zinogre
-                case 153://Stygian Zinogre
-                case 166://Elzelion
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "Back";
-                    Monster1Part4Name = "L. Foreleg";
-                    Monster1Part5Name = "R. Foreleg";
-                    Monster1Part6Name = "L. Hindleg";
-                    Monster1Part7Name = "R. Hindleg";
-                    Monster1Part8Name = "Tail";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 129://Inagami
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "R. Foreleg";
-                    Monster1Part4Name = "L. Foreleg";
-                    Monster1Part5Name = "R. Hindleg";
-                    Monster1Part6Name = "L. Hindleg";
-                    Monster1Part7Name = "Tail";
-                    Monster1Part8Name = "?";
-                    Monster1Part9Name = "?";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Fanged Beast Wolf Skeleton
-                case 91://Kamu Orugaron
-                case 92://Nono Orugaron
-                case 111://Midogaron
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Back";
-                    Monster1Part3Name = "Body";
-                    Monster1Part4Name = "Forelegs";
-                    Monster1Part5Name = "Hindlegs";
-                    Monster1Part6Name = "Tail";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Carapaceon Skeleton
-                case 48://Daimyo Hermitaur
-                case 66://Hermitaur
-                case 67://Shogun Ceanataur
-                case 73://Ceanataur
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "Skull";
-                    Monster1Part4Name = "L. Legs";
-                    Monster1Part5Name = "R. Legs";
-                    Monster1Part6Name = "L. Claw";
-                    Monster1Part7Name = "R. Claw";
-                    Monster1Part8Name = "Arms";
-                    Monster1Part9Name = "Feeler";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Scorpion Skeleton
-                case 83://Akura Vashimu
-                case 84://Akura Jebia
-                case 143://Kusubami
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "R. Claw";
-                    Monster1Part3Name = "L. Claw";
-                    Monster1Part4Name = "Legs";
-                    Monster1Part5Name = "Body";
-                    Monster1Part6Name = "Tail";
-                    Monster1Part7Name = "Tail Cut";
-                    Monster1Part8Name = "?";
-                    Monster1Part9Name = "?";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Flying Wyvern Skeleton 2
-                case 85://Berukyurosu ( doesn't load properly)
-                case 95://Doragyurosu
-                case 161://Zenaserisu
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "L. Wing";
-                    Monster1Part4Name = "R. Wing";
-                    Monster1Part5Name = "Legs";
-                    Monster1Part6Name = "R. Wingclaw";
-                    Monster1Part7Name = "L. Wingclaw";
-                    Monster1Part8Name = "Tail";
-                    Monster1Part9Name = "Sub Tails";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case 125://Forokururu
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "L. Wing";
-                    Monster1Part4Name = "R. Wing";
-                    Monster1Part5Name = "L. Leg";
-                    Monster1Part6Name = "R. Leg";
-                    Monster1Part7Name = "Belly";
-                    Monster1Part8Name = "Tail";
-                    Monster1Part9Name = "Throat";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Elder Skeleton 2
-                case 7://Lao-Shan Lung
-                case 50://Ashen Lao-Shan Lung
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "Forelegs";
-                    Monster1Part4Name = "Tail/Leg";
-                    Monster1Part5Name = "?";
-                    Monster1Part6Name = "Back";
-                    Monster1Part7Name = "Chest";
-                    Monster1Part8Name = "Body";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Elder Skeleton 3 (TODO doesn't load properly)
-                case 58://Yama Tsukami
-                case 72://Yama Tsukami
-                case 144://Yama Kurai
-                    Monster1Part1Name = "None";
-                    Monster1Part2Name = "None";
-                    Monster1Part3Name = "None";
-                    Monster1Part4Name = "None";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "None";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Shen Gaoren
-                case 55:
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "Skull";
-                    Monster1Part4Name = "L. Foreleg";
-                    Monster1Part5Name = "L. Hindleg";
-                    Monster1Part6Name = "R. Foreleg";
-                    Monster1Part7Name = "R. Hindleg";
-                    Monster1Part8Name = "Claws";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Taikun Zamuza
-                case 103:
-                    Monster1Part1Name = "Body";
-                    Monster1Part2Name = "L. Claw";
-                    Monster1Part3Name = "R. Claw";
-                    Monster1Part4Name = "L. Legs";
-                    Monster1Part5Name = "None";
-                    Monster1Part6Name = "R. Legs";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "Tail";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Raviente
-                case 93:
-                    Monster1Part1Name = "?";
-                    Monster1Part2Name = "?";
-                    Monster1Part3Name = "Body";
-                    Monster1Part4Name = "?";
-                    Monster1Part5Name = "Shell";
-                    Monster1Part6Name = "Tail";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "None";
-                    Monster1Part9Name = "None";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Berserk Raviente (doesn't load properly)
-                case 149:
-                    Monster1Part1Name = "Horn";
-                    Monster1Part2Name = "Head";
-                    Monster1Part3Name = "Neck";
-                    Monster1Part4Name = "Shell";
-                    Monster1Part5Name = "Body";
-                    Monster1Part6Name = "Tail";
-                    Monster1Part7Name = "None";
-                    Monster1Part8Name = "Crystal";
-                    Monster1Part9Name = "Crystal";
-                    Monster1Part10Name = "None";
-                    break;
-
-                //Boggers
-                case 170:
-                case 172: //Blitzkrieg
-                    Monster1Part1Name = "Head";
-                    Monster1Part2Name = "Body";
-                    Monster1Part3Name = "Belly";
-                    Monster1Part4Name = "L. Arm";
-                    Monster1Part5Name = "R. Arm";
-                    Monster1Part6Name = "L. Leg";
-                    Monster1Part7Name = "R. Leg";
-                    Monster1Part8Name = "Tail";
-                    Monster1Part9Name = "Tail Tip";
-                    Monster1Part10Name = "None";
-                    break;
-
-                case > 176:
-                    Monster1Part1Name = "Error";
-                    Monster1Part2Name = "Error";
-                    Monster1Part3Name = "Error";
-                    Monster1Part4Name = "Error";
-                    Monster1Part5Name = "Error";
-                    Monster1Part6Name = "Error";
-                    Monster1Part7Name = "Error";
-                    Monster1Part8Name = "Error";
-                    Monster1Part9Name = "Error";
-                    Monster1Part10Name = "Error";
-                    break;
+                return "Error: ";
             }
-
-            string partName = number switch
+            else
             {
-                1 => Monster1Part1Name,
-                2 => Monster1Part2Name,
-                3 => Monster1Part3Name,
-                4 => Monster1Part4Name,
-                5 => Monster1Part5Name,
-                6 => Monster1Part6Name,
-                7 => Monster1Part7Name,
-                8 => Monster1Part8Name,
-                9 => Monster1Part9Name,
-                10 => Monster1Part10Name,
-                _ => "None",
-            };
-            return string.Format("{0}: ", partName);
+                if (number <= 0 && number >= 11)
+                    return "None: ";
+                else
+                    return string.Format("{0}: ", FindPartName(number, monsterID));
+            }
+        }
+
+        /// <summary>
+        /// https://stackoverflow.com/a/35775810/18859245
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        private string FindPartName(int number, int monsterID)
+        {
+            List<int> partMonsterGroup = new List<int> {0};
+
+            foreach (KeyValuePair<List<int>, List<string>> kvp in MonsterPartDictionary.MonsterPartID)
+            {
+                List<int> monsterIDs = kvp.Key;
+                List<string> partNames = kvp.Value;
+
+                if (monsterIDs.Contains(monsterID))
+                {
+                    partMonsterGroup = kvp.Key;
+                    break;
+                }
+            }
+            return DeterminePartName(partMonsterGroup, number-1);
+        }
+
+        private string DeterminePartName(List<int> key, int slot)
+        {
+            string part = MonsterPartDictionary.MonsterPartID[key][slot];
+            if (part == null)
+                return "None";
+            else
+                return part;
         }
 
         public string Monster1Part1Number
@@ -2641,384 +1873,9 @@ namespace MHFZ_Overlay.addresses
                 else if (QuestID() == 23648 || QuestID() == 23649)
                     return "Arrogant Duremudira";
 
-                switch (id)
-                {
-                    case 0: //none
-                        return "None";
-                    case 1:
-                        return "Rathian";
-                    case 2:
-                        return "Fatalis";
-                    case 3:
-                        return "Kelbi";
-                    case 4:
-                        return "Mosswine";
-                    case 5:
-                        return "Bullfango";
-                    case 6:
-                        return "Yian Kut-Ku";
-                    case 7:
-                        return "Lao-Shan Lung";
-                    case 8:
-                        return "Cephadrome";
-                    case 9:
-                        return "Felyne";
-                    case 10: //veggie elder
-                        return "Veggie Elder";
-                    case 11:
-                        return "Rathalos";
-                    case 12:
-                        return "Aptonoth";
-                    case 13:
-                        return "Genprey";
-                    case 14:
-                        return "Diablos";
-                    case 15:
-                        return "Khezu";
-                    case 16:
-                        return "Velociprey";
-                    case 17:
-                        return "Gravios";
-                    case 18:
-                        return "Felyne";
-                    case 19:
-                        return "Vespoid";
-                    case 20:
-                        return "Gypceros";
-                    case 21:
-                        return "Plesioth";
-                    case 22:
-                        return "Basarios";
-                    case 23:
-                        return "Melynx";
-                    case 24:
-                        return "Hornetaur";
-                    case 25:
-                        return "Apceros";
-                    case 26:
-                        return "Monoblos";
-                    case 27:
-                        return "Velocidrome";
-                    case 28:
-                        return "Gendrome";
-                    case 29://rocks
-                        return "Rocks";
-                    case 30:
-                        return "Ioprey";
-                    case 31:
-                        return "Iodrome";
-                    case 32://pugis
-                        return "Poogie";
-                    case 33:
-                        return "Kirin";
-                    case 34:
-                        return "Cephalos";
-                    case 35:
-                        return "Giaprey";
-                    case 36:
-                        return "Crimson Fatalis";
-                    case 37:
-                        return "Pink Rathian";
-                    case 38:
-                        return "Blue Yian Kut-Ku";
-                    case 39:
-                        return "Purple Gypceros";
-                    case 40:
-                        return "Yian Garuga";
-                    case 41:
-                        return "Silver Rathalos";
-                    case 42:
-                        return "Gold Rathian";
-                    case 43:
-                        return "Black Diablos";
-                    case 44:
-                        return "White Monoblos";
-                    case 45:
-                        return "Red Khezu";
-                    case 46:
-                        return "Green Plesioth";
-                    case 47:
-                        return "Black Gravios";
-                    case 48:
-                            return "Daimyo Hermitaur";
-                    case 49:
-                        return "Azure Rathalos";
-                    case 50:
-                        return "Ashen Lao-Shan Lung";
-                    case 51:
-                            return "Blangonga";
-                    case 52:
-                        return "Congalala";
-                    case 53:
-                            return "Rajang";
-                    case 54:
-                        return "Kushala Daora";
-                    case 55:
-                        return "Shen Gaoren";
-                    case 56:
-                        return "Great Thunderbug";
-                    case 57:
-                        return "Shakalaka";
-                    case 58:
-                        return "Yama Tsukami";
-                    case 59:
-                        return "Chameleos";
-                    case 60:
-                        return "Rusted Kushala Daora";
-                    case 61:
-                        return "Blango";
-                    case 62:
-                        return "Conga";
-                    case 63:
-                        return "Remobra";
-                    case 64:
-                        return "Lunastra";
-                    case 65:
-                            return "Teostra";
-                    case 66:
-                        return "Hermitaur";
-                    case 67:
-                        return "Shogun Ceanataur";
-                    case 68:
-                        return "Bulldrome";
-                    case 69:
-                        return "Anteka";
-                    case 70:
-                        return "Popo";
-                    case 71:
-                            return "White Fatalis";
-                    case 72:
-                        return "Yama Tsukami";
-                    case 73:
-                        return "Ceanataur";
-                    case 74:
-                        return "Hypnoc";
-                    case 75:
-                        return "Lavasioth";
-                    case 76:
-                            return "Tigrex";
-                    case 77:
-                        return "Akantor";
-                    case 78:
-                        return "Bright Hypnoc";
-                    case 79:
-                        return "Red Lavasioth";
-                    case 80:
-                            return "Espinas";
-                    case 81:
-                        return "Orange Espinas";
-                    case 82:
-                        return "Silver Hypnoc";
-                    case 83:
-                            return "Akura Vashimu";
-                    case 84:
-                        return "Akura Jebia";
-                    case 85:
-                        return "Berukyurosu";
-                    case 86://cactus
-                        return "Cactus";
-                    case 87://gorge objects
-                        return "Gorge Object";
-                    case 88://gorge rocks
-                        return "Gorge Rock";
-                    case 89:
-                        if (RankBand() == 54)
-                            return "Thirsty Pariapuria";
-                        else
-                            return "Pariapuria";
-                    case 90:
-                        return "White Espinas";
-                    case 91:
-                        return "Kamu Orugaron";
-                    case 92:
-                        return "Nono Orugaron";
-                    case 93:
-                        return "Raviente";
-                    case 94:
-                        return "Dyuragaua";
-                    case 95:
-                            return "Doragyurosu";
-                    case 96:
-                        return "Gurenzeburu";
-                    case 97:
-                        return "Burukku";
-                    case 98:
-                        return "Erupe";
-                    case 99:
-                            return "Rukodiora";
-                    case 100:
-                            return "Unknown";
-                    case 101:
-                        return "Gogomoa";
-                    case 102://kokomoa
-                        return "Kokomoa";
-                    case 103:
-                            return "Taikun Zamuza";
-                    case 104:
-                        return "Abiorugu";
-                    case 105:
-                        return "Kuarusepusu";
-                    case 106:
-                            return "Odibatorasu";
-                    case 107:
-                            return "Disufiroa";
-                    case 108:
-                        return "Rebidiora";
-                    case 109:
-                            return "Anorupatisu";
-                    case 110:
-                            return "Hyujikiki";
-                    case 111:
-                            return "Midogaron";
-                    case 112:
-                            return "Giaorugu";
-                    case 113:
-                        if (RankBand() == 55)
-                            return "Shifting Mi Ru";
-                        else
-                            return "Mi Ru";
-                    case 114:
-                        return "Farunokku";
-                    case 115:
-                        return "Pokaradon";
-                    case 116:
-                            return "Shantien";
-                    case 117:
-                        return "Pokara";
-                    case 118://dummy
-                        return "Dummy";
-                    case 119:
-                        return "Goruganosu";
-                    case 120:
-                        return "Aruganosu";
-                    case 121:
-                            return "Baruragaru";
-                    case 122:
-                        return "Zerureusu";
-                    case 123:
-                        return "Gougarf";
-                    case 124:
-                        return "Uruki";
-                    case 125:
-                        return "Forokururu";
-                    case 126:
-                        return "Meraginasu";
-                    case 127:
-                        return "Diorex";
-                    case 128:
-                        return "Garuba Daora";
-                    case 129:
-                            return "Inagami";
-                    case 130:
-                        return "Varusaburosu";
-                    case 131:
-                        return "Poborubarumu";
-                    case 132:
-                        return "Duremudira";
-                    case 133://UNK
-                        return "UNK";
-                    case 134:
-                        return "Felyne";
-                    case 135://blue npc
-                        return "Blue NPC";
-                    case 136://UNK
-                        return "UNK";
-                    case 137://cactus
-                        return "Cactus";
-                    case 138://veggie elders
-                        return "Veggie Elder";
-                    case 139:
-                        return "Gureadomosu";
-                    case 140:
-                            return "Harudomerugu";
-                    case 141:
-                            return "Toridcless";
-                    case 142:
-                            return "Gasurabazura";
-                    case 143:
-                        return "Kusubami";
-                    case 144:
-                        return "Yama Kurai";
-                    case 145://3rd phase duremudira
-                        return "Duremudira";
-                    case 146:
-                        if (RankBand() >= 54 && RankBand() <= 55)
-                            return "Howling Zinogre";
-                        else
-                            return "Zinogre";
-                    case 147:
-                        return "Deviljho";
-                    case 148:
-                        return "Brachydios";
-                    case 149:
-                        return "Berserk Raviente";
-                    case 150:
-                        return "Toa Tesukatora";
-                    case 151:
-                        return "Barioth";
-                    case 152:
-                        return "Uragaan";
-                    case 153:
-                        return "Stygian Zinogre";
-                    case 154:
-                        if (RankBand() >= 54 && RankBand() <= 55)
-                            return "Ruling Guanzorumu";
-                        else
-                            return "Guanzorumu";
-                    case 155:
-                        if (RankBand() == 55)
-                            return "Golden Deviljho";
-                        else
-                            return "Starving Deviljho";
-                    case 156://UNK
-                        return "UNK";
-                    case 157://egyurasu
-                        return "Egyurasu";
-                    case 158:
-                        return "Voljang";
-                    case 159:
-                        return "Nargacuga";
-                    case 160:
-                        return "Keoaruboru";
-                    case 161:
-                        return "Zenaserisu";
-                    case 162:
-                        return "Gore Magala";
-                    case 163:
-                        return "Blinking Nargacuga";
-                    case 164:
-                        return "Shagaru Magala";
-                    case 165:
-                        return "Amatsu";
-                    case 166:
-                        if (RankBand() >= 54 && RankBand() <= 55)
-                            return "Burning Freezing Elzelion";
-                        else
-                            return "Elzelion";
-                    case 167:
-                        return "Arrogant Duremudira";
-                    case 168://rocks
-                        return "Rock";
-                    case 169:
-                        return "Seregios";
-                    case 170:
-                        return "Bogabadorumu";
-                    case 171://unknown blue barrel
-                        return "Blue Barrel";
-                    case 172:
-                        return "Blitzkrieg Bogabadorumu";
-                    case 173://costumed uruki
-                        return "Uruki";
-                    case 174:
-                        return "Sparkling Zerureusu";
-                    case 175://PSO2 Rappy
-                        return "PSO2 Rappy";
-                    case 176:
-                        return "King Shakalaka";
-                    default:
-                        return "Loading...";
-                }
+                return DetermineMonsterName(id);
             }
+
             //quest ids:
             //mp road: 23527
             //solo road: 23628
@@ -3035,6 +1892,71 @@ namespace MHFZ_Overlay.addresses
             //UNUSED sky corridor: 21730
             //sky corridor prologue: 21729
 
+        }
+
+        public string DetermineMonsterName(int id)
+        {
+            bool keyFound = MonsterNameDictionary.MonsterNameID.TryGetValue(id, out string? link);
+            if (link == null)
+                link = "Loading...";
+            if (keyFound)
+                return link;
+            else
+                return GetAlternateMonsterName(id);
+        }
+
+        public string GetAlternateMonsterName(int id)
+        {
+            switch (id)
+            {
+                case 65:
+                    if (RankBand() == 32)
+                        return "Supremacy Teostra";
+                    else
+                        return "Teostra";
+                case 89:
+                    if (RankBand() == 32 || RankBand() == 54)
+                        return "Thirsty Pariapuria";
+                    else
+                        return "Pariapuria";
+                case 95:
+                    if (RankBand() == 32)
+                        return "Supremacy Doragyurosu";
+                    else
+                        return "Doragyurosu";
+                case 106:
+                    if (RankBand() == 32)
+                        return "Supremacy Odibatorasu";
+                    else
+                        return "Odibatorasu";
+                case 113:
+                    if (RankBand() == 55)
+                        return "Shifting Mi Ru";
+                    else
+                        return "Mi Ru";
+                case 146:
+                    if (RankBand() >= 54 && RankBand() <= 55)
+                        return "Howling Zinogre";
+                    else
+                        return "Zinogre";
+                case 154:
+                    if (RankBand() >= 54 && RankBand() <= 55)
+                        return "Ruling Guanzorumu";
+                    else
+                        return "Guanzorumu";
+                case 155:
+                    if (RankBand() == 55)
+                        return "Golden Deviljho";
+                    else
+                        return "Starving Deviljho";
+                case 166:
+                    if (RankBand() >= 54 && RankBand() <= 55)
+                        return "Burning Freezing Elzelion";
+                    else
+                        return "Elzelion";
+                default:
+                    return "Loading...";
+            }
         }
 
         /// <summary>
@@ -3250,14 +2172,19 @@ namespace MHFZ_Overlay.addresses
                 else if (QuestID() == 23648 || QuestID() == 23649)
                     id = 167;
 
-                bool keyFound = MonsterImage.MonsterImageID.TryGetValue(id, out string? link);
-                if (link == null)
-                    link = "https://i.imgur.com/3pQEtzw.png";
-                if (keyFound)
-                    return link;
-                else
-                    return GetAlternateMonsterImage(id);
+                return DetermineMonsterImage(id);
             }
+        }
+
+        public string DetermineMonsterImage(int id)
+        {
+            bool keyFound = MonsterImageDictionary.MonsterImageID.TryGetValue(id, out string? link);
+            if (link == null)
+                link = "https://i.imgur.com/3pQEtzw.png";
+            if (keyFound)
+                return link;
+            else
+                return GetAlternateMonsterImage(id);
         }
 
         public string CurrentMap

@@ -10,7 +10,7 @@
     <UseWindowsForms>True</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>mhfzoverlayicon256.ico</ApplicationIcon>
-    <RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
+    <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
 	<EnableWindowsTargeting>true</EnableWindowsTargeting>
 	<CodeAnalysisRuleSet>..\.sonarlint\dorielrivalet_mhfz_overlaycsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
