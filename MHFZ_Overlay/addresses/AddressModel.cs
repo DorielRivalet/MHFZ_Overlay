@@ -820,7 +820,6 @@ namespace MHFZ_Overlay.addresses
             foreach (KeyValuePair<List<int>, List<string>> kvp in MonsterPartDictionary.MonsterPartID)
             {
                 List<int> monsterIDs = kvp.Key;
-                List<string> partNames = kvp.Value;
 
                 if (monsterIDs.Contains(monsterID))
                 {
@@ -831,7 +830,7 @@ namespace MHFZ_Overlay.addresses
             return DeterminePartName(partMonsterGroup, number-1);
         }
 
-        private string DeterminePartName(List<int> key, int slot)
+        private static string DeterminePartName(List<int> key, int slot)
         {
             string part = MonsterPartDictionary.MonsterPartID[key][slot];
             if (part == null)
@@ -1910,9 +1909,6 @@ namespace MHFZ_Overlay.addresses
             switch (id)
             {
                 case 65:
-                    if (RankBand() == 32)
-                        return "Supremacy Teostra";
-                    else
                         return "Teostra";
                 case 89:
                     if (RankBand() == 54)
@@ -1920,14 +1916,8 @@ namespace MHFZ_Overlay.addresses
                     else
                         return "Pariapuria";
                 case 95:
-                    if (RankBand() == 32)
-                        return "Supremacy Doragyurosu";
-                    else
                         return "Doragyurosu";
                 case 106:
-                    if (RankBand() == 32)
-                        return "Supremacy Odibatorasu";
-                    else
                         return "Odibatorasu";
                 case 113:
                     if (RankBand() == 55)
