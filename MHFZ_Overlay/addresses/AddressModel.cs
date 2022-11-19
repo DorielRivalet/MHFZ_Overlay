@@ -1915,7 +1915,7 @@ namespace MHFZ_Overlay.addresses
                     else
                         return "Teostra";
                 case 89:
-                    if (RankBand() == 32 || RankBand() == 54)
+                    if (RankBand() == 54)
                         return "Thirsty Pariapuria";
                     else
                         return "Pariapuria";
