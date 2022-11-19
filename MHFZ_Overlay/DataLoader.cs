@@ -94,7 +94,10 @@ namespace MHFZ_Overlay
                 {
                     CreateCodeCave(PID);
                 }
-                catch (Exception) { }
+                catch (Exception)
+                {
+                    // hi
+                }
                 if (!isHighGradeEdition)
                     model = new AddressModelNotHGE(m);
                 else

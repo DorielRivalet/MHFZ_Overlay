@@ -5,6 +5,7 @@ using Memory;
 using MHFZ_Overlay.addresses;
 using Octokit;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -1407,358 +1408,36 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public static string GetAreaIconFromID(int id) //TODO: are highlands, tidal island or painted falls icons correct?
         {
-            switch (id)
+            if (id >= 470 && id < 0)
+                return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/icon/cattleya.png";
+            else
+                return FindAreaIcon(id);
+        }
+
+        private static string FindAreaIcon(int id)
+        {
+            List<int> AreaGroup = new List<int> { 0 };
+
+            foreach (KeyValuePair<List<int>, string> kvp in AreaIconDictionary.AreaIconID)
             {
-                case 0://Loading
-                    return "https://i.imgur.com/Dwdfpen.png";
-                case 1://Jungle areas
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 18:
-                case 19:
-                case 22:
-                case 23:
-                case 26:
-                case 110:
-                case 111:
-                case 112:
-                case 113:
-                case 114:
-                case 115:
-                case 116:
-                case 117:
-                case 118:
-                case 119:
-                case 120:
-                case 212:
-                case 213:
-                    return "https://i.imgur.com/IZ8Zrv4.png";
-                case 6: //Snowy mountain areas
-                case 15:
-                case 92:
-                case 93:
-                case 94:
-                case 95:
-                case 96:
-                case 97:
-                case 98:
-                case 99:
-                case 100:
-                case 101:
-                case 102:
-                case 103:
-                case 104:
-                case 105:
-                case 106:
-                case 107:
-                case 108:
-                case 109:
-                case 218:
-                case 219:
-                    return "https://i.imgur.com/LLr0RoN.png";
-                case 7: //Desert areas
-                case 24:
-                case 45:
-                case 47:
-                case 48:
-                case 49:
-                case 50:
-                case 51:
-                case 52:
-                case 53:
-                case 54:
-                case 55:
-                case 56:
-                case 140:
-                case 141:
-                case 142:
-                case 143:
-                case 144:
-                case 145:
-                case 146:
-                case 147:
-                case 148:
-                case 149:
-                case 150:
-                case 214:
-                case 215:
-                    return "https://i.imgur.com/qmLxGj3.png";
-                case 8://Volcano areas
-                case 27:
-                case 58:
-                case 59:
-                case 60:
-                case 61:
-                case 62:
-                case 63:
-                case 64:
-                case 65:
-                case 74:
-                case 161:
-                case 162:
-                case 163:
-                case 164:
-                case 165:
-                case 166:
-                case 167:
-                case 168:
-                case 169:
-                case 216:
-                case 217:
-                case 220:
-                case 221:
-                case 222:
-                case 223:
-                    return "https://i.imgur.com/m18pzvD.png";
-                case 9://Swamp areas
-                case 16:
-                case 29:
-                case 44:
-                case 67:
-                case 68:
-                case 69:
-                case 70:
-                case 71:
-                case 72:
-                case 73:
-                case 75:
-                case 151:
-                case 152:
-                case 153:
-                case 154:
-                case 155:
-                case 156:
-                case 157:
-                case 158:
-                case 159:
-                case 160:
-                    return "https://i.imgur.com/i9oRjSE.png";
-                case 21://Forest and Hills areas
-                case 32:
-                case 33:
-                case 34:
-                case 35:
-                case 36:
-                case 37:
-                case 38:
-                case 39:
-                case 40:
-                case 41:
-                case 42:
-                case 43:
-                case 184:
-                case 185:
-                case 186:
-                case 187:
-                case 188:
-                case 189:
-                case 190:
-                case 191:
-                case 192:
-                case 193:
-                case 194:
-                case 195:
-                case 196:
-                    return "https://i.imgur.com/mSCOW0P.png";
-                case 224://Great Forest areas
-                case 225:
-                case 226:
-                case 227:
-                case 228:
-                case 229:
-                case 230:
-                case 231:
-                case 232:
-                case 233:
-                case 234:
-                case 235:
-                case 236:
-                case 237:
-                case 238:
-                case 239:
-                case 240:
-                case 241:
-                    return "https://i.imgur.com/prSGAFU.png";
-                case 247://Highlands areas
-                case 248:
-                case 249:
-                case 250:
-                case 251:
-                case 252:
-                case 253:
-                case 254:
-                case 255:
-                case 302:
-                case 303:
-                case 304:
-                case 305:
-                case 306:
-                case 307:
-                case 308:
-                    return "https://i.imgur.com/2HkWBN6.png";
-                case 322://Tidal Island areas
-                case 323:
-                case 324:
-                case 325:
-                case 326:
-                case 327:
-                case 328:
-                case 329:
-                case 330:
-                case 331:
-                case 332:
-                case 333:
-                case 334:
-                case 335:
-                case 336:
-                case 337:
-                case 338:
-                case 339:
-                    return "https://i.imgur.com/31ounTS.png";
-                case 345://Polar Sea areas
-                case 346:
-                case 347:
-                case 348:
-                case 349:
-                case 350:
-                case 351:
-                case 352:
-                case 353:
-                case 354:
-                case 355:
-                case 356:
-                case 357:
-                case 358:
-                    return "https://i.imgur.com/XpIow4u.png";
-                case 361://Flower Field areas
-                case 362:
-                case 363:
-                case 364:
-                case 365:
-                case 366:
-                case 367:
-                case 368:
-                case 369:
-                case 370:
-                case 371:
-                case 372:
-                    return "https://i.imgur.com/ybX6w9G.png";
-                case 390://TODO test
-                case 391://Tower / Tenrou (Sky Corridor) areas
-                case 392:
-                case 393:
-                case 394:
-                case 415:
-                case 416:
-                    return "https://i.imgur.com/Kq8qx0P.png";
-                case 399://dure doorway
-                case 414://dure door
-                    return "https://i.imgur.com/ylzLXo8.gif";
-                case 400://White Lake areas
-                case 401:
-                case 402:
-                case 403:
-                case 404:
-                case 405:
-                case 406:
-                case 407:
-                case 408:
-                case 409:
-                case 410:
-                case 411:
-                case 412:
-                case 413:
-                    return "https://i.imgur.com/qz6XfEq.png";
-                case 423://Painted Falls areas
-                case 424:
-                case 425:
-                case 426:
-                case 427:
-                case 428:
-                case 429:
-                case 430:
-                case 431:
-                case 432:
-                case 433:
-                case 434:
-                case 435:
-                case 436:
-                    return "https://i.imgur.com/36TTe1a.png";
-                case 459://Hunter's Road Base Camp
-                    return "https://i.imgur.com/MEPAa5x.png";
-                case 288://Gorge areas
-                case 289:
-                case 290:
-                case 291:
-                case 292:
-                case 293:
-                case 294:
-                case 295:
-                case 296:
-                case 297:
-                case 298:
-                case 299:
-                case 300:
-                case 301:
-                    return "https://i.imgur.com/EKfebRg.png";
+                List<int> areaIDs = kvp.Key;
 
-
-
-
-                case 200://Mezeporta
-                case 397://Mezeporta dupe non-HD
-                    return "https://i.imgur.com/c4iPpu8.png"; //cattleya
-                case 173://My Houses
-                case 175:
-                    return "https://i.imgur.com/MwGHMuD.png";
-                case 201://Hairdresser
-                    return "https://i.imgur.com/ADsy9ml.png";
-                case 202: //Guild Halls
-                case 203:
-                case 204:
-                    return "https://i.imgur.com/3wSfRmu.png'";
-                case 205://Pugi Farm
-                    return "https://i.imgur.com/Bi5xwQo.png";
-                case 210://Private Bar
-                case 211://Rasta Bar
-                    return "https://i.imgur.com/c08AXk3.png";
-                case 256://Caravan Areas
-                case 260:
-                case 261:
-                case 262:
-                case 263:
-                    return "https://i.imgur.com/YgPzhKw.png";
-                case 257://Blacksmith
-                    return "https://i.imgur.com/nZ1E0KR.png";
-                case 264://Gallery
-                    return "https://i.imgur.com/7f4bwjx.png";
-                case 265://Guuku Farm
-                    return "https://i.imgur.com/4930Pa9.png";
-                case 283://Halk Area
-                    return "https://i.imgur.com/N0NyS0U.png";
-                case 286://PvP Room
-                    return "https://i.imgur.com/QxkNRac.png";
-                case 340: //SR Rooms
-                case 341:
-                    return "https://i.imgur.com/C7te61a.png";
-                case 379://Diva Halls
-                case 445:
-                    return "https://i.imgur.com/76eoGbY.png";
-                //case road?
-                case 462: //MezFes areas
-                case 463:
-                case 464:
-                case 465:
-                case 466:
-                case 467:
-                case 468:
-                case 469:
-                    return "https://i.imgur.com/EcQLTmm.png";
-                default:
-                    return "https://i.imgur.com/c4iPpu8.png";//cattleya
+                if (areaIDs.Contains(id))
+                {
+                    AreaGroup = kvp.Key;
+                    break;
+                }
             }
+            return DetermineAreaIcon(AreaGroup);
+        }
+
+        private static string DetermineAreaIcon(List<int> key)
+        {
+            string areaIcon = AreaIconDictionary.AreaIconID[key];
+            if (areaIcon == null)
+                return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/icon/cattleya.png";
+            else
+                return areaIcon;
         }
 
         /// <summary>
@@ -3015,10 +2694,6 @@ namespace MHFZ_Overlay
         }
         #endregion clickbuttons
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
 /// <TODO>

@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         x:Name="Window"
         Title="MHF-Z Overlay" Height="2160" Width="3840 " Background="Transparent" AllowsTransparency="True" WindowStyle="None" FontFamily="{StaticResource Source Code Pro Bold}"
-        Style="{StaticResource WinAll}" Loaded="Window_Loaded">
+        Style="{StaticResource WinAll}">
     <Window.Resources>
         <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
         <RoutedUICommand x:Key="ESC" Text="Escape"/>
