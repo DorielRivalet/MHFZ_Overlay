@@ -69,7 +69,7 @@ namespace MHFZ_Overlay
             return s.FeriasVersionLink;
         }
 
-        public MonsterInfo[] monsterInfos = new MonsterInfo[]
+        private MonsterInfo[] monsterInfos = new MonsterInfo[]
         {
             new MonsterInfo("[Musou] Arrogant Duremudira",
                 "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dolem_n.htm",

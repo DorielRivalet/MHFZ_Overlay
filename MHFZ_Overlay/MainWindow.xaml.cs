@@ -109,7 +109,7 @@ namespace MHFZ_Overlay
         /// <value>
         /// The client.
         /// </value>
-        public DiscordRpcClient Client;
+        private DiscordRpcClient Client;
 
         //Called when your application first starts.
         //For example, just before your main loop, on OnEnable for unity.
@@ -262,7 +262,7 @@ namespace MHFZ_Overlay
         /// <summary>
         /// Is the main loop currently running?
         /// </summary>
-        public bool isDiscordRPCRunning = false;
+        private bool isDiscordRPCRunning = false;
 
         /// <summary>
         /// Initializes the discord RPC.
@@ -291,7 +291,7 @@ namespace MHFZ_Overlay
                 }
 
                 //should work fine
-                presenceTemplate.Buttons = new DiscordRPC.Button[] { }; ;
+                presenceTemplate.Buttons = new DiscordRPC.Button[] { };
                 presenceTemplate.Buttons = new DiscordRPC.Button[]
                 {
                     new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
@@ -300,7 +300,7 @@ namespace MHFZ_Overlay
 
                 if (GetDiscordServerInvite != "")
                 {
-                    presenceTemplate.Buttons = new DiscordRPC.Button[] { }; ;
+                    presenceTemplate.Buttons = new DiscordRPC.Button[] { };
                     presenceTemplate.Buttons = new DiscordRPC.Button[]
                     {
                     new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
@@ -395,7 +395,9 @@ namespace MHFZ_Overlay
             System.Diagnostics.Process.Start(sInfo);
         }
 
-        public bool isLatestRelease;
+        private bool isLatestRelease;
+        private bool closedGame;
+        private bool isInLauncherBool;
 
         public void CheckGameState()
         {
@@ -418,11 +420,11 @@ namespace MHFZ_Overlay
                 if (className == "MHFLAUNCH")
                 {
                     System.Windows.MessageBox.Show("Detected launcher, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                    DataLoader.isInLauncher = true;
+                    isInLauncherBool = true;
                 }
                 else
                 {
-                    DataLoader.isInLauncher = false;
+                    isInLauncherBool = false;
                 }
 
                 //https://stackoverflow.com/questions/51148/how-do-i-find-out-if-a-process-is-already-running-using-c
@@ -432,8 +434,8 @@ namespace MHFZ_Overlay
                 mhfProcess.EnableRaisingEvents = true;
                 mhfProcess.Exited += (sender, e) =>
                 {
-                    
-                    DataLoader.closedGame = true;
+
+                    closedGame = true;
                     Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
                     if (s.EnableAutoClose)
@@ -448,7 +450,7 @@ namespace MHFZ_Overlay
                         System.Windows.MessageBox.Show("Detected closed game, please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
                     }
                 };
-            };
+            }
         }
 
 
@@ -1487,9 +1489,9 @@ namespace MHFZ_Overlay
 
             if (DataLoader.model.Configuring)
                 return "(Configuring) ";
-            else if (DataLoader.closedGame)
+            else if (closedGame)
                 return "(Closed Game) ";
-            else if (DataLoader.isInLauncher || isInLauncher() == "Yes") //works?
+            else if (isInLauncherBool || isInLauncher() == "Yes") //works?
                 return "(Launcher) ";
             else if (isInLauncher() == "NULL")
                 return "(No game detected) ";
@@ -1553,8 +1555,8 @@ namespace MHFZ_Overlay
                 return false;
         }
 
-        public int currentMonster1MaxHP = 0;
-        public string currentMonster1HPPercent = "";
+        private int currentMonster1MaxHP = 0;
+        private string currentMonster1HPPercent = "";
 
         /// <summary>
         /// Gets the monster1 ehp percent.
@@ -1911,7 +1913,7 @@ namespace MHFZ_Overlay
                         return "";
                     case 21731://1st district dure
                     case 21749://sky corridor version
-                        return "Slay 1st District Duremudira | "; ;
+                        return "Slay 1st District Duremudira | ";
                     case 21746://2nd district dure
                     case 21750://sky corridor version
                         return "Slay 2nd District Duremudira | ";
@@ -1964,7 +1966,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetQuestState()
         {
-            if (DataLoader.isInLauncher) //works?
+            if (isInLauncherBool) //works?
                 return "";
 
             switch (DataLoader.model.QuestState())
@@ -2015,7 +2017,7 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(),GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
+            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(),GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.IsHighGradeEdition));
 
             //quest ids:
             //mp road: 23527
@@ -2616,7 +2618,7 @@ namespace MHFZ_Overlay
         {
             if (IsDragConfigure) return;
 
-            if (DataLoader.isInLauncher)
+            if (isInLauncherBool)
                 System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
 
             if (configWindow == null || !configWindow.IsLoaded)

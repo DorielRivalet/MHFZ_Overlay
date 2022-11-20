@@ -22,9 +22,14 @@ namespace MHFZ_Overlay
         #region DataLoaderVariables
         //needed for getting data
         readonly Mem m = new();
-        public bool isHighGradeEdition;
-        public bool isInLauncher;
-        public bool closedGame;
+        private bool isHighGradeEdition;
+
+        public bool IsHighGradeEdition
+        {
+            get { return isHighGradeEdition; }
+            set { isHighGradeEdition = value; }
+        }
+
         int index;
         /// <summary>
         /// Gets the model.
@@ -198,6 +203,5 @@ namespace MHFZ_Overlay
             }
             return proccess;
         }
-
     }
 }

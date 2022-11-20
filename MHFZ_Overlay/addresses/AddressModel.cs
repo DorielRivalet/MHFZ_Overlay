@@ -22,8 +22,8 @@ namespace MHFZ_Overlay.addresses
 
         public readonly Mem M;
 
-        public int SavedMonster1MaxHP = 0;
-        public int SavedMonster2MaxHP = 0;
+        private int SavedMonster1MaxHP = 0;
+        private int SavedMonster2MaxHP = 0;
         private int SavedMonster3MaxHP = 0;
         private int SavedMonster4MaxHP = 0;
 
@@ -33,9 +33,21 @@ namespace MHFZ_Overlay.addresses
 
         public AddressModel(Mem m) => M = m;
 
-        public int SelectedMonster = 0;
+        private int selectedMonster = 0;
 
-        public string SavedGearStats = "";
+        public int SelectedMonster
+        {
+            get { return selectedMonster; }
+            set { selectedMonster = value; }
+        }
+
+        private string savedGearStats = "";
+
+        public string SavedGearStats
+        {
+            get { return savedGearStats; }
+            set { savedGearStats = value; }
+        }
 
         #endregion
 
@@ -675,7 +687,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public bool _configuring = false;
+        private bool _configuring = false;
 
         /// <summary>
         /// Shows the monster ehp.
@@ -1071,9 +1083,9 @@ namespace MHFZ_Overlay.addresses
             else return "Never";
         }
 
-        public int MaxSharpness = 0;
+        private int MaxSharpness = 0;
 
-        public string TimeLeftPercent = "";
+        private string TimeLeftPercent = "";
 
         public string TimeLeftPercentNumber
         {
@@ -1177,7 +1189,19 @@ namespace MHFZ_Overlay.addresses
         }
 
         //per quest
-        public int HighestAtk = 0;
+        private int highestAtk = 0;
+
+        public int HighestAtk
+        {
+            get
+            {
+                return highestAtk;
+            }
+            set
+            {
+                highestAtk = value;
+            }
+        }
 
         /// <summary>
         /// Shows the color of the highest atk.
@@ -1342,8 +1366,6 @@ namespace MHFZ_Overlay.addresses
                 };
             }
         }
-
-        public bool isMonsterFocused = false;
 
         /// <summary>
         /// Displays the monster ehp.
@@ -1965,7 +1987,7 @@ namespace MHFZ_Overlay.addresses
             if (monstername != null && monstername != RealMonsterName && isFirstMonster)
                 return string.Format("{0}{1}", GetRankName(RankBand()), RealMonsterName);
             else
-                return string.Format("{0}{1}", GetRankName(RankBand()), monstername); ;
+                return string.Format("{0}{1}", GetRankName(RankBand()), monstername);
         }
 
         #region monster hp
@@ -2279,11 +2301,8 @@ namespace MHFZ_Overlay.addresses
                 string className = GetWeaponClass();
                 string lv = GetWeaponNameFromType(WeaponType()).Contains("Bowgun") ? GetGRWeaponLevel(GRWeaponLvBowguns()) : GetGRWeaponLevel(GRWeaponLv());
 
-                if (GetTextFormat() == "Markdown")
-                {
-                    if (lv == " Lv. 50" || lv == " Lv. 100")
-                        lv = string.Format("**{0}**", lv);
-                }
+                if ((GetTextFormat() == "Markdown") && (lv == " Lv. 50" || lv == " Lv. 100"))
+                    lv = string.Format("**{0}**", lv);
 
                 var style = WeaponStyle() switch
                 {
@@ -4106,7 +4125,19 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
-        public string MarkdownSavedGearStats = "";
+        private string markdownSavedGearStats = "";
+
+        public string MarkdownSavedGearStats
+        {
+            get
+            {
+                return markdownSavedGearStats;
+            }
+            set
+            {
+                markdownSavedGearStats = value;
+            }
+        }
 
         /// <summary>
         /// Determines whether [is fixed GSR skill value] [the specified skill name].
@@ -7100,8 +7131,6 @@ namespace MHFZ_Overlay.addresses
                     "※Attention\r\n・When Guild Poogie's \"Poogie Reward Technique\" is activated, the basic reward frame may exceed the upper limit and all 3 rows (24 frames) may become reward frames.\r\n・When a PT (2-4 people) of the same hunting party goes on a quest with different street name titles set for each other, the \"Street Name Title Skill (equivalent to Luck)\" will be activated with a certain probability. (Priority is given to the \"Great Luck\" skill.)\r\n・If you have a Super Lucky Charm, a Large Lucky Charm, or have purchased the Assist Course, it has the same effect as the Great Luck Skill.\r\n・Some quest rewards have fixed slots, in which case only the specified amount of reward slots will appear, regardless of luck skill, etc.\n\n" +
                     "●\u3000Obtaining Reward Materials\r\nOnce the number of frames has been determined, reward materials will be picked via RNG from a list according to the probability, and will be placed in order from the first frame.\r\nQuest rewards may have a fixed item, and always only the first slot will have a fixed item, not a RNG.\r\nFinally, each reward is sorted by item code.\r\nAdditional rewards for hunting HC Red Rajang, HC tickets and souls for each weapon will be added afterwards.\r\n\r\nIf you have the following charms, the number of materials obtained will be increased.\r\n・Super Lucky Charm：There is a 50% chance that the materials obtained will be doubled.\r\n・Large Lucky Charm：There is a 15% chance that the materials obtained will be doubled.\r\n\r\nThe \"Super Lucky Charm\" and the \"Large Lucky Charm\" can be used together. When they are used together, the \"Super Lucky Charm\" will activate the \"Super Luck\" skill, and then the \"Large Lucky Charm\" will activate the \"Great Luck\" skill.\r\n\r\n※Attention\r\n・In the case of practice quests, when \"no items\" is selected, the drawing ends there and no further drawings will be made.\r\n・Some quests have a fixed quota of rewards, in which case you only get the specified number of rewards, regardless of your charms, skills, etc.\n\n" +
                     "Daily Special\r\nThe following benefits are available once a day (updated at 12:00) in the \"Daily Special\" section of the General Shop.\r\nThe maximum N-point limit is 60,000 P. Others are overwritten each time they are received.\r\n\r\nN points\tTrial course: 1 point\r\nHunter Life Course: +3 points\r\nExtra course: +1 point\r\nPoint Bonus Rights\t3x\r\nGet Halk Pot\t5x\r\nDaily Quest Rights\t1x";
-                ;
-
             }
         }
 
