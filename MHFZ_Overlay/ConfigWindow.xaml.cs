@@ -1874,7 +1874,7 @@ namespace MHFZ_Overlay
             get { return new Uri(randomMonsterImage, UriKind.RelativeOrAbsolute); }
         }
 
-        public MonsterLog[] Monsters = new MonsterLog[]
+        private MonsterLog[] Monsters = new MonsterLog[]
         {
           new MonsterLog(0, "None","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/none.png",0),
           new MonsterLog(1, "Rathian","https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/monster/rathian.png",0,true),

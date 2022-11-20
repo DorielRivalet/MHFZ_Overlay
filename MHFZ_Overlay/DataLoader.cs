@@ -22,13 +22,8 @@ namespace MHFZ_Overlay
         #region DataLoaderVariables
         //needed for getting data
         readonly Mem m = new();
-        private bool isHighGradeEdition;
 
-        public bool IsHighGradeEdition
-        {
-            get { return isHighGradeEdition; }
-            set { isHighGradeEdition = value; }
-        }
+        public bool isHighGradeEdition { get; set; }
 
         int index;
         /// <summary>

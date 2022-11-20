@@ -33,21 +33,9 @@ namespace MHFZ_Overlay.addresses
 
         public AddressModel(Mem m) => M = m;
 
-        private int selectedMonster = 0;
+        public int SelectedMonster { get; set; } = 0;
 
-        public int SelectedMonster
-        {
-            get { return selectedMonster; }
-            set { selectedMonster = value; }
-        }
-
-        private string savedGearStats = "";
-
-        public string SavedGearStats
-        {
-            get { return savedGearStats; }
-            set { savedGearStats = value; }
-        }
+        private string SavedGearStats = "";
 
         #endregion
 
@@ -702,15 +690,6 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
-        public bool ShowCaravanScore()
-        {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableCaravanScore)
-                return true;
-            else
-                return false;
-        }
-
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="AddressModel"/> is configuring.
         /// </summary>
@@ -825,7 +804,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="number"></param>
         /// <returns></returns>
-        private string FindPartName(int number, int monsterID)
+        private static string FindPartName(int number, int monsterID)
         {
             List<int> partMonsterGroup = new List<int> {0};
 
@@ -844,11 +823,19 @@ namespace MHFZ_Overlay.addresses
 
         private static string DeterminePartName(List<int> key, int slot)
         {
-            string part = MonsterPartDictionary.MonsterPartID[key][slot];
-            if (part == null)
+            bool keyFound = MonsterPartDictionary.MonsterPartID.ContainsKey(key);
+
+            if (!keyFound)
+            {
                 return "None";
+            }
             else
-                return part;
+            {
+                if (slot > MonsterPartDictionary.MonsterPartID[key].Count)
+                    return "None";
+                else
+                    return MonsterPartDictionary.MonsterPartID[key][slot];
+            }
         }
 
         public string Monster1Part1Number
@@ -1073,16 +1060,6 @@ namespace MHFZ_Overlay.addresses
             else return "Time Left";
         }
 
-        public string GetRoadTimerResetMode()
-        {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.DiscordRoadTimerReset == "Never")
-                return "Never";
-            else if (s.DiscordRoadTimerReset == "Always")
-                return "Always";
-            else return "Never";
-        }
-
         private int MaxSharpness = 0;
 
         private string TimeLeftPercent = "";
@@ -1189,19 +1166,7 @@ namespace MHFZ_Overlay.addresses
         }
 
         //per quest
-        private int highestAtk = 0;
-
-        public int HighestAtk
-        {
-            get
-            {
-                return highestAtk;
-            }
-            set
-            {
-                highestAtk = value;
-            }
-        }
+        public int HighestAtk { get; set; } = 0;
 
         /// <summary>
         /// Shows the color of the highest atk.
@@ -2235,11 +2200,11 @@ namespace MHFZ_Overlay.addresses
 
         private static string DetermineGatheringMap(List<int> key)
         {
-            string areaIcon = GatheringMapDictionary.GatheringMapID[key];
-            if (areaIcon == null)
+            bool gatheringMap = GatheringMapDictionary.GatheringMapID.ContainsKey(key);
+            if (!gatheringMap)
                 return "https://i.imgur.com/aAcPJGb.png";
             else
-                return areaIcon;
+                return GatheringMapDictionary.GatheringMapID[key];
         }
 
         #endregion
@@ -4125,19 +4090,7 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
-        private string markdownSavedGearStats = "";
-
-        public string MarkdownSavedGearStats
-        {
-            get
-            {
-                return markdownSavedGearStats;
-            }
-            set
-            {
-                markdownSavedGearStats = value;
-            }
-        }
+        public string MarkdownSavedGearStats { get; set; } = string.Empty;
 
         /// <summary>
         /// Determines whether [is fixed GSR skill value] [the specified skill name].

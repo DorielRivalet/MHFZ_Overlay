@@ -156,19 +156,7 @@ namespace MHFZ_Overlay.controls
         /// <summary>
         /// The current hp percent
         /// </summary>
-        private string currentHPPercent = "";
-
-        public string CurrentHPPercent
-        {
-            get
-            {
-                return currentHPPercent;
-            }
-            set
-            {
-                currentHPPercent = value;
-            }
-        }
+        private string CurrentHPPercent = "";
 
         /// <summary>
         /// Gets the descriptor horizontal alignment.

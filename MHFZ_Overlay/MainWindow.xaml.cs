@@ -240,7 +240,7 @@ namespace MHFZ_Overlay
         /// <summary>
         /// The current presence to send to discord.
         /// </summary>
-        public RichPresence presenceTemplate = new RichPresence()
+        private RichPresence presenceTemplate = new RichPresence()
         {
             Details = "【MHF-Z】Overlay " + CurrentProgramVersion,
             State = "Loading...",
@@ -366,7 +366,6 @@ namespace MHFZ_Overlay
             var latestRelease = latest.TagName;
             if (latestRelease != MainWindow.CurrentProgramVersion)
             {
-                isLatestRelease = false;
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 if (s.EnableUpdateNotifier)
                 {
@@ -378,8 +377,6 @@ namespace MHFZ_Overlay
                     }
                 }
             }
-            else
-                isLatestRelease = true;
         }
 
         /// <summary>
@@ -395,7 +392,6 @@ namespace MHFZ_Overlay
             System.Diagnostics.Process.Start(sInfo);
         }
 
-        private bool isLatestRelease;
         private bool closedGame;
         private bool isInLauncherBool;
 
@@ -748,10 +744,19 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetCaravanScore()
         {
-            if (DataLoader.model.ShowCaravanScore())
+            if (ShowCaravanScore())
                 return string.Format("Caravan Score: {0} | ", DataLoader.model.CaravanScore());
             else
                 return "";
+        }
+
+        public static bool ShowCaravanScore()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableCaravanScore)
+                return true;
+            else
+                return false;
         }
 
         /// <summary>
@@ -1435,11 +1440,11 @@ namespace MHFZ_Overlay
 
         private static string DetermineAreaIcon(List<int> key)
         {
-            string areaIcon = AreaIconDictionary.AreaIconID[key];
-            if (areaIcon == null)
+            bool areaIcon = AreaIconDictionary.AreaIconID.ContainsKey(key);
+            if (!areaIcon)
                 return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/icon/cattleya.png";
             else
-                return areaIcon;
+                return AreaIconDictionary.AreaIconID[key];
         }
 
         /// <summary>
@@ -1556,7 +1561,6 @@ namespace MHFZ_Overlay
         }
 
         private int currentMonster1MaxHP = 0;
-        private string currentMonster1HPPercent = "";
 
         /// <summary>
         /// Gets the monster1 ehp percent.
@@ -1959,6 +1963,16 @@ namespace MHFZ_Overlay
             }
         }
 
+        private string GetRoadTimerResetMode()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.DiscordRoadTimerReset == "Never")
+                return "Never";
+            else if (s.DiscordRoadTimerReset == "Always")
+                return "Always";
+            else return "Never";
+        }
+
 
         /// <summary>
         /// Get quest state
@@ -2017,7 +2031,7 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(),GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.IsHighGradeEdition));
+            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(),GetCaravanScore(), GetOverlayMode(), GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
 
             //quest ids:
             //mp road: 23527
@@ -2288,7 +2302,7 @@ namespace MHFZ_Overlay
 
                 if (IsRoad()) 
                 {
-                    switch (DataLoader.model.GetRoadTimerResetMode())
+                    switch (GetRoadTimerResetMode())
                     {
                     case "Always":
                         if (DataLoader.model.AreaID() == 458)//Hunter's Road Area 1
