@@ -147,6 +147,10 @@ These images don't show everything, find out what's missing by pressing `Shift+F
 
 ![Config6](./demo/config6.png)
 
+### Damage Calculator
+
+![Config6](./demo/config7.png)
+
 ## Bugs
 
 - Monster Infos are sometimes outside of the screen (if they don't show at all even if you open the config menu, this is probably your issue)
