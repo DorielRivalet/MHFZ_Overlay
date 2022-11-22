@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: seferov/pr-lint-action@master
-#      with:
-#        title-regex: '^\[PROJECT-\d*\](\ )'
-#        title-regex-flags: 'g' # optional
-#        error-message: 'Add ID to your title' # optional
+      with:
+        title-regex: '^.+'
+        title-regex-flags: 'g' # optional
+        error-message: 'Add a title' # optional
