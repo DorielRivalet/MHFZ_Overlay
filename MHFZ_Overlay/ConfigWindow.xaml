@@ -1857,7 +1857,7 @@
                         <Button ToolTip="Stargazers" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/star.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
                         <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1">
                             <ScrollViewer>
-                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Text="Loading..." x:Name="StargazerTextBlock"/>
+                                <TextBlock ToolTip="View Changelog" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="#89b4fa" NavigateUri="https://github.com/DorielRivalet/MHFZ_Overlay/stargazers" RequestNavigate="lnkImg_RequestNavigate">View Stargazers</Hyperlink></TextBlock>
                             </ScrollViewer>
                         </Grid>
                         <MediaElement Grid.Row="3" Grid.Column="2"  MediaEnded="Stars_MediaEnded" x:Name="myAnime" UnloadedBehavior="Manual" Source="https://media.tenor.com/uMRSXoUOwpYAAAAC/anime-girl.gif" LoadedBehavior="Play"/>
