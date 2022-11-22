@@ -2404,9 +2404,15 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Save();
-            webViewFerias.Dispose();
-            webViewMonsterInfo.Dispose();
+            DisposeAllWebViews();
             Close();
+        }
+
+        private void DisposeAllWebViews()
+        {
+            webViewFerias.Dispose();
+            webViewDamageCalculator.Dispose();
+            webViewMonsterInfo.Dispose();
         }
 
         /// <summary>
@@ -2418,8 +2424,7 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Save();
-            webViewFerias.Dispose();
-            webViewMonsterInfo.Dispose();
+            DisposeAllWebViews();
             Close();
         }
 
@@ -2430,8 +2435,7 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             s.Reload();
-            webViewFerias.Dispose();
-            webViewMonsterInfo.Dispose();
+            DisposeAllWebViews();
             Close();
         }
 
@@ -2443,8 +2447,7 @@ namespace MHFZ_Overlay
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            webViewFerias.Dispose();
-            webViewMonsterInfo.Dispose();
+            DisposeAllWebViews();
             s.Reload();
             Close();
         }
@@ -2467,8 +2470,7 @@ namespace MHFZ_Overlay
         public void DefaultKey_Press()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            webViewFerias.Dispose();
-            webViewMonsterInfo.Dispose();
+            DisposeAllWebViews();
             s.Reset();
         }
 
@@ -2480,8 +2482,7 @@ namespace MHFZ_Overlay
         private void DefaultButton_Click(object sender, RoutedEventArgs e)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            webViewFerias.Dispose();
-            webViewMonsterInfo.Dispose();
+            DisposeAllWebViews();
             s.Reset();
         }
 
@@ -2730,8 +2731,7 @@ namespace MHFZ_Overlay
         private void Config_Closed(object sender, EventArgs e)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            webViewFerias.Dispose();
-            webViewMonsterInfo.Dispose();
+            DisposeAllWebViews();
             s.Reload();
             Close();
             DeletexNames_OnClosed();
