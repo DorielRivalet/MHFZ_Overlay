@@ -1,5 +1,12 @@
 
 
+## [0.17.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.16.0...v0.17.0) (2022-11-22)
+
+
+### Features
+
+* add stargazers link ([f7b1e46](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f7b1e465a9ff1b62fd744b88ffe5f92026f3d674))
+
 ## [0.16.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.15.0...v0.16.0) (2022-11-22)
 
 
