@@ -1,5 +1,67 @@
 
 
+## [0.16.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.15.0...v0.16.0) (2022-11-22)
+
+
+### Features
+
+* add damage calculator ([5dc9e09](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5dc9e098cedd12eb27cd0efdac264bc921f9aa9a))
+* create auto-close option for closing game ([ffe4453](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ffe445314cb3482d58b8d235508d748fb0914669))
+
+
+### Bug Fixes
+
+* add containskey method to remove key not found error ([d5670ad](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d5670add6ca6ad09307a9e4b7dcf5168e0b50153))
+* add results.sarif ([d7774ec](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d7774ece6664c0cea3277baaaa7c39128c78d76a))
+* build errors ([48ff02e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/48ff02e46e44aac85f5f6a633810f5d15f2f5966))
+* code smells ([30d022c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/30d022ca41c9a9ce21d1f7c468e79fb2b3ce032d))
+* code smells ([3546a4e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/3546a4e7cd8f7518d4d455c9af9d1d8d082d8da2))
+* code smells ([8718175](https://github.com/DorielRivalet/MHFZ_Overlay/commit/871817595b463201b3143c38765b7613113dc8fd))
+* convert dictionaries to read-only ([a882543](https://github.com/DorielRivalet/MHFZ_Overlay/commit/a882543a0e32ba1b9734aeed2821b8e94ceb4a86))
+* remove code smells ([d8ac9e9](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d8ac9e9e6cb7951da9a9bfd97ad2b6d367fbe137))
+* remove code smells ([ff983f8](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ff983f8517a33c60d004aca4926e641116f52158))
+* remove code smells ([a634c1e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/a634c1e8e6efd49066e8a487d02a8732bd1f1990))
+* set enablewindowstargeting ([4cb9370](https://github.com/DorielRivalet/MHFZ_Overlay/commit/4cb937025192d2369ff7a0a5e712d0d5f0dc39aa))
+* supremacies names ([f35bde0](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f35bde054d503cf76dfb7675569d4a48b8aa4a4b))
+* supremacy pariapuria name ([b0eb23b](https://github.com/DorielRivalet/MHFZ_Overlay/commit/b0eb23b3eff09f3ce677e5f1fd3716e2740ca2dc))
+
+
+### For Developers
+
+* add dependabot ([e636f11](https://github.com/DorielRivalet/MHFZ_Overlay/commit/e636f1170351d0858d02f34f2cb61f4a24082a5e))
+* add dotnet workflow ([6a010e2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/6a010e2f7fdb1ac67c1218130a8fda1a46b5ac79))
+* add more github actions ([09493c7](https://github.com/DorielRivalet/MHFZ_Overlay/commit/09493c7e9d7b18f5df37cf743ad25b72c176b46e))
+* bump version ([5686d3f](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5686d3f9ce5ccece155b523c6352a15b3526cdf4))
+* convert members to static ([e51d281](https://github.com/DorielRivalet/MHFZ_Overlay/commit/e51d281ee7870ed75e5928034197d394befd3c98))
+* create area icons dictionary ([33a608c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/33a608c8b123e819471cf9d47b8b57a63dac1ecb))
+* create gathering spots map dictionary ([0ee8d4f](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0ee8d4f4083989d30a6f629dfa11916c9df47eec))
+* create monster names dictionary ([2173fa6](https://github.com/DorielRivalet/MHFZ_Overlay/commit/2173fa6459dfd4539ec5da0df8b1810f311603fb))
+* create monster part names dictionary ([ab1c746](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ab1c746310aa19528fb5376c32b13a169f163acc))
+* **deps-dev:** bump @commitlint/config-conventional ([1934b6a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/1934b6a4c8651b15a2657b8afb1cb1e102a6f53e))
+* **deps-dev:** bump husky from 8.0.1 to 8.0.2 ([66a10fe](https://github.com/DorielRivalet/MHFZ_Overlay/commit/66a10fe6f38efa5f1075fbc216f110ecae6c1b3d))
+* implement codeql ([80e93c8](https://github.com/DorielRivalet/MHFZ_Overlay/commit/80e93c83a599252599be0a4652f61218c260eb65))
+* implement monster image dictionary ([88ac8c4](https://github.com/DorielRivalet/MHFZ_Overlay/commit/88ac8c4ded4a2537f4caf593df8360062927031c))
+* implement sarif ([8c3393a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/8c3393a0650962b819a0e09b3c6161650b5c5655))
+* implement sonarcloud ([c3fdfc6](https://github.com/DorielRivalet/MHFZ_Overlay/commit/c3fdfc6aa97ed2b6a3cef2b3a35fab45ffe8e06c))
+* implement sonarqube statistics ([db52724](https://github.com/DorielRivalet/MHFZ_Overlay/commit/db52724b81e1a664ebeabcc75556825dbe127fef))
+* re-implement sonarqube workflow ([658e5b8](https://github.com/DorielRivalet/MHFZ_Overlay/commit/658e5b859c089f88f438a989cb5f02d1d24c700d))
+* remove dotnet workflow ([00bfb02](https://github.com/DorielRivalet/MHFZ_Overlay/commit/00bfb02fda1fc1c74090e298aa3e840cfe3e728f))
+* remove sonarqube integration ([92080a8](https://github.com/DorielRivalet/MHFZ_Overlay/commit/92080a86e87a3d790178c4365905073f1e0c18f8))
+* set to release ([f287be2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f287be201c7e66e2b1365bd452388d964f4d142b))
+* update codeql ([27ec08a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/27ec08a177e9c2601f3702523b92fd932257c591))
+* update codeql ([f5bb9b9](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f5bb9b9c39c4783d02f0d58d288103cf539a65b9))
+* update codeql ([ad9479c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ad9479cf788829597157a17614406a3039db7420))
+* update codeql ([a054692](https://github.com/DorielRivalet/MHFZ_Overlay/commit/a054692c60d0a6f41b8de184ce525a9f4d9385fe))
+* update codeql ([78e369d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/78e369dbabd68bb323f0b8958749b520b6cf6ec5))
+* update dependencies ([0c305f3](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0c305f391e435ac1ad3cc32f244d38ec5301716d))
+* update github actions ([cce3818](https://github.com/DorielRivalet/MHFZ_Overlay/commit/cce38188c2240d6df08b1168bcad1dfa81bcfea5))
+* update github actions ([f78193e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f78193e1624125ec91ec10f18b957743731fa323))
+* update github workflows ([eefa289](https://github.com/DorielRivalet/MHFZ_Overlay/commit/eefa289db82867662ccebeaed762b565259fe99b))
+* update issue templates ([eec003b](https://github.com/DorielRivalet/MHFZ_Overlay/commit/eec003b06188b593278f9e54b934b5999436543b))
+* update pull request lint workflow ([d972e7b](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d972e7bc0dae419a2bc00f912d9abf7958ecfc59))
+* update README.md ([98eb105](https://github.com/DorielRivalet/MHFZ_Overlay/commit/98eb105a78025a34de0d940574a744eb593e5436))
+* update sonarqube configuration ([02dc03a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/02dc03a07cbb23da881956f72d96f2e5db934157))
+
 ## [0.15.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.14.0...v0.15.0) (2022-11-07)
 
 
