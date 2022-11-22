@@ -1,6 +1,6 @@
 # Monster Hunter Frontier Z Overlay
 
-![GitHub all releases](https://img.shields.io/github/downloads/DorielRivalet/MHFZ_Overlay/total?style=for-the-badge)
+[![GitHub all releases](https://img.shields.io/github/downloads/DorielRivalet/MHFZ_Overlay/total?style=for-the-badge)](#installation)
 
 [![Preview](https://res.cloudinary.com/marcomontalbano/image/upload/v1664306592/video_to_markdown/images/youtube--_6hHiRHTt_U-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/_6hHiRHTt_U "Preview")
 
