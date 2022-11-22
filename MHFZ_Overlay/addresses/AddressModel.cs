@@ -35,8 +35,6 @@ namespace MHFZ_Overlay.addresses
 
         public int SelectedMonster { get; set; } = 0;
 
-        private string SavedGearStats = "";
-
         #endregion
 
         #region init bool
@@ -4091,6 +4089,8 @@ namespace MHFZ_Overlay.addresses
         }
 
         public string MarkdownSavedGearStats { get; set; } = string.Empty;
+
+        public string SavedGearStats { get; set; } = string.Empty;
 
         /// <summary>
         /// Determines whether [is fixed GSR skill value] [the specified skill name].
