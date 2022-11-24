@@ -330,7 +330,7 @@ namespace MHFZ_Overlay
 #pragma warning restore CS8618 // Non-nullable property 'Client' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
         {
             var splashScreen = new SplashScreen("icons/loading.png");
-            
+
             splashScreen.Show(false);
 
             InitializeComponent();
@@ -398,7 +398,7 @@ namespace MHFZ_Overlay
         public void CheckGameState()
         {
             int PID = m.GetProcIdFromName("mhf");
-            
+
             //https://stackoverflow.com/questions/12372534/how-to-get-a-process-window-class-name-from-c
             int pidToSearch = PID;
             //Init a condition indicating that you want to search by process id.
@@ -658,7 +658,7 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.FindResource("Settings");
             bool v = s.AlwaysShowMonsterInfo || DataLoader.model.Configuring || counter < 60;
             //DL.m.?.Visibility = v && s.?.IsChecked
-            SetMonsterVisibility(v,s);
+            SetMonsterVisibility(v, s);
         }
 
         private void SetMonsterVisibility(bool v, Settings s)
@@ -854,22 +854,6 @@ namespace MHFZ_Overlay
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
             return itemValue1 + "";
-        }
-
-        /// <summary>
-        /// Gets the name of the quest.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        public string GetQuestNameFromID(int id)
-        {
-            if (!(ShowDiscordQuestNames)) return "";
-            string QuestValue1;
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            Dictionary.Quests.QuestIDs.TryGetValue(id, out QuestValue1);  //returns true
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-
-            return QuestValue1 + "";
         }
 
         /// <summary>
@@ -1184,7 +1168,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetRealMonsterName(string iconName, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
+            if (DataLoader.model.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             //quest ids:
             //mp road: 23527
             //solo road: 23628
@@ -1248,7 +1232,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetRankNameFromID(int id, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
+            if (DataLoader.model.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             switch (id)
             {
                 case 0:
@@ -1389,7 +1373,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetObjectiveNameFromID(int id, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
+            if (DataLoader.model.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             return id switch
             {
                 0 => "Nothing ",
@@ -1543,7 +1527,7 @@ namespace MHFZ_Overlay
                 id = 132;//duremudira
             else if (DataLoader.model.AreaID() == 398 && (DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649))
                 id = 167;//arrogant duremudira
-            
+
             return DataLoader.model.DetermineMonsterImage(id);
         }
 
@@ -1606,7 +1590,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetObjective1Name(int id, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
+            if (DataLoader.model.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             string? objValue1;
             Dictionary.Items.ItemIDs.TryGetValue(id, out objValue1);  //returns true
             return objValue1 + "";
@@ -1630,7 +1614,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetObjective1Quantity(bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
+            if (DataLoader.model.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             if (DataLoader.model.Objective1Quantity() <= 1)
                 return "";
             // hunt / capture / slay
@@ -1648,7 +1632,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetObjective1CurrentQuantity(bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames && !(isLargeImageText)) return "";
+            if (DataLoader.model.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             if (DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002)
             {
                 if (DataLoader.model.Objective1Quantity() <= 1)
@@ -1864,31 +1848,13 @@ namespace MHFZ_Overlay
         private bool inDuremudiraDoorway = false;
 
         /// <summary>
-        /// Gets a value indicating whether [show discord quest names].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [show discord quest names]; otherwise, <c>false</c>.
-        /// </value>
-        public static bool ShowDiscordQuestNames
-        {
-            get
-            {
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-                if (s.DiscordQuestNameShown)
-                    return true;
-                else
-                    return false;
-            }
-        }
-
-        /// <summary>
         /// Gets the star grade.
         /// </summary>
         /// <param name="isLargeImageText">if set to <c>true</c> [is large image text].</param>
         /// <returns></returns>
         public string GetStarGrade(bool isLargeImageText = false)
         {
-            if ((ShowDiscordQuestNames && !(isLargeImageText)) || DataLoader.model.CaravanOverride())
+            if ((DataLoader.model.ShowDiscordQuestNames() && !(isLargeImageText)) || DataLoader.model.CaravanOverride())
                 return "";
 
             if (IsToggeableDifficulty())
@@ -1903,7 +1869,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetQuestInformation()
         {
-            if (ShowDiscordQuestNames)
+            if (DataLoader.model.ShowDiscordQuestNames())
             {
                 switch (DataLoader.model.QuestID())
                 {
@@ -2019,7 +1985,23 @@ namespace MHFZ_Overlay
             else
                 return DataLoader.model.PartySizeMax();
         }
-       
+
+        private bool IsInHubAreaID()
+        {
+            switch (DataLoader.model.AreaID())
+            {
+                default:
+                    return false;
+                case 200://Mezeporta
+                case 210://Private Bar
+                case 260://Pallone Caravan
+                case 282://Cities Map
+                case 202://Guild Halls
+                case 203:
+                case 204:
+                    return true;
+            }
+        }
 
         /// <summary>
         /// Updates the discord RPC.
@@ -2073,6 +2055,8 @@ namespace MHFZ_Overlay
             //extreme support 4 55605
             //extreme support 5 55606
             //extreme carve 55607
+            if (IsInHubAreaID() && DataLoader.model.QuestID() == 0)
+                DataLoader.model.PreviousHubAreaID = DataLoader.model.AreaID();
 
             //Info
             if ((DataLoader.model.QuestID() != 0 && DataLoader.model.TimeDefInt() != DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0) || ((DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750 || DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649 || DataLoader.model.QuestID() == 21748 || DataLoader.model.QuestID() == 21747 || DataLoader.model.QuestID() == 21734) && int.Parse(DataLoader.model.ATK) > 0))
@@ -2088,11 +2072,11 @@ namespace MHFZ_Overlay
                         break;
                     case 21731://1st district dure
                     case 21749://sky corridor version
-                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.FirstDistrictDuremudiraSlays(),DataLoader.model.FirstDistrictDuremudiraEncounters());
+                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.FirstDistrictDuremudiraSlays(),DataLoader.model.FirstDistrictDuremudiraEncounters());
                         break;
                     case 21746://2nd district dure
                     case 21750://sky corridor version
-                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
+                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
                         break;
                     case 62105://raviente quests
                     case 62108:
@@ -2119,13 +2103,13 @@ namespace MHFZ_Overlay
                     case 55605:
                     case 55606:
                     case 55607:
-                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetStarGrade(), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
+                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetStarGrade(), GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
                         break;
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}",GetQuestNameFromID(DataLoader.model.QuestID()),GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetStarGrade(), GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}",DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()),GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), GetObjective1Quantity(), GetRankNameFromID(DataLoader.model.RankBand()), GetStarGrade(), GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
                         else
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}",GetQuestNameFromID(DataLoader.model.QuestID()),GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(),GetRankNameFromID(DataLoader.model.RankBand()), GetStarGrade(),GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.ATK,DataLoader.model.HighestAtk,DataLoader.model.HitCount);
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}",DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()),GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", GetObjective1Quantity(),GetRankNameFromID(DataLoader.model.RankBand()), GetStarGrade(),GetRealMonsterName(DataLoader.model.CurrentMonster1Icon),DataLoader.model.ATK,DataLoader.model.HighestAtk,DataLoader.model.HitCount);
                         break;
                 }
 

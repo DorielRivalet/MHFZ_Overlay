@@ -248,8 +248,12 @@
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster 1 Icon Y Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan, Pioneer, Raviente, Cities, Guild Hall, Tavern, Interception or Daily quests to display the correct information. You may have to do a normal quest first in order to load the correct values." Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Caravan/Pioneer/Raviente/Interception/Cities/Tavern/Guild Hall/Daily Quest Override"/>
-                        <ToggleButton Grid.Row="14" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}"/>
-
+                        <ComboBox Grid.Column="1" Grid.Row="14" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}">
+                            <ComboBoxItem>Automatic</ComboBoxItem>
+                            <ComboBoxItem>Enabled</ComboBoxItem>
+                            <ComboBoxItem>Disabled</ComboBoxItem>
+                        </ComboBox>
+                        
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Map" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Location Map"/>
                         <ToggleButton Grid.Row="15" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMap}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Map X Coordinate"/>
@@ -1786,7 +1790,7 @@
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
                             <DockPanel>
-                                <wv2:WebView2 Name="webViewDamageCalculator"
+                                <wv2:WebView2 Name="webViewDamageCalculator" 
                   					Source="https://dorielrivalet.github.io/mhfz-damage-calculator" DefaultBackgroundColor="#f5e0dc"/>
                             </DockPanel>
                         </Grid>

@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using Application = System.Windows.Application;
 
 namespace MHFZ_Overlay.addresses
@@ -727,13 +728,108 @@ namespace MHFZ_Overlay.addresses
             return null;
         }
 
-        public bool CaravanOverride()
+        /// <summary>
+        /// Gets a value indicating whether [show discord quest names].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [show discord quest names]; otherwise, <c>false</c>.
+        /// </value>
+        public bool ShowDiscordQuestNames()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.EnableCaravanOverride)
+            if (s.DiscordQuestNameShown)
                 return true;
             else
                 return false;
+        }
+
+        /// <summary>
+        /// Gets the name of the quest.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetQuestNameFromID(int id)
+        {
+            if (!(ShowDiscordQuestNames())) return "";
+            string QuestValue1;
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+            Dictionary.Quests.QuestIDs.TryGetValue(id, out QuestValue1);  //returns true
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+            return QuestValue1 + "";
+        }
+
+        public string QuestTimeMode
+        {
+            get
+            {
+                switch (GetTimerMode())
+                {
+                    case "Time Left":
+                        return "Time Left";
+                    case "Time Elapsed":
+                        return "Elapsed";
+                    default:
+                        return "Quest Time";
+                }
+            }
+        }
+
+        public int PreviousHubAreaID = 0;
+
+        private bool QuestNameContainsAlternativeTitle()
+        {
+            return (GetQuestNameFromID(QuestID()).Contains("Daily Limited Quest≫") ||
+                GetQuestNameFromID(QuestID()).Contains("Daily Quest≫") ||
+                GetQuestNameFromID(QuestID()).Contains("Guild Quest≫") ||
+                GetQuestNameFromID(QuestID()).Contains("Interception Base≫") ||
+                GetQuestNameFromID(QuestID()).Contains("Interception Quest≫") ||
+                GetQuestNameFromID(QuestID()).Contains("Interception Urgent Quest≫") ||
+                GetQuestNameFromID(QuestID()).Contains("Great Slaying Quest≫") ||
+                GetQuestNameFromID(QuestID()).Contains("G Rank Great Slaying≫"));
+        }
+
+        private bool PreviousHubAreaIDIsAlternative()
+        {
+            switch (PreviousHubAreaID)
+            {
+                default:
+                    return false;
+                case 210://Private Bar
+                case 260://Pallone Caravan
+                case 282://Cities Map
+                case 202://Guild Halls
+                case 203:
+                case 204:
+                    return true;
+            }
+        }
+
+        private bool IsAlternativeQuestName()
+        {
+            if (QuestNameContainsAlternativeTitle() || PreviousHubAreaIDIsAlternative())
+            {
+                return true;
+            } 
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CaravanOverride()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            switch (s.EnableCaravanOverride)
+            {
+                case "Enabled":
+                    return true;
+                case "Disabled":
+                    return false;
+                case "Automatic":
+                    return IsAlternativeQuestName();
+                default: return false;
+            }
         }
 
         //

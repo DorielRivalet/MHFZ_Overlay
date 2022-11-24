@@ -269,8 +269,8 @@
     <Setting Name="DiscordArmorSetShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="EnableCaravanOverride" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="EnableCaravanOverride" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Automatic</Value>
     </Setting>
     <Setting Name="EnableCaravanScore" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

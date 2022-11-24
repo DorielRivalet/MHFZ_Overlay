@@ -1093,10 +1093,10 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool EnableCaravanOverride {
+        [global::System.Configuration.DefaultSettingValueAttribute("Automatic")]
+        public string EnableCaravanOverride {
             get {
-                return ((bool)(this["EnableCaravanOverride"]));
+                return ((string)(this["EnableCaravanOverride"]));
             }
             set {
                 this["EnableCaravanOverride"] = value;
