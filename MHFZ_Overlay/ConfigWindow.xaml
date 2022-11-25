@@ -171,7 +171,7 @@
         <TabItem ToolTip="General settings" Background="Transparent" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Background="Transparent" Orientation="Horizontal">
-                    <Image Name="generalImg" Source="icons/book.png" Width="32" Height="32"/>
+                    <Image Name="generalImg" Source="UI/Icons/book.png" Width="32" Height="32"/>
                     <TextBlock Background="Transparent" Text="General" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f5e0dc"/>
                 </StackPanel>
             </TabItem.Header>
@@ -284,16 +284,16 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
-                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
-                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
+                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
+                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
                 </Grid>
             </Grid>
         </TabItem>
         <TabItem ToolTip="Player settings" Background="#11111b" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                    <Image Name="playerimg" Source="icons/helm.png" Width="32" Height="32"/>
+                    <Image Name="playerimg" Source="UI/Icons/helm.png" Width="32" Height="32"/>
                     <TextBlock Text="Hunter Info" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f38ba8"/>
                 </StackPanel>
             </TabItem.Header>
@@ -367,11 +367,11 @@
                                     <RowDefinition Height="80"/>
                                     <RowDefinition Height="80"/>
                                 </Grid.RowDefinitions>
-                                <Button Background="Transparent" Grid.Row="0" x:Name="BtnSaveFile" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/file_download_FILL0_wght400_GRAD0_opsz48.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="40" Width="40" ToolTip="Save gear to text file" Click="BtnSaveFile_Click"/>
-                                <Button Background="Transparent" Grid.Row="1" x:Name="BtnCopyFile" ToolTip="Copy gear to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/content_copy_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnCopyFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
-                                <Button Background="Transparent" Grid.Row="2" x:Name="BtnImageFile" ToolTip="Save gear image to disk and copy to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/image_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40" Click="BtnImageFile_Click"/>
-                                <Button Background="Transparent" Grid.Row="3" x:Name="BtnLogFile" ToolTip="Export hunted monsters log as Comma Separated Values" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/description_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnLogFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
-                                <Button Background="Transparent" Grid.Row="4" x:Name="BtnGuildCardFile" ToolTip="Save guild card image to disk and copy to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/badge.xaml'}"  Click="BtnGuildCardFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
+                                <Button Background="Transparent" Grid.Row="0" x:Name="BtnSaveFile" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/file_download_FILL0_wght400_GRAD0_opsz48.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="40" Width="40" ToolTip="Save gear to text file" Click="BtnSaveFile_Click"/>
+                                <Button Background="Transparent" Grid.Row="1" x:Name="BtnCopyFile" ToolTip="Copy gear to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/content_copy_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnCopyFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
+                                <Button Background="Transparent" Grid.Row="2" x:Name="BtnImageFile" ToolTip="Save gear image to disk and copy to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/image_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40" Click="BtnImageFile_Click"/>
+                                <Button Background="Transparent" Grid.Row="3" x:Name="BtnLogFile" ToolTip="Export hunted monsters log as Comma Separated Values" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/description_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnLogFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
+                                <Button Background="Transparent" Grid.Row="4" x:Name="BtnGuildCardFile" ToolTip="Save guild card image to disk and copy to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/badge.xaml'}"  Click="BtnGuildCardFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
                                 <TextBlock Foreground="#cdd6f4" Margin="5,5,5,5"  Text="Reopen config. to update gear" TextWrapping="Wrap" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Grid>
 
@@ -541,7 +541,7 @@
                                 <TabItem ToolTip="View Image" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/photo.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/photo.png" Width="32" Height="32"/>
                                             <TextBlock Text="Image" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -630,7 +630,7 @@
                                 <TabItem ToolTip="View Text" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/page.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/page.png" Width="32" Height="32"/>
                                             <TextBlock Text="Text" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -645,7 +645,7 @@
                                 <TabItem ToolTip="View Hunted Monsters" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/bone.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/bone.png" Width="32" Height="32"/>
                                             <TextBlock Text="Hunt Log" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -737,7 +737,7 @@
                                 <TabItem ToolTip="View Caravan Skills" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/caravan_skills.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/caravan_skills.png" Width="32" Height="32"/>
                                             <TextBlock Text="Caravan" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -769,7 +769,7 @@
                                 <TabItem ToolTip="View Road/Duremudira Skills" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/dure2.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/dure2.png" Width="32" Height="32"/>
                                             <TextBlock Text="Road/Duremudira" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -784,7 +784,7 @@
                                 <TabItem ToolTip="View Armor Skills" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/armor_skills.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/armor_skills.png" Width="32" Height="32"/>
                                             <TextBlock Text="Armor" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -828,7 +828,7 @@
                                 <TabItem ToolTip="View Zenith Skills" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/boggers.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/boggers.png" Width="32" Height="32"/>
                                             <TextBlock Text="Zenith Skills" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -843,7 +843,7 @@
                                 <TabItem ToolTip="View Motion Values" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/unknown.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/unknown.png" Width="32" Height="32"/>
                                             <TextBlock Text="Motion Values" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -885,7 +885,7 @@
                                 <!--<TabItem ToolTip="View Hunting Horn Songs" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/note_pink.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/note_pink.png" Width="32" Height="32"/>
                                             <TextBlock Text="Hunting Horn Songs" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -900,7 +900,7 @@
                                 <TabItem ToolTip="View Weapon Information" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/attack.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/attack.png" Width="32" Height="32"/>
                                             <TextBlock Text="Weapons" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -951,7 +951,7 @@
                                 <TabItem ToolTip="View Sigils List" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/sigils.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/sigils.png" Width="32" Height="32"/>
                                             <TextBlock Text="Sigils" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -966,7 +966,7 @@
                                 <TabItem ToolTip="View Diva Prayer Gems and Questline" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/diva_prayer_gems.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/diva_prayer_gems.png" Width="32" Height="32"/>
                                             <TextBlock Text="Diva" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -981,7 +981,7 @@
                                 <TabItem ToolTip="View Style Rank Upgrades" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="icons/knife.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/knife.png" Width="32" Height="32"/>
                                             <TextBlock Text="Style Rank" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -1340,16 +1340,16 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton2" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
-                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton2" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
-                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton2" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
+                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton2" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
+                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton2" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton2" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
                 </Grid>
             </Grid>
         </TabItem>
         <TabItem ToolTip="Monster HP settings" Background="#11111b" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                    <Image Name="hpimg" Source="icons/monster.png" Width="32" Height="32"/>
+                    <Image Name="hpimg" Source="UI/Icons/monster.png" Width="32" Height="32"/>
                     <TextBlock Foreground="#a6e3a1" Text="Monster HP Bars" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
@@ -1454,16 +1454,16 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton3" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
-                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton3" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
-                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton3" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
+                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton3" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
+                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton3" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton3" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
                 </Grid>
             </Grid>
         </TabItem>
         <TabItem ToolTip="Monster status settings" Background="#11111b" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                    <Image Name="statusImg" Source="icons/poison.png" Width="32" Height="32"/>
+                    <Image Name="statusImg" Source="UI/Icons/poison.png" Width="32" Height="32"/>
                     <TextBlock Foreground="#cba6f7" Text="Monster Status Info" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
@@ -1583,9 +1583,9 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton4" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
-                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton4" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
-                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton4" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
+                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton4" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
+                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton4" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton4" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
                 </Grid>
             </Grid>
         </TabItem>
@@ -1687,16 +1687,16 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton5" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
-                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton5" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
-                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton5" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
+                    <Button Background="Transparent" Grid.Column="0" x:Name="ConfigureButton5" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
+                    <Button Background="Transparent" Grid.Column="1" x:Name="DefaultButton5" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                    <Button Background="Transparent" Grid.Column="2" x:Name="SaveButton5" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
                 </Grid>
             </Grid>
         </TabItem>
         <TabItem ToolTip="Monster information" Background="#11111b" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                    <Image Name="monsterinfoimg" Source="icons/monster_info.png" Width="32" Height="32"/>
+                    <Image Name="monsterinfoimg" Source="UI/Icons/monster_info.png" Width="32" Height="32"/>
                     <TextBlock Foreground="#fab387" Text="Monster Info" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
@@ -1858,24 +1858,24 @@
                         </Hyperlink>
                         </TextBlock>
 
-                        <Button ToolTip="Stargazers" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/star.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
+                        <Button ToolTip="Stargazers" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/star.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
                         <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1">
                             <ScrollViewer>
                                 <TextBlock ToolTip="View Changelog" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="#89b4fa" NavigateUri="https://github.com/DorielRivalet/MHFZ_Overlay/stargazers" RequestNavigate="lnkImg_RequestNavigate">View Stargazers</Hyperlink></TextBlock>
                             </ScrollViewer>
                         </Grid>
                         <MediaElement Grid.Row="3" Grid.Column="2"  MediaEnded="Stars_MediaEnded" x:Name="myAnime" UnloadedBehavior="Manual" Source="https://media.tenor.com/uMRSXoUOwpYAAAAC/anime-girl.gif" LoadedBehavior="Play"/>
-                        <Button ToolTip="Watchers" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/watch.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
+                        <Button ToolTip="Watchers" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/watch.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
                         <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1">
                             <TextBlock FontSize="32" Text="Loading..." x:Name="WatchersTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                         <MediaElement Grid.Row="4" Grid.Column="2"  MediaEnded="Watcher_MediaEnded" x:Name="myWatcher" UnloadedBehavior="Manual" Source="https://media.tenor.com/IMNDZBkct8gAAAAC/anime-girl.gif" LoadedBehavior="Play"/>
-                        <Button ToolTip="Issues" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/issues.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
+                        <Button ToolTip="Issues" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/issues.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
                         <Grid Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="1">
                             <TextBlock FontSize="32" Text="Loading..." x:Name="IssuesTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                         <MediaElement Grid.Row="5" Grid.Column="2"  MediaEnded="Krill_MediaEnded" x:Name="myKrill" UnloadedBehavior="Manual" Source="https://media.tenor.com/S5IodS2Ms_IAAAAC/krill-issue.gif" LoadedBehavior="Play"/>
-                        <Button ToolTip="Thank You!" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/heart.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
+                        <Button ToolTip="Thank You!" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/heart.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
                         <Grid Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="1">
                             <TextBlock FontSize="32" Text="Thanks for using the overlay!" x:Name="ThankYouTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using MHFZ_Overlay.addresses;
+using MHFZ_Overlay;
 
 namespace MHFZ_Overlay.controls
 {

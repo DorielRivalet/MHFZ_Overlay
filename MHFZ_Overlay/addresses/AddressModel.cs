@@ -1,6 +1,7 @@
 ﻿using CsvHelper.Configuration.Attributes;
 using Dictionary;
 using Memory;
+using MHFZ_Overlay;
 using Newtonsoft.Json.Linq;
 using Octokit;
 using System;

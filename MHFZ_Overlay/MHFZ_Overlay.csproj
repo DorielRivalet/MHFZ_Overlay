@@ -16,73 +16,73 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Background\1.png" />
-    <None Remove="Background\2.png" />
-    <None Remove="Background\3.png" />
-    <None Remove="Background\4.png" />
-    <None Remove="Background\5.png" />
-    <None Remove="Background\6.png" />
-    <None Remove="Background\7.png" />
-    <None Remove="Fonts\SourceCodePro-Black.ttf" />
-    <None Remove="Fonts\SourceCodePro-BlackItalic.ttf" />
-    <None Remove="Fonts\SourceCodePro-Bold.ttf" />
-    <None Remove="Fonts\SourceCodePro-BoldItalic.ttf" />
-    <None Remove="Fonts\SourceCodePro-ExtraBold.ttf" />
-    <None Remove="Fonts\SourceCodePro-ExtraBoldItalic.ttf" />
-    <None Remove="Fonts\SourceCodePro-ExtraLight.ttf" />
-    <None Remove="Fonts\SourceCodePro-ExtraLightItalic.ttf" />
-    <None Remove="Fonts\SourceCodePro-Italic-VariableFont_wght.ttf" />
-    <None Remove="Fonts\SourceCodePro-Italic.ttf" />
-    <None Remove="Fonts\SourceCodePro-Light.ttf" />
-    <None Remove="Fonts\SourceCodePro-LightItalic.ttf" />
-    <None Remove="Fonts\SourceCodePro-Medium.ttf" />
-    <None Remove="Fonts\SourceCodePro-MediumItalic.ttf" />
-    <None Remove="Fonts\SourceCodePro-Regular.ttf" />
-    <None Remove="Fonts\SourceCodePro-SemiBold.ttf" />
-    <None Remove="Fonts\SourceCodePro-SemiBoldItalic.ttf" />
-    <None Remove="Fonts\SourceCodePro-VariableFont_wght.ttf" />
+    <None Remove="UI\Background\1.png" />
+    <None Remove="UI\Background\2.png" />
+    <None Remove="UI\Background\3.png" />
+    <None Remove="UI\Background\4.png" />
+    <None Remove="UI\Background\5.png" />
+    <None Remove="UI\Background\6.png" />
+    <None Remove="UI\Background\7.png" />
+    <None Remove="UI\Fonts\SourceCodePro-Black.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-BlackItalic.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-Bold.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-BoldItalic.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-ExtraBold.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-ExtraBoldItalic.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-ExtraLight.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-ExtraLightItalic.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-Italic-VariableFont_wght.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-Italic.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-Light.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-LightItalic.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-Medium.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-MediumItalic.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-Regular.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-SemiBold.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-SemiBoldItalic.ttf" />
+    <None Remove="UI\Fonts\SourceCodePro-VariableFont_wght.ttf" />
     <None Remove="HuntedLogs\EXAMPLE.csv" />
-    <None Remove="icons\armor_skills.png" />
-    <None Remove="icons\attack.png" />
-    <None Remove="icons\boggers.png" />
-    <None Remove="icons\bone.png" />
-    <None Remove="icons\book.png" />
-    <None Remove="icons\caravan_skills.png" />
-    <None Remove="icons\description_FILL0_wght400_GRAD0_opsz48.png" />
-    <None Remove="icons\diva_prayer_gems.png" />
-    <None Remove="icons\dure2.png" />
-    <None Remove="icons\fire.png" />
-    <None Remove="icons\guild_food.png" />
-    <None Remove="icons\helm.png" />
-    <None Remove="icons\knife.png" />
-    <None Remove="icons\loading.png" />
-    <None Remove="icons\monster.png" />
-    <None Remove="icons\monster_info.png" />
-    <None Remove="icons\note_pink.png" />
-    <None Remove="icons\page.png" />
-    <None Remove="icons\photo.png" />
-    <None Remove="icons\poison.png" />
-    <None Remove="icons\quest_info.png" />
-    <None Remove="icons\sigils.png" />
-    <None Remove="icons\unknown.png" />
+    <None Remove="UI\Icons\armor_skills.png" />
+    <None Remove="UI\Icons\attack.png" />
+    <None Remove="UI\Icons\boggers.png" />
+    <None Remove="UI\Icons\bone.png" />
+    <None Remove="UI\Icons\book.png" />
+    <None Remove="UI\Icons\caravan_skills.png" />
+    <None Remove="UI\Icons\description_FILL0_wght400_GRAD0_opsz48.png" />
+    <None Remove="UI\Icons\diva_prayer_gems.png" />
+    <None Remove="UI\Icons\dure2.png" />
+    <None Remove="UI\Icons\fire.png" />
+    <None Remove="UI\Icons\guild_food.png" />
+    <None Remove="UI\Icons\helm.png" />
+    <None Remove="UI\Icons\knife.png" />
+    <None Remove="UI\Icons\loading.png" />
+    <None Remove="UI\Icons\monster.png" />
+    <None Remove="UI\Icons\monster_info.png" />
+    <None Remove="UI\Icons\note_pink.png" />
+    <None Remove="UI\Icons\page.png" />
+    <None Remove="UI\Icons\photo.png" />
+    <None Remove="UI\Icons\poison.png" />
+    <None Remove="UI\Icons\quest_info.png" />
+    <None Remove="UI\Icons\sigils.png" />
+    <None Remove="UI\Icons\unknown.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Page Remove="icons\badge.xaml" />
-    <Page Remove="icons\Cancel.xaml" />
-    <Page Remove="icons\Close.xaml" />
-    <Page Remove="icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="icons\description_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="icons\Done.xaml" />
-    <Page Remove="icons\DragDropControl.xaml" />
-    <Page Remove="icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="icons\heart.xaml" />
-    <Page Remove="icons\image_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="icons\issues.xaml" />
-    <Page Remove="icons\Refresh.xaml" />
-    <Page Remove="icons\Settings.xaml" />
-    <Page Remove="icons\Star.xaml" />
-    <Page Remove="icons\Watch.xaml" />
+    <Page Remove="UI\Icons\badge.xaml" />
+    <Page Remove="UI\Icons\Cancel.xaml" />
+    <Page Remove="UI\Icons\Close.xaml" />
+    <Page Remove="UI\Icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Page Remove="UI\Icons\description_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Page Remove="UI\Icons\Done.xaml" />
+    <Page Remove="UI\Icons\DragDropControl.xaml" />
+    <Page Remove="UI\Icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Page Remove="UI\Icons\heart.xaml" />
+    <Page Remove="UI\Icons\image_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Page Remove="UI\Icons\issues.xaml" />
+    <Page Remove="UI\Icons\Refresh.xaml" />
+    <Page Remove="UI\Icons\Settings.xaml" />
+    <Page Remove="UI\Icons\Star.xaml" />
+    <Page Remove="UI\Icons\Watch.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -108,161 +108,161 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Background\1.png">
+    <Resource Include="UI\Background\1.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Background\2.png">
+    <Resource Include="UI\Background\2.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Background\3.png">
+    <Resource Include="UI\Background\3.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Background\4.png">
+    <Resource Include="UI\Background\4.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Background\5.png">
+    <Resource Include="UI\Background\5.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Background\6.png">
+    <Resource Include="UI\Background\6.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Background\7.png">
+    <Resource Include="UI\Background\7.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-Black.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-Black.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-BlackItalic.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-BlackItalic.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-Bold.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-Bold.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-BoldItalic.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-BoldItalic.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-ExtraBold.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-ExtraBold.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-ExtraBoldItalic.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-ExtraBoldItalic.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-ExtraLight.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-ExtraLight.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-ExtraLightItalic.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-ExtraLightItalic.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-Italic-VariableFont_wght.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-Italic-VariableFont_wght.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-Italic.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-Italic.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-Light.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-Light.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-LightItalic.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-LightItalic.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-Medium.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-Medium.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-MediumItalic.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-MediumItalic.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-Regular.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-Regular.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-SemiBold.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-SemiBold.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-SemiBoldItalic.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-SemiBoldItalic.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\SourceCodePro-VariableFont_wght.ttf">
+    <Resource Include="UI\Fonts\SourceCodePro-VariableFont_wght.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="HuntedLogs\EXAMPLE.csv">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="icons\armor_skills.png" />
-    <Resource Include="icons\attack.png" />
-    <Resource Include="icons\boggers.png" />
-    <Resource Include="icons\bone.png" />
-    <Resource Include="icons\book.png">
+    <Resource Include="UI\Icons\armor_skills.png" />
+    <Resource Include="UI\Icons\attack.png" />
+    <Resource Include="UI\Icons\boggers.png" />
+    <Resource Include="UI\Icons\bone.png" />
+    <Resource Include="UI\Icons\book.png">
       <Generator></Generator>
     </Resource>
-    <Resource Include="icons\heart.xaml">
+    <Resource Include="UI\Icons\heart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\issues.xaml">
+    <Resource Include="UI\Icons\issues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\loading.png" />
-    <Resource Include="icons\watch.xaml">
+    <Resource Include="UI\Icons\loading.png" />
+    <Resource Include="UI\Icons\watch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\star.xaml">
+    <Resource Include="UI\Icons\star.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\caravan_skills.png" />
-    <Resource Include="icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml">
+    <Resource Include="UI\Icons\caravan_skills.png" />
+    <Resource Include="UI\Icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\badge.xaml">
+    <Resource Include="UI\Icons\badge.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\description_FILL0_wght400_GRAD0_opsz48.png" />
-    <Resource Include="icons\description_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="icons\diva_prayer_gems.png" />
-    <Resource Include="icons\dure2.png" />
-    <Resource Include="icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml">
+    <Resource Include="UI\Icons\description_FILL0_wght400_GRAD0_opsz48.png" />
+    <Resource Include="UI\Icons\description_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Resource Include="UI\Icons\diva_prayer_gems.png" />
+    <Resource Include="UI\Icons\dure2.png" />
+    <Resource Include="UI\Icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\fire.png" />
-    <Resource Include="icons\guild_food.png" />
-    <Resource Include="icons\helm.png">
+    <Resource Include="UI\Icons\fire.png" />
+    <Resource Include="UI\Icons\guild_food.png" />
+    <Resource Include="UI\Icons\helm.png">
       <Generator></Generator>
     </Resource>
-    <Resource Include="icons\image_FILL0_wght400_GRAD0_opsz48.xaml">
+    <Resource Include="UI\Icons\image_FILL0_wght400_GRAD0_opsz48.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\knife.png" />
-    <Resource Include="icons\monster.png" />
-    <Resource Include="icons\monster_info.png" />
-    <Resource Include="icons\note_pink.png" />
-    <Resource Include="icons\page.png" />
-    <Resource Include="icons\photo.png" />
-    <Resource Include="icons\poison.png" />
-    <Resource Include="icons\quest_info.png" />
-    <Resource Include="icons\Refresh.xaml">
+    <Resource Include="UI\Icons\knife.png" />
+    <Resource Include="UI\Icons\monster.png" />
+    <Resource Include="UI\Icons\monster_info.png" />
+    <Resource Include="UI\Icons\note_pink.png" />
+    <Resource Include="UI\Icons\page.png" />
+    <Resource Include="UI\Icons\photo.png" />
+    <Resource Include="UI\Icons\poison.png" />
+    <Resource Include="UI\Icons\quest_info.png" />
+    <Resource Include="UI\Icons\Refresh.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\Close.xaml">
+    <Resource Include="UI\Icons\Close.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\Cancel.xaml">
+    <Resource Include="UI\Icons\Cancel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\Done.xaml">
+    <Resource Include="UI\Icons\Done.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\DragDropControl.xaml">
+    <Resource Include="UI\Icons\DragDropControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\Settings.xaml">
+    <Resource Include="UI\Icons\Settings.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="icons\sigils.png" />
-    <Resource Include="icons\unknown.png" />
+    <Resource Include="UI\Icons\sigils.png" />
+    <Resource Include="UI\Icons\unknown.png" />
   </ItemGroup>
 
   <ItemGroup>

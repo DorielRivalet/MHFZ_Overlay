@@ -3,6 +3,7 @@ using DiscordRPC;
 using DiscordRPC.Logging;
 using Memory;
 using MHFZ_Overlay.addresses;
+using MHFZ_Overlay;
 using Octokit;
 using System;
 using System.Collections.Generic;
@@ -329,7 +330,7 @@ namespace MHFZ_Overlay
 #pragma warning restore CS8618 // Non-nullable field 'latestRelease' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
 #pragma warning restore CS8618 // Non-nullable property 'Client' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
         {
-            var splashScreen = new SplashScreen("icons/loading.png");
+            var splashScreen = new SplashScreen("UI/Icons/loading.png");
 
             splashScreen.Show(false);
 

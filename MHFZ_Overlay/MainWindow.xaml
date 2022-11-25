@@ -20,9 +20,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>-->
-            <Button Background="#1e1e2e7f" ToolTip="Settings" x:Name="OpenConfigButton" Style="{StaticResource DefaultButton}" Height="25" Width="25"  Grid.Column="0" Click="OpenConfigButton_Click" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Settings.xaml'}" ></Button>
-            <Button Background="#1e1e2e7f" ToolTip="Restart Overlay" x:Name="ReloadButton" Style="{StaticResource DefaultButton}" Height="25" Width="25" Grid.Column="1" Click="ReloadButton_Click" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Refresh.xaml'}" ></Button>
-            <Button Background="#1e1e2e7f" ToolTip="Exit" x:Name="CloseButton" Style="{StaticResource DefaultButton}" Height="25" Width="25" Grid.Column="2" Click="CloseButton_Click" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='icons/Close.xaml'}" ></Button>
+            <Button Background="#1e1e2e7f" ToolTip="Settings" x:Name="OpenConfigButton" Style="{StaticResource DefaultButton}" Height="25" Width="25"  Grid.Column="0" Click="OpenConfigButton_Click" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Settings.xaml'}" ></Button>
+            <Button Background="#1e1e2e7f" ToolTip="Restart Overlay" x:Name="ReloadButton" Style="{StaticResource DefaultButton}" Height="25" Width="25" Grid.Column="1" Click="ReloadButton_Click" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Refresh.xaml'}" ></Button>
+            <Button Background="#1e1e2e7f" ToolTip="Exit" x:Name="CloseButton" Style="{StaticResource DefaultButton}" Height="25" Width="25" Grid.Column="2" Click="CloseButton_Click" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Close.xaml'}" ></Button>
         </Grid>
         <Grid x:Name="SharpnessInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}" Width="200" Height="50" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"  Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowSharpness, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
