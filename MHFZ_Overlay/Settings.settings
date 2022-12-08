@@ -380,5 +380,26 @@
     <Setting Name="EnableAutoClose" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="EnableDamageMeter" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DamageMeterBackGroundColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#1e1e2e</Value>
+    </Setting>
+    <Setting Name="DamagerMeter1PColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Red</Value>
+    </Setting>
+    <Setting Name="DamageMeter2PColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Cyan</Value>
+    </Setting>
+    <Setting Name="DamageMeter3PColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Yellow</Value>
+    </Setting>
+    <Setting Name="DamageMeter4PColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Purple</Value>
+    </Setting>
+    <Setting Name="DamageMeterMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Total Damage</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

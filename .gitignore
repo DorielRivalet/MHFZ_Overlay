@@ -1,3 +1,4 @@
+.vscode
 .sonarlint/
 .sonarqube/
 node_modules

@@ -519,7 +519,8 @@ namespace MHFZ_Overlay
                 }
                 else if (curNum < 0)
                 {
-                    curNum = 1000 + curNum; //TODO
+                    // TODO
+                    curNum += 1000;
                     CreateDamageNumberLabel(curNum);
                 }
                 else

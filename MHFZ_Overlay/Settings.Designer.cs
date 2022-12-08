@@ -1534,5 +1534,89 @@ namespace MHFZ_Overlay {
                 this["EnableAutoClose"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableDamageMeter {
+            get {
+                return ((bool)(this["EnableDamageMeter"]));
+            }
+            set {
+                this["EnableDamageMeter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#1e1e2e")]
+        public string DamageMeterBackGroundColor {
+            get {
+                return ((string)(this["DamageMeterBackGroundColor"]));
+            }
+            set {
+                this["DamageMeterBackGroundColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
+        public string DamagerMeter1PColor {
+            get {
+                return ((string)(this["DamagerMeter1PColor"]));
+            }
+            set {
+                this["DamagerMeter1PColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Cyan")]
+        public string DamageMeter2PColor {
+            get {
+                return ((string)(this["DamageMeter2PColor"]));
+            }
+            set {
+                this["DamageMeter2PColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Yellow")]
+        public string DamageMeter3PColor {
+            get {
+                return ((string)(this["DamageMeter3PColor"]));
+            }
+            set {
+                this["DamageMeter3PColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Purple")]
+        public string DamageMeter4PColor {
+            get {
+                return ((string)(this["DamageMeter4PColor"]));
+            }
+            set {
+                this["DamageMeter4PColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Total Damage")]
+        public string DamageMeterMode {
+            get {
+                return ((string)(this["DamageMeterMode"]));
+            }
+            set {
+                this["DamageMeterMode"] = value;
+            }
+        }
     }
 }
