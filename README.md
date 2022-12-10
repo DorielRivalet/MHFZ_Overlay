@@ -1,13 +1,13 @@
 # Monster Hunter Frontier Z Overlay
 
-[![GitHub all releases](https://img.shields.io/github/downloads/DorielRivalet/MHFZ_Overlay/total?style=for-the-badge)](#installation)
+[![GitHub all releases](https://img.shields.io/github/downloads/DorielRivalet/mhfz-overlay/total?style=for-the-badge)](#installation)
 
 [![Preview](https://res.cloudinary.com/marcomontalbano/image/upload/v1664306592/video_to_markdown/images/youtube--_6hHiRHTt_U-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/_6hHiRHTt_U "Preview")
 
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FDorielRivalet%2FMHFZ_Overlay%2Fbadge%3Fref%3Dmain&style=flat)](https://actions-badge.atrox.dev/DorielRivalet/MHFZ_Overlay/goto?ref=main)
-![CircleCI](https://img.shields.io/circleci/build/github/DorielRivalet/MHFZ_Overlay?label=CircleCI&style=flat)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DorielRivalet/MHFZ_Overlay?style=flat)
-![GitHub repo size](https://img.shields.io/github/repo-size/DorielRivalet/MHFZ_Overlay?style=flat)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FDorielRivalet%2Fmhfz-overlay%2Fbadge%3Fref%3Dmain&style=flat)](https://actions-badge.atrox.dev/DorielRivalet/mhfz-overlay/goto?ref=main)
+![CircleCI](https://img.shields.io/circleci/build/github/DorielRivalet/mhfz-overlay?label=CircleCI&style=flat)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DorielRivalet/mhfz-overlay?style=flat)
+![GitHub repo size](https://img.shields.io/github/repo-size/DorielRivalet/mhfz-overlay?style=flat)
 
 <div align = center>
 
@@ -38,14 +38,14 @@ The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospac
 ## Installation
 
 1. [Get **ALL** of the requirements](#requirements)
-2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest/download/Releases.7z)
+2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/Releases.7z)
 3. Make sure Windows or your antivirus did not delete the files (because it reads the games memory, Windows might detect it as a trojan, so you might have to get it out of quarantine)
-4. Unzip it anywhere. Run `MHFZ_OverlaySetup.exe` **as Administrator**
+4. Unzip it anywhere. Run `mhfz-overlaySetup.exe` **as Administrator**
 5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
 
-[View CHANGELOG.md](https://github.com/DorielRivalet/MHFZ_Overlay/blob/main/CHANGELOG.md)
+[View CHANGELOG.md](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md)
 
-[View Release Statistics](https://somsubhra.github.io/github-release-stats/?username=DorielRivalet&repository=MHFZ_Overlay&page=1&per_page=30)
+[View Release Statistics](https://somsubhra.github.io/github-release-stats/?username=DorielRivalet&repository=mhfz-overlay&page=1&per_page=30)
 
 ## Hotkeys
 
@@ -55,7 +55,7 @@ The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospac
 
 **It's recommended to start the overlay when you are done loading into Mezeporta.**
 
-If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/DorielRivalet/MHFZ_Overlay/issues).
+If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/DorielRivalet/mhfz-overlay/issues).
 
 Additionally, if information from the overlay is wrong or inaccurate (e.g. monster parts labels), feel free to send an issue.
 
@@ -160,7 +160,7 @@ Press `Alt+Enter` twice if your screen resolution got lowered.
 
 If the HP shows 0/1 then change area for it to load.
 
-[Check more bugs here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
+[Check more bugs here](https://github.com/DorielRivalet/mhfz-overlay/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
 
 ## Features not yet implemented
 
@@ -197,7 +197,7 @@ If the HP shows 0/1 then change area for it to load.
 - Sharpness tables
 - Gear rarity colors in hunter info stats
 
-[Check more possible future features here](https://github.com/DorielRivalet/MHFZ_Overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
+[Check more possible future features here](https://github.com/DorielRivalet/mhfz-overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 
 ## How to Enable Discord Rich Presence
 
@@ -233,7 +233,7 @@ If the HP shows 0/1 then change area for it to load.
 
 ## How to Manually Update with Update.exe
 
-`update.exe --update https://www.github.com/DorielRivalet/MHFZ_Overlay/releases/download/ENTER VERSION NUMBER (E.G. v0.6.4)`
+`update.exe --update https://www.github.com/DorielRivalet/mhfz-overlay/releases/download/ENTER VERSION NUMBER (E.G. v0.6.4)`
 
 ## How to Uninstall
 
@@ -243,22 +243,22 @@ If the HP shows 0/1 then change area for it to load.
 
 ## Changelog
 
-[CHANGELOG](https://github.com/DorielRivalet/MHFZ_Overlay/blob/main/CHANGELOG.md)
+[CHANGELOG](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md)
 
 ## License
 
-[MIT](https://github.com/DorielRivalet/MHFZ_Overlay/blob/main/LICENSE.md)
+[MIT](https://github.com/DorielRivalet/mhfz-overlay/blob/main/LICENSE.md)
 
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_mhfz-overlay)
 
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=coverage)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
-[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=bugs)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_mhfz-overlay&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_mhfz-overlay)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_mhfz-overlay&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_mhfz-overlay)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_mhfz-overlay&metric=coverage)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_mhfz-overlay)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_mhfz-overlay&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_mhfz-overlay)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_mhfz-overlay&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_mhfz-overlay)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_mhfz-overlay&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_mhfz-overlay)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_mhfz-overlay&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_mhfz-overlay)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_mhfz-overlay&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_mhfz-overlay)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_mhfz-overlay&metric=bugs)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_mhfz-overlay)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_mhfz-overlay&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_mhfz-overlay)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_mhfz-overlay&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_mhfz-overlay)

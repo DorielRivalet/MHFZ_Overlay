@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MHFZ_Overlay {
+namespace mhfz_overlay {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
