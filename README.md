@@ -249,6 +249,8 @@ If the HP shows 0/1 then change area for it to load.
 
 [MIT](https://github.com/DorielRivalet/mhfz-overlay/blob/main/LICENSE.md)
 
+## Code Analysis
+
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
 
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
