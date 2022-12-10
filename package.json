@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DorielRivalet/MHFZ_Overlay.git"
+    "url": "git+https://github.com/DorielRivalet/mhfz-overlay.git"
   },
   "keywords": [],
   "author": "DorielRivalet",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DorielRivalet/MHFZ_Overlay/issues"
+    "url": "https://github.com/DorielRivalet/mhfz-overlay/issues"
   },
-  "homepage": "https://github.com/DorielRivalet/MHFZ_Overlay#readme",
+  "homepage": "https://github.com/DorielRivalet/mhfz-overlay#readme",
   "dependencies": {
     "@release-it/conventional-changelog": "^5.1.1",
     "release-it": "^15.5.1"

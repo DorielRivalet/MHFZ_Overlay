@@ -19,7 +19,7 @@ jobs:
       id: sitemap
       uses: cicirello/generate-sitemap@v1
       with:
-        base-url-path: https://dorierivalet.github.io/MHFZ_Overlay/
+        base-url-path: https://dorierivalet.github.io/mhfz-overlay/
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
