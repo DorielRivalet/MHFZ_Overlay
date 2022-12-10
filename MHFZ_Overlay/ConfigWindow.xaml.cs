@@ -2287,13 +2287,13 @@ namespace MHFZ_Overlay
             Topmost = true;
             MainWindow = mainWindow;
 
-            string background1 = @"pack://application:,,,/mhfz-overlay;component/UI/Background/1.png";
-            string background2 = @"pack://application:,,,/mhfz-overlay;component/UI/Background/2.png";
-            string background3 = @"pack://application:,,,/mhfz-overlay;component/UI/Background/3.png";
-            string background4 = @"pack://application:,,,/mhfz-overlay;component/UI/Background/4.png";
-            string background5 = @"pack://application:,,,/mhfz-overlay;component/UI/Background/5.png";
-            string background6 = @"pack://application:,,,/mhfz-overlay;component/UI/Background/6.png";
-            string background7 = @"pack://application:,,,/mhfz-overlay;component/UI/Background/7.png";
+            string background1 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/1.png";
+            string background2 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/2.png";
+            string background3 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/3.png";
+            string background4 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/4.png";
+            string background5 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/5.png";
+            string background6 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/6.png";
+            string background7 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/7.png";
 
             //https://stackoverflow.com/questions/30839173/change-background-image-in-wpf-using-c-sharp
             GeneralContent.Background = new ImageBrush(new BitmapImage(new Uri(background1)));
