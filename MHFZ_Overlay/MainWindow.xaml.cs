@@ -92,7 +92,7 @@ namespace MHFZ_Overlay
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
         //set version here
-        public const string CurrentProgramVersion = "v0.17.0";
+        public const string CurrentProgramVersion = "v0.17.1";
 
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);
@@ -255,7 +255,7 @@ namespace MHFZ_Overlay
             },
             Buttons = new DiscordRPC.Button[]
                 {
-                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
+                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay"},
                     new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
                 }
         };
@@ -295,7 +295,7 @@ namespace MHFZ_Overlay
                 presenceTemplate.Buttons = new DiscordRPC.Button[] { };
                 presenceTemplate.Buttons = new DiscordRPC.Button[]
                 {
-                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
+                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay"},
                     new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
                 };
 
@@ -304,7 +304,7 @@ namespace MHFZ_Overlay
                     presenceTemplate.Buttons = new DiscordRPC.Button[] { };
                     presenceTemplate.Buttons = new DiscordRPC.Button[]
                     {
-                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/MHFZ_Overlay"},
+                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay"},
                     new DiscordRPC.Button() { Label = "Join Discord Server", Url = String.Format("https://discord.com/invite/{0}",GetDiscordServerInvite)}
                     };
                 }
@@ -374,7 +374,7 @@ namespace MHFZ_Overlay
 
                     if (messageBoxResult.ToString() == "Yes")
                     {
-                        OpenLink("https://github.com/DorielRivalet/MHFZ_Overlay/releases/latest/download/Releases.7z");
+                        OpenLink("https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/Releases.7z");
                     }
                 }
             }
@@ -1402,7 +1402,7 @@ namespace MHFZ_Overlay
         public static string GetAreaIconFromID(int id) //TODO: are highlands, tidal island or painted falls icons correct?
         {
             if (id >= 470 && id < 0)
-                return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/icon/cattleya.png";
+                return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
             else
                 return FindAreaIcon(id);
         }
@@ -1428,7 +1428,7 @@ namespace MHFZ_Overlay
         {
             bool areaIcon = AreaIconDictionary.AreaIconID.ContainsKey(key);
             if (!areaIcon)
-                return "https://raw.githubusercontent.com/DorielRivalet/MHFZ_Overlay/main/img/icon/cattleya.png";
+                return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
             else
                 return AreaIconDictionary.AreaIconID[key];
         }
