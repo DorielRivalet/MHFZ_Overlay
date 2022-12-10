@@ -1,8 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Security.Policy;
-using System.Windows.Documents;
-using System.Windows.Media;
 
 namespace Dictionary
 {
@@ -59,7 +55,7 @@ namespace Dictionary
     ///</summary>
     public static class List
     {
-        public static IReadOnlyDictionary<int, string> MonsterID { get;} = new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> MonsterID { get; } = new Dictionary<int, string>
         {
             {0, "None"},//
             {1, "Rathian"},//
@@ -2315,7 +2311,7 @@ namespace Dictionary
         public static IReadOnlyDictionary<int, string> BerserkRavienteTriggerEventIDs { get; } = new Dictionary<int, string>
         {
             {0, "Slay 1"},
-            {1, "Sedation 1"},  
+            {1, "Sedation 1"},
             {2, "Sedation 2"},
             {3, "Destruction 2"},
             {4, "Support 1 Done"},

@@ -1,19 +1,9 @@
-﻿using CsvHelper.Configuration.Attributes;
-using Dictionary;
+﻿using Dictionary;
 using Memory;
-using MHFZ_Overlay;
-using Newtonsoft.Json.Linq;
-using Octokit;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Forms;
 using Application = System.Windows.Application;
 
 namespace MHFZ_Overlay.addresses
@@ -811,7 +801,7 @@ namespace MHFZ_Overlay.addresses
             if (QuestNameContainsAlternativeTitle() || PreviousHubAreaIDIsAlternative())
             {
                 return true;
-            } 
+            }
             else
             {
                 return false;
@@ -901,7 +891,7 @@ namespace MHFZ_Overlay.addresses
         /// <returns></returns>
         private static string FindPartName(int number, int monsterID)
         {
-            List<int> partMonsterGroup = new List<int> {0};
+            List<int> partMonsterGroup = new List<int> { 0 };
 
             foreach (KeyValuePair<List<int>, List<string>> kvp in MonsterPartDictionary.MonsterPartID)
             {
@@ -913,7 +903,7 @@ namespace MHFZ_Overlay.addresses
                     break;
                 }
             }
-            return DeterminePartName(partMonsterGroup, number-1);
+            return DeterminePartName(partMonsterGroup, number - 1);
         }
 
         private static string DeterminePartName(List<int> key, int slot)
@@ -1188,7 +1178,8 @@ namespace MHFZ_Overlay.addresses
                     else if (Sharpness() <= 0)
                     {
                         return " (0%)";
-                    } else // MaxSharpness > CurrentSharpness && CurrentSharpness > 0
+                    }
+                    else // MaxSharpness > CurrentSharpness && CurrentSharpness > 0
                     {
                         return string.Format(" ({0:0}%)", (float)Sharpness() / MaxSharpness * 100.0);
                     }
@@ -1216,7 +1207,8 @@ namespace MHFZ_Overlay.addresses
                 else if (GetTimerMode() == "Time Left")
                 {
                     time = TimeInt();
-                } else // default to Time Left mode
+                }
+                else // default to Time Left mode
                 {
                     time = TimeInt();
                 }
@@ -1238,11 +1230,13 @@ namespace MHFZ_Overlay.addresses
                         if ((time / 30) % 60 < 10)
                         {
                             return string.Format("{0:00}:{1:00}.{2}", (time / 30) / 60, time / 30 % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;//should work fine
-                        } else
+                        }
+                        else
                         {
                             return string.Format("{0:00}:{1}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
                         }
-                    } else
+                    }
+                    else
                     {
                         if ((time / 30) % 60 < 10)
                         {
@@ -1253,7 +1247,8 @@ namespace MHFZ_Overlay.addresses
                             return string.Format("{0}:{1}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
                         }
                     }
-                } else
+                }
+                else
                 {
                     return string.Format("{0:00}:{1:00}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
                 }
@@ -1475,7 +1470,7 @@ namespace MHFZ_Overlay.addresses
                 switch (SelectedMonster)
                 {
                     case 0:
-                        return string.Format("{0:0.0000}",Monster1DefMult());
+                        return string.Format("{0:0.0000}", Monster1DefMult());
                     case 1:
                         return Monster2DefMult().ToString();
                     default:
@@ -1936,7 +1931,8 @@ namespace MHFZ_Overlay.addresses
         /// </value>
         public string RealMonsterName
         {
-            get {
+            get
+            {
 
                 ////https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
                 int id;
@@ -1991,16 +1987,16 @@ namespace MHFZ_Overlay.addresses
             switch (id)
             {
                 case 65:
-                        return "Teostra";
+                    return "Teostra";
                 case 89:
                     if (RankBand() == 54)
                         return "Thirsty Pariapuria";
                     else
                         return "Pariapuria";
                 case 95:
-                        return "Doragyurosu";
+                    return "Doragyurosu";
                 case 106:
-                        return "Odibatorasu";
+                    return "Odibatorasu";
                 case 113:
                     if (RankBand() == 55)
                         return "Shifting Mi Ru";
@@ -4751,7 +4747,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return "Lv. " + (CaravenGemLevel()+1).ToString();
+                return "Lv. " + (CaravenGemLevel() + 1).ToString();
             }
         }
 
@@ -5900,11 +5896,11 @@ namespace MHFZ_Overlay.addresses
 
         public static string GetGameSigilsInfo
         {
-            get 
+            get
             {
                 return "Sigils are similar to decorations but exclusively used in G Rank weaponry. They are crafted at theCat Smith who creates random Gou weapons.Sigil Slots are triangular slots that either replace decoration slots in standard G Rank weaponry or are part of hybrid slots that can take either decorations or a sigil.Weapons can have up to three sigils. Sigils with variable values will generally always stack but ones that add or enhance abilities and motions generally have a fixed effect regardless of the number slotted.\n\n" +
                     "Although most weapons have dedicated sigils, many are far from optimal. You should carefully consider the frequency with which you will actually be using the attack. For an excellent example,the Dual Swords sigils for the Rush Slash and Frontip Slash have incredibly low viability for Extreme Style because of Extreme Demon Mode not having access to them and because of optimal play involving almost exclusive use of that mode. Similarly,the GS Guard Slash is outright unavailable for Extreme Style and Upswings will mostly be charged - which does not benefit from the sigil - and so the sigils to buff those moves are mostly useless, especially compared to simply buffing raw. Realistically, if you want the best results you should really just be aiming almost entirely to get Attack or Elemental on sigils and one or more of your weapon's specific sigils. For Gunlance you should always aim to have Lv9 shelling if you are utilizing Shelling and Wyvern Fires.\n\n" +
-                    "Optimal sigil build is 15/15/15 Attack/Element Adv Shiten, 15/15/15 Attack/Element UL Sigil, 15/12(Duration)/20(Cooldown) Attack/Element Zenith Sigil (for multiplayer: Z Area of Effect)\n\n"+
+                    "Optimal sigil build is 15/15/15 Attack/Element Adv Shiten, 15/15/15 Attack/Element UL Sigil, 15/12(Duration)/20(Cooldown) Attack/Element Zenith Sigil (for multiplayer: Z Area of Effect)\n\n" +
                     "Health and Stamina\n" +
                     "Sleeping: Recover gear by using the gesture 「睡覺」 (does not stack)\n\n" +
                     "Offensive\n" +
@@ -6418,26 +6414,26 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return "The Maximum Cost is 130.\n\n"+
-                    "Attack\n"+
-                    "Lv1: Small increase to attack.(+10)\n"+
-                    "Lv2: Increases attack.(+20)\n"+
-                    "Lv3: Medium increase to attack.(+30)\n"+
-                    "Lv4: Large increase to attack.(+50)\n"+
-                    "Lv5: Very large increase to attack.(+70)\n\n"+
-                    "Defense\n"+
-                    "Lv1: Defense +30\n"+
-                    "Lv2: Defense +50\n"+
-                    "Lv3: Defense +80\n"+
-                    "Lv4: Defense +110\n"+
-                    "Lv5: Defense +150\n\n"+
-                    "Health Recovery\n"+
-                    "Lv1: Red Health recovery speed is increased.\n"+
-                    "Lv2: Red health recovery speed is further increased.\n\n"+
-                    "Fire Res\n"+
-                    "Lv1: Fire Res +10\n"+
-                    "Lv2: Fire Res +15\n"+
-                    "Lv3: Fire Res +25\n\n"+
+                return "The Maximum Cost is 130.\n\n" +
+                    "Attack\n" +
+                    "Lv1: Small increase to attack.(+10)\n" +
+                    "Lv2: Increases attack.(+20)\n" +
+                    "Lv3: Medium increase to attack.(+30)\n" +
+                    "Lv4: Large increase to attack.(+50)\n" +
+                    "Lv5: Very large increase to attack.(+70)\n\n" +
+                    "Defense\n" +
+                    "Lv1: Defense +30\n" +
+                    "Lv2: Defense +50\n" +
+                    "Lv3: Defense +80\n" +
+                    "Lv4: Defense +110\n" +
+                    "Lv5: Defense +150\n\n" +
+                    "Health Recovery\n" +
+                    "Lv1: Red Health recovery speed is increased.\n" +
+                    "Lv2: Red health recovery speed is further increased.\n\n" +
+                    "Fire Res\n" +
+                    "Lv1: Fire Res +10\n" +
+                    "Lv2: Fire Res +15\n" +
+                    "Lv3: Fire Res +25\n\n" +
                     "Water Res\n" +
                     "Lv1: Water Res +10\n" +
                     "Lv2: Water Res +15\n" +
@@ -6454,58 +6450,58 @@ namespace MHFZ_Overlay.addresses
                     "Lv1: Dragon Res +10\n" +
                     "Lv2: Dragon Res +15\n" +
                     "Lv3: Dragon Res +25\n\n" +
-                    "All Res\n"+
-                    "Lv1: All Res +5\n"+
-                    "Lv2: All Res +10\n"+
-                    "Lv3: All Res +15\n\n"+
-                    "Technical Skills\n"+
-                    "Starting Gm Up\n"+
-                    "Lv1: Increases starting Gm.(+1000Gm)\n"+
-                    "Lv2: Increases starting Gm significantly.(+3000Gm)\n\n"+
-                    "Hunting Road Points Up\n"+
-                    "Lv1: Increases Road Point earning slightly (+10%).\n"+
-                    "Lv2: Increases Road Point earning (+20%).\n"+
-                    "Lv3: Increases Road Point earning greatly (+40%).\n\n"+
-                    "Bonus Stages Up\n"+
-                    "Lv1: Increases the likelihood of getting Bonus Stages slightly. Stacks with other players on road.\n"+
+                    "All Res\n" +
+                    "Lv1: All Res +5\n" +
+                    "Lv2: All Res +10\n" +
+                    "Lv3: All Res +15\n\n" +
+                    "Technical Skills\n" +
+                    "Starting Gm Up\n" +
+                    "Lv1: Increases starting Gm.(+1000Gm)\n" +
+                    "Lv2: Increases starting Gm significantly.(+3000Gm)\n\n" +
+                    "Hunting Road Points Up\n" +
+                    "Lv1: Increases Road Point earning slightly (+10%).\n" +
+                    "Lv2: Increases Road Point earning (+20%).\n" +
+                    "Lv3: Increases Road Point earning greatly (+40%).\n\n" +
+                    "Bonus Stages Up\n" +
+                    "Lv1: Increases the likelihood of getting Bonus Stages slightly. Stacks with other players on road.\n" +
                     "Lv2: Increases the likelihood of getting Bonus Stages. Stacks with other players on road.\n\n" +
-                    "Resurrection Knowledge\n"+
-                    "Lv1: Increases the number of times you can faint on the road before failing (+1 Cart).\n\n"+
-                    "Advancement Knowledge\n"+
-                    "Lv1: Attack increases every 5 stages on the Road. Floor 6 will give +20 Attack while every 5th floor after will grant +10 Attack stopping after floor 26. Maximum buff of 60 Attack for all floors above 26.\n"+
-                    "Lv2: Attack increases every 5 stages on the Road. Floor 6 will give +40 Attack while every 5th floor after will grant +10 Attack stopping after floor 26. Maximum buff of 80 Attack for all floors above 26.\n"+
-                    "Lv3: Attack increases every 5 stages on the Road. Floor 6 will give +60 Attack while every 5th floor after will grant +10 Attack stopping after floor 26. Maximum buff of 100 Attack for all floors above 26.\n\n"+
-                    "Last Stand\n"+
-                    "Lv1: Increases affinity by +30% and Attack by +80 but causes you to have a single faint on Road regardless of other skills.\n"+
-                    "Lv2: Increases affinity by +50% and Attack by +120 but causes you to have a single faint on road regardless of other skills.\n\n"+
-                    "Duremudira Skills\n"+
-                    "Care\n"+
-                    "Lv1: Slightly increases speed of revivals and the amount of health left after being revived.\n"+
-                    "Lv2: Increases speed of revivals and the amount of health left after being revived.\n"+
-                    "Lv3: Greatly increases speed of revivals and the amount of health left after being revived.\n\n"+
-                    "Pharmacist\n"+
-                    "Lv1: Increases the number of revival items you can carry by 1.\n"+
-                    "Lv2: Increases the number of revival items you can carry by 2.\n"+
-                    "Lv3: Increases the number of revival items you can carry by 4.\n\n"+
-                    "Virus Protection\n"+
-                    "Lv1: Increases resistance to Deadly Poison slightly.\n"+
-                    "Lv2: Increases resistance to Deadly Poison.\n"+
-                    "Lv3: Increases resistance to Deadly Poison greatly.\n\n"+
-                    "Frost Protection\n"+
-                    "Lv1: Increases resistance to Powerful Frost slightly.\n"+
-                    "Lv2: Increases resistance to Powerful Frost.\n"+
-                    "Lv3: Increases resistance to Powerful Frost greatly.\n\n"+
-                    "Gatekeeper Offensive\n"+
-                    "Lv1: Increases attack when facing Duremudira by +50 true raw.\n"+
-                    "Lv2: Increases attack when facing Duremudira by +75 true raw.\n"+
-                    "Lv3: Increases attack when facing Duremudira by +100 true raw.\n"+
-                    "Lv4: Increases attack when facing Duremudira by +150 true raw.\n"+
-                    "Lv5: Increases attack when facing Duremudira by +200 true raw.\n\n"+
-                    "Gatekeeper Defensive\n"+
-                    "Lv1: Increases defense when facing Duremudira.\n"+
-                    "Lv2: Increases defense when facing Duremudira.\n"+
-                    "Lv3: Increases defense when facing Duremudira.\n"+
-                    "Lv4: Increases defense when facing Duremudira.\n"+
+                    "Resurrection Knowledge\n" +
+                    "Lv1: Increases the number of times you can faint on the road before failing (+1 Cart).\n\n" +
+                    "Advancement Knowledge\n" +
+                    "Lv1: Attack increases every 5 stages on the Road. Floor 6 will give +20 Attack while every 5th floor after will grant +10 Attack stopping after floor 26. Maximum buff of 60 Attack for all floors above 26.\n" +
+                    "Lv2: Attack increases every 5 stages on the Road. Floor 6 will give +40 Attack while every 5th floor after will grant +10 Attack stopping after floor 26. Maximum buff of 80 Attack for all floors above 26.\n" +
+                    "Lv3: Attack increases every 5 stages on the Road. Floor 6 will give +60 Attack while every 5th floor after will grant +10 Attack stopping after floor 26. Maximum buff of 100 Attack for all floors above 26.\n\n" +
+                    "Last Stand\n" +
+                    "Lv1: Increases affinity by +30% and Attack by +80 but causes you to have a single faint on Road regardless of other skills.\n" +
+                    "Lv2: Increases affinity by +50% and Attack by +120 but causes you to have a single faint on road regardless of other skills.\n\n" +
+                    "Duremudira Skills\n" +
+                    "Care\n" +
+                    "Lv1: Slightly increases speed of revivals and the amount of health left after being revived.\n" +
+                    "Lv2: Increases speed of revivals and the amount of health left after being revived.\n" +
+                    "Lv3: Greatly increases speed of revivals and the amount of health left after being revived.\n\n" +
+                    "Pharmacist\n" +
+                    "Lv1: Increases the number of revival items you can carry by 1.\n" +
+                    "Lv2: Increases the number of revival items you can carry by 2.\n" +
+                    "Lv3: Increases the number of revival items you can carry by 4.\n\n" +
+                    "Virus Protection\n" +
+                    "Lv1: Increases resistance to Deadly Poison slightly.\n" +
+                    "Lv2: Increases resistance to Deadly Poison.\n" +
+                    "Lv3: Increases resistance to Deadly Poison greatly.\n\n" +
+                    "Frost Protection\n" +
+                    "Lv1: Increases resistance to Powerful Frost slightly.\n" +
+                    "Lv2: Increases resistance to Powerful Frost.\n" +
+                    "Lv3: Increases resistance to Powerful Frost greatly.\n\n" +
+                    "Gatekeeper Offensive\n" +
+                    "Lv1: Increases attack when facing Duremudira by +50 true raw.\n" +
+                    "Lv2: Increases attack when facing Duremudira by +75 true raw.\n" +
+                    "Lv3: Increases attack when facing Duremudira by +100 true raw.\n" +
+                    "Lv4: Increases attack when facing Duremudira by +150 true raw.\n" +
+                    "Lv5: Increases attack when facing Duremudira by +200 true raw.\n\n" +
+                    "Gatekeeper Defensive\n" +
+                    "Lv1: Increases defense when facing Duremudira.\n" +
+                    "Lv2: Increases defense when facing Duremudira.\n" +
+                    "Lv3: Increases defense when facing Duremudira.\n" +
+                    "Lv4: Increases defense when facing Duremudira.\n" +
                     "Lv5: Increases defense when facing Duremudira.\n\n" +
                     "Tower Weapons\n" +
                     "The best one is Blue Tower. You generally want the upgrades to be 1 into sharpness, max poison, 4 into element, rest into raw, with a Skill Slots Up sigil.\n\n" +
@@ -6518,75 +6514,75 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return "Skill Slots Up\n"+
-                    "Available Skill Slots go up by 1/2/3/4/5/6/7. Stacks with the +1 or +2 skill slots from having 3 or 5 standard G Rank pieces (including Z, ZF, ZY, ZX and ZP)\n\n"+
-                    "Flash Conversion\n"+
-                    "Flash Conversion Up+1: Increases attack based on your weapon's natural affinity (5 x √Base Affinity, always rounded down before addition). Example: 50% base affinity = 5 x √50 = 7.07 x 10 = 35. This only uses the true base affinity of your weapon. Sigils, Skills, SR Skills and the +5-10% from having above blue sharpness do not count towards the increase. (The sharpness bonus is always displayed\n"+
-                    "Flash Conversion Up+2: Increases attack based on your weapon's natural affinity (10 x √Base Affinity, always rounded down before addition). Example: 50% base affinity = 10 x √50 = 7.07 x 10 = 70. This only uses the true base affinity of your weapon. Sigils, Skills, SR Skills and the +5-10% from having above blue sharpness do not count towards the increase. (The sharpness bonus is always displayed\n\n"+
-                    "Stylish Assault\n"+
-                    "(Recommended) Stylish Assault Up+1: Boosts Attack by +20 per evade up to a maximum of +220. The duration of the buff resets every evasion. Your attack being overbuffed is indicated by the aura becoming yellow. Synergizes well with Stylish Up.\n"+
-                    "Stylish Assault Up+2: Boosts Attack by +40 per evade up to a maximum of +220. The duration of the buff resets every evasion. Your attack being overbuffed is indicated by the aura becoming yellow. Synergizes well with Stylish Up.\n\n"+
+                return "Skill Slots Up\n" +
+                    "Available Skill Slots go up by 1/2/3/4/5/6/7. Stacks with the +1 or +2 skill slots from having 3 or 5 standard G Rank pieces (including Z, ZF, ZY, ZX and ZP)\n\n" +
+                    "Flash Conversion\n" +
+                    "Flash Conversion Up+1: Increases attack based on your weapon's natural affinity (5 x √Base Affinity, always rounded down before addition). Example: 50% base affinity = 5 x √50 = 7.07 x 10 = 35. This only uses the true base affinity of your weapon. Sigils, Skills, SR Skills and the +5-10% from having above blue sharpness do not count towards the increase. (The sharpness bonus is always displayed\n" +
+                    "Flash Conversion Up+2: Increases attack based on your weapon's natural affinity (10 x √Base Affinity, always rounded down before addition). Example: 50% base affinity = 10 x √50 = 7.07 x 10 = 70. This only uses the true base affinity of your weapon. Sigils, Skills, SR Skills and the +5-10% from having above blue sharpness do not count towards the increase. (The sharpness bonus is always displayed\n\n" +
+                    "Stylish Assault\n" +
+                    "(Recommended) Stylish Assault Up+1: Boosts Attack by +20 per evade up to a maximum of +220. The duration of the buff resets every evasion. Your attack being overbuffed is indicated by the aura becoming yellow. Synergizes well with Stylish Up.\n" +
+                    "Stylish Assault Up+2: Boosts Attack by +40 per evade up to a maximum of +220. The duration of the buff resets every evasion. Your attack being overbuffed is indicated by the aura becoming yellow. Synergizes well with Stylish Up.\n\n" +
                     "Dissolver Up\n" +
-                    "Lowers the Elemental Hitbox requirements for Dissolver. (15 Weakness down from 20). Unnecessary with Solid Determination.\n\n"+
-                    "Thunder Clad\n"+
-                    "Thunder Clad Up+1: Increases the active duration of Thunder Clad to 80 seconds (+20)\n"+
-                    "Thunder Clad Up+2: Increases the active duration of Thunder Clad to 120 seconds (+60)\n\n"+
-                    "Ice Age Up\n"+
-                    "Increases the maximum duration that the Ice Age aura can stay at a stage by +3 seconds. Only affects top tier stage (i.e. Stage 3 is 9>12 seconds but if it hits stage 2 that is 10 seconds for decay, not 13).\n\n"+
-                    "Hearing Protection\n"+
-                    "Hearing Protection Up+1: Increases Hearing Protection by one tier, allows blocking of Ultra Roars with Super High-Grade Earplugs.\n"+
+                    "Lowers the Elemental Hitbox requirements for Dissolver. (15 Weakness down from 20). Unnecessary with Solid Determination.\n\n" +
+                    "Thunder Clad\n" +
+                    "Thunder Clad Up+1: Increases the active duration of Thunder Clad to 80 seconds (+20)\n" +
+                    "Thunder Clad Up+2: Increases the active duration of Thunder Clad to 120 seconds (+60)\n\n" +
+                    "Ice Age Up\n" +
+                    "Increases the maximum duration that the Ice Age aura can stay at a stage by +3 seconds. Only affects top tier stage (i.e. Stage 3 is 9>12 seconds but if it hits stage 2 that is 10 seconds for decay, not 13).\n\n" +
+                    "Hearing Protection\n" +
+                    "Hearing Protection Up+1: Increases Hearing Protection by one tier, allows blocking of Ultra Roars with Super High-Grade Earplugs.\n" +
                     "Hearing Protection Up+2: Increases Hearing Protection by two tiers, allows blocking of Ultra Roars with High-Grade Earplugs.\n" +
-                    "Hearing Protection Up+3: Allows blocking of Ultra Roars with Earplugs.\n\n"+
-                    "Wind Res Up\n"+
-                    "Wind Res Up+1: Increases Wind Res by 1 tier, allows blocking of Ultra Wind Pressure with Violent Wind Breaker\n"+
+                    "Hearing Protection Up+3: Allows blocking of Ultra Roars with Earplugs.\n\n" +
+                    "Wind Res Up\n" +
+                    "Wind Res Up+1: Increases Wind Res by 1 tier, allows blocking of Ultra Wind Pressure with Violent Wind Breaker\n" +
                     "Wind Res Up+2: Increases Wind Res by 2 tiers, allows blocking of Ultra Wind Pressure with Dragon Wind Breaker\n" +
                     "Wind Res Up+3: Increases Wind Res by 3 tiers, allows blocking of Ultra Wind Pressure with Wind Res (Large)\n" +
-                    "Wind Res Up+4: Allows blocking of Ultra Wind Pressure with Wind Res (Small)\n\n"+
-                    "Quake Res\n"+
-                    "Quake Res Up+1: Increases Quake Res by 1 tier, allows blocking of Ultra Tremor with Quake Res+1\n"+
-                    "Quake Res Up+2: Allows blocking of Ultra Tremor with Quake Res+1.\n\n"+
-                    "Poison Res\n"+
-                    "Poison Res Up+1: Upgrades Poison Res by 1 tier, enables Super Poison Damage Halved with Poison Immunity. There is no immunity for Super Poison. Increases level of the hybrid skill Status Immunity but does not increase the skill granted by Assistance or Thunder Clad.\n"+
-                    "Poison Res Up+2: Super Poison Damage Halved. There is no immunity for Super Poison. Increases level of the hybrid skill Status Immunity but does not increase the skill granted by Assistance or Thunder Clad.\n\n"+
+                    "Wind Res Up+4: Allows blocking of Ultra Wind Pressure with Wind Res (Small)\n\n" +
+                    "Quake Res\n" +
+                    "Quake Res Up+1: Increases Quake Res by 1 tier, allows blocking of Ultra Tremor with Quake Res+1\n" +
+                    "Quake Res Up+2: Allows blocking of Ultra Tremor with Quake Res+1.\n\n" +
+                    "Poison Res\n" +
+                    "Poison Res Up+1: Upgrades Poison Res by 1 tier, enables Super Poison Damage Halved with Poison Immunity. There is no immunity for Super Poison. Increases level of the hybrid skill Status Immunity but does not increase the skill granted by Assistance or Thunder Clad.\n" +
+                    "Poison Res Up+2: Super Poison Damage Halved. There is no immunity for Super Poison. Increases level of the hybrid skill Status Immunity but does not increase the skill granted by Assistance or Thunder Clad.\n\n" +
                     "Paralysis Res\n" +
-                    "Paralysis Res Up+1: Upgrades Paralysis Res by 1 tier, enables Super Paralysis Halved with Paralysis Immunity. There is no immunity for Super Paralysis. Increases level of the hybrid skill Status Immunity but does not increase the skill granted by Assistance or Thunder Clad.\n"+
-                    "Paralysis Res Up+2: Super Paralysis Halved. There is no immunity for Super Paralysis. Increases level of the hybrid skill Status Immunity but does not increase the skill granted by Assistance or Thunder Clad.\n\n"+
+                    "Paralysis Res Up+1: Upgrades Paralysis Res by 1 tier, enables Super Paralysis Halved with Paralysis Immunity. There is no immunity for Super Paralysis. Increases level of the hybrid skill Status Immunity but does not increase the skill granted by Assistance or Thunder Clad.\n" +
+                    "Paralysis Res Up+2: Super Paralysis Halved. There is no immunity for Super Paralysis. Increases level of the hybrid skill Status Immunity but does not increase the skill granted by Assistance or Thunder Clad.\n\n" +
                     "Sleep Res\n" +
-                    "Sleep Res Up+1: Upgrades Sleep Res by 1 tier, enables Super Sleep Halved with Sleep Immunity. There is no immunity for Super Sleep. Increases level of the hybrid skill Status Immunity but does not increase the skill granted by Assistance or Thunder Clad.\n"+
-                    "Sleep Res Up+2: Super Sleep Halved. There is no immunity for Super Sleep. Increases level of the hybrid skill Status Immunity but does not increase the skill granted by Assistance or Thunder Clad.\n\n"+
-                    "Vampirism\n"+
-                    "Vampirism Up: Increases level of Vampirism by one. Increases leech rate to 100% if you already have Vampirism+2. Leeching with Vampirism+3 regains the same amount of health as Vampirism+2, the buff is purely to the leech chance and is not much of a buff compared to that of increasing Vampirism+1 to +2.\n\n"+
-                    "Drug Knowledge\n"+
-                    "Drug Knowledge Up: Status weapons always inflict 42% of their original status value (Up from 38%). Does not increase the amount of raw gained from the original status value beyond 1/4th. Normal status infliction rate is 33% chance of 100% status points.\n\n"+
-                    "Assistance\n"+
-                    "Assistance Up: Party members within the area of effect of Assistance get Status Immunity (Myriad). Immunity skill still only affects other hunters, does not affect the person with the skill active.\n\n"+
-                    "Bullet Saver\n"+
-                    "Bullet Saver Up+1: Upgrades Bullet Saver by 1 tier. If you have Bullet Saving Master, further increases the rate at which you save bullets or coatings to around 46.4%.\n"+
+                    "Sleep Res Up+1: Upgrades Sleep Res by 1 tier, enables Super Sleep Halved with Sleep Immunity. There is no immunity for Super Sleep. Increases level of the hybrid skill Status Immunity but does not increase the skill granted by Assistance or Thunder Clad.\n" +
+                    "Sleep Res Up+2: Super Sleep Halved. There is no immunity for Super Sleep. Increases level of the hybrid skill Status Immunity but does not increase the skill granted by Assistance or Thunder Clad.\n\n" +
+                    "Vampirism\n" +
+                    "Vampirism Up: Increases level of Vampirism by one. Increases leech rate to 100% if you already have Vampirism+2. Leeching with Vampirism+3 regains the same amount of health as Vampirism+2, the buff is purely to the leech chance and is not much of a buff compared to that of increasing Vampirism+1 to +2.\n\n" +
+                    "Drug Knowledge\n" +
+                    "Drug Knowledge Up: Status weapons always inflict 42% of their original status value (Up from 38%). Does not increase the amount of raw gained from the original status value beyond 1/4th. Normal status infliction rate is 33% chance of 100% status points.\n\n" +
+                    "Assistance\n" +
+                    "Assistance Up: Party members within the area of effect of Assistance get Status Immunity (Myriad). Immunity skill still only affects other hunters, does not affect the person with the skill active.\n\n" +
+                    "Bullet Saver\n" +
+                    "Bullet Saver Up+1: Upgrades Bullet Saver by 1 tier. If you have Bullet Saving Master, further increases the rate at which you save bullets or coatings to around 46.4%.\n" +
                     "Bullet Saver Up+2: Further increases the rate at which you save bullets or coatings to around 46.4%.\n\n" +
-                    "Guard\n"+
-                    "(Recommended for Lance/Gunlance) Guard Up+1: Upgrades Guard by one level. If you already have Guard+2, decreases the amount of knockback, stamina loss and health loss while guarding and increases the size of the guard window. Lances and Gunlances only: Only applies when exceeding Guard+2, Guarding affects 360 degrees around you, rear hits still cause knockdown. Heavy and Ranged Guards can block attacks that were previously unblockable. Lance's Guard Meter fills faster (Extreme Style). Gunlances have lowered Wyvern Fire cooldowns. Synergizes well with Reflect Up, Obscurity Up and Rush Up.\n"+
+                    "Guard\n" +
+                    "(Recommended for Lance/Gunlance) Guard Up+1: Upgrades Guard by one level. If you already have Guard+2, decreases the amount of knockback, stamina loss and health loss while guarding and increases the size of the guard window. Lances and Gunlances only: Only applies when exceeding Guard+2, Guarding affects 360 degrees around you, rear hits still cause knockdown. Heavy and Ranged Guards can block attacks that were previously unblockable. Lance's Guard Meter fills faster (Extreme Style). Gunlances have lowered Wyvern Fire cooldowns. Synergizes well with Reflect Up, Obscurity Up and Rush Up.\n" +
                     "Guard Up+2: Decreases the amount of knockback, stamina loss and health loss while guarding and increases the size of the guard window. Lances and Gunlances only: Only applies when exceeding Guard+2, Guarding affects 360 degrees around you, rear hits still cause knockdown. Heavy and Ranged Guards can block attacks that were previously unblockable. Lance's Guard Meter fills faster (3 Hits > 2 Hits per phial). Gunlances have lowered Wyvern Fire cooldowns (10s faster, 5s with Hiden). Synergizes well with Reflect Up, Obscurity Up and Rush Up.\n\n" +
-                    "Adaptation\n"+
-                    "Adaptation Up+1: Upgrades Adaptation by one level. If you already have Adaptation+2, increases the % of the adapted hitbox's value used to 90% for Cutting or Impact and 81% for Ranged Weapons.\n"+
+                    "Adaptation\n" +
+                    "Adaptation Up+1: Upgrades Adaptation by one level. If you already have Adaptation+2, increases the % of the adapted hitbox's value used to 90% for Cutting or Impact and 81% for Ranged Weapons.\n" +
                     "Adaptation Up+2: Increases the % of the adapted hitbox's value used to 90% for Cutting or Impact and 81% for Ranged Weapons.\n\n" +
-                    "Encourage\n"+
-                    "Encourage Up+1: Upgrades Encourage+1 to Encourage+2. If you already have Encourage+2, adds party wide Marathon Runner and Stamina Recovery Up Large.\n"+
+                    "Encourage\n" +
+                    "Encourage Up+1: Upgrades Encourage+1 to Encourage+2. If you already have Encourage+2, adds party wide Marathon Runner and Stamina Recovery Up Large.\n" +
                     "Encourage Up+2: Adds party wide Marathon Runner and Stamina Recovery Up Large.\n\n" +
-                    "Reflect\n"+
-                    "(Recommended) Reflect Up+1: Upgrades Reflect by 1 tier. Going beyond Reflect+3 increases the motion value of the Reflect+3 motion (48 > 68). Also buffs perfect guard reflects while active (72 > 92). The hit uses your current attack and sharpness values and inflicts impact based damage. Reflect motions cannot deal critical hits, inflict status damage or deal elemental damage. Consumes 1 sharpness on reflection hitting a monster. Does not benefit from Fencing+2 or utilize sword crystals if loaded. This skill can trigger on every part of any attacks which hit multiple times without any cooldown period. Does not buff the Perfect Guard reflect without actually having Reflect+3 active alongside Reflect Up. Synergizes well with Guard Up, Rush Up and Obscurity Up.\n"+
-                    "Reflect Up+2: Upgrades Reflect by 2 tiers. Going beyond Reflect+3 increases the motion value of the Reflect+3 motion (48 > 68). Also buffs perfect guard reflects while active (72 > 92). The hit uses your current attack and sharpness values and inflicts impact based damage. Reflect motions cannot deal critical hits, inflict status damage or deal elemental damage. Consumes 1 sharpness on reflection hitting a monster. Does not benefit from Fencing+2 or utilize sword crystals if loaded. This skill can trigger on every part of any attacks which hit multiple times without any cooldown period. Does not buff the Perfect Guard reflect without actually having Reflect+3 active alongside Reflect Up. Synergizes well with Guard Up, Rush Up and Obscurity Up.\n"+
+                    "Reflect\n" +
+                    "(Recommended) Reflect Up+1: Upgrades Reflect by 1 tier. Going beyond Reflect+3 increases the motion value of the Reflect+3 motion (48 > 68). Also buffs perfect guard reflects while active (72 > 92). The hit uses your current attack and sharpness values and inflicts impact based damage. Reflect motions cannot deal critical hits, inflict status damage or deal elemental damage. Consumes 1 sharpness on reflection hitting a monster. Does not benefit from Fencing+2 or utilize sword crystals if loaded. This skill can trigger on every part of any attacks which hit multiple times without any cooldown period. Does not buff the Perfect Guard reflect without actually having Reflect+3 active alongside Reflect Up. Synergizes well with Guard Up, Rush Up and Obscurity Up.\n" +
+                    "Reflect Up+2: Upgrades Reflect by 2 tiers. Going beyond Reflect+3 increases the motion value of the Reflect+3 motion (48 > 68). Also buffs perfect guard reflects while active (72 > 92). The hit uses your current attack and sharpness values and inflicts impact based damage. Reflect motions cannot deal critical hits, inflict status damage or deal elemental damage. Consumes 1 sharpness on reflection hitting a monster. Does not benefit from Fencing+2 or utilize sword crystals if loaded. This skill can trigger on every part of any attacks which hit multiple times without any cooldown period. Does not buff the Perfect Guard reflect without actually having Reflect+3 active alongside Reflect Up. Synergizes well with Guard Up, Rush Up and Obscurity Up.\n" +
                     "Reflect Up+3: Increases the motion value of the Reflect+3 motion (48 > 68). Also buffs perfect guard reflects while active (72 > 92). The hit uses your current attack and sharpness values and inflicts impact based damage. Reflect motions cannot deal critical hits, inflict status damage or deal elemental damage. Consumes 1 sharpness on reflection hitting a monster. Does not benefit from Fencing+2 or utilize sword crystals if loaded. This skill can trigger on every part of any attacks which hit multiple times without any cooldown period. Does not buff the Perfect Guard reflect without actually having Reflect+3 active alongside Reflect Up. Synergizes well with Guard Up, Rush Up and Obscurity Up.\n\n" +
-                    "Stylish\n"+
-                    "(Recommended for evasion playstyle) Stylish Up: Successful evades cause your weapon to use no sharpness for a fixed number of attacks as well as regaining the usual sharpness from Stylish and releasing an Area of Effect attack with a motion value of 30. Amount of hits that do not consume sharpness varies based on the weapon type in use.\nDS: 5 hits.\nSnS, Tonfa: 4 Hits.\nLS, Lance, Swaxe F, Magnet Spike: 3 Hits.\nGS, Hammer, HH, GL: 2 Hits.\nUsing Consumption Slayer reduces this to 1 hit for everything except SnS and DS which have 2 hits. Stylish Up AoE Motion cannot deal critical hits, inflict status damage or deal elemental damage. The motion does not benefit from Fencing+2 nor does it utilize sword crystals if they are loaded. Synergizes well with Stylish Assault Up.\n"+
-                    "Vigorous\n"+
-                    "Vigorous Up: Multiplies attack by 1.15x when your HP is over 100. Adds +100 attack for Blademasters or +50 attack for Gunners if your HP bar is also completely filled.\n\n"+
-                    "Obscurity\n"+
-                    "(Recommended for parry/block playstyle) Obscurity Up: Reduces total attack steps to 6 for maximum buff and allows for sharpness recovery at maximum attack buff. Perfect guards go up three attack steps (i.e. 2 perfect guards is maximum attack buff) and recover additional sharpness while maxed. Recovering sharpness with Gunlance while in heat blade mode reduces the sharpness loss on deactivation (20 guard or 5 perfect guards negates all 100 sharpness loss).\nAttack Increase:\nSnS, Lance, GL, Tonfa: 70 / 140 / 210 / 240 / 270 / 300\nGS, Swaxe F, Magnet Spike: 50 / 100 / 150 / 175 / 200 / 225\nLS: 30 / 60 / 90 / 110 / 130 / 150\nSharpness Recovery:\nSnS: 4 / 12\nLance: 2 / 10\nGunlance: 5 / 20\nGS: 5 / 15\nSwaxe F: 4 / 10\nTonfa: 5 / 13\nLS: 5 / 11\nMagnet Spike: 5 / 10\n\n"+
-                    "Soul\n"+
-                    "(Recommended for HH) Soul Up: Soul can be applied by using items, attacks will not stagger other players.\nRed Soul: +100 Attack on both user and players struck. Zero stamina consumption for running with weapons unsheathed.\nBlue Soul: +200 Defense on both user and players struck. Health Recovery effects, removes most abnormal status effects (Zenith Blights cannot be removed.)\nThis Skill works with all sources of Soul meaning you can stack Blue Soul with Red Soul from Blazing Grace and buff both. Attack is a final addition that is always the stated value and completely unaffected by other skills and multipliers.\n\n"+
-                    "Rush\n"+
-                    "(Recommended) Rush Up: Adds a third stage to Rush that is activated from the 2nd stage by attacking or guarding. Strictly time limited and increases attack further and grants infinite stamina during its duration. Grants +70 true raw (Total +200) and has a duration of 30 seconds. Indicated by an intensified version of the current aura with additional lightning effects. Infinite stamina works with Combat Supremacy and Starving Wolf but does not refill, meaning you would need to activate it before the bar empties to have stamina for evading, etc. Synergizes well with Guard Up, Reflect Up and Obscurity Up.\n\n"+
-                    "Ceaseless\n"+
+                    "Stylish\n" +
+                    "(Recommended for evasion playstyle) Stylish Up: Successful evades cause your weapon to use no sharpness for a fixed number of attacks as well as regaining the usual sharpness from Stylish and releasing an Area of Effect attack with a motion value of 30. Amount of hits that do not consume sharpness varies based on the weapon type in use.\nDS: 5 hits.\nSnS, Tonfa: 4 Hits.\nLS, Lance, Swaxe F, Magnet Spike: 3 Hits.\nGS, Hammer, HH, GL: 2 Hits.\nUsing Consumption Slayer reduces this to 1 hit for everything except SnS and DS which have 2 hits. Stylish Up AoE Motion cannot deal critical hits, inflict status damage or deal elemental damage. The motion does not benefit from Fencing+2 nor does it utilize sword crystals if they are loaded. Synergizes well with Stylish Assault Up.\n" +
+                    "Vigorous\n" +
+                    "Vigorous Up: Multiplies attack by 1.15x when your HP is over 100. Adds +100 attack for Blademasters or +50 attack for Gunners if your HP bar is also completely filled.\n\n" +
+                    "Obscurity\n" +
+                    "(Recommended for parry/block playstyle) Obscurity Up: Reduces total attack steps to 6 for maximum buff and allows for sharpness recovery at maximum attack buff. Perfect guards go up three attack steps (i.e. 2 perfect guards is maximum attack buff) and recover additional sharpness while maxed. Recovering sharpness with Gunlance while in heat blade mode reduces the sharpness loss on deactivation (20 guard or 5 perfect guards negates all 100 sharpness loss).\nAttack Increase:\nSnS, Lance, GL, Tonfa: 70 / 140 / 210 / 240 / 270 / 300\nGS, Swaxe F, Magnet Spike: 50 / 100 / 150 / 175 / 200 / 225\nLS: 30 / 60 / 90 / 110 / 130 / 150\nSharpness Recovery:\nSnS: 4 / 12\nLance: 2 / 10\nGunlance: 5 / 20\nGS: 5 / 15\nSwaxe F: 4 / 10\nTonfa: 5 / 13\nLS: 5 / 11\nMagnet Spike: 5 / 10\n\n" +
+                    "Soul\n" +
+                    "(Recommended for HH) Soul Up: Soul can be applied by using items, attacks will not stagger other players.\nRed Soul: +100 Attack on both user and players struck. Zero stamina consumption for running with weapons unsheathed.\nBlue Soul: +200 Defense on both user and players struck. Health Recovery effects, removes most abnormal status effects (Zenith Blights cannot be removed.)\nThis Skill works with all sources of Soul meaning you can stack Blue Soul with Red Soul from Blazing Grace and buff both. Attack is a final addition that is always the stated value and completely unaffected by other skills and multipliers.\n\n" +
+                    "Rush\n" +
+                    "(Recommended) Rush Up: Adds a third stage to Rush that is activated from the 2nd stage by attacking or guarding. Strictly time limited and increases attack further and grants infinite stamina during its duration. Grants +70 true raw (Total +200) and has a duration of 30 seconds. Indicated by an intensified version of the current aura with additional lightning effects. Infinite stamina works with Combat Supremacy and Starving Wolf but does not refill, meaning you would need to activate it before the bar empties to have stamina for evading, etc. Synergizes well with Guard Up, Reflect Up and Obscurity Up.\n\n" +
+                    "Ceaseless\n" +
                     "(Recommended) Ceaseless Up: Adds a third stage to Ceaseless with higher Affinity and additional Critical Multiplier. All stages require less hits to be reached and the skill goes down one level on timing out instead of losing all levels (e.g. stage 2 downgrades to stage 1 instead of no stages). Third stage is indicated by a red ceaseless aura instead of the standard white.\nFirst Phase: +35% Affinity, +0.1x Critical Multiplier\nSecond Phase: +50% Affinity, +0.15x Critical Multiplier\nThird Phase: +60% Affinity, +0.20x Critical Multiplier.\nEach weapon requires a different number of hits to progress in stages.\nSnS: 10s, 15/35/54 hits\nDS: 11s, 12/29/45 hits\nGS: 15s, 7/16/26 hits\nLS: 12, 11/29/47 hits\nHammer: 15s 6/21/36 hits\nHH: 14s, 8/24/40 hits\nLance, GL, Swaxe F: 12s, 10/27/44 hits\nTonfa: 11s, 11/27/43 hits\nMagnet Spike: 12s, 8/23/38 hits\nLBG: 11s, 27/74/120 hits\nHBG: 13s, 21/57/93 hits\nBow: 12s, 12/36/60 hits\nReflect and Stylish Up count towards these hit totals but Fencing+2's extra hit does not. Both affinity and multiplier stack with similar buffs (e.g. Issen+3 and second phase Ceaseless gives +70% Affinity and a multiplier of 1.65x)"
                     ;
             }
@@ -6614,125 +6610,125 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {//TODO: missing gems?
-                return "Prayer Gems\nRinging Prayer Gem\n"+
-                    "Adds new items to the GCP store based on level.\n\n"+
-                    "Elegance Prayer Gem\n"+
-                    "Adds passive HP recovery to all quests.\n\n"+
-                    "Heavy Thunder Prayer Gem\n"+
-                    "Elemental damage increases based on level.\n\n"+
-                    "Windstorm Prayer Gem\n"+
-                    "Sharpness does not decrease with blademaster weapons. Works for 5, 10 or 20 quests depending on level during the prayer active window.\n\n"+
-                    "Cutting Edge Prayer Gem\n"+
-                    "Increases the amount of raw damage dealt by a cutting weapon by adjusting hitboxes to be weaker against the damage type.\n\n"+
-                    "Status Length Prayer\n"+
-                    "Increases the duration of status effects on monsters.\n\n"+
-                    "Rising Bullet Prayer Gem\n"+
-                    "Increases the amount of raw damage dealt by a ranged weapon by adjusting hitboxes to be weaker against the damage type.\n\n"+
-                    "Severing Power Prayer Gem\n"+
-                    "Tails can be cut with any damage type.\n\n"+
-                    "Powerful Strikes Prayer Gem\n"+
-                    "Increases affinity of all weapons based on the level of the song.\n\n"+
-                    "Protection Prayer Gem\n"+
-                    "Gives Divine Protection, Goddess' Embrace or Soul Revival based on level.\n\n"+
-                    "Mobilization Prayer Gem\n"+
-                    "Attack will go up based on the number of human hunters in a quest.\n\n"+
-                    "Unshakable Prayer Gem\n"+
-                    "Monsters cannot flee if in the same area as a hunter.\n\n"+
-                    "Blunt Prayer Gem\n"+
-                    "Increases the amount of raw damage dealt by an impact weapon by adjusting hitboxes to be weaker against the damage type.\n\n"+
-                    "Diva Questline\n"+
-                    "Unless rank is specified the monsters are any rank. Your partner needs to be PR81 to progress through these quests. Do the special quests for PRP and give it the HRP tickets you get from progressing by choosing the final option followed by the first option on your partner in the smith or your house. If you find yourself unable to progress you probably need to talk to one of the NPCs who gave you the task again (cats etc.). Be sure to also look for monster names in the text if you can't progress after killing one, you might be on a lower step than you thought. Complete Chapter 3 to unlock Diva Song.\n\n"+
-                    "Chapter 1\n"+
-                    "Part 1: Deliver 1 Thin Jack Mackerel (薄竹筴魚). Deliver 1 Lazurite Jewel (琉璃原珠)\n\n"+
-                    "Part 2: Hunt 1 White Monoblos. Return to the Diva Hall\n\n"+
-                    "Part 3: Talk to the Guild Mistress. Hunt 1 Yama Tsukami. Talk to the Legendary Rasta Edward (Lance User)\n\n"+
-                    "Part 4: Talk to the Guild Mistress. Hunt 1 Chameleos. Talk to the Legendary Rasta Edward\n\n"+
-                    "Part 5: Talk to the Guild Mistress. Hunt 1 Yama Tsukami. Return to the Diva Hall. Claim the items you need to deliver from the Hunter Challenge, you don't need to farm a million Kelbi.\n\n"+
-                    "Rewards: Diva Armour Materials. Items to deliver in Chapter 2 (Hunter Challenge Reward)\n\n"+
-                    "Chapter 2\n"+
-                    "Part 1: Deliver 30 Kelbi Horns (精靈鹿的角). Deliver 20 Chaos Shrooms (混沌茸). Deliver 5 Kirin Azure Horns (麒麟的蒼角). Items delivered above are returned to you\n\n"+
-                    "Part 2: Hunt 3 Cephadromes. Deliver 10 Dragon Seeds (屠龍果實). Hunt 2 Lao Shan Lungs. Return to the Diva Hall. Talk to the Legendary Rastas Edward and Frau (DS user)\n\n"+
-                    "Part 3: Talk to the Legendary Rasta Frau. Return to the Diva Hall. Hunt 1 Baruragaru. Return to the Diva Hall. Talk to the Legendary Rasta Frau. Return to the Diva Hall\n\n"+
-                    "Rewards: Diva HC Armour Materials"+
-                    "Chapter 3\n"+
-                    "Part 1: Hunt 1 Teostra. Return to the Diva Hall. Talk to the Legendary Rasta Frau\n\n"+
-                    "Part 2: Go to the Blacksmith. Return to the Diva Hall. Hunt 3 Rukodioras\n\n"+
-                    "Part 3: Hunt 1 Anorupatisu\n\n"+
-                    "Part 4: Hunt 1 Rebidiora\n\n"+
-                    "Rewards: Diva G Rank Weapon Materials. Diva Weapon Gem (1st Series). 5 Diva Song Gems (Hunter Challenge Reward). 5 Warm Honey Tea (Give the Diva as a gift then Hunter Challenge Reward). Completion of this Chapter unlocks the Diva Song Buffs. Cram her full of warm honey tea and fluffy cakes to max its effects. Your Discord RPC shows the current Bond when you are in the Diva Hall, the maximum is 999.\n\n"+
-                    "Chapter 4\n"+
-                    "Part 1: Hunt 1 Berukyurosu. Hunt 1 Doragyurosu\n\n"+
-                    "Part 2: Deliver 1 Saint Ore (純聖礦石). Hunt 1 Hyujikiki. Hunt 1 Giaorugu\n\n"+
-                    "Part 3: Speak to the Town Square Cats three times. Hunt 2 Gougarfs\n\n"+
-                    "Part 4: Talk to NPC in Blacksmith. Solo Hunt 1 Gurenzeburu\n\n"+
-                    "Part 5: Talk to Guild Mistress. Hunt 1 Pokaradon. Hunt 1 Midogaron. Talk to NPC next to Guild Hall entrance\n\n"+
-                    "Rewards: Diva HC Armour Materials\n\n"+
-                    "Chapter 5\n"+
-                    "Part 1: Hunt 1 Farunokku\n\n"+
-                    "Part 2: Hunt 2 Baruragaru (Return to Fountain between the two)\n\n"+
-                    "Part 3: Hunt 1 Rebidiora\n\n"+
-                    "Part 4: Hunt 1 Zerureusu\n\n"+
-                    "Rewards: Diva Weapon Gem (1st Series)\n\n"+
-                    "Chapter 6\n"+
-                    "Part 1: Hunt 1 Akantor\n\n"+
-                    "Part 2: Hire a partner if you don't have one and then talk to them in your house. Return to the Diva Hall. Talk to partner in house, return to Diva Hall.\n\n"+
-                    "Part 3: ※Partner must be at least PR31 to proceed. Hunt 1 G Rank Yian Kut-ku with partner present.\n\n"+
-                    "Part 4: ※Partner must be at least PR51 to proceed. Hunt 1 Pokaradon with partner present.\n\n"+
-                    "Part 5: ※Partner must be at least PR81 to proceed. Hunt 1 Midogaron with partner present. (Talk to partner in house and return to Diva Hall before leaving on quest)\n\n"+
+                return "Prayer Gems\nRinging Prayer Gem\n" +
+                    "Adds new items to the GCP store based on level.\n\n" +
+                    "Elegance Prayer Gem\n" +
+                    "Adds passive HP recovery to all quests.\n\n" +
+                    "Heavy Thunder Prayer Gem\n" +
+                    "Elemental damage increases based on level.\n\n" +
+                    "Windstorm Prayer Gem\n" +
+                    "Sharpness does not decrease with blademaster weapons. Works for 5, 10 or 20 quests depending on level during the prayer active window.\n\n" +
+                    "Cutting Edge Prayer Gem\n" +
+                    "Increases the amount of raw damage dealt by a cutting weapon by adjusting hitboxes to be weaker against the damage type.\n\n" +
+                    "Status Length Prayer\n" +
+                    "Increases the duration of status effects on monsters.\n\n" +
+                    "Rising Bullet Prayer Gem\n" +
+                    "Increases the amount of raw damage dealt by a ranged weapon by adjusting hitboxes to be weaker against the damage type.\n\n" +
+                    "Severing Power Prayer Gem\n" +
+                    "Tails can be cut with any damage type.\n\n" +
+                    "Powerful Strikes Prayer Gem\n" +
+                    "Increases affinity of all weapons based on the level of the song.\n\n" +
+                    "Protection Prayer Gem\n" +
+                    "Gives Divine Protection, Goddess' Embrace or Soul Revival based on level.\n\n" +
+                    "Mobilization Prayer Gem\n" +
+                    "Attack will go up based on the number of human hunters in a quest.\n\n" +
+                    "Unshakable Prayer Gem\n" +
+                    "Monsters cannot flee if in the same area as a hunter.\n\n" +
+                    "Blunt Prayer Gem\n" +
+                    "Increases the amount of raw damage dealt by an impact weapon by adjusting hitboxes to be weaker against the damage type.\n\n" +
+                    "Diva Questline\n" +
+                    "Unless rank is specified the monsters are any rank. Your partner needs to be PR81 to progress through these quests. Do the special quests for PRP and give it the HRP tickets you get from progressing by choosing the final option followed by the first option on your partner in the smith or your house. If you find yourself unable to progress you probably need to talk to one of the NPCs who gave you the task again (cats etc.). Be sure to also look for monster names in the text if you can't progress after killing one, you might be on a lower step than you thought. Complete Chapter 3 to unlock Diva Song.\n\n" +
+                    "Chapter 1\n" +
+                    "Part 1: Deliver 1 Thin Jack Mackerel (薄竹筴魚). Deliver 1 Lazurite Jewel (琉璃原珠)\n\n" +
+                    "Part 2: Hunt 1 White Monoblos. Return to the Diva Hall\n\n" +
+                    "Part 3: Talk to the Guild Mistress. Hunt 1 Yama Tsukami. Talk to the Legendary Rasta Edward (Lance User)\n\n" +
+                    "Part 4: Talk to the Guild Mistress. Hunt 1 Chameleos. Talk to the Legendary Rasta Edward\n\n" +
+                    "Part 5: Talk to the Guild Mistress. Hunt 1 Yama Tsukami. Return to the Diva Hall. Claim the items you need to deliver from the Hunter Challenge, you don't need to farm a million Kelbi.\n\n" +
+                    "Rewards: Diva Armour Materials. Items to deliver in Chapter 2 (Hunter Challenge Reward)\n\n" +
+                    "Chapter 2\n" +
+                    "Part 1: Deliver 30 Kelbi Horns (精靈鹿的角). Deliver 20 Chaos Shrooms (混沌茸). Deliver 5 Kirin Azure Horns (麒麟的蒼角). Items delivered above are returned to you\n\n" +
+                    "Part 2: Hunt 3 Cephadromes. Deliver 10 Dragon Seeds (屠龍果實). Hunt 2 Lao Shan Lungs. Return to the Diva Hall. Talk to the Legendary Rastas Edward and Frau (DS user)\n\n" +
+                    "Part 3: Talk to the Legendary Rasta Frau. Return to the Diva Hall. Hunt 1 Baruragaru. Return to the Diva Hall. Talk to the Legendary Rasta Frau. Return to the Diva Hall\n\n" +
+                    "Rewards: Diva HC Armour Materials" +
+                    "Chapter 3\n" +
+                    "Part 1: Hunt 1 Teostra. Return to the Diva Hall. Talk to the Legendary Rasta Frau\n\n" +
+                    "Part 2: Go to the Blacksmith. Return to the Diva Hall. Hunt 3 Rukodioras\n\n" +
+                    "Part 3: Hunt 1 Anorupatisu\n\n" +
+                    "Part 4: Hunt 1 Rebidiora\n\n" +
+                    "Rewards: Diva G Rank Weapon Materials. Diva Weapon Gem (1st Series). 5 Diva Song Gems (Hunter Challenge Reward). 5 Warm Honey Tea (Give the Diva as a gift then Hunter Challenge Reward). Completion of this Chapter unlocks the Diva Song Buffs. Cram her full of warm honey tea and fluffy cakes to max its effects. Your Discord RPC shows the current Bond when you are in the Diva Hall, the maximum is 999.\n\n" +
+                    "Chapter 4\n" +
+                    "Part 1: Hunt 1 Berukyurosu. Hunt 1 Doragyurosu\n\n" +
+                    "Part 2: Deliver 1 Saint Ore (純聖礦石). Hunt 1 Hyujikiki. Hunt 1 Giaorugu\n\n" +
+                    "Part 3: Speak to the Town Square Cats three times. Hunt 2 Gougarfs\n\n" +
+                    "Part 4: Talk to NPC in Blacksmith. Solo Hunt 1 Gurenzeburu\n\n" +
+                    "Part 5: Talk to Guild Mistress. Hunt 1 Pokaradon. Hunt 1 Midogaron. Talk to NPC next to Guild Hall entrance\n\n" +
+                    "Rewards: Diva HC Armour Materials\n\n" +
+                    "Chapter 5\n" +
+                    "Part 1: Hunt 1 Farunokku\n\n" +
+                    "Part 2: Hunt 2 Baruragaru (Return to Fountain between the two)\n\n" +
+                    "Part 3: Hunt 1 Rebidiora\n\n" +
+                    "Part 4: Hunt 1 Zerureusu\n\n" +
+                    "Rewards: Diva Weapon Gem (1st Series)\n\n" +
+                    "Chapter 6\n" +
+                    "Part 1: Hunt 1 Akantor\n\n" +
+                    "Part 2: Hire a partner if you don't have one and then talk to them in your house. Return to the Diva Hall. Talk to partner in house, return to Diva Hall.\n\n" +
+                    "Part 3: ※Partner must be at least PR31 to proceed. Hunt 1 G Rank Yian Kut-ku with partner present.\n\n" +
+                    "Part 4: ※Partner must be at least PR51 to proceed. Hunt 1 Pokaradon with partner present.\n\n" +
+                    "Part 5: ※Partner must be at least PR81 to proceed. Hunt 1 Midogaron with partner present. (Talk to partner in house and return to Diva Hall before leaving on quest)\n\n" +
                     "Rewards: Diva Armour Materials\n\n" +
-                    "Chapter 7\n"+
-                    "Part 1: Talk to Blacksmith and return to Diva Hall. Hunt 1 Rebidiora\n\n"+
-                    "Part 2: Hunt 2 G Rank HC Gurenzeburu (Return to Fountain between the two)\n\n"+
-                    "Part 3: Hunt 1 Taikun Zamuza\n\n"+
-                    "Part 4: Hunt 1 Meraginasu\n\n"+
+                    "Chapter 7\n" +
+                    "Part 1: Talk to Blacksmith and return to Diva Hall. Hunt 1 Rebidiora\n\n" +
+                    "Part 2: Hunt 2 G Rank HC Gurenzeburu (Return to Fountain between the two)\n\n" +
+                    "Part 3: Hunt 1 Taikun Zamuza\n\n" +
+                    "Part 4: Hunt 1 Meraginasu\n\n" +
                     "Rewards: Diva Weapon Gem (1st Series)\n\n" +
                     "Chapter 8\n" +
-                    "Part 1: Speak to Blacksmith and return to Diva Hall\n\n"+
-                    "Part 2: Deliver 3 Grease Stone (白鳥石) and 1 Atarka Ore (亞達爾純礦石). You can mine the ores in the G Rank Flower Field or simply buy them for 235 GCP total. Hunt 1 Forokururu\n\n"+
-                    "Part 3: You need to craft the Prototype Tonfas at this point. Kill 3 Aptonoth in the preset quest\n\n"+
-                    "Part 4: Hunt 1 Yian Kut-Ku (Does not need to be with Tonfas)\n\n"+
+                    "Part 1: Speak to Blacksmith and return to Diva Hall\n\n" +
+                    "Part 2: Deliver 3 Grease Stone (白鳥石) and 1 Atarka Ore (亞達爾純礦石). You can mine the ores in the G Rank Flower Field or simply buy them for 235 GCP total. Hunt 1 Forokururu\n\n" +
+                    "Part 3: You need to craft the Prototype Tonfas at this point. Kill 3 Aptonoth in the preset quest\n\n" +
+                    "Part 4: Hunt 1 Yian Kut-Ku (Does not need to be with Tonfas)\n\n" +
                     "Rewards: Ores spent in part 2 (Hunter Challenge Reward). Used to be ability to craft Tonfas.\n\n" +
                     "Chapter 9\n" +
-                    "Part 1: Deliver 1 Teostra Miracle Wing (Supremacy Teo)\n\n"+
-                    "Part 2: Hunt 2 G Rank Velocidrome\n\n"+
-                    "Part 3: Hunt 1 Meraginasu\n\n"+
-                    "Part 4: Speak to Gin (Hammer Rasta)\n\n"+
+                    "Part 1: Deliver 1 Teostra Miracle Wing (Supremacy Teo)\n\n" +
+                    "Part 2: Hunt 2 G Rank Velocidrome\n\n" +
+                    "Part 3: Hunt 1 Meraginasu\n\n" +
+                    "Part 4: Speak to Gin (Hammer Rasta)\n\n" +
                     "Rewards: Diva G Rank Armour Materials\n\n" +
-                    "Chapter 10\n"+
-                    "Part 1: Talk to Guild Master. Hunt 1 Monoblos\n\n"+
-                    "Part 2: Hunt 1 Gou Lunastra\n\n"+
-                    "Part 3: Speak to the Guild Mistress\n\n"+
-                    "Part 4: Hunt 1 Anorupatisu (Preset Quest). ※ Everyone must use Tonfas for this mission . (Restricted equipment disables AI outside of Legendaries)\n\n"+
+                    "Chapter 10\n" +
+                    "Part 1: Talk to Guild Master. Hunt 1 Monoblos\n\n" +
+                    "Part 2: Hunt 1 Gou Lunastra\n\n" +
+                    "Part 3: Speak to the Guild Mistress\n\n" +
+                    "Part 4: Hunt 1 Anorupatisu (Preset Quest). ※ Everyone must use Tonfas for this mission . (Restricted equipment disables AI outside of Legendaries)\n\n" +
                     "Rewards: Diva Weapon Materials (1st Series) (2 Gems with Hunter Challenge Reward)\n\n" +
                     "Chapter 11\n\n" +
-                    "Part 1: Talk to Guild Mistress, Return to Diva Hall\n\n"+
-                    "Part 2: Capture 1 Forokururu\n\n"+
-                    "Part 3: Speak to Leila (Tonfa Legendary). Solo Hunt 1 Diorex. Speak to Leila. Return to the Diva Hall\n\n"+
-                    "Part 4: Hunt 1 Burst Species Meraginasu\n\n"+
+                    "Part 1: Talk to Guild Mistress, Return to Diva Hall\n\n" +
+                    "Part 2: Capture 1 Forokururu\n\n" +
+                    "Part 3: Speak to Leila (Tonfa Legendary). Solo Hunt 1 Diorex. Speak to Leila. Return to the Diva Hall\n\n" +
+                    "Part 4: Hunt 1 Burst Species Meraginasu\n\n" +
                     "Rewards: Diva Armour Materials\n\n" +
                     "Chapter 12\n" +
-                    "Part 1: Hunt 1 G Rank Gold Rathian, talk to cats and return to Diva Hall\n\n"+
-                    "Part 2: Speak to Leila and return to the Diva Hall\n\n"+
-                    "Part 3: Hunt 1 Inagami\n\n"+
-                    "Part 4: Hunt 1 G Rank Inagami (Preset quest with set equipment, AI outside of Legendaries is disabled)\n\n"+
+                    "Part 1: Hunt 1 G Rank Gold Rathian, talk to cats and return to Diva Hall\n\n" +
+                    "Part 2: Speak to Leila and return to the Diva Hall\n\n" +
+                    "Part 3: Hunt 1 Inagami\n\n" +
+                    "Part 4: Hunt 1 G Rank Inagami (Preset quest with set equipment, AI outside of Legendaries is disabled)\n\n" +
                     "Rewards: Diva Weapon Gem (2nd Series)\n\n" +
                     "Chapter 13\n" +
-                    "Part 1: Hunt 1 Giaorugu\n\n"+
-                    "Part 2: Hunt 1 G Rank Gravios\n\n"+
-                    "Part 3: Speak to Leila and return to the Diva Hall. Speak to the Blacksmith\n\n"+
-                    "Part 4: Hunt 1 G Rank Forokururu. Hunt 1 G Rank HC Rajang\n\n"+
+                    "Part 1: Hunt 1 Giaorugu\n\n" +
+                    "Part 2: Hunt 1 G Rank Gravios\n\n" +
+                    "Part 3: Speak to Leila and return to the Diva Hall. Speak to the Blacksmith\n\n" +
+                    "Part 4: Hunt 1 G Rank Forokururu. Hunt 1 G Rank HC Rajang\n\n" +
                     "Rewards: Diva HC Armour Materials\n\n" +
                     "Chapter 14\n" +
-                    "Part 1: Hunt 1 Red Lavasioth (Training Quest on Black Quest NPC)\n\n"+
-                    "Part 2: Speak to Flora (SnS Legendary) and return to Diva Hall. Hunt 1 Hyujikiki\n\n"+
-                    "Part 3: Hunt 1 Inagami\n\n"+
-                    "Part 4: Deliver 3 Herbal Medicine G (中藥G). (Can be bought in Guild Hall for Guild Tix)\n\n"+
+                    "Part 1: Hunt 1 Red Lavasioth (Training Quest on Black Quest NPC)\n\n" +
+                    "Part 2: Speak to Flora (SnS Legendary) and return to Diva Hall. Hunt 1 Hyujikiki\n\n" +
+                    "Part 3: Hunt 1 Inagami\n\n" +
+                    "Part 4: Deliver 3 Herbal Medicine G (中藥G). (Can be bought in Guild Hall for Guild Tix)\n\n" +
                     "Rewards: Diva Weapon Gem (2nd Series)\n\n" +
                     "Chapter 15\n" +
-                    "Part 1: Talk to Guild Master. Return to fountain. Hunt 1 G Rank White Espinas.\n\n"+
-                    "Part 2: Hunt 1 G Rank Baruragaru\n\n"+
-                    "Part 3: Hunt 1 G Rank Akura Jebia\n\n"+
-                    "Part 4: Hunt 1 Burst (G Rank) Garuba Daora\n\n"+
+                    "Part 1: Talk to Guild Master. Return to fountain. Hunt 1 G Rank White Espinas.\n\n" +
+                    "Part 2: Hunt 1 G Rank Baruragaru\n\n" +
+                    "Part 3: Hunt 1 G Rank Akura Jebia\n\n" +
+                    "Part 4: Hunt 1 Burst (G Rank) Garuba Daora\n\n" +
                     "Rewards: Diva Armour Materials. Diva Weapon Gem (2nd Series)"
                     ;
             }
@@ -6745,37 +6741,37 @@ namespace MHFZ_Overlay.addresses
                 return "Guild Cooking\r\nGuild cooking is available at guild rank 15, it is a mini-game performed by up to four people.\r\nCooking has the following menu items, which can activate effects separate from armor skills.\r\n■The skill effect gained by cooking lasts for 90 minutes. However, if a new skill is obtained by cooking, the effect is overwritten.\r\n■Up to 6 dishes can be \"left over\". The leftover dishes will be stored for 1 hour.\r\nHow to cook\r\n[Select the menu]\r\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000※Note, however, that the selections here are only a guide for selecting ingredients.\r\n[Selecting] yellow ingredients are \"base ingredients\" and pink ingredients are \"Auxiliary\". These allow you to create dishes via the menu.\r\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000※If you select any other option, it will be a Guild's Yaminabe.\r\n[How to cook] By repeatedly pressing the confirm button, the cursor on the gauge will move to the right.\r\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000By hovering the cursor over the green \"Success Area\" or blue \"Great Success Area,\" a stamp will accumulate directly below the food meter.\r\nWhen the color of the stamp turns green, the dish is a success, and when it turns blue, it is a great success.\r\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000※The more people that participate, the higher the chance the dish will be a great success.\r\nChef Cat's Wisdom\r\nSecret of success\t10 tickets\tGreen area expanded.\r\nNo failure allowed\t10 tickets\tRed areas removed\r\nUltimate Success\t10 tickets\tBlue area gets doubled.\r\nCooking Technique\t10 tickets\tCursors return speed is slower\r\nSecret seasoning\t20 tickets\tResult will be one rank higher.\r\nMystery seasoning\t5 tickets\tResult is randomized\n\nThe order of the skills are G.Failure/Failure/Success/G.Success\n\n" +
                     "Easiest way to cook is selecting Secret Seasoning from Chef's Wisdom before cooking. What it does is raise the success level by one. \n\n" +
                     "Page 1\n" +
-                    "1: Explosive Rice [Snow Powder, Whole Vanilla, Wabisabi Wasabi, Deep Sea Chub] (Hunger Increased [Lg] / Health+30 / Rage+1 / Rage+2)\n\n"+
+                    "1: Explosive Rice [Snow Powder, Whole Vanilla, Wabisabi Wasabi, Deep Sea Chub] (Hunger Increased [Lg] / Health+30 / Rage+1 / Rage+2)\n\n" +
                     "2: Pioneer's Meal [Goemon Frog, Rainbow Mint, Onion Sticks, Mimic Vines] (Hunger Increased [Lg] / Health +30 / Three Worlds Protection +2 / Three Worlds Protection +3)\n\n" +
-                    "2: Pioneer's Meal [Dangerous Melon, Demon Pepper, Onion Sticks, Mimic Vines] (Hunger Increased [Lg], Wind Pressure [Sm], Wind Pressure [Lg], Wind Pressure [Dragon])\n\n" + 
+                    "2: Pioneer's Meal [Dangerous Melon, Demon Pepper, Onion Sticks, Mimic Vines] (Hunger Increased [Lg], Wind Pressure [Sm], Wind Pressure [Lg], Wind Pressure [Dragon])\n\n" +
                     "3: Lucky Pancake [Star Pineapple, Dangerous Melon, Whole Vanilla, Mimic Vines] (Hunger Increased [Lg] / Health +10 / Good Luck / Great Luck)\n\n" +
                     "4: Ultimate Sashimi [Deep Sea Chub, Blk and Wht Dragonfly, Ice Salmon, Whole Vanilla] (Hunger Increased [Lg], Earplugs, High Grade Earplugs, Super Ear Plugs)\n\n" +
-                    "5: Brother's BBQ [Monochrome Mushroom, Deep Sea Chub, Ice Salmon, Mimic Vines] (Hunger Increased [Lg], Caring +1, Caring +2, Caring +3)\n\n"+
-                    "6: Hot Claw Feast [Lava King Crab, Whole Vanilla, Dangerous Melon, Mimic Vines] (Hunger Increased [Lg], Health +20, Adrenaline +1, Adrenaline +2)\n\n"+
-                    "7: Medicinal Spirit [Ancient Algae, Dangerous Melon, Deep Sea Chub, Demon Pepper] (Hunger Increased [Lg], Wind Pressure [Sm], Wind Pressure [Lg], Wind Pressure [Dragon])\n\n"+
-                    "7: Medicinal Spirit [Rainbow Mint, Dangerous Melon, Deep Sea Chub, Demon Pepper] (Hunger Increased [Lg], Wind Pressure [Sm], Wind Pressure [Dragon], Violent Wind Breaker)\n\n"+
-                    "Page 2\n"+
-                    "8: World Fried Rice [Acid Pepper, Mimic Vines, Onion Sticks, Blk and Wht Dragonfly] (Hunger Increased [Lg], Health +20, Runner +1, Runner +2)\n\n"+
-                    "9: Goddess Dessert [Snow Kiwi, Dangerous Melon, Whole Vanilla, Magma Mango] (Hunger Increased [Lg], Health +20, Divine Protection, Goddess' Embrace)\n\n"+
-                    "10: Grilled Shellfish [Large Blly Shlfish, Ice Salmon, Whole Vanilla, Mimic Vines] (Hunger Increased [Lg], Health +20, Hunger Halved, Hunger Negated)\n\n"+
+                    "5: Brother's BBQ [Monochrome Mushroom, Deep Sea Chub, Ice Salmon, Mimic Vines] (Hunger Increased [Lg], Caring +1, Caring +2, Caring +3)\n\n" +
+                    "6: Hot Claw Feast [Lava King Crab, Whole Vanilla, Dangerous Melon, Mimic Vines] (Hunger Increased [Lg], Health +20, Adrenaline +1, Adrenaline +2)\n\n" +
+                    "7: Medicinal Spirit [Ancient Algae, Dangerous Melon, Deep Sea Chub, Demon Pepper] (Hunger Increased [Lg], Wind Pressure [Sm], Wind Pressure [Lg], Wind Pressure [Dragon])\n\n" +
+                    "7: Medicinal Spirit [Rainbow Mint, Dangerous Melon, Deep Sea Chub, Demon Pepper] (Hunger Increased [Lg], Wind Pressure [Sm], Wind Pressure [Dragon], Violent Wind Breaker)\n\n" +
+                    "Page 2\n" +
+                    "8: World Fried Rice [Acid Pepper, Mimic Vines, Onion Sticks, Blk and Wht Dragonfly] (Hunger Increased [Lg], Health +20, Runner +1, Runner +2)\n\n" +
+                    "9: Goddess Dessert [Snow Kiwi, Dangerous Melon, Whole Vanilla, Magma Mango] (Hunger Increased [Lg], Health +20, Divine Protection, Goddess' Embrace)\n\n" +
+                    "10: Grilled Shellfish [Large Blly Shlfish, Ice Salmon, Whole Vanilla, Mimic Vines] (Hunger Increased [Lg], Health +20, Hunger Halved, Hunger Negated)\n\n" +
                     "(Recommended) 11: Holy Seafood Banquet [Deep Sea Chub, Ice Salmon, Whole Vanilla, Mimic Vines] (Hunger Increased [Lg], Wide-Area +1, Wide-Area +2, Wide-Area +3)\n\n" +
                     "(Recommended) 12: Energy Noodles [Mimic Vines, Onion Sticks, Blk and Wht Dragonfly, Whole Vanilla] (Hunger Increased [Lg], Health +10, Terrain [Sm], Terrain [Lg])\n\n" +
-                    "13: Hunter's Whim [Ice Salmon, Dangerous Melon, Mimic Vines, Deep Sea Chub] (Hunger Increased [Lg], Health +10, Whim, Divine Whim)\n\n"+
-                    "14: Fantasy Dumplings [Dangerous Melon, Magma Mango, Whole Vanilla, Mimic Vines] (Hunger Increased [Lg], Health +10, Paralysis Halved, Paralysis Negated)\n\n"+
-                    "Page 3\n"+
-                    "15: Crimson BBQ [Demon Pepper, Dangerous Melon, Magma Mango, Mimic Vines] (Hunger Increased [Lg], Health +10, Sleep Halved, Sleep Negated)\n\n"+
-                    "16: Sweet Wrap [Magma Mango, Star Pineapple, Dangerous Melon, Mimic Vines] (Hunger Increased [Lg], Health +10, Poison Halved, Poison Negated)\n\n"+
-                    "17: Dawn Toast [Whole Vanilla, Magma Mango, Dangerous Melon, Mimic Vines] (Hunger Increased [Lg], Health +10, Stun Halved, Stun Negated)\n\n"+
+                    "13: Hunter's Whim [Ice Salmon, Dangerous Melon, Mimic Vines, Deep Sea Chub] (Hunger Increased [Lg], Health +10, Whim, Divine Whim)\n\n" +
+                    "14: Fantasy Dumplings [Dangerous Melon, Magma Mango, Whole Vanilla, Mimic Vines] (Hunger Increased [Lg], Health +10, Paralysis Halved, Paralysis Negated)\n\n" +
+                    "Page 3\n" +
+                    "15: Crimson BBQ [Demon Pepper, Dangerous Melon, Magma Mango, Mimic Vines] (Hunger Increased [Lg], Health +10, Sleep Halved, Sleep Negated)\n\n" +
+                    "16: Sweet Wrap [Magma Mango, Star Pineapple, Dangerous Melon, Mimic Vines] (Hunger Increased [Lg], Health +10, Poison Halved, Poison Negated)\n\n" +
+                    "17: Dawn Toast [Whole Vanilla, Magma Mango, Dangerous Melon, Mimic Vines] (Hunger Increased [Lg], Health +10, Stun Halved, Stun Negated)\n\n" +
                     "(Recommended) 18: Rainbow Soup [Onion Sticks, Snow Powder, Blk and Wht Dragonfly, Bright Grain] (Hunger Increased [Lg], All Res UP +5, All Res UP +10, All Res UP +20)\n\n" +
-                    "18: Rainbow Soup [Onion Sticks, Magma Mango, Whole Vanilla, Deep Sea Chub] (Hunger Increased [Lg], Fire Res +10, Fire Res +20, Fire Res +30)\n\n"+
-                    "18: Rainbow Soup [Onion Sticks, Dangerous Melon, Whole Vanilla, Deep Sea Chub] (Hunger Increased [Lg], Water Res +10, Water Res +20, Water Res +30)\n\n"+
-                    "18: Rainbow Soup [Onion Sticks, Ice Salmon, Whole Vanilla, Deep Sea Chub] (Hunger Increased [Lg], Ice Res +10, Ice Res +20, Ice Res +30)\n\n"+
-                    "18: Rainbow Soup [Onion Sticks, Demon Pepper, Whole Vanilla, Deep Sea Chub] (Hunger Increased [Lg], Thunder Res +10, Thunder Res +20, Thunder Res +30)\n\n"+
-                    "18: Rainbow Soup [Onion Sticks, Mimic Vines, Whole Vanilla, Deep Sea Chub] (Hunger Increased [Lg], Dragon Res +10, Dragon Res +20, Dragon Res +30)\n\n"+
-                    "(Recommended) 19: Vigor Salad [Taiko Olive, Miracle Herb, Ancient Algae, Whole Vanilla] (Hunger Increased [Lg], Health +30, Wide-Area +3, Herbal Medicine)\n\n"+
+                    "18: Rainbow Soup [Onion Sticks, Magma Mango, Whole Vanilla, Deep Sea Chub] (Hunger Increased [Lg], Fire Res +10, Fire Res +20, Fire Res +30)\n\n" +
+                    "18: Rainbow Soup [Onion Sticks, Dangerous Melon, Whole Vanilla, Deep Sea Chub] (Hunger Increased [Lg], Water Res +10, Water Res +20, Water Res +30)\n\n" +
+                    "18: Rainbow Soup [Onion Sticks, Ice Salmon, Whole Vanilla, Deep Sea Chub] (Hunger Increased [Lg], Ice Res +10, Ice Res +20, Ice Res +30)\n\n" +
+                    "18: Rainbow Soup [Onion Sticks, Demon Pepper, Whole Vanilla, Deep Sea Chub] (Hunger Increased [Lg], Thunder Res +10, Thunder Res +20, Thunder Res +30)\n\n" +
+                    "18: Rainbow Soup [Onion Sticks, Mimic Vines, Whole Vanilla, Deep Sea Chub] (Hunger Increased [Lg], Dragon Res +10, Dragon Res +20, Dragon Res +30)\n\n" +
+                    "(Recommended) 19: Vigor Salad [Taiko Olive, Miracle Herb, Ancient Algae, Whole Vanilla] (Hunger Increased [Lg], Health +30, Wide-Area +3, Herbal Medicine)\n\n" +
                     "(Recommended) 20: Hearty Pie [Gutsy Meat, Onion Sticks, Bright Grain, Snow Powder] (Hunger Increased [Lg], Health +30, Encourage +1, Encourage +2)\n\n" +
-                    "21: Unity Buns [Taiko Olive, Bright Grain, Blk and Wht Dragonfly, Mimic Vines] (Hunger Increased [Lg], Health +30, Bond, Assistance)\n\n"+
-                    "Page 4\n"+
+                    "21: Unity Buns [Taiko Olive, Bright Grain, Blk and Wht Dragonfly, Mimic Vines] (Hunger Increased [Lg], Health +30, Bond, Assistance)\n\n" +
+                    "Page 4\n" +
                     "(Recommended) 22: Blast Steak [Gutsy Meat, Magma Mango, Snow Kiwi, Star Pineapple] (Blue Soul, Blue Soul, Incitement, Red Soul)\n\n" +
                     "0: Guild's Yaminabe [Any, Any, Any, Any] (Hunger Increased [Lg], Random, Random, Random)";
             }
@@ -6886,7 +6882,7 @@ namespace MHFZ_Overlay.addresses
             {
                 return "The Tonfa is a weapon that attacks primarily with airdashes. It could also fight on the ground.\t\t\t\t\t\t\t\t\t\r\nEffectively the strongest weapon in the game, relative to effort taken.\t\t\t\t\t\t\t\t\t\r\nHiden Skill Effects\t\t\t\t\t\t\t\t\t\r\nThe combo and EX meters are both extended to have a sixth segment each. The former technically augments Tonfa's combo multiplier with an additional 1.10x raw, up to a maximum of 1.60x.\t\t\t\t\t\t\t\t\t\r\nNotes\t\t\t\t\t\t\t\t\t\r\nDue to how the combo meter inflates raw, Tonfa requires a much higher My Mission attack ceiling than most weapons!\t\t\t\t\t\t\t\t\t\r\nLong mode is the default and does more KO damage. Short mode was reworked into being centered around meter gain, but it has a ton of hitlag and isn't really worth using outside of the dash attack for meter.\t\t\t\t\t\t\t\t\t\r\nGuardpoints do exist on some attacks, but it's not that practical to invoke them. Iron Arm is also fairly tough to get on modern sets.\t\t\t\t\t\t\t\t\t\r\nThe Ryuuki finisher tops up meters of all nearby Tonfa players. It can also be triggered by Tonfa-wielding hunter NPCs. These bursts also grant a fair few other benefits, but most are pretty lightweight in function at this point.\t\t\t\t\t\t\t\t\t\r\nTo keep your combo meter, just hit or evade things. Generally, the timer runs slower if the monster is going through a lengthy attack when you can't or shouldn't be hitting them.\t\t\t\t\t\t\t\t\t\n" +
                     "EX Evasion doesn't cost stamina, only meter.\t\t\t\t\t\t\t\t\t\r\nEX Pursuit (charged jab + meter) benefits from Gunnery/Artillery (obtainable via Blazing Majesty), Charge Attack Up, and Focus, but is quite expensive compared to airdash spam.\t\t\t\t\t\t\t\t\t\r\nLike SnS, two well-timed blocks with the Perfect Defense caravan skill alongside Obscurity Up can amass 300 raw until you get knocked back.\t\t\t\t\t\t\t\t\t\n\n" +
-                    "Blue Tower for Poison, Z100 Affinity otherwise.\n\n"+
+                    "Blue Tower for Poison, Z100 Affinity otherwise.\n\n" +
                     "TO Sigil Effects\t\t\t\t\r\nTech Boost\t\t\t\t\r\nEX Meter\tSlightly increases EX meter gain\t\t\t\r\nCombo Timer\tThe combo timer decreases more slowly before meter is lost\t\t\t\r\nMisc\t\t\t\t\r\nStun Value\tNot Tonfa-specific, but still relevant as an impact weapon\t\t\t\n\n" +
                     "Skill Recommendations\t\t\t\t\t\t\t\t\t\r\nSkill\tNotes / Reasoning\t\t\t\t\t\t\t\t\r\nCore\t\t\t\t\t\t\t\t\t\r\n(Weapon) Hiden\tSecond best skill for any weapon. Good raw multiplier, super earplugs, and a myriad of benefits. Does not take up a skill slot if a hiden cuff is used.\t\t\t\t\t\t\t\t\r\nDetermination\tBest in slot skill in all of Monster Hunter. Supersedes Issen, Critical Eye, Exploit Weakness, Elemental Exploiter, and any source of Adrenaline +2 in one skill. Makes Guts unusable.\t\t\t\t\t\t\t\t\r\nStrong Attack\tUp to +150 true raw with Strong Attack +5 (40). JP has access to Strong Attack +6 (50).\t\t\t\t\t\t\t\t\r\nIssen +1/2/3\tCritical hit multiplier. Difficult to obtain higher levels of it on Zenith equipment outside of JP, but still very potent if you lack Determination.\t\t\t\t\t\t\t\t\r\nFurious\tVery powerful skill that grants successive raw, element, status, and affinity bonuses. Stacks are lost on getting hit, not just knockback.\t\t\t\t\t\t\t\t\r\nSword God +2\tCombines Sharpness +1, Fencing +2, and Razor Sharp +2 into one excellent compound skill.\t\t\t\t\t\t\t\t\r\nEvasion +2\tGreatly increases survivability in Frontier, also triggers evasion-reliant skills much more easily. Obtain it through Drawing Arts +2, Evasion Boost, Encourage, or wearing a piece of Nargacuga armor.\t\t\t\t\t\t\t\t\r\nThunder Clad\tFill up a meter for a bonus against hitzones, additional movement speed, and basic status immunity.\t\t\t\t\t\t\t\t\r\nVampirism (Up)\tDramatically increases sustainability with health leeching and also adds some attack. You do not need more than Vampirism +1 (10pts), going higher only increases leech rate.\t\t\t\t\t\t\t\t\r\nFlash Conversion (Up)\tGet +30% affinity, and all excess affinity is converted into extra raw. May be dropped by some players. Bad Z skill outside of Affinity-inclined Raviente weapons.\t\t\t\t\t\t\t\t\r\nSkill Slots Up\tZ skill that boosts the amount of maximum skill slots you can have by one (you have 12 by default with a full set of G-Rank armor). You can get up to +7 for a maximum of 19 skill slots, but this competes with other Z skills.\t\t\t\t\t\t\t\t\r\nRecommended\t\t\t\t\t\t\t\t\t\r\nStylish Assault (Up)\tFree +100 true raw on successful dodging and for effectively playing well. Use the Z skill to boost raw gains further.\t\t\t\t\t\t\t\t\r\nStylish (Up)\tSharpness restoration on avoiding attacks.\t\t\t\t\t\t\t\t\r\nRush (Up)\tGood source of raw if you stay unsheathed. Cannot get the Z skill on TW.\t\t\t\t\t\t\t\t\r\nCeaseless (Up)\tRepeat Offender on crystal meth with up to +50% affinity and even a higher critical hit multiplier. Cannot get the Z skill on TW.\t\t\t\t\t\t\t\t\r\nAbnormality\tStellar compound skill when paired with poison.\t\t\t\t\t\t\t\t\r\nOther Skills\t\t\t\t\t\t\t\t\t\r\nCombat Supremacy\tPairs well with EX Evasion spam on the ground as they do not cost stamina. On JP it is more commonly paired with Rush Up and used in the air if possible.\t\t\t\t\t\t\t\t\r\nUnaffected\tCatch-all hearing/tremor/wind resist skill. Can create some more attacking opportunities and quality of life, but min-maxing may involve avoiding this skill. Can be paired with Z skill equivalents for Zenith-grade resists.\t\t\t\t\t\t\t\t\r\nAdrenaline\tPopular in Frontier due to the availability of -60 HP food, Evasion +2, and overall more dangerous but predictable monsters. Get it through guild food, Buchigire, Blazing Majesty +2, or Determination.\t\t\t\t\t\t\t\t\r\nVigorous (Up)\tProvides a 1.15x boost to raw if your HP is 100 or greater. Vigorous Up provides +100 true raw at maximum HP. Its usefulness varies a lot and may outright be skipped on JP depending on your other skills.\t\t\t\t\t\t\t\t\r\nBlazing Majesty\tCompound skill with a myraid of benefits. For Tonfa, this can boost the damage from EX Pursuits significantly due to the Artillery God portion.\t\t\t\t\t\t\t\t\r\nExpert / Critical Eye\tAlternate source of pre-Determination affinity, but affinity itself is not difficult to get with other sources.\t\t\t\t\t\t\t\t\r\nExploit Weakness\tBehaves like MH3U/MH4U Weakness Exploit but at 35> hitzones. Powerful raw skill, but hard to get with a high point requirement as well. Pairs very well with Thunder Clad. Obsolete with Determination.\t\t\t\t\t\t\t\t\r\nPoint Breakthrough\tSuccessive attacks on a single hitzone provide a bonus. Not always a consistent skill.\t\t\t\t\t\t\t\t\r\nIce Age (Up)\tGrants a DOT AoE around your character, pairs great with poison and grants other benefits. Useless Z skill.\t\t\t\t\t\t\t\t\r\nStatus Immunity \tNiche or outright unnecessary for anything at a given point. Shagaru Magala armor is an easy means of obtaining this, but it comes with bad resistances and low defense in its stead.\t\t\t\t\t\t\t\t\r\nObscurity (Up)\tViable with a combination of Obscurity Up and the Perfect Guard caravan skill. However, this needs good timing and the boost is lost on knockback, but if executed well you can get +300 true raw on two perfect guards.\t\t\t\t\t\t\t\t\r\nStarving Wolf +2\tGrants +0.10x to the crit multiplier, +50% affinity and Evasion +2 if you are at 25 Stamina and do not have infinite stamina buffs. Pairs well with Combat Supremacy.\t\t\t\t\t\t\t\t\r\nFocus/Trained +2\tFocus can be used with Storm EX Pursuit attacks, otherwise effectively a luxury. Trained only exists on JP, and also includes Martial Arts +2 which can help sustain airtime.\t\t\t\t\t\t\t\t\r\nCharge Attack UP +2\tIncreases the damage of the EX Pursuit and the charged overhead.\t\t\t\t\t\t\t\t\r\nNot Recommended\t\t\t\t\t\t\t\t\t\r\nLavish Attack\tYour sharpness will get murdered.\t\t\t\t\t\t\t\t\r\nIron Arm +2\tTechnically boosts Tonfa's guardpoints by 7 frames, but the skill is very rare.\t\t\t\t\t\t\t\t\r\nAbsolute Defense\tTakes priority over guarding.\t\t\t\t\t\t\t\t";
             }
@@ -7133,8 +7129,8 @@ namespace MHFZ_Overlay.addresses
 
         public static string GetGameArmorTypesInfo
         {
-            get 
-            { 
+            get
+            {
                 return "Armor Types\r\nSP Armor\r\nIt does not have unique skills, but it is possible to equip SP decorations. You can also equip accessories with slot 1.\r\nDefense power is basically the same for all, but SP armor that uses Gou material has high defense power.\r\nFor quests with HR 100 or higher, if you equip even one part, your defense will be +100.\r\nHiden Armor\r\nEach weapon has an armor that can be created with SR 300 or more, and even if you have the materials, you cannot produce it if you do not have enough SR.\r\nIf you have both White Hiden and Red Hiden at LV7, you can activate Twin Hiden.\r\nG-class hiden armor\r\nSame as Hiden Armor\r\nGou Armor\r\nWhen equipped, the activated skill will be increased by one rank under certain conditions. (Only those with higher level skills)\r\n\r\nConditions for changing the rank of the activated skill\r\nNo. of Parts Equipped\tHP\tStamina\r\n1 Part\t100%\tMax value 26+\r\n2 Parts\t90%+\tMax value 26+\r\n3 Parts\t83%+\tMax value 26+\r\n4 Parts\t76%+\tMax value 26+\r\n5 Parts\t70%+\tMax value 26+\r\nTenran Armor\r\nIn addition to the effects of gou armor, the following effects are also available in the gou/HC/g-rank quests.\r\n・In the case of Gou/Tenran/HC weapons, the weapon multiplier increases with the number of parts equipped.\r\n\u3000In addition, the rarity limit when equipping a secret book is lowered by one per equipped part.\r\n・Equipping 2 or more pieces will change the performance of Tenran/HC Weapons.\r\nEffect when equipping Gou/Tenran/HC weapons\r\nNo. of Parts Equipped\tWeapon multiplier\tRarity limit for SR\r\n1 Part\t15\t-1\r\n2 Parts\t30\t-2\r\n3 Parts\t45\t-3\r\n4 Parts\t60\t-4\r\n5 Parts\t80\t-5\r\nSupremacy Armor\r\nIn addition to the effects of the Gou/Tenran armor, the Gou/HC/G-rank quests will also include the following\r\n・In the case of the gou/tenran/HC type weapons, the attribute and condition value will be increased by 2% per part.\r\nIn addition, the skill rank up conditions will be relaxed.\r\n\r\nCondition for changing rank of activated skill\r\nThe strength limit will be relaxed by 33% for one part of the supremacy armor and by 6% for one part of the tenran armor.\r\nEx：\r\nIn the case of 2 parts of supremacy + 3 parts of tenran: 100 - 33x2 - 6x3 = 16%+ of HP\r\nG Supremacy Armor\r\nSupremacy armor effects will be activated when you are equipped with a Gou/Tenran/HC/G rank supremacy weapon.\r\nBurst Armor\r\nThe effect of Supremacy Armor will be activated when you are equipped with Gou/Tenran/HC/G-Rank Supremacy/Burst Weapons.\r\nThe skill rank-up condition has been removed, and the skill will always be upgraded.\r\nOrigin Armor\r\nThe effects of Burst armor will be activated when you are equipped with Gou/Tenran/HC/G-rank supremacy/Burst/Origin Weapons.\r\n※However, bowgun/bows are applicable to all weapon types.\r\n・Equipping 1 or more pieces will change the performance of Tenran/HC/G-rank supremacy/Burst/Origin Weapon.\r\n・Weapon multiplier increases by 20 for 1 part, 110 for 5 parts.\r\n・Increases element value and abnormal status value by 3% per part.\r\nAlways has skill rank up.\r\nG Rank Armor\r\nIf you strengthen your GF to LV7, you can refine it into decos.\r\nEach part has a defense correction of (own GR - armor GR) x 20\r\n\u3000※In GR quests, the damage is calculated by subtracting (quest * level - 1) x 150 from the defense, regardless of the armor type.\r\nSkill slots +1 for 3 or more parts; skill slots +2 for 5 parts.\r\n・Weapon multiplier +30 when equipping 3 or more parts in G level quests.\r\nＨＣ Armor\r\nWhen equipped in HC Quest, it will restore your HP to maximum under certain conditions.\r\nHowever, HP must be at least 50%.\r\n\r\nConditions\r\nNo. of Parts Equipped\tMax Stamina\tRecovery\r\n1 Part\t150\t8 seconds for 1 HP\r\n2 Parts\t125+\t4 seconds for 1 HP\r\n3 Parts\t100+\t2 seconds for 1 HP\r\n4 Parts\t75+\t1.5 seconds for 1 HP\r\n5 Parts\t50+\t1 seconds for 1 HP\r\nSafeguard Armor\r\nWhen equipped in HC Quest, it will restore your HP to maximum under certain conditions.\r\n・In HC/Supremacy/G-rank quests, defense power is +20 for each part.\r\n・Damage is reduced in HC/Supremacy/G-rank quests after SR100. (Priority given to Halk Pot)\r\nConditions\r\nNo. of Parts Equipped\tDamage Reduction\r\n1 Part\t10%\r\n2 Parts\t17%\r\n3 Parts\t24%\r\n4 Parts\t27%\r\n5 Parts\t30%\r\nG Safeguard Armor\r\nWhen equipped in HC quests, your HP recovers to the maximum under certain conditions.\r\nEach part has a defense correction of (own GR - armor GR) x 20\r\n\u3000※In the GR quest, the damage is calculated by subtracting (quest * level - 1) x 150 from the defense, regardless of the armor type.\r\nSkill slots +1 for 3 or more parts; skill slots +2 for 5 parts.\r\n・Weapon multiplier +30 when equipping 3 or more parts in G level quests.";
             }
         }
@@ -7370,7 +7366,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return string.Format("{0}, {1}, {2}", GetDecoName(WeaponDeco1ID(), 1,true), GetDecoName(WeaponDeco2ID(), 2,true), GetDecoName(WeaponDeco3ID(), 3,true));
+                return string.Format("{0}, {1}, {2}", GetDecoName(WeaponDeco1ID(), 1, true), GetDecoName(WeaponDeco2ID(), 2, true), GetDecoName(WeaponDeco3ID(), 3, true));
             }
         }
 
@@ -7428,7 +7424,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return string.Format("{0}, {1}, {2}",GetItemName(ArmorHeadDeco1ID()), GetItemName(ArmorHeadDeco2ID()), GetItemName(ArmorHeadDeco3ID()));
+                return string.Format("{0}, {1}, {2}", GetItemName(ArmorHeadDeco1ID()), GetItemName(ArmorHeadDeco2ID()), GetItemName(ArmorHeadDeco3ID()));
             }
         }
 
@@ -7497,7 +7493,7 @@ namespace MHFZ_Overlay.addresses
 
                 if (className == "Blademaster" || className == "Gunner")
                     return string.Format("{0} | {1} | {2}", GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
-                else 
+                else
                     return "None";
             }
         }
@@ -7507,7 +7503,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorHeads.ArmorHeadIDs.TryGetValue(ArmorHeadID(), out string? piecename);
-                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorHeadDeco1ID(),0,true), GetDecoName(ArmorHeadDeco2ID(),0,true), GetDecoName(ArmorHeadDeco3ID(),0,true));
+                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorHeadDeco1ID(), 0, true), GetDecoName(ArmorHeadDeco2ID(), 0, true), GetDecoName(ArmorHeadDeco3ID(), 0, true));
             }
         }
 
@@ -7516,7 +7512,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(ArmorChestID(), out string? piecename);
-                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorChestDeco1ID(),0,true), GetDecoName(ArmorChestDeco2ID(),0,true), GetDecoName(ArmorChestDeco3ID(),0,true));
+                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorChestDeco1ID(), 0, true), GetDecoName(ArmorChestDeco2ID(), 0, true), GetDecoName(ArmorChestDeco3ID(), 0, true));
             }
         }
 
@@ -7525,7 +7521,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorArms.ArmorArmIDs.TryGetValue(ArmorArmsID(), out string? piecename);
-                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorArmsDeco1ID(),0,true), GetDecoName(ArmorArmsDeco2ID(),0,true), GetDecoName(ArmorArmsDeco3ID(),0,true));
+                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorArmsDeco1ID(), 0, true), GetDecoName(ArmorArmsDeco2ID(), 0, true), GetDecoName(ArmorArmsDeco3ID(), 0, true));
             }
         }
 
@@ -7534,7 +7530,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorWaists.ArmorWaistIDs.TryGetValue(ArmorWaistID(), out string? piecename);
-                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorWaistDeco1ID(),0,true), GetDecoName(ArmorWaistDeco2ID(),0,true), GetDecoName(ArmorWaistDeco3ID(),0,true));
+                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorWaistDeco1ID(), 0, true), GetDecoName(ArmorWaistDeco2ID(), 0, true), GetDecoName(ArmorWaistDeco3ID(), 0, true));
             }
         }
 
@@ -7543,7 +7539,7 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(ArmorLegsID(), out string? piecename);
-                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorLegsDeco1ID(),0,true), GetDecoName(ArmorLegsDeco2ID(),0,true), GetDecoName(ArmorLegsDeco3ID(),0,true));
+                return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorLegsDeco1ID(), 0, true), GetDecoName(ArmorLegsDeco2ID(), 0, true), GetDecoName(ArmorLegsDeco3ID(), 0, true));
             }
         }
 
@@ -7876,7 +7872,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         public void ReloadData()
         {
-            
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
     }

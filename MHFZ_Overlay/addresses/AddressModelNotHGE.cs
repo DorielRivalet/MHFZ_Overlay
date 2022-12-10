@@ -11,7 +11,7 @@ namespace MHFZ_Overlay.addresses
 
         }
 
-        
+
         public override int HitCountInt() => M.Read2Byte("mhfo.dll+60792E6");
         public override int TimeDefInt() => M.ReadInt("mhfo.dll+1B97780");
         public override int TimeInt() => M.ReadInt("mhfo.dll+5BC6540");
@@ -90,7 +90,7 @@ namespace MHFZ_Overlay.addresses
         public override int Monster3HPInt() => M.Read2Byte("0043C608");
         public override int Monster4HPInt() => M.Read2Byte("0043C60C");
         public override string Monster1AtkMult() => M.ReadFloat("mhfo.dll+60A3E58,898").ToString();
-        public override decimal Monster1DefMult() => (decimal)M.ReadFloat("mhfo.dll+60A3E58,89C","",false);
+        public override decimal Monster1DefMult() => (decimal)M.ReadFloat("mhfo.dll+60A3E58,89C", "", false);
         public override int Monster1Poison() => M.Read2Byte("mhfo.dll+60A3E58,88A");
         public override int Monster1PoisonNeed() => M.Read2Byte("mhfo.dll+60A3E58,888");
         public override int Monster1Sleep() => M.Read2Byte("mhfo.dll+60A3E58,86C");
@@ -103,7 +103,7 @@ namespace MHFZ_Overlay.addresses
         public override int Monster1StunNeed() => M.Read2Byte("mhfo.dll+60A3E58,A74");
         public override string Monster1Size() => M.Read2Byte("mhfo.dll+2AFA784").ToString() + "%";
         public override string Monster2AtkMult() => M.ReadFloat("mhfo.dll+60A3E58,1788").ToString();
-        public override decimal Monster2DefMult() => (decimal)M.ReadFloat("mhfo.dll+60A3E58,178C","",false);
+        public override decimal Monster2DefMult() => (decimal)M.ReadFloat("mhfo.dll+60A3E58,178C", "", false);
         public override int Monster2Poison() => M.Read2Byte("mhfo.dll+60A3E58,177A");
         public override int Monster2PoisonNeed() => M.Read2Byte("mhfo.dll+60A3E58,1778");
         public override int Monster2Sleep() => M.Read2Byte("mhfo.dll+60A3E58,175C");
@@ -252,9 +252,9 @@ namespace MHFZ_Overlay.addresses
 
 
         public override int MeleeWeaponID() => M.Read2Byte("mhfo.dll+5033F92");
-        
+
         public override int RangedWeaponID() => M.Read2Byte("mhfo.dll+5033F92");
-            //the deco addresses for the weapon includes the tower sigils
+        //the deco addresses for the weapon includes the tower sigils
         public override int WeaponDeco1ID() => M.Read2Byte("mhfo.dll+5033F96");
         public override int WeaponDeco2ID() => M.Read2Byte("mhfo.dll+5033F98");
         public override int WeaponDeco3ID() => M.Read2Byte("mhfo.dll+5033F9A");
@@ -410,7 +410,7 @@ namespace MHFZ_Overlay.addresses
 
         public override int FelyneHunted() => M.Read2Byte("mhfo.dll+6103A1E");
         public override int MelynxHunted() => M.Read2Byte("mhfo.dll+6103A3A");
-        public override int ShakalakaHunted() => M.Read2Byte("mhfo.dll+6103A7E")+0;
+        public override int ShakalakaHunted() => M.Read2Byte("mhfo.dll+6103A7E") + 0;
         public override int VespoidHunted() => M.Read2Byte("mhfo.dll+6103A32");
         public override int HornetaurHunted() => M.Read2Byte("mhfo.dll+6103A3C");
         public override int GreatThunderbugHunted() => M.Read2Byte("mhfo.dll+6103A7C");
@@ -469,7 +469,7 @@ namespace MHFZ_Overlay.addresses
         public override int OdibatorasuHunted() => M.Read2Byte("mhfo.dll+6103AE0");
         public override int HyujikikiHunted() => M.Read2Byte("mhfo.dll+6103AE8");
         public override int AnorupatisuHunted() => M.Read2Byte("mhfo.dll+6103AE6");
-        public override int ZerureusuHunted() => M.Read2Byte("mhfo.dll+6103B00")+0;
+        public override int ZerureusuHunted() => M.Read2Byte("mhfo.dll+6103B00") + 0;
         public override int MeraginasuHunted() => M.Read2Byte("mhfo.dll+6103B08");
         public override int DiorexHunted() => M.Read2Byte("mhfo.dll+6103B0A");
         public override int PoborubarumuHunted() => M.Read2Byte("mhfo.dll+6103B12");
@@ -477,7 +477,7 @@ namespace MHFZ_Overlay.addresses
         public override int GureadomosuHunted() => M.Read2Byte("mhfo.dll+6103B22");
         public override int BariothHunted() => M.Read2Byte("mhfo.dll+6103B3A");
         //musous are separate???
-        public override int NargacugaHunted() => M.Read2Byte("mhfo.dll+6103B4A")+0;
+        public override int NargacugaHunted() => M.Read2Byte("mhfo.dll+6103B4A") + 0;
         public override int ZenaserisuHunted() => M.Read2Byte("mhfo.dll+6103B4E");
         public override int SeregiosHunted() => M.Read2Byte("mhfo.dll+6103B5E");
         public override int BogabadorumuHunted() => M.Read2Byte("mhfo.dll+6103B60");

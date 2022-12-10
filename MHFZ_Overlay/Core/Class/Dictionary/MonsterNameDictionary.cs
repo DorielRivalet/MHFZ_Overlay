@@ -1,10 +1,4 @@
-﻿using MHFZ_Overlay;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Security.Policy;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Navigation;
+﻿using System.Collections.Generic;
 
 namespace Dictionary
 {

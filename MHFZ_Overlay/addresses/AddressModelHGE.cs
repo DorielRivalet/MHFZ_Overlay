@@ -1,6 +1,4 @@
 ﻿using Memory;
-using System;
-using System.Windows.Media.Animation;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -333,7 +331,7 @@ namespace MHFZ_Overlay.addresses
         public override int ArmorWaistID() => M.Read2Byte("mhfo-hd.dll+DC6BB42");
         public override int ArmorWaistDeco1ID() => M.Read2Byte("mhfo-hd.dll+DC6BB46");
         public override int ArmorWaistDeco2ID() => M.Read2Byte("mhfo-hd.dll+DC6BB48");
-        public override int ArmorWaistDeco3ID() => M.Read2Byte("mhfo-hd.dll+DC6BB4A"); 
+        public override int ArmorWaistDeco3ID() => M.Read2Byte("mhfo-hd.dll+DC6BB4A");
         public override int ArmorLegsID() => M.Read2Byte("mhfo-hd.dll+DC6BAF2");
         public override int ArmorLegsDeco1ID() => M.Read2Byte("mhfo-hd.dll+DC6BAF6");
         public override int ArmorLegsDeco2ID() => M.Read2Byte("mhfo-hd.dll+DC6BAF8");
@@ -550,7 +548,7 @@ namespace MHFZ_Overlay.addresses
         public override int SilverHypnocHunted() => M.Read2Byte("mhfo-hd.dll+ED3E250");
         public override int AkuraVashimuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E252");
         public override int AkuraJebiaHunted() => M.Read2Byte("mhfo-hd.dll+ED3E254");
-        
+
         public override int BerukyurosuHunted() => M.Read2Byte("mhfo-hd.dll+ED3E256");
         public override int CactusHunted() => M.Read2Byte("mhfo-hd.dll+ED3E258");
         public override int GorgeObjectsHunted() => M.Read2Byte("mhfo-hd.dll+ED3E25A");

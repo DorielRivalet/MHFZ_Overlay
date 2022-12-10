@@ -1,44 +1,22 @@
-﻿using System.Diagnostics;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Navigation;
-using System.Windows.Input;
-using System;
-using System.Text.RegularExpressions;
-using System.Linq;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
-using System.IO;
-using Microsoft.Win32;
-using System.Diagnostics.Metrics;
-using System.Threading;
-using System.ComponentModel;
-using System.Globalization;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Forms;
-using Application = System.Windows.Application;
-using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
-using Clipboard = System.Windows.Clipboard;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Data;
-using ListViewItem = System.Windows.Controls.ListViewItem;
-using ListView = System.Windows.Controls.ListView;
-using System.Runtime.Intrinsics.X86;
-using System.Text;
-using System.Reflection;
-using Binding = System.Windows.Data.Binding;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
-using Window = System.Windows.Window;
-using CsvHelper;
-using MaterialDesignThemes.Wpf.Converters;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Microsoft.Web.WebView2.Core;
-using System.Collections.Generic;
-using Dictionary;
+﻿using CsvHelper;
 using Octokit;
-using MHFZ_Overlay;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Application = System.Windows.Application;
+using Clipboard = System.Windows.Clipboard;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+using Window = System.Windows.Window;
 
 namespace MHFZ_Overlay
 {
@@ -59,7 +37,7 @@ namespace MHFZ_Overlay
 
         public static Uri MonsterInfoLink
         {
-            get { return new Uri(randomMonsterImage, UriKind.RelativeOrAbsolute);}
+            get { return new Uri(randomMonsterImage, UriKind.RelativeOrAbsolute); }
         }
 
         public static readonly string RickRoll = "https://www.youtube.com/embed/dQw4w9WgXcQ";
@@ -115,7 +93,7 @@ namespace MHFZ_Overlay
                 },
                 "https://monsterhunter.fandom.com/wiki/Blinking_Nargacuga"
                 ),
-            
+
             new MonsterInfo("[Musou] Blitzkrieg Bogabadorumu",
                 "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/bogaK_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
@@ -159,7 +137,7 @@ namespace MHFZ_Overlay
                 },
                 "https://monsterhunter.fandom.com/wiki/Burning_Freezing_Eruzerion"
                 ),
-                         
+
 
                 new MonsterInfo("[Musou] Howling Zinogre",
                 "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/zin_ng.htm",
@@ -248,7 +226,7 @@ namespace MHFZ_Overlay
                 },
                 "https://monsterhunter.fandom.com/wiki/Sparkling_Zerureusu"
                 ),
-            
+
             new MonsterInfo("[Musou] Starving Deviljho",
                 "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/joeK_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
@@ -270,7 +248,7 @@ namespace MHFZ_Overlay
                 },
                 "https://monsterhunter.fandom.com/wiki/Starving_Deviljho"
                 ),
-            
+
             new MonsterInfo("[Musou] Thirsty Pariapuria",
                 "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/paria_ng.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
@@ -292,7 +270,7 @@ namespace MHFZ_Overlay
                 },
                 "https://monsterhunter.fandom.com/wiki/Thirsty_Pariapuria"
                 ),
-            
+
 
             new MonsterInfo("Zenith Akura Vashimu",
                 "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/aqura_ni.htm",
@@ -2064,8 +2042,8 @@ namespace MHFZ_Overlay
 
             string ReplaceSettingsLink = getFeriasLink();
             ReplaceSettingsLink = ReplaceSettingsLink.Replace(separator, "");
-            
-            return string.Format("{0}{1}{2}",ReplaceSettingsLink,separator,dir);
+
+            return string.Format("{0}{1}{2}", ReplaceSettingsLink, separator, dir);
         }
 
         public int GetHuntedCount(int id)
@@ -2572,7 +2550,7 @@ namespace MHFZ_Overlay
         private void BtnSaveFile_Click(object sender, RoutedEventArgs e)
         {
             string textToSave = GearStats.Text;
-            
+
 
             if (GetTextFormatMode() == "Code Block")
                 textToSave = string.Format("```text\n{0}\n```", textToSave);
@@ -2581,7 +2559,7 @@ namespace MHFZ_Overlay
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
-            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory+@"USERDATA\HunterSets\";
+            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
             string dateTime = DateTime.Now.ToString();
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
@@ -2632,7 +2610,7 @@ namespace MHFZ_Overlay
 
             if (savefile.ShowDialog() == true)
             {
-                GearImageGrid.Background = new SolidColorBrush(Color.FromArgb(0x00,0x1E,0x1E,0x2E));
+                GearImageGrid.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
                 CreateBitmapFromVisual(GearImageGrid, savefile.FileName);
                 CopyUIElementToClipboard(GearImageGrid);
                 GearImageGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
@@ -2652,7 +2630,7 @@ namespace MHFZ_Overlay
                 System.Windows.MessageBox.Show("Please load the gear stats by visiting the text tab in the configuration window", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return;
             }
-            
+
             RenderTargetBitmap bmpCopied = new RenderTargetBitmap((int)Math.Round(width), (int)Math.Round(height), 96, 96, PixelFormats.Default);
             DrawingVisual dv = new DrawingVisual();
             using (DrawingContext dc = dv.RenderOpen())
@@ -2713,7 +2691,7 @@ namespace MHFZ_Overlay
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
-            savefile.FileName = "HuntedLog-"+dateTime+".csv";
+            savefile.FileName = "HuntedLog-" + dateTime + ".csv";
             savefile.Filter = "CSV files (*.csv)|*.csv";
             savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HuntedLogs\";
 
@@ -2776,7 +2754,7 @@ namespace MHFZ_Overlay
                 MonsterFeriasOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].FeriasLink);
             }
 
-            string selectedName = MonsterNameListBox.SelectedItem.ToString()+"";
+            string selectedName = MonsterNameListBox.SelectedItem.ToString() + "";
             selectedName = selectedName.Replace("System.Windows.Controls.ComboBoxItem: ", "");
 
             string selectedMatchup = WeaponMatchupListBox.SelectedItem.ToString() + " " + MonsterNameListBox.SelectedItem.ToString();
@@ -2856,14 +2834,14 @@ namespace MHFZ_Overlay
             var info = client.GetLastApiInfo();
 
             if (info != null)
-                OctokitInfo.Text = String.Format("Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference,info.RateLimit.Limit,info.RateLimit.Remaining, info.RateLimit.Reset);
+                OctokitInfo.Text = String.Format("Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
 
             var issuesForOctokit = await client.Issue.GetAllForRepository("DorielRivalet", "MHFZ_Overlay");
 
-            IssuesTextBlock.Text = issuesForOctokit.Count.ToString()+" Issue(s)";
+            IssuesTextBlock.Text = issuesForOctokit.Count.ToString() + " Issue(s)";
 
             var watchers = await client.Activity.Watching.GetAllWatchers("DorielRivalet", "MHFZ_Overlay");
-            WatchersTextBlock.Text = watchers.Count.ToString()+" Watcher(s)";
+            WatchersTextBlock.Text = watchers.Count.ToString() + " Watcher(s)";
 
             info = client.GetLastApiInfo();
 
@@ -2873,21 +2851,23 @@ namespace MHFZ_Overlay
             info = client.GetLastApiInfo();
 
             if (info != null)
-                OctokitInfo.Text = String.Format("Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Reset Time: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining,info.RateLimit.Reset);
+                OctokitInfo.Text = String.Format("Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Reset Time: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
 
         }
 
         #endregion
 
         private void Fumo_MediaEnded(object sender, RoutedEventArgs e)
-        {if (myFumo == null)
+        {
+            if (myFumo == null)
                 return;
             myFumo.Position = new TimeSpan(0, 0, 1);
             myFumo.Play();
         }
 
         private void Krill_MediaEnded(object sender, RoutedEventArgs e)
-        {if (myKrill == null)
+        {
+            if (myKrill == null)
                 return;
             myKrill.Position = new TimeSpan(0, 0, 1);
             myKrill.Play();
@@ -2919,7 +2899,7 @@ namespace MHFZ_Overlay
             }
         }
     };
-    
+
     /* LoadConfig on startup
      * Load Config on window open to have extra copy
      * On Save -> Window close -> tell program to use new copy instead of current -> Save Config File

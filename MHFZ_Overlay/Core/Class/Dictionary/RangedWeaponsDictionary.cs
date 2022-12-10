@@ -7,7 +7,7 @@ namespace Dictionary
     /// </summary>
     public static class RangedWeapons
     {
-        public static IReadOnlyDictionary<int, string> RangedWeaponIDs {get;}= new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> RangedWeaponIDs { get; } = new Dictionary<int, string>
         {
             {0x0000, "None"},
             {0x0001, "Cross Bowgun"},

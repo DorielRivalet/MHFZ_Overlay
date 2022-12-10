@@ -7,7 +7,7 @@ namespace Dictionary
     /// </summary>
     public static class ArmorWaists
     {
-        public static IReadOnlyDictionary<int, string> ArmorWaistIDs {get;}= new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> ArmorWaistIDs { get; } = new Dictionary<int, string>
         {
             {0x0000, "No Equipment"},
             {0x0001, "Leather Belt"},

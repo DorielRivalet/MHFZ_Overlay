@@ -8,7 +8,7 @@ namespace Dictionary
     /// </summary>
     public static class Items
     {
-        public static IReadOnlyDictionary<int, string> ItemIDs{get;} = new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> ItemIDs { get; } = new Dictionary<int, string>
         {
             {0, "None"},
             {1, "Book of Combos 1"},

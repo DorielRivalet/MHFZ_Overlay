@@ -3,8 +3,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using MHFZ_Overlay.addresses;
-using MHFZ_Overlay;
 
 namespace MHFZ_Overlay.controls
 {
@@ -142,14 +140,16 @@ namespace MHFZ_Overlay.controls
         /// The current hp percent number.
         /// </value>
         public string CurrentHPPercentNumber
-        { get
+        {
+            get
             {
                 if (NumMax < NumCurr)
                 {
                     return "0";
-                } else
+                }
+                else
                 {
-                    return string.Format(" ({0:0}%)",(float)NumCurr / NumMax * 100.0);
+                    return string.Format(" ({0:0}%)", (float)NumCurr / NumMax * 100.0);
                 }
             }
         }
@@ -196,7 +196,8 @@ namespace MHFZ_Overlay.controls
                     if (ShowCurrentHPPercentage())
                     {
                         CurrentHPPercent = CurrentHPPercentNumber;
-                    } else
+                    }
+                    else
                     {
                         CurrentHPPercent = "";
                     }

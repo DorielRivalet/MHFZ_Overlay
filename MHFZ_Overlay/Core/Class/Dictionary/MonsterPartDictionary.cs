@@ -1,10 +1,4 @@
-﻿using MHFZ_Overlay;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Security.Policy;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Navigation;
+﻿using System.Collections.Generic;
 
 namespace Dictionary
 {
@@ -16,10 +10,10 @@ namespace Dictionary
     {
         public static IReadOnlyDictionary<List<int>, List<string>> MonsterPartID { get; } = new Dictionary<List<int>, List<string>>
         {
-            {new List<int>{0,10,18,23,29,32,57,63,86,87,88,118,124,133,134,135,136,137,138,156,168,171,173,175,176,19,24,56}, 
+            {new List<int>{0,10,18,23,29,32,57,63,86,87,88,118,124,133,134,135,136,137,138,156,168,171,173,175,176,19,24,56},
                 new List<string>{"None","None","None","None","None","None","None","None","None","None"}},
              // Rath skeleton
-            {new List<int>{1,11,14,15,26,37,41,42,43,44,45,49,80,81,90,96,100,109,122,126,130,139,174}, 
+            {new List<int>{1,11,14,15,26,37,41,42,43,44,45,49,80,81,90,96,100,109,122,126,130,139,174},
                 new List<string>{"Body","L. Wing","R. Wing","L. Leg","R. Leg","Neck","Head","Tail Tip","Tail","None"}},
              // Flying Wyvern Skeleton 2
             {new List<int>{17,22,47},

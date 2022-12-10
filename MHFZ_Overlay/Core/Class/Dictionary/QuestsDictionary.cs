@@ -7,7 +7,7 @@ namespace Dictionary
     /// </summary>
     public static class Quests
     {
-        public static IReadOnlyDictionary<int, string> QuestIDs {get;}= new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> QuestIDs { get; } = new Dictionary<int, string>
         {
             {1, "≪Hunter Basics≫ Hunter Basics"},
             {2, "≪Hunter Basics≫ Secret Wyvern Cooking"},
