@@ -1501,7 +1501,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://dorielrivalet.github.io/mhfz-ferias-english-project/")]
         public string FeriasVersionLink {
             get {
                 return ((string)(this["FeriasVersionLink"]));

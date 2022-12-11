@@ -5518,7 +5518,7 @@ namespace MHFZ_Overlay.addresses
         #region get game info
 
         /// <summary>
-        /// https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/
+        /// https://dorielrivalet.github.io/mhfz-ferias-english-project/
         /// </summary>
         public static string GetGameArmorSkillsPriority
         {

@@ -51,7 +51,7 @@ namespace MHFZ_Overlay
         private MonsterInfo[] monsterInfos = new MonsterInfo[]
         {
             new MonsterInfo("[Musou] Arrogant Duremudira",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dolem_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dolem_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","https://www.youtube.com/embed/jqaUPZ8DVfw" },
@@ -73,7 +73,7 @@ namespace MHFZ_Overlay
                 ),
 
             new MonsterInfo("[Musou] Blinking Nargacuga",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/nalgaK_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/nalgaK_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","https://www.youtube.com/embed/baWvEuLLwxk" },
@@ -95,7 +95,7 @@ namespace MHFZ_Overlay
                 ),
 
             new MonsterInfo("[Musou] Blitzkrieg Bogabadorumu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/bogaK_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/bogaK_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","https://youtube.com/embed/ak1o6N06V6U" },
@@ -117,7 +117,7 @@ namespace MHFZ_Overlay
                 ),
 
             new MonsterInfo("[Musou] Burning Freezing Elzelion",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/elze_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/elze_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","https://www.youtube.com/embed/RAdft8GHKvU" },
@@ -140,7 +140,7 @@ namespace MHFZ_Overlay
 
 
                 new MonsterInfo("[Musou] Howling Zinogre",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/zin_ng.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zin_ng.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","https://www.youtube.com/embed/wc8lCUg0pko" },
@@ -162,7 +162,7 @@ namespace MHFZ_Overlay
                 ),
 
             new MonsterInfo("[Musou] Ruling Guanzorumu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/guan_ng.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/guan_ng.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","https://www.youtube.com/embed/UzLiZrO9CDE" },
@@ -184,7 +184,7 @@ namespace MHFZ_Overlay
                 ),
 
             new MonsterInfo("[Musou] Shifting Mi Ru",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/mi-ru_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mi-ru_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -206,7 +206,7 @@ namespace MHFZ_Overlay
                 ),
 
             new MonsterInfo("[Musou] Sparkling Zerureusu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/zeruK_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zeruK_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -228,7 +228,7 @@ namespace MHFZ_Overlay
                 ),
 
             new MonsterInfo("[Musou] Starving Deviljho",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/joeK_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/joeK_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -250,7 +250,7 @@ namespace MHFZ_Overlay
                 ),
 
             new MonsterInfo("[Musou] Thirsty Pariapuria",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/paria_ng.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/paria_ng.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -273,7 +273,7 @@ namespace MHFZ_Overlay
 
 
             new MonsterInfo("Zenith Akura Vashimu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/aqura_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/aqura_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -294,7 +294,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Akura_Vashimu"
                 ),
             new MonsterInfo("Zenith Anorupatisu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/anolu_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/anolu_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -315,7 +315,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Anorupatisu"
                 ),
             new MonsterInfo("Zenith Baruragaru",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/bal_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/bal_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -336,7 +336,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Baruragaru"
                 ),
             new MonsterInfo("Zenith Blangonga",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dodobura_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dodobura_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -357,7 +357,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Blangonga"
                 ),
             new MonsterInfo("Zenith Daimyo Hermitaur",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/daimyo_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/daimyo_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -378,7 +378,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Daimyo_Hermitaur"
                 ),
             new MonsterInfo("Zenith Doragyurosu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/doragyu_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/doragyu_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -400,7 +400,7 @@ namespace MHFZ_Overlay
                 ),
 
             new MonsterInfo("Zenith Espinas",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/esp_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/esp_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -421,7 +421,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Espinas"
                 ),
             new MonsterInfo("Zenith Gasurabazura",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gasra_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gasra_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -442,7 +442,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Gasurabazura"
                 ),
             new MonsterInfo("Zenith Giaorugu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/giao_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/giao_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -463,7 +463,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Giaorugu"
                 ),
             new MonsterInfo("Zenith Gravios",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gura_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gura_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -485,7 +485,7 @@ namespace MHFZ_Overlay
                 ),
 
             new MonsterInfo("Zenith Harudomerugu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/hald_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hald_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -506,7 +506,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Harudomerugu"
                 ),
             new MonsterInfo("Zenith Hypnoc",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/hipu_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hipu_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -527,7 +527,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Hypnocatrice"
                 ),
             new MonsterInfo("Zenith Hyujikiki",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/hyuji_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hyuji_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -548,7 +548,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Hyujikiki"
                 ),
             new MonsterInfo("Zenith Inagami",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/ina_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ina_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -569,7 +569,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Inagami"
                 ),
             new MonsterInfo("Zenith Khezu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/furu_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/furu_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -591,7 +591,7 @@ namespace MHFZ_Overlay
                 ),
 
             new MonsterInfo("Zenith Midogaron",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/mido_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mido_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -613,7 +613,7 @@ namespace MHFZ_Overlay
                 ),
 
             new MonsterInfo("Zenith Plesioth",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gano_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gano_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -634,7 +634,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Plesioth"
                 ),
             new MonsterInfo("Zenith Rathalos",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/reusu_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reusu_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","https://www.youtube.com/embed/pGqYN1ks5AQ" },
@@ -655,7 +655,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Rathalos"
                 ),
             new MonsterInfo("Zenith Rukodiora",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/ruco_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ruco_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -676,7 +676,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Rukodiora"
                 ),
             new MonsterInfo("Zenith Taikun Zamuza",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/taikun_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/taikun_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -697,7 +697,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Taikun_Zamuza"
                 ),
             new MonsterInfo("Zenith Tigrex",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/tiga_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/tiga_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -718,7 +718,7 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Zenith_Tigrex"
                 ),
             new MonsterInfo("Zenith Toridcless",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/torid_ni.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/torid_ni.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","" },
@@ -741,112 +741,112 @@ namespace MHFZ_Overlay
 
 
                         new MonsterInfo("1st District Duremudira",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dolem1_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dolem1_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Duremudira"
                 ),            new MonsterInfo("2nd District Duremudira",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dolem2_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dolem2_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Duremudira"
                 ),            new MonsterInfo("Abiorugu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/abio_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/abio_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Abiorugu"
                 ),            new MonsterInfo("Akantor",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/akamu_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/akamu_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Akantor"
                 ),            new MonsterInfo("Akura Jebia",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/aquraj_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/aquraj_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Akura_Jebia"
                 ),            new MonsterInfo("Akura Vashimu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/aqura_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/aqura_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Akura_Vashimu"
                 ),            new MonsterInfo("Amatsu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/amatsu_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/amatsu_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Amatsu"
                 ),            new MonsterInfo("Anorupatisu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/anolu_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/anolu_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Anorupatisu"
                 ),            new MonsterInfo("Anteka",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gau_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gau_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Anteka"
                 ),            new MonsterInfo("Apceros",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/apuke_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/apuke_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Apceros"
                 ),            new MonsterInfo("Aptonoth",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/apono_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/apono_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Aptonoth"
                 ),             new MonsterInfo("Aruganosu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/volgin_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/volgin_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Aruganosu"
                 ),            new MonsterInfo("Ashen Lao-Shan Lung",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/raoao_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/raoao_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Ashen_Lao-Shan_Lung"
                 ),            new MonsterInfo("Azure Rathalos",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/reusuao_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reusuao_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Azure_Rathalos"
                 ),            new MonsterInfo("Barioth",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/berio_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/berio_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Barioth"
                 ),            new MonsterInfo("Baruragaru",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/bal_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/bal_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
@@ -854,182 +854,182 @@ namespace MHFZ_Overlay
                 "https://monsterhunter.fandom.com/wiki/Baruragaru"
                 ),
                 new MonsterInfo("Basarios",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/basa_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/basa_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Basarios"
                 ),new MonsterInfo("Berserk Raviente",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/lavieG_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/lavieG_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Berserk_Raviente"
                 ),new MonsterInfo("Berukyurosu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/beru_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/beru_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Berukyurosu"
                 ),new MonsterInfo("Black Diablos",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/deakuro_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/deakuro_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Black_Diablos"
                 ),new MonsterInfo("Black Gravios",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gurakuro_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gurakuro_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Black_Gravios"
                 ),new MonsterInfo("Blango",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/bura_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/bura_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Blango"
                 ),new MonsterInfo("Blangonga",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dodobura_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dodobura_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Blangonga"
                 ),new MonsterInfo("Blue Yian Kut-Ku",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/kukkuao_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kukkuao_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Blue_Yian_Kut-Ku"
                 ),new MonsterInfo("Bogabadorumu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/boga_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/boga_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Bogabadorumu"
                 ),new MonsterInfo("Brachydios",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/buraki_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/buraki_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Brachydios"
                 ),new MonsterInfo("Bright Hypnoc",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/hipuao_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hipuao_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Breeding_Season_Hypnocatrice"
                 ),new MonsterInfo("Bulldrome",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dosburu_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dosburu_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Bulldrome"
                 ),new MonsterInfo("Bullfango",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/buru_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/buru_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Bullfango"
                 ),new MonsterInfo("Burukku",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/brook_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/brook_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Burukku"
                 ),new MonsterInfo("Ceanataur",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/yao_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/yao_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Ceanataur"
                 ),new MonsterInfo("Cephadrome",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dosgare_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dosgare_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Cephadrome"
                 ),new MonsterInfo("Cephalos",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gare_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gare_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Cephalos"
                 ),new MonsterInfo("Chameleos",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/oo_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/oo_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Chameleos"
                 ),new MonsterInfo("Conga",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/konga_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/konga_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Conga"
                 ),new MonsterInfo("Congalala",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/babakonga_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/babakonga_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Congalala"
                 ),new MonsterInfo("Crimson Fatalis",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/miraval_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/miraval_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Crimson_Fatalis"
                 ),new MonsterInfo("Daimyo Hermitaur",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/daimyo_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/daimyo_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Daimyo_Hermitaur"
                 ),new MonsterInfo("Deviljho",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/joe_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/joe_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Deviljho"
                 ),new MonsterInfo("Diablos",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dea_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dea_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Diablos"
                 ),new MonsterInfo("Diorex",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dio_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dio_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Diorekkusu"
                 ),new MonsterInfo("Disufiroa",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/disf_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/disf_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","https://www.youtube.com/embed/leNWg4HoAbQ" },
@@ -1049,665 +1049,665 @@ namespace MHFZ_Overlay
                 },
                 "https://monsterhunter.fandom.com/wiki/Disufiroa"
                 ),new MonsterInfo("Doragyurosu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/doragyu_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/doragyu_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Doragyurosu"
                 ),new MonsterInfo("Dyuragaua",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dura_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dura_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Dyuragaua"
                 ),new MonsterInfo("Egyurasu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/egura_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/egura_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Egyurasu"
                 ),new MonsterInfo("Elzelion",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/elze_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/elze_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Eruzerion"
                 ),new MonsterInfo("Erupe",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/erupe_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/erupe_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Erupe"
                 ),new MonsterInfo("Espinas",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/esp_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/esp_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Espinas"
                 ),new MonsterInfo("Farunokku",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/faru_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/faru_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Farunokku"
                 ),new MonsterInfo("Fatalis",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/mira_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mira_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Fatalis"
                 ),new MonsterInfo("Felyne",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/airu_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/airu_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Felyne"
                 ),new MonsterInfo("Forokururu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/folo_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/folo_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Forokururu"
                 ),new MonsterInfo("Garuba Daora",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/galba_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/galba_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Garuba_Daora"
                 ),new MonsterInfo("Gasurabazura",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gasra_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gasra_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Gasurabazura"
                 ),new MonsterInfo("Gendrome",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dosgene_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dosgene_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Gendrome"
                 ),new MonsterInfo("Genprey",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gene_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gene_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Genprey"
                 ),new MonsterInfo("Giaorugu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/giao_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/giao_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Giaorugu"
                 ),new MonsterInfo("Giaprey",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/giano_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/giano_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Giaprey"
                 ),new MonsterInfo("Gogomoa",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gogo_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gogo_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Gogomoa"
                 ),new MonsterInfo("Gold Rathian",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/reiakin_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reiakin_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Gold_Rathian"
                 ),new MonsterInfo("Gore Magala",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/goa_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/goa_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Gore_Magala"
                 ),new MonsterInfo("Goruganosu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/volkin_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/volkin_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Goruganosu"
                 ),new MonsterInfo("Gougarf, Ray",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/goglf_r_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/goglf_r_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Ray_Gougarf"
                 ),new MonsterInfo("Gougarf, Lolo",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/goglf_l_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/goglf_l_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Lolo_Gougarf"
                 ),new MonsterInfo("Gravios",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gura_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gura_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Gravios"
                 ),new MonsterInfo("Great Thunderbug",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/raikou_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/raikou_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Great_Thunderbug"
                 ),new MonsterInfo("Green Plesioth",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/ganomidori_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ganomidori_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Green_Plesioth"
                 ),new MonsterInfo("Guanzorumu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/guan_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/guan_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Guanzorumu"
                 ),new MonsterInfo("Gureadomosu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/glare_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/glare_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Gureadomosu"
                 ),new MonsterInfo("Gurenzeburu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/guren_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/guren_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Gurenzeburu"
                 ),new MonsterInfo("Gypceros",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/geryo_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/geryo_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Gypceros"
                 ),new MonsterInfo("Harudomerugu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/hald_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hald_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Harudomerugu"
                 ),new MonsterInfo("Hermitaur",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gami_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gami_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Hermitaur"
                 ),new MonsterInfo("Hornetaur",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/kanta_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kanta_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Hornetaur"
                 ),new MonsterInfo("Hypnoc",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/hipu_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hipu_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Hypnocatrice"
                 ),new MonsterInfo("Hyujikiki",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/hyuji_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hyuji_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Hyujikiki"
                 ),new MonsterInfo("Inagami",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/ina_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ina_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Inagami"
                 ),new MonsterInfo("Iodrome",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dosios_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dosios_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Iodrome"
                 ),new MonsterInfo("Ioprey",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/ios_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ios_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Ioprey"
                 ),new MonsterInfo("Kamu Orugaron",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/olgk_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/olgk_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Kamu_Orugaron"
                 ),new MonsterInfo("Kelbi",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/kerubi_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kerubi_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Kelbi"
                 ),new MonsterInfo("Keoaruboru",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/keoa_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/keoa_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Keoaruboru"
                 ),new MonsterInfo("Khezu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/furu_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/furu_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Khezu"
                 ),new MonsterInfo("King Shakalaka",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/cyacyaKing_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/cyacyaKing_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/King_Shakalaka"
                 ),new MonsterInfo("Kirin",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/kirin_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kirin_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Kirin"
                 ),new MonsterInfo("Kokomoa",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/koko_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/koko_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Gogomoa"
                 ),new MonsterInfo("Kuarusepusu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/qual_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/qual_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Kuarusepusu"
                 ),new MonsterInfo("Kushala Daora",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/kusha_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kusha_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Kushala_Daora"
                 ),new MonsterInfo("Kusubami",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/kusb_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kusb_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Kusubami"
                 ),new MonsterInfo("Lao-Shan Lung",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/rao_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/rao_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Lao-Shan_Lung"
                 ),new MonsterInfo("Lavasioth",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/vol_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/vol_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Lavasioth"
                 ),new MonsterInfo("Lunastra",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/nana_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/nana_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Lunastra"
                 ),new MonsterInfo("Melynx",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/merura_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/merura_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Melynx"
                 ),new MonsterInfo("Meraginasu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/mera_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mera_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Meraginasu"
                 ),new MonsterInfo("Mi Ru",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/mi-ru_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mi-ru_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Mi_Ru"
                 ),new MonsterInfo("Midogaron",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/mido_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mido_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Midogaron"
                 ),new MonsterInfo("Monoblos",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/mono_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mono_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Monoblos"
                 ),new MonsterInfo("Mosswine",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/mos_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mos_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Mosswine"
                 ),new MonsterInfo("Nargacuga",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/nalga_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/nalga_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Nargacuga"
                 ),new MonsterInfo("Nono Orugaron",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/olgn_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/olgn_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Nono_Orugaron"
                 ),new MonsterInfo("Odibatorasu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/odiva_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/odiva_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Odibatorasu"
                 ),new MonsterInfo("Orange Espinas",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/espcya_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/espcya_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Flaming_Espinas"
                 ),new MonsterInfo("Pariapuria",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/paria_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/paria_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Pariapuria"
                 ),new MonsterInfo("Pink Rathian",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/reiasa_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reiasa_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Pink_Rathian"
                 ),new MonsterInfo("Plesioth",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gano_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gano_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Plesioth"
                 ),new MonsterInfo("Poborubarumu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/pobol_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/pobol_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Poborubarumu"
                 ),new MonsterInfo("Pokara",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/pokara_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/pokara_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Pokara"
                 ),new MonsterInfo("Pokaradon",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/pokaradon_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/pokaradon_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Pokaradon"
                 ),new MonsterInfo("Popo",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/popo_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/popo_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Popo"
                 ),new MonsterInfo("PSO2 Rappy",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/lappy_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/lappy_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 RickRoll
                 ),new MonsterInfo("Purple Gypceros",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/geryoao_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/geryoao_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Purple_Gypceros"
                 ),new MonsterInfo("Rajang",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/ra_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ra_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Rajang"
                 ),new MonsterInfo("Rathalos",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/reusu_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reusu_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Rathalos"
                 ),new MonsterInfo("Rathian",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/reia_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reia_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Rathian"
                 ),new MonsterInfo("Raviente",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/lavie_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/lavie_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Raviente"
                 ),new MonsterInfo("Rebidiora",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/levy_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/levy_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Rebidiora"
                 ),new MonsterInfo("Red Khezu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/furuaka_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/furuaka_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Red_Khezu"
                 ),new MonsterInfo("Red Lavasioth",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/volaka_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/volaka_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Red_Volganos"
                 ),new MonsterInfo("Remobra",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/gabu_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gabu_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Remobra"
                 ),new MonsterInfo("Rocks",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/iwa_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/iwa_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 RickRoll
                 ),new MonsterInfo("Rukodiora",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/ruco_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ruco_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Rukodiora"
                 ),new MonsterInfo("Rusted Kushala Daora",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/kushasabi_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kushasabi_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Rusted_Kushala_Daora"
                 ),new MonsterInfo("Seregios",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/sell_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/sell_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Seregios"
                 ),new MonsterInfo("Shagaru Magala",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/shagal_nh.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/shagal_nh.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Shagaru_Magala"
                 ),new MonsterInfo("Shakalaka",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/cyacya_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/cyacya_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Shakalaka"
                 ),new MonsterInfo("Shantien",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/shan_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/shan_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Shantien"
                 ),new MonsterInfo("Shen Gaoren",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/shen_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/shen_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Rathian"
                 ),new MonsterInfo("Shogun Ceanataur",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/syougun_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/syougun_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Shogun_Ceanataur"
                 ),new MonsterInfo("Silver Hypnoc",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/hipusiro_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hipusiro_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Silver_Hypnocatrice"
                 ),new MonsterInfo("Silver Rathalos",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/reusugin_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reusugin_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Silver_Rathalos"
                 ),new MonsterInfo("Stygian Zinogre",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/zingoku_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zingoku_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Stygian_Zinogre"
                 ),new MonsterInfo("Taikun Zamuza",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/taikun_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/taikun_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Taikun_Zamuza"
                 ),new MonsterInfo("Teostra",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/teo_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/teo_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Teostra"
                 ),new MonsterInfo("Tigrex",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/tiga_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/tiga_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Tigrex"
                 ),new MonsterInfo("Toa Tesukatora",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/toa_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/toa_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Toa_Tesukatora"
                 ),new MonsterInfo("Toridcless",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/torid_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/torid_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Toridcless"
                 ),new MonsterInfo("UNKNOWN",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/ra-ro_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ra-ro_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"Sword and Shield","https://www.youtube.com/embed/REF3OBNu4Wo" },
@@ -1727,119 +1727,119 @@ namespace MHFZ_Overlay
                 },
                 "https://monsterhunter.fandom.com/wiki/Unknown_(Black_Flying_Wyvern)"
                 ),new MonsterInfo("Uragaan",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/ura_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ura_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Uragaan"
                 ),new MonsterInfo("Uruki",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/ulky_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ulky_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Uruki"
                 ),new MonsterInfo("Varusaburosu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/valsa_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/valsa_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Varusaburosu"
                 ),new MonsterInfo("Velocidrome",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/dosran_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dosran_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Velocidrome"
                 ),new MonsterInfo("Velociprey",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/ran_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ran_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Velociprey"
                 ),new MonsterInfo("Vespoid",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/rango_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/rango_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Vespoid"
                 ),new MonsterInfo("Voljang",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/Vau_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/Vau_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Voljang"
                 ),new MonsterInfo("White Espinas",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/espsiro_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/espsiro_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Espinas_Rare_Species"
                 ),new MonsterInfo("White Fatalis",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/miraru_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/miraru_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/White_Fatalis"
                 ),new MonsterInfo("White Monoblos",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/monosiro_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/monosiro_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/White_Monoblos"
                 ),new MonsterInfo("Yama Kurai",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/yamac_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/yamac_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Yama_Kurai"
                 ),new MonsterInfo("Yama Tsukami",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/yama_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/yama_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Yama_Tsukami"
                 ),new MonsterInfo("Yian Garuga",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/garuru_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/garuru_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Yian_Garuga"
                 ),new MonsterInfo("Yian Kut-Ku",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/kukku_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kukku_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Yian_Kut-Ku"
                 ),new MonsterInfo("Zenaserisu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/zena_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zena_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Zenaserisu"
                 ),new MonsterInfo("Zerureusu",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/zeru_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zeru_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
                 },
                 "https://monsterhunter.fandom.com/wiki/Zerureusu"
                 ),new MonsterInfo("Zinogre",
-                "https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/mons/zin_n.htm",
+                "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zin_n.htm",
                 new System.Collections.Generic.Dictionary<string, string>()
                 {
                     {"","" },
@@ -2038,6 +2038,9 @@ namespace MHFZ_Overlay
         {
             string separator = "MHFZ-Ferias-English-Project";
 
+            if (!(link.Contains("separator")))
+                separator = separator.ToLower();
+            
             string dir = link.Split(separator)[1];
 
             string ReplaceSettingsLink = getFeriasLink();

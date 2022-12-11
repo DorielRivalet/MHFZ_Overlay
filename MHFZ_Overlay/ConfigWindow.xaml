@@ -270,7 +270,7 @@
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Select ferias version (re-open configuration window)" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Ferias Version"/>
                         <ComboBox Grid.Column="1" Grid.Row="21" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=FeriasVersionLink}">
-                            <ComboBoxItem>https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/</ComboBoxItem>
+                            <ComboBoxItem>https://dorielrivalet.github.io/mhfz-ferias-english-project/</ComboBoxItem>
                             <ComboBoxItem>https://xl3lackout.github.io/MHFZ-Ferias-English-Project/</ComboBoxItem>
                         </ComboBox>
 
@@ -1739,7 +1739,7 @@
                         </ComboBox>
                         <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" x:Name="DockPanelMonsterInfo" Width="Auto" Height="Auto">
                             <wv2:WebView2 Name="webViewMonsterInfo" ToolTip="Monster info"
-                  					    Source="https://dorielrivalet.github.io/MHFZ-Ferias-English-Project/img/monszones/rathianhr5.png"
+                  					    Source="https://dorielrivalet.github.io/mhfz-ferias-english-project/img/monszones/rathianhr5.png"
   							    />
                         </DockPanel>
                     </Grid>
