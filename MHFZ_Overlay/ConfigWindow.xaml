@@ -1715,7 +1715,7 @@
                         </Grid.RowDefinitions>
                         <!--<TextBlock Margin="5,5,5,5" ToolTip="Select option. Image based on cutting damage" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Option"/>-->
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Select option" Grid.Row="0" Grid.Column="0" ToolTip="Select option"/>
-                        <ComboBox SelectedIndex="0" SelectionChanged="RankBandListBox_SelectionChanged" Name="MonsterInfoViewOptionComboBox" Margin="5,5,5,5" Grid.Column="1" Grid.Row="0">
+                        <ComboBox SelectedIndex="0" SelectionChanged="MonsterInfoSource_SelectionChanged" Name="MonsterInfoViewOptionComboBox" Margin="5,5,5,5" Grid.Column="1" Grid.Row="0">
                             <ComboBoxItem>Ferias</ComboBoxItem>
                             <ComboBoxItem>Wiki</ComboBoxItem>
                             <ComboBoxItem>YouTube</ComboBoxItem>

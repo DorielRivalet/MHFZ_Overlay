@@ -2034,19 +2034,18 @@ namespace MHFZ_Overlay
           new MonsterLog(176, "King Shakalaka","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/king_shakalaka.png",0,true)
         };
 
-        public static string ReplaceFeriasVersion(string link)
+        public static string ReplaceMonsterInfoFeriasVersion(string link)
         {
-            string separator = "MHFZ-Ferias-English-Project";
-
-            if (!(link.Contains("separator")))
-                separator = separator.ToLower();
-            
-            string dir = link.Split(separator)[1];
-
             string ReplaceSettingsLink = getFeriasLink();
-            ReplaceSettingsLink = ReplaceSettingsLink.Replace(separator, "");
 
-            return string.Format("{0}{1}{2}", ReplaceSettingsLink, separator, dir);
+            // Check if no need to replace because its the same version already
+            if (link.Contains(ReplaceSettingsLink))
+                return link;
+
+            string separator = "mons/";
+            string info = link.Split(separator)[1];
+
+            return string.Format("{0}{1}{2}", ReplaceSettingsLink, separator, info);
         }
 
         public int GetHuntedCount(int id)
@@ -2321,9 +2320,14 @@ namespace MHFZ_Overlay
 
             _ = GetRepoStats();
 
+            replaceAllMonsterInfoFeriasLinks();
+        }
+
+        private void replaceAllMonsterInfoFeriasLinks()
+        {
             for (int i = 0; i < monsterInfos.Length; i++)
             {
-                monsterInfos[i].FeriasLink = ReplaceFeriasVersion(monsterInfos[i].FeriasLink);
+                monsterInfos[i].FeriasLink = ReplaceMonsterInfoFeriasVersion(monsterInfos[i].FeriasLink);
             }
         }
 
@@ -2813,7 +2817,7 @@ namespace MHFZ_Overlay
             ChangeMonsterInfo();
         }
 
-        private void RankBandListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MonsterInfoSource_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ChangeMonsterInfo();
         }
