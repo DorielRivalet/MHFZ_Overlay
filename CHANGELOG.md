@@ -1,5 +1,22 @@
 
 
+## [0.18.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.18.0...v0.18.1) (2022-12-11)
+
+
+### Bug Fixes
+
+* ferias version in monster info ([bd948ef](https://github.com/DorielRivalet/MHFZ_Overlay/commit/bd948ef12ce579cff40a427bf8f99888ad63895d))
+* update ferias links ([41d351c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/41d351ce72c14a8220bce22da342c5f1efcf54d6))
+
+
+### For Developers
+
+* fix sonarcloud link ([f1b092f](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f1b092fa6d072d66e508b54cddf85c7fab01678b))
+* fix sonarcloud links ([0d9f58d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0d9f58dc59c2f92910274bee7ff6106dbebbcb1c))
+* run code cleanup ([242a135](https://github.com/DorielRivalet/MHFZ_Overlay/commit/242a135ff70483a264822bddf4248b52121e9d66))
+* set to release ([74ed2e3](https://github.com/DorielRivalet/MHFZ_Overlay/commit/74ed2e34d53f2055ee3c2a2a03c943ff4f7c5ce4))
+* update README.md ([6791f17](https://github.com/DorielRivalet/MHFZ_Overlay/commit/6791f1779722dafac3ba4b73461b5493117b2fe8))
+
 ## [0.18.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.17.0...v0.18.0) (2022-12-10)
 
 
