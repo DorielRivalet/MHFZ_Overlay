@@ -336,9 +336,6 @@ namespace MHFZ_Overlay
 
             InitializeComponent();
 
-            // Start rendering the game
-            CompositionTarget.Rendering += DataLoader.model.CompositionTarget_Rendering;
-
             Left = 0;
             Top = 0;
             Topmost = true;
@@ -359,46 +356,8 @@ namespace MHFZ_Overlay
             CheckGameState();
             _ = LoadOctoKit();
 
-            // Set the Timer's interval to 100 milliseconds
-            fpsTimer.Interval = 100;
-            // Register a callback method to be executed when the Timer ticks
-            fpsTimer.Elapsed += CalculateAndDisplayFPS;
-
-            // Start the Timer
-            fpsTimer.Start();
-
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
-
         }
-
-        private double FPS;
-
-        // This method will be called every 100 milliseconds to calculate and display the FPS value
-        private void CalculateAndDisplayFPS(object sender, ElapsedEventArgs e)
-        {
-            // Create a Stopwatch object to measure time elapsed
-            Stopwatch stopwatch = new Stopwatch();
-
-            // Start the Stopwatch
-            stopwatch.Start();
-
-            // Check if the ElapsedMilliseconds property is not zero
-            if (stopwatch.ElapsedMilliseconds != 0)
-            {
-                // Calculate the current FPS value
-                double FPS = 1000 / stopwatch.ElapsedMilliseconds;
-
-                // Format the FPS value as a string with 2 decimal places
-                string FPSString = FPS.ToString("0.00");
-
-                // Convert the FPSString variable to type double
-                double FPSDouble = Convert.ToDouble(FPSString);
-
-                // Update the FPS property in your data model, which will trigger a PropertyChanged event
-                DataLoader.model.FPS = (float)FPSDouble;
-            }
-        }
-
 
         GitHubClient ghClient = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
 

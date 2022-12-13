@@ -175,7 +175,6 @@ If the HP shows 0/1 then change area for it to load.
 - Weapon stats import/export
 - Quest stats import/export
 - Monster stats import/export
-- Damage numbers Label border
 - Automatically set default positions according to screen resolution
 - Global damage number labels
 - Attach user interface to game window option
@@ -193,7 +192,6 @@ If the HP shows 0/1 then change area for it to load.
 - Armor Set Website links
 - Sky Corridor
 - Drag and Drop multiple selection
-- FPS counter
 - Sharpness tables
 - Gear rarity colors in hunter info stats
 

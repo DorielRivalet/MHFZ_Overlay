@@ -7880,50 +7880,5 @@ namespace MHFZ_Overlay.addresses
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        #region stopwatch
-
-        // Create a new Stopwatch to measure the time elapsed between frames
-        private Stopwatch stopwatch = new Stopwatch();
-
-        // Store the time elapsed between the previous frame and the current frame
-        private double elapsedTime;
-
-        // Create a property to hold the current FPS value
-        private float fps;
-
-        // Store the time elapsed since the last FPS update
-        private double elapsedTimeSinceLastUpdate;
-
-        public float FPS
-        {
-            get { return fps; }
-            set
-            {
-                fps = value;
-                //OnPropertyChanged
-                ReloadData(nameof(FPS));
-            }
-        }
-
-        public void CompositionTarget_Rendering(object sender, EventArgs e)
-        {
-            // Start the stopwatch if it is not already running
-            if (!stopwatch.IsRunning)
-            {
-                stopwatch.Start();
-            }
-
-            // Calculate the time elapsed since the last frame
-            elapsedTime = stopwatch.ElapsedMilliseconds;
-
-            // Calculate the FPS value by dividing the number of frames per second by the time elapsed since the last frame
-            FPS = (float)(1000f / elapsedTime);
-
-            // Reset the stopwatch to measure the time elapsed between the current frame and the next frame
-            stopwatch.Restart();
-        }
-
-        #endregion
     }
 }
