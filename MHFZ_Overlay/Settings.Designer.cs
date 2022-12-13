@@ -1618,5 +1618,41 @@ namespace MHFZ_Overlay {
                 this["DamageMeterMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FrameCounterShown {
+            get {
+                return ((bool)(this["FrameCounterShown"]));
+            }
+            set {
+                this["FrameCounterShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public double FrameCounterX {
+            get {
+                return ((double)(this["FrameCounterX"]));
+            }
+            set {
+                this["FrameCounterX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        public double FrameCounterY {
+            get {
+                return ((double)(this["FrameCounterY"]));
+            }
+            set {
+                this["FrameCounterY"] = value;
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Dictionary;
 using DiscordRPC;
 using Memory;
+using MHFZ_Overlay.addresses;
 using Octokit;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -310,6 +313,9 @@ namespace MHFZ_Overlay
 
         #endregion
 
+        // Create a new Timer object to calculate and display the FPS value
+        Timer fpsTimer = new Timer();
+
         #region main
 
         //Main entry point?        
@@ -329,6 +335,10 @@ namespace MHFZ_Overlay
             splashScreen.Show(false);
 
             InitializeComponent();
+
+            // Start rendering the game
+            CompositionTarget.Rendering += DataLoader.model.CompositionTarget_Rendering;
+
             Left = 0;
             Top = 0;
             Topmost = true;
@@ -348,9 +358,47 @@ namespace MHFZ_Overlay
             InitializeDiscordRPC();
             CheckGameState();
             _ = LoadOctoKit();
+
+            // Set the Timer's interval to 100 milliseconds
+            fpsTimer.Interval = 100;
+            // Register a callback method to be executed when the Timer ticks
+            fpsTimer.Elapsed += CalculateAndDisplayFPS;
+
+            // Start the Timer
+            fpsTimer.Start();
+
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
 
         }
+
+        private double FPS;
+
+        // This method will be called every 100 milliseconds to calculate and display the FPS value
+        private void CalculateAndDisplayFPS(object sender, ElapsedEventArgs e)
+        {
+            // Create a Stopwatch object to measure time elapsed
+            Stopwatch stopwatch = new Stopwatch();
+
+            // Start the Stopwatch
+            stopwatch.Start();
+
+            // Check if the ElapsedMilliseconds property is not zero
+            if (stopwatch.ElapsedMilliseconds != 0)
+            {
+                // Calculate the current FPS value
+                double FPS = 1000 / stopwatch.ElapsedMilliseconds;
+
+                // Format the FPS value as a string with 2 decimal places
+                string FPSString = FPS.ToString("0.00");
+
+                // Convert the FPSString variable to type double
+                double FPSDouble = Convert.ToDouble(FPSString);
+
+                // Update the FPS property in your data model, which will trigger a PropertyChanged event
+                DataLoader.model.FPS = (float)FPSDouble;
+            }
+        }
+
 
         GitHubClient ghClient = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
 
@@ -551,11 +599,16 @@ namespace MHFZ_Overlay
             double x = random.Next(450);
             double y = random.Next(254);
             Point newPoint = DamageNumbers.TranslatePoint(new Point(x, y), DamageNumbers);
-            Label damageLabel = new()
-            {
-                Content = damage.ToString(),
-                FontFamily = new System.Windows.Media.FontFamily("MS Gothic Bold")
-            };
+
+            // Create a new instance of the OutlinedTextBlock class.
+            OutlinedTextBlock outlinedTextBlock = new OutlinedTextBlock();
+
+            // Set the properties of the OutlinedTextBlock instance.
+            outlinedTextBlock.Text = damage.ToString();
+            outlinedTextBlock.FontFamily = new System.Windows.Media.FontFamily("MS Gothic Bold");
+            outlinedTextBlock.FontSize = 21;
+            outlinedTextBlock.StrokeThickness = 4;
+            outlinedTextBlock.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
 
             //does not alter actual number displayed, only the text style
             double damageModifier = damage / (DataLoader.model.CurrentWeaponMultiplier / 2);
@@ -563,43 +616,43 @@ namespace MHFZ_Overlay
             switch (damageModifier)
             {
                 case < 15.0:
-                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xB4, 0xBE, 0xFE));
-                    damageLabel.FontSize = 22;
+                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xB4, 0xBE, 0xFE));
+                    outlinedTextBlock.FontSize = 22;
                     break;
                 case < 35.0:
-                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
-                    damageLabel.FontSize = 22;
+                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
+                    outlinedTextBlock.FontSize = 22;
                     break;
                 case < 75.0:
-                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x74, 0xC7, 0xEC));
-                    damageLabel.FontSize = 22;
+                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x74, 0xC7, 0xEC));
+                    outlinedTextBlock.FontSize = 22;
                     break;
                 case < 200.0:
-                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xDC, 0xEB));
-                    damageLabel.FontSize = 22;
+                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xDC, 0xEB));
+                    outlinedTextBlock.FontSize = 22;
                     break;
                 case < 250.0:
-                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x94, 0xE2, 0xD5));
-                    damageLabel.FontSize = 24;
+                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x94, 0xE2, 0xD5));
+                    outlinedTextBlock.FontSize = 24;
                     break;
                 case < 300.0:
-                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF9, 0xE2, 0xAF));
-                    damageLabel.FontSize = 24;
+                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xF9, 0xE2, 0xAF));
+                    outlinedTextBlock.FontSize = 24;
                     break;
                 case < 350.0:
-                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x97));
-                    damageLabel.FontSize = 24;
-                    damageLabel.Content += "!";
+                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x97));
+                    outlinedTextBlock.FontSize = 24;
+                    outlinedTextBlock.Text += "!";
                     break;
                 case < 500.0:
-                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xEB, 0xA0, 0xAC));
-                    damageLabel.FontSize = 26;
-                    damageLabel.Content += "!!";
+                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xEB, 0xA0, 0xAC));
+                    outlinedTextBlock.FontSize = 26;
+                    outlinedTextBlock.Text += "!!";
                     break;
                 default:
-                    damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0x8B, 0xA8));
-                    damageLabel.FontSize = 30;
-                    damageLabel.Content += "!!!";
+                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0x8B, 0xA8));
+                    outlinedTextBlock.FontSize = 30;
+                    outlinedTextBlock.Text += "!!!";
                     break;
             }
 
@@ -608,17 +661,19 @@ namespace MHFZ_Overlay
                 //https://stackoverflow.com/questions/14601759/convert-color-to-byte-value
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 System.Drawing.Color color = ColorTranslator.FromHtml(s.DamageNumbersColor);
-                damageLabel.Foreground = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+                outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
             }
+
+            Label damageLabel = new()
+            {
+                Content = outlinedTextBlock,
+            };
 
             damageLabel.SetValue(Canvas.TopProperty, newPoint.Y);
             damageLabel.SetValue(Canvas.LeftProperty, newPoint.X);
 
             DamageNumbers.Children.Add(damageLabel);
-
             RemoveDamageNumberLabel(damageLabel);
-
-
         }
 
         /// <summary>
@@ -699,6 +754,7 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowSharpness = v && s.EnableSharpness;
 
             DataLoader.model.ShowMap = v && s.EnableMap;
+            DataLoader.model.ShowFrameCounter = v && s.FrameCounterShown;
         }
 
         #endregion

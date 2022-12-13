@@ -276,6 +276,8 @@
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Close overlay when closed game" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Close Overlay when Closed Game"/>
                         <ToggleButton Grid.Row="22" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAutoClose}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Enable Frames per Second Counter (Warning: Potentially Resource Intensive). The game logic is tied to 30fps." Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Enable Frames per Second Counter"/>
+                        <ToggleButton Grid.Row="23" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=FrameCounterShown}"/>
                     </Grid>
                 </ScrollViewer>
                 <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">

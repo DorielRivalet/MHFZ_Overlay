@@ -4,7 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:uc="clr-namespace:MHFZ_Overlay.controls"
-        xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        xmlns:local="clr-namespace:MHFZ_Overlay"
+        xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses"
+        d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
         x:Name="Window"
         Title="MHF-Z Overlay" Height="2160" Width="3840 " Background="Transparent" AllowsTransparency="True" WindowStyle="None" FontFamily="{StaticResource Source Code Pro Bold}"
@@ -13,6 +16,7 @@
         <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
         <RoutedUICommand x:Key="ESC" Text="Escape"/>
     </Window.Resources>
+
     <Canvas x:Name="MainGrid" Width="3840 " Height="2160" Background="Transparent" AllowDrop="True" Drop="MainGrid_Drop" DragOver="MainGrid_DragOver"  MouseMove="MainGrid_MouseMove">
         <Grid x:Name="ConfigGrid" Canvas.Top="0" Canvas.Left="0">
             <!--<Grid.ColumnDefinitions>
@@ -265,6 +269,16 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Image Source="{Binding CurrentMonster1Icon}" Grid.Column="0" Grid.Row="0"/>
+        </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="FrameCounterName" Canvas.Left="{Binding Source={StaticResource Settings},Path=FrameCounterX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=FrameCounterY}" Width="256" Height="128" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowFrameCounter, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <local:OutlinedTextBlock  x:Name="FPSLabel" HorizontalAlignment="Left" Text="{Binding FPS}" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MapImage" Canvas.Left="{Binding Source={StaticResource Settings},Path=MapX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MapY}" Width="{Binding Source={StaticResource Settings},Path=MapAreaWidth}" Height="{Binding Source={StaticResource Settings},Path=MapAreaHeight}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMap, Converter={StaticResource BoolToVis}}">

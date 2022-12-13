@@ -401,5 +401,14 @@
     <Setting Name="DamageMeterMode" Type="System.String" Scope="User">
       <Value Profile="(Default)">Total Damage</Value>
     </Setting>
+    <Setting Name="FrameCounterShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FrameCounterX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="FrameCounterY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">400</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
