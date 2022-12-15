@@ -1654,5 +1654,41 @@ namespace MHFZ_Overlay {
                 this["FrameCounterY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayerAttackGraphShown {
+            get {
+                return ((bool)(this["PlayerAttackGraphShown"]));
+            }
+            set {
+                this["PlayerAttackGraphShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double PlayerAttackGraphX {
+            get {
+                return ((double)(this["PlayerAttackGraphX"]));
+            }
+            set {
+                this["PlayerAttackGraphX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double PlayerAttackGraphY {
+            get {
+                return ((double)(this["PlayerAttackGraphY"]));
+            }
+            set {
+                this["PlayerAttackGraphY"] = value;
+            }
+        }
     }
 }

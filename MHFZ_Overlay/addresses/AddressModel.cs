@@ -1,4 +1,6 @@
 ﻿using Dictionary;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore;
 using Memory;
 using System;
 using System.Collections.Generic;
@@ -72,6 +74,8 @@ namespace MHFZ_Overlay.addresses
         public bool ShowFrameCounter { get; set; } = true;
 
         public bool ShowMap { get; set; } = true;
+
+        public bool ShowPlayerAttackGraph { get; set; } = true;
 
         #endregion
 
@@ -7870,6 +7874,32 @@ namespace MHFZ_Overlay.addresses
                 return s.FeriasVersionLink;
             }
         }
+
+        public static double GetPlayerAttackValue()
+        {
+            var dl = new DataLoader();
+            return dl.model.WeaponRaw();
+        }
+
+        #region graphs
+
+        public ISeries[] PlayerAttackSeries { get; set; }
+           = new ISeries[]
+           {
+                new LineSeries<double>
+                {
+                    Values = new double[]{1,1,1,2},
+                    Fill = null
+                }
+           };
+
+        private double[] ReadPlayerAttack()
+        {
+            // TODO: implement code to read the memory address and return the current player attack value
+            return new double[]{ GetPlayerAttackValue() };
+        }
+
+        #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

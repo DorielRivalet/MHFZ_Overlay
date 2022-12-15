@@ -341,6 +341,8 @@
 - AmmoPouchItem10ID mhfo.dll+5034690
 - AmmoPouchItem10Qty mhfo.dll+5034692
 
+For more addresses, check the respective files.
+
 ## IDs
 
 ### Rank Bands / Stat Tables

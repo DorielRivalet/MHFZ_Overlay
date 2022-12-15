@@ -16,6 +16,9 @@
         <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
         <RoutedUICommand x:Key="ESC" Text="Escape"/>
     </Window.Resources>
+    <Window.DataContext>
+        <local:DataLoader />
+    </Window.DataContext>
 
     <Canvas x:Name="MainGrid" Width="3840 " Height="2160" Background="Transparent" AllowDrop="True" Drop="MainGrid_Drop" DragOver="MainGrid_DragOver"  MouseMove="MainGrid_MouseMove">
         <Grid x:Name="ConfigGrid" Canvas.Top="0" Canvas.Left="0">
@@ -269,6 +272,18 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Image Source="{Binding CurrentMonster1Icon}" Grid.Column="0" Grid.Row="0"/>
+        </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="PlayerAttackGraphName" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphY}" Width="256" Height="256" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPlayerAttackGraph, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <lvc:CartesianChart
+        Series="{Binding PlayerAttackSeries}">
+            </lvc:CartesianChart>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MapImage" Canvas.Left="{Binding Source={StaticResource Settings},Path=MapX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MapY}" Width="{Binding Source={StaticResource Settings},Path=MapAreaWidth}" Height="{Binding Source={StaticResource Settings},Path=MapAreaHeight}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMap, Converter={StaticResource BoolToVis}}">

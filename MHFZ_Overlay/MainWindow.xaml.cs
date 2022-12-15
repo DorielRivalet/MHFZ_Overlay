@@ -1,5 +1,7 @@
 ﻿using Dictionary;
 using DiscordRPC;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 using Memory;
 using MHFZ_Overlay.addresses;
 using Octokit;
@@ -355,6 +357,21 @@ namespace MHFZ_Overlay
             InitializeDiscordRPC();
             CheckGameState();
             _ = LoadOctoKit();
+
+            LiveCharts.Configure(config =>
+            config
+                // registers SkiaSharp as the library backend
+                // REQUIRED unless you build your own
+                .AddSkiaSharp()
+
+                // adds the default supported types
+                // OPTIONAL but highly recommend
+                .AddDefaultMappers()
+
+                // select a theme, default is Light
+                // OPTIONAL
+                .AddDarkTheme());
+                //.AddLightTheme());
 
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
         }
@@ -714,6 +731,7 @@ namespace MHFZ_Overlay
 
             DataLoader.model.ShowMap = v && s.EnableMap;
             DataLoader.model.ShowFrameCounter = v && s.FrameCounterShown;
+            DataLoader.model.ShowPlayerAttackGraph = v && s.PlayerAttackGraphShown;
         }
 
         #endregion
