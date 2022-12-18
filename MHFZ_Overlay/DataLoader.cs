@@ -1,11 +1,18 @@
-﻿using Memory;
+﻿using Dictionary;
+using Memory;
 using MHFZ_Overlay.addresses;
+using SQLitePCL;
+using Octokit;
 using Squirrel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Data.SQLite;
 
 namespace MHFZ_Overlay
 {
@@ -93,10 +100,13 @@ namespace MHFZ_Overlay
                 {
                     // hi
                 }
+
                 if (!isHighGradeEdition)
                     model = new AddressModelNotHGE(m);
                 else
                     model = new AddressModelHGE(m);
+
+                SetupLocalDatabase();
             }
             else
             {
@@ -146,6 +156,403 @@ namespace MHFZ_Overlay
                 LoadMHFODLL(PID);
             }
         }
+
+        string GetQuestTimeCompletion()
+        {
+            double totalQuestDuration = model.TimeDefInt() / 30; // Total duration of the quest in seconds
+            double timeRemainingInQuest = model.TimeInt() / 30; // Time left in the quest in seconds
+
+            // Calculate the elapsed time by subtracting the time left from the total duration
+            double elapsedTime = totalQuestDuration - timeRemainingInQuest;
+
+            // Convert the elapsed time from seconds to milliseconds
+            elapsedTime *= 1000;
+
+            // Convert the elapsed time to a TimeSpan object
+            TimeSpan timeSpan = TimeSpan.FromMilliseconds(elapsedTime);
+
+            // Format the TimeSpan object as a string
+            string formattedTime = timeSpan.ToString(@"mm\:ss\.ff");
+
+            return formattedTime;
+        }
+
+        public static List<Dictionary<int, string>> GetArmorDictionariesList()
+        {
+            return new List<Dictionary<int, string>>
+            {
+                (Dictionary<int, string>)ArmorHeads.ArmorHeadIDs,
+                (Dictionary<int, string>)ArmorChests.ArmorChestIDs,
+                (Dictionary<int, string>)ArmorArms.ArmorArmIDs,
+                (Dictionary<int, string>)ArmorWaists.ArmorWaistIDs,
+                (Dictionary<int, string>)ArmorLegs.ArmorLegIDs
+            };
+        }
+
+        #region database
+
+        void CreateDatabaseTables(SQLiteConnection conn)
+        {   
+            // Create table to store program usage time
+            string sql = @"CREATE TABLE IF NOT EXISTS Session (
+            SessionID INTEGER PRIMARY KEY AUTOINCREMENT,
+            StartTime DATETIME NOT NULL,
+            EndTime DATETIME NOT NULL,
+            SessionDuration INTEGER NOT NULL)";
+            SQLiteCommand createTableCommand = new SQLiteCommand(sql, conn);
+            createTableCommand.ExecuteNonQuery();
+
+            // Create the Quests table
+            //sql = @"CREATE TABLE IF NOT EXISTS Quests 
+            //(RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
+            //QuestID INTEGER, 
+            //AreaID INTEGER,
+            //QuestName TEXT, 
+            //EndTime DATETIME, 
+            //ObjectiveImage BLOB,
+            //ObjectiveType TEXT, 
+            //ObjectiveQuantity INTEGER, 
+            //StarGrade INTEGER, 
+            //RankName TEXT, 
+            //ObjectiveName TEXT, 
+            //Date DATETIME)";
+            //SqliteCommand cmd = new SqliteCommand(sql, conn);
+            //cmd.ExecuteNonQuery();
+
+            //// Calculate the elapsed time of the quest
+            //string questTime = GetQuestTimeCompletion();
+
+            //// Convert the elapsed time to a DateTime object
+            //DateTime endTime = DateTime.ParseExact(questTime, @"mm\:ss\.ff", CultureInfo.InvariantCulture);
+
+            //string objectiveType = model.GetObjectiveNameFromID(model.ObjectiveType());
+            //string objectiveName = "Not Loaded";
+            //string rankName = model.GetRankNameFromID(model.RankBand());
+            //int objectiveQuantity = int.Parse(model.GetObjective1Quantity());
+            //int starGrade = model.StarGrades();
+
+            //if ((model.ObjectiveType() == 0x0 || model.ObjectiveType() == 0x02 || model.ObjectiveType() == 0x1002 || model.ObjectiveType() == 0x10) && (model.QuestID() != 23527 && model.QuestID() != 23628 && model.QuestID() != 21731 && model.QuestID() != 21749 && model.QuestID() != 21746 && model.QuestID() != 21750))
+            //    objectiveName = model.GetObjective1Name(model.Objective1ID());
+            //else
+            //    objectiveName = model.GetRealMonsterName(model.CurrentMonster1Icon);
+
+            //// Create the Players table
+            //sql = @"
+            //CREATE TABLE IF NOT EXISTS Players (
+            //    PlayerID INTEGER PRIMARY KEY AUTOINCREMENT, 
+            //    PlayerName TEXT,
+            //    GuildName TEXT,
+            //    Gender TEXT"; 
+
+            //cmd = new SqliteCommand(sql, conn);
+            //cmd.ExecuteNonQuery();
+
+            //Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+            //string playerName = s.HunterName;
+            //string guildName = s.GuildName;
+            //string gender = s.GenderExport;
+            //string gearName = s.GearDescriptionExport;
+            //string weaponClass = model.GetWeaponClass();
+            //int weaponTypeID = model.WeaponType();
+            //int weaponID = model.MeleeWeaponID();//ranged and melee are the same afaik
+            //string weaponSlot1 = model.GetDecoName(model.WeaponDeco1ID(), 1);// no sigils in database ig
+            //string weaponSlot2 = model.GetDecoName(model.WeaponDeco2ID(), 2);
+            //string weaponSlot3 = model.GetDecoName(model.WeaponDeco3ID(), 3);
+            //int headID = model.ArmorHeadID();
+            //int headSlot1 = model.ArmorHeadDeco1ID();
+            //int headSlot2 = model.ArmorHeadDeco2ID();
+            //int headSlot3 = model.ArmorHeadDeco3ID();
+            //int chestID = model.ArmorChestID();
+            //int chestSlot1 = model.ArmorChestDeco1ID();
+            //int chestSlot2 = model.ArmorChestDeco2ID();
+            //int chestSlot3 = model.ArmorChestDeco3ID();
+            //int armsID = model.ArmorArmsID();
+            //int armsSlot1 = model.ArmorArmsDeco1ID();
+            //int armsSlot2 = model.ArmorArmsDeco2ID();
+            //int armsSlot3 = model.ArmorArmsDeco3ID();
+            //int waistID = model.ArmorWaistID();
+            //int waistSlot1 = model.ArmorWaistDeco1ID();
+            //int waistSlot2 = model.ArmorWaistDeco2ID();
+            //int waistSlot3 = model.ArmorWaistDeco3ID();
+            //int legsID = model.ArmorLegsID();
+            //int legsSlot1 = model.ArmorLegsDeco1ID();
+            //int legsSlot2 = model.ArmorLegsDeco2ID();
+            //int legsSlot3 = model.ArmorLegsDeco3ID();
+            //int cuffSlot1 = model.Cuff1ID();
+            //int cuffSlot2 = model.Cuff2ID();
+
+            //// Create the WeaponTypes table
+            //sql = @"CREATE TABLE IF NOT EXISTS WeaponTypes (
+            //WeaponTypeID INTEGER PRIMARY KEY, 
+            //WeaponTypeName TEXT)";
+            //cmd = new SqliteCommand(sql, conn);
+            //cmd.ExecuteNonQuery();
+
+            //// Create the Item table
+            //sql = @"CREATE TABLE IF NOT EXISTS Item (
+            //ItemID INTEGER PRIMARY KEY, 
+            //ItemName TEXT)";
+            //cmd = new SqliteCommand(sql, conn);
+            //cmd.ExecuteNonQuery();
+
+            //// Loop through the entries in the dictionary
+            //foreach (KeyValuePair<int, string> entry in Items.ItemIDs)
+            //{
+            //    int itemID = entry.Key;
+            //    string itemName = entry.Value;
+
+            //    sql = "INSERT OR IGNORE INTO Item (ItemID, ItemName) VALUES (@ItemID, @ItemName)";
+            //    cmd = new SqliteCommand(sql, conn);
+            //    cmd.Parameters.AddWithValue("@ItemID", itemID);
+            //    cmd.Parameters.AddWithValue("@ItemName", itemName);
+            //    cmd.ExecuteNonQuery();
+            //}
+            
+            //// Create the PlayerGear table
+            //sql = @"CREATE TABLE IF NOT EXISTS PlayerGear (
+            //RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
+            //FOREIGN KEY(RunID) REFERENCES Quests(RunID), 
+            //GearName TEXT,
+            //StyleID INTEGER,
+            //WeaponClass TEXT,
+            //WeaponTypeID INTEGER,
+            //WeaponID INTEGER,
+            //WeaponSlot1 TEXT,
+            //WeaponSlot2 TEXT,
+            //WeaponSlot3 TEXT,
+            //HeadID INTEGER, 
+            //HeadSlot1ID INTEGER,
+            //HeadSlot2ID INTEGER,
+            //HeadSlot3ID INTEGER,
+            //ChestID INTEGER, 
+            //ChestSlot1ID INTEGER,
+            //ChestSlot2ID INTEGER,
+            //ChestSlot3ID INTEGER,
+            //ArmsID INTEGER, 
+            //ArmsSlot1ID INTEGER,
+            //ArmsSlot2ID INTEGER,
+            //ArmsSlot3ID INTEGER,
+            //WaistID INTEGER, 
+            //WaistSlot1ID INTEGER,
+            //WaistSlot2ID INTEGER,
+            //WaistSlot3ID INTEGER,
+            //LegsID INTEGER,
+            //LegsSlot1ID INTEGER,
+            //LegsSlot2ID INTEGER,
+            //LegsSlot3ID INTEGER,
+            //Cuff1ID INTEGER,
+            //Cuff2ID INTEGER,
+            //FOREIGN KEY(WeaponTypeID) REFERENCES WeaponTypes(WeaponTypeID),
+            //FOREIGN KEY(WeaponID) REFERENCES Gear(ItemID),
+            //FOREIGN KEY(HeadID) REFERENCES Gear(ItemID),
+            //FOREIGN KEY(ChestID) REFERENCES Gear(ItemID),
+            //FOREIGN KEY(ArmsID) REFERENCES Gear(ItemID),
+            //FOREIGN KEY(WaistID) REFERENCES Gear(ItemID),
+            //FOREIGN KEY(LegsID) REFERENCES Gear(ItemID)
+            //)";
+            //cmd = new SqliteCommand(sql, conn);
+            //cmd.ExecuteNonQuery();
+
+            //// Create the PlayerInventory table
+            //sql = "CREATE TABLE IF NOT EXISTS PlayerInventory (RunID INTEGER PRIMARY KEY AUTOINCREMENT, FOREIGN KEY(RunID) REFERENCES Quests(RunID), ItemID INTEGER, ItemQuantity INTEGER)";
+            //cmd = new SqliteCommand(sql, conn);
+            //cmd.ExecuteNonQuery();
+
+            //sql = @"
+            //CREATE TABLE IF NOT EXISTS Gear (
+            //  PieceID INTEGER PRIMARY KEY,
+            //  PieceName TEXT,
+            //  PieceType TEXT
+            //)";
+
+            //// Get a list of dictionaries containing the armor piece IDs and names
+            //List<Dictionary<int, string>> armorDictionaries = GetArmorDictionariesList();
+
+            //// Create a list of the armor piece types
+            //List<string> armorTypes = new List<string>
+            //{
+            //    "Head",
+            //    "Chest",
+            //    "Arms",
+            //    "Waist",
+            //    "Legs"
+            //};
+
+            //// Iterate over the dictionaries and piece types
+            //for (int i = 0; i < armorDictionaries.Count; i++)
+            //{
+            //    Dictionary<int, string> dictionary = armorDictionaries[i];
+            //    string pieceType = armorTypes[i];
+
+            //    // Loop through the entries in the dictionary
+            //    foreach (KeyValuePair<int, string> entry in dictionary)
+            //    {
+            //        int pieceID = entry.Key;
+            //        string pieceName = entry.Value;
+
+            //        sql = "INSERT OR IGNORE INTO Gear (PieceID, PieceName, PieceType) VALUES (@PieceID, @PieceName, @PieceType)";
+            //        cmd = new SqliteCommand(sql, conn);
+            //        cmd.Parameters.AddWithValue("@PieceID", pieceID);
+            //        cmd.Parameters.AddWithValue("@PieceName", pieceName);
+            //        cmd.Parameters.AddWithValue("@PieceType", pieceType);
+            //        cmd.ExecuteNonQuery();
+            //    }
+            //}
+        }
+
+        void InsertQuestIntoDatabase(SQLiteConnection conn)
+        {
+            // Insert a new quest into the Quests table
+            string sql = @"INSERT INTO Quests (
+            QuestID, 
+            QuestName, 
+            EndTime, 
+            ObjectiveQuantity, 
+            ObjectiveName, 
+            Gear, 
+            Weapon, 
+            Date) 
+            VALUES (
+            @questID, 
+            @questName, 
+            @endTime, 
+            @objectiveType, 
+            @objectiveQuantity, 
+            @starGrade, 
+            @rankName, 
+            @objectiveName, 
+            @date)";
+            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+            
+            cmd.Parameters.AddWithValue("@questName", model.GetQuestNameFromID(model.QuestID()));
+            cmd.Parameters.AddWithValue("@endTime", "");
+            cmd.Parameters.AddWithValue("@objectiveType", "");
+            cmd.Parameters.AddWithValue("@objectiveQuantity", "");
+            cmd.Parameters.AddWithValue("@starGrade", "");
+            cmd.Parameters.AddWithValue("@rankName", "");
+            cmd.Parameters.AddWithValue("@objectiveName", model.GetObjectiveNameFromID(model.Objective1ID()));
+            cmd.Parameters.AddWithValue("@date", DateTime.Now);
+            cmd.ExecuteNonQuery();
+
+            // Check if the player has already been inserted into the Players table
+            sql = "SELECT PlayerID FROM Players WHERE PlayerName = @playerName";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@playerName", "Doriel");
+            object result = cmd.ExecuteScalar();
+
+            int playerID;
+
+            // If the player has not been inserted, insert the player into the Players table
+            if (result == null)
+            {
+                sql = "INSERT INTO Players (PlayerName) VALUES (@playerName)";
+                cmd = new SQLiteCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@playerName", "Doriel");
+                cmd.ExecuteNonQuery();
+
+                // Get the PlayerID of the inserted player
+                sql = "SELECT PlayerID FROM Players WHERE PlayerName = @playerName";
+                cmd = new SQLiteCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@playerName", "Doriel");
+                playerID = (int)cmd.ExecuteScalar();
+
+            }
+            else
+            {
+                // Get the PlayerID of the player that was retrieved from the database
+                playerID = (int)result;
+            }
+
+            // Check if the helmet, chestplate, and weapon have already been inserted into the Gear table
+            sql = "SELECT GearID FROM Gear WHERE GearType = @gearType AND Rarity = @rarity AND OtherInfo = @otherInfo";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@gearType", "Helmet");
+            cmd.Parameters.AddWithValue("@rarity", 3);
+            cmd.Parameters.AddWithValue("@otherInfo", "Alisys ZP Head");
+            result = cmd.ExecuteScalar();
+
+            // If the gear has not been inserted, insert it into the Gear table
+            if (result == null)
+            {
+                sql = "INSERT INTO Gear (GearType, Rarity, OtherInfo) VALUES (@gearType, @rarity, @otherInfo)";
+                cmd = new SQLiteCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@gearType", "Helmet");
+                cmd.Parameters.AddWithValue("@rarity", 3);
+                cmd.Parameters.AddWithValue("@otherInfo", "Alisys ZP Head");
+                cmd.ExecuteNonQuery();
+
+                // Retrieve the ID of the newly inserted gear
+                //int gearID = (int)cmd.LastInsertedId;
+
+                // Insert data into the PlayerGear table
+                sql = "INSERT INTO PlayerGear (PlayerID, RunID, GearID) VALUES (@playerID, @runID, @gearID)";
+                cmd = new SQLiteCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@playerID", playerID);
+                cmd.Parameters.AddWithValue("@runID", "");
+                cmd.Parameters.AddWithValue("@gearID", "");
+                cmd.ExecuteNonQuery();
+
+                // Close the database connection
+                conn.Close();
+
+                return;
+            }
+
+            // Close the database connection
+            conn.Close();
+        }
+
+        void RetreiveQuestsFromDatabase()
+        {
+            SQLiteConnection conn = new SQLiteConnection("Data Source=" + dbFilePath + "");
+            SQLitePCL.Batteries.Init();
+            conn.Open();
+
+            // Create the Quests table
+            string sql = "CREATE TABLE IF NOT EXISTS Quests (RunID INTEGER PRIMARY KEY AUTOINCREMENT, QuestID INTEGER, QuestName TEXT, EndTime DATETIME, ObjectiveType TEXT, ObjectiveQuantity INTEGER, StarGrade INTEGER, RankName TEXT, ObjectiveName TEXT, Date DATETIME)";
+            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            // Retrieve all quests from the Quests table
+            sql = "SELECT * FROM Quests";
+            cmd = new SQLiteCommand(sql, conn);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                // Print the quest data to the console
+                Console.WriteLine("Quest: " + reader["QuestName"].ToString());
+                Console.WriteLine("End Time: " + reader["EndTime"].ToString());
+                Console.WriteLine("Monster: " + reader["Monster"].ToString());
+                Console.WriteLine("Gear: " + reader["Gear"].ToString());
+                Console.WriteLine();
+            }
+
+            // Close the database connection
+            conn.Close();
+        }
+
+        public static string dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
+
+        void SetupLocalDatabase()
+        {
+
+            if (!File.Exists(dbFilePath))
+            {
+                SQLiteConnection.CreateFile(dbFilePath);
+            }
+
+            using (var conn = new SQLiteConnection("Data Source=" + dbFilePath + ""))
+            {
+                conn.Open();
+
+                // Do something with the connection
+                CreateDatabaseTables(conn);
+            }
+            //            SQLitePCL.Batteries.Init();
+        }
+
+        #endregion
 
         /// <summary>
         /// Writes the byte from address.

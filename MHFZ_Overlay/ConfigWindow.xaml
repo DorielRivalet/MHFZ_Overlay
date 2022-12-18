@@ -1823,7 +1823,7 @@
                 </DockPanel>
             </Grid>
         </TabItem>
-        <TabItem ToolTip="Authors and developers information" Background="#11111b" Foreground="#cdd6f4">
+        <TabItem ToolTip="Developers and program information" Background="#11111b" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xf09b;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Margin="4,0,0,0" VerticalAlignment="Center" FontSize="32"/>
@@ -1845,6 +1845,7 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="128"/>
                             <RowDefinition Height="128"/>
                             <RowDefinition Height="128"/>
                             <RowDefinition Height="128"/>
@@ -1913,6 +1914,8 @@
                         <TextBlock ToolTip="View Changelog" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="#89b4fa" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md" RequestNavigate="lnkImg_RequestNavigate">View Changelog</Hyperlink></TextBlock>
                         <TextBlock ToolTip="View Releases Statistics (Put DorielRivalet as GitHub Username and MHFZ_Overlay as Repository Name)" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="#89b4fa" NavigateUri="https://somsubhra.github.io/github-release-stats/" RequestNavigate="lnkImg_RequestNavigate">View Releases Statistics</Hyperlink></TextBlock>
                         <TextBlock ToolTip="Download latest version as 7z file" Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="#89b4fa" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/Releases.7z" RequestNavigate="lnkImg_RequestNavigate">Get latest version</Hyperlink></TextBlock>
+                        <TextBlock ToolTip="Total Program Usage Time" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Text="{Binding TotalTimeSpent, StringFormat=hh\\:mm\\:ss, Mode=OneTime}"/>
+
                     </Grid>
                 </ScrollViewer>
             </Grid>

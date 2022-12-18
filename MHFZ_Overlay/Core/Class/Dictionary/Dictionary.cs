@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+//TODO: separate into files
 namespace Dictionary
 {
     ///<summary>
@@ -53,7 +53,7 @@ namespace Dictionary
     ///<summary>
     ///The monster ID list
     ///</summary>
-    public static class List
+    public static class MonsterList
     {
         public static IReadOnlyDictionary<int, string> MonsterID { get; } = new Dictionary<int, string>
         {

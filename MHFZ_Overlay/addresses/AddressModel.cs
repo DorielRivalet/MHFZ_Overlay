@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Permissions;
 using Application = System.Windows.Application;
+using System.Data.SQLite;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -292,6 +293,7 @@ namespace MHFZ_Overlay.addresses
         abstract public int CaravanMonster2ID();
 
         abstract public int MeleeWeaponID();
+        //same as melee afaik
         abstract public int RangedWeaponID();
         abstract public int WeaponDeco1ID();
         abstract public int WeaponDeco2ID();
@@ -2048,7 +2050,7 @@ namespace MHFZ_Overlay.addresses
                 return "Blitzkrieg Bogabadorumu";
             if (id == 0)
                 return "";
-            Dictionary.List.MonsterID.TryGetValue(id, out string? monstername);
+            Dictionary.MonsterList.MonsterID.TryGetValue(id, out string? monstername);
 
             if (monstername != null && monstername != RealMonsterName && isFirstMonster)
                 return string.Format("{0}{1}", GetRankName(RankBand()), RealMonsterName);
@@ -2318,7 +2320,6 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         public string GetWeaponClass()
         {
-
             if (CurrentWeaponName == "Light Bowgun" || CurrentWeaponName == "Heavy Bowgun" || CurrentWeaponName == "Bow")
                 return "Gunner";
             else
@@ -7897,6 +7898,417 @@ namespace MHFZ_Overlay.addresses
         {
             // TODO: implement code to read the memory address and return the current player attack value
             return new double[]{ GetPlayerAttackValue() };
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Gets the objective name from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetObjectiveNameFromID(int id, bool isLargeImageText = false)
+        {
+            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            return id switch
+            {
+                0 => "Nothing ",
+                1 => "Hunt ",
+                257 => "Capture ",
+                513 => "Slay ",
+                32772 => "Repel ",
+                98308 => "Slay or Repel ",
+                262144 => "Slay All ",
+                131072 => "Slay Total ",
+                2 => "Deliver ",
+                16388 => "Break Part ",
+                4098 => "Deliver Flag ",
+                16 => "Esoteric Action ",
+                _ => "Nothing ",
+            };
+        }
+
+        /// <summary>
+        /// Gets the objective1 quantity.
+        /// </summary>
+        /// <returns></returns>
+        public string GetObjective1Quantity(bool isLargeImageText = false)
+        {
+            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (Objective1Quantity() <= 1)
+                return "";
+            // hunt / capture / slay
+            else if (ObjectiveType() == 0x1 || ObjectiveType() == 0x101 || ObjectiveType() == 0x201)
+                return Objective1Quantity().ToString() + " ";
+            else if (ObjectiveType() == 0x8004 || ObjectiveType() == 0x18004)
+                return string.Format("({0} True HP) ", Objective1Quantity() * 100);
+            else
+                return Objective1Quantity().ToString() + " ";
+        }
+
+        /// <summary>
+        /// Gets the rank name from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetRankNameFromID(int id, bool isLargeImageText = false)
+        {
+            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            switch (id)
+            {
+                case 0:
+                    return "";
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                    return "Low Rank ";
+                case 11:
+                    return "Low/High Rank ";
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                case 16:
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                    return "High Rank ";
+                case 26:
+                case 31:
+                case 42:
+                    return "HR5 ";
+                case 32:
+                case 46://supremacies
+
+                    return "";
+
+                case 53://: conquest levels via quest id
+                    //shantien
+                    //lv1 23585
+                    //lv200 23586
+                    //lv1000 23587
+                    //lv9999 23588
+                    //disufiroa
+                    //lv1 23589
+                    //lv200 23590
+                    //lv1000 23591
+                    //lv9999 23592
+                    //fatalis
+                    //lv1 23593
+                    //lv200 23594
+                    //lv1000 23595
+                    //lv9999 23596
+                    //crimson fatalis
+                    //lv1 23597
+                    //lv200 23598
+                    //lv1000 23599
+                    //lv9999 23601
+                    //upper shiten unknown 23605
+                    //lower shiten unknown 23604
+                    //upper shiten disufiroa 23603
+                    //lower shiten disu 23602
+                    //thirsty 55532
+                    //shifting 55920
+                    //starving 55916
+                    //golden 55917
+                    switch (QuestID())
+                    {
+                        default:
+                            return "G Rank ";
+                        case 23585:
+                        case 23589:
+                        case 23593:
+                        case 23597:
+                            return "Lv1 ";
+                        case 23586:
+                        case 23590:
+                        case 23594:
+                        case 23598:
+                            return "Lv200 ";
+                        case 23587:
+                        case 23591:
+                        case 23595:
+                        case 23599:
+                            return "Lv1000 ";
+                        case 23588:
+                        case 23592:
+                        case 23596:
+                        case 23601:
+                            return "Lv9999 ";
+                    }
+
+                case 54:
+                    switch (QuestID())
+                    {
+                        default:
+                            return "";
+                        case 23604:
+                        case 23602:
+                            return "Lower Shiten ";
+                    }
+                case 55:
+                    switch (QuestID())
+                    {
+                        default:
+                            return "";
+                        case 23603:
+                            return "Upper Shiten ";
+                    }
+                //10m upper shiten/musou true slay
+
+
+                case 56://twinhead rajang / voljang and rajang
+                case 57://twinhead mi ru / white and brown espi / unknown and zeru / rajang and dorag
+                    return "Twinhead ";
+                case 64:
+                    return "Zenith★1 ";
+                case 65:
+                    return "Zenith★2 ";
+                case 66:
+                    return "Zenith★3 ";
+                case 67:
+                    return "Zenith★4 ";
+                case 70://unknown
+                    return "Upper Shiten ";
+                case 71:
+                case 72:
+                case 73:
+                    return "Interception ";
+                default:
+                    return "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the star grade.
+        /// </summary>
+        /// <param name="isLargeImageText">if set to <c>true</c> [is large image text].</param>
+        /// <returns></returns>
+        public string GetStarGrade(bool isLargeImageText = false)
+        {
+            if ((ShowDiscordQuestNames() && !(isLargeImageText)) || CaravanOverride())
+                return "";
+
+            if (IsToggeableDifficulty())
+                return string.Format("★{0} ", StarGrades().ToString());
+            else
+                return "";
+        }
+
+        /// <summary>
+        /// Determines whether this instance is road.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is road; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsRoad()
+        {
+            if (roadOverride() != null && roadOverride() == false)
+                return true;
+            else if (roadOverride() != null && roadOverride() == true)
+                return false;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Determines whether this instance is dure quest.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is dure; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsDure()
+        {
+            if (getDureName() != "None")
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Determines whether [is toggeable difficulty].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is toggeable difficulty]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsToggeableDifficulty()
+        {
+            if (!(IsDure()) && !(IsRavi()) && !(IsRoad()) && QuestID() != 0)
+            {
+                switch (RankBand())
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                    case 11:
+                    case 12:
+                    case 13:
+                    case 14:
+                    case 15:
+                    case 16:
+                    case 17:
+                    case 18:
+                    case 19:
+                    case 20:
+                    case 26:
+                    case 31:
+                    case 42:
+                    case 53:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether this instance is ravi.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is ravi; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsRavi()
+        {
+            if (getRaviName() != "None")
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Gets the real name of the monster.
+        /// </summary>
+        /// <param name="iconName">Name of the icon.</param>
+        /// <returns></returns>
+        public string GetRealMonsterName(string iconName, bool isLargeImageText = false)
+        {
+            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            //quest ids:
+            //mp road: 23527
+            //solo road: 23628
+            //1st district dure: 21731
+            //2nd district dure: 21746
+            //1st district dure sky corridor: 21749
+            //2nd district dure sky corridor: 21750
+            //arrogant dure repel: 23648
+            //arrogant dure slay: 23649
+            //urgent tower: 21751
+            //4th district dure: 21748
+            //3rd district dure: 21747
+            //3rd district dure 2: 21734
+            //UNUSED sky corridor: 21730
+            //sky corridor prologue: 21729
+
+            ////https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
+
+            int id;
+
+            if (roadOverride() == false)
+                id = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
+            else if (CaravanOverride())
+                id = CaravanMonster1ID();
+            else
+                id = LargeMonster1ID();
+
+            //dure
+            if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
+                return "Duremudira";
+            else if (QuestID() == 23648 || QuestID() == 23649)
+                return "Arrogant Duremudira";
+
+            //ravi
+            if (getRaviName() != "None")
+            {
+                switch (getRaviName())
+                {
+                    case "Raviente":
+                        return "Raviente";
+                    case "Violent Raviente":
+                        return "Violent Raviente";
+                    case "Berserk Raviente Practice":
+                        return "Berserk Raviente (Practice)";
+                    case "Berserk Raviente":
+                        return "Berserk Raviente";
+                    case "Extreme Raviente":
+                        return "Extreme Raviente";
+                    default:
+                        return "Raviente";
+                }
+            }
+
+            return DetermineMonsterName(id);
+        }
+
+        //TODO cactus quest shows fatalis        
+        /// <summary>
+        /// Gets the name of the objective1.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetObjective1Name(int id, bool isLargeImageText = false)
+        {
+            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            string? objValue1;
+            Dictionary.Items.ItemIDs.TryGetValue(id, out objValue1);  //returns true
+            return objValue1 + "";
+        }
+
+        #region program time
+
+        public string ProgramStart;
+        public string ProgramEnd;
+
+        public TimeSpan TotalTimeSpent { get; set; }
+
+        // Calculate the total time spent using the program
+        public TimeSpan CalculateTotalTimeSpent()
+        {
+            TimeSpan totalTimeSpent = new TimeSpan();
+            // Connect to the database
+            string dbFilePath = DataLoader.dbFilePath;
+            string connectionString = "Data Source=" + dbFilePath + "";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+
+                // Retrieve all rows from the Session table
+                string selectSql = "SELECT SessionDuration FROM Session";
+                using (SQLiteCommand selectCommand = new SQLiteCommand(selectSql, connection))
+                {
+                    using (SQLiteDataReader reader = selectCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            // Add the session duration to the total time spent
+                            int sessionDuration = reader.GetInt32(0);
+                            totalTimeSpent = totalTimeSpent.Add(TimeSpan.FromSeconds(sessionDuration)); ;
+                        }
+                    }
+                }
+            }
+
+            return totalTimeSpent;
         }
 
         #endregion
