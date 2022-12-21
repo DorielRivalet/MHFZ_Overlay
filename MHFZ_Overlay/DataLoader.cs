@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Data.SQLite;
+using SharpCompress.Common;
 
 namespace MHFZ_Overlay
 {
@@ -157,10 +158,10 @@ namespace MHFZ_Overlay
             }
         }
 
-        string GetQuestTimeCompletion()
+        private string GetQuestTimeCompletion()
         {
-            double totalQuestDuration = model.TimeDefInt() / 30; // Total duration of the quest in seconds
-            double timeRemainingInQuest = model.TimeInt() / 30; // Time left in the quest in seconds
+            double totalQuestDuration = (double)model.TimeDefInt() / 30; // Total duration of the quest in seconds
+            double timeRemainingInQuest = (double)model.TimeInt() / 30; // Time left in the quest in seconds
 
             // Calculate the elapsed time by subtracting the time left from the total duration
             double elapsedTime = totalQuestDuration - timeRemainingInQuest;
@@ -177,7 +178,7 @@ namespace MHFZ_Overlay
             return formattedTime;
         }
 
-        public static List<Dictionary<int, string>> GetArmorDictionariesList()
+        public static List<Dictionary<int, string>> GetGearDictionariesList()
         {
             return new List<Dictionary<int, string>>
             {
@@ -185,39 +186,139 @@ namespace MHFZ_Overlay
                 (Dictionary<int, string>)ArmorChests.ArmorChestIDs,
                 (Dictionary<int, string>)ArmorArms.ArmorArmIDs,
                 (Dictionary<int, string>)ArmorWaists.ArmorWaistIDs,
-                (Dictionary<int, string>)ArmorLegs.ArmorLegIDs
+                (Dictionary<int, string>)ArmorLegs.ArmorLegIDs,
+                (Dictionary<int, string>)MeleeWeapons.MeleeWeaponIDs,
+                (Dictionary<int, string>)RangedWeapons.RangedWeaponIDs
             };
         }
 
         #region database
 
-        void CreateDatabaseTables(SQLiteConnection conn)
-        {   
+        public static string dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
+
+        void SetupLocalDatabase()
+        {
+
+            if (!File.Exists(dbFilePath))
+            {
+                SQLiteConnection.CreateFile(dbFilePath);
+            }
+
+            using (var conn = new SQLiteConnection("Data Source=" + dbFilePath + ""))
+            {
+                conn.Open();
+
+                // Do something with the connection
+                CreateDatabaseTables(conn);
+            }
+            //            SQLitePCL.Batteries.Init();
+        }
+
+        private void InsertIntoTable(IReadOnlyDictionary<int, string> dictionary, string tableName, string idField, string nameField, SQLiteConnection conn)
+        {
+            // Loop through the entries in the dictionary
+            foreach (KeyValuePair<int, string> entry in dictionary)
+            {
+                int key = entry.Key;
+                string value = entry.Value;
+
+                string sql = $"INSERT OR IGNORE INTO {tableName} ({idField}, {nameField}) VALUES (@1, @2)";
+                SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@1", key);
+                cmd.Parameters.AddWithValue("@2", value);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        private void CreateDatabaseTables(SQLiteConnection conn)
+        {
             // Create table to store program usage time
             string sql = @"CREATE TABLE IF NOT EXISTS Session (
             SessionID INTEGER PRIMARY KEY AUTOINCREMENT,
             StartTime DATETIME NOT NULL,
             EndTime DATETIME NOT NULL,
             SessionDuration INTEGER NOT NULL)";
-            SQLiteCommand createTableCommand = new SQLiteCommand(sql, conn);
-            createTableCommand.ExecuteNonQuery();
+            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
 
-            // Create the Quests table
-            //sql = @"CREATE TABLE IF NOT EXISTS Quests 
-            //(RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
-            //QuestID INTEGER, 
-            //AreaID INTEGER,
-            //QuestName TEXT, 
-            //EndTime DATETIME, 
-            //ObjectiveImage BLOB,
-            //ObjectiveType TEXT, 
-            //ObjectiveQuantity INTEGER, 
-            //StarGrade INTEGER, 
-            //RankName TEXT, 
-            //ObjectiveName TEXT, 
-            //Date DATETIME)";
-            //SqliteCommand cmd = new SqliteCommand(sql, conn);
-            //cmd.ExecuteNonQuery();
+            //Create the Quests table
+            sql = @"CREATE TABLE IF NOT EXISTS Quests 
+            (RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
+            QuestID INTEGER NOT NULL, 
+            AreaID INTEGER NOT NULL, 
+            FinalTimeValue INTEGER NOT NULL,
+            FinalTimeDisplay TEXT NOT NULL, 
+            ObjectiveImage TEXT NOT NULL,
+            ObjectiveType TEXT NOT NULL, 
+            ObjectiveQuantity INTEGER NOT NULL, 
+            StarGrade INTEGER NOT NULL, 
+            RankName TEXT NOT NULL, 
+            ObjectiveName TEXT NOT NULL, 
+            Date DATETIME NOT NULL,
+            FOREIGN KEY(QuestID) REFERENCES QuestName(QuestID),
+            FOREIGN KEY(AreaID) REFERENCES Area(AreaID),
+            FOREIGN KEY(ObjectiveType) REFERENCES ObjectiveType(ObjectiveTypeID),
+            FOREIGN KEY(RankName) REFERENCES RankName(RankNameID)
+            )";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            //int timeLeft = 514; // Example value of the TimeLeft variable
+
+            //// Calculate the finalTimeDisplay value in the "mm:ss.mm" format
+            //TimeSpan finalTimeDisplay = TimeSpan.FromSeconds(timeLeft / 30.0);
+
+            //// Insert the TimeLeft value into the FinalTimeValue field and the finalTimeDisplay value into the FinalTimeString field of the Quests table
+            //string sql = "INSERT INTO Quests (QuestID, FinalTimeValue, FinalTimeString) VALUES (@QuestID, @FinalTimeValue, @FinalTimeString)";
+            //using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+            //{
+            //    cmd.Parameters.AddWithValue("@QuestID", 1);
+            //    cmd.Parameters.AddWithValue("@FinalTimeValue", timeLeft);
+            //    cmd.Parameters.AddWithValue("@FinalTimeString", finalTimeDisplay.ToString("mm\\:ss\\.ff"));
+            //    cmd.ExecuteNonQuery();
+            //}
+
+            //string sql = "SELECT FinalTimeValue, FinalTimeString FROM Quests WHERE QuestID = @QuestID ORDER BY FinalTimeValue ASC";
+            //using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+            //{
+            //    cmd.Parameters.AddWithValue("@QuestID", 1);
+            //    using (SQLiteDataReader reader = cmd.ExecuteReader())
+            //    {
+            //        while (reader.Read())
+            //        {
+            //            int finalTimeValue = reader.GetInt32(0);
+            //            string finalTimeString = reader.GetString(1);
+            //            // Do something with the finalTimeValue and finalTimeString values
+            //        }
+            //    }
+            //}
+
+            //Create the RankNames table
+            sql = @"CREATE TABLE IF NOT EXISTS RankName
+            (RankNameID INTEGER PRIMARY KEY, 
+            RankNameName TEXT NOT NULL)";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            InsertIntoTable(Dictionary.RanksBandsList.RankBandsID, "RankName", "RankNameID","RankNameName",conn);
+
+            //Create the ObjectiveTypes table
+            sql = @"CREATE TABLE IF NOT EXISTS ObjectiveType
+            (ObjectiveTypeID INTEGER PRIMARY KEY, 
+            ObjectiveTypeName TEXT NOT NULL)";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            InsertIntoTable(Dictionary.ObjectiveTypeList.ObjectiveTypeID, "ObjectiveType", "ObjectiveTypeID", "ObjectiveTypeName", conn);
+
+            //Create the QuestNames table
+            sql = @"CREATE TABLE IF NOT EXISTS QuestName
+            (QuestNameID INTEGER PRIMARY KEY, 
+            QuestNameName TEXT NOT NULL)";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            InsertIntoTable(Quests.QuestIDs, "QuestName", "QuestNameID", "QuestNameName", conn);
 
             //// Calculate the elapsed time of the quest
             //string questTime = GetQuestTimeCompletion();
@@ -236,16 +337,16 @@ namespace MHFZ_Overlay
             //else
             //    objectiveName = model.GetRealMonsterName(model.CurrentMonster1Icon);
 
-            //// Create the Players table
-            //sql = @"
-            //CREATE TABLE IF NOT EXISTS Players (
-            //    PlayerID INTEGER PRIMARY KEY AUTOINCREMENT, 
-            //    PlayerName TEXT,
-            //    GuildName TEXT,
-            //    Gender TEXT"; 
-
-            //cmd = new SqliteCommand(sql, conn);
-            //cmd.ExecuteNonQuery();
+            // Create the Players table
+            //do an UPDATE when inserting quests. since its just local player
+            sql = @"
+            CREATE TABLE IF NOT EXISTS Players (
+            PlayerID INTEGER PRIMARY KEY AUTOINCREMENT, 
+            PlayerName TEXT NOT NULL,
+            GuildName TEXT NOT NULL,
+            Gender TEXT NOT NULL)";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
 
             //Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
             //string playerName = s.HunterName;
@@ -281,125 +382,483 @@ namespace MHFZ_Overlay
             //int cuffSlot1 = model.Cuff1ID();
             //int cuffSlot2 = model.Cuff2ID();
 
-            //// Create the WeaponTypes table
-            //sql = @"CREATE TABLE IF NOT EXISTS WeaponTypes (
-            //WeaponTypeID INTEGER PRIMARY KEY, 
-            //WeaponTypeName TEXT)";
-            //cmd = new SqliteCommand(sql, conn);
-            //cmd.ExecuteNonQuery();
+            // Create the WeaponTypes table
+            sql = @"CREATE TABLE IF NOT EXISTS WeaponType (
+            WeaponTypeID INTEGER PRIMARY KEY, 
+            WeaponTypeName TEXT NOT NULL)";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
 
-            //// Create the Item table
-            //sql = @"CREATE TABLE IF NOT EXISTS Item (
-            //ItemID INTEGER PRIMARY KEY, 
-            //ItemName TEXT)";
-            //cmd = new SqliteCommand(sql, conn);
-            //cmd.ExecuteNonQuery();
+            InsertIntoTable(WeaponList.WeaponID, "WeaponType", "WeaponTypeID", "WeaponTypeName", conn);
 
-            //// Loop through the entries in the dictionary
-            //foreach (KeyValuePair<int, string> entry in Items.ItemIDs)
-            //{
-            //    int itemID = entry.Key;
-            //    string itemName = entry.Value;
+            // Create the Item table
+            sql = @"CREATE TABLE IF NOT EXISTS Item (
+            ItemID INTEGER PRIMARY KEY, 
+            ItemName TEXT NOT NULL)";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
 
-            //    sql = "INSERT OR IGNORE INTO Item (ItemID, ItemName) VALUES (@ItemID, @ItemName)";
-            //    cmd = new SqliteCommand(sql, conn);
-            //    cmd.Parameters.AddWithValue("@ItemID", itemID);
-            //    cmd.Parameters.AddWithValue("@ItemName", itemName);
-            //    cmd.ExecuteNonQuery();
-            //}
-            
-            //// Create the PlayerGear table
-            //sql = @"CREATE TABLE IF NOT EXISTS PlayerGear (
-            //RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
-            //FOREIGN KEY(RunID) REFERENCES Quests(RunID), 
-            //GearName TEXT,
-            //StyleID INTEGER,
-            //WeaponClass TEXT,
-            //WeaponTypeID INTEGER,
-            //WeaponID INTEGER,
-            //WeaponSlot1 TEXT,
-            //WeaponSlot2 TEXT,
-            //WeaponSlot3 TEXT,
-            //HeadID INTEGER, 
-            //HeadSlot1ID INTEGER,
-            //HeadSlot2ID INTEGER,
-            //HeadSlot3ID INTEGER,
-            //ChestID INTEGER, 
-            //ChestSlot1ID INTEGER,
-            //ChestSlot2ID INTEGER,
-            //ChestSlot3ID INTEGER,
-            //ArmsID INTEGER, 
-            //ArmsSlot1ID INTEGER,
-            //ArmsSlot2ID INTEGER,
-            //ArmsSlot3ID INTEGER,
-            //WaistID INTEGER, 
-            //WaistSlot1ID INTEGER,
-            //WaistSlot2ID INTEGER,
-            //WaistSlot3ID INTEGER,
-            //LegsID INTEGER,
-            //LegsSlot1ID INTEGER,
-            //LegsSlot2ID INTEGER,
-            //LegsSlot3ID INTEGER,
-            //Cuff1ID INTEGER,
-            //Cuff2ID INTEGER,
-            //FOREIGN KEY(WeaponTypeID) REFERENCES WeaponTypes(WeaponTypeID),
-            //FOREIGN KEY(WeaponID) REFERENCES Gear(ItemID),
-            //FOREIGN KEY(HeadID) REFERENCES Gear(ItemID),
-            //FOREIGN KEY(ChestID) REFERENCES Gear(ItemID),
-            //FOREIGN KEY(ArmsID) REFERENCES Gear(ItemID),
-            //FOREIGN KEY(WaistID) REFERENCES Gear(ItemID),
-            //FOREIGN KEY(LegsID) REFERENCES Gear(ItemID)
-            //)";
-            //cmd = new SqliteCommand(sql, conn);
-            //cmd.ExecuteNonQuery();
+            InsertIntoTable(Items.ItemIDs, "Item", "ItemID", "ItemName", conn);
 
-            //// Create the PlayerInventory table
-            //sql = "CREATE TABLE IF NOT EXISTS PlayerInventory (RunID INTEGER PRIMARY KEY AUTOINCREMENT, FOREIGN KEY(RunID) REFERENCES Quests(RunID), ItemID INTEGER, ItemQuantity INTEGER)";
-            //cmd = new SqliteCommand(sql, conn);
-            //cmd.ExecuteNonQuery();
+            // Create the Area table
+            sql = @"CREATE TABLE IF NOT EXISTS Area (
+            AreaID INTEGER PRIMARY KEY,
+            AreaName TEXT NOT NULL,
+            AreaIcon TEXT NOT NULL)";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
 
-            //sql = @"
-            //CREATE TABLE IF NOT EXISTS Gear (
-            //  PieceID INTEGER PRIMARY KEY,
-            //  PieceName TEXT,
-            //  PieceType TEXT
-            //)";
+            List<int> AreaGroup = new List<int> { 0 };
 
-            //// Get a list of dictionaries containing the armor piece IDs and names
-            //List<Dictionary<int, string>> armorDictionaries = GetArmorDictionariesList();
+            foreach (KeyValuePair<List<int>, string> kvp in AreaIconDictionary.AreaIconID)
+            {
+                List<int> areaIDs = kvp.Key;
 
-            //// Create a list of the armor piece types
-            //List<string> armorTypes = new List<string>
-            //{
-            //    "Head",
-            //    "Chest",
-            //    "Arms",
-            //    "Waist",
-            //    "Legs"
-            //};
+                foreach(int areaID in areaIDs)
+                {
+                    string areaIcon = kvp.Value;
+                    string areaName = model.GetAreaName(areaID);
 
-            //// Iterate over the dictionaries and piece types
-            //for (int i = 0; i < armorDictionaries.Count; i++)
-            //{
-            //    Dictionary<int, string> dictionary = armorDictionaries[i];
-            //    string pieceType = armorTypes[i];
+                    sql = "INSERT OR IGNORE INTO Area (AreaID, AreaIcon, AreaName) VALUES (@AreaID, @AreaIcon, @AreaName)";
+                    cmd = new SQLiteCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@AreaID", areaID);
+                    cmd.Parameters.AddWithValue("@AreaIcon", areaIcon);
+                    cmd.Parameters.AddWithValue("@AreaName", areaName);
+                    cmd.ExecuteNonQuery();
+                }
+            }
 
-            //    // Loop through the entries in the dictionary
-            //    foreach (KeyValuePair<int, string> entry in dictionary)
-            //    {
-            //        int pieceID = entry.Key;
-            //        string pieceName = entry.Value;
+            // Create the PlayerGear table
+            sql = @"CREATE TABLE IF NOT EXISTS PlayerGear (
+            RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
+            GearName TEXT NOT NULL,
+            StyleID INTEGER NOT NULL,
+            WeaponIcon TEXT NOT NULL,
+            WeaponClass TEXT NOT NULL,
+            WeaponTypeID INTEGER NOT NULL,
+            WeaponID INTEGER NOT NULL,
+            WeaponSlot1 TEXT NOT NULL,
+            WeaponSlot2 TEXT NOT NULL,
+            WeaponSlot3 TEXT NOT NULL,
+            HeadID INTEGER NOT NULL, 
+            HeadSlot1ID INTEGER NOT NULL,
+            HeadSlot2ID INTEGER NOT NULL,
+            HeadSlot3ID INTEGER NOT NULL,
+            ChestID INTEGER NOT NULL,
+            ChestSlot1ID INTEGER NOT NULL,
+            ChestSlot2ID INTEGER NOT NULL,
+            ChestSlot3ID INTEGER NOT NULL,
+            ArmsID INTEGER NOT NULL,
+            ArmsSlot1ID INTEGER NOT NULL,
+            ArmsSlot2ID INTEGER NOT NULL,
+            ArmsSlot3ID INTEGER NOT NULL,
+            WaistID INTEGER NOT NULL,
+            WaistSlot1ID INTEGER NOT NULL,
+            WaistSlot2ID INTEGER NOT NULL,
+            WaistSlot3ID INTEGER NOT NULL,
+            LegsID INTEGER NOT NULL,
+            LegsSlot1ID INTEGER NOT NULL,
+            LegsSlot2ID INTEGER NOT NULL,
+            LegsSlot3ID INTEGER NOT NULL,
+            Cuff1ID INTEGER NOT NULL,
+            Cuff2ID INTEGER NOT NULL,
+            ZenithSkillsID INTEGER NOT NULL,
+            AutomaticSkillsID INTEGER NOT NULL,
+            ActiveSkillsID INTEGER NOT NULL,
+            CaravanSkillsID INTEGER NOT NULL,
+            DivaSkillID INTEGER NOT NULL,
+            GuildFoodID INTEGER NOT NULL,
+            StyleRankSkillsID INTEGER NOT NULL,
+            PlayerInventoryID INTEGER NOT NULL,
+            AmmoPouchID INTEGER NOT NULL,
+            PoogieItemID INTEGER NOT NULL,
+            RoadDureSkillsID INTEGER NOT NULL,
+            FOREIGN KEY(RunID) REFERENCES Quests(RunID),
+            FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+            FOREIGN KEY(WeaponID) REFERENCES Gear(PieceID),
+            FOREIGN KEY(HeadID) REFERENCES Gear(PieceID),
+            FOREIGN KEY(ChestID) REFERENCES Gear(PieceID),
+            FOREIGN KEY(ArmsID) REFERENCES Gear(PieceID),
+            FOREIGN KEY(WaistID) REFERENCES Gear(PieceID),
+            FOREIGN KEY(LegsID) REFERENCES Gear(PieceID),
+            FOREIGN KEY(Cuff1ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Cuff2ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(ZenithSkillsID) REFERENCES ZenithSkills(ZenithSkillsID),
+            FOREIGN KEY(AutomaticSkillsID) REFERENCES AutomaticSkills(AutomaticSkillsID),
+            FOREIGN KEY(ActiveSkillsID) REFERENCES ActiveSkills(ActiveSkillsID),
+            FOREIGN KEY(CaravanSkillsID) REFERENCES CaravanSkills(CaravanSkillsID),
+            FOREIGN KEY(StyleRankSkillsID) REFERENCES StyleRankSkills(StyleRankSkillsID),
+            FOREIGN KEY(PlayerInventoryID) REFERENCES PlayerInventory(PlayerInventoryID),
+            FOREIGN KEY(AmmoPouchID) REFERENCES AmmoPouch(AmmoPouchID),
+            FOREIGN KEY(RoadDureSkillsID) REFERENCES RoadDureSkills(RoadDureSkillsID)
+            )";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
 
-            //        sql = "INSERT OR IGNORE INTO Gear (PieceID, PieceName, PieceType) VALUES (@PieceID, @PieceName, @PieceType)";
-            //        cmd = new SqliteCommand(sql, conn);
-            //        cmd.Parameters.AddWithValue("@PieceID", pieceID);
-            //        cmd.Parameters.AddWithValue("@PieceName", pieceName);
-            //        cmd.Parameters.AddWithValue("@PieceType", pieceType);
-            //        cmd.ExecuteNonQuery();
-            //    }
-            //}
+            sql = @"CREATE TABLE IF NOT EXISTS ZenithSkills(
+            ZenithSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
+            RunID INTEGER NOT NULL,
+            ZenithSkill1ID INTEGER NOT NULL,
+            ZenithSkill2ID INTEGER NOT NULL,
+            ZenithSkill3ID INTEGER NOT NULL,
+            ZenithSkill4ID INTEGER NOT NULL,
+            ZenithSkill5ID INTEGER NOT NULL,
+            ZenithSkill6ID INTEGER NOT NULL,
+            ZenithSkill7ID INTEGER NOT NULL,
+            FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+            FOREIGN KEY(ZenithSkill1ID) REFERENCES AllZenithSkills(ZenithSkillID),
+            FOREIGN KEY(ZenithSkill2ID) REFERENCES AllZenithSkills(ZenithSkillID),
+            FOREIGN KEY(ZenithSkill3ID) REFERENCES AllZenithSkills(ZenithSkillID),
+            FOREIGN KEY(ZenithSkill4ID) REFERENCES AllZenithSkills(ZenithSkillID),
+            FOREIGN KEY(ZenithSkill5ID) REFERENCES AllZenithSkills(ZenithSkillID),
+            FOREIGN KEY(ZenithSkill6ID) REFERENCES AllZenithSkills(ZenithSkillID),
+            FOREIGN KEY(ZenithSkill7ID) REFERENCES AllZenithSkills(ZenithSkillID))";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            sql = @"CREATE TABLE IF NOT EXISTS AllZenithSkills(
+            ZenithSkillID INTEGER PRIMARY KEY,
+            ZenithSkillName TEXT NOT NULL)";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            InsertIntoTable(Dictionary.ZenithSkillList.ZenithSkillID, "AllZenithSkills", "ZenithSkillID", "ZenithSkillName", conn);
+
+            sql = @"CREATE TABLE IF NOT EXISTS AutomaticSkills(
+            AutomaticSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
+            RunID INTEGER NOT NULL,
+            AutomaticSkill1ID INTEGER NOT NULL,
+            AutomaticSkill2ID INTEGER NOT NULL,
+            AutomaticSkill3ID INTEGER NOT NULL,
+            AutomaticSkill4ID INTEGER NOT NULL,
+            AutomaticSkill5ID INTEGER NOT NULL,
+            AutomaticSkill6ID INTEGER NOT NULL,
+            FOREIGN KEY(RunID) REFERENCES Quests(RunID),
+            FOREIGN KEY(AutomaticSkill1ID) REFERENCES AllArmorSkills(ArmorSkillID),
+            FOREIGN KEY(AutomaticSkill2ID) REFERENCES AllArmorSkills(ArmorSkillID),
+            FOREIGN KEY(AutomaticSkill3ID) REFERENCES AllArmorSkills(ArmorSkillID),
+            FOREIGN KEY(AutomaticSkill4ID) REFERENCES AllArmorSkills(ArmorSkillID),
+            FOREIGN KEY(AutomaticSkill5ID) REFERENCES AllArmorSkills(ArmorSkillID),
+            FOREIGN KEY(AutomaticSkill6ID) REFERENCES AllArmorSkills(ArmorSkillID))";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            sql = @"CREATE TABLE IF NOT EXISTS AllArmorSkills(
+            ArmorSkillID INTEGER PRIMARY KEY,
+            ArmorSkillName TEXT NOT NULL)";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            InsertIntoTable(Dictionary.ArmorSkillList.ArmorSkillID, "AllArmorSkills", "ArmorSkillID", "ArmorSkillName", conn);
+
+            sql = @"CREATE TABLE IF NOT EXISTS ActiveSkills(
+                ActiveSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                RunID INTEGER NOT NULL,
+                ActiveSkill1ID INTEGER NOT NULL,
+                ActiveSkill2ID INTEGER NOT NULL,
+                ActiveSkill3ID INTEGER NOT NULL,
+                ActiveSkill4ID INTEGER NOT NULL,
+                ActiveSkill5ID INTEGER NOT NULL,
+                ActiveSkill6ID INTEGER NOT NULL,
+                ActiveSkill7ID INTEGER NOT NULL,
+                ActiveSkill8ID INTEGER NOT NULL,
+                ActiveSkill9ID INTEGER NOT NULL,
+                ActiveSkill10ID INTEGER NOT NULL,
+                ActiveSkill11ID INTEGER NOT NULL,
+                ActiveSkill12ID INTEGER NOT NULL,
+                ActiveSkill13ID INTEGER NOT NULL,
+                ActiveSkill14ID INTEGER NOT NULL,
+                ActiveSkill15ID INTEGER NOT NULL,
+                ActiveSkill16ID INTEGER NOT NULL,
+                ActiveSkill17ID INTEGER NOT NULL,
+                ActiveSkill18ID INTEGER NOT NULL,
+                ActiveSkill19ID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                FOREIGN KEY(ActiveSkill1ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill2ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill3ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill4ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill5ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill6ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill7ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill8ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill9ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill10ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill11ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill12ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill13ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill14ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill15ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill16ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill17ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill18ID) REFERENCES AllArmorSkills(ArmorSkillID),
+                FOREIGN KEY(ActiveSkill19ID) REFERENCES AllArmorSkills(ArmorSkillID)
+                )";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            sql = @"CREATE TABLE IF NOT EXISTS CaravanSkills(
+                CaravanSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                RunID INTEGER NOT NULL,
+                CaravanSkill1ID INTEGER NOT NULL,
+                CaravanSkill2ID INTEGER NOT NULL,
+                CaravanSkill3ID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                FOREIGN KEY(CaravanSkill1ID) REFERENCES AllCaravanSkills(CaravanSkillID),
+                FOREIGN KEY(CaravanSkill2ID) REFERENCES AllCaravanSkills(CaravanSkillID),
+                FOREIGN KEY(CaravanSkill3ID) REFERENCES AllCaravanSkills(CaravanSkillID)
+                )";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            sql = @"CREATE TABLE IF NOT EXISTS AllCaravanSkills(
+            CaravanSkillID INTEGER PRIMARY KEY,
+            CaravanSkillName TEXT NOT NULL)";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            InsertIntoTable(Dictionary.CaravanSkillList.CaravanSkillID, "AllCaravanSkills", "CaravanSkillID", "CaravanSkillName", conn);
+
+            sql = @"CREATE TABLE IF NOT EXISTS StyleRankSkills(
+                StyleRankSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                RunID INTEGER NOT NULL,
+                StyleRankSkill1ID INTEGER NOT NULL,
+                StyleRankSkill2ID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID),
+                FOREIGN KEY(StyleRankSkill1ID) REFERENCES AllStyleRankSkills(StyleRankSkillID),
+                FOREIGN KEY(StyleRankSkill2ID) REFERENCES AllStyleRankSkills(StyleRankSkillID)
+                )";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            sql = @"CREATE TABLE IF NOT EXISTS AllStyleRankSkills(
+            StyleRankSkillID INTEGER PRIMARY KEY,
+            StyleRankSkillName TEXT NOT NULL)";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            InsertIntoTable(Dictionary.StyleRankSkillList.StyleRankSkillID, "AllStyleRankSkills", "StyleRankSkillID", "StyleRankSkillName", conn);
+
+            // Create the PlayerInventory table
+            sql = @"CREATE TABLE IF NOT EXISTS PlayerInventory (
+            PlayerInventoryID INTEGER PRIMARY KEY AUTOINCREMENT,
+            RunID INTEGER NOT NULL,
+            Item1ID INTEGER NOT NULL, 
+            Item1Quantity INTEGER NOT NULL,
+            Item2ID INTEGER NOT NULL, 
+            Item2Quantity INTEGER NOT NULL,
+            Item3ID INTEGER NOT NULL, 
+            Item3Quantity INTEGER NOT NULL,
+            Item4ID INTEGER NOT NULL, 
+            Item4Quantity INTEGER NOT NULL,
+            Item5ID INTEGER NOT NULL, 
+            Item5Quantity INTEGER NOT NULL,
+            Item6ID INTEGER NOT NULL, 
+            Item6Quantity INTEGER NOT NULL,
+            Item7ID INTEGER NOT NULL, 
+            Item7Quantity INTEGER NOT NULL,
+            Item8ID INTEGER NOT NULL, 
+            Item8Quantity INTEGER NOT NULL,
+            Item9ID INTEGER NOT NULL, 
+            Item9Quantity INTEGER NOT NULL,
+            Item10ID INTEGER NOT NULL, 
+            Item10Quantity INTEGER NOT NULL,
+            Item11ID INTEGER NOT NULL, 
+            Item11Quantity INTEGER NOT NULL,
+            Item12ID INTEGER NOT NULL, 
+            Item12Quantity INTEGER NOT NULL,
+            Item13ID INTEGER NOT NULL, 
+            Item13Quantity INTEGER NOT NULL,
+            Item14ID INTEGER NOT NULL, 
+            Item14Quantity INTEGER NOT NULL,
+            Item15ID INTEGER NOT NULL, 
+            Item15Quantity INTEGER NOT NULL,
+            Item16ID INTEGER NOT NULL, 
+            Item16Quantity INTEGER NOT NULL,
+            Item17ID INTEGER NOT NULL, 
+            Item17Quantity INTEGER NOT NULL,
+            Item18ID INTEGER NOT NULL, 
+            Item18Quantity INTEGER NOT NULL,
+            Item19ID INTEGER NOT NULL, 
+            Item19Quantity INTEGER NOT NULL,
+            Item20ID INTEGER NOT NULL, 
+            Item20Quantity INTEGER NOT NULL,
+            FOREIGN KEY(RunID) REFERENCES Quests(RunID),
+            FOREIGN KEY(Item1ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item2ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item3ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item4ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item5ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item6ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item7ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item8ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item9ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item10ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item11ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item12ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item13ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item14ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item15ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item16ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item17ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item18ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item19ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item20ID) REFERENCES Item(ItemID)
+            )";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            sql = @"CREATE TABLE IF NOT EXISTS AmmoPouch (
+            AmmoPouchID INTEGER PRIMARY KEY AUTOINCREMENT,
+            RunID INTEGER NOT NULL,
+            Item1ID INTEGER NOT NULL, 
+            Item1Quantity INTEGER NOT NULL,
+            Item2ID INTEGER NOT NULL, 
+            Item2Quantity INTEGER NOT NULL,
+            Item3ID INTEGER NOT NULL, 
+            Item3Quantity INTEGER NOT NULL,
+            Item4ID INTEGER NOT NULL, 
+            Item4Quantity INTEGER NOT NULL,
+            Item5ID INTEGER NOT NULL, 
+            Item5Quantity INTEGER NOT NULL,
+            Item6ID INTEGER NOT NULL, 
+            Item6Quantity INTEGER NOT NULL,
+            Item7ID INTEGER NOT NULL, 
+            Item7Quantity INTEGER NOT NULL,
+            Item8ID INTEGER NOT NULL, 
+            Item8Quantity INTEGER NOT NULL,
+            Item9ID INTEGER NOT NULL, 
+            Item9Quantity INTEGER NOT NULL,
+            Item10ID INTEGER NOT NULL, 
+            Item10Quantity INTEGER NOT NULL,
+            FOREIGN KEY(RunID) REFERENCES Quests(RunID),
+            FOREIGN KEY(Item1ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item2ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item3ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item4ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item5ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item6ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item7ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item8ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item9ID) REFERENCES Item(ItemID),
+            FOREIGN KEY(Item10ID) REFERENCES Item(ItemID)
+            )";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            sql = @"CREATE TABLE IF NOT EXISTS RoadDureSkills (
+            RoadDureSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
+            RunID INTEGER NOT NULL,
+            RoadDureSkill1ID INTEGER NOT NULL, 
+            RoadDureSkill1Level INTEGER NOT NULL,
+            RoadDureSkill2ID INTEGER NOT NULL, 
+            RoadDureSkill2Level INTEGER NOT NULL,
+            RoadDureSkill3ID INTEGER NOT NULL, 
+            RoadDureSkill3Level INTEGER NOT NULL,
+            RoadDureSkill4ID INTEGER NOT NULL, 
+            RoadDureSkill4Level INTEGER NOT NULL,
+            RoadDureSkill5ID INTEGER NOT NULL, 
+            RoadDureSkill5Level INTEGER NOT NULL,
+            RoadDureSkill6ID INTEGER NOT NULL, 
+            RoadDureSkill6Level INTEGER NOT NULL,
+            RoadDureSkill7ID INTEGER NOT NULL, 
+            RoadDureSkill7Level INTEGER NOT NULL,
+            RoadDureSkill8ID INTEGER NOT NULL, 
+            RoadDureSkill8Level INTEGER NOT NULL,
+            RoadDureSkill9ID INTEGER NOT NULL, 
+            RoadDureSkill9Level INTEGER NOT NULL,
+            RoadDureSkill10ID INTEGER NOT NULL, 
+            RoadDureSkill10Level INTEGER NOT NULL,
+            RoadDureSkill11ID INTEGER NOT NULL, 
+            RoadDureSkill11Level INTEGER NOT NULL,
+            RoadDureSkill12ID INTEGER NOT NULL, 
+            RoadDureSkill12Level INTEGER NOT NULL,
+            RoadDureSkill13ID INTEGER NOT NULL, 
+            RoadDureSkill13Level INTEGER NOT NULL,
+            RoadDureSkill14ID INTEGER NOT NULL, 
+            RoadDureSkill14Level INTEGER NOT NULL,
+            RoadDureSkill15ID INTEGER NOT NULL, 
+            RoadDureSkill15Level INTEGER NOT NULL,
+            RoadDureSkill16ID INTEGER NOT NULL, 
+            RoadDureSkill16Level INTEGER NOT NULL,
+            FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+            FOREIGN KEY(RoadDureSkill1ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill2ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill3ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill4ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill5ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill6ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill7ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill8ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill9ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill10ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill11ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill12ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill13ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill14ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill15ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+            FOREIGN KEY(RoadDureSkill16ID) REFERENCES AllRoadDureSkills(RoadDureSkillID)
+            )";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            sql = @"CREATE TABLE IF NOT EXISTS AllRoadDureSkills(
+            RoadDureSkillID INTEGER PRIMARY KEY,
+            RoadDureSkillName TEXT NOT NULL)";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            InsertIntoTable(Dictionary.RoadDureSkills.RoadDureSkillIDs, "AllRoadDureSkills", "RoadDureSkillID", "RoadDureSkillName", conn);
+
+            sql = @"
+            CREATE TABLE IF NOT EXISTS Gear (
+              PieceID INTEGER PRIMARY KEY,
+              PieceName TEXT NOT NULL,
+              PieceType TEXT NOT NULL
+            )";
+            cmd = new SQLiteCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+
+            // Get a list of dictionaries containing the armor piece IDs and names
+            List<Dictionary<int, string>> gearDictionaries = GetGearDictionariesList();
+
+            // Create a list of the gear piece types
+            List<string> gearTypes = new List<string>
+            {
+                "Head",
+                "Chest",
+                "Arms",
+                "Waist",
+                "Legs",
+                "Melee",
+                "Ranged",
+            };
+
+            // Iterate over the dictionaries and piece types
+            for (int i = 0; i < gearDictionaries.Count; i++)
+            {
+                Dictionary<int, string> dictionary = gearDictionaries[i];
+                string pieceType = gearTypes[i];
+
+                // Loop through the entries in the dictionary
+                foreach (KeyValuePair<int, string> entry in dictionary)
+                {
+                    int pieceID = entry.Key;
+                    string pieceName = entry.Value;
+
+                    sql = "INSERT OR IGNORE INTO Gear (PieceID, PieceName, PieceType) VALUES (@PieceID, @PieceName, @PieceType)";
+                    cmd = new SQLiteCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@PieceID", pieceID);
+                    cmd.Parameters.AddWithValue("@PieceName", pieceName);
+                    cmd.Parameters.AddWithValue("@PieceType", pieceType);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
+        //i would first insert into the quest table,
+        //then the tables referencing
+        //playergear, then the playergear table
         void InsertQuestIntoDatabase(SQLiteConnection conn)
         {
             // Insert a new quest into the Quests table
@@ -530,26 +989,6 @@ namespace MHFZ_Overlay
 
             // Close the database connection
             conn.Close();
-        }
-
-        public static string dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
-
-        void SetupLocalDatabase()
-        {
-
-            if (!File.Exists(dbFilePath))
-            {
-                SQLiteConnection.CreateFile(dbFilePath);
-            }
-
-            using (var conn = new SQLiteConnection("Data Source=" + dbFilePath + ""))
-            {
-                conn.Open();
-
-                // Do something with the connection
-                CreateDatabaseTables(conn);
-            }
-            //            SQLitePCL.Batteries.Init();
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using Newtonsoft.Json;
 using Octokit;
 using System;
 using System.Collections.Generic;
@@ -2317,7 +2318,6 @@ namespace MHFZ_Overlay
 
             MonsterNameListBox.ItemsSource = MonsterNameList;
 
-
             _ = GetRepoStats();
 
             replaceAllMonsterInfoFeriasLinks();
@@ -2903,6 +2903,42 @@ namespace MHFZ_Overlay
             {
                 this.UnregisterName("myWatcher");
                 myWatcher = null;
+            }
+        }
+
+        private void ExportUserSettings_Click(object sender, RoutedEventArgs e)
+        {
+            // Show a Save File Dialog to let the user choose the location for the JSON file
+            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+            saveFileDialog.FileName = "user_settings"; // Default file name
+            saveFileDialog.DefaultExt = ".json"; // Default file extension
+            saveFileDialog.Filter = "JSON files (.json)|*.json"; // Filter files by extension
+
+            // Show the Save File Dialog
+            Nullable<bool> result = saveFileDialog.ShowDialog();
+
+            // If the user clicked the Save button and selected a file
+            if (result == true)
+            {
+                // Get the user settings from the Settings class
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                // Create a dictionary to store the user settings
+                Dictionary<string, string> settings = new Dictionary<string, string>();
+
+                // Loop through the user settings properties and add them to the dictionary
+                foreach (System.Configuration.SettingsProperty setting in s.Properties)
+                {
+                    string settingName = setting.Name;
+                    string settingValue = s[settingName].ToString();
+                    settings.Add(settingName, settingValue);
+                }
+
+                // Serialize the dictionary to a JSON string
+                string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
+
+                // Save the JSON string to the selected file
+                File.WriteAllText(saveFileDialog.FileName, json);
             }
         }
     };

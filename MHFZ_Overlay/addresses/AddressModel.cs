@@ -7954,137 +7954,7 @@ namespace MHFZ_Overlay.addresses
         public string GetRankNameFromID(int id, bool isLargeImageText = false)
         {
             if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
-            switch (id)
-            {
-                case 0:
-                    return "";
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                    return "Low Rank ";
-                case 11:
-                    return "Low/High Rank ";
-                case 12:
-                case 13:
-                case 14:
-                case 15:
-                case 16:
-                case 17:
-                case 18:
-                case 19:
-                case 20:
-                    return "High Rank ";
-                case 26:
-                case 31:
-                case 42:
-                    return "HR5 ";
-                case 32:
-                case 46://supremacies
-
-                    return "";
-
-                case 53://: conquest levels via quest id
-                    //shantien
-                    //lv1 23585
-                    //lv200 23586
-                    //lv1000 23587
-                    //lv9999 23588
-                    //disufiroa
-                    //lv1 23589
-                    //lv200 23590
-                    //lv1000 23591
-                    //lv9999 23592
-                    //fatalis
-                    //lv1 23593
-                    //lv200 23594
-                    //lv1000 23595
-                    //lv9999 23596
-                    //crimson fatalis
-                    //lv1 23597
-                    //lv200 23598
-                    //lv1000 23599
-                    //lv9999 23601
-                    //upper shiten unknown 23605
-                    //lower shiten unknown 23604
-                    //upper shiten disufiroa 23603
-                    //lower shiten disu 23602
-                    //thirsty 55532
-                    //shifting 55920
-                    //starving 55916
-                    //golden 55917
-                    switch (QuestID())
-                    {
-                        default:
-                            return "G Rank ";
-                        case 23585:
-                        case 23589:
-                        case 23593:
-                        case 23597:
-                            return "Lv1 ";
-                        case 23586:
-                        case 23590:
-                        case 23594:
-                        case 23598:
-                            return "Lv200 ";
-                        case 23587:
-                        case 23591:
-                        case 23595:
-                        case 23599:
-                            return "Lv1000 ";
-                        case 23588:
-                        case 23592:
-                        case 23596:
-                        case 23601:
-                            return "Lv9999 ";
-                    }
-
-                case 54:
-                    switch (QuestID())
-                    {
-                        default:
-                            return "";
-                        case 23604:
-                        case 23602:
-                            return "Lower Shiten ";
-                    }
-                case 55:
-                    switch (QuestID())
-                    {
-                        default:
-                            return "";
-                        case 23603:
-                            return "Upper Shiten ";
-                    }
-                //10m upper shiten/musou true slay
-
-
-                case 56://twinhead rajang / voljang and rajang
-                case 57://twinhead mi ru / white and brown espi / unknown and zeru / rajang and dorag
-                    return "Twinhead ";
-                case 64:
-                    return "Zenith★1 ";
-                case 65:
-                    return "Zenith★2 ";
-                case 66:
-                    return "Zenith★3 ";
-                case 67:
-                    return "Zenith★4 ";
-                case 70://unknown
-                    return "Upper Shiten ";
-                case 71:
-                case 72:
-                case 73:
-                    return "Interception ";
-                default:
-                    return "";
-            }
+            return GetRankName(id);
         }
 
         /// <summary>
@@ -8273,10 +8143,39 @@ namespace MHFZ_Overlay.addresses
             return objValue1 + "";
         }
 
+        /// <summary>
+        /// Gets the name of the area.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetAreaName(int id)
+        {
+            if (id == 0)
+                return "Loading...";
+            Dictionary.MapAreaList.MapAreaID.TryGetValue(id, out string? areaname);
+            Dictionary.MapAreaList.MapAreaID.TryGetValue(RavienteAreaID(), out string? raviareaname);
+
+            switch (getRaviName())
+            {
+                default://or None
+                    return areaname + "";
+                case "Raviente":
+                case "Violent Raviente":
+                    return raviareaname + "";
+                case "Berserk Raviente Practice":
+                case "Berserk Raviente":
+                case "Extreme Raviente":
+                    if (QuestID() != 55796 || QuestID() != 55807 || QuestID() != 54751 || QuestID() != 54761 || QuestID() != 55596 || QuestID() != 55607)
+                        return areaname + "";
+                    else
+                        return raviareaname + "";
+            }
+        }
+
         #region program time
 
-        public string ProgramStart;
-        public string ProgramEnd;
+        public string ProgramStart = "";
+        public string ProgramEnd = "";
 
         public TimeSpan TotalTimeSpent { get; set; }
 
@@ -8292,19 +8191,12 @@ namespace MHFZ_Overlay.addresses
                 SQLitePCL.Batteries.Init();
                 connection.Open();
 
-                // Retrieve all rows from the Session table
-                string selectSql = "SELECT SessionDuration FROM Session";
+                // Calculate the total time spent using the SUM function
+                string selectSql = "SELECT SUM(SessionDuration) FROM Session";
                 using (SQLiteCommand selectCommand = new SQLiteCommand(selectSql, connection))
                 {
-                    using (SQLiteDataReader reader = selectCommand.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            // Add the session duration to the total time spent
-                            int sessionDuration = reader.GetInt32(0);
-                            totalTimeSpent = totalTimeSpent.Add(TimeSpan.FromSeconds(sessionDuration)); ;
-                        }
-                    }
+                    int totalDuration = Convert.ToInt32(selectCommand.ExecuteScalar());
+                    totalTimeSpent = TimeSpan.FromSeconds(totalDuration);
                 }
             }
 
