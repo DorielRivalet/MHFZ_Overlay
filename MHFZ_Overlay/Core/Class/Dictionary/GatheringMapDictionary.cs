@@ -12,7 +12,7 @@ namespace Dictionary
             // Loading
             {new List<int>{0 }, "https://i.imgur.com/aAcPJGb.png"},
             //Jungle areas
-            {new List<int>{1,2,3,4,5,18,19,22,23,26,110,11,112,113,114,115,116,117,118,119,120,212,213 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/jungle_map.png"},
+            {new List<int>{1,2,3,4,5,18,19,22,23,26,110,111,112,113,114,115,116,117,118,119,120,212,213 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/jungle_map.png"},
             //Snowy mountain areas
             {new List<int>{6,15,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,218,219 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/snowy_mountains_map.png"},
             //Desert areas
@@ -44,11 +44,11 @@ namespace Dictionary
             // road
             {new List<int>{459 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/road_map.png"},
             //Gorge areas
-            {new List<int>{288,289,290,2901,292,293,294,295,296,297,298,299,300,301 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/gorge_map.png"},
+            {new List<int>{288,289,290,291,292,293,294,295,296,297,298,299,300,301 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/gorge_map.png"},
             //Mezeporta
             {new List<int>{200,397 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/mezeporta_map.png"},
             //my houses
-            {new List<int>{173,175 }, "https://i.imgur.com/aAcPJGb.png"},
+            {new List<int>{173,174,175 }, "https://i.imgur.com/aAcPJGb.png"},
             //hairdresser
             {new List<int>{201 }, "https://i.imgur.com/aAcPJGb.png"},
             //guild halls

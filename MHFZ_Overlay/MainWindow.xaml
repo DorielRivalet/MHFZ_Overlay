@@ -19,7 +19,6 @@
     <Window.DataContext>
         <local:DataLoader />
     </Window.DataContext>
-
     <Canvas x:Name="MainGrid" Width="3840 " Height="2160" Background="Transparent" AllowDrop="True" Drop="MainGrid_Drop" DragOver="MainGrid_DragOver"  MouseMove="MainGrid_MouseMove">
         <Grid x:Name="ConfigGrid" Canvas.Top="0" Canvas.Left="0">
             <!--<Grid.ColumnDefinitions>

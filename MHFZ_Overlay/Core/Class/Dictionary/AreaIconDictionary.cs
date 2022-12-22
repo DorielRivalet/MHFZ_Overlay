@@ -12,7 +12,7 @@ namespace Dictionary
             // Loading
             {new List<int>{0 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/entrance.png"},
             //Jungle areas
-            {new List<int>{1,2,3,4,5,18,19,22,23,26,110,11,112,113,114,115,116,117,118,119,120,212,213 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/jungle.png"},
+            {new List<int>{1,2,3,4,5,18,19,22,23,26,110,111,112,113,114,115,116,117,118,119,120,212,213 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/jungle.png"},
             //Snowy mountain areas
             {new List<int>{6,15,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,218,219 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/snowy_mountains.png"},
             //Desert areas
@@ -44,11 +44,11 @@ namespace Dictionary
             // road
             {new List<int>{459 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/rengoku.png"},
             //Gorge areas
-            {new List<int>{288,289,290,2901,292,293,294,295,296,297,298,299,300,301 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/gorge.png"},
+            {new List<int>{288,289,290,291,292,293,294,295,296,297,298,299,300,301 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/gorge.png"},
             //Mezeporta
             {new List<int>{200,397 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png"},
             //my houses
-            {new List<int>{173,175 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/my_house.png"},
+            {new List<int>{173,174,175 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/my_house.png"},
             //hairdresser
             {new List<int>{201 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/tent.png"},
             //guild halls

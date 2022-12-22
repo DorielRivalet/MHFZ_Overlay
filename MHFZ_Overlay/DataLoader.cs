@@ -14,6 +14,9 @@ using System.Linq;
 using System.Windows;
 using System.Data.SQLite;
 using SharpCompress.Common;
+using MHFZ_Overlay.controls;
+using System.Data;
+using System.Data.Common;
 
 namespace MHFZ_Overlay
 {
@@ -214,21 +217,44 @@ namespace MHFZ_Overlay
             //            SQLitePCL.Batteries.Init();
         }
 
-        private void InsertIntoTable(IReadOnlyDictionary<int, string> dictionary, string tableName, string idField, string nameField, SQLiteConnection conn)
+        private void InsertIntoTable(IReadOnlyDictionary<int, string> dictionary, string tableName, string idColumn, string valueColumn, SQLiteConnection conn)
         {
-            // Loop through the entries in the dictionary
-            foreach (KeyValuePair<int, string> entry in dictionary)
+            // Start a transaction
+            using (var transaction = conn.BeginTransaction())
             {
-                int key = entry.Key;
-                string value = entry.Value;
+                // Create a command that will be used to insert multiple rows in a batch
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    // Create a parameter for the value to be inserted
+                    var valueParam = cmd.CreateParameter();
+                    valueParam.ParameterName = "@value";
 
-                string sql = $"INSERT OR IGNORE INTO {tableName} ({idField}, {nameField}) VALUES (@1, @2)";
-                SQLiteCommand cmd = new SQLiteCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@1", key);
-                cmd.Parameters.AddWithValue("@2", value);
-                cmd.ExecuteNonQuery();
+                    // Create a parameter for the ID to be inserted
+                    var idParam = cmd.CreateParameter();
+                    idParam.ParameterName = "@id";
+
+                    // Set the command text to insert a single row
+                    cmd.CommandText = $"INSERT INTO {tableName} ({idColumn}, {valueColumn}) VALUES (@id, @value)";
+                    cmd.Parameters.Add(idParam);
+                    cmd.Parameters.Add(valueParam);
+
+                    // Insert each row in the dictionary
+                    foreach (var pair in dictionary)
+                    {
+                        // Set the values of the parameters
+                        idParam.Value = pair.Key;
+                        valueParam.Value = pair.Value;
+
+                        // Execute the command to insert the row
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Commit the transaction
+                    transaction.Commit();
+                }
             }
         }
+
 
         private void CreateDatabaseTables(SQLiteConnection conn)
         {
@@ -255,7 +281,7 @@ namespace MHFZ_Overlay
             RankName TEXT NOT NULL, 
             ObjectiveName TEXT NOT NULL, 
             Date DATETIME NOT NULL,
-            FOREIGN KEY(QuestID) REFERENCES QuestName(QuestID),
+            FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
             FOREIGN KEY(AreaID) REFERENCES Area(AreaID),
             FOREIGN KEY(ObjectiveType) REFERENCES ObjectiveType(ObjectiveTypeID),
             FOREIGN KEY(RankName) REFERENCES RankName(RankNameID)
@@ -408,23 +434,49 @@ namespace MHFZ_Overlay
             cmd = new SQLiteCommand(sql, conn);
             cmd.ExecuteNonQuery();
 
-            List<int> AreaGroup = new List<int> { 0 };
-
-            foreach (KeyValuePair<List<int>, string> kvp in AreaIconDictionary.AreaIconID)
+            // Start a transaction
+            using (DbTransaction transaction = conn.BeginTransaction())
             {
-                List<int> areaIDs = kvp.Key;
-
-                foreach(int areaID in areaIDs)
+                // Prepare the SQL statement
+                sql = "INSERT OR IGNORE INTO Area (AreaID, AreaIcon, AreaName) VALUES (@AreaID, @AreaIcon, @AreaName)";
+                using (cmd = new SQLiteCommand(sql, conn))
                 {
-                    string areaIcon = kvp.Value;
-                    string areaName = model.GetAreaName(areaID);
+                    // Add the parameter placeholders
+                    cmd.Parameters.Add("@AreaID", DbType.Int32);
+                    cmd.Parameters.Add("@AreaIcon", DbType.String);
+                    cmd.Parameters.Add("@AreaName", DbType.String);
 
-                    sql = "INSERT OR IGNORE INTO Area (AreaID, AreaIcon, AreaName) VALUES (@AreaID, @AreaIcon, @AreaName)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@AreaID", areaID);
-                    cmd.Parameters.AddWithValue("@AreaIcon", areaIcon);
-                    cmd.Parameters.AddWithValue("@AreaName", areaName);
-                    cmd.ExecuteNonQuery();
+                    try
+                    {
+                        // Iterate through the list of areas
+                        foreach (KeyValuePair<List<int>, string> kvp in AreaIconDictionary.AreaIconID)
+                        {
+                            List<int> areaIDs = kvp.Key;
+
+                            foreach (int areaID in areaIDs)
+                            {
+                                string areaIcon = kvp.Value;
+                                string areaName = model.GetAreaName(areaID);
+
+                                // Set the parameter values
+                                cmd.Parameters["@AreaID"].Value = areaID;
+                                cmd.Parameters["@AreaIcon"].Value = areaIcon;
+                                cmd.Parameters["@AreaName"].Value = areaName;
+
+                                // Execute the SQL statement
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+
+                        // Commit the transaction
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        // Roll back the transaction
+                        transaction.Rollback();
+                    }
                 }
             }
 
@@ -812,47 +864,66 @@ namespace MHFZ_Overlay
 
             sql = @"
             CREATE TABLE IF NOT EXISTS Gear (
-              PieceID INTEGER PRIMARY KEY,
+              GearPieceID INTEGER PRIMARY KEY AUTOINCREMENT,
+              PieceID INTEGER NOT NULL,
               PieceName TEXT NOT NULL,
               PieceType TEXT NOT NULL
             )";
             cmd = new SQLiteCommand(sql, conn);
             cmd.ExecuteNonQuery();
 
-            // Get a list of dictionaries containing the armor piece IDs and names
-            List<Dictionary<int, string>> gearDictionaries = GetGearDictionariesList();
-
-            // Create a list of the gear piece types
-            List<string> gearTypes = new List<string>
+            // Start a transaction
+            using (var transaction = conn.BeginTransaction())
             {
-                "Head",
-                "Chest",
-                "Arms",
-                "Waist",
-                "Legs",
-                "Melee",
-                "Ranged",
-            };
-
-            // Iterate over the dictionaries and piece types
-            for (int i = 0; i < gearDictionaries.Count; i++)
-            {
-                Dictionary<int, string> dictionary = gearDictionaries[i];
-                string pieceType = gearTypes[i];
-
-                // Loop through the entries in the dictionary
-                foreach (KeyValuePair<int, string> entry in dictionary)
+                // Prepare the SQL statement
+                sql = "INSERT OR IGNORE INTO Gear (PieceID, PieceName, PieceType) VALUES (@PieceID, @PieceName, @PieceType)";
+                using (cmd = new SQLiteCommand(sql, conn))
                 {
-                    int pieceID = entry.Key;
-                    string pieceName = entry.Value;
+                    // Add the parameter placeholders
+                    cmd.Parameters.Add("@PieceID", DbType.Int32);
+                    cmd.Parameters.Add("@PieceName", DbType.String);
+                    cmd.Parameters.Add("@PieceType", DbType.String);
 
-                    sql = "INSERT OR IGNORE INTO Gear (PieceID, PieceName, PieceType) VALUES (@PieceID, @PieceName, @PieceType)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@PieceID", pieceID);
-                    cmd.Parameters.AddWithValue("@PieceName", pieceName);
-                    cmd.Parameters.AddWithValue("@PieceType", pieceType);
-                    cmd.ExecuteNonQuery();
+                    // Get a list of dictionaries containing the armor piece IDs and names
+                    List<Dictionary<int, string>> gearDictionaries = GetGearDictionariesList();
+
+                    // Create a list of the gear piece types
+                    List<string> gearTypes = new List<string>
+                    {
+                        "Head",
+                        "Chest",
+                        "Arms",
+                        "Waist",
+                        "Legs",
+                        "Melee",
+                        "Ranged",
+                    };
+
+                    // Iterate over the dictionaries and piece types
+                    for (int i = 0; i < gearDictionaries.Count; i++)
+                    {
+                        Dictionary<int, string> dictionary = gearDictionaries[i];
+                        string pieceType = gearTypes[i];
+
+                        // Loop through the entries in the dictionary
+                        foreach (KeyValuePair<int, string> entry in dictionary)
+                        {
+                            int pieceID = entry.Key;
+                            string pieceName = entry.Value;
+
+                            // Set the parameter values
+                            cmd.Parameters["@PieceID"].Value = pieceID;
+                            cmd.Parameters["@PieceName"].Value = pieceName;
+                            cmd.Parameters["@PieceType"].Value = pieceType;
+
+                            // Execute the statement
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
                 }
+
+                // Commit the transaction
+                transaction.Commit();
             }
         }
 
