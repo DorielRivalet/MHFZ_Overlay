@@ -234,7 +234,7 @@ namespace MHFZ_Overlay
                     idParam.ParameterName = "@id";
 
                     // Set the command text to insert a single row
-                    cmd.CommandText = $"INSERT INTO {tableName} ({idColumn}, {valueColumn}) VALUES (@id, @value)";
+                    cmd.CommandText = $"INSERT OR IGNORE INTO {tableName} ({idColumn}, {valueColumn}) VALUES (@id, @value)";
                     cmd.Parameters.Add(idParam);
                     cmd.Parameters.Add(valueParam);
 
@@ -255,7 +255,6 @@ namespace MHFZ_Overlay
             }
         }
 
-
         private void CreateDatabaseTables(SQLiteConnection conn)
         {
             // Create table to store program usage time
@@ -275,16 +274,16 @@ namespace MHFZ_Overlay
             FinalTimeValue INTEGER NOT NULL,
             FinalTimeDisplay TEXT NOT NULL, 
             ObjectiveImage TEXT NOT NULL,
-            ObjectiveType TEXT NOT NULL, 
+            ObjectiveTypeID INTEGER NOT NULL, 
             ObjectiveQuantity INTEGER NOT NULL, 
             StarGrade INTEGER NOT NULL, 
-            RankName TEXT NOT NULL, 
+            RankNameID INTEGER NOT NULL, 
             ObjectiveName TEXT NOT NULL, 
             Date DATETIME NOT NULL,
             FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
             FOREIGN KEY(AreaID) REFERENCES Area(AreaID),
-            FOREIGN KEY(ObjectiveType) REFERENCES ObjectiveType(ObjectiveTypeID),
-            FOREIGN KEY(RankName) REFERENCES RankName(RankNameID)
+            FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID),
+            FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
             )";
             cmd = new SQLiteCommand(sql, conn);
             cmd.ExecuteNonQuery();

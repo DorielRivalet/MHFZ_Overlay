@@ -8195,8 +8195,17 @@ namespace MHFZ_Overlay.addresses
                 string selectSql = "SELECT SUM(SessionDuration) FROM Session";
                 using (SQLiteCommand selectCommand = new SQLiteCommand(selectSql, connection))
                 {
-                    int totalDuration = Convert.ToInt32(selectCommand.ExecuteScalar());
-                    totalTimeSpent = TimeSpan.FromSeconds(totalDuration);
+                    object result = selectCommand.ExecuteScalar();
+                    if (result != DBNull.Value)
+                    {
+                        int totalDuration = Convert.ToInt32(result);
+                        totalTimeSpent = TimeSpan.FromSeconds(totalDuration);
+                    }
+                    else
+                    {
+                        // No rows in the Session table, so total time spent is zero
+                        totalTimeSpent = TimeSpan.Zero;
+                    }
                 }
             }
 
