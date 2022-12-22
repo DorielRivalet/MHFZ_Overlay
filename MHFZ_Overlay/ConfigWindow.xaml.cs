@@ -2926,8 +2926,11 @@ namespace MHFZ_Overlay
                 // Create a dictionary to store the user settings
                 Dictionary<string, string> settings = new Dictionary<string, string>();
 
+                // Get a list of the user settings properties sorted alphabetically by name
+                List<System.Configuration.SettingsProperty> sortedSettings = s.Properties.Cast<System.Configuration.SettingsProperty>().OrderBy(setting => setting.Name).ToList();
+
                 // Loop through the user settings properties and add them to the dictionary
-                foreach (System.Configuration.SettingsProperty setting in s.Properties)
+                foreach (System.Configuration.SettingsProperty setting in sortedSettings)
                 {
                     string settingName = setting.Name;
                     string settingValue = s[settingName].ToString();
