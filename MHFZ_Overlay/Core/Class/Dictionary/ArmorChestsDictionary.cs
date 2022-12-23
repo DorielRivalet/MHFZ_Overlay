@@ -11196,7 +11196,7 @@ namespace Dictionary
             {0x2BB0, "Sword Hero GS Suit"},
             {0x2BB1, "Sword Hero GP Suit"},
             {0x2BB2, "Sword Hero ZP Suit"},
-            {0x2BB3, "Twin Star  Suit"},
+            {0x2BB3, "Twin Star Suit"},
             {0x2BB4, "Twin Star F Suit"},
             {0x2BB5, "Twin Star FZ Suit"},
             {0x2BB6, "Twin Star HS Suit"},

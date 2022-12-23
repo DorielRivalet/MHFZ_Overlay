@@ -2845,7 +2845,7 @@ namespace MHFZ_Overlay
 
             var issuesForOctokit = await client.Issue.GetAllForRepository("DorielRivalet", "MHFZ_Overlay");
 
-            IssuesTextBlock.Text = issuesForOctokit.Count.ToString() + " Issue(s)";
+            IssuesTextBlock.Text = (issuesForOctokit.Count - 1).ToString() + " Issue(s)";
 
             var watchers = await client.Activity.Watching.GetAllWatchers("DorielRivalet", "MHFZ_Overlay");
             WatchersTextBlock.Text = watchers.Count.ToString() + " Watcher(s)";

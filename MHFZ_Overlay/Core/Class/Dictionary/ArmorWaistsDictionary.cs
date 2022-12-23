@@ -11458,7 +11458,7 @@ namespace Dictionary
             {0x2CB6, "Scream Lance GS Coil"},
             {0x2CB7, "Scream Lance GP Coil"},
             {0x2CB8, "Scream Lance ZP Coil"},
-            {0x2CB9, "Piercing Light  Coil"},
+            {0x2CB9, "Piercing Light Coil"},
             {0x2CBA, "Piercing Light F Coil"},
             {0x2CBB, "Piercing Light FZ Coil"},
             {0x2CBC, "Piercing Light HS Coil"},

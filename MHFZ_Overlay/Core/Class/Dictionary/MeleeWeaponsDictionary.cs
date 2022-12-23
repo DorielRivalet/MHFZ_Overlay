@@ -16662,7 +16662,7 @@ namespace Dictionary
             {0x4107, "Savage Skull Stormsmash"},
             {0x4108, "Glory Skull Stormsmash"},
             {0x411D, "Skull Frostsmash"},
-            {0x411E, "Fierce  Skull Frostsmash"},
+            {0x411E, "Fierce Skull Frostsmash"},
             {0x411F, "Savage Skull Frostsmash"},
             {0x4120, "Glory Skull Frostsmash"},
             {0x3FEA, "Divine Excalibur"},

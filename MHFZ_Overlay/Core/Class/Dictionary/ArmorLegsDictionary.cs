@@ -11252,7 +11252,7 @@ namespace Dictionary
             {0x2BE8, "Crush Lance GS Feet"},
             {0x2BE9, "Crush Lance GP Feet"},
             {0x2BEA, "Crush Lance ZP Feet"},
-            {0x2BEB, "Scream Lance  Feet"},
+            {0x2BEB, "Scream Lance Feet"},
             {0x2BEC, "Scream Lance F Feet"},
             {0x2BED, "Scream Lance FZ Feet"},
             {0x2BEE, "Scream Lance HS Feet"},

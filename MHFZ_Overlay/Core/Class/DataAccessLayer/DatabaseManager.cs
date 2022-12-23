@@ -15,6 +15,8 @@ using System.Windows.Documents;
 using System.Windows.Markup;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Transactions;
+using System.Collections;
+using Octokit;
 
 namespace MHFZ_Overlay
 {
@@ -1324,164 +1326,164 @@ namespace MHFZ_Overlay
 
                     // Create the PlayerInventory table
                     sql = @"CREATE TABLE IF NOT EXISTS PlayerInventory (
-                        PlayerInventoryID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        RunID INTEGER NOT NULL,
-                        Item1ID INTEGER NOT NULL, 
-                        Item1Quantity INTEGER NOT NULL,
-                        Item2ID INTEGER NOT NULL, 
-                        Item2Quantity INTEGER NOT NULL,
-                        Item3ID INTEGER NOT NULL, 
-                        Item3Quantity INTEGER NOT NULL,
-                        Item4ID INTEGER NOT NULL, 
-                        Item4Quantity INTEGER NOT NULL,
-                        Item5ID INTEGER NOT NULL, 
-                        Item5Quantity INTEGER NOT NULL,
-                        Item6ID INTEGER NOT NULL, 
-                        Item6Quantity INTEGER NOT NULL,
-                        Item7ID INTEGER NOT NULL, 
-                        Item7Quantity INTEGER NOT NULL,
-                        Item8ID INTEGER NOT NULL, 
-                        Item8Quantity INTEGER NOT NULL,
-                        Item9ID INTEGER NOT NULL, 
-                        Item9Quantity INTEGER NOT NULL,
-                        Item10ID INTEGER NOT NULL, 
-                        Item10Quantity INTEGER NOT NULL,
-                        Item11ID INTEGER NOT NULL, 
-                        Item11Quantity INTEGER NOT NULL,
-                        Item12ID INTEGER NOT NULL, 
-                        Item12Quantity INTEGER NOT NULL,
-                        Item13ID INTEGER NOT NULL, 
-                        Item13Quantity INTEGER NOT NULL,
-                        Item14ID INTEGER NOT NULL, 
-                        Item14Quantity INTEGER NOT NULL,
-                        Item15ID INTEGER NOT NULL, 
-                        Item15Quantity INTEGER NOT NULL,
-                        Item16ID INTEGER NOT NULL, 
-                        Item16Quantity INTEGER NOT NULL,
-                        Item17ID INTEGER NOT NULL, 
-                        Item17Quantity INTEGER NOT NULL,
-                        Item18ID INTEGER NOT NULL, 
-                        Item18Quantity INTEGER NOT NULL,
-                        Item19ID INTEGER NOT NULL, 
-                        Item19Quantity INTEGER NOT NULL,
-                        Item20ID INTEGER NOT NULL, 
-                        Item20Quantity INTEGER NOT NULL,
-                        FOREIGN KEY(RunID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Item1ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item2ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item3ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item4ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item5ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item6ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item7ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item8ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item9ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item10ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item11ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item12ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item13ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item14ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item15ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item16ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item17ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item18ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item19ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item20ID) REFERENCES Item(ItemID)
-                        )";
+                    PlayerInventoryID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL,
+                    Item1ID INTEGER NOT NULL, 
+                    Item1Quantity INTEGER NOT NULL,
+                    Item2ID INTEGER NOT NULL, 
+                    Item2Quantity INTEGER NOT NULL,
+                    Item3ID INTEGER NOT NULL, 
+                    Item3Quantity INTEGER NOT NULL,
+                    Item4ID INTEGER NOT NULL, 
+                    Item4Quantity INTEGER NOT NULL,
+                    Item5ID INTEGER NOT NULL, 
+                    Item5Quantity INTEGER NOT NULL,
+                    Item6ID INTEGER NOT NULL, 
+                    Item6Quantity INTEGER NOT NULL,
+                    Item7ID INTEGER NOT NULL, 
+                    Item7Quantity INTEGER NOT NULL,
+                    Item8ID INTEGER NOT NULL, 
+                    Item8Quantity INTEGER NOT NULL,
+                    Item9ID INTEGER NOT NULL, 
+                    Item9Quantity INTEGER NOT NULL,
+                    Item10ID INTEGER NOT NULL, 
+                    Item10Quantity INTEGER NOT NULL,
+                    Item11ID INTEGER NOT NULL, 
+                    Item11Quantity INTEGER NOT NULL,
+                    Item12ID INTEGER NOT NULL, 
+                    Item12Quantity INTEGER NOT NULL,
+                    Item13ID INTEGER NOT NULL, 
+                    Item13Quantity INTEGER NOT NULL,
+                    Item14ID INTEGER NOT NULL, 
+                    Item14Quantity INTEGER NOT NULL,
+                    Item15ID INTEGER NOT NULL, 
+                    Item15Quantity INTEGER NOT NULL,
+                    Item16ID INTEGER NOT NULL, 
+                    Item16Quantity INTEGER NOT NULL,
+                    Item17ID INTEGER NOT NULL, 
+                    Item17Quantity INTEGER NOT NULL,
+                    Item18ID INTEGER NOT NULL, 
+                    Item18Quantity INTEGER NOT NULL,
+                    Item19ID INTEGER NOT NULL, 
+                    Item19Quantity INTEGER NOT NULL,
+                    Item20ID INTEGER NOT NULL, 
+                    Item20Quantity INTEGER NOT NULL,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID),
+                    FOREIGN KEY(Item1ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item2ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item3ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item4ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item5ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item6ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item7ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item8ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item9ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item10ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item11ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item12ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item13ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item14ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item15ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item16ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item17ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item18ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item19ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item20ID) REFERENCES Item(ItemID)
+                    )";
                     cmd = new SQLiteCommand(sql, conn);
                     cmd.ExecuteNonQuery();
 
                     sql = @"CREATE TABLE IF NOT EXISTS AmmoPouch (
-                        AmmoPouchID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        RunID INTEGER NOT NULL,
-                        Item1ID INTEGER NOT NULL, 
-                        Item1Quantity INTEGER NOT NULL,
-                        Item2ID INTEGER NOT NULL, 
-                        Item2Quantity INTEGER NOT NULL,
-                        Item3ID INTEGER NOT NULL, 
-                        Item3Quantity INTEGER NOT NULL,
-                        Item4ID INTEGER NOT NULL, 
-                        Item4Quantity INTEGER NOT NULL,
-                        Item5ID INTEGER NOT NULL, 
-                        Item5Quantity INTEGER NOT NULL,
-                        Item6ID INTEGER NOT NULL, 
-                        Item6Quantity INTEGER NOT NULL,
-                        Item7ID INTEGER NOT NULL, 
-                        Item7Quantity INTEGER NOT NULL,
-                        Item8ID INTEGER NOT NULL, 
-                        Item8Quantity INTEGER NOT NULL,
-                        Item9ID INTEGER NOT NULL, 
-                        Item9Quantity INTEGER NOT NULL,
-                        Item10ID INTEGER NOT NULL, 
-                        Item10Quantity INTEGER NOT NULL,
-                        FOREIGN KEY(RunID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Item1ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item2ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item3ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item4ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item5ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item6ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item7ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item8ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item9ID) REFERENCES Item(ItemID),
-                        FOREIGN KEY(Item10ID) REFERENCES Item(ItemID)
-                        )";
+                    AmmoPouchID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL,
+                    Item1ID INTEGER NOT NULL, 
+                    Item1Quantity INTEGER NOT NULL,
+                    Item2ID INTEGER NOT NULL, 
+                    Item2Quantity INTEGER NOT NULL,
+                    Item3ID INTEGER NOT NULL, 
+                    Item3Quantity INTEGER NOT NULL,
+                    Item4ID INTEGER NOT NULL, 
+                    Item4Quantity INTEGER NOT NULL,
+                    Item5ID INTEGER NOT NULL, 
+                    Item5Quantity INTEGER NOT NULL,
+                    Item6ID INTEGER NOT NULL, 
+                    Item6Quantity INTEGER NOT NULL,
+                    Item7ID INTEGER NOT NULL, 
+                    Item7Quantity INTEGER NOT NULL,
+                    Item8ID INTEGER NOT NULL, 
+                    Item8Quantity INTEGER NOT NULL,
+                    Item9ID INTEGER NOT NULL, 
+                    Item9Quantity INTEGER NOT NULL,
+                    Item10ID INTEGER NOT NULL, 
+                    Item10Quantity INTEGER NOT NULL,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID),
+                    FOREIGN KEY(Item1ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item2ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item3ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item4ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item5ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item6ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item7ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item8ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item9ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item10ID) REFERENCES Item(ItemID)
+                    )";
                     cmd = new SQLiteCommand(sql, conn);
                     cmd.ExecuteNonQuery();
 
                     sql = @"CREATE TABLE IF NOT EXISTS RoadDureSkills (
-                        RoadDureSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        RunID INTEGER NOT NULL,
-                        RoadDureSkill1ID INTEGER NOT NULL, 
-                        RoadDureSkill1Level INTEGER NOT NULL,
-                        RoadDureSkill2ID INTEGER NOT NULL, 
-                        RoadDureSkill2Level INTEGER NOT NULL,
-                        RoadDureSkill3ID INTEGER NOT NULL, 
-                        RoadDureSkill3Level INTEGER NOT NULL,
-                        RoadDureSkill4ID INTEGER NOT NULL, 
-                        RoadDureSkill4Level INTEGER NOT NULL,
-                        RoadDureSkill5ID INTEGER NOT NULL, 
-                        RoadDureSkill5Level INTEGER NOT NULL,
-                        RoadDureSkill6ID INTEGER NOT NULL, 
-                        RoadDureSkill6Level INTEGER NOT NULL,
-                        RoadDureSkill7ID INTEGER NOT NULL, 
-                        RoadDureSkill7Level INTEGER NOT NULL,
-                        RoadDureSkill8ID INTEGER NOT NULL, 
-                        RoadDureSkill8Level INTEGER NOT NULL,
-                        RoadDureSkill9ID INTEGER NOT NULL, 
-                        RoadDureSkill9Level INTEGER NOT NULL,
-                        RoadDureSkill10ID INTEGER NOT NULL, 
-                        RoadDureSkill10Level INTEGER NOT NULL,
-                        RoadDureSkill11ID INTEGER NOT NULL, 
-                        RoadDureSkill11Level INTEGER NOT NULL,
-                        RoadDureSkill12ID INTEGER NOT NULL, 
-                        RoadDureSkill12Level INTEGER NOT NULL,
-                        RoadDureSkill13ID INTEGER NOT NULL, 
-                        RoadDureSkill13Level INTEGER NOT NULL,
-                        RoadDureSkill14ID INTEGER NOT NULL, 
-                        RoadDureSkill14Level INTEGER NOT NULL,
-                        RoadDureSkill15ID INTEGER NOT NULL, 
-                        RoadDureSkill15Level INTEGER NOT NULL,
-                        RoadDureSkill16ID INTEGER NOT NULL, 
-                        RoadDureSkill16Level INTEGER NOT NULL,
-                        FOREIGN KEY(RunID) REFERENCES Quests(RunID)
-                        FOREIGN KEY(RoadDureSkill1ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill2ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill3ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill4ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill5ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill6ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill7ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill8ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill9ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill10ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill11ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill12ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill13ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill14ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill15ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
-                        FOREIGN KEY(RoadDureSkill16ID) REFERENCES AllRoadDureSkills(RoadDureSkillID)
-                        )";
+                    RoadDureSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL,
+                    RoadDureSkill1ID INTEGER NOT NULL, 
+                    RoadDureSkill1Level INTEGER NOT NULL,
+                    RoadDureSkill2ID INTEGER NOT NULL, 
+                    RoadDureSkill2Level INTEGER NOT NULL,
+                    RoadDureSkill3ID INTEGER NOT NULL, 
+                    RoadDureSkill3Level INTEGER NOT NULL,
+                    RoadDureSkill4ID INTEGER NOT NULL, 
+                    RoadDureSkill4Level INTEGER NOT NULL,
+                    RoadDureSkill5ID INTEGER NOT NULL, 
+                    RoadDureSkill5Level INTEGER NOT NULL,
+                    RoadDureSkill6ID INTEGER NOT NULL, 
+                    RoadDureSkill6Level INTEGER NOT NULL,
+                    RoadDureSkill7ID INTEGER NOT NULL, 
+                    RoadDureSkill7Level INTEGER NOT NULL,
+                    RoadDureSkill8ID INTEGER NOT NULL, 
+                    RoadDureSkill8Level INTEGER NOT NULL,
+                    RoadDureSkill9ID INTEGER NOT NULL, 
+                    RoadDureSkill9Level INTEGER NOT NULL,
+                    RoadDureSkill10ID INTEGER NOT NULL, 
+                    RoadDureSkill10Level INTEGER NOT NULL,
+                    RoadDureSkill11ID INTEGER NOT NULL, 
+                    RoadDureSkill11Level INTEGER NOT NULL,
+                    RoadDureSkill12ID INTEGER NOT NULL, 
+                    RoadDureSkill12Level INTEGER NOT NULL,
+                    RoadDureSkill13ID INTEGER NOT NULL, 
+                    RoadDureSkill13Level INTEGER NOT NULL,
+                    RoadDureSkill14ID INTEGER NOT NULL, 
+                    RoadDureSkill14Level INTEGER NOT NULL,
+                    RoadDureSkill15ID INTEGER NOT NULL, 
+                    RoadDureSkill15Level INTEGER NOT NULL,
+                    RoadDureSkill16ID INTEGER NOT NULL, 
+                    RoadDureSkill16Level INTEGER NOT NULL,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                    FOREIGN KEY(RoadDureSkill1ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill2ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill3ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill4ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill5ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill6ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill7ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill8ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill9ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill10ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill11ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill12ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill13ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill14ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill15ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
+                    FOREIGN KEY(RoadDureSkill16ID) REFERENCES AllRoadDureSkills(RoadDureSkillID)
+                    )";
                     cmd = new SQLiteCommand(sql, conn);
                     cmd.ExecuteNonQuery();
 
@@ -1494,13 +1496,13 @@ namespace MHFZ_Overlay
                     InsertIntoTable(Dictionary.RoadDureSkills.RoadDureSkillIDs, "AllRoadDureSkills", "RoadDureSkillID", "RoadDureSkillName", conn);
 
                     sql = @"
-                        CREATE TABLE IF NOT EXISTS Gear (
-                          GearPieceID INTEGER PRIMARY KEY AUTOINCREMENT,
-                          PieceID INTEGER NOT NULL,
-                          PieceName TEXT NOT NULL,
-                          PieceType TEXT NOT NULL,
-                          UNIQUE (PieceID, PieceName, PieceType)
-                        )";
+                    CREATE TABLE IF NOT EXISTS Gear (
+                        PieceID INTEGER NOT NULL,
+                        PieceName TEXT NOT NULL,
+                        PieceType TEXT NOT NULL,
+                        PRIMARY KEY (PieceID, PieceType),
+                        UNIQUE (PieceID, PieceName, PieceType)
+                    )";
                     using (cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.ExecuteNonQuery();
@@ -1521,8 +1523,8 @@ namespace MHFZ_Overlay
                             "Ranged",
                         };
 
-                    // Create a command that will be used to insert multiple rows in a batch
-                    using (cmd = new SQLiteCommand(sql, conn))
+                    // Create a command to execute the insert or replace statement
+                    using (SQLiteCommand updateCmd = new SQLiteCommand(conn))
                     {
                         // Create the parameter objects
                         SQLiteParameter pieceIdParam = new SQLiteParameter("@PieceID", DbType.Int32);
@@ -1530,12 +1532,9 @@ namespace MHFZ_Overlay
                         SQLiteParameter pieceTypeParam = new SQLiteParameter("@PieceType", DbType.String);
 
                         // Add the parameters to the command
-                        cmd.Parameters.Add(pieceIdParam);
-                        cmd.Parameters.Add(pieceNameParam);
-                        cmd.Parameters.Add(pieceTypeParam);
-
-                        // Set the command text
-                        cmd.CommandText = "INSERT OR REPLACE INTO Gear (PieceID, PieceName, PieceType) VALUES (@PieceID, @PieceName, @PieceType)";
+                        updateCmd.Parameters.Add(pieceIdParam);
+                        updateCmd.Parameters.Add(pieceNameParam);
+                        updateCmd.Parameters.Add(pieceTypeParam);
 
                         // Iterate over the dictionaries and piece types
                         for (int i = 0; i < gearDictionaries.Count; i++)
@@ -1554,8 +1553,13 @@ namespace MHFZ_Overlay
                                 pieceNameParam.Value = pieceName;
                                 pieceTypeParam.Value = pieceType;
 
+                                // Set the command text for the insert or replace statement
+                                updateCmd.CommandText = @"
+                                INSERT OR REPLACE INTO Gear (PieceID, PieceName, PieceType)
+                                VALUES (@PieceID, @PieceName, @PieceType);
+                                ";
                                 // Execute the statement
-                                cmd.ExecuteNonQuery();
+                                updateCmd.ExecuteNonQuery();
                             }
                         }
                     }
