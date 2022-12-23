@@ -919,6 +919,8 @@ namespace MHFZ_Overlay
 
         #endregion
 
+        private readonly List<string> _validTableNames = new List<string> {"RankName", "ObjectiveType", "QuestName", "WeaponType", "Item", "Area", "AllZenithSkills", "AllArmorSkills", "AllCaravanSkills", "AllStyleRankSkills", "AllRoadDureSkills" };
+
         private void InsertIntoTable(IReadOnlyDictionary<int, string> dictionary, string tableName, string idColumn, string valueColumn, SQLiteConnection conn)
         {
             // Start a transaction
@@ -926,6 +928,31 @@ namespace MHFZ_Overlay
             {
                 try
                 {
+                    // Validate the input table name
+                    if (!_validTableNames.Contains(tableName))
+                    {
+                        throw new ArgumentException("Invalid table name");
+                    }
+
+                    // Validate the input parameters
+                    if (dictionary == null || dictionary.Count == 0)
+                    {
+                        throw new ArgumentException("Invalid dictionary");
+                    }
+
+                    if (string.IsNullOrEmpty(tableName) || string.IsNullOrEmpty(idColumn) || string.IsNullOrEmpty(valueColumn))
+                    {
+                        throw new ArgumentException("Invalid table name, id column, or value column");
+                    }
+                    if (conn == null)
+                    {
+                        throw new ArgumentException("Invalid connection");
+                    }
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        throw new InvalidOperationException("Connection is not open");
+                    }
+
                     // Create a command that will be used to insert multiple rows in a batch
                     using (var cmd = new SQLiteCommand(conn))
                     {
@@ -1082,7 +1109,7 @@ namespace MHFZ_Overlay
                     cmd.ExecuteNonQuery();
 
                     // Prepare the SQL statement
-                    sql = "INSERT OR IGNORE INTO Area (AreaID, AreaIcon, AreaName) VALUES (@AreaID, @AreaIcon, @AreaName)";
+                    sql = "INSERT OR REPLACE INTO Area (AreaID, AreaIcon, AreaName) VALUES (@AreaID, @AreaIcon, @AreaName)";
                     using (cmd = new SQLiteCommand(sql, conn))
                     {
                         // Add the parameter placeholders
