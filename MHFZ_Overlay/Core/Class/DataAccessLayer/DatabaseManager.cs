@@ -978,12 +978,12 @@ namespace MHFZ_Overlay
 
         private void CreateDatabaseTables(SQLiteConnection conn, DataLoader dataLoader)
         {
-            var model = dataLoader.model;
-
             using (SQLiteTransaction transaction = conn.BeginTransaction())
             {
                 try
                 {
+                    var model = dataLoader.model;
+
                     // Create table to store program usage time
                     string sql = @"CREATE TABLE IF NOT EXISTS Session (
                     SessionID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1079,22 +1079,9 @@ namespace MHFZ_Overlay
                     cmd = new SQLiteCommand(sql, conn);
                     cmd.ExecuteNonQuery();
 
-                    // Commit the transaction
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    HandleError(transaction, ex);
-                }
-            }
-
-            // Start a transaction
-            using (SQLiteTransaction transaction = conn.BeginTransaction())
-            {
-                try { 
                     // Prepare the SQL statement
-                    string sql = "INSERT OR IGNORE INTO Area (AreaID, AreaIcon, AreaName) VALUES (@AreaID, @AreaIcon, @AreaName)";
-                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    sql = "INSERT OR IGNORE INTO Area (AreaID, AreaIcon, AreaName) VALUES (@AreaID, @AreaIcon, @AreaName)";
+                    using (cmd = new SQLiteCommand(sql, conn))
                     {
                         // Add the parameter placeholders
                         cmd.Parameters.Add("@AreaID", DbType.Int32);
@@ -1120,24 +1107,10 @@ namespace MHFZ_Overlay
                                 cmd.ExecuteNonQuery();
                             }
                         }
-
-                        // Commit the transaction
-                        transaction.Commit();
                     }
-                }
-                catch (Exception ex)
-                {
-                    HandleError(transaction, ex);
-                }
-            }
 
-            // Start a transaction
-            using (SQLiteTransaction transaction = conn.BeginTransaction())
-            {
-                try
-                {
                     // Create the PlayerGear table
-                    string sql = @"CREATE TABLE IF NOT EXISTS PlayerGear (
+                    sql = @"CREATE TABLE IF NOT EXISTS PlayerGear (
                     RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
                     PlayerID INTEGER NOT NULL,
                     GearName TEXT NOT NULL,
@@ -1202,7 +1175,7 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(AmmoPouchID) REFERENCES AmmoPouch(AmmoPouchID),
                     FOREIGN KEY(RoadDureSkillsID) REFERENCES RoadDureSkills(RoadDureSkillsID)
                     )";
-                    SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+                    cmd = new SQLiteCommand(sql, conn);
                     cmd.ExecuteNonQuery();
 
                     sql = @"CREATE TABLE IF NOT EXISTS ZenithSkills(
@@ -1530,23 +1503,9 @@ namespace MHFZ_Overlay
                     cmd = new SQLiteCommand(sql, conn);
                     cmd.ExecuteNonQuery();
 
-                    // Commit the transaction
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    HandleError(transaction, ex);
-                }
-            }
-
-            // Start a transaction
-            using (SQLiteTransaction transaction = conn.BeginTransaction())
-            {
-                try
-                {
                     // Prepare the SQL statement
-                    string sql = "INSERT OR IGNORE INTO Gear (PieceID, PieceName, PieceType) VALUES (@PieceID, @PieceName, @PieceType)";
-                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    sql = "INSERT OR IGNORE INTO Gear (PieceID, PieceName, PieceType) VALUES (@PieceID, @PieceName, @PieceType)";
+                    using (cmd = new SQLiteCommand(sql, conn))
                     {
                         // Add the parameter placeholders
                         cmd.Parameters.Add("@PieceID", DbType.Int32);
@@ -1590,6 +1549,7 @@ namespace MHFZ_Overlay
                             }
                         }
                     }
+
                     // Commit the transaction
                     transaction.Commit();
                 }
