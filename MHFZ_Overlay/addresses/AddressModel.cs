@@ -7878,8 +7878,9 @@ namespace MHFZ_Overlay.addresses
 
         public static double GetPlayerAttackValue()
         {
-            var dl = new DataLoader();
-            return dl.model.WeaponRaw();
+            //var dl = new DataLoader();
+            //return dl.model.WeaponRaw();
+            return 0;
         }
 
         #region graphs
@@ -7955,6 +7956,41 @@ namespace MHFZ_Overlay.addresses
         {
             if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             return GetRankName(id);
+        }
+
+        /// <summary>
+        /// Gets the monster icon.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string getMonsterIcon(int id)
+        {
+            //quest ids:
+            //mp road: 23527
+            //solo road: 23628
+            //1st district dure: 21731
+            //2nd district dure: 21746
+            //1st district dure sky corridor: 21749
+            //2nd district dure sky corridor: 21750
+            //arrogant dure repel: 23648
+            //arrogant dure slay: 23649
+            //urgent tower: 21751
+            //4th district dure: 21748
+            //3rd district dure: 21747
+            //3rd district dure 2: 21734
+            //UNUSED sky corridor: 21730
+            //sky corridor prologue: 21729
+            if (roadOverride() == false)
+                id = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
+            else if (CaravanOverride())
+                id = CaravanMonster1ID();
+            //Duremudira Arena
+            if (AreaID() == 398 && (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750))
+                id = 132;//duremudira
+            else if (AreaID() == 398 && (QuestID() == 23648 || QuestID() == 23649))
+                id = 167;//arrogant duremudira
+
+            return DetermineMonsterImage(id);
         }
 
         /// <summary>
@@ -8172,47 +8208,70 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        #region program time
+        // TODO: change when loading into quest
+        public int PouchItem1IDAtQuestStart = 0;
+        public int PouchItem2IDAtQuestStart = 0;
+        public int PouchItem3IDAtQuestStart = 0;
+        public int PouchItem4IDAtQuestStart = 0;
+        public int PouchItem5IDAtQuestStart = 0;
+        public int PouchItem6IDAtQuestStart = 0;
+        public int PouchItem7IDAtQuestStart = 0;
+        public int PouchItem8IDAtQuestStart = 0;
+        public int PouchItem9IDAtQuestStart = 0;
+        public int PouchItem10IDAtQuestStart = 0;
+        public int PouchItem11IDAtQuestStart = 0;
+        public int PouchItem12IDAtQuestStart = 0;
+        public int PouchItem13IDAtQuestStart = 0;
+        public int PouchItem14IDAtQuestStart = 0;
+        public int PouchItem15IDAtQuestStart = 0;
+        public int PouchItem16IDAtQuestStart = 0;
+        public int PouchItem17IDAtQuestStart = 0;
+        public int PouchItem18IDAtQuestStart = 0;
+        public int PouchItem19IDAtQuestStart = 0;
+        public int PouchItem20IDAtQuestStart = 0;
+        public int PouchItem1QuantityAtQuestStart = 0;
+        public int PouchItem2QuantityAtQuestStart = 0;
+        public int PouchItem3QuantityAtQuestStart = 0;
+        public int PouchItem4QuantityAtQuestStart = 0;
+        public int PouchItem5QuantityAtQuestStart = 0;
+        public int PouchItem6QuantityAtQuestStart = 0;
+        public int PouchItem7QuantityAtQuestStart = 0;
+        public int PouchItem8QuantityAtQuestStart = 0;
+        public int PouchItem9QuantityAtQuestStart = 0;
+        public int PouchItem10QuantityAtQuestStart = 0;
+        public int PouchItem11QuantityAtQuestStart = 0;
+        public int PouchItem12QuantityAtQuestStart = 0;
+        public int PouchItem13QuantityAtQuestStart = 0;
+        public int PouchItem14QuantityAtQuestStart = 0;
+        public int PouchItem15QuantityAtQuestStart = 0;
+        public int PouchItem16QuantityAtQuestStart = 0;
+        public int PouchItem17QuantityAtQuestStart = 0;
+        public int PouchItem18QuantityAtQuestStart = 0;
+        public int PouchItem19QuantityAtQuestStart = 0;
+        public int PouchItem20QuantityAtQuestStart = 0;
 
-        public string ProgramStart = "";
-        public string ProgramEnd = "";
+        public int AmmoPouchItem1IDAtQuestStart = 0;
+        public int AmmoPouchItem2IDAtQuestStart = 0;
+        public int AmmoPouchItem3IDAtQuestStart = 0;
+        public int AmmoPouchItem4IDAtQuestStart = 0;
+        public int AmmoPouchItem5IDAtQuestStart = 0;
+        public int AmmoPouchItem6IDAtQuestStart = 0;
+        public int AmmoPouchItem7IDAtQuestStart = 0;
+        public int AmmoPouchItem8IDAtQuestStart = 0;
+        public int AmmoPouchItem9IDAtQuestStart = 0;
+        public int AmmoPouchItem10IDAtQuestStart = 0;
+        public int AmmoPouchItem1QuantityAtQuestStart = 0;
+        public int AmmoPouchItem2QuantityAtQuestStart = 0;
+        public int AmmoPouchItem3QuantityAtQuestStart = 0;
+        public int AmmoPouchItem4QuantityAtQuestStart = 0;
+        public int AmmoPouchItem5QuantityAtQuestStart = 0;
+        public int AmmoPouchItem6QuantityAtQuestStart = 0;
+        public int AmmoPouchItem7QuantityAtQuestStart = 0;
+        public int AmmoPouchItem8QuantityAtQuestStart = 0;
+        public int AmmoPouchItem9QuantityAtQuestStart = 0;
+        public int AmmoPouchItem10QuantityAtQuestStart = 0;
 
         public TimeSpan TotalTimeSpent { get; set; }
-
-        // Calculate the total time spent using the program
-        public TimeSpan CalculateTotalTimeSpent()
-        {
-            TimeSpan totalTimeSpent = new TimeSpan();
-            // Connect to the database
-            string dbFilePath = DataLoader.dbFilePath;
-            string connectionString = "Data Source=" + dbFilePath + "";
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-            {
-                SQLitePCL.Batteries.Init();
-                connection.Open();
-
-                // Calculate the total time spent using the SUM function
-                string selectSql = "SELECT SUM(SessionDuration) FROM Session";
-                using (SQLiteCommand selectCommand = new SQLiteCommand(selectSql, connection))
-                {
-                    object result = selectCommand.ExecuteScalar();
-                    if (result != DBNull.Value)
-                    {
-                        int totalDuration = Convert.ToInt32(result);
-                        totalTimeSpent = TimeSpan.FromSeconds(totalDuration);
-                    }
-                    else
-                    {
-                        // No rows in the Session table, so total time spent is zero
-                        totalTimeSpent = TimeSpan.Zero;
-                    }
-                }
-            }
-
-            return totalTimeSpent;
-        }
-
-        #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

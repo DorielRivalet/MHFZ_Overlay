@@ -318,6 +318,10 @@ namespace MHFZ_Overlay
 
         #endregion
 
+        public DateTime ProgramStart;
+        public DateTime ProgramEnd;
+
+
         #region main
 
         //Main entry point?        
@@ -376,10 +380,10 @@ namespace MHFZ_Overlay
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
 
             // When the program starts
-            DataLoader.model.ProgramStart = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            ProgramStart = DateTime.Now;
             
             // Calculate the total time spent and update the TotalTimeSpent property
-            DataLoader.model.TotalTimeSpent = DataLoader.model.CalculateTotalTimeSpent();
+            DataLoader.model.TotalTimeSpent = databaseManager.CalculateTotalTimeSpent();
         }
 
         GitHubClient ghClient = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
@@ -419,6 +423,8 @@ namespace MHFZ_Overlay
 
         private bool closedGame;
         private bool isInLauncherBool;
+
+        DatabaseManager databaseManager = DatabaseManager.GetInstance();
 
         public void CheckGameState()
         {
@@ -464,7 +470,7 @@ namespace MHFZ_Overlay
                         System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
                         //https://stackoverflow.com/a/9050477/18859245
                         Cleanup();
-                        StoreSessionTime();
+                        databaseManager.StoreSessionTime(this);
                         Environment.Exit(0);
                     }
                     else
@@ -1273,41 +1279,6 @@ namespace MHFZ_Overlay
         }
 
         /// <summary>
-        /// Gets the monster icon.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        public string getMonsterIcon(int id)
-        {
-            //quest ids:
-            //mp road: 23527
-            //solo road: 23628
-            //1st district dure: 21731
-            //2nd district dure: 21746
-            //1st district dure sky corridor: 21749
-            //2nd district dure sky corridor: 21750
-            //arrogant dure repel: 23648
-            //arrogant dure slay: 23649
-            //urgent tower: 21751
-            //4th district dure: 21748
-            //3rd district dure: 21747
-            //3rd district dure 2: 21734
-            //UNUSED sky corridor: 21730
-            //sky corridor prologue: 21729
-            if (DataLoader.model.roadOverride() == false)
-                id = DataLoader.model.RoadSelectedMonster() == 0 ? DataLoader.model.LargeMonster1ID() : DataLoader.model.LargeMonster2ID();
-            else if (DataLoader.model.CaravanOverride())
-                id = DataLoader.model.CaravanMonster1ID();
-            //Duremudira Arena
-            if (DataLoader.model.AreaID() == 398 && (DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750))
-                id = 132;//duremudira
-            else if (DataLoader.model.AreaID() == 398 && (DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649))
-                id = 167;//arrogant duremudira
-
-            return DataLoader.model.DetermineMonsterImage(id);
-        }
-
-        /// <summary>
         /// Shows the current hp percentage.
         /// </summary>
         /// <returns></returns>
@@ -1770,7 +1741,7 @@ namespace MHFZ_Overlay
                 //Duremudira Arena
                 else if (DataLoader.model.AreaID() == 398)
                 {
-                    presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
+                    presenceTemplate.Assets.LargeImageKey = DataLoader.model.getMonsterIcon(DataLoader.model.LargeMonster1ID());
                     presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
                 }
                 //Hunter's Road Base Camp
@@ -1782,12 +1753,12 @@ namespace MHFZ_Overlay
                 //Raviente
                 else if (DataLoader.model.AreaID() == 309 || (DataLoader.model.AreaID() >= 311 && DataLoader.model.AreaID() <= 321) || (DataLoader.model.AreaID() >= 417 && DataLoader.model.AreaID() <= 422) || DataLoader.model.AreaID() == 437 || (DataLoader.model.AreaID() >= 440 && DataLoader.model.AreaID() <= 444))
                 {
-                    presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
+                    presenceTemplate.Assets.LargeImageKey = DataLoader.model.getMonsterIcon(DataLoader.model.LargeMonster1ID());
                     presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5} | Points: {6} | {7}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), GetMaxFaints(), DataLoader.model.GreatSlayingPoints(), GetRavienteEvent(DataLoader.model.RavienteTriggeredEvent()));
                 }
                 else
                 {
-                    presenceTemplate.Assets.LargeImageKey = getMonsterIcon(DataLoader.model.LargeMonster1ID());
+                    presenceTemplate.Assets.LargeImageKey = DataLoader.model.getMonsterIcon(DataLoader.model.LargeMonster1ID());
                     presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), GetMaxFaints());
                 }
             }
@@ -2220,7 +2191,7 @@ namespace MHFZ_Overlay
         private void ReloadButton_Click(object sender, RoutedEventArgs e)
         {
             Cleanup();
-            StoreSessionTime();
+            databaseManager.StoreSessionTime(this);
             Environment.Exit(0);
             System.Windows.Forms.Application.Restart();
         }
@@ -2238,7 +2209,7 @@ namespace MHFZ_Overlay
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Cleanup();
-            StoreSessionTime();
+            databaseManager.StoreSessionTime(this);
             Environment.Exit(0);
         }
 
@@ -2246,7 +2217,7 @@ namespace MHFZ_Overlay
         private void ReloadButton_Key()
         {
             Cleanup();
-            StoreSessionTime();
+            databaseManager.StoreSessionTime(this);
             System.Windows.Forms.Application.Restart();
             System.Windows.Application.Current.Shutdown();
         }
@@ -2264,44 +2235,10 @@ namespace MHFZ_Overlay
             DataLoader.model.Configuring = true;
         }
 
-        #region session time
-
-        private void StoreSessionTime()
-        {
-            // When the program exits, store the program end time
-            DataLoader.model.ProgramEnd = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-
-            // Get the session duration time as a TimeSpan object
-            DateTime start = DateTime.Parse(DataLoader.model.ProgramStart);
-            DateTime end = DateTime.Parse(DataLoader.model.ProgramEnd);
-            TimeSpan duration = end - start;
-            int sessionDuration = (int)duration.TotalSeconds;
-
-            // Connect to the database
-            string dbFilePath = DataLoader.dbFilePath;
-            string connectionString = "Data Source=" + dbFilePath + "";
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-            {
-                SQLitePCL.Batteries.Init();
-                connection.Open(); // Open the connection
-                // Execute the SQL command
-                string insertSql = "INSERT INTO Session (StartTime, EndTime, SessionDuration) VALUES (@startTime, @endTime, @sessionDuration)";
-                using (SQLiteCommand insertCommand = new SQLiteCommand(insertSql, connection))
-                {
-                    insertCommand.Parameters.AddWithValue("@startTime", start);
-                    insertCommand.Parameters.AddWithValue("@endTime", end);
-                    insertCommand.Parameters.AddWithValue("@sessionDuration", sessionDuration);
-                    insertCommand.ExecuteNonQuery();
-                }
-            }
-        }
-
-        #endregion
-
         private void CloseButton_Key()
         {
             Cleanup();
-            StoreSessionTime();
+            databaseManager.StoreSessionTime(this);
             Environment.Exit(0);
         }
 

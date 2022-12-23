@@ -280,9 +280,9 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <lvc:CartesianChart
+            <!--<lvc:CartesianChart
         Series="{Binding PlayerAttackSeries}">
-            </lvc:CartesianChart>
+            </lvc:CartesianChart>-->
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MapImage" Canvas.Left="{Binding Source={StaticResource Settings},Path=MapX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MapY}" Width="{Binding Source={StaticResource Settings},Path=MapAreaWidth}" Height="{Binding Source={StaticResource Settings},Path=MapAreaHeight}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMap, Converter={StaticResource BoolToVis}}">
