@@ -48,29 +48,18 @@ namespace MHFZ_Overlay
         // Calculate the total time spent using the program
         public TimeSpan CalculateTotalTimeSpent()
         {
-            TimeSpan totalTimeSpent = new TimeSpan();
-            // Connect to the database
-            string dbFilePath = _connectionString;
-            string connectionString = "Data Source=" + dbFilePath + "";
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-            {
-                SQLitePCL.Batteries.Init();
-                connection.Open();
+            TimeSpan totalTimeSpent = TimeSpan.Zero;
 
-                // Calculate the total time spent using the SUM function
-                string selectSql = "SELECT SUM(SessionDuration) FROM Session";
-                using (SQLiteCommand selectCommand = new SQLiteCommand(selectSql, connection))
+            using (var connection = new SQLiteConnection(_connectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
                 {
-                    object result = selectCommand.ExecuteScalar();
+                    command.CommandText = "SELECT SUM(SessionDuration) FROM Session";
+                    object result = command.ExecuteScalar();
                     if (result != DBNull.Value)
                     {
-                        int totalDuration = Convert.ToInt32(result);
-                        totalTimeSpent = TimeSpan.FromSeconds(totalDuration);
-                    }
-                    else
-                    {
-                        // No rows in the Session table, so total time spent is zero
-                        totalTimeSpent = TimeSpan.Zero;
+                        totalTimeSpent = TimeSpan.FromSeconds(Convert.ToInt32(result));
                     }
                 }
             }
@@ -99,7 +88,6 @@ namespace MHFZ_Overlay
                 CreateDatabaseIndexes(conn);
                 CreateDatabaseTriggers(conn);
             }
-            //            SQLitePCL.Batteries.Init();
         }
 
         // Calculate the finalTimeDisplay value in the "mm:ss.mm" format
@@ -822,20 +810,42 @@ namespace MHFZ_Overlay
 
         private void CreateDatabaseIndexes(SQLiteConnection conn)
         {
-            string createIndexSql = "CREATE UNIQUE INDEX IF NOT EXISTS idx_playergear_runid ON PlayerGear(RunID)";
-            string createIndexSql2 = "CREATE UNIQUE INDEX IF NOT EXISTS idx_quests_runid ON Quests(RunID)";
+            List<string> createIndexSqlStatements = new List<string>
+            {
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_activeskills_runid ON ActiveSkills(RunID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allarmorskills_armorskillid ON AllArmorSkills(ArmorSkillID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allcaravanskills_caravanskillid ON AllCaravanSkills(CaravanSkillID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allroaddureskills_roaddureskillid ON AllRoadDureSkills(RoadDureSkillID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allstylerankskills_stylerankskillid ON AllStyleRankSkills(StyleRankSkillID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS isx_allzenithskills_zenithskillid ON AllZenithSkills(ZenithSkillID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_ammopouch_runid ON AmmoPouch(RunID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_area_areaid ON Area(AreaID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_automaticskills_runid ON AutomaticSkills(RunID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_caravanskills_runid ON CaravanSkills(RunID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_item_itemid ON Item(ItemID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_objectivetype_objectivetypeid ON ObjectiveType(ObjectiveTypeID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_playergear_runid ON PlayerGear(RunID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_playerinventory_runid ON PlayerInventory(RunID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_players_playerid ON Players(PlayerID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_questname_questnameid ON QuestName(QuestNameID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_quests_runid ON Quests(RunID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_rankname_ranknameid ON RankName(RankNameID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_roaddureskills_runid ON RoadDureSkills(RunID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_stylerankskills_runid ON StyleRankSkills(RunID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_weapontype_weapontypeid ON WeaponType(WeaponTypeID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_zenithskills_runid ON ZenithSkills(RunID)"
+            };
 
             using (var transaction = conn.BeginTransaction())
             {
                 try
                 {
-                    using (var cmd = new SQLiteCommand(createIndexSql, conn))
+                    foreach (string createIndexSql in createIndexSqlStatements)
                     {
-                        cmd.ExecuteNonQuery();
-                    }
-                    using (var cmd = new SQLiteCommand(createIndexSql2, conn))
-                    {
-                        cmd.ExecuteNonQuery();
+                        using (var cmd = new SQLiteCommand(createIndexSql, conn))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
                     }
                     transaction.Commit();
                 }
@@ -872,9 +882,10 @@ namespace MHFZ_Overlay
                 string connectionString = "Data Source=" + dbFilePath + "";
                 using (SQLiteConnection connection = new SQLiteConnection(connectionString))
                 {
-                    SQLitePCL.Batteries.Init();
-                    connection.Open(); // Open the connection
-                                       // Begin a transaction
+                    // Open the connection
+                    connection.Open();
+
+                    // Begin a transaction
                     using (SQLiteTransaction transaction = connection.BeginTransaction())
                     {
                         try
@@ -1019,8 +1030,10 @@ namespace MHFZ_Overlay
                     StartTime DATETIME NOT NULL,
                     EndTime DATETIME NOT NULL,
                     SessionDuration INTEGER NOT NULL)";
-                    SQLiteCommand cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     //Create the Quests table
                     sql = @"CREATE TABLE IF NOT EXISTS Quests 
@@ -1041,15 +1054,19 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID),
                     FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
                     )";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     //Create the RankNames table
                     sql = @"CREATE TABLE IF NOT EXISTS RankName
                     (RankNameID INTEGER PRIMARY KEY, 
                     RankNameName TEXT NOT NULL)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     InsertIntoTable(Dictionary.RanksBandsList.RankBandsID, "RankName", "RankNameID", "RankNameName", conn);
 
@@ -1057,8 +1074,10 @@ namespace MHFZ_Overlay
                     sql = @"CREATE TABLE IF NOT EXISTS ObjectiveType
                     (ObjectiveTypeID INTEGER PRIMARY KEY, 
                     ObjectiveTypeName TEXT NOT NULL)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     InsertIntoTable(Dictionary.ObjectiveTypeList.ObjectiveTypeID, "ObjectiveType", "ObjectiveTypeID", "ObjectiveTypeName", conn);
 
@@ -1066,8 +1085,10 @@ namespace MHFZ_Overlay
                     sql = @"CREATE TABLE IF NOT EXISTS QuestName
                     (QuestNameID INTEGER PRIMARY KEY, 
                     QuestNameName TEXT NOT NULL)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     InsertIntoTable(Quests.QuestIDs, "QuestName", "QuestNameID", "QuestNameName", conn);
 
@@ -1079,15 +1100,19 @@ namespace MHFZ_Overlay
                     PlayerName TEXT NOT NULL,
                     GuildName TEXT NOT NULL,
                     Gender TEXT NOT NULL)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     // Create the WeaponTypes table
                     sql = @"CREATE TABLE IF NOT EXISTS WeaponType (
                     WeaponTypeID INTEGER PRIMARY KEY, 
                     WeaponTypeName TEXT NOT NULL)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     InsertIntoTable(WeaponList.WeaponID, "WeaponType", "WeaponTypeID", "WeaponTypeName", conn);
 
@@ -1095,8 +1120,10 @@ namespace MHFZ_Overlay
                     sql = @"CREATE TABLE IF NOT EXISTS Item (
                     ItemID INTEGER PRIMARY KEY, 
                     ItemName TEXT NOT NULL)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     InsertIntoTable(Items.ItemIDs, "Item", "ItemID", "ItemName", conn);
 
@@ -1105,12 +1132,14 @@ namespace MHFZ_Overlay
                     AreaID INTEGER PRIMARY KEY,
                     AreaName TEXT NOT NULL,
                     AreaIcon TEXT NOT NULL)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     // Prepare the SQL statement
                     sql = "INSERT OR REPLACE INTO Area (AreaID, AreaIcon, AreaName) VALUES (@AreaID, @AreaIcon, @AreaName)";
-                    using (cmd = new SQLiteCommand(sql, conn))
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
                         // Add the parameter placeholders
                         cmd.Parameters.Add("@AreaID", DbType.Int32);
@@ -1204,8 +1233,10 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(AmmoPouchID) REFERENCES AmmoPouch(AmmoPouchID),
                     FOREIGN KEY(RoadDureSkillsID) REFERENCES RoadDureSkills(RoadDureSkillsID)
                     )";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     sql = @"CREATE TABLE IF NOT EXISTS ZenithSkills(
                     ZenithSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1225,14 +1256,18 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(ZenithSkill5ID) REFERENCES AllZenithSkills(ZenithSkillID),
                     FOREIGN KEY(ZenithSkill6ID) REFERENCES AllZenithSkills(ZenithSkillID),
                     FOREIGN KEY(ZenithSkill7ID) REFERENCES AllZenithSkills(ZenithSkillID))";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllZenithSkills(
                     ZenithSkillID INTEGER PRIMARY KEY,
                     ZenithSkillName TEXT NOT NULL)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     InsertIntoTable(Dictionary.ZenithSkillList.ZenithSkillID, "AllZenithSkills", "ZenithSkillID", "ZenithSkillName", conn);
 
@@ -1252,14 +1287,18 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(AutomaticSkill4ID) REFERENCES AllArmorSkills(ArmorSkillID),
                     FOREIGN KEY(AutomaticSkill5ID) REFERENCES AllArmorSkills(ArmorSkillID),
                     FOREIGN KEY(AutomaticSkill6ID) REFERENCES AllArmorSkills(ArmorSkillID))";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllArmorSkills(
                     ArmorSkillID INTEGER PRIMARY KEY,
                     ArmorSkillName TEXT NOT NULL)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     InsertIntoTable(Dictionary.ArmorSkillList.ArmorSkillID, "AllArmorSkills", "ArmorSkillID", "ArmorSkillName", conn);
 
@@ -1306,8 +1345,10 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(ActiveSkill18ID) REFERENCES AllArmorSkills(ArmorSkillID),
                     FOREIGN KEY(ActiveSkill19ID) REFERENCES AllArmorSkills(ArmorSkillID)
                     )";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     sql = @"CREATE TABLE IF NOT EXISTS CaravanSkills(
                     CaravanSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1320,14 +1361,18 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(CaravanSkill2ID) REFERENCES AllCaravanSkills(CaravanSkillID),
                     FOREIGN KEY(CaravanSkill3ID) REFERENCES AllCaravanSkills(CaravanSkillID)
                     )";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllCaravanSkills(
                     CaravanSkillID INTEGER PRIMARY KEY,
                     CaravanSkillName TEXT NOT NULL)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     InsertIntoTable(Dictionary.CaravanSkillList.CaravanSkillID, "AllCaravanSkills", "CaravanSkillID", "CaravanSkillName", conn);
 
@@ -1340,14 +1385,18 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(StyleRankSkill1ID) REFERENCES AllStyleRankSkills(StyleRankSkillID),
                     FOREIGN KEY(StyleRankSkill2ID) REFERENCES AllStyleRankSkills(StyleRankSkillID)
                     )";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllStyleRankSkills(
                     StyleRankSkillID INTEGER PRIMARY KEY,
                     StyleRankSkillName TEXT NOT NULL)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     InsertIntoTable(Dictionary.StyleRankSkillList.StyleRankSkillID, "AllStyleRankSkills", "StyleRankSkillID", "StyleRankSkillName", conn);
 
@@ -1417,8 +1466,10 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(Item19ID) REFERENCES Item(ItemID),
                     FOREIGN KEY(Item20ID) REFERENCES Item(ItemID)
                     )";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     sql = @"CREATE TABLE IF NOT EXISTS AmmoPouch (
                     AmmoPouchID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1455,8 +1506,10 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(Item9ID) REFERENCES Item(ItemID),
                     FOREIGN KEY(Item10ID) REFERENCES Item(ItemID)
                     )";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     sql = @"CREATE TABLE IF NOT EXISTS RoadDureSkills (
                     RoadDureSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1511,14 +1564,18 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(RoadDureSkill15ID) REFERENCES AllRoadDureSkills(RoadDureSkillID),
                     FOREIGN KEY(RoadDureSkill16ID) REFERENCES AllRoadDureSkills(RoadDureSkillID)
                     )";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllRoadDureSkills(
                     RoadDureSkillID INTEGER PRIMARY KEY,
                     RoadDureSkillName TEXT NOT NULL)";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
 
                     InsertIntoTable(Dictionary.RoadDureSkills.RoadDureSkillIDs, "AllRoadDureSkills", "RoadDureSkillID", "RoadDureSkillName", conn);
 
@@ -1530,7 +1587,7 @@ namespace MHFZ_Overlay
                         PRIMARY KEY (PieceID, PieceType),
                         UNIQUE (PieceID, PieceName, PieceType)
                     )";
-                    using (cmd = new SQLiteCommand(sql, conn))
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.ExecuteNonQuery();
                     }
@@ -1603,6 +1660,7 @@ namespace MHFZ_Overlay
         //i would first insert into the quest table,
         //then the tables referencing
         //playergear, then the playergear table
+        // TODO
         void InsertQuestIntoDatabase(SQLiteConnection conn, DataLoader dataLoader)
         {
             var model = dataLoader.model;
@@ -1706,10 +1764,11 @@ namespace MHFZ_Overlay
             conn.Close();
         }
 
+        // TODO
         void RetreiveQuestsFromDatabase()
         {
             SQLiteConnection conn = new SQLiteConnection("Data Source=" + _connectionString + "");
-            SQLitePCL.Batteries.Init();
+            
             conn.Open();
 
             // Create the Quests table
