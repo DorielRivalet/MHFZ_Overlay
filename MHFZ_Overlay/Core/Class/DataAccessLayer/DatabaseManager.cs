@@ -928,7 +928,7 @@ namespace MHFZ_Overlay
                     using (var cmd = new SQLiteCommand(conn))
                     {
                         // Set the command text to insert a single row
-                        cmd.CommandText = $"INSERT OR IGNORE INTO {tableName} ({idColumn}, {valueColumn}) VALUES (@id, @value)";
+                        cmd.CommandText = $"INSERT OR REPLACE INTO {tableName} ({idColumn}, {valueColumn}) VALUES (@id, @value)";
 
                         // Create a parameter for the value to be inserted
                         var valueParam = cmd.CreateParameter();
@@ -1498,25 +1498,19 @@ namespace MHFZ_Overlay
                           GearPieceID INTEGER PRIMARY KEY AUTOINCREMENT,
                           PieceID INTEGER NOT NULL,
                           PieceName TEXT NOT NULL,
-                          PieceType TEXT NOT NULL
+                          PieceType TEXT NOT NULL,
+                          UNIQUE (PieceID, PieceName, PieceType)
                         )";
-                    cmd = new SQLiteCommand(sql, conn);
-                    cmd.ExecuteNonQuery();
-
-                    // Prepare the SQL statement
-                    sql = "INSERT OR IGNORE INTO Gear (PieceID, PieceName, PieceType) VALUES (@PieceID, @PieceName, @PieceType)";
                     using (cmd = new SQLiteCommand(sql, conn))
                     {
-                        // Add the parameter placeholders
-                        cmd.Parameters.Add("@PieceID", DbType.Int32);
-                        cmd.Parameters.Add("@PieceName", DbType.String);
-                        cmd.Parameters.Add("@PieceType", DbType.String);
+                        cmd.ExecuteNonQuery();
+                    }
 
-                        // Get a list of dictionaries containing the armor piece IDs and names
-                        List<Dictionary<int, string>> gearDictionaries = GetGearDictionariesList();
+                    // Get a list of dictionaries containing the armor piece IDs and names
+                    List<Dictionary<int, string>> gearDictionaries = GetGearDictionariesList();
 
-                        // Create a list of the gear piece types
-                        List<string> gearTypes = new List<string>
+                    // Create a list of the gear piece types
+                    List<string> gearTypes = new List<string>
                         {
                             "Head",
                             "Chest",
@@ -1526,6 +1520,22 @@ namespace MHFZ_Overlay
                             "Melee",
                             "Ranged",
                         };
+
+                    // Create a command that will be used to insert multiple rows in a batch
+                    using (cmd = new SQLiteCommand(sql, conn))
+                    {
+                        // Create the parameter objects
+                        SQLiteParameter pieceIdParam = new SQLiteParameter("@PieceID", DbType.Int32);
+                        SQLiteParameter pieceNameParam = new SQLiteParameter("@PieceName", DbType.String);
+                        SQLiteParameter pieceTypeParam = new SQLiteParameter("@PieceType", DbType.String);
+
+                        // Add the parameters to the command
+                        cmd.Parameters.Add(pieceIdParam);
+                        cmd.Parameters.Add(pieceNameParam);
+                        cmd.Parameters.Add(pieceTypeParam);
+
+                        // Set the command text
+                        cmd.CommandText = "INSERT OR REPLACE INTO Gear (PieceID, PieceName, PieceType) VALUES (@PieceID, @PieceName, @PieceType)";
 
                         // Iterate over the dictionaries and piece types
                         for (int i = 0; i < gearDictionaries.Count; i++)
@@ -1540,16 +1550,15 @@ namespace MHFZ_Overlay
                                 string pieceName = entry.Value;
 
                                 // Set the parameter values
-                                cmd.Parameters["@PieceID"].Value = pieceID;
-                                cmd.Parameters["@PieceName"].Value = pieceName;
-                                cmd.Parameters["@PieceType"].Value = pieceType;
+                                pieceIdParam.Value = pieceID;
+                                pieceNameParam.Value = pieceName;
+                                pieceTypeParam.Value = pieceType;
 
                                 // Execute the statement
                                 cmd.ExecuteNonQuery();
                             }
                         }
                     }
-
                     // Commit the transaction
                     transaction.Commit();
                 }
