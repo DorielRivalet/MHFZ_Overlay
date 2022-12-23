@@ -856,13 +856,14 @@ namespace MHFZ_Overlay
             }
         }
 
-        private void HandleError(SQLiteTransaction transaction, Exception ex)
+        private void HandleError(SQLiteTransaction? transaction, Exception ex)
         {
+            // Roll back the transaction
+            if (transaction != null)
+                transaction.Rollback();
+
             // Handle the exception and show an error message to the user
             MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
-            // Roll back the transaction
-            transaction.Rollback();
         }
 
         #region session time
@@ -1002,6 +1003,56 @@ namespace MHFZ_Overlay
             }
         }
 
+        public void UpdateYoutubeLink(string youtubeId, int runId, SQLiteConnection conn)
+        {
+            try
+            {
+                // Start a transaction
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // Execute the query
+                        string updateSql = "UPDATE Quests SET YoutubeID = @youtubeId WHERE RunID = @runId";
+                        using (SQLiteCommand cmd = new SQLiteCommand(updateSql, conn))
+                        {
+                            // Add the parameters for the placeholders in the SQL query
+                            cmd.Parameters.AddWithValue("@youtubeId", youtubeId);
+                            cmd.Parameters.AddWithValue("@runId", runId);
+
+                            // Execute the update statement
+                            int rowsAffected = cmd.ExecuteNonQuery();
+
+                            // Check if the update was successful
+                            if (rowsAffected > 0)
+                            {
+                                // The update was successful
+                                MessageBox.Show("YoutubeID updated successfully");
+                            }
+                            else
+                            {
+                                // The update was not successful
+                                MessageBox.Show("Error updating YoutubeID");
+                            }
+                        }
+
+                        // Commit the transaction
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle the error
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any errors that may occur when starting the transaction
+                HandleError(null, ex);
+            }
+        }
+
         public static List<Dictionary<int, string>> GetGearDictionariesList()
         {
             return new List<Dictionary<int, string>>
@@ -1049,6 +1100,7 @@ namespace MHFZ_Overlay
                     RankNameID INTEGER NOT NULL CHECK (RankNameID >= 0), 
                     ObjectiveName TEXT NOT NULL, 
                     Date DATETIME NOT NULL,
+                    YoutubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YoutubeID is a Rick Roll video
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(AreaID) REFERENCES Area(AreaID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID),
