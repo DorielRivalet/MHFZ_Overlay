@@ -18,12 +18,15 @@ using System.Transactions;
 using System.Collections;
 using Octokit;
 
+// TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
 {
     // Singleton
     internal class DatabaseManager
     {
         private readonly string _connectionString;
+
+        private readonly string dataSource = "Data Source="+Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
 
         private static DatabaseManager instance;
 
@@ -50,7 +53,7 @@ namespace MHFZ_Overlay
         {
             TimeSpan totalTimeSpent = TimeSpan.Zero;
 
-            using (var connection = new SQLiteConnection(_connectionString))
+            using (var connection = new SQLiteConnection(dataSource))
             {
                 connection.Open();
                 using (var command = connection.CreateCommand())
@@ -79,7 +82,7 @@ namespace MHFZ_Overlay
                 SQLiteConnection.CreateFile(_connectionString);
             }
 
-            using (var conn = new SQLiteConnection("Data Source=" + _connectionString + ""))
+            using (var conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
 
@@ -726,10 +729,6 @@ namespace MHFZ_Overlay
                             cmd.ExecuteNonQuery();
                         }
 
-
-
-
-
                         string gearName = s.GearDescriptionExport;
                         string weaponClass = model.GetWeaponClass();
                         int weaponTypeID = model.WeaponType();
@@ -776,12 +775,56 @@ namespace MHFZ_Overlay
                         //cmd.Parameters.Add(new SQLiteParameter("@objectiveName", finalTimeDisplay));
                         //cmd.Parameters.Add(new SQLiteParameter("@date", finalTimeDisplay));
                         //// Add the remaining parameters here
+                        ///
+  //                      string insertSql = "INSERT INTO PlayerGear (PlayerID, GearName, StyleID, WeaponIcon, WeaponClass, WeaponTypeID, MeleeWeaponID, RangedWeaponID, ...) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ...)";
 
-                        //// Execute the stored procedure
-                        //cmd.ExecuteNonQuery();
+  //                      using (SQLiteCommand cmd = new SQLiteCommand(insertSql, conn))
+  //                      {
+  //                          cmd.Parameters.AddWithValue("@PlayerID", playerId);
+  //                          cmd.Parameters.AddWithValue("@GearName", gearName);
+  //                          cmd.Parameters.AddWithValue("@StyleID", styleId);
+  //                          cmd.Parameters.AddWithValue("@WeaponIcon", weaponIcon);
+  //                          cmd.Parameters.AddWithValue("@WeaponClass", weaponClass);
+  //                          cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeId);
 
-                        // Commit the transaction
-                        transaction.Commit();
+  //                          // Check the WeaponTypeID and insert the corresponding weapon ID
+  //                          if (weaponTypeId == 1)
+  //                          {
+  //                              cmd.Parameters.AddWithValue("@MeleeWeaponID", weaponId);
+  //                              cmd.Parameters.AddWithValue("@RangedWeaponID", DBNull.Value);
+  //                          }
+  //                          else if (weaponTypeId == 2)
+  //                          {
+  //                              cmd.Parameters.AddWithValue("@MeleeWeaponID", DBNull.Value);
+  //                              cmd.Parameters.AddWithValue("@RangedWeaponID", weaponId);
+  //                          }
+  //                          else
+  //                          {
+  //                              // Handle other weapon types if needed
+  //                          }
+
+  //                          // Add the rest of the parameters
+  //                          ...
+
+  //// Execute the INSERT statement
+  //int rowsAffected = cmd.ExecuteNonQuery();
+
+  //                          // Check if the insert was successful
+  //                          if (rowsAffected > 0)
+  //                          {
+  //                              // The insert was successful
+  //                              Console.WriteLine("PlayerGear inserted successfully");
+  //                          }
+  //                          else
+  //                          {
+  //                              // The insert was not successful
+
+
+                                //// Execute the stored procedure
+                                //cmd.ExecuteNonQuery();
+
+                                // Commit the transaction
+                                transaction.Commit();
                     }
                     catch (Exception ex)
                     {
@@ -880,7 +923,7 @@ namespace MHFZ_Overlay
 
                 // Connect to the database
                 string dbFilePath = _connectionString;
-                string connectionString = "Data Source=" + dbFilePath + "";
+                string connectionString = "Data Source=" + dbFilePath;
                 using (SQLiteConnection connection = new SQLiteConnection(connectionString))
                 {
                     // Open the connection
@@ -931,9 +974,9 @@ namespace MHFZ_Overlay
 
         #endregion
 
-        private readonly List<string> _validTableNames = new List<string> {"RankName", "ObjectiveType", "QuestName", "WeaponType", "Item", "Area", "AllZenithSkills", "AllArmorSkills", "AllCaravanSkills", "AllStyleRankSkills", "AllRoadDureSkills" };
+        private readonly List<string> _validTableNames = new List<string> {"RankName", "ObjectiveType", "QuestName", "WeaponType", "Item", "Area", "AllZenithSkills", "AllArmorSkills", "AllCaravanSkills", "AllStyleRankSkills", "AllRoadDureSkills", "AllMeleeWeapons","AllRangedWeapons","AllHeadPieces","AllChestPieces","AllArmsPieces","AllWaistPieces","AllLegsPieces" };
 
-        private void InsertIntoTable(IReadOnlyDictionary<int, string> dictionary, string tableName, string idColumn, string valueColumn, SQLiteConnection conn)
+        private void InsertDictionaryDataIntoTable(IReadOnlyDictionary<int, string> dictionary, string tableName, string idColumn, string valueColumn, SQLiteConnection conn)
         {
             // Start a transaction
             using (SQLiteTransaction transaction = conn.BeginTransaction())
@@ -1053,20 +1096,6 @@ namespace MHFZ_Overlay
             }
         }
 
-        public static List<Dictionary<int, string>> GetGearDictionariesList()
-        {
-            return new List<Dictionary<int, string>>
-            {
-                (Dictionary<int, string>)ArmorHeads.ArmorHeadIDs,
-                (Dictionary<int, string>)ArmorChests.ArmorChestIDs,
-                (Dictionary<int, string>)ArmorArms.ArmorArmIDs,
-                (Dictionary<int, string>)ArmorWaists.ArmorWaistIDs,
-                (Dictionary<int, string>)ArmorLegs.ArmorLegIDs,
-                (Dictionary<int, string>)MeleeWeapons.MeleeWeaponIDs,
-                (Dictionary<int, string>)RangedWeapons.RangedWeaponIDs
-            };
-        }
-
         private void CreateDatabaseTables(SQLiteConnection conn, DataLoader dataLoader)
         {
             using (SQLiteTransaction transaction = conn.BeginTransaction())
@@ -1120,7 +1149,7 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertIntoTable(Dictionary.RanksBandsList.RankBandsID, "RankName", "RankNameID", "RankNameName", conn);
+                    InsertDictionaryDataIntoTable(Dictionary.RanksBandsList.RankBandsID, "RankName", "RankNameID", "RankNameName", conn);
 
                     //Create the ObjectiveTypes table
                     sql = @"CREATE TABLE IF NOT EXISTS ObjectiveType
@@ -1131,7 +1160,7 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertIntoTable(Dictionary.ObjectiveTypeList.ObjectiveTypeID, "ObjectiveType", "ObjectiveTypeID", "ObjectiveTypeName", conn);
+                    InsertDictionaryDataIntoTable(Dictionary.ObjectiveTypeList.ObjectiveTypeID, "ObjectiveType", "ObjectiveTypeID", "ObjectiveTypeName", conn);
 
                     //Create the QuestNames table
                     sql = @"CREATE TABLE IF NOT EXISTS QuestName
@@ -1142,7 +1171,7 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertIntoTable(Quests.QuestIDs, "QuestName", "QuestNameID", "QuestNameName", conn);
+                    InsertDictionaryDataIntoTable(Quests.QuestIDs, "QuestName", "QuestNameID", "QuestNameName", conn);
 
                     // Create the Players table
                     //do an UPDATE when inserting quests. since its just local player?
@@ -1166,7 +1195,7 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertIntoTable(WeaponList.WeaponID, "WeaponType", "WeaponTypeID", "WeaponTypeName", conn);
+                    InsertDictionaryDataIntoTable(WeaponList.WeaponID, "WeaponType", "WeaponTypeID", "WeaponTypeName", conn);
 
                     // Create the Item table
                     sql = @"CREATE TABLE IF NOT EXISTS Item (
@@ -1177,7 +1206,7 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertIntoTable(Items.ItemIDs, "Item", "ItemID", "ItemName", conn);
+                    InsertDictionaryDataIntoTable(Items.ItemIDs, "Item", "ItemID", "ItemName", conn);
 
                     // Create the Area table
                     sql = @"CREATE TABLE IF NOT EXISTS Area (
@@ -1228,7 +1257,8 @@ namespace MHFZ_Overlay
                     WeaponIcon TEXT NOT NULL,
                     WeaponClass TEXT NOT NULL,
                     WeaponTypeID INTEGER NOT NULL CHECK (WeaponTypeID >= 0),
-                    WeaponID INTEGER NOT NULL CHECK (WeaponID >= 0),
+                    MeleeWeaponID INTEGER,
+                    RangedWeaponID INTEGER,
                     WeaponSlot1 TEXT NOT NULL,
                     WeaponSlot2 TEXT NOT NULL,
                     WeaponSlot3 TEXT NOT NULL,
@@ -1268,12 +1298,18 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(RunID) REFERENCES Quests(RunID),
                     FOREIGN KEY(PlayerID) REFERENCES Players(PlayerID),
                     FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    FOREIGN KEY(WeaponID) REFERENCES Gear(PieceID),
-                    FOREIGN KEY(HeadID) REFERENCES Gear(PieceID),
-                    FOREIGN KEY(ChestID) REFERENCES Gear(PieceID),
-                    FOREIGN KEY(ArmsID) REFERENCES Gear(PieceID),
-                    FOREIGN KEY(WaistID) REFERENCES Gear(PieceID),
-                    FOREIGN KEY(LegsID) REFERENCES Gear(PieceID),
+                    FOREIGN KEY(MeleeWeaponID) REFERENCES AllMeleeWeapons(MeleeWeaponID),
+                    FOREIGN KEY(RangedWeaponID) REFERENCES AllRangedWeapons(RangedWeaponID),
+                    CHECK 
+                    (
+                        (MeleeWeaponID IS NOT NULL AND RangedWeaponID IS NULL) OR 
+                        (MeleeWeaponID IS NULL AND RangedWeaponID IS NOT NULL)
+                    )
+                    FOREIGN KEY(HeadID) REFERENCES AllHeadPieces(HeadPieceID),
+                    FOREIGN KEY(ChestID) REFERENCES AllChestPieces(ChestPieceID),
+                    FOREIGN KEY(ArmsID) REFERENCES AllArmsPieces(ArmsPieceID),
+                    FOREIGN KEY(WaistID) REFERENCES AllWaistPieces(WaistPieceID),
+                    FOREIGN KEY(LegsID) REFERENCES AllLegsPieces(LegsPieceID),
                     FOREIGN KEY(Cuff1ID) REFERENCES Item(ItemID),
                     FOREIGN KEY(Cuff2ID) REFERENCES Item(ItemID),
                     FOREIGN KEY(ZenithSkillsID) REFERENCES ZenithSkills(ZenithSkillsID),
@@ -1289,6 +1325,83 @@ namespace MHFZ_Overlay
                     {
                         cmd.ExecuteNonQuery();
                     }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS AllMeleeWeapons (
+                      MeleeWeaponID INTEGER PRIMARY KEY,
+                      MeleeWeaponName TEXT NOT NULL
+                    )"; 
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    InsertDictionaryDataIntoTable(Dictionary.MeleeWeapons.MeleeWeaponIDs, "AllMeleeWeapons", "MeleeWeaponID", "MeleeWeaponName", conn);
+
+                    sql = @"CREATE TABLE IF NOT EXISTS AllRangedWeapons (
+                      RangedWeaponID INTEGER PRIMARY KEY,
+                      RangedWeaponName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    InsertDictionaryDataIntoTable(Dictionary.MeleeWeapons.MeleeWeaponIDs, "AllRangedWeapons", "RangedWeaponID", "RangedWeaponName", conn);
+
+                    sql = @"CREATE TABLE IF NOT EXISTS AllHeadPieces (
+                      HeadPieceID INTEGER PRIMARY KEY,
+                      HeadPieceName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    InsertDictionaryDataIntoTable(Dictionary.ArmorHeads.ArmorHeadIDs, "AllHeadPieces", "HeadPieceID", "HeadPieceName", conn);
+
+                    sql = @"CREATE TABLE IF NOT EXISTS AllChestPieces (
+                      ChestPieceID INTEGER PRIMARY KEY,
+                      ChestPieceName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    InsertDictionaryDataIntoTable(Dictionary.ArmorChests.ArmorChestIDs, "AllChestPieces", "ChestPieceID", "ChestPieceName", conn);
+
+                    sql = @"CREATE TABLE IF NOT EXISTS AllArmsPieces (
+                      ArmsPieceID INTEGER PRIMARY KEY,
+                      ArmsPieceName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    InsertDictionaryDataIntoTable(Dictionary.ArmorArms.ArmorArmIDs, "AllArmsPieces", "ArmsPieceID", "ArmsPieceName", conn);
+
+                    sql = @"CREATE TABLE IF NOT EXISTS AllWaistPieces (
+                      WaistPieceID INTEGER PRIMARY KEY,
+                      WaistPieceName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    InsertDictionaryDataIntoTable(Dictionary.ArmorWaists.ArmorWaistIDs, "AllWaistPieces", "WaistPieceID", "WaistPieceName", conn);
+
+                    sql = @"CREATE TABLE IF NOT EXISTS AllLegsPieces (
+                      LegsPieceID INTEGER PRIMARY KEY,
+                      LegsPieceName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    InsertDictionaryDataIntoTable(Dictionary.ArmorLegs.ArmorLegIDs, "AllLegsPieces", "LegsPieceID", "LegsPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS ZenithSkills(
                     ZenithSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1321,7 +1434,7 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertIntoTable(Dictionary.ZenithSkillList.ZenithSkillID, "AllZenithSkills", "ZenithSkillID", "ZenithSkillName", conn);
+                    InsertDictionaryDataIntoTable(Dictionary.ZenithSkillList.ZenithSkillID, "AllZenithSkills", "ZenithSkillID", "ZenithSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AutomaticSkills(
                     AutomaticSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1352,7 +1465,7 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertIntoTable(Dictionary.ArmorSkillList.ArmorSkillID, "AllArmorSkills", "ArmorSkillID", "ArmorSkillName", conn);
+                    InsertDictionaryDataIntoTable(Dictionary.ArmorSkillList.ArmorSkillID, "AllArmorSkills", "ArmorSkillID", "ArmorSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS ActiveSkills(
                     ActiveSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1426,7 +1539,7 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertIntoTable(Dictionary.CaravanSkillList.CaravanSkillID, "AllCaravanSkills", "CaravanSkillID", "CaravanSkillName", conn);
+                    InsertDictionaryDataIntoTable(Dictionary.CaravanSkillList.CaravanSkillID, "AllCaravanSkills", "CaravanSkillID", "CaravanSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS StyleRankSkills(
                     StyleRankSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1450,7 +1563,7 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertIntoTable(Dictionary.StyleRankSkillList.StyleRankSkillID, "AllStyleRankSkills", "StyleRankSkillID", "StyleRankSkillName", conn);
+                    InsertDictionaryDataIntoTable(Dictionary.StyleRankSkillList.StyleRankSkillID, "AllStyleRankSkills", "StyleRankSkillID", "StyleRankSkillName", conn);
 
                     // Create the PlayerInventory table
                     sql = @"CREATE TABLE IF NOT EXISTS PlayerInventory (
@@ -1584,7 +1697,7 @@ namespace MHFZ_Overlay
                     RoadDureSkill8Level INTEGER NOT NULL,
                     RoadDureSkill9ID INTEGER NOT NULL CHECK (RoadDureSkill9ID >= 0), 
                     RoadDureSkill9Level INTEGER NOT NULL,
-                    RoadDureSkill10ID INTEGER NOT NULL CHECK (RoadDureSkill01ID >= 0), 
+                    RoadDureSkill10ID INTEGER NOT NULL CHECK (RoadDureSkill10ID >= 0), 
                     RoadDureSkill10Level INTEGER NOT NULL,
                     RoadDureSkill11ID INTEGER NOT NULL CHECK (RoadDureSkill11ID >= 0), 
                     RoadDureSkill11Level INTEGER NOT NULL,
@@ -1629,76 +1742,8 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertIntoTable(Dictionary.RoadDureSkills.RoadDureSkillIDs, "AllRoadDureSkills", "RoadDureSkillID", "RoadDureSkillName", conn);
+                    InsertDictionaryDataIntoTable(Dictionary.RoadDureSkills.RoadDureSkillIDs, "AllRoadDureSkills", "RoadDureSkillID", "RoadDureSkillName", conn);
 
-                    sql = @"
-                    CREATE TABLE IF NOT EXISTS Gear (
-                        PieceID INTEGER NOT NULL CHECK (PieceID >= 0),
-                        PieceName TEXT NOT NULL,
-                        PieceType TEXT NOT NULL,
-                        PRIMARY KEY (PieceID, PieceType),
-                        UNIQUE (PieceID, PieceName, PieceType)
-                    )";
-                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    // Get a list of dictionaries containing the armor piece IDs and names
-                    List<Dictionary<int, string>> gearDictionaries = GetGearDictionariesList();
-
-                    // Create a list of the gear piece types
-                    List<string> gearTypes = new List<string>
-                        {
-                            "Head",
-                            "Chest",
-                            "Arms",
-                            "Waist",
-                            "Legs",
-                            "Melee",
-                            "Ranged",
-                        };
-
-                    // Create a command to execute the insert or replace statement
-                    using (SQLiteCommand updateCmd = new SQLiteCommand(conn))
-                    {
-                        // Create the parameter objects
-                        SQLiteParameter pieceIdParam = new SQLiteParameter("@PieceID", DbType.Int32);
-                        SQLiteParameter pieceNameParam = new SQLiteParameter("@PieceName", DbType.String);
-                        SQLiteParameter pieceTypeParam = new SQLiteParameter("@PieceType", DbType.String);
-
-                        // Add the parameters to the command
-                        updateCmd.Parameters.Add(pieceIdParam);
-                        updateCmd.Parameters.Add(pieceNameParam);
-                        updateCmd.Parameters.Add(pieceTypeParam);
-
-                        // Iterate over the dictionaries and piece types
-                        for (int i = 0; i < gearDictionaries.Count; i++)
-                        {
-                            Dictionary<int, string> dictionary = gearDictionaries[i];
-                            string pieceType = gearTypes[i];
-
-                            // Loop through the entries in the dictionary
-                            foreach (KeyValuePair<int, string> entry in dictionary)
-                            {
-                                int pieceID = entry.Key;
-                                string pieceName = entry.Value;
-
-                                // Set the parameter values
-                                pieceIdParam.Value = pieceID;
-                                pieceNameParam.Value = pieceName;
-                                pieceTypeParam.Value = pieceType;
-
-                                // Set the command text for the insert or replace statement
-                                updateCmd.CommandText = @"
-                                INSERT OR REPLACE INTO Gear (PieceID, PieceName, PieceType)
-                                VALUES (@PieceID, @PieceName, @PieceType);
-                                ";
-                                // Execute the statement
-                                updateCmd.ExecuteNonQuery();
-                            }
-                        }
-                    }
                     // Commit the transaction
                     transaction.Commit();
                 }
@@ -1819,7 +1864,7 @@ namespace MHFZ_Overlay
         // TODO
         void RetreiveQuestsFromDatabase()
         {
-            SQLiteConnection conn = new SQLiteConnection("Data Source=" + _connectionString + "");
+            SQLiteConnection conn = new SQLiteConnection(dataSource);
             
             conn.Open();
 

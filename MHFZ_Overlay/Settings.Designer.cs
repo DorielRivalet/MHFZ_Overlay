@@ -1690,5 +1690,17 @@ namespace MHFZ_Overlay {
                 this["PlayerAttackGraphY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableQuestLogging {
+            get {
+                return ((bool)(this["EnableQuestLogging"]));
+            }
+            set {
+                this["EnableQuestLogging"] = value;
+            }
+        }
     }
 }

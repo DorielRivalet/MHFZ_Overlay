@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using MHFZ_Overlay.Core.Class;
 using Newtonsoft.Json;
 using Octokit;
 using System;
@@ -2924,7 +2925,7 @@ namespace MHFZ_Overlay
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
                 // Create a dictionary to store the user settings
-                Dictionary<string, string> settings = new Dictionary<string, string>();
+                Dictionary<string, Setting> settings = new Dictionary<string, Setting>();
 
                 // Get a list of the user settings properties sorted alphabetically by name
                 List<System.Configuration.SettingsProperty> sortedSettings = s.Properties.Cast<System.Configuration.SettingsProperty>().OrderBy(setting => setting.Name).ToList();
@@ -2933,8 +2934,30 @@ namespace MHFZ_Overlay
                 foreach (System.Configuration.SettingsProperty setting in sortedSettings)
                 {
                     string settingName = setting.Name;
+                    string settingDefaultValue = setting.DefaultValue.ToString();
+                    string settingPropertyType = setting.PropertyType.ToString();
+                    string settingIsReadOnly = setting.IsReadOnly.ToString();
+                    string settingProvider = setting.Provider.ToString();
+                    string settingProviderApplicationName = setting.Provider.ApplicationName;
+                    string settingProviderDescription = setting.Provider.Description;
+                    string settingProviderName = setting.Provider.Name;
                     string settingValue = s[settingName].ToString();
-                    settings.Add(settingName, settingValue);
+
+                    // Create a new Setting object and set its properties
+                    Setting settingObject = new Setting
+                    {
+                        Value = settingValue,
+                        DefaultValue = settingDefaultValue,
+                        PropertyType = settingPropertyType,
+                        IsReadOnly = settingIsReadOnly,
+                        Provider = settingProvider,
+                        ProviderName = settingProviderName,
+                        ProviderApplicationName = settingProviderApplicationName,
+                        ProviderDescription = settingProviderDescription
+                    };
+
+                    // Add the key and Setting object to the dictionary
+                    settings.Add(settingName, settingObject);
                 }
 
                 // Serialize the dictionary to a JSON string
