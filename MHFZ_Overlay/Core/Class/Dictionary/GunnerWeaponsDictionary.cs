@@ -3,11 +3,11 @@
 namespace Dictionary
 {
     /// <summary>
-    /// Ranged weapons dictionary
+    /// Gunner (ranged) weapons dictionary
     /// </summary>
-    public static class RangedWeapons
+    public static class GunnerWeapons
     {
-        public static IReadOnlyDictionary<int, string> RangedWeaponIDs { get; } = new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> GunnerWeaponIDs { get; } = new Dictionary<int, string>
         {
             {0x0000, "None"},
             {0x0001, "Cross Bowgun"},

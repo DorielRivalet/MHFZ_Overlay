@@ -17,6 +17,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Transactions;
 using System.Collections;
 using Octokit;
+using System.Windows.Controls;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -134,7 +135,6 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
-
                         // Insert data into the Quests table
                         sql = @"INSERT INTO Quests (
                         QuestID, AreaID, FinalTimeValue, FinalTimeDisplay, ObjectiveImage, ObjectiveTypeID, ObjectiveQuantity, StarGrade, RankNameID, ObjectiveName, Date
@@ -142,8 +142,6 @@ namespace MHFZ_Overlay
 
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
-
-
                             int questID = model.QuestID();
                             int areaID = model.AreaID();
                             int timeLeft = model.TimeInt(); // Example value of the TimeLeft variable
@@ -257,26 +255,6 @@ namespace MHFZ_Overlay
                         {
                             playerID = Convert.ToInt32(cmd.ExecuteScalar());
                         }
-
-                        //    FOREIGN KEY(RunID) REFERENCES Quests(RunID),
-                        //FOREIGN KEY(PlayerID) REFERENCES Players(PlayerID),
-                        //FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                        //FOREIGN KEY(WeaponID) REFERENCES Gear(PieceID),
-                        //FOREIGN KEY(HeadID) REFERENCES Gear(PieceID),
-                        //FOREIGN KEY(ChestID) REFERENCES Gear(PieceID),
-                        //FOREIGN KEY(ArmsID) REFERENCES Gear(PieceID),
-                        //FOREIGN KEY(WaistID) REFERENCES Gear(PieceID),
-                        //FOREIGN KEY(LegsID) REFERENCES Gear(PieceID),
-                        //FOREIGN KEY(Cuff1ID) REFERENCES Item(ItemID),
-                        //FOREIGN KEY(Cuff2ID) REFERENCES Item(ItemID),
-                        //FOREIGN KEY(ZenithSkillsID) REFERENCES ZenithSkills(ZenithSkillsID),
-                        //FOREIGN KEY(AutomaticSkillsID) REFERENCES AutomaticSkills(AutomaticSkillsID),
-                        //FOREIGN KEY(ActiveSkillsID) REFERENCES ActiveSkills(ActiveSkillsID),
-                        //FOREIGN KEY(CaravanSkillsID) REFERENCES CaravanSkills(CaravanSkillsID),
-                        //FOREIGN KEY(StyleRankSkillsID) REFERENCES StyleRankSkills(StyleRankSkillsID),
-                        //FOREIGN KEY(PlayerInventoryID) REFERENCES PlayerInventory(PlayerInventoryID),
-                        //FOREIGN KEY(AmmoPouchID) REFERENCES AmmoPouch(AmmoPouchID),
-                        //FOREIGN KEY(RoadDureSkillsID) REFERENCES RoadDureSkills(RoadDureSkillsID)
 
                         // Insert data into the ZenithSkills table
                         sql = "INSERT INTO ZenithSkills (RunID, ZenithSkill1ID, ZenithSkill2ID, ZenithSkill3ID, ZenithSkill4ID, ZenithSkill5ID, ZenithSkill6ID, ZenithSkill7ID) VALUES (@RunID, @ZenithSkill1ID, @ZenithSkill2ID, @ZenithSkill3ID, @ZenithSkill4ID, @ZenithSkill5ID, @ZenithSkill6ID, @ZenithSkill7ID)";
@@ -707,32 +685,160 @@ namespace MHFZ_Overlay
                             ammoPouchID = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
-                        sql = "INSERT INTO RoadDureSkills (RunID, ZenithSkill1ID, ZenithSkill2ID, ZenithSkill3ID, ZenithSkill4ID, ZenithSkill5ID, ZenithSkill6ID, ZenithSkill7ID) VALUES (@RunID, @ZenithSkill1ID, @ZenithSkill2ID, @ZenithSkill3ID, @ZenithSkill4ID, @ZenithSkill5ID, @ZenithSkill6ID, @ZenithSkill7ID)";
+                        sql = @"INSERT INTO RoadDureSkills (
+                        RunID, 
+                        RoadDureSkill1ID,
+                        RoadDureSkill1Level,
+                        RoadDureSkill2ID,
+                        RoadDureSkill2Level,
+                        RoadDureSkill3ID,
+                        RoadDureSkill3Level,
+                        RoadDureSkill4ID,
+                        RoadDureSkill4Level,
+                        RoadDureSkill5ID,
+                        RoadDureSkill5Level,
+                        RoadDureSkill6ID,
+                        RoadDureSkill6Level,
+                        RoadDureSkill7ID,
+                        RoadDureSkill7Level,
+                        RoadDureSkill8ID,
+                        RoadDureSkill8Level,
+                        RoadDureSkill9ID,
+                        RoadDureSkill9Level,
+                        RoadDureSkill10ID,
+                        RoadDureSkill10Level,
+                        RoadDureSkill11ID,
+                        RoadDureSkill11Level,
+                        RoadDureSkill12ID,
+                        RoadDureSkill12Level,
+                        RoadDureSkill13ID,
+                        RoadDureSkill13Level,
+                        RoadDureSkill14ID,
+                        RoadDureSkill14Level,
+                        RoadDureSkill15ID,
+                        RoadDureSkill15Level,
+                        RoadDureSkill16ID,
+                        RoadDureSkill16Level
+                        ) VALUES (
+                        @RunID, 
+                        @RoadDureSkill1ID,
+                        @RoadDureSkill1Level,
+                        @RoadDureSkill2ID,
+                        @RoadDureSkill2Level,
+                        @RoadDureSkill3ID,
+                        @RoadDureSkill3Level,
+                        @RoadDureSkill4ID,
+                        @RoadDureSkill4Level,
+                        @RoadDureSkill5ID,
+                        @RoadDureSkill5Level,
+                        @RoadDureSkill6ID,
+                        @RoadDureSkill6Level,
+                        @RoadDureSkill7ID,
+                        @RoadDureSkill7Level,
+                        @RoadDureSkill8ID,
+                        @RoadDureSkill8Level,
+                        @RoadDureSkill9ID,
+                        @RoadDureSkill9Level,
+                        @RoadDureSkill10ID,
+                        @RoadDureSkill10Level,
+                        @RoadDureSkill11ID,
+                        @RoadDureSkill11Level,
+                        @RoadDureSkill12ID,
+                        @RoadDureSkill12Level,
+                        @RoadDureSkill13ID,
+                        @RoadDureSkill13Level,
+                        @RoadDureSkill14ID,
+                        @RoadDureSkill14Level,
+                        @RoadDureSkill15ID,
+                        @RoadDureSkill15Level,
+                        @RoadDureSkill16ID,
+                        @RoadDureSkill16Level
+                        )";
+
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
-                            int zenithSkill1ID = model.ZenithSkill1();
-                            int zenithSkill2ID = model.ZenithSkill2();
-                            int zenithSkill3ID = model.ZenithSkill3();
-                            int zenithSkill4ID = model.ZenithSkill4();
-                            int zenithSkill5ID = model.ZenithSkill5();
-                            int zenithSkill6ID = model.ZenithSkill6();
-                            int zenithSkill7ID = model.ZenithSkill7();
+                            int roadDureSkill1ID = model.RoadDureSkill1Name();
+                            int roadDureSkill2ID = model.RoadDureSkill2Name();
+                            int roadDureSkill3ID = model.RoadDureSkill3Name();
+                            int roadDureSkill4ID = model.RoadDureSkill4Name();
+                            int roadDureSkill5ID = model.RoadDureSkill5Name();
+                            int roadDureSkill6ID = model.RoadDureSkill6Name();
+                            int roadDureSkill7ID = model.RoadDureSkill7Name();
+                            int roadDureSkill8ID = model.RoadDureSkill8Name();
+                            int roadDureSkill9ID = model.RoadDureSkill9Name();
+                            int roadDureSkill10ID = model.RoadDureSkill10Name();
+                            int roadDureSkill11ID = model.RoadDureSkill11Name();
+                            int roadDureSkill12ID = model.RoadDureSkill12Name();
+                            int roadDureSkill13ID = model.RoadDureSkill13Name();
+                            int roadDureSkill14ID = model.RoadDureSkill14Name();
+                            int roadDureSkill15ID = model.RoadDureSkill15Name();
+                            int roadDureSkill16ID = model.RoadDureSkill16Name();
+
+                            int roadDureSkill1Level = model.RoadDureSkill1Level();
+                            int roadDureSkill2Level = model.RoadDureSkill2Level();
+                            int roadDureSkill3Level = model.RoadDureSkill3Level();
+                            int roadDureSkill4Level = model.RoadDureSkill4Level();
+                            int roadDureSkill5Level = model.RoadDureSkill5Level();
+                            int roadDureSkill6Level = model.RoadDureSkill6Level();
+                            int roadDureSkill7Level = model.RoadDureSkill7Level();
+                            int roadDureSkill8Level = model.RoadDureSkill8Level();
+                            int roadDureSkill9Level = model.RoadDureSkill9Level();
+                            int roadDureSkill10Level = model.RoadDureSkill10Level();
+                            int roadDureSkill11Level = model.RoadDureSkill11Level();
+                            int roadDureSkill12Level = model.RoadDureSkill12Level();
+                            int roadDureSkill13Level = model.RoadDureSkill13Level();
+                            int roadDureSkill14Level = model.RoadDureSkill14Level();
+                            int roadDureSkill15Level = model.RoadDureSkill15Level();
+                            int roadDureSkill16Level = model.RoadDureSkill16Level();
 
                             cmd.Parameters.AddWithValue("@RunID", runID);
-                            cmd.Parameters.AddWithValue("@ZenithSkill1ID", zenithSkill1ID);
-                            cmd.Parameters.AddWithValue("@ZenithSkill2ID", zenithSkill2ID);
-                            cmd.Parameters.AddWithValue("@ZenithSkill3ID", zenithSkill3ID);
-                            cmd.Parameters.AddWithValue("@ZenithSkill4ID", zenithSkill4ID);
-                            cmd.Parameters.AddWithValue("@ZenithSkill5ID", zenithSkill5ID);
-                            cmd.Parameters.AddWithValue("@ZenithSkill6ID", zenithSkill6ID);
-                            cmd.Parameters.AddWithValue("@ZenithSkill7ID", zenithSkill7ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill1ID", roadDureSkill1ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill2ID", roadDureSkill2ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill3ID", roadDureSkill3ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill4ID", roadDureSkill4ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill5ID", roadDureSkill5ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill6ID", roadDureSkill6ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill7ID", roadDureSkill7ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill8ID", roadDureSkill8ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill9ID", roadDureSkill9ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill10ID", roadDureSkill10ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill11ID", roadDureSkill11ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill12ID", roadDureSkill12ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill13ID", roadDureSkill13ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill14ID", roadDureSkill14ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill15ID", roadDureSkill15ID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill16ID", roadDureSkill16ID);
+
+                            cmd.Parameters.AddWithValue("@RoadDureSkill1Level", roadDureSkill1Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill2Level", roadDureSkill2Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill3Level", roadDureSkill3Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill4Level", roadDureSkill4Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill5Level", roadDureSkill5Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill6Level", roadDureSkill6Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill7Level", roadDureSkill7Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill8Level", roadDureSkill8Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill9Level", roadDureSkill9Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill10Level", roadDureSkill10Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill11Level", roadDureSkill11Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill12Level", roadDureSkill12Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill13Level", roadDureSkill13Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill14Level", roadDureSkill14Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill15Level", roadDureSkill15Level);
+                            cmd.Parameters.AddWithValue("@RoadDureSkill16Level", roadDureSkill16Level);
                             cmd.ExecuteNonQuery();
                         }
 
+                        sql = "SELECT LAST_INSERT_ROWID()";
+                        int roadDureSkillsID;
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            roadDureSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        }
+
                         string gearName = s.GearDescriptionExport;
-                        string weaponClass = model.GetWeaponClass();
                         int weaponTypeID = model.WeaponType();
-                        int weaponID = model.MeleeWeaponID();//ranged and melee are the same afaik
+                        int weaponClassID = weaponTypeID;
+                        int weaponID = model.BlademasterWeaponID();//ranged and melee are the same afaik
                         string weaponSlot1 = model.GetDecoName(model.WeaponDeco1ID(), 1);// no sigils in database ig
                         string weaponSlot2 = model.GetDecoName(model.WeaponDeco2ID(), 2);
                         string weaponSlot3 = model.GetDecoName(model.WeaponDeco3ID(), 3);
@@ -758,73 +864,185 @@ namespace MHFZ_Overlay
                         int legsSlot3 = model.ArmorLegsDeco3ID();
                         int cuffSlot1 = model.Cuff1ID();
                         int cuffSlot2 = model.Cuff2ID();
-
-
                         string questName = model.GetQuestNameFromID(model.QuestID());
+                        int styleID = model.WeaponStyle();
+                        int weaponIconID = weaponTypeID;
+                        int divaSkillID = model.DivaSkill();
+                        int guildFoodID = model.GuildFoodSkill();
+                        int poogieItemID = model.PoogieItemUseID();
 
-                        // Add the parameter values as SQLiteParameter objects
-                        //cmd.Parameters.Add(new SQLiteParameter("@questID", questID));
-                        //cmd.Parameters.Add(new SQLiteParameter("@areaID", areaID));
-                        //cmd.Parameters.Add(new SQLiteParameter("@finalTimeValue", finalTimeValue));
-                        //cmd.Parameters.Add(new SQLiteParameter("@finalTimeDisplay", finalTimeDisplay));
-                        //cmd.Parameters.Add(new SQLiteParameter("@objectiveImage", finalTimeDisplay));
-                        //cmd.Parameters.Add(new SQLiteParameter("@objectiveTypeID", finalTimeDisplay));
-                        //cmd.Parameters.Add(new SQLiteParameter("@objectiveQuantity", finalTimeDisplay));
-                        //cmd.Parameters.Add(new SQLiteParameter("@starGrade", finalTimeDisplay));
-                        //cmd.Parameters.Add(new SQLiteParameter("@rankNameID", finalTimeDisplay));
-                        //cmd.Parameters.Add(new SQLiteParameter("@objectiveName", finalTimeDisplay));
-                        //cmd.Parameters.Add(new SQLiteParameter("@date", finalTimeDisplay));
-                        //// Add the remaining parameters here
-                        ///
-  //                      string insertSql = "INSERT INTO PlayerGear (PlayerID, GearName, StyleID, WeaponIcon, WeaponClass, WeaponTypeID, MeleeWeaponID, RangedWeaponID, ...) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ...)";
+                        string insertSql = @"INSERT INTO PlayerGear (
+                        RunID, 
+                        PlayerID,
+                        GearName,
+                        StyleID,
+                        WeaponIconID,
+                        WeaponClassID,
+                        WeaponTypeID,
+                        BlademasterWeaponID,
+                        GunnerWeaponID,
+                        WeaponSlot1,
+                        WeaponSlot2,
+                        WeaponSlot3,
+                        HeadID, 
+                        HeadSlot1ID,
+                        HeadSlot2ID,
+                        HeadSlot3ID,
+                        ChestID,
+                        ChestSlot1ID,
+                        ChestSlot2ID,
+                        ChestSlot3ID,
+                        ArmsID,
+                        ArmsSlot1ID,
+                        ArmsSlot2ID,
+                        ArmsSlot3ID,
+                        WaistID,
+                        WaistSlot1ID,
+                        WaistSlot2ID,
+                        WaistSlot3ID,
+                        LegsID,
+                        LegsSlot1ID,
+                        LegsSlot2ID,
+                        LegsSlot3ID,
+                        Cuff1ID,
+                        Cuff2ID,
+                        ZenithSkillsID,
+                        AutomaticSkillsID,
+                        ActiveSkillsID,
+                        CaravanSkillsID,
+                        DivaSkillID,
+                        GuildFoodID,
+                        StyleRankSkillsID,
+                        PlayerInventoryID,
+                        AmmoPouchID,
+                        PoogieItemID,
+                        RoadDureSkillsID
+                        ) VALUES (
+                        @RunID, 
+                        @PlayerID,
+                        @GearName,
+                        @StyleID,
+                        @WeaponIconID,
+                        @WeaponClassID,
+                        @WeaponTypeID,
+                        @BlademasterWeaponID,
+                        @GunnerWeaponID,
+                        @WeaponSlot1,
+                        @WeaponSlot2,
+                        @WeaponSlot3,
+                        @HeadID, 
+                        @HeadSlot1ID,
+                        @HeadSlot2ID,
+                        @HeadSlot3ID,
+                        @ChestID,
+                        @ChestSlot1ID,
+                        @ChestSlot2ID,
+                        @ChestSlot3ID,
+                        @ArmsID,
+                        @ArmsSlot1ID,
+                        @ArmsSlot2ID,
+                        @ArmsSlot3ID,
+                        @WaistID,
+                        @WaistSlot1ID,
+                        @WaistSlot2ID,
+                        @WaistSlot3ID,
+                        @LegsID,
+                        @LegsSlot1ID,
+                        @LegsSlot2ID,
+                        @LegsSlot3ID,
+                        @Cuff1ID,
+                        @Cuff2ID,
+                        @ZenithSkillsID,
+                        @AutomaticSkillsID,
+                        @ActiveSkillsID,
+                        @CaravanSkillsID,
+                        @DivaSkillID,
+                        @GuildFoodID,
+                        @StyleRankSkillsID,
+                        @PlayerInventoryID,
+                        @AmmoPouchID,
+                        @PoogieItemID,
+                        @RoadDureSkillsID
+                        )";
 
-  //                      using (SQLiteCommand cmd = new SQLiteCommand(insertSql, conn))
-  //                      {
-  //                          cmd.Parameters.AddWithValue("@PlayerID", playerId);
-  //                          cmd.Parameters.AddWithValue("@GearName", gearName);
-  //                          cmd.Parameters.AddWithValue("@StyleID", styleId);
-  //                          cmd.Parameters.AddWithValue("@WeaponIcon", weaponIcon);
-  //                          cmd.Parameters.AddWithValue("@WeaponClass", weaponClass);
-  //                          cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeId);
+                        using (SQLiteCommand cmd = new SQLiteCommand(insertSql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@RunID", runID);
+                            cmd.Parameters.AddWithValue("@PlayerID", playerID);
+                            cmd.Parameters.AddWithValue("@GearName", gearName);
+                            cmd.Parameters.AddWithValue("@StyleID", styleID);
+                            cmd.Parameters.AddWithValue("@WeaponIconID", weaponIconID);
+                            cmd.Parameters.AddWithValue("@WeaponClassID", weaponClassID);
+                            cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
 
-  //                          // Check the WeaponTypeID and insert the corresponding weapon ID
-  //                          if (weaponTypeId == 1)
-  //                          {
-  //                              cmd.Parameters.AddWithValue("@MeleeWeaponID", weaponId);
-  //                              cmd.Parameters.AddWithValue("@RangedWeaponID", DBNull.Value);
-  //                          }
-  //                          else if (weaponTypeId == 2)
-  //                          {
-  //                              cmd.Parameters.AddWithValue("@MeleeWeaponID", DBNull.Value);
-  //                              cmd.Parameters.AddWithValue("@RangedWeaponID", weaponId);
-  //                          }
-  //                          else
-  //                          {
-  //                              // Handle other weapon types if needed
-  //                          }
+                            //Check the WeaponTypeID and insert the corresponding weapon ID
+                            switch (weaponTypeID)
+                            {
+                                case 1:
+                                case 5:
+                                case 10:
+                                    cmd.Parameters.AddWithValue("@BlademasterWeaponID", weaponID);
+                                    cmd.Parameters.AddWithValue("@GunnerWeaponID", DBNull.Value);
+                                    break;
+                                case 0:
+                                case 2:
+                                case 3:
+                                case 4:
+                                case 6:
+                                case 7:
+                                case 8:
+                                case 9:
+                                case 11:
+                                case 12:
+                                case 13:
+                                    cmd.Parameters.AddWithValue("@BlademasterWeaponID", DBNull.Value);
+                                    cmd.Parameters.AddWithValue("@GunnerWeaponID", weaponID);
+                                    break;
+                            }
 
-  //                          // Add the rest of the parameters
-  //                          ...
+                            cmd.Parameters.AddWithValue("@WeaponSlot1", weaponSlot1);
+                            cmd.Parameters.AddWithValue("@WeaponSlot1", weaponSlot2);
+                            cmd.Parameters.AddWithValue("@WeaponSlot1", weaponSlot3);
+                            cmd.Parameters.AddWithValue("@HeadID", headID);
+                            cmd.Parameters.AddWithValue("@HeadSlot1ID", headSlot1);
+                            cmd.Parameters.AddWithValue("@HeadSlot2ID", headSlot2);
+                            cmd.Parameters.AddWithValue("@HeadSlot3ID", headSlot3);
+                            cmd.Parameters.AddWithValue("@ChestID", chestID);
+                            cmd.Parameters.AddWithValue("@ChestSlot1ID", chestSlot1);
+                            cmd.Parameters.AddWithValue("@ChestSlot2ID", chestSlot2);
+                            cmd.Parameters.AddWithValue("@ChestSlot3ID", chestSlot3);
+                            cmd.Parameters.AddWithValue("@ArmsID", armsID);
+                            cmd.Parameters.AddWithValue("@ArmsSlot1ID", armsSlot1);
+                            cmd.Parameters.AddWithValue("@ArmsSlot2ID", armsSlot2);
+                            cmd.Parameters.AddWithValue("@ArmsSlot3ID", armsSlot3);
+                            cmd.Parameters.AddWithValue("@WaistID", waistID);
+                            cmd.Parameters.AddWithValue("@WaistSlot1ID", waistSlot1);
+                            cmd.Parameters.AddWithValue("@WaistSlot2ID", waistSlot2);
+                            cmd.Parameters.AddWithValue("@WaistSlot3ID", waistSlot3);
+                            cmd.Parameters.AddWithValue("@LegsID", legsID);
+                            cmd.Parameters.AddWithValue("@LegsSlot1ID", legsSlot1);
+                            cmd.Parameters.AddWithValue("@LegsSlot2ID", legsSlot2);
+                            cmd.Parameters.AddWithValue("@LegsSlot3ID", legsSlot3);
+                            cmd.Parameters.AddWithValue("@Cuff1ID", cuffSlot1);
+                            cmd.Parameters.AddWithValue("@Cuff2ID", cuffSlot2);
+                            cmd.Parameters.AddWithValue("@ZenithSkillsID", zenithSkillsID);
+                            cmd.Parameters.AddWithValue("@AutomaticSkillsID", automaticSkillsID);
+                            cmd.Parameters.AddWithValue("@ActiveSkillsID", activeSkillsID);
+                            cmd.Parameters.AddWithValue("@CaravanSkillsID", caravanSkillsID);
+                            cmd.Parameters.AddWithValue("@DivaSkillsID", divaSkillID);
+                            cmd.Parameters.AddWithValue("@GuildFoodID", guildFoodID);
+                            cmd.Parameters.AddWithValue("@StyleRankSkillsID", styleRankSkillsID);
+                            cmd.Parameters.AddWithValue("@PlayerInventoryID", playerInventoryID);
+                            cmd.Parameters.AddWithValue("@AmmoPouchID", ammoPouchID);
+                            cmd.Parameters.AddWithValue("@PoogieItemID", poogieItemID);
+                            cmd.Parameters.AddWithValue("@RoadDureSkillsID", roadDureSkillsID);
 
-  //// Execute the INSERT statement
-  //int rowsAffected = cmd.ExecuteNonQuery();
+                            // Execute the stored procedure
+                            cmd.ExecuteNonQuery();
+                        }
 
-  //                          // Check if the insert was successful
-  //                          if (rowsAffected > 0)
-  //                          {
-  //                              // The insert was successful
-  //                              Console.WriteLine("PlayerGear inserted successfully");
-  //                          }
-  //                          else
-  //                          {
-  //                              // The insert was not successful
-
-
-                                //// Execute the stored procedure
-                                //cmd.ExecuteNonQuery();
-
-                                // Commit the transaction
-                                transaction.Commit();
+                        // Commit the transaction
+                        transaction.Commit();
                     }
                     catch (Exception ex)
                     {
@@ -860,7 +1078,7 @@ namespace MHFZ_Overlay
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_allcaravanskills_caravanskillid ON AllCaravanSkills(CaravanSkillID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_allroaddureskills_roaddureskillid ON AllRoadDureSkills(RoadDureSkillID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_allstylerankskills_stylerankskillid ON AllStyleRankSkills(StyleRankSkillID)",
-                "CREATE UNIQUE INDEX IF NOT EXISTS isx_allzenithskills_zenithskillid ON AllZenithSkills(ZenithSkillID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allzenithskills_zenithskillid ON AllZenithSkills(ZenithSkillID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_ammopouch_runid ON AmmoPouch(RunID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_area_areaid ON Area(AreaID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_automaticskills_runid ON AutomaticSkills(RunID)",
@@ -877,14 +1095,18 @@ namespace MHFZ_Overlay
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_stylerankskills_runid ON StyleRankSkills(RunID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_weapontype_weapontypeid ON WeaponType(WeaponTypeID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_zenithskills_runid ON ZenithSkills(RunID)",
-                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allmeleeweapons_meleeweaponid ON AllMeleeWeapons(MeleeWeaponID)",
-                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allrangedweapons_rangedweaponid ON AllRangedWeapons(RangedWeaponID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allblademasterweapons_blademasterweaponid ON AllBlademasterWeapons(BlademasterWeaponID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allgunnerweapons_gunnerweaponid ON AllGunnerWeapons(GunnerWeaponID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_allheadpieces_headpieceid ON AllHeadPieces(HeadPieceID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_allchestpieces_chestpieceid ON AllChestPieces(ChestPieceID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_allarmspieces_armspieceid ON AllArmsPieces(ArmsPieceID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_allwaistpieces_waistpieceid ON AllWaistPieces(WaistPieceID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_alllegspieces_legspieceid ON AllLegsPieces(LegsPieceID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_questevents_runid ON QuestEvents(RunID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_weaponclass_weaponclassid ON WeaponClass(WeaponClassID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_weaponicon_weaponiconid ON WeaponIcon(WeaponIconID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_weaponstyles_styleid ON WeaponStyles(StyleID)"
+
             };
 
             using (var transaction = conn.BeginTransaction())
@@ -982,7 +1204,29 @@ namespace MHFZ_Overlay
 
         #endregion
 
-        private readonly List<string> _validTableNames = new List<string> {"RankName", "ObjectiveType", "QuestName", "WeaponType", "Item", "Area", "AllZenithSkills", "AllArmorSkills", "AllCaravanSkills", "AllStyleRankSkills", "AllRoadDureSkills", "AllMeleeWeapons","AllRangedWeapons","AllHeadPieces","AllChestPieces","AllArmsPieces","AllWaistPieces","AllLegsPieces" };
+        private readonly List<string> _validTableNames = new List<string> {
+            "RankName", 
+            "ObjectiveType", 
+            "QuestName", 
+            "WeaponType", 
+            "Item", 
+            "Area", 
+            "AllZenithSkills",
+            "AllArmorSkills",
+            "AllCaravanSkills", 
+            "AllStyleRankSkills", 
+            "AllRoadDureSkills",
+            "AllBlademasterWeapons",
+            "AllGunnerWeapons",
+            "AllHeadPieces",
+            "AllChestPieces",
+            "AllArmsPieces",
+            "AllWaistPieces",
+            "AllLegsPieces", 
+            "WeaponClass", 
+            "WeaponIcon",
+            "WeaponStyles",
+            "AllDivaSkills"};
 
         private void InsertDictionaryDataIntoTable(IReadOnlyDictionary<int, string> dictionary, string tableName, string idColumn, string valueColumn, SQLiteConnection conn)
         {
@@ -994,13 +1238,13 @@ namespace MHFZ_Overlay
                     // Validate the input table name
                     if (!_validTableNames.Contains(tableName))
                     {
-                        throw new ArgumentException("Invalid table name");
+                        throw new ArgumentException($"Invalid table name: {tableName}");
                     }
 
                     // Validate the input parameters
                     if (dictionary == null || dictionary.Count == 0)
                     {
-                        throw new ArgumentException("Invalid dictionary");
+                        throw new ArgumentException($"Invalid dictionary: {dictionary}");
                     }
 
                     if (string.IsNullOrEmpty(tableName) || string.IsNullOrEmpty(idColumn) || string.IsNullOrEmpty(valueColumn))
@@ -1259,7 +1503,7 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(WeaponList.WeaponID, "WeaponType", "WeaponTypeID", "WeaponTypeName", conn);
+                    InsertDictionaryDataIntoTable(WeaponTypes.WeaponTypeID, "WeaponType", "WeaponTypeID", "WeaponTypeName", conn);
 
                     // Create the Item table
                     sql = @"CREATE TABLE IF NOT EXISTS Item (
@@ -1319,11 +1563,11 @@ namespace MHFZ_Overlay
                     PlayerID INTEGER NOT NULL,
                     GearName TEXT NOT NULL,
                     StyleID INTEGER NOT NULL CHECK (StyleID >= 0),
-                    WeaponIcon TEXT NOT NULL,
-                    WeaponClass TEXT NOT NULL,
+                    WeaponIconID INTEGER NOT NULL,
+                    WeaponClassID INTEGER NOT NULL,
                     WeaponTypeID INTEGER NOT NULL CHECK (WeaponTypeID >= 0),
-                    MeleeWeaponID INTEGER,
-                    RangedWeaponID INTEGER,
+                    BlademasterWeaponID INTEGER,
+                    GunnerWeaponID INTEGER,
                     WeaponSlot1 TEXT NOT NULL,
                     WeaponSlot2 TEXT NOT NULL,
                     WeaponSlot3 TEXT NOT NULL,
@@ -1362,13 +1606,16 @@ namespace MHFZ_Overlay
                     RoadDureSkillsID INTEGER NOT NULL,
                     FOREIGN KEY(RunID) REFERENCES Quests(RunID),
                     FOREIGN KEY(PlayerID) REFERENCES Players(PlayerID),
+                    FOREIGN KEY(StyleID) REFERENCES WeaponStyles(StyleID),
+                    FOREIGN KEY(WeaponIconID) REFERENCES WeaponIcon(WeaponIconID),
+                    FOREIGN KEY(WeaponClassID) REFERENCES WeaponClass(WeaponClassID),
                     FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    FOREIGN KEY(MeleeWeaponID) REFERENCES AllMeleeWeapons(MeleeWeaponID),
-                    FOREIGN KEY(RangedWeaponID) REFERENCES AllRangedWeapons(RangedWeaponID),
+                    FOREIGN KEY(BlademasterWeaponID) REFERENCES AllBlademasterWeapons(BlademasterWeaponID),
+                    FOREIGN KEY(GunnerWeaponID) REFERENCES AllGunnerWeapons(GunnerWeaponID),
                     CHECK 
                     (
-                        (MeleeWeaponID IS NOT NULL AND RangedWeaponID IS NULL) OR 
-                        (MeleeWeaponID IS NULL AND RangedWeaponID IS NOT NULL)
+                        (BlademasterWeaponID IS NOT NULL AND GunnerWeaponID IS NULL) OR 
+                        (BlademasterWeaponID IS NULL AND GunnerWeaponID IS NOT NULL)
                     )
                     FOREIGN KEY(HeadID) REFERENCES AllHeadPieces(HeadPieceID),
                     FOREIGN KEY(ChestID) REFERENCES AllChestPieces(ChestPieceID),
@@ -1381,9 +1628,12 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(AutomaticSkillsID) REFERENCES AutomaticSkills(AutomaticSkillsID),
                     FOREIGN KEY(ActiveSkillsID) REFERENCES ActiveSkills(ActiveSkillsID),
                     FOREIGN KEY(CaravanSkillsID) REFERENCES CaravanSkills(CaravanSkillsID),
+                    FOREIGN KEY(DivaSkillID) REFERENCES AllDivaSkills(DivaSkillID),
+                    FOREIGN KEY(GuildFoodID) REFERENCES AllArmorSkills(ArmorSkillID),
                     FOREIGN KEY(StyleRankSkillsID) REFERENCES StyleRankSkills(StyleRankSkillsID),
                     FOREIGN KEY(PlayerInventoryID) REFERENCES PlayerInventory(PlayerInventoryID),
                     FOREIGN KEY(AmmoPouchID) REFERENCES AmmoPouch(AmmoPouchID),
+                    FOREIGN KEY(PoogieItemID) REFERENCES Item(ItemID),
                     FOREIGN KEY(RoadDureSkillsID) REFERENCES RoadDureSkills(RoadDureSkillsID)
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -1391,27 +1641,71 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    sql = @"CREATE TABLE IF NOT EXISTS AllMeleeWeapons (
-                      MeleeWeaponID INTEGER PRIMARY KEY,
-                      MeleeWeaponName TEXT NOT NULL
-                    )"; 
-                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    InsertDictionaryDataIntoTable(Dictionary.MeleeWeapons.MeleeWeaponIDs, "AllMeleeWeapons", "MeleeWeaponID", "MeleeWeaponName", conn);
-
-                    sql = @"CREATE TABLE IF NOT EXISTS AllRangedWeapons (
-                      RangedWeaponID INTEGER PRIMARY KEY,
-                      RangedWeaponName TEXT NOT NULL
+                    sql = @"CREATE TABLE IF NOT EXISTS AllDivaSkills (
+                      DivaSkillID INTEGER PRIMARY KEY,
+                      DivaSkillName TEXT NOT NULL
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.MeleeWeapons.MeleeWeaponIDs, "AllRangedWeapons", "RangedWeaponID", "RangedWeaponName", conn);
+                    InsertDictionaryDataIntoTable(Dictionary.DivaSkillList.DivaSkillID, "AllDivaSkills", "DivaSkillID", "DivaSkillName", conn);
+
+                    sql = @"CREATE TABLE IF NOT EXISTS WeaponStyles (
+                      StyleID INTEGER PRIMARY KEY,
+                      StyleName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    InsertDictionaryDataIntoTable(Dictionary.WeaponStyles.WeaponStyleID, "WeaponStyles", "StyleID", "StyleName", conn);
+
+                    sql = @"CREATE TABLE IF NOT EXISTS WeaponIcon (
+                      WeaponIconID INTEGER PRIMARY KEY,
+                      WeaponIconLink TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    InsertDictionaryDataIntoTable(Dictionary.WeaponIconsDictionary.WeaponIconID, "WeaponIcon", "WeaponIconID", "WeaponIconLink", conn);
+
+                    sql = @"CREATE TABLE IF NOT EXISTS WeaponClass (
+                      WeaponClassID INTEGER PRIMARY KEY,
+                      WeaponClassName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    InsertDictionaryDataIntoTable(Dictionary.WeaponClass.WeaponClassID, "WeaponClass", "WeaponClassID", "WeaponClassName", conn);
+
+                    sql = @"CREATE TABLE IF NOT EXISTS AllBlademasterWeapons (
+                      BlademasterWeaponID INTEGER PRIMARY KEY,
+                      BlademasterWeaponName TEXT NOT NULL
+                    )"; 
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    InsertDictionaryDataIntoTable(Dictionary.BlademasterWeapons.BlademasterWeaponIDs, "AllBlademasterWeapons", "BlademasterWeaponID", "BlademasterWeaponName", conn);
+
+                    sql = @"CREATE TABLE IF NOT EXISTS AllGunnerWeapons (
+                      GunnerWeaponID INTEGER PRIMARY KEY,
+                      GunnerWeaponName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    InsertDictionaryDataIntoTable(Dictionary.GunnerWeapons.GunnerWeaponIDs, "AllGunnerWeapons", "GunnerWeaponID", "GunnerWeaponName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllHeadPieces (
                       HeadPieceID INTEGER PRIMARY KEY,

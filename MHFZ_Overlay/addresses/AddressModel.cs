@@ -292,9 +292,9 @@ namespace MHFZ_Overlay.addresses
         //unsure
         abstract public int CaravanMonster2ID();
 
-        abstract public int MeleeWeaponID();
+        abstract public int BlademasterWeaponID();
         //same as melee afaik
-        abstract public int RangedWeaponID();
+        abstract public int GunnerWeaponID();
         abstract public int WeaponDeco1ID();
         abstract public int WeaponDeco2ID();
         abstract public int WeaponDeco3ID();
@@ -2382,16 +2382,16 @@ namespace MHFZ_Overlay.addresses
 
                 if (className == "Blademaster")
                 {
-                    Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
-                    string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
+                    Dictionary.BlademasterWeapons.BlademasterWeaponIDs.TryGetValue(BlademasterWeaponID(), out string? wepname);
+                    string address = BlademasterWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
 
                     return string.Format("{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
 
                 }
                 else if (className == "Gunner")
                 {
-                    Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
-                    string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
+                    Dictionary.GunnerWeapons.GunnerWeaponIDs.TryGetValue(GunnerWeaponID(), out string? wepname);
+                    string address = GunnerWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
                     return string.Format("{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
                 }
                 else
@@ -7354,16 +7354,16 @@ namespace MHFZ_Overlay.addresses
 
                 if (className == "Blademaster")
                 {
-                    Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
-                    string address = MeleeWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
+                    Dictionary.BlademasterWeapons.BlademasterWeaponIDs.TryGetValue(BlademasterWeaponID(), out string? wepname);
+                    string address = BlademasterWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
 
                     return string.Format("{0}{1} ({2})", wepname, lv, address);
 
                 }
                 else if (className == "Gunner")
                 {
-                    Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
-                    string address = RangedWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
+                    Dictionary.GunnerWeapons.GunnerWeaponIDs.TryGetValue(GunnerWeaponID(), out string? wepname);
+                    string address = GunnerWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
                     return string.Format("{0}{1} ({2})", wepname, lv, address);
                 }
                 else
@@ -7480,13 +7480,13 @@ namespace MHFZ_Overlay.addresses
 
                 if (className == "Blademaster")
                 {
-                    Dictionary.MeleeWeapons.MeleeWeaponIDs.TryGetValue(MeleeWeaponID(), out string? wepname);
+                    Dictionary.BlademasterWeapons.BlademasterWeaponIDs.TryGetValue(BlademasterWeaponID(), out string? wepname);
                     return string.Format("{0}{1}", wepname, lv);
 
                 }
                 else if (className == "Gunner")
                 {
-                    Dictionary.RangedWeapons.RangedWeaponIDs.TryGetValue(RangedWeaponID(), out string? wepname);
+                    Dictionary.GunnerWeapons.GunnerWeaponIDs.TryGetValue(GunnerWeaponID(), out string? wepname);
                     return string.Format("{0}{1}", wepname, lv);
                 }
                 else

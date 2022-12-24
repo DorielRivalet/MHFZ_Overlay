@@ -3,11 +3,11 @@
 namespace Dictionary
 {
     /// <summary>
-    /// Melee weapons dictionary
+    /// Blademaster (melee) weapons dictionary
     /// </summary>
-    public static class MeleeWeapons
+    public static class BlademasterWeapons
     {
-        public static IReadOnlyDictionary<int, string> MeleeWeaponIDs { get; } = new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> BlademasterWeaponIDs { get; } = new Dictionary<int, string>
         {
             {0x0000, "None"},
             {0x000A, "Iron Katana"},

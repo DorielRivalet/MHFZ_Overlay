@@ -3,11 +3,11 @@
 namespace Dictionary
 {
     ///<summary>
-    ///The weapon list
+    ///The weapon types list
     ///</summary>
-    public static class WeaponList
+    public static class WeaponTypes
     {
-        public static IReadOnlyDictionary<int, string> WeaponID { get; } = new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> WeaponTypeID { get; } = new Dictionary<int, string>
         {
             {0, "Great Sword"},
             {1, "Heavy Bowgun"},

@@ -876,7 +876,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public static string getWeaponNameFromID(int id)
         {
-            Dictionary.WeaponList.WeaponID.TryGetValue(id, out string? weaponname);
+            Dictionary.WeaponTypes.WeaponTypeID.TryGetValue(id, out string? weaponname);
             return weaponname + "";
         }
 
@@ -1266,9 +1266,9 @@ namespace MHFZ_Overlay
                 return "(Launcher) ";
             else if (isInLauncher() == "NULL")
                 return "(No game detected) ";
-            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.AreaID() == 0 && DataLoader.model.MeleeWeaponID() == 0 && DataLoader.model.RangedWeaponID() == 0)
+            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.AreaID() == 0 && DataLoader.model.BlademasterWeaponID() == 0 && DataLoader.model.GunnerWeaponID() == 0)
                 return "(Main Menu) ";
-            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.AreaID() == 200 && DataLoader.model.MeleeWeaponID() == 0 && DataLoader.model.RangedWeaponID() == 0)
+            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.AreaID() == 200 && DataLoader.model.BlademasterWeaponID() == 0 && DataLoader.model.GunnerWeaponID() == 0)
                 return "(World Select) ";
             else if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown)
                 return "";

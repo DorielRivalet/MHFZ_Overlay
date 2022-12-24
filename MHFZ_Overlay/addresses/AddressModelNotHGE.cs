@@ -251,9 +251,9 @@ namespace MHFZ_Overlay.addresses
         public override int CaravanMonster2ID() => M.ReadByte("mhfo.dll+28C2C8C");
 
 
-        public override int MeleeWeaponID() => M.Read2Byte("mhfo.dll+5033F92");
+        public override int BlademasterWeaponID() => M.Read2Byte("mhfo.dll+5033F92");
 
-        public override int RangedWeaponID() => M.Read2Byte("mhfo.dll+5033F92");
+        public override int GunnerWeaponID() => M.Read2Byte("mhfo.dll+5033F92");
         //the deco addresses for the weapon includes the tower sigils
         public override int WeaponDeco1ID() => M.Read2Byte("mhfo.dll+5033F96");
         public override int WeaponDeco2ID() => M.Read2Byte("mhfo.dll+5033F98");
