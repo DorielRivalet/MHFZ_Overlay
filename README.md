@@ -22,6 +22,12 @@
 
 ## About
 
+This project aims to provide a simple, customizable overlay for Monster Hunter Frontier Z on Windows, with the added bonus of Discord Rich Presence integration. The overlay allows players to keep track of their in-game stats and progress, as well as providing a convenient way to access various tools and resources.
+
+The overlay is highly configurable, with a wide range of options available to suit the needs of individual players and speedrunners alike. It is also constantly being updated and improved, so be sure to check back for the latest features and fixes.
+
+We hope you find this overlay useful and enjoyable, and we welcome any feedback or suggestions you may have. Happy hunting!
+
 [This project is directly inspired from the overlay created by *suzaku01*](https://github.com/suzaku01/mhf_displayer)
 
 [The theme and color palette used for the application is *Catppuccin Mocha*](https://github.com/catppuccin/catppuccin)
