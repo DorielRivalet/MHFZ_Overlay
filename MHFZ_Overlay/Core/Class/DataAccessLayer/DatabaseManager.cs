@@ -876,7 +876,15 @@ namespace MHFZ_Overlay
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_roaddureskills_runid ON RoadDureSkills(RunID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_stylerankskills_runid ON StyleRankSkills(RunID)",
                 "CREATE UNIQUE INDEX IF NOT EXISTS idx_weapontype_weapontypeid ON WeaponType(WeaponTypeID)",
-                "CREATE UNIQUE INDEX IF NOT EXISTS idx_zenithskills_runid ON ZenithSkills(RunID)"
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_zenithskills_runid ON ZenithSkills(RunID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allmeleeweapons_meleeweaponid ON AllMeleeWeapons(MeleeWeaponID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allrangedweapons_rangedweaponid ON AllRangedWeapons(RangedWeaponID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allheadpieces_headpieceid ON AllHeadPieces(HeadPieceID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allchestpieces_chestpieceid ON AllChestPieces(ChestPieceID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allarmspieces_armspieceid ON AllArmsPieces(ArmsPieceID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_allwaistpieces_waistpieceid ON AllWaistPieces(WaistPieceID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_alllegspieces_legspieceid ON AllLegsPieces(LegsPieceID)",
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_questevents_runid ON QuestEvents(RunID)",
             };
 
             using (var transaction = conn.BeginTransaction())
@@ -1130,10 +1138,66 @@ namespace MHFZ_Overlay
                     ObjectiveName TEXT NOT NULL, 
                     Date DATETIME NOT NULL,
                     YoutubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YoutubeID is a Rick Roll video
+                    -- DpsData TEXT NOT NULL,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(AreaID) REFERENCES Area(AreaID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID),
                     FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    /*
+                     * Here's an example of how you could store the dps data as a JSON string in a single column in the "Quests" table:
+
+                        1. Add a new column to the "Quests" table to store the dps data as a JSON string. You could use a data type like "TEXT" or "BLOB" for this column.
+
+                        2. When a quest finishes, generate an array or list of dps values recorded during the quest run.
+
+                        3. Use a JSON serialization library (such as Newtonsoft.Json in C#) to convert the array or list of dps values into a JSON string.
+
+                        4. Insert the JSON string into the new column in the "Quests" table, along with the other quest run data (such as the QuestID, AreaID, etc.).
+
+                        To extract the dps data and plot it in the chart later, you would do the following:
+
+                        1. Retrieve the JSON string from the "Quests" table for the specific quest run you want to display.
+
+                        2. Use a JSON parsing library (such as Newtonsoft.Json in C#) to deserialize the JSON string into an array or list of dps values.
+
+                        3. Use the dps values and a charting library (such as OxyPlot or LiveCharts) to plot the dps data in a chart.
+
+                        Note that this approach assumes that the dps data is recorded and stored consistently for each quest run. You may need to do additional processing or validation on the data to ensure that it is in a suitable format for charting.
+                     */
+
+                    /*
+                     Quest Events log example:
+
+                        00:00.00 Start at zone X
+                        00:10.00 Changed to zone X
+                        00:15.00 First hit towards monster
+                        00:20.00 Maximum attack buff obtained is now 2850
+                        00:25.00 Reached 67 Hits towards monster
+                        00:27.00 Maximum attack buff obtained is now 3060
+                        00:30.00 Hit by monster
+                        00:40.00 Changed to zone X
+                        00:50.00 Carted at zone X
+                        01:10.33 Changed to zone X (Basecamp ig)
+                        02:00.30 Monster is now at 90% HP
+                        ...
+                        35:34.27 Monster is now at 10% HP
+                        40:00.00 Completed Quest
+                     */
+
+                    sql = @"CREATE TABLE IF NOT EXISTS QuestEvents(
+                      EventID INTEGER PRIMARY KEY AUTOINCREMENT,
+                      RunID INTEGER NOT NULL, -- foreign key to the Quests table
+                      EventType TEXT NOT NULL, -- type of event, e.g. Start, Hit, Cart, etc.
+                      TimeValue INTEGER NOT NULL,
+                      TimeDisplay TEXT NOT NULL, 
+                      EventDetails TEXT NOT NULL, -- data for the event, e.g. zone X, 67 Hits. 
+                      FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
@@ -1250,7 +1314,8 @@ namespace MHFZ_Overlay
 
                     // Create the PlayerGear table
                     sql = @"CREATE TABLE IF NOT EXISTS PlayerGear (
-                    RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    PlayerGearID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL, 
                     PlayerID INTEGER NOT NULL,
                     GearName TEXT NOT NULL,
                     StyleID INTEGER NOT NULL CHECK (StyleID >= 0),
