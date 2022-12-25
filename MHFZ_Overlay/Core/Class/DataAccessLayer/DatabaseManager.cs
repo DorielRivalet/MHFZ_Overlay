@@ -18,6 +18,7 @@ using System.Transactions;
 using System.Collections;
 using Octokit;
 using System.Windows.Controls;
+using System.Diagnostics;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -27,7 +28,7 @@ namespace MHFZ_Overlay
     {
         private readonly string _connectionString;
 
-        private readonly string dataSource = "Data Source="+Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
+        public readonly string dataSource = "Data Source="+Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
 
         private static DatabaseManager instance;
 
@@ -122,8 +123,11 @@ namespace MHFZ_Overlay
         //    }
         //}
 
-        private void InsertQuestData(string connectionString, DataLoader dataLoader)
+        public void InsertQuestData(string connectionString, DataLoader dataLoader)
         {
+            if (!dataLoader.model.questCleared)
+                return;
+
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
                 conn.Open();
@@ -196,7 +200,7 @@ namespace MHFZ_Overlay
                                 objectiveName = model.GetRealMonsterName(model.CurrentMonster1Icon, true);
 
                             string rankName = model.GetRankNameFromID(model.RankBand(), true);
-                            int objectiveQuantity = int.Parse(model.GetObjective1Quantity());
+                            int objectiveQuantity = model.Objective1Quantity();
                             int starGrade = model.StarGrades();
 
                             if ((model.ObjectiveType() == 0x0 || model.ObjectiveType() == 0x02 || model.ObjectiveType() == 0x1002 || model.ObjectiveType() == 0x10) && (model.QuestID() != 23527 && model.QuestID() != 23628 && model.QuestID() != 21731 && model.QuestID() != 21749 && model.QuestID() != 21746 && model.QuestID() != 21750))
@@ -374,9 +378,9 @@ namespace MHFZ_Overlay
                             int caravanSkill3ID = model.CaravanSkill3();
 
                             cmd.Parameters.AddWithValue("@RunID", runID);
-                            cmd.Parameters.AddWithValue("@ZenithSkill1ID", caravanSkill1ID);
-                            cmd.Parameters.AddWithValue("@ZenithSkill2ID", caravanSkill2ID);
-                            cmd.Parameters.AddWithValue("@ZenithSkill3ID", caravanSkill3ID);
+                            cmd.Parameters.AddWithValue("@CaravanSkill1ID", caravanSkill1ID);
+                            cmd.Parameters.AddWithValue("@CaravanSkill2ID", caravanSkill2ID);
+                            cmd.Parameters.AddWithValue("@CaravanSkill3ID", caravanSkill3ID);
                             cmd.ExecuteNonQuery();
                         }
 
@@ -394,8 +398,8 @@ namespace MHFZ_Overlay
                             int styleRankSkill2ID = model.StyleRank2();
 
                             cmd.Parameters.AddWithValue("@RunID", runID);
-                            cmd.Parameters.AddWithValue("@ZenithSkill1ID", styleRankSkill1ID);
-                            cmd.Parameters.AddWithValue("@ZenithSkill2ID", styleRankSkill2ID);
+                            cmd.Parameters.AddWithValue("@StyleRankSkill1ID", styleRankSkill1ID);
+                            cmd.Parameters.AddWithValue("@StyleRankSkill2ID", styleRankSkill2ID);
                             cmd.ExecuteNonQuery();
                         }
 
@@ -836,6 +840,9 @@ namespace MHFZ_Overlay
                         }
 
                         string gearName = s.GearDescriptionExport;
+                        if (gearName == "" || gearName == null)
+                            gearName = "Unnamed";
+
                         int weaponTypeID = model.WeaponType();
                         int weaponClassID = weaponTypeID;
                         int weaponID = model.BlademasterWeaponID();//ranged and melee are the same afaik
@@ -871,98 +878,126 @@ namespace MHFZ_Overlay
                         int guildFoodID = model.GuildFoodSkill();
                         int poogieItemID = model.PoogieItemUseID();
 
+                        int? blademasterWeaponID = null;
+                        int? gunnerWeaponID = null;
+
+                        //Check the WeaponTypeID and insert the corresponding weapon ID
+                        switch (weaponTypeID)
+                        {
+                            case 0:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 6:
+                            case 7:
+                            case 8:
+                            case 9:
+                            case 11:
+                            case 12:
+                            case 13:
+                                blademasterWeaponID = model.BlademasterWeaponID();
+                                break;
+                            case 1:
+                            case 5:
+                            case 10:
+                                gunnerWeaponID = model.GunnerWeaponID();
+                                break;
+                        }
+
                         string insertSql = @"INSERT INTO PlayerGear (
-                        RunID, 
-                        PlayerID,
-                        GearName,
-                        StyleID,
-                        WeaponIconID,
-                        WeaponClassID,
-                        WeaponTypeID,
-                        BlademasterWeaponID,
-                        GunnerWeaponID,
-                        WeaponSlot1,
-                        WeaponSlot2,
-                        WeaponSlot3,
-                        HeadID, 
-                        HeadSlot1ID,
-                        HeadSlot2ID,
-                        HeadSlot3ID,
-                        ChestID,
-                        ChestSlot1ID,
-                        ChestSlot2ID,
-                        ChestSlot3ID,
-                        ArmsID,
-                        ArmsSlot1ID,
-                        ArmsSlot2ID,
-                        ArmsSlot3ID,
-                        WaistID,
-                        WaistSlot1ID,
-                        WaistSlot2ID,
-                        WaistSlot3ID,
-                        LegsID,
-                        LegsSlot1ID,
-                        LegsSlot2ID,
-                        LegsSlot3ID,
-                        Cuff1ID,
-                        Cuff2ID,
-                        ZenithSkillsID,
-                        AutomaticSkillsID,
-                        ActiveSkillsID,
-                        CaravanSkillsID,
-                        DivaSkillID,
-                        GuildFoodID,
-                        StyleRankSkillsID,
-                        PlayerInventoryID,
-                        AmmoPouchID,
-                        PoogieItemID,
-                        RoadDureSkillsID
-                        ) VALUES (
-                        @RunID, 
-                        @PlayerID,
-                        @GearName,
-                        @StyleID,
-                        @WeaponIconID,
-                        @WeaponClassID,
-                        @WeaponTypeID,
-                        @BlademasterWeaponID,
-                        @GunnerWeaponID,
-                        @WeaponSlot1,
-                        @WeaponSlot2,
-                        @WeaponSlot3,
-                        @HeadID, 
-                        @HeadSlot1ID,
-                        @HeadSlot2ID,
-                        @HeadSlot3ID,
-                        @ChestID,
-                        @ChestSlot1ID,
-                        @ChestSlot2ID,
-                        @ChestSlot3ID,
-                        @ArmsID,
-                        @ArmsSlot1ID,
-                        @ArmsSlot2ID,
-                        @ArmsSlot3ID,
-                        @WaistID,
-                        @WaistSlot1ID,
-                        @WaistSlot2ID,
-                        @WaistSlot3ID,
-                        @LegsID,
-                        @LegsSlot1ID,
-                        @LegsSlot2ID,
-                        @LegsSlot3ID,
-                        @Cuff1ID,
-                        @Cuff2ID,
-                        @ZenithSkillsID,
-                        @AutomaticSkillsID,
-                        @ActiveSkillsID,
-                        @CaravanSkillsID,
-                        @DivaSkillID,
-                        @GuildFoodID,
-                        @StyleRankSkillsID,
-                        @PlayerInventoryID,
-                        @AmmoPouchID,
-                        @PoogieItemID,
-                        @RoadDureSkillsID
+                        --PlayerGearID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        RunID, --INTEGER NOT NULL, 
+                        PlayerID, --INTEGER NOT NULL,
+                        GearName, --TEXT NOT NULL,
+                        StyleID, --INTEGER NOT NULL CHECK (StyleID >= 0),
+                        WeaponIconID, --INTEGER NOT NULL,
+                        WeaponClassID, --INTEGER NOT NULL,
+                        WeaponTypeID, --INTEGER NOT NULL CHECK (WeaponTypeID >= 0),
+                        BlademasterWeaponID, --INTEGER,
+                        GunnerWeaponID, --INTEGER,
+                        WeaponSlot1, --TEXT NOT NULL,
+                        WeaponSlot2, --TEXT NOT NULL,
+                        WeaponSlot3, --TEXT NOT NULL,
+                        HeadID, --INTEGER NOT NULL CHECK (HeadID >= 0), 
+                        HeadSlot1ID, --INTEGER NOT NULL CHECK (HeadSlot1ID >= 0),
+                        HeadSlot2ID, --INTEGER NOT NULL CHECK (HeadSlot2ID >= 0),
+                        HeadSlot3ID, --INTEGER NOT NULL CHECK (HeadSlot3ID >= 0),
+                        ChestID, --INTEGER NOT NULL CHECK (ChestID >= 0),
+                        ChestSlot1ID, --INTEGER NOT NULL CHECK (ChestSlot1ID >= 0),
+                        ChestSlot2ID,-- INTEGER NOT NULL CHECK (ChestSlot2ID >= 0),
+                        ChestSlot3ID,-- INTEGER NOT NULL CHECK (ChestSlot3ID >= 0),
+                        ArmsID,-- INTEGER NOT NULL CHECK (ArmsID >= 0),
+                        ArmsSlot1ID,-- INTEGER NOT NULL CHECK (ArmsSlot1ID >= 0),
+                        ArmsSlot2ID,-- INTEGER NOT NULL CHECK (ArmsSlot2ID >= 0),
+                        ArmsSlot3ID,-- INTEGER NOT NULL CHECK (ArmsSlot3ID >= 0),
+                        WaistID,-- INTEGER NOT NULL CHECK (WaistID >= 0),
+                        WaistSlot1ID,-- INTEGER NOT NULL CHECK (WaistSlot1ID >= 0),
+                        WaistSlot2ID,-- INTEGER NOT NULL CHECK (WaistSlot2ID >= 0),
+                        WaistSlot3ID,-- INTEGER NOT NULL CHECK (WaistSlot3ID >= 0),
+                        LegsID,-- INTEGER NOT NULL CHECK (LegsID >= 0),
+                        LegsSlot1ID,-- INTEGER NOT NULL CHECK (LegsSlot1ID >= 0),
+                        LegsSlot2ID,-- INTEGER NOT NULL CHECK (LegsSlot2ID >= 0),
+                        LegsSlot3ID,-- INTEGER NOT NULL CHECK (LegsSlot3ID >= 0),
+                        Cuff1ID,-- INTEGER NOT NULL CHECK (Cuff1ID >= 0),
+                        Cuff2ID,-- INTEGER NOT NULL CHECK (Cuff2ID >= 0),
+                        ZenithSkillsID,-- INTEGER NOT NULL,
+                        AutomaticSkillsID,-- INTEGER NOT NULL,
+                        ActiveSkillsID,-- INTEGER NOT NULL,
+                        CaravanSkillsID,-- INTEGER NOT NULL,
+                        DivaSkillID,-- INTEGER NOT NULL,
+                        GuildFoodID,-- INTEGER NOT NULL,
+                        StyleRankSkillsID,-- INTEGER NOT NULL,
+                        PlayerInventoryID,-- INTEGER NOT NULL,
+                        AmmoPouchID,-- INTEGER NOT NULL,
+                        PoogieItemID,-- INTEGER NOT NULL,
+                        RoadDureSkillsID-- INTEGER NOT NULL,
+                            ) VALUES (
+                        --PlayerGearID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        @RunID, --INTEGER NOT NULL, 
+                        @PlayerID, --INTEGER NOT NULL,
+                        @GearName, --TEXT NOT NULL,
+                        @StyleID, --INTEGER NOT NULL CHECK (StyleID >= 0),
+                        @WeaponIconID, --INTEGER NOT NULL,
+                        @WeaponClassID, --INTEGER NOT NULL,
+                        @WeaponTypeID, --INTEGER NOT NULL CHECK (WeaponTypeID >= 0),
+                        @BlademasterWeaponID, --INTEGER,
+                        @GunnerWeaponID, --INTEGER,
+                        @WeaponSlot1, --TEXT NOT NULL,
+                        @WeaponSlot2, --TEXT NOT NULL,
+                        @WeaponSlot3, --TEXT NOT NULL,
+                        @HeadID, --INTEGER NOT NULL CHECK (HeadID >= 0), 
+                        @HeadSlot1ID, --INTEGER NOT NULL CHECK (HeadSlot1ID >= 0),
+                        @HeadSlot2ID, --INTEGER NOT NULL CHECK (HeadSlot2ID >= 0),
+                        @HeadSlot3ID, --INTEGER NOT NULL CHECK (HeadSlot3ID >= 0),
+                        @ChestID, --INTEGER NOT NULL CHECK (ChestID >= 0),
+                        @ChestSlot1ID, --INTEGER NOT NULL CHECK (ChestSlot1ID >= 0),
+                        @ChestSlot2ID,-- INTEGER NOT NULL CHECK (ChestSlot2ID >= 0),
+                        @ChestSlot3ID,-- INTEGER NOT NULL CHECK (ChestSlot3ID >= 0),
+                        @ArmsID,-- INTEGER NOT NULL CHECK (ArmsID >= 0),
+                        @ArmsSlot1ID,-- INTEGER NOT NULL CHECK (ArmsSlot1ID >= 0),
+                        @ArmsSlot2ID,-- INTEGER NOT NULL CHECK (ArmsSlot2ID >= 0),
+                        @ArmsSlot3ID,-- INTEGER NOT NULL CHECK (ArmsSlot3ID >= 0),
+                        @WaistID,-- INTEGER NOT NULL CHECK (WaistID >= 0),
+                        @WaistSlot1ID,-- INTEGER NOT NULL CHECK (WaistSlot1ID >= 0),
+                        @WaistSlot2ID,-- INTEGER NOT NULL CHECK (WaistSlot2ID >= 0),
+                        @WaistSlot3ID,-- INTEGER NOT NULL CHECK (WaistSlot3ID >= 0),
+                        @LegsID,-- INTEGER NOT NULL CHECK (LegsID >= 0),
+                        @LegsSlot1ID,-- INTEGER NOT NULL CHECK (LegsSlot1ID >= 0),
+                        @LegsSlot2ID,-- INTEGER NOT NULL CHECK (LegsSlot2ID >= 0),
+                        @LegsSlot3ID,-- INTEGER NOT NULL CHECK (LegsSlot3ID >= 0),
+                        @Cuff1ID,-- INTEGER NOT NULL CHECK (Cuff1ID >= 0),
+                        @Cuff2ID,-- INTEGER NOT NULL CHECK (Cuff2ID >= 0),
+                        @ZenithSkillsID,-- INTEGER NOT NULL,
+                        @AutomaticSkillsID,-- INTEGER NOT NULL,
+                        @ActiveSkillsID,-- INTEGER NOT NULL,
+                        @CaravanSkillsID,-- INTEGER NOT NULL,
+                        @DivaSkillID,-- INTEGER NOT NULL,
+                        @GuildFoodID,-- INTEGER NOT NULL,
+                        @StyleRankSkillsID,-- INTEGER NOT NULL,
+                        @PlayerInventoryID,-- INTEGER NOT NULL,
+                        @AmmoPouchID,-- INTEGER NOT NULL,
+                        @PoogieItemID,-- INTEGER NOT NULL,
+                        @RoadDureSkillsID-- INTEGER NOT NULL,
                         )";
 
                         using (SQLiteCommand cmd = new SQLiteCommand(insertSql, conn))
@@ -974,35 +1009,25 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@WeaponIconID", weaponIconID);
                             cmd.Parameters.AddWithValue("@WeaponClassID", weaponClassID);
                             cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
-
-                            //Check the WeaponTypeID and insert the corresponding weapon ID
-                            switch (weaponTypeID)
+                            if (blademasterWeaponID == null)
                             {
-                                case 1:
-                                case 5:
-                                case 10:
-                                    cmd.Parameters.AddWithValue("@BlademasterWeaponID", weaponID);
-                                    cmd.Parameters.AddWithValue("@GunnerWeaponID", DBNull.Value);
-                                    break;
-                                case 0:
-                                case 2:
-                                case 3:
-                                case 4:
-                                case 6:
-                                case 7:
-                                case 8:
-                                case 9:
-                                case 11:
-                                case 12:
-                                case 13:
-                                    cmd.Parameters.AddWithValue("@BlademasterWeaponID", DBNull.Value);
-                                    cmd.Parameters.AddWithValue("@GunnerWeaponID", weaponID);
-                                    break;
+                                cmd.Parameters.AddWithValue("@BlademasterWeaponID", DBNull.Value);
                             }
-
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@BlademasterWeaponID", blademasterWeaponID);
+                            }
+                            if (gunnerWeaponID == null)
+                            {
+                                cmd.Parameters.AddWithValue("@GunnerWeaponID", DBNull.Value);
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@GunnerWeaponID", gunnerWeaponID);
+                            }
                             cmd.Parameters.AddWithValue("@WeaponSlot1", weaponSlot1);
-                            cmd.Parameters.AddWithValue("@WeaponSlot1", weaponSlot2);
-                            cmd.Parameters.AddWithValue("@WeaponSlot1", weaponSlot3);
+                            cmd.Parameters.AddWithValue("@WeaponSlot2", weaponSlot2);
+                            cmd.Parameters.AddWithValue("@WeaponSlot3", weaponSlot3);
                             cmd.Parameters.AddWithValue("@HeadID", headID);
                             cmd.Parameters.AddWithValue("@HeadSlot1ID", headSlot1);
                             cmd.Parameters.AddWithValue("@HeadSlot2ID", headSlot2);
@@ -1029,7 +1054,7 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@AutomaticSkillsID", automaticSkillsID);
                             cmd.Parameters.AddWithValue("@ActiveSkillsID", activeSkillsID);
                             cmd.Parameters.AddWithValue("@CaravanSkillsID", caravanSkillsID);
-                            cmd.Parameters.AddWithValue("@DivaSkillsID", divaSkillID);
+                            cmd.Parameters.AddWithValue("@DivaSkillID", divaSkillID);
                             cmd.Parameters.AddWithValue("@GuildFoodID", guildFoodID);
                             cmd.Parameters.AddWithValue("@StyleRankSkillsID", styleRankSkillsID);
                             cmd.Parameters.AddWithValue("@PlayerInventoryID", playerInventoryID);
@@ -1043,6 +1068,26 @@ namespace MHFZ_Overlay
 
                         // Commit the transaction
                         transaction.Commit();
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        if (transaction != null)
+                            transaction.Rollback();
+                        // Handle a SQL exception
+                        MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState+"\n\n"+ex.HelpLink+"\n\n"+ex.ResultCode+"\n\n"+ex.ErrorCode+"\n\n"+ex.Source+"\n\n"+ex.StackTrace+"\n\n"+ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (IOException ex)
+                    {
+                        if (transaction != null)
+                            transaction.Rollback();
+                        // Handle an I/O exception
+                        MessageBox.Show("An error occurred while accessing a file: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        if (transaction != null)
+                            transaction.Rollback();
+                        MessageBox.Show("ArgumentException " + ex.Message + " " + ex.ParamName);
                     }
                     catch (Exception ex)
                     {
@@ -1136,7 +1181,7 @@ namespace MHFZ_Overlay
                 transaction.Rollback();
 
             // Handle the exception and show an error message to the user
-            MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("An error occurred: " + ex.Message +"\n\n" + ex.StackTrace + "\n\n" +ex.Source+"\n\n"+ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         #region session time

@@ -1814,10 +1814,28 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
-                            <DockPanel>
-                                
-                            </DockPanel>
+                            <Grid Grid.Row="0" Background="Transparent" Style="{StaticResource ConfigSingleGrid}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Enable Quest Logging"/>
+                                <ToggleButton Grid.Row="0" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}"/>
+                            </Grid>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Enable Quest Logging"/>
                         </Grid>
                     </ScrollViewer>
                 </DockPanel>

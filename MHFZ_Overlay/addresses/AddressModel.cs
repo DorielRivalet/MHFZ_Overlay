@@ -8273,6 +8273,8 @@ namespace MHFZ_Overlay.addresses
 
         public TimeSpan TotalTimeSpent { get; set; }
 
+        public bool questCleared = false;
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>

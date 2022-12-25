@@ -1610,6 +1610,47 @@ namespace MHFZ_Overlay
             }
         }
 
+        //quest ids:
+        //mp road: 23527
+        //solo road: 23628
+        //1st district dure: 21731
+        //2nd district dure: 21746
+        //1st district dure sky corridor: 21749
+        //2nd district dure sky corridor: 21750
+        //arrogant dure repel: 23648
+        //arrogant dure slay: 23649
+        //urgent tower: 21751
+        //4th district dure: 21748
+        //3rd district dure: 21747
+        //3rd district dure 2: 21734
+        //UNUSED sky corridor: 21730
+        //sky corridor prologue: 21729
+        //raviente 62105
+        //raviente carve 62108
+        ///violent raviente 62101
+        ///violent carve 62104
+        //berserk slay practice 55796
+        //berserk support practice 1 55802
+        //berserk support practice 2 55803
+        //berserk support practice 3 55804
+        //berserk support practice 4 55805
+        //berserk support practice 5 55806
+        //berserk practice carve 55807
+        //berserk slay  54751
+        //berserk support 1 54756
+        //berserk support 2 54757
+        //berserk support 3 54758
+        //berserk support 4 54759
+        //berserk support 5 54760
+        //berserk carve 54761
+        //extreme slay (musou table 54) 55596 
+        //extreme support 1 55602
+        //extreme support 2 55603
+        //extreme support 3 55604
+        //extreme support 4 55605
+        //extreme support 5 55606
+        //extreme carve 55607
+
         /// <summary>
         /// Updates the discord RPC.
         /// </summary>
@@ -1622,46 +1663,6 @@ namespace MHFZ_Overlay
 
             presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), GetOverlayMode(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
 
-            //quest ids:
-            //mp road: 23527
-            //solo road: 23628
-            //1st district dure: 21731
-            //2nd district dure: 21746
-            //1st district dure sky corridor: 21749
-            //2nd district dure sky corridor: 21750
-            //arrogant dure repel: 23648
-            //arrogant dure slay: 23649
-            //urgent tower: 21751
-            //4th district dure: 21748
-            //3rd district dure: 21747
-            //3rd district dure 2: 21734
-            //UNUSED sky corridor: 21730
-            //sky corridor prologue: 21729
-            //raviente 62105
-            //raviente carve 62108
-            ///violent raviente 62101
-            ///violent carve 62104
-            //berserk slay practice 55796
-            //berserk support practice 1 55802
-            //berserk support practice 2 55803
-            //berserk support practice 3 55804
-            //berserk support practice 4 55805
-            //berserk support practice 5 55806
-            //berserk practice carve 55807
-            //berserk slay  54751
-            //berserk support 1 54756
-            //berserk support 2 54757
-            //berserk support 3 54758
-            //berserk support 4 54759
-            //berserk support 5 54760
-            //berserk carve 54761
-            //extreme slay (musou table 54) 55596 
-            //extreme support 1 55602
-            //extreme support 2 55603
-            //extreme support 3 55604
-            //extreme support 4 55605
-            //extreme support 5 55606
-            //extreme carve 55607
             if (IsInHubAreaID() && DataLoader.model.QuestID() == 0)
                 DataLoader.model.PreviousHubAreaID = DataLoader.model.AreaID();
 
@@ -2019,9 +2020,17 @@ namespace MHFZ_Overlay
                     }
                 }
             }
-            else if (DataLoader.model.QuestID() == 0 && inQuest && int.Parse(DataLoader.model.ATK) == 0)
+            // check if quest clear 
+            else if (DataLoader.model.QuestState() == 1 && !DataLoader.model.questCleared)
+            {
+                DataLoader.model.questCleared = true;
+                databaseManager.InsertQuestData(databaseManager.dataSource, DataLoader);
+            }
+            // going back to Mezeporta or w/e
+            else if (DataLoader.model.QuestState() != 1 && DataLoader.model.QuestID() == 0 && inQuest && int.Parse(DataLoader.model.ATK) == 0)
             {
                 inQuest = false;
+                DataLoader.model.questCleared = false;
 
                 //reset values
                 currentMonster1MaxHP = 0;
