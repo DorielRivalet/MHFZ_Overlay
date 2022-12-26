@@ -1223,7 +1223,7 @@
                             <ComboBoxItem>Zinogre</ComboBoxItem>
                         </ComboBox>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Enter a custom gear title or description" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Gear Description"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Enter a custom gear title or description. Gets logged on database along with the other player info." Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Gear Description"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GearDescriptionExport}" MaxLength="32"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Select Gender" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Gender"/>
@@ -1317,17 +1317,26 @@
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Highest Attack Color (resets per quest)" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0"  Text="Highest Attack Color"/>
                         <ToggleButton Grid.Row="32" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestAtkColor}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Total Current Sharpness Values" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0"  Text="Total Sharpness"/>
-                        <ToggleButton Grid.Row="33" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0"  Text="DPS X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="33" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSX}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0"  Text="Total Sharpness Info X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="34" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0"  Text="DPS Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="34" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSY}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0"  Text="Total Sharpness Info Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="35" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Highest DPS Color (resets per quest)" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0"  Text="Highest DPS Color"/>
+                        <ToggleButton Grid.Row="35" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestDPSColor}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0"  Text="Current Sharpness as Percentage"/>
-                        <ToggleButton Grid.Row="36" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Total Current Sharpness Values" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0"  Text="Total Sharpness"/>
+                        <ToggleButton Grid.Row="36" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
+
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="37" Grid.Column="0"  Text="Total Sharpness Info X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="37" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
+
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="38" Grid.Column="0"  Text="Total Sharpness Info Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="38" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="39" Grid.Column="0"  Text="Current Sharpness as Percentage"/>
+                        <ToggleButton Grid.Row="39" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
 
                         <!--<TextBlock Margin="5,5,5,5" ToolTip="Currently Equipped Weapon (includes Town Set)" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="{Binding CurrentWeaponName}"/>
                         <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="16" x:Name="playerWepTextBox" Text="{Binding CurrentWeaponName}"/>-->
@@ -1653,27 +1662,29 @@
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordClientID}"  PreviewTextInput="ValidateNumber" MaxLength="19"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="The server you play on (e.g. https://discord.gg/y8mF6amH, enter only the ID, not the whole link)" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="(Optional) Frontier Discord Server Invite Link"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordServerInvite}"  PreviewTextInput="ValidateName" MaxLength="10"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Your hunter name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="(Optional) Hunter Name"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Your hunter name to display on. Gets logged on database along with the other names." Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="(Optional) Hunter Name"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HunterName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Your guild (in-game) name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="(Optional) Guild Name"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GuildName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Select Quest Timing Mode (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Quest Timing Mode"/>
-                        <ComboBox Grid.Column="1" Grid.Row="7" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordTimerMode}">
+                        <TextBlock Margin="5,5,5,5" ToolTip="Your server (in-game) name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="(Optional) Server Name"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ServerName}"  PreviewTextInput="ValidateName" MaxLength="24"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select Quest Timing Mode (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Quest Timing Mode"/>
+                        <ComboBox Grid.Column="1" Grid.Row="8" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordTimerMode}">
                             <ComboBoxItem>Time Left</ComboBoxItem>
                             <ComboBoxItem>Time Elapsed</ComboBoxItem>
                         </ComboBox>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Reset Time on Floor change (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Road Timer Reset per Floor"/>
-                        <ComboBox Grid.Column="1" Grid.Row="8" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordRoadTimerReset}">
+                        <TextBlock Margin="5,5,5,5" ToolTip="Reset Time on Floor change (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Road Timer Reset per Floor"/>
+                        <ComboBox Grid.Column="1" Grid.Row="9" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordRoadTimerReset}">
                             <ComboBoxItem>Never</ComboBoxItem>
                             <ComboBoxItem>Always</ComboBoxItem>
                         </ComboBox>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Name (some are untranslated. Replaces Objective and Monster information and puts it into the large image text tooltip)" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Quest Name"/>
-                        <ToggleButton Grid.Row="9" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=DiscordQuestNameShown}"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Caravan Score (meant to be used in tandem with Caravan Override)" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Caravan Score"/>
-                        <ToggleButton Grid.Row="10" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCaravanScore}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Name (some are untranslated. Replaces Objective and Monster information and puts it into the large image text tooltip)" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Quest Name"/>
+                        <ToggleButton Grid.Row="10" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=DiscordQuestNameShown}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Caravan Score (meant to be used in tandem with Caravan Override)" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Caravan Score"/>
+                        <ToggleButton Grid.Row="11" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCaravanScore}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Max carts override" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Max Faints Override"/>
-                        <ComboBox Grid.Column="1" Grid.Row="11" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=MaxFaintsOverride}">
+                        <TextBlock Margin="5,5,5,5" ToolTip="Max carts override" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Max Faints Override"/>
+                        <ComboBox Grid.Column="1" Grid.Row="12" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=MaxFaintsOverride}">
                             <ComboBoxItem>Automatic</ComboBoxItem>
                             <ComboBoxItem>Normal Quests</ComboBoxItem>
                             <ComboBoxItem>Shiten/Conquest/Pioneer/Daily/Caravan/Interception Quests</ComboBoxItem>
@@ -1798,6 +1809,7 @@
                 </DockPanel>
             </Grid>
         </TabItem>
+        <!--TODO: Make this similar to Hunter Info layout. first tab is Settings, second tab is Quest Records (Read), third tab is Weapon Usage, fourth tab is Youtube, fifth tab could be Run Manager (Create, Update, Delete)-->
         <TabItem ToolTip="Quest Database" Background="#11111b" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
@@ -1820,20 +1832,22 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" Background="Transparent" Style="{StaticResource ConfigSingleGrid}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Enable Quest Logging"/>
-                                <ToggleButton Grid.Row="0" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}"/>
+                                <Button ToolTip="Select the dat folder (which is in the same directory of where your game exe resides). This is needed because the overlay will read the *unique signatures* of the files within the folder and thus show which files you have used in a quest run" Grid.Row="0" Grid.Column="0" Content="(Mandatory) Select dat Folder" Click="datFolderButton_Click"/>
+                                <TextBlock Margin="5,5,5,5" ToolTip="dat Folder Path" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="1"  Text="{Binding Source={StaticResource Settings}, Path=datFolderPath}"/>
+                                <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Quest Logging" />
+                                <ToggleButton Grid.Row="1" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}" Checked="questLoggingToggle_Check"/>
                             </Grid>
                             <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Enable Quest Logging"/>
                         </Grid>
@@ -1841,6 +1855,7 @@
                 </DockPanel>
             </Grid>
         </TabItem>
+        <!--TODO: ID Viewer (select id FROM table)-->
         <TabItem ToolTip="Developers and program information" Background="#11111b" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">

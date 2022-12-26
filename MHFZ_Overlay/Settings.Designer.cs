@@ -1033,7 +1033,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("470")]
+        [global::System.Configuration.DefaultSettingValueAttribute("340")]
         public double Monster1IconY {
             get {
                 return ((double)(this["Monster1IconY"]));
@@ -1700,6 +1700,66 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["EnableQuestLogging"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string datFolderPath {
+            get {
+                return ((string)(this["datFolderPath"]));
+            }
+            set {
+                this["datFolderPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public double PlayerDPSX {
+            get {
+                return ((double)(this["PlayerDPSX"]));
+            }
+            set {
+                this["PlayerDPSX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("520")]
+        public double PlayerDPSY {
+            get {
+                return ((double)(this["PlayerDPSY"]));
+            }
+            set {
+                this["PlayerDPSY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableHighestDPSColor {
+            get {
+                return ((bool)(this["EnableHighestDPSColor"]));
+            }
+            set {
+                this["EnableHighestDPSColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ServerName")]
+        public string ServerName {
+            get {
+                return ((string)(this["ServerName"]));
+            }
+            set {
+                this["ServerName"] = value;
             }
         }
     }

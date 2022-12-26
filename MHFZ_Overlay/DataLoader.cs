@@ -60,7 +60,8 @@ namespace MHFZ_Overlay
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
 
-                App.Current.Shutdown();
+                //App.Current.Shutdown();
+                Environment.Exit(0);
             }
         }
 
@@ -129,7 +130,8 @@ namespace MHFZ_Overlay
             if (proc == null)
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                App.Current.Shutdown();
+                //App.Current.Shutdown();
+                Environment.Exit(0);
                 return;
             }
             long searchAddress = m.AoBScan("89 04 8D 00 C6 43 00 61 E9").Result.FirstOrDefault();

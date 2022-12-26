@@ -19,6 +19,8 @@ using System.Collections;
 using Octokit;
 using System.Windows.Controls;
 using System.Diagnostics;
+using System.Security.Cryptography;
+using Newtonsoft.Json;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -123,8 +125,38 @@ namespace MHFZ_Overlay
         //    }
         //}
 
+        public void InsertAllExternalPlayerQuestsData()
+        {
+            // TODO: hyggog, etc.
+        }
+
+        public string CalculateFileHash(string folderPath, string fileName)
+        {
+            // Calculate the SHA256 hash of a file
+            string filePath = folderPath+fileName;
+            byte[] hash;
+            using (var stream = new BufferedStream(File.OpenRead(filePath), 1200000))
+            {
+                hash = SHA256.Create().ComputeHash(stream);
+            }
+
+            // Convert the hash to a hexadecimal string
+            string hashString = BitConverter.ToString(hash).Replace("-", string.Empty);
+
+            // Print the hash to the console
+            return hashString;
+        }
+
         public void InsertQuestData(string connectionString, DataLoader dataLoader)
         {
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+            
+            if (!dataLoader.model.ValidateDatFolder())
+                return;
+
+            if (!s.EnableQuestLogging)
+                return;
+
             if (!dataLoader.model.questCleared)
                 return;
 
@@ -132,8 +164,9 @@ namespace MHFZ_Overlay
             {
                 conn.Open();
                 var model = dataLoader.model;
-                Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                 string sql;
+                // TODO: tomotaka is 2, hygogg is 3, etc. prob make a dictionary that holds these.
+                int playerID = 1;
 
                 using (SQLiteTransaction transaction = conn.BeginTransaction())
                 {
@@ -141,8 +174,51 @@ namespace MHFZ_Overlay
                     {
                         // Insert data into the Quests table
                         sql = @"INSERT INTO Quests (
-                        QuestID, AreaID, FinalTimeValue, FinalTimeDisplay, ObjectiveImage, ObjectiveTypeID, ObjectiveQuantity, StarGrade, RankNameID, ObjectiveName, Date
-                        ) VALUES (@QuestID, @AreaID, @FinalTimeValue, @FinalTimeDisplay, @ObjectiveImage, @ObjectiveTypeID, @ObjectiveQuantity, @StarGrade, @RankNameID, @ObjectiveName, @Date)";
+                        QuestID, 
+                        AreaID, 
+                        FinalTimeValue, 
+                        FinalTimeDisplay, ObjectiveImage, 
+                        ObjectiveTypeID,
+                        ObjectiveQuantity,
+                        StarGrade,
+                        RankNameID,
+                        ObjectiveName, 
+                        Date,
+                        YoutubeID,
+                        AttackBuffDictionary,
+                        HitCountDictionary,
+                        DamageDealtDictionary,
+                        DamagePerSecondDictionary,
+                        AreaChangesDictionary,
+                        CartsDictionary,
+                        Monster1HPDictionary,
+                        Monster2HPDictionary,
+                        Monster3HPDictionary,
+                        Monster4HPDictionary
+                        ) VALUES (
+                        @QuestID, 
+                        @AreaID, 
+                        @FinalTimeValue,
+                        @FinalTimeDisplay, 
+                        @ObjectiveImage,
+                        @ObjectiveTypeID, 
+                        @ObjectiveQuantity, 
+                        @StarGrade,
+                        @RankNameID,
+                        @ObjectiveName, 
+                        @Date,
+                        @YoutubeID,
+                        @AttackBuffDictionary,
+                        @HitCountDictionary,
+                        @DamageDealtDictionary,
+                        @DamagePerSecondDictionary,
+                        @AreaChangesDictionary,
+                        @CartsDictionary,
+                        @Monster1HPDictionary,
+                        @Monster2HPDictionary,
+                        @Monster3HPDictionary,
+                        @Monster4HPDictionary
+                        )";
 
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
@@ -210,6 +286,21 @@ namespace MHFZ_Overlay
 
                             DateTime date = DateTime.Now;
 
+                            // TODO
+                            //rick roll
+                            string youtubeID = "dQw4w9WgXcQ";
+                            Dictionary<int, int> attackBuffDictionary = dataLoader.model.attackBuffDictionary;
+                            Dictionary<int, int> hitCountDictionary = dataLoader.model.hitCountDictionary;
+                            Dictionary<int, int> damageDealtDictionary = dataLoader.model.damageDealtDictionary;
+                            Dictionary<int, double> damagePerSecondDictionary = dataLoader.model.damagePerSecondDictionary;
+                            Dictionary<int, int> areaChangesDictionary = dataLoader.model.areaChangesDictionary;
+                            Dictionary<int, int> cartsDictionary = dataLoader.model.cartsDictionary;
+                            // time <monsterid, monsterhp>
+                            Dictionary<int, Dictionary<int,int>> monster1HPDictionary = dataLoader.model.monster1HPDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster2HPDictionary = dataLoader.model.monster2HPDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster3HPDictionary = dataLoader.model.monster3HPDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster4HPDictionary = dataLoader.model.monster4HPDictionary;
+
                             //                    --Insert data into the ZenithSkills table
                             //INSERT INTO ZenithSkills(ZenithSkill1, ZenithSkill2, ZenithSkill3, ZenithSkill4, ZenithSkill5, ZenithSkill6)
                             //VALUES(zenithSkillsID, zenithSkillsID, zenithSkillsID, zenithSkillsID, zenithSkillsID, zenithSkillsID);
@@ -228,6 +319,18 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@RankNameID", rankName);
                             cmd.Parameters.AddWithValue("@ObjectiveName", objectiveName);
                             cmd.Parameters.AddWithValue("@Date", date);
+                            cmd.Parameters.AddWithValue("@YoutubeID", youtubeID);
+                            cmd.Parameters.AddWithValue("@AttackBuffDictionary", attackBuffDictionary);
+                            cmd.Parameters.AddWithValue("@HitCountDictionary", hitCountDictionary);
+                            cmd.Parameters.AddWithValue("@DamageDealtDictionary", damageDealtDictionary);
+                            cmd.Parameters.AddWithValue("@DamagePerSecondDictionary", damagePerSecondDictionary);
+                            cmd.Parameters.AddWithValue("@AreaChangesDictionary", areaChangesDictionary);
+                            cmd.Parameters.AddWithValue("@CartsDictionary", cartsDictionary);
+                            cmd.Parameters.AddWithValue("@Monster1HPDictionary", monster1HPDictionary);
+                            cmd.Parameters.AddWithValue("@Monster2HPDictionary", monster2HPDictionary);
+                            cmd.Parameters.AddWithValue("@Monster3HPDictionary", monster3HPDictionary);
+                            cmd.Parameters.AddWithValue("@Monster4HPDictionary", monster4HPDictionary);
+                        
                             cmd.ExecuteNonQuery();
                         }
 
@@ -239,26 +342,48 @@ namespace MHFZ_Overlay
                         }
 
                         // Insert data into the Players table
-                        sql = "INSERT INTO Players (PlayerName, GuildName, Gender) VALUES (@PlayerName, @GuildName, @Gender)";
+                        sql = "INSERT OR REPLACE INTO datFolder (RunID, datFolderPath, mhfdatHash, mhfemdHash, mhfinfHash, mhfsqdHash) VALUES (@RunID, @datFolderPath, @mhfdatHash, @mhfemdHash, @mhfinfHash, @mhfsqdHash)";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            string datFolderPath = s.datFolderPath;
+                            string mhfdatHash = CalculateFileHash(datFolderPath,"mhfdat.bin");
+                            string mhfemdHash = CalculateFileHash(datFolderPath, "mhfemd.bin");
+                            string mhfinfHash = CalculateFileHash(datFolderPath, "mhfinf.bin");
+                            string mhfsqdHash = CalculateFileHash(datFolderPath, "mhfsqd.bin");
+
+                            cmd.Parameters.AddWithValue("@RunID", runID);
+                            cmd.Parameters.AddWithValue("@datFolderPath", datFolderPath);
+                            cmd.Parameters.AddWithValue("@mhfdatHash", mhfdatHash);
+                            cmd.Parameters.AddWithValue("@mhfemdHash", mhfemdHash);
+                            cmd.Parameters.AddWithValue("@mhfinfHash", mhfinfHash);
+                            cmd.Parameters.AddWithValue("@mhfsqdHash", mhfsqdHash);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // Insert data into the Players table
+                        sql = "INSERT OR REPLACE INTO Players (PlayerID, PlayerName, GuildName, ServerName, Gender) VALUES (@PlayerID, @PlayerName, @GuildName, @ServerName, @Gender)";
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             string playerName = s.HunterName;
                             string guildName = s.GuildName;
+                            string serverName = s.ServerName;
                             string gender = s.GenderExport;
 
+                            cmd.Parameters.AddWithValue("@PlayerID", playerID);
                             cmd.Parameters.AddWithValue("@PlayerName", playerName);
                             cmd.Parameters.AddWithValue("@GuildName", guildName);
+                            cmd.Parameters.AddWithValue("@ServerName", serverName);
                             cmd.Parameters.AddWithValue("@Gender", gender);
                             cmd.ExecuteNonQuery();
                         }
 
                         // Get the ID of the last inserted row in the Players table
-                        sql = "SELECT LAST_INSERT_ROWID()";
-                        int playerID;
-                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                        {
-                            playerID = Convert.ToInt32(cmd.ExecuteScalar());
-                        }
+                        //sql = "SELECT LAST_INSERT_ROWID()";
+                        //int playerID;
+                        //using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        //{
+                        //    playerID = Convert.ToInt32(cmd.ExecuteScalar());
+                        //}
 
                         // Insert data into the ZenithSkills table
                         sql = "INSERT INTO ZenithSkills (RunID, ZenithSkill1ID, ZenithSkill2ID, ZenithSkill3ID, ZenithSkill4ID, ZenithSkill5ID, ZenithSkill6ID, ZenithSkill7ID) VALUES (@RunID, @ZenithSkill1ID, @ZenithSkill2ID, @ZenithSkill3ID, @ZenithSkill4ID, @ZenithSkill5ID, @ZenithSkill6ID, @ZenithSkill7ID)";
@@ -495,6 +620,7 @@ namespace MHFZ_Overlay
                             @Item20ID , 
                             @Item20Quantity )";
 
+                        // TODO: test
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             int item1ID = model.PouchItem1IDAtQuestStart;
@@ -1184,6 +1310,55 @@ namespace MHFZ_Overlay
             MessageBox.Show("An error occurred: " + ex.Message +"\n\n" + ex.StackTrace + "\n\n" +ex.Source+"\n\n"+ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
+        public void MakeDeserealizedQuestInfoDictionariesFromRunID(SQLiteConnection conn, DataLoader dataLoader, int runID)
+        {
+            //To retrieve the dictionaries from the database, you can use the following code:
+            using (SQLiteCommand cmd = new SQLiteCommand(conn))
+            {
+                cmd.CommandText = @"SELECT
+                           AttackBuffDictionary,
+                           HitCountDictionary,
+                           DamageDealtDictionary,
+                           DamagePerSecondDictionary,
+                           AreaChangesDictionary,
+                           CartsDictionary,
+                           Monster1HPDictionary,
+                           Monster2HPDictionary,
+                           Monster3HPDictionary,
+                           Monster4HPDictionary
+                           FROM Quests WHERE RunID = @RunID";
+
+                cmd.Parameters.AddWithValue("@RunID", runID);
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        string attackBuffDictionaryJson = reader.GetString(0);
+                        string hitCountDictionaryJson = reader.GetString(1);
+                        string damageDealtDictionaryJson = reader.GetString(2);
+                        string damagePerSecondDictionaryJson = reader.GetString(3);
+                        string areaChangesDictionaryJson = reader.GetString(4);
+                        string cartsDictionaryJson = reader.GetString(5);
+                        string monster1HPDictionaryJson = reader.GetString(6);
+                        string monster2HPDictionaryJson = reader.GetString(7);
+                        string monster3HPDictionaryJson = reader.GetString(8);
+                        string monster4HPDictionaryJson = reader.GetString(9);
+
+                        dataLoader.model.attackBuffDictionaryDeserealized = JsonConvert.DeserializeObject<Dictionary<int, int>>(attackBuffDictionaryJson);
+                        dataLoader.model.hitCountDictionaryDeserealized = JsonConvert.DeserializeObject<Dictionary<int, int>>(hitCountDictionaryJson);
+                        dataLoader.model.damageDealtDictionaryDeserealized = JsonConvert.DeserializeObject<Dictionary<int, int>>(damageDealtDictionaryJson);
+                        dataLoader.model.damagePerSecondDictionaryDeserealized = JsonConvert.DeserializeObject<Dictionary<int, double>>(damagePerSecondDictionaryJson);
+                        dataLoader.model.areaChangesDictionaryDeserealized = JsonConvert.DeserializeObject<Dictionary<int, int>>(areaChangesDictionaryJson);
+                        dataLoader.model.cartsDictionaryDeserealized = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartsDictionaryJson);
+                        dataLoader.model.monster1HPDictionaryDeserealized = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int,int>>>(monster1HPDictionaryJson);
+                        dataLoader.model.monster2HPDictionaryDeserealized = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster2HPDictionaryJson);
+                        dataLoader.model.monster3HPDictionaryDeserealized = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster3HPDictionaryJson);
+                        dataLoader.model.monster4HPDictionaryDeserealized = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster4HPDictionaryJson);
+                    }
+                }
+            }
+        }
+
         #region session time
 
         public void StoreSessionTime(MainWindow window)
@@ -1428,6 +1603,16 @@ namespace MHFZ_Overlay
                     Date DATETIME NOT NULL,
                     YoutubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YoutubeID is a Rick Roll video
                     -- DpsData TEXT NOT NULL,
+                    AttackBuffDictionary TEXT NOT NULL,
+                    HitCountDictionary TEXT NOT NULL,
+                    DamageDealtDictionary TEXT NOT NULL,
+                    DamagePerSecondDictionary TEXT NOT NULL,
+                    AreaChangesDictionary TEXT NOT NULL,
+                    CartsDictionary TEXT NOT NULL,
+                    Monster1HPDictionary TEXT NOT NULL,
+                    Monster2HPDictionary TEXT NOT NULL,
+                    Monster3HPDictionary TEXT NOT NULL,
+                    Monster4HPDictionary TEXT NOT NULL,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(AreaID) REFERENCES Area(AreaID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID),
@@ -1479,6 +1664,7 @@ namespace MHFZ_Overlay
                         40:00.00 Completed Quest
                      */
 
+                    // TODO
                     sql = @"CREATE TABLE IF NOT EXISTS QuestEvents(
                       EventID INTEGER PRIMARY KEY AUTOINCREMENT,
                       RunID INTEGER NOT NULL, -- foreign key to the Quests table
@@ -1530,10 +1716,129 @@ namespace MHFZ_Overlay
                     //do an UPDATE when inserting quests. since its just local player?
                     sql = @"
                     CREATE TABLE IF NOT EXISTS Players (
-                    PlayerID INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    PlayerID INTEGER PRIMARY KEY, 
                     PlayerName TEXT NOT NULL,
                     GuildName TEXT NOT NULL,
+                    ServerName TEXT NOT NULL,
                     Gender TEXT NOT NULL)";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    /*
+                     * mhfdat.bin
+                        All shops' core inventory (exceptions are held in files mentioned below)
+                        All equipment stats, names, model data, flags etc.
+                        All item stats, names, icon data, colours, flags etc.
+                        Carve tables
+                        Caravan gem unlock levels
+                        Caravan gem colour requirements
+                        Raviente upgrade points
+                    mhfemd.bin
+                        All enemy related information, stats, movesets, size ranges etc.
+                    mhfgao.bin
+                        Cat NPC companion equipment, decorations, etc.
+                    mhfinf.bin
+                        Client side quest data for permanent quests such as subs required, descriptions, target icons etc.
+                        Does not actually contain quest data at all.
+                    mhfjmp.bin
+                        Town and facility quick travel functionality
+                        mhfmec.bin
+                        Unknown.
+                    mhfmfd.bin
+                        Mezefest carnival game data, item store inventory and costs, etc.
+                    mhfmsx.bin
+                        Unknown, contains strings related to since removed Tower content.
+                    mhfnav.bin
+                        Hunter Navigation rewards, requirements, etc.
+                    mhfpac.bin
+                        Most menu strings, NPC interaction prompts etc.
+                    mhfrcc.bin
+                        Currently held event information, blurbs below icon for travelling to the NPCs.
+                    mhfsch.bin
+                        Unknown.
+                    mhfsdt.bin
+                        Unknown, has HC repeated internally a lot.
+                    mhfsqd.bin
+                        Diva defense related strings such as activating buffs and skills in second week of event.
+                     */
+                    sql = @"
+                    CREATE TABLE IF NOT EXISTS datFolder (
+                    datFolderID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL,
+                    datFolderPath TEXT NOT NULL,
+                    mhfdatHash TEXT NOT NULL,
+                    mhfemdHash TEXT NOT NULL,
+                    mhfinfHash TEXT NOT NULL,
+                    mhfsqdHash TEXT NOT NULL,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Create table to store program usage time
+                    sql = @"CREATE TABLE IF NOT EXISTS PlayerCurrency (
+                    PlayerID INTEGER PRIMARY KEY,
+                    TrialGachaCoins INTEGER NOT NULL DEFAULT 0,
+                    PremiumGachaCoins INTEGER NOT NULL DEFAULT 0,
+                    PrismaticGachaCoins INTEGER NOT NULL DEFAULT 0,
+                    FrontierPoints INTEGER NOT NULL DEFAULT 0,
+                    LegendaryTickets INTEGER NOT NULL DEFAULT 0,
+                    NetCafePoints INTEGER NOT NULL DEFAULT 0,
+                    MonsterCoins INTEGER NOT NULL DEFAULT 0,
+                    GZenny INTEGER NOT NULL DEFAULT 0,
+                    Zenny INTEGER NOT NULL DEFAULT 0,
+                    GCP INTEGER NOT NULL DEFAULT 0,
+                    CP INTEGER NOT NULL DEFAULT 0,
+                    Gg INTEGER NOT NULL DEFAULT 0,
+                    g INTEGER NOT NULL DEFAULT 0,
+                    GreatSlayingPoints INTEGER NOT NULL DEFAULT 0,
+                    MezFesCoins INTEGER NOT NULL DEFAULT 0,
+                    RdP INTEGER NOT NULL DEFAULT 0, -- Road
+                    Gm INTEGER NOT NULL DEFAULT 0,
+                    TowerMedals INTEGER NOT NULL DEFAULT 0,
+                    TowerPoints INTEGER NOT NULL DEFAULT 0,
+                    Souls INTEGER NOT NULL DEFAULT 0,
+                    FestivalPoints INTEGER NOT NULL DEFAULT 0,
+                    FestivalTickets INTEGER NOT NULL DEFAULT 0,
+                    FestivalGems INTEGER NOT NULL DEFAULT 0,
+                    FestivalMarks INTEGER NOT NULL DEFAULT 0,
+                    GuildTickets INTEGER NOT NULL DEFAULT 0,
+                    GuildMedals INTEGER NOT NULL DEFAULT 0,
+                    HuntingMedals INTEGER NOT NULL DEFAULT 0,
+                    InterceptionPoints INTEGER NOT NULL DEFAULT 0,
+                    DivaNotes INTEGER NOT NULL DEFAULT 0,
+                    PoogiePoints INTEGER NOT NULL DEFAULT 0,
+                    PartnerPoints INTEGER NOT NULL DEFAULT 0,
+                    PartnyaaPoints INTEGER NOT NULL DEFAULT 0,
+                    GalleryPoints INTEGER NOT NULL DEFAULT 0,
+                    TranscendPoints INTEGER NOT NULL DEFAULT 0,
+                    ZZenny INTEGER NOT NULL DEFAULT 0,
+                    FOREIGN KEY(PlayerID) REFERENCES Players(PlayerID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Create table to store program usage time
+                    sql = @"CREATE TABLE IF NOT EXISTS PlayerGem (
+                    PlayerID INTEGER PRIMARY KEY,
+                    GemColor TEXT NOT NULL,
+                    GemLv INTEGER NOT NULL DEFAULT 1,
+                    PeachPoints INTEGER NOT NULL DEFAULT 0,
+                    BrownPoints INTEGER NOT NULL DEFAULT 0,
+                    YellowPoints INTEGER NOT NULL DEFAULT 0,
+                    GreenPoints INTEGER NOT NULL DEFAULT 0,
+                    WhitePoints INTEGER NOT NULL DEFAULT 0,
+                    PurplePoints INTEGER NOT NULL DEFAULT 0,
+                    CyanPoints INTEGER NOT NULL DEFAULT 0,
+                    RainbowPoints INTEGER NOT NULL DEFAULT 0,
+                    FOREIGN KEY(PlayerID) REFERENCES Players(PlayerID)
+                    )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.ExecuteNonQuery();
@@ -2299,3 +2604,55 @@ namespace MHFZ_Overlay
         #endregion
     }
 }
+/* TODO
+ * 
+ * USE BLOB for attack buff list and hit count list.
+ * data structure: list<int (timeint), int (hit count / attack buff)>
+ * 
+ * 
+ * 
+ You can use LINQ to perform various operations on lists, such as filtering, sorting, and aggregating data. Here's an example of how you can use LINQ to calculate the average attack buff of a particular quest run with a particular weapon type:
+
+Copy code
+int weaponType = 3;
+int questID = 123;
+
+List<int> attackBuffList = GetAttackBuffList(weaponType, questID);
+
+double averageAttackBuff = attackBuffDictionary.Values.Average();
+To calculate the maximum attack buff of a particular quest run with a particular weapon type, you can use the Max() method:
+
+Copy code
+int maxAttackBuff = attackBuffDictionary.Values.Max();
+To calculate the maximum attack buff of all quest runs of a particular quest with a particular weapon type, you can use LINQ to group the attack buff values by quest and weapon type, and then use the Max() method to find the maximum attack buff for each group:
+
+Copy code
+var attackBuffGroups = attackBuffList
+    .GroupBy(x => new { QuestID = questID, WeaponType = weaponType })
+    .Select(g => new {
+        QuestID = g.Key.QuestID,
+        WeaponType = g.Key.WeaponType,
+        MaxAttackBuff = g.Max()
+    });
+This will return a list of groups, each containing the quest ID, weapon type, and maximum attack buff for a particular quest and weapon type. You can then iterate over this list to find the maximum attack buff for all quest runs. 
+ 
+ Include info from more spreadsheets (speedrun calculation etc)
+
+LINQ (Language Integrated Query) is a set of features in C# that allows you to write queries to filter, transform, and aggregate data in your code. It works with various data sources, including arrays, lists, and dictionaries.
+
+For example, if you want to calculate the average attack buff for a particular quest run with a particular weapon type, you could use LINQ's Average method like this:
+
+Copy code
+double averageAttackBuff = attackBuffDictionary.Values.Average();
+To calculate the maximum attack buff for a particular quest run with a particular weapon type, you could use LINQ's Max method like this:
+
+Copy code
+int maxAttackBuff = attackBuffDictionary.Values.Max();
+To calculate the maximum attack buff of all quest runs of a particular quest with a particular weapon type, you would need to store the attack buff dictionaries for each quest run in a list or collection and then use LINQ's Max method like this:
+
+Copy code
+int maxAttackBuffAllRuns = attackBuffDictionaries.Select(d => d.Values.Max()).Max();
+This would select the maximum attack buff value for each dictionary in the list, and then find the overall maximum value from those.
+
+You can read more about LINQ and its various methods and features in the C# documentation: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/
+ */

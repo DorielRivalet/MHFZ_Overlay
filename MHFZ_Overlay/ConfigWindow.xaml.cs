@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -2966,6 +2967,25 @@ namespace MHFZ_Overlay
                 // Save the JSON string to the selected file
                 File.WriteAllText(saveFileDialog.FileName, json);
             }
+        }
+
+        private void datFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new FolderBrowserDialog();
+            DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string selectedFolder = dialog.SelectedPath;
+                // You can use the selectedFolder variable to do something with the chosen folder, such as calculate its hash.
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                s.datFolderPath = selectedFolder;
+            }
+        }
+
+        private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
+        {
+            MainWindow.DataLoader.model.ValidateDatFolder();
         }
     };
 

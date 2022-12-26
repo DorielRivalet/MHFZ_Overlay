@@ -255,7 +255,7 @@
       <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="Monster1IconY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">470</Value>
+      <Value Profile="(Default)">340</Value>
     </Setting>
     <Setting Name="DiscordTimerMode" Type="System.String" Scope="User">
       <Value Profile="(Default)">Time Left</Value>
@@ -421,6 +421,21 @@
     </Setting>
     <Setting Name="EnableQuestLogging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="datFolderPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="PlayerDPSX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="PlayerDPSY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">520</Value>
+    </Setting>
+    <Setting Name="EnableHighestDPSColor" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ServerName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ServerName</Value>
     </Setting>
   </Settings>
 </SettingsFile>

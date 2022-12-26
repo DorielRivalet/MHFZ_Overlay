@@ -11,6 +11,12 @@ using System.Linq;
 using System.Security.Permissions;
 using Application = System.Windows.Application;
 using System.Data.SQLite;
+using System.Windows;
+using System.IO;
+using System.Threading;
+using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
+using System.Windows.Input;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -1270,6 +1276,8 @@ namespace MHFZ_Overlay.addresses
         //per quest
         public int HighestAtk { get; set; } = 0;
 
+        public double HighestDPS { get; set; } = 0;
+
         /// <summary>
         /// Shows the color of the highest atk.
         /// </summary>
@@ -1283,11 +1291,31 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
+        public static bool ShowHighestDPSColor()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableHighestDPSColor)
+                return true;
+            else
+                return false;
+        }
+
         public string isHighestAtk
         {
             get
             {
                 if (WeaponRaw() == HighestAtk && ShowHighestAtkColor())
+                    return "#f38ba8";
+                else
+                    return "#f5e0dc";
+            }
+        }
+
+        public string isHighestDPS
+        {
+            get
+            {
+                if (DPS == HighestDPS && ShowHighestDPSColor())
                     return "#f38ba8";
                 else
                     return "#f5e0dc";
@@ -1309,11 +1337,17 @@ namespace MHFZ_Overlay.addresses
                 if (QuestID() == 0) //should work fine
                 {
                     HighestAtk = 0;
+                    HighestDPS = 0;
                 }
 
                 if (weaponRaw > HighestAtk)
                 {
                     HighestAtk = weaponRaw;
+                }
+
+                if (DPS > HighestDPS)
+                {
+                    HighestDPS = DPS;
                 }
 
                 return weaponRaw.ToString();
@@ -4712,6 +4746,7 @@ namespace MHFZ_Overlay.addresses
 
                 string guildName;
                 string hunterName;
+
                 string DateAndTime = DateTime.Now.ToString();
 
                 if (s.GuildName.Length >= 1)
@@ -8274,6 +8309,250 @@ namespace MHFZ_Overlay.addresses
         public TimeSpan TotalTimeSpent { get; set; }
 
         public bool questCleared = false;
+
+        #region dictionaries for graphs and database
+
+        public bool ValidateDatFolder()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            List<string> findFiles = new List<string>{ 
+                s.datFolderPath + @"\mhfdat.bin", 
+                s.datFolderPath + @"\mhfinf.bin", 
+                s.datFolderPath + @"\mhfemd.bin", 
+                s.datFolderPath + @"\mhfsqd.bin"};
+
+            //check if the folder is named dat and contains dat, emd, and sqd.
+            if (s.datFolderPath == "" || s.datFolderPath == null || !s.datFolderPath.Contains(@"\dat"))
+            {
+                MessageBox.Show("Please provide a path to the dat folder by clicking the *Select dat Folder button* in Quest Logs section. See tooltip in Quest Logs for more information.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
+                
+                s.EnableQuestLogging = false;
+                return false;
+            }
+
+            // Get a list of file names in the dat folder
+            var datFolderFiles = Directory.EnumerateFiles(s.datFolderPath);
+
+            // Get the intersection of the findFiles list and the datFolderFiles list
+            var intersection = findFiles.Intersect(datFolderFiles);
+
+            // If the intersection is not empty, it means that all the files in the findFiles list are present in the dat folder
+            if (intersection.Any())
+            {
+                // All required files are present
+                return true;
+            }
+            else
+            {
+                // Some required files are missing
+                MessageBox.Show("Some required files are missing from the dat folder. Please make sure that the dat folder contains the following files: "
+                + String.Join(", ", findFiles) + "\n" +
+                "datFolderFiles: " + String.Join(", ", datFolderFiles),
+                "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
+                s.EnableQuestLogging = false;
+                return false;
+            }
+        }
+
+        // all dictionaries get a new entry every 1 second. freezes on quest state 1, resets on quest id = 0.
+        // use modulo
+        //  if (timeint() % 30 == 0)
+        //      insertPlayerQuestInfoIntoDictionaries();
+        //      insertQuestDictionariesInfoIntoDatabase();
+        //int for timeint() which is current quest time, second int for current attack buff
+        public Dictionary<int, int> attackBuffDictionary = new Dictionary<int,int>();
+        // the deserealized are used for displays
+        public Dictionary<int, int> attackBuffDictionaryDeserealized;
+
+        // same for this but second is current hit count
+        public Dictionary<int, int> hitCountDictionary = new Dictionary<int, int>();
+        public Dictionary<int, int> hitCountDictionaryDeserealized;
+
+        // same but the second int is the damage dealt when hitting monster. a new entry is added every 1 second.
+        public Dictionary<int, int> damageDealtDictionary = new Dictionary<int, int>();
+        public Dictionary<int, int> damageDealtDictionaryDeserealized;
+
+        // then for DPS i can calculate from the above dictionary and only update the
+        // DPS value every time you register a new hit (new entry in damageDealtDictionary), which means its accurate but
+        // not according to the real-time, but then again, the time that passes in-game
+        // is not real-time.
+        public double DPS { get; set; } = 0;
+        //get
+        //{
+        //    if (damageDealtDictionary.Count <= 1)
+        //        return 0;
+
+        //    double sum = 0;
+        //    double numHits = 0;
+
+        //    foreach (KeyValuePair<int, int> hit in damageDealtDictionary)
+        //    {
+        //        int timeDifference = TimeInt() - hit.Key;
+        //        if (timeDifference <= 1)
+        //        {
+        //            sum += hit.Value;
+        //            numHits++;
+        //        }
+        //    }
+
+        //    return sum / numHits;
+        //} 
+        //}
+
+        public double CalculateDPS()
+        {
+            // Initialize the damageDealt and timeElapsed variables to 0
+            int damageDealt = 0;
+            int timeElapsed = 0;
+
+            // Iterate through the damageDealtDictionary and update the damageDealt and timeElapsed values
+            foreach (KeyValuePair<int, int> hit in damageDealtDictionary)
+            {
+                // Update the damageDealt value by adding the damage dealt in the current hit
+                damageDealt += hit.Value;
+
+                // Update the timeElapsed value by calculating the time difference between the current hit and the previous hit
+                timeElapsed += hit.Key - previousHitTime;
+
+                // Update the previousHitTime value for the next iteration
+                previousHitTime = hit.Key;
+            }
+
+            // avoid division by zero
+            if (timeElapsed == 0)
+                return damageDealt;
+
+            // Calculate and return the DPS
+            return damageDealt / timeElapsed;
+        }
+
+        // new entry every second during quest (use this for chart?)
+        public Dictionary<int, double> damagePerSecondDictionary = new Dictionary<int, double>();
+        public Dictionary<int, double> damagePerSecondDictionaryDeserealized;
+
+        public Dictionary<int, int> areaChangesDictionary = new Dictionary<int, int>();
+        public Dictionary<int, int> areaChangesDictionaryDeserealized;
+
+        public Dictionary<int, int> cartsDictionary = new Dictionary<int, int>();
+        public Dictionary<int, int> cartsDictionaryDeserealized;
+
+        // time <monsterid, monsterhp>
+        public Dictionary<int, Dictionary<int, int>> monster1HPDictionary = new Dictionary<int, Dictionary<int,int>>();
+        public Dictionary<int, Dictionary<int, int>> monster2HPDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> monster3HPDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> monster4HPDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> monster1HPDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster2HPDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster3HPDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster4HPDictionaryDeserealized;
+
+        // Initialize the damageDealt and timeElapsed variables to 0
+        //int damageDealt = 0;
+        //int timeElapsed = 0;
+
+        // Initialize the previousHitTime variable to 0
+        int previousHitTime = 0;
+
+        public void InsertQuestInfoIntoDictionaries()
+        {
+            attackBuffDictionary.Add(TimeInt(), WeaponRaw());
+            hitCountDictionary.Add(TimeInt(),HitCountInt());
+            damagePerSecondDictionary.Add(TimeInt(), DPS);
+            areaChangesDictionary.Add(TimeInt(), AreaID());
+            cartsDictionary.Add(TimeInt(),CurrentFaints());
+            Dictionary<int, int> monster1HPDictionaryMonsterInfo = new Dictionary<int, int>();
+            Dictionary<int, int> monster2HPDictionaryMonsterInfo = new Dictionary<int, int>();
+            Dictionary<int, int> monster3HPDictionaryMonsterInfo = new Dictionary<int, int>();
+            Dictionary<int, int> monster4HPDictionaryMonsterInfo = new Dictionary<int, int>();
+            monster1HPDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1HPInt());
+            monster2HPDictionaryMonsterInfo.Add(LargeMonster2ID(), Monster2HPInt());
+            monster3HPDictionaryMonsterInfo.Add(LargeMonster3ID(), Monster3HPInt());
+            monster4HPDictionaryMonsterInfo.Add(LargeMonster4ID(), Monster4HPInt());
+            monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
+            monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
+            monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
+            monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
+        }
+
+        public void clearQuestInfoDictionaries()
+        {
+            attackBuffDictionary.Clear();
+            hitCountDictionary.Clear();
+            damageDealtDictionary.Clear();
+            damagePerSecondDictionary.Clear();
+            areaChangesDictionary.Clear();
+            cartsDictionary.Clear();
+            monster1HPDictionary.Clear();
+            monster2HPDictionary.Clear();
+            monster3HPDictionary.Clear();
+            monster4HPDictionary.Clear();
+
+            PouchItem1IDAtQuestStart = 0;
+            PouchItem2IDAtQuestStart = 0;
+            PouchItem3IDAtQuestStart = 0;
+            PouchItem4IDAtQuestStart = 0;
+            PouchItem5IDAtQuestStart = 0;
+            PouchItem6IDAtQuestStart = 0;
+            PouchItem7IDAtQuestStart = 0;
+            PouchItem8IDAtQuestStart = 0;
+            PouchItem9IDAtQuestStart = 0;
+            PouchItem10IDAtQuestStart = 0;
+            PouchItem11IDAtQuestStart = 0;
+            PouchItem12IDAtQuestStart = 0;
+            PouchItem13IDAtQuestStart = 0;
+            PouchItem14IDAtQuestStart = 0;
+            PouchItem15IDAtQuestStart = 0;
+            PouchItem16IDAtQuestStart = 0;
+            PouchItem17IDAtQuestStart = 0;
+            PouchItem18IDAtQuestStart = 0;
+            PouchItem19IDAtQuestStart = 0;
+            PouchItem20IDAtQuestStart = 0;
+            PouchItem1QuantityAtQuestStart = 0;
+            PouchItem2QuantityAtQuestStart = 0;
+            PouchItem3QuantityAtQuestStart = 0;
+            PouchItem4QuantityAtQuestStart = 0;
+            PouchItem5QuantityAtQuestStart = 0;
+            PouchItem6QuantityAtQuestStart = 0;
+            PouchItem7QuantityAtQuestStart = 0;
+            PouchItem8QuantityAtQuestStart = 0;
+            PouchItem9QuantityAtQuestStart = 0;
+            PouchItem10QuantityAtQuestStart = 0;
+            PouchItem11QuantityAtQuestStart = 0;
+            PouchItem12QuantityAtQuestStart = 0;
+            PouchItem13QuantityAtQuestStart = 0;
+            PouchItem14QuantityAtQuestStart = 0;
+            PouchItem15QuantityAtQuestStart = 0;
+            PouchItem16QuantityAtQuestStart = 0;
+            PouchItem17QuantityAtQuestStart = 0;
+            PouchItem18QuantityAtQuestStart = 0;
+            PouchItem19QuantityAtQuestStart = 0;
+            PouchItem20QuantityAtQuestStart = 0;
+
+            AmmoPouchItem1IDAtQuestStart = 0;
+            AmmoPouchItem2IDAtQuestStart = 0;
+            AmmoPouchItem3IDAtQuestStart = 0;
+            AmmoPouchItem4IDAtQuestStart = 0;
+            AmmoPouchItem5IDAtQuestStart = 0;
+            AmmoPouchItem6IDAtQuestStart = 0;
+            AmmoPouchItem7IDAtQuestStart = 0;
+            AmmoPouchItem8IDAtQuestStart = 0;
+            AmmoPouchItem9IDAtQuestStart = 0;
+            AmmoPouchItem10IDAtQuestStart = 0;
+            AmmoPouchItem1QuantityAtQuestStart = 0;
+            AmmoPouchItem2QuantityAtQuestStart = 0;
+            AmmoPouchItem3QuantityAtQuestStart = 0;
+            AmmoPouchItem4QuantityAtQuestStart = 0;
+            AmmoPouchItem5QuantityAtQuestStart = 0;
+            AmmoPouchItem6QuantityAtQuestStart = 0;
+            AmmoPouchItem7QuantityAtQuestStart = 0;
+            AmmoPouchItem8QuantityAtQuestStart = 0;
+            AmmoPouchItem9QuantityAtQuestStart = 0;
+            AmmoPouchItem10QuantityAtQuestStart = 0;
+        }
+
+
+        #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

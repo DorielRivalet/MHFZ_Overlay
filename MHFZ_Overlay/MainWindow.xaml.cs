@@ -1,4 +1,5 @@
-﻿using Dictionary;
+﻿using CommunityToolkit.Mvvm.Input;
+using Dictionary;
 using DiscordRPC;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
@@ -227,6 +228,18 @@ namespace MHFZ_Overlay
             }
         }
 
+        public static string GetServerName
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                if (s.ServerName.Length >= 1)
+                    return s.ServerName;
+                else
+                    return "Server Name";
+            }
+        }
+
         //Dispose client        
         /// <summary>
         /// Cleanups this instance.
@@ -282,14 +295,14 @@ namespace MHFZ_Overlay
                 //Set Presence
                 presenceTemplate.Timestamps = Timestamps.Now;
 
-                if (GetHunterName != "" && GetGuildName != "")
+                if (GetHunterName != "" && GetGuildName != "" && GetServerName != "")
                 {
                     presenceTemplate.Assets = new Assets()
                     {
                         LargeImageKey = "cattleya",
                         LargeImageText = "Please Wait",
                         SmallImageKey = "https://i.imgur.com/9OkLYAz.png",
-                        SmallImageText = GetHunterName + " | " + GetGuildName
+                        SmallImageText = GetHunterName + " | " + GetGuildName + " | " + GetServerName
                     };
                 }
 
@@ -375,15 +388,16 @@ namespace MHFZ_Overlay
                 // select a theme, default is Light
                 // OPTIONAL
                 .AddDarkTheme());
-                //.AddLightTheme());
+            //.AddLightTheme());
 
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
 
             // When the program starts
             ProgramStart = DateTime.Now;
-            
+
             // Calculate the total time spent and update the TotalTimeSpent property
             DataLoader.model.TotalTimeSpent = databaseManager.CalculateTotalTimeSpent();
+
         }
 
         GitHubClient ghClient = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
@@ -486,6 +500,7 @@ namespace MHFZ_Overlay
         int prevTime = 0;
 
         private bool showedNullError = false;
+        private bool showedDatFolderWarning = false;
 
         //
         public void Timer_Tick(object? obj, EventArgs e)
@@ -508,9 +523,21 @@ namespace MHFZ_Overlay
 
             UpdateDiscordRPC();
 
+            CheckQuestStateForDatabaseLogging();
+
             if (isInLauncher() == "NULL" && !showedNullError)
             {
                 showedNullError = true;
+            }
+
+            //if (DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() != 0)
+            //{
+            //    DataLoader.model.CalculateDPS();
+            //}
+            if (!showedDatFolderWarning)
+            {
+                DataLoader.model.ValidateDatFolder();
+                showedDatFolderWarning = true;
             }
         }
 
@@ -547,18 +574,24 @@ namespace MHFZ_Overlay
                 {
                     isFirstAttack = false;
                     CreateDamageNumberLabel(damage);
+                    DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), damage);
+                    //DataLoader.model.DPS = DataLoader.model.CalculateDPS();
                 }
                 else if (curNum < 0)
                 {
                     // TODO
                     curNum += 1000;
                     CreateDamageNumberLabel(curNum);
+                    DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
+                    //DataLoader.model.DPS = DataLoader.model.CalculateDPS();
                 }
                 else
                 {
                     if (curNum != damage)
                     {
                         CreateDamageNumberLabel(curNum);
+                        DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
+                        //DataLoader.model.DPS = DataLoader.model.CalculateDPS();
                     }
                 }
             }
@@ -1711,13 +1744,13 @@ namespace MHFZ_Overlay
                     case 55605:
                     case 55606:
                     case 55607:
-                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
+                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9} | DPS: {10} (Max {11})", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount, DataLoader.model.DPS, DataLoader.model.HighestDPS);
                         break;
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9} | DPS: {10} (Max {11})", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount, DataLoader.model.DPS, DataLoader.model.HighestDPS);
                         else
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount);
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9} | DPS: {10} (Max {11})", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount, DataLoader.model.DPS, DataLoader.model.HighestDPS);
                         break;
                 }
 
@@ -1906,8 +1939,9 @@ namespace MHFZ_Overlay
                             {
                                 if (DataLoader.model.RoadFloor() + 1 > previousRoadFloor)
                                 {
+                                    // reset values
                                     inQuest = false;
-                                    currentMonster1MaxHP = 0;//reset values
+                                    currentMonster1MaxHP = 0;
                                     previousRoadFloor = DataLoader.model.RoadFloor() + 1;
                                     presenceTemplate.Timestamps = GetDiscordTimerMode() switch
                                     {
@@ -1932,8 +1966,9 @@ namespace MHFZ_Overlay
                             {
                                 if (DataLoader.model.RoadFloor() + 1 > previousRoadFloor)
                                 {
+                                    // reset values
                                     inQuest = false;
-                                    currentMonster1MaxHP = 0;//reset values
+                                    currentMonster1MaxHP = 0;
                                     previousRoadFloor = DataLoader.model.RoadFloor() + 1;
 
                                     if (!(StartedRoadElapsedTime))
@@ -1958,8 +1993,9 @@ namespace MHFZ_Overlay
                             {
                                 if (DataLoader.model.RoadFloor() + 1 > previousRoadFloor)
                                 {
+                                    // reset values
                                     inQuest = false;
-                                    currentMonster1MaxHP = 0;//reset values
+                                    currentMonster1MaxHP = 0;
                                     previousRoadFloor = DataLoader.model.RoadFloor() + 1;
 
                                     if (!(StartedRoadElapsedTime))
@@ -2020,19 +2056,11 @@ namespace MHFZ_Overlay
                     }
                 }
             }
-            // check if quest clear 
-            else if (DataLoader.model.QuestState() == 1 && !DataLoader.model.questCleared)
-            {
-                DataLoader.model.questCleared = true;
-                databaseManager.InsertQuestData(databaseManager.dataSource, DataLoader);
-            }
             // going back to Mezeporta or w/e
             else if (DataLoader.model.QuestState() != 1 && DataLoader.model.QuestID() == 0 && inQuest && int.Parse(DataLoader.model.ATK) == 0)
             {
-                inQuest = false;
-                DataLoader.model.questCleared = false;
-
                 //reset values
+                inQuest = false;
                 currentMonster1MaxHP = 0;
                 previousRoadFloor = 0;
                 StartedRoadElapsedTime = false;
@@ -2045,9 +2073,9 @@ namespace MHFZ_Overlay
             //SmallInfo
             presenceTemplate.Assets.SmallImageKey = getWeaponIconFromID(DataLoader.model.WeaponType());
 
-            if (GetHunterName != "" && GetGuildName != "")
+            if (GetHunterName != "" && GetGuildName != "" && GetServerName != "")
             {
-                presenceTemplate.Assets.SmallImageText = String.Format("{0} | {1} | GSR: {2} | {3} Style | Caravan Skills: {4}", GetHunterName, GetGuildName, DataLoader.model.GSR(), GetWeaponStyleFromID(DataLoader.model.WeaponStyle()), GetCaravanSkills());
+                presenceTemplate.Assets.SmallImageText = String.Format("{0} | {1} | {2} | GSR: {3} | {4} Style | Caravan Skills: {5}", GetHunterName, GetGuildName, GetServerName, DataLoader.model.GSR(), GetWeaponStyleFromID(DataLoader.model.WeaponStyle()), GetCaravanSkills());
             }
 
             Client.SetPresence(presenceTemplate);
@@ -2314,6 +2342,109 @@ namespace MHFZ_Overlay
             DisableDragAndDrop();
         }
         #endregion clickbuttons
+
+        #region database
+
+        private bool loadedItemsAtQuestStart = false;
+
+        //TODO
+        private void CheckQuestStateForDatabaseLogging()
+        {
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            if (DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.TimeInt() % 30 == 0)
+            {
+                DataLoader.model.InsertQuestInfoIntoDictionaries();
+                DataLoader.model.DPS = DataLoader.model.CalculateDPS();
+            }
+
+            if (!s.EnableQuestLogging || (DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() == 0))
+                return;
+            else if (!loadedItemsAtQuestStart && DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() != 0)
+            {
+                loadedItemsAtQuestStart = true;
+                DataLoader.model.PouchItem1IDAtQuestStart = DataLoader.model.PouchItem1ID();
+                DataLoader.model.PouchItem2IDAtQuestStart = DataLoader.model.PouchItem2ID();
+                DataLoader.model.PouchItem3IDAtQuestStart = DataLoader.model.PouchItem3ID();
+                DataLoader.model.PouchItem4IDAtQuestStart = DataLoader.model.PouchItem4ID();
+                DataLoader.model.PouchItem5IDAtQuestStart = DataLoader.model.PouchItem5ID();
+                DataLoader.model.PouchItem6IDAtQuestStart = DataLoader.model.PouchItem6ID();
+                DataLoader.model.PouchItem7IDAtQuestStart = DataLoader.model.PouchItem7ID();
+                DataLoader.model.PouchItem8IDAtQuestStart = DataLoader.model.PouchItem8ID();
+                DataLoader.model.PouchItem9IDAtQuestStart = DataLoader.model.PouchItem9ID();
+                DataLoader.model.PouchItem10IDAtQuestStart = DataLoader.model.PouchItem10ID();
+                DataLoader.model.PouchItem11IDAtQuestStart = DataLoader.model.PouchItem11ID();
+                DataLoader.model.PouchItem12IDAtQuestStart = DataLoader.model.PouchItem12ID();
+                DataLoader.model.PouchItem13IDAtQuestStart = DataLoader.model.PouchItem13ID();
+                DataLoader.model.PouchItem14IDAtQuestStart = DataLoader.model.PouchItem14ID();
+                DataLoader.model.PouchItem15IDAtQuestStart = DataLoader.model.PouchItem15ID();
+                DataLoader.model.PouchItem16IDAtQuestStart = DataLoader.model.PouchItem16ID();
+                DataLoader.model.PouchItem17IDAtQuestStart = DataLoader.model.PouchItem17ID();
+                DataLoader.model.PouchItem18IDAtQuestStart = DataLoader.model.PouchItem18ID();
+                DataLoader.model.PouchItem19IDAtQuestStart = DataLoader.model.PouchItem19ID();
+                DataLoader.model.PouchItem20IDAtQuestStart = DataLoader.model.PouchItem20ID();
+                DataLoader.model.PouchItem1QuantityAtQuestStart = DataLoader.model.PouchItem1Qty();
+                DataLoader.model.PouchItem2QuantityAtQuestStart = DataLoader.model.PouchItem2Qty();
+                DataLoader.model.PouchItem3QuantityAtQuestStart = DataLoader.model.PouchItem3Qty();
+                DataLoader.model.PouchItem4QuantityAtQuestStart = DataLoader.model.PouchItem4Qty();
+                DataLoader.model.PouchItem5QuantityAtQuestStart = DataLoader.model.PouchItem5Qty();
+                DataLoader.model.PouchItem6QuantityAtQuestStart = DataLoader.model.PouchItem6Qty();
+                DataLoader.model.PouchItem7QuantityAtQuestStart = DataLoader.model.PouchItem7Qty();
+                DataLoader.model.PouchItem8QuantityAtQuestStart = DataLoader.model.PouchItem8Qty();
+                DataLoader.model.PouchItem9QuantityAtQuestStart = DataLoader.model.PouchItem9Qty();
+                DataLoader.model.PouchItem10QuantityAtQuestStart = DataLoader.model.PouchItem10Qty();
+                DataLoader.model.PouchItem11QuantityAtQuestStart = DataLoader.model.PouchItem11Qty();
+                DataLoader.model.PouchItem12QuantityAtQuestStart = DataLoader.model.PouchItem12Qty();
+                DataLoader.model.PouchItem13QuantityAtQuestStart = DataLoader.model.PouchItem13Qty();
+                DataLoader.model.PouchItem14QuantityAtQuestStart = DataLoader.model.PouchItem14Qty();
+                DataLoader.model.PouchItem15QuantityAtQuestStart = DataLoader.model.PouchItem15Qty();
+                DataLoader.model.PouchItem16QuantityAtQuestStart = DataLoader.model.PouchItem16Qty();
+                DataLoader.model.PouchItem17QuantityAtQuestStart = DataLoader.model.PouchItem17Qty();
+                DataLoader.model.PouchItem18QuantityAtQuestStart = DataLoader.model.PouchItem18Qty();
+                DataLoader.model.PouchItem19QuantityAtQuestStart = DataLoader.model.PouchItem19Qty();
+                DataLoader.model.PouchItem20QuantityAtQuestStart = DataLoader.model.PouchItem20Qty();
+
+                DataLoader.model.AmmoPouchItem1IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
+                DataLoader.model.AmmoPouchItem2IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
+                DataLoader.model.AmmoPouchItem3IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
+                DataLoader.model.AmmoPouchItem4IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
+                DataLoader.model.AmmoPouchItem5IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
+                DataLoader.model.AmmoPouchItem6IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
+                DataLoader.model.AmmoPouchItem7IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
+                DataLoader.model.AmmoPouchItem8IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
+                DataLoader.model.AmmoPouchItem9IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
+                DataLoader.model.AmmoPouchItem10IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
+                DataLoader.model.AmmoPouchItem1QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
+                DataLoader.model.AmmoPouchItem2QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
+                DataLoader.model.AmmoPouchItem3QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
+                DataLoader.model.AmmoPouchItem4QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
+                DataLoader.model.AmmoPouchItem5QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
+                DataLoader.model.AmmoPouchItem6QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
+                DataLoader.model.AmmoPouchItem7QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
+                DataLoader.model.AmmoPouchItem8QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
+                DataLoader.model.AmmoPouchItem9QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
+                DataLoader.model.AmmoPouchItem10QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
+            }
+
+            if (DataLoader.model.QuestState() == 0)
+                return;
+
+            // check if quest clear 
+            if (DataLoader.model.QuestState() == 1 && !DataLoader.model.questCleared)
+            {
+                DataLoader.model.questCleared = true;
+                loadedItemsAtQuestStart = false;
+                databaseManager.InsertQuestData(databaseManager.dataSource, DataLoader);
+            }
+            // going back to Mezeporta or w/e
+            else if (DataLoader.model.QuestState() != 1 && DataLoader.model.QuestID() == 0 && int.Parse(DataLoader.model.ATK) == 0)
+            {
+                DataLoader.model.questCleared = false;
+                DataLoader.model.clearQuestInfoDictionaries();
+            }
+        }
+
+        #endregion
 
     }
 }
