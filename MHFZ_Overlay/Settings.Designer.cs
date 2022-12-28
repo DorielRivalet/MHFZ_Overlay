@@ -1033,7 +1033,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("340")]
+        [global::System.Configuration.DefaultSettingValueAttribute("420")]
         public double Monster1IconY {
             get {
                 return ((double)(this["Monster1IconY"]));
@@ -1760,6 +1760,19 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["ServerName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/transc" +
+            "end.png")]
+        public string PlayerAvatarLink {
+            get {
+                return ((string)(this["PlayerAvatarLink"]));
+            }
+            set {
+                this["PlayerAvatarLink"] = value;
             }
         }
     }

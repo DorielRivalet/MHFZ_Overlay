@@ -255,7 +255,7 @@
       <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="Monster1IconY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">340</Value>
+      <Value Profile="(Default)">420</Value>
     </Setting>
     <Setting Name="DiscordTimerMode" Type="System.String" Scope="User">
       <Value Profile="(Default)">Time Left</Value>
@@ -436,6 +436,9 @@
     </Setting>
     <Setting Name="ServerName" Type="System.String" Scope="User">
       <Value Profile="(Default)">ServerName</Value>
+    </Setting>
+    <Setting Name="PlayerAvatarLink" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/transcend.png</Value>
     </Setting>
   </Settings>
 </SettingsFile>

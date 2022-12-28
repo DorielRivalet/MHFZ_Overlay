@@ -21,6 +21,7 @@ using System.Windows.Controls;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
+using System.Reflection;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -92,8 +93,11 @@ namespace MHFZ_Overlay
 
                 // Do something with the connection
                 CreateDatabaseTables(conn, dataLoader);
-                CreateDatabaseIndexes(conn);
-                CreateDatabaseTriggers(conn);
+                if (!schemaChanged)
+                {
+                    CreateDatabaseIndexes(conn);
+                    CreateDatabaseTriggers(conn);
+                }
             }
         }
 
@@ -127,7 +131,7 @@ namespace MHFZ_Overlay
 
         public void InsertAllExternalPlayerQuestsData()
         {
-            // TODO: hyggog, etc.
+            // TODO: hygogg, etc.
         }
 
         public string CalculateFileHash(string folderPath, string fileName)
@@ -194,7 +198,9 @@ namespace MHFZ_Overlay
                         Monster1HPDictionary,
                         Monster2HPDictionary,
                         Monster3HPDictionary,
-                        Monster4HPDictionary
+                        Monster4HPDictionary,
+                        PartySize,
+                        OverlayMode
                         ) VALUES (
                         @QuestID, 
                         @AreaID, 
@@ -217,7 +223,9 @@ namespace MHFZ_Overlay
                         @Monster1HPDictionary,
                         @Monster2HPDictionary,
                         @Monster3HPDictionary,
-                        @Monster4HPDictionary
+                        @Monster4HPDictionary,
+                        @PartySize,
+                        @OverlayMode
                         )";
 
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -300,7 +308,13 @@ namespace MHFZ_Overlay
                             Dictionary<int, Dictionary<int, int>> monster2HPDictionary = dataLoader.model.monster2HPDictionary;
                             Dictionary<int, Dictionary<int, int>> monster3HPDictionary = dataLoader.model.monster3HPDictionary;
                             Dictionary<int, Dictionary<int, int>> monster4HPDictionary = dataLoader.model.monster4HPDictionary;
-
+                            int partySize = dataLoader.model.PartySize();
+                            string overlayMode = dataLoader.model.GetOverlayMode();
+                            overlayMode = overlayMode.Replace("(", "");
+                            overlayMode = overlayMode.Replace(")", "");
+                            overlayMode = overlayMode.Trim();
+                            if (overlayMode == null || overlayMode == "")
+                                overlayMode = "Standard";
                             //                    --Insert data into the ZenithSkills table
                             //INSERT INTO ZenithSkills(ZenithSkill1, ZenithSkill2, ZenithSkill3, ZenithSkill4, ZenithSkill5, ZenithSkill6)
                             //VALUES(zenithSkillsID, zenithSkillsID, zenithSkillsID, zenithSkillsID, zenithSkillsID, zenithSkillsID);
@@ -320,17 +334,19 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@ObjectiveName", objectiveName);
                             cmd.Parameters.AddWithValue("@Date", date);
                             cmd.Parameters.AddWithValue("@YoutubeID", youtubeID);
-                            cmd.Parameters.AddWithValue("@AttackBuffDictionary", attackBuffDictionary);
-                            cmd.Parameters.AddWithValue("@HitCountDictionary", hitCountDictionary);
-                            cmd.Parameters.AddWithValue("@DamageDealtDictionary", damageDealtDictionary);
-                            cmd.Parameters.AddWithValue("@DamagePerSecondDictionary", damagePerSecondDictionary);
-                            cmd.Parameters.AddWithValue("@AreaChangesDictionary", areaChangesDictionary);
-                            cmd.Parameters.AddWithValue("@CartsDictionary", cartsDictionary);
-                            cmd.Parameters.AddWithValue("@Monster1HPDictionary", monster1HPDictionary);
-                            cmd.Parameters.AddWithValue("@Monster2HPDictionary", monster2HPDictionary);
-                            cmd.Parameters.AddWithValue("@Monster3HPDictionary", monster3HPDictionary);
-                            cmd.Parameters.AddWithValue("@Monster4HPDictionary", monster4HPDictionary);
-                        
+                            cmd.Parameters.AddWithValue("@AttackBuffDictionary", JsonConvert.SerializeObject(attackBuffDictionary));
+                            cmd.Parameters.AddWithValue("@HitCountDictionary", JsonConvert.SerializeObject(hitCountDictionary));
+                            cmd.Parameters.AddWithValue("@DamageDealtDictionary", JsonConvert.SerializeObject(damageDealtDictionary));
+                            cmd.Parameters.AddWithValue("@DamagePerSecondDictionary", JsonConvert.SerializeObject(damagePerSecondDictionary));
+                            cmd.Parameters.AddWithValue("@AreaChangesDictionary", JsonConvert.SerializeObject(areaChangesDictionary));
+                            cmd.Parameters.AddWithValue("@CartsDictionary", JsonConvert.SerializeObject(cartsDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1HPDictionary", JsonConvert.SerializeObject(monster1HPDictionary));
+                            cmd.Parameters.AddWithValue("@Monster2HPDictionary", JsonConvert.SerializeObject(monster2HPDictionary));
+                            cmd.Parameters.AddWithValue("@Monster3HPDictionary", JsonConvert.SerializeObject(monster3HPDictionary));
+                            cmd.Parameters.AddWithValue("@Monster4HPDictionary", JsonConvert.SerializeObject(monster4HPDictionary));
+                            cmd.Parameters.AddWithValue("@PartySize", partySize);
+                            cmd.Parameters.AddWithValue("@OverlayMode", overlayMode);
+
                             cmd.ExecuteNonQuery();
                         }
 
@@ -342,14 +358,14 @@ namespace MHFZ_Overlay
                         }
 
                         // Insert data into the Players table
-                        sql = "INSERT OR REPLACE INTO datFolder (RunID, datFolderPath, mhfdatHash, mhfemdHash, mhfinfHash, mhfsqdHash) VALUES (@RunID, @datFolderPath, @mhfdatHash, @mhfemdHash, @mhfinfHash, @mhfsqdHash)";
+                        sql = "INSERT INTO datFolder (RunID, datFolderPath, mhfdatHash, mhfemdHash, mhfinfHash, mhfsqdHash) VALUES (@RunID, @datFolderPath, @mhfdatHash, @mhfemdHash, @mhfinfHash, @mhfsqdHash)";
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             string datFolderPath = s.datFolderPath;
-                            string mhfdatHash = CalculateFileHash(datFolderPath,"mhfdat.bin");
-                            string mhfemdHash = CalculateFileHash(datFolderPath, "mhfemd.bin");
-                            string mhfinfHash = CalculateFileHash(datFolderPath, "mhfinf.bin");
-                            string mhfsqdHash = CalculateFileHash(datFolderPath, "mhfsqd.bin");
+                            string mhfdatHash = CalculateFileHash(datFolderPath,@"\mhfdat.bin");
+                            string mhfemdHash = CalculateFileHash(datFolderPath, @"\mhfemd.bin");
+                            string mhfinfHash = CalculateFileHash(datFolderPath, @"\mhfinf.bin");
+                            string mhfsqdHash = CalculateFileHash(datFolderPath, @"\mhfsqd.bin");
 
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@datFolderPath", datFolderPath);
@@ -361,15 +377,29 @@ namespace MHFZ_Overlay
                         }
 
                         // Insert data into the Players table
-                        sql = "INSERT OR REPLACE INTO Players (PlayerID, PlayerName, GuildName, ServerName, Gender) VALUES (@PlayerID, @PlayerName, @GuildName, @ServerName, @Gender)";
+                        sql = @"INSERT OR REPLACE INTO Players (
+                        PlayerID, 
+                        PlayerAvatar,
+                        PlayerName, 
+                        GuildName, 
+                        ServerName, 
+                        Gender) VALUES (
+                        @PlayerID,
+                        @PlayerAvatar
+                        @PlayerName,
+                        @GuildName,
+                        @ServerName,
+                        @Gender)";
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
+                            string playerAvatar = s.PlayerAvatarLink;
                             string playerName = s.HunterName;
                             string guildName = s.GuildName;
                             string serverName = s.ServerName;
                             string gender = s.GenderExport;
 
                             cmd.Parameters.AddWithValue("@PlayerID", playerID);
+                            cmd.Parameters.AddWithValue("@PlayerAvatar", playerAvatar);
                             cmd.Parameters.AddWithValue("@PlayerName", playerName);
                             cmd.Parameters.AddWithValue("@GuildName", guildName);
                             cmd.Parameters.AddWithValue("@ServerName", serverName);
@@ -1207,13 +1237,13 @@ namespace MHFZ_Overlay
                         if (transaction != null)
                             transaction.Rollback();
                         // Handle an I/O exception
-                        MessageBox.Show("An error occurred while accessing a file: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch (ArgumentException ex)
                     {
                         if (transaction != null)
                             transaction.Rollback();
-                        MessageBox.Show("ArgumentException " + ex.Message + " " + ex.ParamName);
+                        MessageBox.Show("ArgumentException " +ex.ParamName+"\n\n"+ ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch (Exception ex)
                     {
@@ -1407,17 +1437,17 @@ namespace MHFZ_Overlay
             catch (SQLiteException ex)
             {
                 // Handle a SQL exception
-                MessageBox.Show("An error occurred while accessing the database: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (IOException ex)
             {
                 // Handle an I/O exception
-                MessageBox.Show("An error occurred while accessing a file: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
                 // Handle any other exception
-                MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1447,6 +1477,295 @@ namespace MHFZ_Overlay
             "WeaponIcon",
             "WeaponStyles",
             "AllDivaSkills"};
+
+        private void CreateReferenceSchemaJSONFromLocalDatabaseFile(SQLiteConnection conn)
+        {
+            // Start a transaction
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    // Create a dictionary to store the reference schema
+                    var schema = new Dictionary<string, object>();
+
+                    using (var cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = "SELECT name FROM sqlite_master WHERE type='table'";
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                // Get the name of the table
+                                var tableName = reader["name"].ToString();
+
+                                // Query the database to get information about the columns in the table
+                                using (var command2 = conn.CreateCommand())
+                                {
+                                    command2.CommandText = $"PRAGMA table_info({tableName})";
+
+                                    using (var reader2 = command2.ExecuteReader())
+                                    {
+                                        // Create a list to store the column information
+                                        var columns = new List<object>();
+
+                                        // Iterate through the columns in the table
+                                        while (reader2.Read())
+                                        {
+                                            // Get the name and data type of the column
+                                            var columnName = reader2["name"].ToString();
+                                            var columnType = reader2["type"].ToString();
+
+                                            // Add the column information to the list
+                                            columns.Add(new { name = columnName, type = columnType });
+                                        }
+
+                                        // Add the list of columns to the schema dictionary
+                                        schema[tableName] = columns;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Convert the schema dictionary to JSON and save it to a file
+                    var json = JsonConvert.SerializeObject(schema, Formatting.Indented);
+                    File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"), json);
+
+                    // Commit the transaction
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        public bool schemaChanged = false;
+
+        //TODO: Test
+        private void CompareReferenceSchemaJSONFromLocalDatabaseFileToCurrentDatabaseSchema(SQLiteConnection conn)
+        {
+            // Start a transaction
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    // Load the reference schema file
+                    var referenceSchemaJson = File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
+                    var referenceSchema = JsonConvert.DeserializeObject<Dictionary<string, object>>(referenceSchemaJson);
+
+                    // Create a dictionary to store the current schema
+                    var currentSchema = new Dictionary<string, object>();
+
+                    // Query the database to get a list of table names
+                    using (var command = conn.CreateCommand())
+                    {
+                        command.CommandText = "SELECT name FROM sqlite_master WHERE type='table'";
+
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                // Get the name of the table
+                                var tableName = reader["name"].ToString();
+
+                                // Query the database to get information about the columns in the table
+                                using (var command2 = conn.CreateCommand())
+                                {
+                                    command2.CommandText = $"PRAGMA table_info({tableName})";
+
+                                    using (var reader2 = command2.ExecuteReader())
+                                    {
+                                        // Create a list to store the column information
+                                        var columns = new List<object>();
+
+                                        // Iterate through the columns in the table
+                                        while (reader2.Read())
+                                        {
+                                            // Get the name and data type of the column
+                                            var columnName = reader2["name"].ToString();
+                                            var columnType = reader2["type"].ToString();
+
+                                            // Add the column information to the list
+                                            columns.Add(new { name = columnName, type = columnType });
+                                        }
+                                        // Add the list of columns to the current schema dictionary
+                                        currentSchema[tableName] = columns;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Compare the reference schema and the current schema
+                    foreach (var table in referenceSchema)
+                    {
+                        // Get the name of the table
+                        var tableName = table.Key;
+
+                        // Get the list of columns in the reference schema
+                        var referenceColumns = (List<object>)table.Value;
+
+                        // Check if the table exists in the current schema
+                        if (currentSchema.ContainsKey(tableName))
+                        {
+                            // Get the list of columns in the current schema
+                            var currentColumns = (List<object>)currentSchema[tableName];
+
+                            // Compare the number of columns
+                            if (referenceColumns.Count != currentColumns.Count)
+                            {
+                                schemaChanged = true;
+                                break;
+                            }
+
+                            // Compare the names and data types of the columns
+                            for (var i = 0; i < referenceColumns.Count; i++)
+                            {
+                                var referenceColumn = (dynamic)referenceColumns[i];
+                                var currentColumn = (dynamic)currentColumns[i];
+
+                                if (referenceColumn.name != currentColumn.name || referenceColumn.type != currentColumn.type)
+                                {
+                                    schemaChanged = true;
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            schemaChanged = true;
+                            break;
+                        }
+                    }
+
+                    // Alert the user if the schema has changed
+                    if (schemaChanged)
+                    {
+                        Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+                        MessageBox.Show(@"ERROR: The database schema got updated in the latest version. Please make sure that both MHFZ_Overlay.sqlite and reference_schema.json don't exist in the current overlay directory, so that the program can make new ones",
+                        "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
+                        s.EnableQuestLogging = false;
+                    }
+
+                    // Commit the transaction
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        private void InsertPlayerDictionaryDataIntoTable(SQLiteConnection conn)
+        {
+            // Start a transaction
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    DateTime startTime = DateTime.UnixEpoch;
+
+                    using (var cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"SELECT StartTime FROM Session WHERE SessionID = 1";
+                        var result = cmd.ExecuteScalar();
+                        if (result != null)
+                            startTime = Convert.ToDateTime(result);
+                        else
+                            startTime = DateTime.MinValue;
+                    }
+
+                    // Create a command that will be used to insert multiple rows in a batch
+                    using (var cmd = new SQLiteCommand(conn))
+                    {
+                        // Set the command text to insert a single row
+                        //                      PlayerID INTEGER PRIMARY KEY,
+                        //                      PlayerAvatar TEXT NOT NULL DEFAULT 'https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/transcend.png',
+                        //                      CreationDate DATE NOT NULL,
+                        //                      PlayerName TEXT NOT NULL,
+                        //                      GuildName TEXT NOT NULL,
+                        //                      ServerName TEXT NOT NULL,
+                        //                      Gender TEXT NOT NULL)";
+                        cmd.CommandText = @"INSERT OR REPLACE INTO Players (
+                        PlayerID, 
+                        PlayerAvatar, 
+                        CreationDate,
+                        PlayerName,
+                        GuildName,
+                        ServerName,
+                        Gender
+                        ) VALUES (
+                        @PlayerID, 
+                        @PlayerAvatar,
+                        @CreationDate,
+                        @PlayerName,
+                        @GuildName,
+                        @ServerName,
+                        @Gender)";
+
+                        // Add the parameter placeholders
+                        cmd.Parameters.Add("@PlayerID", DbType.Int32);
+                        cmd.Parameters.Add("@PlayerAvatar", DbType.String);
+                        cmd.Parameters.Add("@CreationDate", DbType.String);
+                        cmd.Parameters.Add("@PlayerName", DbType.String);
+                        cmd.Parameters.Add("@GuildName", DbType.String);
+                        cmd.Parameters.Add("@ServerName", DbType.String);
+                        cmd.Parameters.Add("@Gender", DbType.String);
+
+                        // Iterate through the list of players
+                        foreach (KeyValuePair<int, List<string>> kvp in PlayersList.PlayerIDs)
+                        {
+                            int playerID = kvp.Key;
+                            List<string> playerInfo = kvp.Value;
+                            string playerAvatar = playerInfo[0];
+                            string creationDate = playerInfo[1];
+                            string playerName = playerInfo[2];
+                            string guildName = playerInfo[3];
+                            string serverName = playerInfo[4];
+                            string gender = playerInfo[5];
+
+                            if (playerID == 1 && (startTime == DateTime.UnixEpoch || startTime == DateTime.MinValue))
+                                creationDate = DateTime.Now.Date.ToString();
+                            else
+                                creationDate = startTime.Date.ToString();
+
+                            if (playerID == 1)
+                            {
+                                Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+                                playerAvatar = s.PlayerAvatarLink;
+                                playerName = s.HunterName;
+                                guildName = s.GuildName;
+                                serverName = s.ServerName;
+                                gender = s.GenderExport;
+                            }
+
+                            // Set the parameter values
+                            cmd.Parameters["@PlayerID"].Value = playerID;
+                            cmd.Parameters["@PlayerAvatar"].Value = playerAvatar;
+                            cmd.Parameters["@CreationDate"].Value = creationDate;
+                            cmd.Parameters["@PlayerName"].Value = playerName;
+                            cmd.Parameters["@GuildName"].Value = guildName;
+                            cmd.Parameters["@ServerName"].Value = serverName;
+                            cmd.Parameters["@Gender"].Value = gender;
+
+                            // Execute the SQL statement
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // Commit the transaction
+                        transaction.Commit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
 
         private void InsertDictionaryDataIntoTable(IReadOnlyDictionary<int, string> dictionary, string tableName, string idColumn, string valueColumn, SQLiteConnection conn)
         {
@@ -1613,6 +1932,8 @@ namespace MHFZ_Overlay
                     Monster2HPDictionary TEXT NOT NULL,
                     Monster3HPDictionary TEXT NOT NULL,
                     Monster4HPDictionary TEXT NOT NULL,
+                    PartySize INTEGER NOT NULL,
+                    OverlayMode TEXT NOT NULL,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(AreaID) REFERENCES Area(AreaID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID),
@@ -1717,6 +2038,8 @@ namespace MHFZ_Overlay
                     sql = @"
                     CREATE TABLE IF NOT EXISTS Players (
                     PlayerID INTEGER PRIMARY KEY, 
+                    PlayerAvatar TEXT NOT NULL DEFAULT 'https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/transcend.png',
+                    CreationDate DATE NOT NULL,
                     PlayerName TEXT NOT NULL,
                     GuildName TEXT NOT NULL,
                     ServerName TEXT NOT NULL,
@@ -1725,6 +2048,8 @@ namespace MHFZ_Overlay
                     {
                         cmd.ExecuteNonQuery();
                     }
+
+                    InsertPlayerDictionaryDataIntoTable(conn);
 
                     /*
                      * mhfdat.bin
@@ -1773,71 +2098,6 @@ namespace MHFZ_Overlay
                     mhfinfHash TEXT NOT NULL,
                     mhfsqdHash TEXT NOT NULL,
                     FOREIGN KEY(RunID) REFERENCES Quests(RunID)
-                    )";
-                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    // Create table to store program usage time
-                    sql = @"CREATE TABLE IF NOT EXISTS PlayerCurrency (
-                    PlayerID INTEGER PRIMARY KEY,
-                    TrialGachaCoins INTEGER NOT NULL DEFAULT 0,
-                    PremiumGachaCoins INTEGER NOT NULL DEFAULT 0,
-                    PrismaticGachaCoins INTEGER NOT NULL DEFAULT 0,
-                    FrontierPoints INTEGER NOT NULL DEFAULT 0,
-                    LegendaryTickets INTEGER NOT NULL DEFAULT 0,
-                    NetCafePoints INTEGER NOT NULL DEFAULT 0,
-                    MonsterCoins INTEGER NOT NULL DEFAULT 0,
-                    GZenny INTEGER NOT NULL DEFAULT 0,
-                    Zenny INTEGER NOT NULL DEFAULT 0,
-                    GCP INTEGER NOT NULL DEFAULT 0,
-                    CP INTEGER NOT NULL DEFAULT 0,
-                    Gg INTEGER NOT NULL DEFAULT 0,
-                    g INTEGER NOT NULL DEFAULT 0,
-                    GreatSlayingPoints INTEGER NOT NULL DEFAULT 0,
-                    MezFesCoins INTEGER NOT NULL DEFAULT 0,
-                    RdP INTEGER NOT NULL DEFAULT 0, -- Road
-                    Gm INTEGER NOT NULL DEFAULT 0,
-                    TowerMedals INTEGER NOT NULL DEFAULT 0,
-                    TowerPoints INTEGER NOT NULL DEFAULT 0,
-                    Souls INTEGER NOT NULL DEFAULT 0,
-                    FestivalPoints INTEGER NOT NULL DEFAULT 0,
-                    FestivalTickets INTEGER NOT NULL DEFAULT 0,
-                    FestivalGems INTEGER NOT NULL DEFAULT 0,
-                    FestivalMarks INTEGER NOT NULL DEFAULT 0,
-                    GuildTickets INTEGER NOT NULL DEFAULT 0,
-                    GuildMedals INTEGER NOT NULL DEFAULT 0,
-                    HuntingMedals INTEGER NOT NULL DEFAULT 0,
-                    InterceptionPoints INTEGER NOT NULL DEFAULT 0,
-                    DivaNotes INTEGER NOT NULL DEFAULT 0,
-                    PoogiePoints INTEGER NOT NULL DEFAULT 0,
-                    PartnerPoints INTEGER NOT NULL DEFAULT 0,
-                    PartnyaaPoints INTEGER NOT NULL DEFAULT 0,
-                    GalleryPoints INTEGER NOT NULL DEFAULT 0,
-                    TranscendPoints INTEGER NOT NULL DEFAULT 0,
-                    ZZenny INTEGER NOT NULL DEFAULT 0,
-                    FOREIGN KEY(PlayerID) REFERENCES Players(PlayerID)
-                    )";
-                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    // Create table to store program usage time
-                    sql = @"CREATE TABLE IF NOT EXISTS PlayerGem (
-                    PlayerID INTEGER PRIMARY KEY,
-                    GemColor TEXT NOT NULL,
-                    GemLv INTEGER NOT NULL DEFAULT 1,
-                    PeachPoints INTEGER NOT NULL DEFAULT 0,
-                    BrownPoints INTEGER NOT NULL DEFAULT 0,
-                    YellowPoints INTEGER NOT NULL DEFAULT 0,
-                    GreenPoints INTEGER NOT NULL DEFAULT 0,
-                    WhitePoints INTEGER NOT NULL DEFAULT 0,
-                    PurplePoints INTEGER NOT NULL DEFAULT 0,
-                    CyanPoints INTEGER NOT NULL DEFAULT 0,
-                    RainbowPoints INTEGER NOT NULL DEFAULT 0,
-                    FOREIGN KEY(PlayerID) REFERENCES Players(PlayerID)
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
@@ -2385,6 +2645,47 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
+                    // TODO: addresses
+                    sql = @"CREATE TABLE IF NOT EXISTS PartnyaBag (
+                    PartnyaBagID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL,
+                    Item1ID INTEGER NOT NULL CHECK (Item1ID >= 0), 
+                    Item1Quantity INTEGER NOT NULL,
+                    Item2ID INTEGER NOT NULL CHECK (Item2ID >= 0), 
+                    Item2Quantity INTEGER NOT NULL,
+                    Item3ID INTEGER NOT NULL CHECK (Item3ID >= 0), 
+                    Item3Quantity INTEGER NOT NULL,
+                    Item4ID INTEGER NOT NULL CHECK (Item4ID >= 0), 
+                    Item4Quantity INTEGER NOT NULL,
+                    Item5ID INTEGER NOT NULL CHECK (Item5ID >= 0), 
+                    Item5Quantity INTEGER NOT NULL,
+                    Item6ID INTEGER NOT NULL CHECK (Item6ID >= 0), 
+                    Item6Quantity INTEGER NOT NULL,
+                    Item7ID INTEGER NOT NULL CHECK (Item7ID >= 0), 
+                    Item7Quantity INTEGER NOT NULL,
+                    Item8ID INTEGER NOT NULL CHECK (Item8ID >= 0), 
+                    Item8Quantity INTEGER NOT NULL,
+                    Item9ID INTEGER NOT NULL CHECK (Item9ID >= 0), 
+                    Item9Quantity INTEGER NOT NULL,
+                    Item10ID INTEGER NOT NULL CHECK (Item10ID >= 0), 
+                    Item10Quantity INTEGER NOT NULL,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID),
+                    FOREIGN KEY(Item1ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item2ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item3ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item4ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item5ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item6ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item7ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item8ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item9ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item10ID) REFERENCES Item(ItemID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
                     sql = @"CREATE TABLE IF NOT EXISTS RoadDureSkills (
                     RoadDureSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -2452,6 +2753,249 @@ namespace MHFZ_Overlay
                     }
 
                     InsertDictionaryDataIntoTable(Dictionary.RoadDureSkills.RoadDureSkillIDs, "AllRoadDureSkills", "RoadDureSkillID", "RoadDureSkillName", conn);
+
+                    #region gacha
+                    // a mh game but like a MUD. hunt in-game to get many kinds of points for this game. hunt and tame monsters. challenge other CPU players/monsters.
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaPlayerCurrency (
+                    GachaPlayerID INTEGER PRIMARY KEY,
+                    TrialGachaCoins INTEGER NOT NULL DEFAULT 0,
+                    PremiumGachaCoins INTEGER NOT NULL DEFAULT 0,
+                    PrismaticGachaCoins INTEGER NOT NULL DEFAULT 0,
+                    FrontierPoints INTEGER NOT NULL DEFAULT 0,
+                    LegendaryTickets INTEGER NOT NULL DEFAULT 0,
+                    NetCafePoints INTEGER NOT NULL DEFAULT 0,
+                    MonsterCoins INTEGER NOT NULL DEFAULT 0,
+                    GZenny INTEGER NOT NULL DEFAULT 0,
+                    Zenny INTEGER NOT NULL DEFAULT 0,
+                    GCP INTEGER NOT NULL DEFAULT 0,
+                    CP INTEGER NOT NULL DEFAULT 0,
+                    Gg INTEGER NOT NULL DEFAULT 0,
+                    g INTEGER NOT NULL DEFAULT 0,
+                    GreatSlayingPoints INTEGER NOT NULL DEFAULT 0,
+                    MezFesCoins INTEGER NOT NULL DEFAULT 0,
+                    RdP INTEGER NOT NULL DEFAULT 0, -- Road
+                    Gm INTEGER NOT NULL DEFAULT 0,
+                    TowerMedals INTEGER NOT NULL DEFAULT 0,
+                    TowerPoints INTEGER NOT NULL DEFAULT 0,
+                    Souls INTEGER NOT NULL DEFAULT 0,
+                    FestivalPoints INTEGER NOT NULL DEFAULT 0,
+                    FestivalTickets INTEGER NOT NULL DEFAULT 0,
+                    FestivalGems INTEGER NOT NULL DEFAULT 0,
+                    FestivalMarks INTEGER NOT NULL DEFAULT 0,
+                    GuildTickets INTEGER NOT NULL DEFAULT 0,
+                    GuildMedals INTEGER NOT NULL DEFAULT 0,
+                    HuntingMedals INTEGER NOT NULL DEFAULT 0,
+                    InterceptionPoints INTEGER NOT NULL DEFAULT 0,
+                    DivaNotes INTEGER NOT NULL DEFAULT 0,
+                    PoogiePoints INTEGER NOT NULL DEFAULT 0,
+                    PartnerPoints INTEGER NOT NULL DEFAULT 0,
+                    PartnyaaPoints INTEGER NOT NULL DEFAULT 0,
+                    GalleryPoints INTEGER NOT NULL DEFAULT 0,
+                    TranscendPoints INTEGER NOT NULL DEFAULT 0,
+                    ZZenny INTEGER NOT NULL DEFAULT 0,
+                    FOREIGN KEY(GachaPlayerID) REFERENCES GachaPlayer(GachaPlayerID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaPlayerGem (
+                    GachaPlayerID INTEGER PRIMARY KEY,
+                    GemColor TEXT NOT NULL,
+                    GemLv INTEGER NOT NULL DEFAULT 1,
+                    PeachPoints INTEGER NOT NULL DEFAULT 0,
+                    BrownPoints INTEGER NOT NULL DEFAULT 0,
+                    YellowPoints INTEGER NOT NULL DEFAULT 0,
+                    GreenPoints INTEGER NOT NULL DEFAULT 0,
+                    WhitePoints INTEGER NOT NULL DEFAULT 0,
+                    PurplePoints INTEGER NOT NULL DEFAULT 0,
+                    CyanPoints INTEGER NOT NULL DEFAULT 0,
+                    RainbowPoints INTEGER NOT NULL DEFAULT 0,
+                    FOREIGN KEY(GachaPlayerID) REFERENCES GachaPlayer(GachaPlayerID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaPlayer (
+                    GachaPlayerID INTEGER PRIMARY KEY,
+                    GachaPlayerAvatar TEXT NOT NULL DEFAULT 'https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/transcend.png',
+                    Level INTEGER NOT NULL, -- the character level
+                    Experience INTEGER NOT NULL, -- xp for the char level
+                    Health INTEGER NOT NULL, -- The player's maximum hit points and current hit points
+                    Stamina INTEGER NOT NULL, -- the player stamina for actions
+                    Strength INTEGER NOT NULL,-- Affects the player's physical damage and carrying capacity
+                    Dexterity INTEGER NOT NULL, -- Affects the player's accuracy and critical hit chance with weapons, as well as their dodge chance
+                    Intelligence INTEGER NOT NULL, --Affects the player's XP gain and the number of moves they can learn
+                    Charisma INTEGER NOT NULL, --Affects the player's ability to persuade or intimidate NPC characters, and may affect the prices of items they buy or sell. also increases chance of NPC asking for monsterVSmonster battles.
+                    Endurance INTEGER NOT NULL, -- Affects the player's resistance to physical damage and ability to withstand harsh environments
+                    Stealth INTEGER NOT NULL, -- Affects the ability to be spotted by monsters
+                    Agility INTEGER NOT NULL, -- Affects the player's movement speed and overall agility in combat
+                    Accuracy INTEGER NOT NULL, -- Affects the player's ability to hit targets with their attacks
+                    Synergy INTEGER NOT NULL, -- the player coordination ability with NPC teammates. high points increases the chance of more hunt rewards and success. low points increase the chance of lower hunt rewards and success, and also NPC asking for PVP duels after a successful hunt.
+                    Artisanry INTEGER NOT NULL, -- This name implies a level of creativity and artistic ability in the creation of gear.
+                    Taming INTEGER NOT NULL, -- for monster pets. chance of taming and monster pet stats increases.
+                    Dueling INTEGER NOT NULL, -- for pvp. chance of winning and/or losing but avoiding injury increases.
+                    -- idk what else
+                    BlademasterXP INTEGER NOT NULL, -- xp for the weapon class
+                    GunnerXP INTEGER NOT NULL,
+                    ShortSwordXP INTEGER NOT NULL, -- xp for the weapon subclasses, SNS+DS
+                    LargeSwordXP INTEGER NOT NULL, -- GS+LS
+                    LancesXP INTEGER NOT NULL, -- LA+GL
+                    BluntWeaponsXP INTEGER NOT NULL, -- HA+HH
+                    BowgunXP INTEGER NOT NULL, --LBG+HBG
+                    -- TO, SAF, MS and Bow have bonus xp gain because they don't form part of a subclass for the extra XP.
+                    SwordAndShieldLevel INTEGER NOT NULL, -- the mastery of the weapons
+                    DualSwordsLevel INTEGER NOT NULL,
+                    GreatSwordLevel INTEGER NOT NULL,
+                    LongSwordLevel INTEGER NOT NULL,
+                    LanceLevel INTEGER NOT NULL,
+                    GunlanceLevel INTEGER NOT NULL,
+                    HammerLevel INTEGER NOT NULL,
+                    HuntingHornLevel INTEGER NOT NULL,
+                    TonfaLevel INTEGER NOT NULL,
+                    SwitchAxeFLevel INTEGER NOT NULL,
+                    MagnetSpikeLevel INTEGER NOT NULL,
+                    LightBowgunLevel INTEGER NOT NULL,
+                    HeavyBowgunLevel INTEGER NOT NULL,
+                    BowLevel INTEGER NOT NULL,
+                    GachaWeaponID INTEGER NOT NULL,
+                    WeaponLevel INTEGER NOT NULL,
+                    WeaponXP INTEGER NOT NULL, --used to level weapon along with monster materials
+                    FOREIGN KEY(GachaWeaponID) REFERENCES GachaWeapon(GachaWeaponID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaWeapon(
+                    GachaWeaponID INTEGER PRIMARY KEY,
+                    -- flavor text option? 
+                    GachaWeaponType TEXT NOT NULL,
+                    GachaWeaponName TEXT NOT NULL,
+                    GachaWeaponDamage INTEGER NOT NULL,
+                    GachaWeaponAffinity INTEGER NOT NULL,
+                    GachaWeaponElementTypeID INTEGER NOT NULL,
+                    GachaWeaponElementValue INTEGER NOT NULL,
+                    GachaWeaponStatusTypeID INTEGER NOT NULL,
+                    GachaWeaponStatusValue INTEGER NOT NULL,
+                    GachaWeaponSlot1Type TEXT NOT NULL,
+                    GachaWeaponSlot1ItemID INTEGER NOT NULL,
+                    GachaWeaponSlot2Type TEXT NOT NULL,
+                    GachaWeaponSlot2ItemID INTEGER NOT NULL,
+                    GachaWeaponSlot3Type TEXT NOT NULL,
+                    GachaWeaponSlot3ItemID INTEGER NOT NULL,
+                    FOREIGN KEY(GachaWeaponSlot1ItemID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY(GachaWeaponSlot2ItemID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY(GachaWeaponSlot3ItemID) REFERENCES GachaMaterial(GachaMaterialID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaCraft(
+                    GachaCraftID INTEGER PRIMARY KEY,
+                    GachaWeaponID INTEGER NOT NULL,
+                    Material1ID INTEGER,
+                    Material1Quantity INTEGER,
+                    Material2ID INTEGER,
+                    Material2Quantity INTEGER,
+                    Material3ID INTEGER,
+                    Material3Quantity INTEGER,
+                    Material4ID INTEGER,
+                    Material4Quantity INTEGER,
+                    Material5ID INTEGER,
+                    Material5Quantity INTEGER,
+                    Material6ID INTEGER,
+                    Material6Quantity INTEGER,
+                    FOREIGN KEY (GachaWeaponID) REFERENCES GachaWeapon(GachaWeaponID),
+                    FOREIGN KEY (Material1ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material2ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material3ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material4ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material5ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material6ID) REFERENCES GachaMaterial(GachaMaterialID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaMaterial(
+                    GachaMaterialID INTEGER PRIMARY KEY,
+                    GachaMaterialName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaWeaponShop(
+                    GachaWeaponID INTEGER PRIMARY KEY,
+                    GachaWeaponZennyCost INTEGER NOT NULL,
+                    GachaWeaponGZennyCost INTEGER NOT NULL,
+                    GachaWeaponZZennyCost INTEGER NOT NULL,
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaMonster(
+                    GachaMonsterID INTEGER PRIMARY KEY,
+                    Level INTEGER NOT NULL,
+                    Experience INTEGER NOT NULL,
+                    Health INTEGER NOT NULL,
+                    Stamina INTEGER NOT NULL,
+                    Defense INTEGER NOT NULL,
+                    Attack INTEGER NOT NULL,
+                    Speed INTEGER NOT NULL,
+                    SpecialAttack INTEGER NOT NULL, -- increases the chance and damage of the special attack
+                    Intelligence INTEGER NOT NULL, -- increases chance to counter-attack
+                    Morale INTEGER NOT NULL, -- high morale decreases chance to flee if opponent stats are higher                
+                    FireRes INTEGER NOT NULL, 
+                    WaterRes INTEGER NOT NULL, 
+                    ThunderRes INTEGER NOT NULL, 
+                    IceRes INTEGER NOT NULL, 
+                    DragonRes INTEGER NOT NULL, 
+                    FireAttack INTEGER NOT NULL,
+                    WaterAttack INTEGER NOT NULL,
+                    ThunderAttack INTEGER NOT NULL,
+                    IceAttack INTEGER NOT NULL,
+                    DragonAttack INTEGER NOT NULL,
+                    Stun INTEGER NOT NULL,
+                    StunRes INTEGER NOT NULL,
+                    Poison INTEGER NOT NULL,
+                    PoisonRes INTEGER NOT NULL,
+                    Paralysis INTEGER NOT NULL,
+                    ParalysisRes INTEGER NOT NULL,
+                    Sleep INTEGER NOT NULL,
+                    SleepRes INTEGER NOT NULL,
+                    Blast INTEGER,
+                    BlastRes INTEGER NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+
+                    #endregion
+
+                    // Check if the reference schema file exists
+                    if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json")))
+                    {
+                        CreateReferenceSchemaJSONFromLocalDatabaseFile(conn);
+                    }
+                    else
+                    {
+                        CompareReferenceSchemaJSONFromLocalDatabaseFileToCurrentDatabaseSchema(conn);
+                    }
 
                     // Commit the transaction
                     transaction.Commit();

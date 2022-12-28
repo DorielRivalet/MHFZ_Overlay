@@ -435,9 +435,6 @@ namespace MHFZ_Overlay
             System.Diagnostics.Process.Start(sInfo);
         }
 
-        private bool closedGame;
-        private bool isInLauncherBool;
-
         DatabaseManager databaseManager = DatabaseManager.GetInstance();
 
         public void CheckGameState()
@@ -461,11 +458,11 @@ namespace MHFZ_Overlay
                 if (className == "MHFLAUNCH")
                 {
                     System.Windows.MessageBox.Show("Detected launcher, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                    isInLauncherBool = true;
+                    DataLoader.model.isInLauncherBool = true;
                 }
                 else
                 {
-                    isInLauncherBool = false;
+                    DataLoader.model.isInLauncherBool = false;
                 }
 
                 //https://stackoverflow.com/questions/51148/how-do-i-find-out-if-a-process-is-already-running-using-c
@@ -476,7 +473,7 @@ namespace MHFZ_Overlay
                 mhfProcess.Exited += (sender, e) =>
                 {
 
-                    closedGame = true;
+                    DataLoader.model.closedGame = true;
                     Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
                     if (s.EnableAutoClose)
@@ -525,7 +522,7 @@ namespace MHFZ_Overlay
 
             CheckQuestStateForDatabaseLogging();
 
-            if (isInLauncher() == "NULL" && !showedNullError)
+            if (DataLoader.model.isInLauncher() == "NULL" && !showedNullError)
             {
                 showedNullError = true;
             }
@@ -853,8 +850,6 @@ namespace MHFZ_Overlay
                 return "Time Elapsed";
             else return "Time Left";
         }
-
-        private bool inQuest = false;
 
         /// <summary>
         /// Gets the weapon style from identifier.
@@ -1261,56 +1256,6 @@ namespace MHFZ_Overlay
 
         readonly Mem m = new();
 
-        public string isInLauncher()
-        {
-            int pidToSearch = m.GetProcIdFromName("mhf");
-            //Init a condition indicating that you want to search by process id.
-            var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
-                pidToSearch);
-            //Find the automation element matching the criteria
-            AutomationElement element = AutomationElement.RootElement.FindFirst(
-                TreeScope.Children, condition);
-
-            if (element == null || pidToSearch == 0)
-                return "NULL";
-
-            //get the classname
-            var className = element.Current.ClassName;
-
-            if (className == "MHFLAUNCH")
-                return "Yes";
-            else
-                return "No";
-        }
-
-        /// <summary>
-        /// Gets the overlay mode.
-        /// </summary>
-        /// <returns></returns>
-        public string GetOverlayMode()
-        {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
-            if (DataLoader.model.Configuring)
-                return "(Configuring) ";
-            else if (closedGame)
-                return "(Closed Game) ";
-            else if (isInLauncherBool || isInLauncher() == "Yes") //works?
-                return "(Launcher) ";
-            else if (isInLauncher() == "NULL")
-                return "(No game detected) ";
-            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.AreaID() == 0 && DataLoader.model.BlademasterWeaponID() == 0 && DataLoader.model.GunnerWeaponID() == 0)
-                return "(Main Menu) ";
-            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.AreaID() == 200 && DataLoader.model.BlademasterWeaponID() == 0 && DataLoader.model.GunnerWeaponID() == 0)
-                return "(World Select) ";
-            else if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown)
-                return "";
-            else if (s.TimerInfoShown)
-                return "(Speedrun) ";
-            else
-                return "(Zen) ";
-        }
-
         /// <summary>
         /// Shows the current hp percentage.
         /// </summary>
@@ -1586,7 +1531,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetQuestState()
         {
-            if (isInLauncherBool) //works?
+            if (DataLoader.model.isInLauncherBool) //works?
                 return "";
 
             switch (DataLoader.model.QuestState())
@@ -1608,7 +1553,7 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string GetPartySize()
         {
-            if (DataLoader.model.QuestID() == 0 || DataLoader.model.PartySize() == 0 || isInLauncher() == "NULL" || isInLauncher() == "Yes")
+            if (DataLoader.model.QuestID() == 0 || DataLoader.model.PartySize() == 0 || DataLoader.model.isInLauncher() == "NULL" || DataLoader.model.isInLauncher() == "Yes")
             {
                 return "";
             }
@@ -1694,7 +1639,7 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), GetOverlayMode(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
+            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), DataLoader.model.GetOverlayMode(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
 
             if (IsInHubAreaID() && DataLoader.model.QuestID() == 0)
                 DataLoader.model.PreviousHubAreaID = DataLoader.model.AreaID();
@@ -1744,13 +1689,13 @@ namespace MHFZ_Overlay
                     case 55605:
                     case 55606:
                     case 55607:
-                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9} | DPS: {10} (Max {11})", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount, DataLoader.model.DPS, DataLoader.model.HighestDPS);
+                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9} | DPS: {10:0.00} (Max {11:0.00})", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount, DataLoader.model.DPS, DataLoader.model.HighestDPS);
                         break;
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9} | DPS: {10} (Max {11})", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount, DataLoader.model.DPS, DataLoader.model.HighestDPS);
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9} | DPS: {10:0.00} (Max {11:0.00})", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount, DataLoader.model.DPS, DataLoader.model.HighestDPS);
                         else
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9} | DPS: {10} (Max {11})", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount, DataLoader.model.DPS, DataLoader.model.HighestDPS);
+                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9} | DPS: {10:0.00} (Max {11:0.00})", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCount, DataLoader.model.DPS, DataLoader.model.HighestDPS);
                         break;
                 }
 
@@ -1909,9 +1854,9 @@ namespace MHFZ_Overlay
             }
 
             //Timer
-            if ((DataLoader.model.QuestID() != 0 && !inQuest && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0) || (DataLoader.model.IsRoad() || DataLoader.model.IsDure()))
+            if ((DataLoader.model.QuestID() != 0 && !DataLoader.model.inQuest && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0) || (DataLoader.model.IsRoad() || DataLoader.model.IsDure()))
             {
-                inQuest = true;
+                DataLoader.model.inQuest = true;
 
                 if (!(DataLoader.model.IsRoad() || DataLoader.model.IsDure()))
                 {
@@ -1940,7 +1885,7 @@ namespace MHFZ_Overlay
                                 if (DataLoader.model.RoadFloor() + 1 > previousRoadFloor)
                                 {
                                     // reset values
-                                    inQuest = false;
+                                    DataLoader.model.inQuest = false;
                                     currentMonster1MaxHP = 0;
                                     previousRoadFloor = DataLoader.model.RoadFloor() + 1;
                                     presenceTemplate.Timestamps = GetDiscordTimerMode() switch
@@ -1967,7 +1912,7 @@ namespace MHFZ_Overlay
                                 if (DataLoader.model.RoadFloor() + 1 > previousRoadFloor)
                                 {
                                     // reset values
-                                    inQuest = false;
+                                    DataLoader.model.inQuest = false;
                                     currentMonster1MaxHP = 0;
                                     previousRoadFloor = DataLoader.model.RoadFloor() + 1;
 
@@ -1994,7 +1939,7 @@ namespace MHFZ_Overlay
                                 if (DataLoader.model.RoadFloor() + 1 > previousRoadFloor)
                                 {
                                     // reset values
-                                    inQuest = false;
+                                    DataLoader.model.inQuest = false;
                                     currentMonster1MaxHP = 0;
                                     previousRoadFloor = DataLoader.model.RoadFloor() + 1;
 
@@ -2057,10 +2002,10 @@ namespace MHFZ_Overlay
                 }
             }
             // going back to Mezeporta or w/e
-            else if (DataLoader.model.QuestState() != 1 && DataLoader.model.QuestID() == 0 && inQuest && int.Parse(DataLoader.model.ATK) == 0)
+            else if (DataLoader.model.QuestState() != 1 && DataLoader.model.QuestID() == 0 && DataLoader.model.inQuest && int.Parse(DataLoader.model.ATK) == 0)
             {
                 //reset values
-                inQuest = false;
+                DataLoader.model.inQuest = false;
                 currentMonster1MaxHP = 0;
                 previousRoadFloor = 0;
                 StartedRoadElapsedTime = false;
@@ -2263,7 +2208,7 @@ namespace MHFZ_Overlay
         {
             if (IsDragConfigure) return;
 
-            if (isInLauncherBool)
+            if (DataLoader.model.isInLauncherBool)
                 System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
 
             if (configWindow == null || !configWindow.IsLoaded)
@@ -2352,14 +2297,20 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.TimeInt() % 30 == 0)
+            // Check if in quest and timer is NOT frozen
+            if (DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.TimeInt() % 30 == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt())
             {
                 DataLoader.model.InsertQuestInfoIntoDictionaries();
                 DataLoader.model.DPS = DataLoader.model.CalculateDPS();
             }
 
-            if (!s.EnableQuestLogging || (DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() == 0))
+            if ((DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() == 0))
+            {
+                DataLoader.model.questCleared = false;
+                DataLoader.model.clearQuestInfoDictionaries();
                 return;
+            }
+
             else if (!loadedItemsAtQuestStart && DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() != 0)
             {
                 loadedItemsAtQuestStart = true;
@@ -2434,14 +2385,16 @@ namespace MHFZ_Overlay
             {
                 DataLoader.model.questCleared = true;
                 loadedItemsAtQuestStart = false;
-                databaseManager.InsertQuestData(databaseManager.dataSource, DataLoader);
+                if (s.EnableQuestLogging)
+                    databaseManager.InsertQuestData(databaseManager.dataSource, DataLoader);
             }
             // going back to Mezeporta or w/e
-            else if (DataLoader.model.QuestState() != 1 && DataLoader.model.QuestID() == 0 && int.Parse(DataLoader.model.ATK) == 0)
-            {
-                DataLoader.model.questCleared = false;
-                DataLoader.model.clearQuestInfoDictionaries();
-            }
+            // TODO: i think this never runs?
+            //else if (DataLoader.model.QuestState() != 1 && DataLoader.model.QuestID() == 0 && int.Parse(DataLoader.model.ATK) == 0)
+            //{
+            //    DataLoader.model.questCleared = false;
+            //    DataLoader.model.clearQuestInfoDictionaries();
+            //}
         }
 
         #endregion

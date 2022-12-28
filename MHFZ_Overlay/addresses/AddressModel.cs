@@ -17,6 +17,7 @@ using System.Threading;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
+using System.Windows.Automation;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -785,6 +786,62 @@ namespace MHFZ_Overlay.addresses
         }
 
         public int PreviousHubAreaID = 0;
+        public bool closedGame;
+        public bool isInLauncherBool;
+
+        readonly Mem m = new();
+
+        public string isInLauncher()
+        {
+            int pidToSearch = m.GetProcIdFromName("mhf");
+            //Init a condition indicating that you want to search by process id.
+            var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
+                pidToSearch);
+            //Find the automation element matching the criteria
+            AutomationElement element = AutomationElement.RootElement.FindFirst(
+                TreeScope.Children, condition);
+
+            if (element == null || pidToSearch == 0)
+                return "NULL";
+
+            //get the classname
+            var className = element.Current.ClassName;
+
+            if (className == "MHFLAUNCH")
+                return "Yes";
+            else
+                return "No";
+        }
+
+        public bool inQuest = false;
+
+        /// <summary>
+        /// Gets the overlay mode.
+        /// </summary>
+        /// <returns></returns>
+        public string GetOverlayMode()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            if (Configuring)
+                return "(Configuring) ";
+            else if (closedGame)
+                return "(Closed Game) ";
+            else if (isInLauncherBool || isInLauncher() == "Yes") //works?
+                return "(Launcher) ";
+            else if (isInLauncher() == "NULL")
+                return "(No game detected) ";
+            else if (QuestID() == 0 && AreaID() == 0 && BlademasterWeaponID() == 0 && GunnerWeaponID() == 0)
+                return "(Main Menu) ";
+            else if (QuestID() == 0 && AreaID() == 200 && BlademasterWeaponID() == 0 && GunnerWeaponID() == 0)
+                return "(World Select) ";
+            else if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown)
+                return "";
+            else if (s.TimerInfoShown)
+                return "(Speedrun) ";
+            else
+                return "(Zen) ";
+        }
 
         private bool QuestNameContainsAlternativeTitle()
         {
@@ -8400,12 +8457,23 @@ namespace MHFZ_Overlay.addresses
         //} 
         //}
 
+        // TODO
         public double CalculateDPS()
         {
             // Initialize the damageDealt and timeElapsed variables to 0
-            int damageDealt = 0;
-            int timeElapsed = 0;
+            double damageDealt = 0;
+            double timeElapsed = 0;
 
+            // Check if the damageDealtDictionary is empty
+            if (!damageDealtDictionary.Any())
+            {
+                // If the dictionary is empty, return 0 as the DPS value
+                return 0;
+            }
+
+            // Get the time of the first hit in the dictionary
+            //int previousHitTime = damageDealtDictionary.First().Key;
+            int previousHitTime = 0;
             // Iterate through the damageDealtDictionary and update the damageDealt and timeElapsed values
             foreach (KeyValuePair<int, int> hit in damageDealtDictionary)
             {
@@ -8419,13 +8487,10 @@ namespace MHFZ_Overlay.addresses
                 previousHitTime = hit.Key;
             }
 
-            // avoid division by zero
-            if (timeElapsed == 0)
-                return damageDealt;
-
             // Calculate and return the DPS
-            return damageDealt / timeElapsed;
+            return damageDealt / (timeElapsed/30);
         }
+
 
         // new entry every second during quest (use this for chart?)
         public Dictionary<int, double> damagePerSecondDictionary = new Dictionary<int, double>();
@@ -8452,15 +8517,56 @@ namespace MHFZ_Overlay.addresses
         //int timeElapsed = 0;
 
         // Initialize the previousHitTime variable to 0
-        int previousHitTime = 0;
+        public int previousHitTime = 0;
+
+        public int previousTimeInt = 0;
+
+        public int previousAttackBuffInt = 0;
+
+        public int previousHitCountInt = 0;
+
+        public double previousDPS = 0;
+
+        public int previousAreaID = 0;
+
+        public int previousCartsInt = 0;
 
         public void InsertQuestInfoIntoDictionaries()
         {
-            attackBuffDictionary.Add(TimeInt(), WeaponRaw());
-            hitCountDictionary.Add(TimeInt(),HitCountInt());
-            damagePerSecondDictionary.Add(TimeInt(), DPS);
-            areaChangesDictionary.Add(TimeInt(), AreaID());
-            cartsDictionary.Add(TimeInt(),CurrentFaints());
+            if (TimeInt() == previousTimeInt)
+                return;
+
+            previousTimeInt = TimeInt();
+
+            if (previousAttackBuffInt != WeaponRaw())
+            {
+                previousAttackBuffInt = WeaponRaw();
+                attackBuffDictionary.Add(TimeInt(), WeaponRaw());
+            }
+
+            if (previousHitCountInt != HitCountInt())
+            {
+                previousHitCountInt = HitCountInt();
+                hitCountDictionary.Add(TimeInt(), HitCountInt());
+            }
+
+            if (previousDPS != DPS)
+            {
+                previousDPS = DPS;
+                damagePerSecondDictionary.Add(TimeInt(), DPS);
+            }
+
+            if (previousCartsInt != CurrentFaints())
+            {
+                previousCartsInt = CurrentFaints();
+                cartsDictionary.Add(TimeInt(), CurrentFaints());
+            }
+            if (previousAreaID != AreaID())
+            {
+                previousAreaID = AreaID();
+                areaChangesDictionary.Add(TimeInt(), AreaID());
+            }
+
             Dictionary<int, int> monster1HPDictionaryMonsterInfo = new Dictionary<int, int>();
             Dictionary<int, int> monster2HPDictionaryMonsterInfo = new Dictionary<int, int>();
             Dictionary<int, int> monster3HPDictionaryMonsterInfo = new Dictionary<int, int>();
@@ -8549,6 +8655,15 @@ namespace MHFZ_Overlay.addresses
             AmmoPouchItem8QuantityAtQuestStart = 0;
             AmmoPouchItem9QuantityAtQuestStart = 0;
             AmmoPouchItem10QuantityAtQuestStart = 0;
+
+            DPS = 0;
+            HighestDPS = 0;
+
+            previousAttackBuffInt = 0;
+            previousDPS = 0;
+            previousHitCountInt = 0;
+            previousAreaID = 0;
+            previousCartsInt = 0;
         }
 
 
