@@ -8517,7 +8517,7 @@ namespace MHFZ_Overlay.addresses
         //int timeElapsed = 0;
 
         // Initialize the previousHitTime variable to 0
-        public int previousHitTime = 0;
+        public int previousHitTime = 0; // is this used?
 
         public int previousTimeInt = 0;
 
@@ -8581,19 +8581,8 @@ namespace MHFZ_Overlay.addresses
             monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
         }
 
-        public void clearQuestInfoDictionaries()
+        public void resetQuestInfoVariables()
         {
-            attackBuffDictionary.Clear();
-            hitCountDictionary.Clear();
-            damageDealtDictionary.Clear();
-            damagePerSecondDictionary.Clear();
-            areaChangesDictionary.Clear();
-            cartsDictionary.Clear();
-            monster1HPDictionary.Clear();
-            monster2HPDictionary.Clear();
-            monster3HPDictionary.Clear();
-            monster4HPDictionary.Clear();
-
             PouchItem1IDAtQuestStart = 0;
             PouchItem2IDAtQuestStart = 0;
             PouchItem3IDAtQuestStart = 0;
@@ -8664,6 +8653,20 @@ namespace MHFZ_Overlay.addresses
             previousHitCountInt = 0;
             previousAreaID = 0;
             previousCartsInt = 0;
+        }
+
+        public void clearQuestInfoDictionaries()
+        {
+            attackBuffDictionary.Clear();
+            hitCountDictionary.Clear();
+            damageDealtDictionary.Clear();
+            damagePerSecondDictionary.Clear();
+            areaChangesDictionary.Clear();
+            cartsDictionary.Clear();
+            monster1HPDictionary.Clear();
+            monster2HPDictionary.Clear();
+            monster3HPDictionary.Clear();
+            monster4HPDictionary.Clear();
         }
 
 

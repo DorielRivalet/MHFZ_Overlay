@@ -376,36 +376,7 @@ namespace MHFZ_Overlay
                             cmd.ExecuteNonQuery();
                         }
 
-                        // Insert data into the Players table
-                        sql = @"INSERT OR REPLACE INTO Players (
-                        PlayerID, 
-                        PlayerAvatar,
-                        PlayerName, 
-                        GuildName, 
-                        ServerName, 
-                        Gender) VALUES (
-                        @PlayerID,
-                        @PlayerAvatar
-                        @PlayerName,
-                        @GuildName,
-                        @ServerName,
-                        @Gender)";
-                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                        {
-                            string playerAvatar = s.PlayerAvatarLink;
-                            string playerName = s.HunterName;
-                            string guildName = s.GuildName;
-                            string serverName = s.ServerName;
-                            string gender = s.GenderExport;
-
-                            cmd.Parameters.AddWithValue("@PlayerID", playerID);
-                            cmd.Parameters.AddWithValue("@PlayerAvatar", playerAvatar);
-                            cmd.Parameters.AddWithValue("@PlayerName", playerName);
-                            cmd.Parameters.AddWithValue("@GuildName", guildName);
-                            cmd.Parameters.AddWithValue("@ServerName", serverName);
-                            cmd.Parameters.AddWithValue("@Gender", gender);
-                            cmd.ExecuteNonQuery();
-                        }
+                        InsertPlayerDictionaryDataIntoTable(conn);
 
                         // Get the ID of the last inserted row in the Players table
                         //sql = "SELECT LAST_INSERT_ROWID()";
@@ -1683,13 +1654,6 @@ namespace MHFZ_Overlay
                     using (var cmd = new SQLiteCommand(conn))
                     {
                         // Set the command text to insert a single row
-                        //                      PlayerID INTEGER PRIMARY KEY,
-                        //                      PlayerAvatar TEXT NOT NULL DEFAULT 'https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/transcend.png',
-                        //                      CreationDate DATE NOT NULL,
-                        //                      PlayerName TEXT NOT NULL,
-                        //                      GuildName TEXT NOT NULL,
-                        //                      ServerName TEXT NOT NULL,
-                        //                      Gender TEXT NOT NULL)";
                         cmd.CommandText = @"INSERT OR REPLACE INTO Players (
                         PlayerID, 
                         PlayerAvatar, 
@@ -2757,6 +2721,15 @@ namespace MHFZ_Overlay
                     #region gacha
                     // a mh game but like a MUD. hunt in-game to get many kinds of points for this game. hunt and tame monsters. challenge other CPU players/monsters.
 
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaMaterial(
+                    GachaMaterialID INTEGER PRIMARY KEY,
+                    GachaMaterialName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
                     sql = @"CREATE TABLE IF NOT EXISTS GachaPlayerCurrency (
                     GachaPlayerID INTEGER PRIMARY KEY,
                     TrialGachaCoins INTEGER NOT NULL DEFAULT 0,
@@ -2878,6 +2851,7 @@ namespace MHFZ_Overlay
                     GachaWeaponType TEXT NOT NULL,
                     GachaWeaponName TEXT NOT NULL,
                     GachaWeaponDamage INTEGER NOT NULL,
+                    GachaWeaponBonusDefense INTEGER NOT NULL,
                     GachaWeaponAffinity INTEGER NOT NULL,
                     GachaWeaponElementTypeID INTEGER NOT NULL,
                     GachaWeaponElementValue INTEGER NOT NULL,
@@ -2898,7 +2872,7 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    sql = @"CREATE TABLE IF NOT EXISTS GachaCraft(
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaCraftWeapon(
                     GachaCraftID INTEGER PRIMARY KEY,
                     GachaWeaponID INTEGER NOT NULL,
                     Material1ID INTEGER,
@@ -2926,20 +2900,178 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-                    sql = @"CREATE TABLE IF NOT EXISTS GachaMaterial(
-                    GachaMaterialID INTEGER PRIMARY KEY,
-                    GachaMaterialName TEXT NOT NULL
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaWeaponShop(
+                    GachaWeaponID INTEGER PRIMARY KEY,
+                    FrontierPoints INTEGER NOT NULL DEFAULT 0,
+                    NetCafePoints INTEGER NOT NULL DEFAULT 0,
+                    GZenny INTEGER NOT NULL DEFAULT 0,
+                    Zenny INTEGER NOT NULL DEFAULT 0,
+                    GCP INTEGER NOT NULL DEFAULT 0,
+                    CP INTEGER NOT NULL DEFAULT 0,
+                    Gg INTEGER NOT NULL DEFAULT 0,
+                    g INTEGER NOT NULL DEFAULT 0,
+                    RdP INTEGER NOT NULL DEFAULT 0, -- Road
+                    TowerMedals INTEGER NOT NULL DEFAULT 0,
+                    TowerPoints INTEGER NOT NULL DEFAULT 0,
+                    FestivalTickets INTEGER NOT NULL DEFAULT 0,
+                    FestivalGems INTEGER NOT NULL DEFAULT 0,
+                    FestivalMarks INTEGER NOT NULL DEFAULT 0,
+                    GuildMedals INTEGER NOT NULL DEFAULT 0,
+                    HuntingMedals INTEGER NOT NULL DEFAULT 0,
+                    InterceptionPoints INTEGER NOT NULL DEFAULT 0,
+                    DivaNotes INTEGER NOT NULL DEFAULT 0,
+                    ZZenny INTEGER NOT NULL DEFAULT 0,
+                    FOREIGN KEY(GachaWeaponID) REFERENCES GachaWeapon(GachaWeaponID)
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.ExecuteNonQuery();
                     }
 
-                    sql = @"CREATE TABLE IF NOT EXISTS GachaWeaponShop(
-                    GachaWeaponID INTEGER PRIMARY KEY,
-                    GachaWeaponZennyCost INTEGER NOT NULL,
-                    GachaWeaponGZennyCost INTEGER NOT NULL,
-                    GachaWeaponZZennyCost INTEGER NOT NULL,
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaArmor(
+                    GachaArmorID INTEGER PRIMARY KEY,
+                    -- flavor text option? 
+                    GachaArmorType TEXT NOT NULL,
+                    GachaArmorName TEXT NOT NULL,
+                    GachaArmorDefense INTEGER NOT NULL,
+                    GachaArmorFireRes INTEGER NOT NULL,
+                    GachaArmorWaterRes INTEGER NOT NULL,
+                    GachaArmorThunderRes INTEGER NOT NULL,
+                    GachaArmorIceRes INTEGER NOT NULL,
+                    GachaArmorDragonRes INTEGER NOT NULL,
+                    GachaArmorSkill1ID INTEGER NOT NULL,
+                    GachaArmorSkill1Points INTEGER NOT NULL,
+                    GachaArmorSkill2ID INTEGER NOT NULL,
+                    GachaArmorSkill2Points INTEGER NOT NULL,
+                    GachaArmorSkill3ID INTEGER NOT NULL,
+                    GachaArmorSkill3Points INTEGER NOT NULL,
+                    GachaArmorSkill4ID INTEGER NOT NULL,
+                    GachaArmorSkill4Points INTEGER NOT NULL,
+                    GachaArmorSlot1Type TEXT NOT NULL,
+                    GachaArmorSlot1ItemID INTEGER NOT NULL,
+                    GachaArmorSlot2Type TEXT NOT NULL,
+                    GachaArmorSlot2ItemID INTEGER NOT NULL,
+                    GachaArmorSlot3Type TEXT NOT NULL,
+                    GachaArmorSlot3ItemID INTEGER NOT NULL,
+                    FOREIGN KEY(GachaArmorSkill1ID) REFERENCES GachaArmorSkill(GachaArmorSkillID),
+                    FOREIGN KEY(GachaArmorSkill2ID) REFERENCES GachaArmorSkill(GachaArmorSkillID),
+                    FOREIGN KEY(GachaArmorSkill3ID) REFERENCES GachaArmorSkill(GachaArmorSkillID),
+                    FOREIGN KEY(GachaArmorSkill4ID) REFERENCES GachaArmorSkill(GachaArmorSkillID),
+                    FOREIGN KEY(GachaArmorSlot1ItemID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY(GachaArmorSlot2ItemID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY(GachaArmorSlot3ItemID) REFERENCES GachaMaterial(GachaMaterialID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaCraftArmor(
+                    GachaCraftID INTEGER PRIMARY KEY,
+                    GachaArmorID INTEGER NOT NULL,
+                    Material1ID INTEGER,
+                    Material1Quantity INTEGER,
+                    Material2ID INTEGER,
+                    Material2Quantity INTEGER,
+                    Material3ID INTEGER,
+                    Material3Quantity INTEGER,
+                    Material4ID INTEGER,
+                    Material4Quantity INTEGER,
+                    Material5ID INTEGER,
+                    Material5Quantity INTEGER,
+                    Material6ID INTEGER,
+                    Material6Quantity INTEGER,
+                    FOREIGN KEY (GachaArmorID) REFERENCES GachaArmor(GachaArmorID),
+                    FOREIGN KEY (Material1ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material2ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material3ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material4ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material5ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material6ID) REFERENCES GachaMaterial(GachaMaterialID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaArmorShop(
+                    GachaArmorID INTEGER PRIMARY KEY,
+                    FrontierPoints INTEGER NOT NULL DEFAULT 0,
+                    NetCafePoints INTEGER NOT NULL DEFAULT 0,
+                    GZenny INTEGER NOT NULL DEFAULT 0,
+                    Zenny INTEGER NOT NULL DEFAULT 0,
+                    GCP INTEGER NOT NULL DEFAULT 0,
+                    CP INTEGER NOT NULL DEFAULT 0,
+                    Gg INTEGER NOT NULL DEFAULT 0,
+                    g INTEGER NOT NULL DEFAULT 0,
+                    RdP INTEGER NOT NULL DEFAULT 0, -- Road
+                    TowerMedals INTEGER NOT NULL DEFAULT 0,
+                    TowerPoints INTEGER NOT NULL DEFAULT 0,
+                    FestivalTickets INTEGER NOT NULL DEFAULT 0,
+                    FestivalGems INTEGER NOT NULL DEFAULT 0,
+                    FestivalMarks INTEGER NOT NULL DEFAULT 0,
+                    GuildMedals INTEGER NOT NULL DEFAULT 0,
+                    HuntingMedals INTEGER NOT NULL DEFAULT 0,
+                    InterceptionPoints INTEGER NOT NULL DEFAULT 0,
+                    DivaNotes INTEGER NOT NULL DEFAULT 0,
+                    ZZenny INTEGER NOT NULL DEFAULT 0,
+                    FOREIGN KEY(GachaArmorID) REFERENCES GachaArmor(GachaArmorID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaCraftItem(
+                    GachaCraftID INTEGER PRIMARY KEY,
+                    GachaItemID INTEGER NOT NULL,
+                    Material1ID INTEGER,
+                    Material1Quantity INTEGER,
+                    Material2ID INTEGER,
+                    Material2Quantity INTEGER,
+                    Material3ID INTEGER,
+                    Material3Quantity INTEGER,
+                    Material4ID INTEGER,
+                    Material4Quantity INTEGER,
+                    Material5ID INTEGER,
+                    Material5Quantity INTEGER,
+                    Material6ID INTEGER,
+                    Material6Quantity INTEGER,
+                    FOREIGN KEY (GachaItemID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material1ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material2ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material3ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material4ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material5ID) REFERENCES GachaMaterial(GachaMaterialID),
+                    FOREIGN KEY (Material6ID) REFERENCES GachaMaterial(GachaMaterialID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaItemShop(
+                    GachaItemID INTEGER PRIMARY KEY,
+                    FrontierPoints INTEGER NOT NULL DEFAULT 0,
+                    NetCafePoints INTEGER NOT NULL DEFAULT 0,
+                    GZenny INTEGER NOT NULL DEFAULT 0,
+                    Zenny INTEGER NOT NULL DEFAULT 0,
+                    GCP INTEGER NOT NULL DEFAULT 0,
+                    CP INTEGER NOT NULL DEFAULT 0,
+                    Gg INTEGER NOT NULL DEFAULT 0,
+                    g INTEGER NOT NULL DEFAULT 0,
+                    RdP INTEGER NOT NULL DEFAULT 0, -- Road
+                    TowerMedals INTEGER NOT NULL DEFAULT 0,
+                    TowerPoints INTEGER NOT NULL DEFAULT 0,
+                    FestivalTickets INTEGER NOT NULL DEFAULT 0,
+                    FestivalGems INTEGER NOT NULL DEFAULT 0,
+                    FestivalMarks INTEGER NOT NULL DEFAULT 0,
+                    GuildMedals INTEGER NOT NULL DEFAULT 0,
+                    HuntingMedals INTEGER NOT NULL DEFAULT 0,
+                    InterceptionPoints INTEGER NOT NULL DEFAULT 0,
+                    DivaNotes INTEGER NOT NULL DEFAULT 0,
+                    ZZenny INTEGER NOT NULL DEFAULT 0,
+                    FOREIGN KEY(GachaItemID) REFERENCES GachaMaterial(GachaMaterialID)
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {

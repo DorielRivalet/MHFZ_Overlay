@@ -283,4 +283,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Core\Class\Dictionary\Gacha\" />
+  </ItemGroup>
+
 </Project>

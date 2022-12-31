@@ -2308,6 +2308,7 @@ namespace MHFZ_Overlay
             {
                 DataLoader.model.questCleared = false;
                 DataLoader.model.clearQuestInfoDictionaries();
+                DataLoader.model.resetQuestInfoVariables();
                 return;
             }
 
