@@ -23,6 +23,7 @@ using System.Security.Cryptography;
 using Newtonsoft.Json;
 using System.Reflection;
 using Microsoft.VisualBasic;
+using Newtonsoft.Json.Linq;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -1930,68 +1931,70 @@ namespace MHFZ_Overlay
 
         public bool schemaChanged = false;
 
+        public bool CompareDictionaries(Dictionary<string, Dictionary<string, object>> dict1, Dictionary<string, Dictionary<string, object>> dict2)
+        {
+            // Check if the number of tables is different
+            if (dict1.Count != dict2.Count)
+            {
+                return false;
+            }
+
+            // Iterate through the tables in the first dictionary
+            foreach (var table1 in dict1)
+            {
+                // Get the name of the table
+                var tableName = table1.Key;
+
+                // Check if the table exists in the second dictionary
+                if (!dict2.ContainsKey(tableName))
+                {
+                    return false;
+                }
+
+                var tableData1 = table1.Value;
+                var tableData2 = dict2[tableName];
+
+                // Check if the number of key-value pairs in the table is different
+                if (tableData1.Count != tableData2.Count)
+                {
+                    return false;
+                }
+
+                // Iterate through the key-value pairs in the table
+                foreach (var data1 in tableData1)
+                {
+                    var dataName = data1.Key;
+                    var dataValue1 = data1.Value;
+
+                    // Check if the key exists in the second dictionary
+                    if (!tableData2.ContainsKey(dataName))
+                    {
+                        return false;
+                    }
+
+                    var dataValue2 = tableData2[dataName];
+
+                    // Check if the values are equal
+                    if (!dataValue1.Equals(dataValue2))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            // If all checks pass, the dictionaries are equal
+            return true;
+        }
+
         //TODO: Test
         private bool CompareDatabaseSchemas(Dictionary<string, Dictionary<string, object>> referenceSchema, Dictionary<string, Dictionary<string, object>> currentSchema)
         {
-            // Check if the number of tables is different
-            if (referenceSchema.Count != currentSchema.Count)
-            {
+    
+            if (CompareDictionaries(referenceSchema, currentSchema))
+            { 
                 schemaChanged = true;
-                return schemaChanged;
             }
 
-            // Iterate through the tables in the reference schema
-            foreach (var referenceTable in referenceSchema)
-            {
-                // Get the name of the table
-                var tableName = referenceTable.Key;
-
-                // Check if the table exists in the current schema
-                if (!currentSchema.ContainsKey(tableName))
-                {
-                    schemaChanged = true;
-                    return schemaChanged;
-                }
-
-                // Get the list of columns in the reference schema
-                var referenceColumns = referenceTable.Value;
-
-                // Get the list of columns in the current schema
-                var currentColumns = currentSchema[tableName];
-
-                // Compare the number of columns
-                if (referenceColumns.Count != currentColumns.Count)
-                {
-                    schemaChanged = true;
-                    return schemaChanged;
-                }
-
-                // Iterate through the columns in the reference schema
-                foreach (var referenceColumn in referenceColumns)
-                {
-                    // Get the name and data type of the column
-                    var columnName = referenceColumn.Key;
-                    var columnType = referenceColumn.Value;
-
-                    // Check if the column exists in the current schema
-                    if (currentColumns.ContainsKey(columnName))
-                    {
-                        // Get the data type of the column in the current schema
-                        var currentColumnType = currentColumns[columnName];
-                        // Compare the data types
-                        if (columnType != currentColumnType)
-                        {
-                            schemaChanged = true;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        schemaChanged = true;
-                        break;
-                    }
-                }
-            }
             // Check if the schema has changed
             if (schemaChanged)
             {
@@ -1999,11 +2002,6 @@ namespace MHFZ_Overlay
                 MessageBox.Show(@"ERROR: The database schema got updated in the latest version. Please make sure that both MHFZ_Overlay.sqlite and reference_schema.json don't exist in the current overlay directory, so that the program can make new ones",
                 "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
                 s.EnableQuestLogging = false;
-            }
-            else
-            {
-                // The schema has not changed
-                //Console.WriteLine("The schema has not changed.");
             }
 
             return schemaChanged;
