@@ -1974,8 +1974,15 @@ namespace MHFZ_Overlay
 
                     var dataValue2 = tableData2[dataName];
 
-                    // Check if the values are equal
-                    if (!dataValue1.Equals(dataValue2))
+                    // Get the JSON representations of the values
+                    var json1 = JsonConvert.SerializeObject(dataValue1);
+                    var json2 = JsonConvert.SerializeObject(dataValue2);
+
+                    Debug.WriteLine(json1);
+                    Debug.WriteLine(json2);
+
+                    // Check if the JSON representations are equal
+                    if (json1 != json2)
                     {
                         return false;
                     }
@@ -1990,7 +1997,7 @@ namespace MHFZ_Overlay
         private bool CompareDatabaseSchemas(Dictionary<string, Dictionary<string, object>> referenceSchema, Dictionary<string, Dictionary<string, object>> currentSchema)
         {
     
-            if (CompareDictionaries(referenceSchema, currentSchema))
+            if (!CompareDictionaries(referenceSchema, currentSchema))
             { 
                 schemaChanged = true;
             }
