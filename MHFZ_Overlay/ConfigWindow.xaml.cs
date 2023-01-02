@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;
+using MessageBox = System.Windows.MessageBox;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Window = System.Windows.Window;
 
@@ -2986,6 +2987,13 @@ namespace MHFZ_Overlay
         private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
         {
             MainWindow.DataLoader.model.ValidateDatFolder();
+            if (MainWindow.DataLoader.databaseChanged)
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                MessageBox.Show("Please update the database structure", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                s.EnableQuestLogging = false;
+            }
         }
     };
 

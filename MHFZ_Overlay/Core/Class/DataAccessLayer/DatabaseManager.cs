@@ -83,7 +83,7 @@ namespace MHFZ_Overlay
 
         private bool isDatabaseSetup = false;
 
-        public void SetupLocalDatabase(DataLoader dataLoader)
+        public bool SetupLocalDatabase(DataLoader dataLoader)
         {
             if (!isDatabaseSetup)
             {
@@ -128,6 +128,7 @@ namespace MHFZ_Overlay
                     MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
+            return schemaChanged;
         }
 
         // Calculate the finalTimeDisplay value in the "mm:ss.mm" format
@@ -1811,7 +1812,7 @@ namespace MHFZ_Overlay
                     using (var cmd = new SQLiteCommand(conn))
                     {
                         // Query the database to get information about the tables, triggers, and indexes
-                        cmd.CommandText = "SELECT name, type FROM sqlite_master WHERE type IN ('table', 'trigger', 'index')";
+                        cmd.CommandText = "SELECT name, type, tbl_name, sql FROM sqlite_master WHERE type IN ('table', 'trigger', 'index')";
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -1872,13 +1873,11 @@ namespace MHFZ_Overlay
                                             schema[tableName] = new Dictionary<string, object>();
                                         }
 
-                                        // Add the index to the schema dictionary
-                                        if (!schema[tableName].ContainsKey("indexes"))
-                                        {
-                                            schema[tableName]["indexes"] = new List<string>();
-                                        }
-
-                                    ((List<string>)schema[tableName]["indexes"]).Add(objectName);
+                                        // Add the index information to the schema dictionary
+                                        schema[tableName]["indexes"] = schema[tableName].ContainsKey("indexes")
+                                            ? schema[tableName]["indexes"]
+                                        : new List<object>();
+                                        ((List<object>)schema[tableName]["indexes"]).Add(new { name = objectName, sql = reader["sql"].ToString() });
                                     }
                                 }
                                 else if (objectType == "trigger")
@@ -1895,12 +1894,12 @@ namespace MHFZ_Overlay
                                             schema[tableName] = new Dictionary<string, object>();
                                         }
 
-                                        // Add the trigger to the schema dictionary
-                                        if (!schema[tableName].ContainsKey("triggers"))
-                                        {
-                                            schema[tableName]["triggers"] = new List<string>();
-                                        }
-                                    ((List<string>)schema[tableName]["triggers"]).Add(objectName);
+                                        // Add the trigger information to the schema dictionary
+                                        schema[tableName]["triggers"] = schema[tableName].ContainsKey("triggers")
+                                            ? schema[tableName]["triggers"] as List<object>
+                                            : new List<object>();
+
+                                        (schema[tableName]["triggers"] as List<object>).Add(new { name = objectName, sql = reader["sql"].ToString() });
                                     }
                                 }
                             }

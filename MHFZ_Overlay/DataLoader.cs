@@ -26,6 +26,7 @@ namespace MHFZ_Overlay
     public class DataLoader
     {
         // TODO: would like to make this a singleton but its complicated
+        // this loads first before MainWindow constructor is called. meaning this runs twice.
         public DataLoader()
         {
             // run Squirrel first, as the app may exit after these run
@@ -54,7 +55,7 @@ namespace MHFZ_Overlay
                 else
                     model = new AddressModelHGE(m);
 
-                databaseManager.SetupLocalDatabase(this);
+                databaseChanged = databaseManager.SetupLocalDatabase(this);
             }
             else
             {
@@ -64,6 +65,8 @@ namespace MHFZ_Overlay
                 Environment.Exit(0);
             }
         }
+
+        public bool databaseChanged = false;
 
 
         #region DataLoaderVariables
