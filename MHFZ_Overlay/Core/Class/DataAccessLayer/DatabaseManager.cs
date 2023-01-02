@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
 using System.Reflection;
+using Microsoft.VisualBasic;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -63,7 +64,7 @@ namespace MHFZ_Overlay
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "SELECT SUM(SessionDuration) FROM Session";
+                    command.CommandText = "SELECT SUM(session_duration) FROM session";
                     object result = command.ExecuteScalar();
                     if (result != DBNull.Value)
                     {
@@ -91,13 +92,14 @@ namespace MHFZ_Overlay
             {
                 conn.Open();
 
-                // Do something with the connection
                 CreateDatabaseTables(conn, dataLoader);
-                if (!schemaChanged)
-                {
-                    CreateDatabaseIndexes(conn);
-                    CreateDatabaseTriggers(conn);
-                }
+                CreateDatabaseIndexes(conn);
+                CreateDatabaseTriggers(conn);
+            }
+
+            if (schemaChanged)
+            {
+                MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.","Warning",MessageBoxButton.OK,MessageBoxImage.Warning);
             }
         }
 
@@ -132,6 +134,16 @@ namespace MHFZ_Overlay
         public void InsertAllExternalPlayerQuestsData()
         {
             // TODO: hygogg, etc.
+        }
+
+        public string CalculateStringHash(string input)
+        {
+            // Calculate the hash value for the data in the row
+            // concatenate the relevant data from the row
+            byte[] dataBytes = Encoding.UTF8.GetBytes(input); // convert the data to a byte array
+            byte[] hashBytes = SHA256.Create().ComputeHash(dataBytes); // compute the hash value
+            string hash = Convert.ToBase64String(hashBytes); // convert the hash value to a string
+            return hash;
         }
 
         public string CalculateFileHash(string folderPath, string fileName)
@@ -169,6 +181,8 @@ namespace MHFZ_Overlay
                 conn.Open();
                 var model = dataLoader.model;
                 string sql;
+                DateTime createdAt = DateTime.Now;
+                string createdBy = "Overlay";
                 // TODO: tomotaka is 2, hygogg is 3, etc. prob make a dictionary that holds these.
                 int playerID = 1;
 
@@ -176,12 +190,28 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
+                        int? runID;
+
+                        using (var cmd = new SQLiteCommand(conn))
+                        {
+                            cmd.CommandText = @"SELECT MAX(RunID) FROM Quests;";
+                            var result = cmd.ExecuteScalar();
+                            if (result != null)
+                                runID = Convert.ToInt32(result);
+                            else
+                                runID = 1;// TODO test
+                        }
+
                         // Insert data into the Quests table
                         sql = @"INSERT INTO Quests (
+                        QuestHash,
+                        CreatedAt,
+                        CreatedBy,
                         QuestID, 
                         AreaID, 
                         FinalTimeValue, 
-                        FinalTimeDisplay, ObjectiveImage, 
+                        FinalTimeDisplay, 
+                        ObjectiveImage, 
                         ObjectiveTypeID,
                         ObjectiveQuantity,
                         StarGrade,
@@ -202,6 +232,9 @@ namespace MHFZ_Overlay
                         PartySize,
                         OverlayMode
                         ) VALUES (
+                        @QuestHash,
+                        @CreatedAt,
+                        @CreatedBy,
                         @QuestID, 
                         @AreaID, 
                         @FinalTimeValue,
@@ -322,6 +355,22 @@ namespace MHFZ_Overlay
                             //                    --Get the ZenithSkillsID that was generated
                             //                    SELECT LAST_INSERT_ROWID() as ZenithSkillsID;
 
+                            string questData = string.Format(
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}",
+                                runID, createdAt, createdBy, questID, areaID,
+                                finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
+                                starGrade, rankName, objectiveName, date, attackBuffDictionary,
+                                hitCountDictionary, damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary, cartsDictionary,
+                                monster1HPDictionary, monster2HPDictionary, monster3HPDictionary, monster4HPDictionary, partySize,
+                                overlayMode
+                                );
+
+                            // Calculate the hash value for the data in the row
+                            string questHash = CalculateStringHash(questData); // concatenate the relevant data from the row
+
+                            cmd.Parameters.AddWithValue("@QuestHash", questHash);
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@QuestID", questID);
                             cmd.Parameters.AddWithValue("@AreaID", areaID);
                             cmd.Parameters.AddWithValue("@FinalTimeValue", finalTimeValue);
@@ -351,14 +400,31 @@ namespace MHFZ_Overlay
                         }
 
                         sql = "SELECT LAST_INSERT_ROWID()";
-                        int runID;
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             runID = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
-                        // Insert data into the Players table
-                        sql = "INSERT INTO datFolder (RunID, datFolderPath, mhfdatHash, mhfemdHash, mhfinfHash, mhfsqdHash) VALUES (@RunID, @datFolderPath, @mhfdatHash, @mhfemdHash, @mhfinfHash, @mhfsqdHash)";
+                        sql = @"INSERT INTO datFolder (
+                        datFolderHash,
+                        CreatedAt,
+                        CreatedBy,
+                        RunID, 
+                        datFolderPath, 
+                        mhfdatHash, 
+                        mhfemdHash,
+                        mhfinfHash, 
+                        mhfsqdHash
+                        ) VALUES (
+                        @datFolderHash,
+                        @CreatedAt,
+                        @CreatedBy,
+                        @RunID, 
+                        @datFolderPath,
+                        @mhfdatHash,
+                        @mhfemdHash,
+                        @mhfinfHash,
+                        @mhfsqdHash)";
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             string datFolderPath = s.datFolderPath;
@@ -366,7 +432,16 @@ namespace MHFZ_Overlay
                             string mhfemdHash = CalculateFileHash(datFolderPath, @"\mhfemd.bin");
                             string mhfinfHash = CalculateFileHash(datFolderPath, @"\mhfinf.bin");
                             string mhfsqdHash = CalculateFileHash(datFolderPath, @"\mhfsqd.bin");
+                            string datFolderData = string.Format(
+                                "{0}{1}{2}{3}{4}{5}{6}{7}",
+                                createdAt, createdBy, runID,
+                                datFolderPath, mhfdatHash, mhfemdHash,
+                                mhfinfHash, mhfsqdHash);
+                            string datFolderHash = CalculateStringHash(datFolderData);
 
+                            cmd.Parameters.AddWithValue("@datFolderHash", datFolderHash);
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@datFolderPath", datFolderPath);
                             cmd.Parameters.AddWithValue("@mhfdatHash", mhfdatHash);
@@ -387,7 +462,28 @@ namespace MHFZ_Overlay
                         //}
 
                         // Insert data into the ZenithSkills table
-                        sql = "INSERT INTO ZenithSkills (RunID, ZenithSkill1ID, ZenithSkill2ID, ZenithSkill3ID, ZenithSkill4ID, ZenithSkill5ID, ZenithSkill6ID, ZenithSkill7ID) VALUES (@RunID, @ZenithSkill1ID, @ZenithSkill2ID, @ZenithSkill3ID, @ZenithSkill4ID, @ZenithSkill5ID, @ZenithSkill6ID, @ZenithSkill7ID)";
+                        sql = @"INSERT INTO ZenithSkills (
+                        CreatedAt,
+                        CreatedBy,
+                        RunID, 
+                        ZenithSkill1ID, 
+                        ZenithSkill2ID,
+                        ZenithSkill3ID, 
+                        ZenithSkill4ID, 
+                        ZenithSkill5ID, 
+                        ZenithSkill6ID,
+                        ZenithSkill7ID) 
+                        VALUES (
+                        @CreatedAt,
+                        @CreatedBy,
+                        @RunID,
+                        @ZenithSkill1ID,
+                        @ZenithSkill2ID, 
+                        @ZenithSkill3ID,
+                        @ZenithSkill4ID, 
+                        @ZenithSkill5ID, 
+                        @ZenithSkill6ID,
+                        @ZenithSkill7ID)";
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             int zenithSkill1ID = model.ZenithSkill1();
@@ -398,6 +494,8 @@ namespace MHFZ_Overlay
                             int zenithSkill6ID = model.ZenithSkill6();
                             int zenithSkill7ID = model.ZenithSkill7();
 
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@ZenithSkill1ID", zenithSkill1ID);
                             cmd.Parameters.AddWithValue("@ZenithSkill2ID", zenithSkill2ID);
@@ -416,7 +514,26 @@ namespace MHFZ_Overlay
                             zenithSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
-                        sql = "INSERT INTO AutomaticSkills (RunID, AutomaticSkill1ID, AutomaticSkill2ID, AutomaticSkill3ID, AutomaticSkill4ID, AutomaticSkill5ID, AutomaticSkill6ID) VALUES (@RunID, @AutomaticSkill1ID, @AutomaticSkill2ID, @AutomaticSkill3ID, @AutomaticSkill4ID, @AutomaticSkill5ID, @AutomaticSkill6ID)";
+                        sql = @"INSERT INTO AutomaticSkills (
+                        CreatedAt,
+                        CreatedBy,
+                        RunID,
+                        AutomaticSkill1ID,
+                        AutomaticSkill2ID,
+                        AutomaticSkill3ID,
+                        AutomaticSkill4ID, 
+                        AutomaticSkill5ID,
+                        AutomaticSkill6ID
+                        ) VALUES (
+                        @CreatedAt,
+                        @CreatedBy,
+                        @RunID,
+                        @AutomaticSkill1ID,
+                        @AutomaticSkill2ID, 
+                        @AutomaticSkill3ID, 
+                        @AutomaticSkill4ID, 
+                        @AutomaticSkill5ID,
+                        @AutomaticSkill6ID)";
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             int automaticSkill1ID = model.AutomaticSkillWeapon();
@@ -426,6 +543,8 @@ namespace MHFZ_Overlay
                             int automaticSkill5ID = model.AutomaticSkillWaist();
                             int automaticSkill6ID = model.AutomaticSkillLegs();
 
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@AutomaticSkill1ID", automaticSkill1ID);
                             cmd.Parameters.AddWithValue("@AutomaticSkill2ID", automaticSkill2ID);
@@ -443,7 +562,52 @@ namespace MHFZ_Overlay
                             automaticSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
-                        sql = "INSERT INTO ActiveSkills (RunID, ActiveSkill1ID, ActiveSkill2ID, ActiveSkill3ID, ActiveSkill4ID, ActiveSkill5ID, ActiveSkill6ID, ActiveSkill7ID, ActiveSkill8ID, ActiveSkill9ID, ActiveSkill10ID, ActiveSkill11ID, ActiveSkill12ID,ActiveSkill13ID,ActiveSkill14ID,ActiveSkill15ID,ActiveSkill16ID,ActiveSkill17ID,ActiveSkill18ID,ActiveSkill19ID) VALUES (@RunID, @ActiveSkill1ID, @ActiveSkill2ID, @ActiveSkill3ID, @ActiveSkill4ID, @ActiveSkill5ID, @ActiveSkill6ID, @ActiveSkill7ID, @ActiveSkill8ID, @ActiveSkill9ID, @ActiveSkill10ID, @ActiveSkill11ID, @ActiveSkill12ID, @ActiveSkill13ID, @ActiveSkill14ID, @ActiveSkill15ID, @ActiveSkill16ID, @ActiveSkill17ID, @ActiveSkill18ID, @ActiveSkill19ID)";
+                        sql = @"INSERT INTO ActiveSkills (
+                        CreatedAt,
+                        CreatedBy,
+                        RunID, 
+                        ActiveSkill1ID,
+                        ActiveSkill2ID,
+                        ActiveSkill3ID,
+                        ActiveSkill4ID,
+                        ActiveSkill5ID,
+                        ActiveSkill6ID,
+                        ActiveSkill7ID,
+                        ActiveSkill8ID,
+                        ActiveSkill9ID,
+                        ActiveSkill10ID,
+                        ActiveSkill11ID, 
+                        ActiveSkill12ID,
+                        ActiveSkill13ID,
+                        ActiveSkill14ID,
+                        ActiveSkill15ID,
+                        ActiveSkill16ID,
+                        ActiveSkill17ID,
+                        ActiveSkill18ID,
+                        ActiveSkill19ID
+                        ) VALUES (
+                        @CreatedAt,
+                        @CreatedBy,
+                        @RunID, 
+                        @ActiveSkill1ID,
+                        @ActiveSkill2ID,
+                        @ActiveSkill3ID,
+                        @ActiveSkill4ID,
+                        @ActiveSkill5ID,
+                        @ActiveSkill6ID,
+                        @ActiveSkill7ID, 
+                        @ActiveSkill8ID, 
+                        @ActiveSkill9ID, 
+                        @ActiveSkill10ID,
+                        @ActiveSkill11ID,
+                        @ActiveSkill12ID,
+                        @ActiveSkill13ID, 
+                        @ActiveSkill14ID, 
+                        @ActiveSkill15ID, 
+                        @ActiveSkill16ID, 
+                        @ActiveSkill17ID,
+                        @ActiveSkill18ID, 
+                        @ActiveSkill19ID)";
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             int activeSkill1ID = model.ArmorSkill1();
@@ -466,6 +630,8 @@ namespace MHFZ_Overlay
                             int activeSkill18ID = model.ArmorSkill18();
                             int activeSkill19ID = model.ArmorSkill19();
 
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@ActiveSkill1ID", activeSkill1ID);
                             cmd.Parameters.AddWithValue("@ActiveSkill2ID", activeSkill2ID);
@@ -496,13 +662,28 @@ namespace MHFZ_Overlay
                             activeSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
-                        sql = "INSERT INTO CaravanSkills (RunID, CaravanSkill1ID, CaravanSkill2ID, CaravanSkill3ID) VALUES (@RunID, @CaravanSkill1ID, @CaravanSkill2ID, @CaravanSkill3ID)";
+                        sql = @"INSERT INTO CaravanSkills (
+                        CreatedAt,
+                        CreatedBy,
+                        RunID, 
+                        CaravanSkill1ID,
+                        CaravanSkill2ID,
+                        CaravanSkill3ID
+                        ) VALUES (
+                        @CreatedAt,
+                        @CreatedBy,
+                        @RunID, 
+                        @CaravanSkill1ID,
+                        @CaravanSkill2ID,
+                        @CaravanSkill3ID)";
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             int caravanSkill1ID = model.CaravanSkill1();
                             int caravanSkill2ID = model.CaravanSkill2();
                             int caravanSkill3ID = model.CaravanSkill3();
 
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@CaravanSkill1ID", caravanSkill1ID);
                             cmd.Parameters.AddWithValue("@CaravanSkill2ID", caravanSkill2ID);
@@ -517,12 +698,25 @@ namespace MHFZ_Overlay
                             caravanSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
-                        sql = "INSERT INTO StyleRankSkills (RunID, StyleRankSkill1ID, StyleRankSkill2ID) VALUES (@RunID, @StyleRankSkill1ID, @StyleRankSkill2ID)";
+                        sql = @"INSERT INTO StyleRankSkills (
+                        CreatedAt,
+                        CreatedBy,
+                        RunID, 
+                        StyleRankSkill1ID,
+                        StyleRankSkill2ID) 
+                        VALUES (
+                        CreatedAt,
+                        CreatedBy,
+                        @RunID,
+                        @StyleRankSkill1ID,
+                        @StyleRankSkill2ID)";
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             int styleRankSkill1ID = model.StyleRank1();
                             int styleRankSkill2ID = model.StyleRank2();
 
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@StyleRankSkill1ID", styleRankSkill1ID);
                             cmd.Parameters.AddWithValue("@StyleRankSkill2ID", styleRankSkill2ID);
@@ -537,6 +731,8 @@ namespace MHFZ_Overlay
                         }
 
                         sql = @"INSERT INTO PlayerInventory (
+                            CreatedAt,
+                            CreatedBy,
                             RunID,
                             Item1ID , 
                             Item1Quantity ,
@@ -579,6 +775,8 @@ namespace MHFZ_Overlay
                             Item20ID , 
                             Item20Quantity )
                             VALUES (
+                            @CreatedAt,
+                            @CreatedBy,
                             @RunID,
                             @Item1ID , 
                             @Item1Quantity ,
@@ -665,6 +863,8 @@ namespace MHFZ_Overlay
                             int item20ID = model.PouchItem20IDAtQuestStart;
                             int item20Quantity = model.PouchItem20QuantityAtQuestStart;
 
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@Item1ID", item1ID);
                             cmd.Parameters.AddWithValue("@Item1Quantity", item1Quantity);
@@ -717,6 +917,8 @@ namespace MHFZ_Overlay
                         }
 
                         sql = @"INSERT INTO AmmoPouch (
+                            CreatedAt,
+                            CreatedBy,
                             RunID,
                             Item1ID , 
                             Item1Quantity ,
@@ -740,6 +942,8 @@ namespace MHFZ_Overlay
                             Item10Quantity
                             )
                             VALUES (
+                            @CreatedAt,
+                            @CreatedBy,
                             @RunID,
                             @Item1ID , 
                             @Item1Quantity ,
@@ -785,6 +989,8 @@ namespace MHFZ_Overlay
                             int item10ID = model.AmmoPouchItem10IDAtQuestStart;
                             int item10Quantity = model.AmmoPouchItem10QuantityAtQuestStart;
 
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@Item1ID", item1ID);
                             cmd.Parameters.AddWithValue("@Item1Quantity", item1Quantity);
@@ -817,6 +1023,8 @@ namespace MHFZ_Overlay
                         }
 
                         sql = @"INSERT INTO RoadDureSkills (
+                        CreatedAt,
+                        CreatedBy,
                         RunID, 
                         RoadDureSkill1ID,
                         RoadDureSkill1Level,
@@ -851,6 +1059,8 @@ namespace MHFZ_Overlay
                         RoadDureSkill16ID,
                         RoadDureSkill16Level
                         ) VALUES (
+                        @CreatedAt,
+                        @CreatedBy,
                         @RunID, 
                         @RoadDureSkill1ID,
                         @RoadDureSkill1Level,
@@ -922,6 +1132,8 @@ namespace MHFZ_Overlay
                             int roadDureSkill15Level = model.RoadDureSkill15Level();
                             int roadDureSkill16Level = model.RoadDureSkill16Level();
 
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@RoadDureSkill1ID", roadDureSkill1ID);
                             cmd.Parameters.AddWithValue("@RoadDureSkill2ID", roadDureSkill2ID);
@@ -1032,6 +1244,9 @@ namespace MHFZ_Overlay
                         }
 
                         string insertSql = @"INSERT INTO PlayerGear (
+                        PlayerGearHash,
+                        CreatedAt,
+                        CreatedBy,
                         --PlayerGearID INTEGER PRIMARY KEY AUTOINCREMENT,
                         RunID, --INTEGER NOT NULL, 
                         PlayerID, --INTEGER NOT NULL,
@@ -1078,7 +1293,10 @@ namespace MHFZ_Overlay
                         AmmoPouchID,-- INTEGER NOT NULL,
                         PoogieItemID,-- INTEGER NOT NULL,
                         RoadDureSkillsID-- INTEGER NOT NULL,
-                            ) VALUES (
+                        ) VALUES (
+                        @PlayerGearHash,
+                        @CreatedAt,
+                        @CreatedBy,
                         --PlayerGearID INTEGER PRIMARY KEY AUTOINCREMENT,
                         @RunID, --INTEGER NOT NULL, 
                         @PlayerID, --INTEGER NOT NULL,
@@ -1127,8 +1345,32 @@ namespace MHFZ_Overlay
                         @RoadDureSkillsID-- INTEGER NOT NULL,
                         )";
 
+                        string playerGearData = string.Format(
+                            "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}",
+                            createdAt,createdBy,runID,
+                            playerID,gearName,styleID,
+                            weaponIconID,weaponClassID,weaponTypeID,
+                            blademasterWeaponID,gunnerWeaponID,weaponSlot1,
+                            weaponSlot2,weaponSlot3,headID,
+                            headSlot1,headSlot2,headSlot3,
+                            chestID, chestSlot1, chestSlot2,
+                            chestSlot3, armsID, armsSlot1,
+                            armsSlot2,armsSlot3, waistID,
+                            waistSlot1,waistSlot2,waistSlot3,
+                            legsID,legsSlot1,legsSlot2,
+                            legsSlot3,cuffSlot1,cuffSlot2,
+                            zenithSkillsID,automaticSkillsID,activeSkillsID,
+                            caravanSkillsID, divaSkillID,guildFoodID,
+                            styleRankSkillsID,playerInventoryID,ammoPouchID,
+                            poogieItemID,roadDureSkillsID
+                            );
+                        string playerGearHash = CalculateStringHash(playerGearData);
+
                         using (SQLiteCommand cmd = new SQLiteCommand(insertSql, conn))
                         {
+                            cmd.Parameters.AddWithValue("@PlayerGearHash", playerGearHash);
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@PlayerID", playerID);
                             cmd.Parameters.AddWithValue("@GearName", gearName);
@@ -1230,9 +1472,45 @@ namespace MHFZ_Overlay
             {
                 try
                 {
-                    // goodbye world
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        // Create the trigger
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS trigger_modify_quests_insert_audit 
+                        AFTER INSERT, UPDATE, DELETE ON Quests
+                        BEGIN
+                            INSERT INTO Audit (
+                                CreatedAt, 
+                                CreatedBy,
+                                ChangeType,
+                                HashValue
+                            ) VALUES (
+                                new.CreatedAt, 
+                                new.CreatedBy,
+                                'INSERT',
+                                new.QuestHash
+                            );
+                        END;";
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS trigger_update_quests_check_integrity
+                        BEFORE UPDATE ON Quests
+                        BEGIN
+                            SELECT
+                                CASE
+                                    WHEN (SELECT QuestHash FROM Quests WHERE RunID = NEW.RunID) != NEW.QuestHash THEN
+                                        RAISE(ABORT, 'Data integrity check failed')
+                                END;
+                        END";
+
+                        cmd.ExecuteNonQuery();
+                    }
+
                     // Commit the transaction
-                    //transaction.Commit();
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -1449,186 +1727,299 @@ namespace MHFZ_Overlay
             "WeaponStyles",
             "AllDivaSkills"};
 
-        private void CreateReferenceSchemaJSONFromLocalDatabaseFile(SQLiteConnection conn)
+        private Dictionary<string, Dictionary<string,object>> CreateReferenceSchemaJSONFromLocalDatabaseFile(SQLiteConnection conn, bool writeFile = true)
         {
             // Start a transaction
             using (SQLiteTransaction transaction = conn.BeginTransaction())
             {
+                // Create a dictionary to store the reference schema
+                var schema = new Dictionary<string, Dictionary<string, object>>();
                 try
                 {
-                    // Create a dictionary to store the reference schema
-                    var schema = new Dictionary<string, object>();
-
                     using (var cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = "SELECT name FROM sqlite_master WHERE type='table'";
+                        cmd.CommandText = "SELECT name, type FROM sqlite_master WHERE type IN ('table', 'trigger', 'index')";
 
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                // Get the name of the table
-                                var tableName = reader["name"].ToString();
+                                // Get the name and type of the object
+                                var objectName = reader["name"].ToString();
+                                var objectType = reader["type"].ToString();
 
-                                // Query the database to get information about the columns in the table
-                                using (var command2 = conn.CreateCommand())
+                                // Check the type of the object
+                                if (objectType == "table")
                                 {
-                                    command2.CommandText = $"PRAGMA table_info({tableName})";
+                                    // Set the table name
+                                    var tableName = objectName;
 
-                                    using (var reader2 = command2.ExecuteReader())
+                                    // Query the database to get information about the columns in the table
+                                    using (var command2 = conn.CreateCommand())
                                     {
-                                        // Create a list to store the column information
-                                        var columns = new List<object>();
+                                        command2.CommandText = $"PRAGMA table_info({objectName})";
 
-                                        // Iterate through the columns in the table
-                                        while (reader2.Read())
+                                        using (var reader2 = command2.ExecuteReader())
                                         {
-                                            // Get the name and data type of the column
-                                            var columnName = reader2["name"].ToString();
-                                            var columnType = reader2["type"].ToString();
+                                            // Create a list to store the column information
+                                            var columns = new List<object>();
 
-                                            // Add the column information to the list
-                                            columns.Add(new { name = columnName, type = columnType });
+                                            // Iterate through the columns in the table
+                                            while (reader2.Read())
+                                            {
+                                                // Get the name and data type of the column
+                                                var columnName = reader2["name"].ToString();
+                                                var columnType = reader2["type"].ToString();
+
+                                                // Add the column information to the list
+                                                columns.Add(new { name = columnName, type = columnType });
+                                            }
+
+                                            // Initialize the schema entry for the table if it doesn't exist
+                                            if (!schema.ContainsKey(tableName))
+                                            {
+                                                schema[tableName] = new Dictionary<string, object>();
+                                            }
+
+                                            // Add the list of columns to the schema dictionary
+                                            schema[tableName]["columns"] = columns;
                                         }
+                                    }
 
-                                        // Add the list of columns to the schema dictionary
-                                        schema[tableName] = columns;
+                                    // Query the database to get information about the triggers in the table
+                                    using (var command3 = conn.CreateCommand())
+                                    {
+                                        command3.CommandText = $"SELECT name, sql FROM sqlite_master WHERE type='trigger' AND tbl_name='{objectName}'";
+
+                                        using (var reader3 = command3.ExecuteReader())
+                                        {
+                                            // Create a list to store the trigger information
+                                            var triggers = new List<object>();
+
+                                            // Iterate through the triggers in the table
+                                            while (reader3.Read())
+                                            {
+                                                // Get the name and SQL of the trigger
+                                                var triggerName = reader3["name"].ToString();
+                                                var triggerSQL = reader3["sql"].ToString();
+
+                                                // Add the trigger information to the list
+                                                triggers.Add(new { name = triggerName, sql = triggerSQL });
+                                            }
+
+                                            // Initialize the schema entry for the table if it doesn't exist
+                                            if (!schema.ContainsKey(tableName))
+                                            {
+                                                schema[tableName] = new Dictionary<string, object>();
+                                            }
+
+                                            // Add the list of triggers to the schema dictionary
+                                            schema[tableName]["triggers"] = triggers;
+                                        }
+                                    }
+
+                                    // Query the database to get information about the indexes in the table
+                                    using (var command4 = conn.CreateCommand())
+                                    {
+                                        command4.CommandText = $"SELECT name, sql FROM sqlite_master WHERE type='index' AND tbl_name='{objectName}'";
+
+                                        using (var reader4 = command4.ExecuteReader())
+                                        {
+                                            // Create a list to store the index information
+                                            var indexes = new List<object>();
+
+                                            // Iterate through the indexes in the table
+                                            while (reader4.Read())
+                                            {
+                                                // Get the name and SQL of the index
+                                                var indexName = reader4["name"].ToString();
+                                                var indexSQL = reader4["sql"].ToString();
+
+                                                // Add the index information to the list
+                                                indexes.Add(new { name = indexName, sql = indexSQL });
+                                            }
+
+                                            // Initialize the schema entry for the table if it doesn't exist
+                                            if (!schema.ContainsKey(tableName))
+                                            {
+                                                schema[tableName] = new Dictionary<string, object>();
+                                            }
+
+                                            // Add the list of indexes to the schema dictionary
+                                            schema[tableName]["indexes"] = indexes;
+                                        }
+                                    }
+                                }
+                                else if (objectType == "trigger")
+                                {
+                                    // Set the table name
+                                    var tableName = reader["tbl_name"].ToString();
+
+                                    // Query the database to get the SQL of the trigger
+                                    using (var command2 = conn.CreateCommand())
+                                    {
+                                        command2.CommandText = $"SELECT sql FROM sqlite_master WHERE type='trigger' AND name='{objectName}'";
+
+                                        using (var reader2 = command2.ExecuteReader())
+                                        {
+                                            while (reader2.Read())
+                                            {
+                                                // Get the SQL of the trigger
+                                                var triggerSQL = reader2["sql"].ToString();
+
+                                                // Initialize the schema entry for the table if it doesn't exist
+                                                if (!schema.ContainsKey(tableName))
+                                                {
+                                                    schema[tableName] = new Dictionary<string, object>();
+                                                }
+
+                                                // Initialize the list of triggers for the table if it doesn't exist
+                                                if (!schema[tableName].ContainsKey("triggers"))
+                                                {
+                                                    schema[tableName]["triggers"] = new List<object>();
+                                                }
+
+                                        // Add the trigger information to the list
+                                        ((List<object>)schema[tableName]["triggers"]).Add(new { name = objectName, sql = triggerSQL });
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (objectType == "index")
+                                {
+                                    // Set the table name
+                                    var tableName = reader["tbl_name"].ToString();
+
+                                    // Query the database to get the SQL of the index
+                                    using (var command2 = conn.CreateCommand())
+                                    {
+                                        command2.CommandText = $"SELECT sql FROM sqlite_master WHERE type='index' AND name='{objectName}'";
+
+                                        using (var reader2 = command2.ExecuteReader())
+                                        {
+                                            while (reader2.Read())
+                                            {
+                                                // Get the SQL of the index
+                                                var indexSQL = reader2["sql"].ToString();
+
+                                                // Initialize the schema entry for the table if it doesn't exist
+                                                if (!schema.ContainsKey(tableName))
+                                                {
+                                                    schema[tableName] = new Dictionary<string, object>();
+                                                }
+
+                                                // Initialize the list of indexes for the table if it doesn't exist
+                                                if (!schema[tableName].ContainsKey("indexes"))
+                                                {
+                                                    schema[tableName]["indexes"] = new List<object>();
+                                                }
+
+                                                ((List<object>)schema[tableName]["indexes"]).Add(new { name = objectName, sql = indexSQL });
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
 
-                    // Convert the schema dictionary to JSON and save it to a file
-                    var json = JsonConvert.SerializeObject(schema, Formatting.Indented);
-                    File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"), json);
+                    if (writeFile)
+                    {
+                        // Convert the schema dictionary to JSON and save it to a file
+                        var json = JsonConvert.SerializeObject(schema, Formatting.Indented);
+                        File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"), json);
+                    }
 
                     // Commit the transaction
                     transaction.Commit();
-                }
+                } 
                 catch (Exception ex)
                 {
                     HandleError(transaction, ex);
                 }
-            }
+                return schema;
+            }   
         }
 
         public bool schemaChanged = false;
 
         //TODO: Test
-        private void CompareReferenceSchemaJSONFromLocalDatabaseFileToCurrentDatabaseSchema(SQLiteConnection conn)
+        private bool CompareDatabaseSchemas(Dictionary<string, Dictionary<string, object>> referenceSchema, Dictionary<string, Dictionary<string, object>> currentSchema)
         {
-            // Start a transaction
-            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            // Check if the number of tables is different
+            if (referenceSchema.Count != currentSchema.Count)
             {
-                try
+                schemaChanged = true;
+                return schemaChanged;
+            }
+
+            // Iterate through the tables in the reference schema
+            foreach (var referenceTable in referenceSchema)
+            {
+                // Get the name of the table
+                var tableName = referenceTable.Key;
+
+                // Check if the table exists in the current schema
+                if (!currentSchema.ContainsKey(tableName))
                 {
-                    // Load the reference schema file
-                    var referenceSchemaJson = File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
-                    var referenceSchema = JsonConvert.DeserializeObject<Dictionary<string, object>>(referenceSchemaJson);
+                    schemaChanged = true;
+                    return schemaChanged;
+                }
 
-                    // Create a dictionary to store the current schema
-                    var currentSchema = new Dictionary<string, object>();
+                // Get the list of columns in the reference schema
+                var referenceColumns = referenceTable.Value;
 
-                    // Query the database to get a list of table names
-                    using (var command = conn.CreateCommand())
+                // Get the list of columns in the current schema
+                var currentColumns = currentSchema[tableName];
+
+                // Compare the number of columns
+                if (referenceColumns.Count != currentColumns.Count)
+                {
+                    schemaChanged = true;
+                    return schemaChanged;
+                }
+
+                // Iterate through the columns in the reference schema
+                foreach (var referenceColumn in referenceColumns)
+                {
+                    // Get the name and data type of the column
+                    var columnName = referenceColumn.Key;
+                    var columnType = referenceColumn.Value;
+
+                    // Check if the column exists in the current schema
+                    if (currentColumns.ContainsKey(columnName))
                     {
-                        command.CommandText = "SELECT name FROM sqlite_master WHERE type='table'";
-
-                        using (var reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                // Get the name of the table
-                                var tableName = reader["name"].ToString();
-
-                                // Query the database to get information about the columns in the table
-                                using (var command2 = conn.CreateCommand())
-                                {
-                                    command2.CommandText = $"PRAGMA table_info({tableName})";
-
-                                    using (var reader2 = command2.ExecuteReader())
-                                    {
-                                        // Create a list to store the column information
-                                        var columns = new List<object>();
-
-                                        // Iterate through the columns in the table
-                                        while (reader2.Read())
-                                        {
-                                            // Get the name and data type of the column
-                                            var columnName = reader2["name"].ToString();
-                                            var columnType = reader2["type"].ToString();
-
-                                            // Add the column information to the list
-                                            columns.Add(new { name = columnName, type = columnType });
-                                        }
-                                        // Add the list of columns to the current schema dictionary
-                                        currentSchema[tableName] = columns;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    // Compare the reference schema and the current schema
-                    foreach (var table in referenceSchema)
-                    {
-                        // Get the name of the table
-                        var tableName = table.Key;
-
-                        // Get the list of columns in the reference schema
-                        var referenceColumns = (List<object>)table.Value;
-
-                        // Check if the table exists in the current schema
-                        if (currentSchema.ContainsKey(tableName))
-                        {
-                            // Get the list of columns in the current schema
-                            var currentColumns = (List<object>)currentSchema[tableName];
-
-                            // Compare the number of columns
-                            if (referenceColumns.Count != currentColumns.Count)
-                            {
-                                schemaChanged = true;
-                                break;
-                            }
-
-                            // Compare the names and data types of the columns
-                            for (var i = 0; i < referenceColumns.Count; i++)
-                            {
-                                var referenceColumn = (dynamic)referenceColumns[i];
-                                var currentColumn = (dynamic)currentColumns[i];
-
-                                if (referenceColumn.name != currentColumn.name || referenceColumn.type != currentColumn.type)
-                                {
-                                    schemaChanged = true;
-                                    break;
-                                }
-                            }
-                        }
-                        else
+                        // Get the data type of the column in the current schema
+                        var currentColumnType = currentColumns[columnName];
+                        // Compare the data types
+                        if (columnType != currentColumnType)
                         {
                             schemaChanged = true;
                             break;
                         }
                     }
-
-                    // Alert the user if the schema has changed
-                    if (schemaChanged)
+                    else
                     {
-                        Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
-                        MessageBox.Show(@"ERROR: The database schema got updated in the latest version. Please make sure that both MHFZ_Overlay.sqlite and reference_schema.json don't exist in the current overlay directory, so that the program can make new ones",
-                        "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
-                        s.EnableQuestLogging = false;
+                        schemaChanged = true;
+                        break;
                     }
-
-                    // Commit the transaction
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    HandleError(transaction, ex);
                 }
             }
+            // Check if the schema has changed
+            if (schemaChanged)
+            {
+                Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+                MessageBox.Show(@"ERROR: The database schema got updated in the latest version. Please make sure that both MHFZ_Overlay.sqlite and reference_schema.json don't exist in the current overlay directory, so that the program can make new ones",
+                "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
+                s.EnableQuestLogging = false;
+            }
+            else
+            {
+                // The schema has not changed
+                //Console.WriteLine("The schema has not changed.");
+            }
+
+            return schemaChanged;
         }
 
         private void InsertPlayerDictionaryDataIntoTable(SQLiteConnection conn)
@@ -1870,9 +2261,25 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
+                    sql = @"CREATE TABLE IF NOT EXISTS Audit(
+                    AuditID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
+                    ChangeType TEXT NOT NULL,
+                    HashValue TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
                     //Create the Quests table
                     sql = @"CREATE TABLE IF NOT EXISTS Quests 
-                    (RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    (
+                    QuestHash TEXT NOT NULL,
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
+                    RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
                     QuestID INTEGER NOT NULL CHECK (QuestID >= 0), 
                     AreaID INTEGER NOT NULL CHECK (AreaID >= 0), 
                     FinalTimeValue INTEGER NOT NULL,
@@ -2054,6 +2461,9 @@ namespace MHFZ_Overlay
                      */
                     sql = @"
                     CREATE TABLE IF NOT EXISTS datFolder (
+                    datFolderHash TEXT NOT NULL,
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
                     datFolderID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
                     datFolderPath TEXT NOT NULL,
@@ -2101,7 +2511,14 @@ namespace MHFZ_Overlay
                     }
 
                     // Prepare the SQL statement
-                    sql = "INSERT OR REPLACE INTO Area (AreaID, AreaIcon, AreaName) VALUES (@AreaID, @AreaIcon, @AreaName)";
+                    sql = @"INSERT OR REPLACE INTO Area (
+                    AreaID, 
+                    AreaIcon, 
+                    AreaName
+                    ) VALUES (
+                    @AreaID,
+                    @AreaIcon,
+                    @AreaName)";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
                         // Add the parameter placeholders
@@ -2132,6 +2549,9 @@ namespace MHFZ_Overlay
 
                     // Create the PlayerGear table
                     sql = @"CREATE TABLE IF NOT EXISTS PlayerGear (
+                    PlayerGearHash TEXT NOT NULL,
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
                     PlayerGearID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL, 
                     PlayerID INTEGER NOT NULL,
@@ -2337,6 +2757,8 @@ namespace MHFZ_Overlay
                     InsertDictionaryDataIntoTable(Dictionary.ArmorLegs.ArmorLegIDs, "AllLegsPieces", "LegsPieceID", "LegsPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS ZenithSkills(
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
                     ZenithSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
                     ZenithSkill1ID INTEGER NOT NULL CHECK (ZenithSkill1ID >= 0),
@@ -2370,6 +2792,8 @@ namespace MHFZ_Overlay
                     InsertDictionaryDataIntoTable(Dictionary.ZenithSkillList.ZenithSkillID, "AllZenithSkills", "ZenithSkillID", "ZenithSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AutomaticSkills(
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
                     AutomaticSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
                     AutomaticSkill1ID INTEGER NOT NULL CHECK (AutomaticSkill1ID >= 0),
@@ -2401,6 +2825,8 @@ namespace MHFZ_Overlay
                     InsertDictionaryDataIntoTable(Dictionary.ArmorSkillList.ArmorSkillID, "AllArmorSkills", "ArmorSkillID", "ArmorSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS ActiveSkills(
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
                     ActiveSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
                     ActiveSkill1ID INTEGER NOT NULL CHECK (ActiveSkill1ID >= 0),
@@ -2449,6 +2875,8 @@ namespace MHFZ_Overlay
                     }
 
                     sql = @"CREATE TABLE IF NOT EXISTS CaravanSkills(
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
                     CaravanSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
                     CaravanSkill1ID INTEGER NOT NULL CHECK (CaravanSkill1ID >= 0),
@@ -2475,6 +2903,8 @@ namespace MHFZ_Overlay
                     InsertDictionaryDataIntoTable(Dictionary.CaravanSkillList.CaravanSkillID, "AllCaravanSkills", "CaravanSkillID", "CaravanSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS StyleRankSkills(
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
                     StyleRankSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
                     StyleRankSkill1ID INTEGER NOT NULL CHECK (StyleRankSkill1ID >= 0),
@@ -2500,6 +2930,8 @@ namespace MHFZ_Overlay
 
                     // Create the PlayerInventory table
                     sql = @"CREATE TABLE IF NOT EXISTS PlayerInventory (
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
                     PlayerInventoryID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
                     Item1ID INTEGER NOT NULL CHECK (Item1ID >= 0), 
@@ -2570,6 +3002,8 @@ namespace MHFZ_Overlay
                     }
 
                     sql = @"CREATE TABLE IF NOT EXISTS AmmoPouch (
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
                     AmmoPouchID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
                     Item1ID INTEGER NOT NULL CHECK (Item1ID >= 0), 
@@ -2611,6 +3045,8 @@ namespace MHFZ_Overlay
 
                     // TODO: addresses
                     sql = @"CREATE TABLE IF NOT EXISTS PartnyaBag (
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
                     PartnyaBagID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
                     Item1ID INTEGER NOT NULL CHECK (Item1ID >= 0), 
@@ -2651,6 +3087,8 @@ namespace MHFZ_Overlay
                     }
 
                     sql = @"CREATE TABLE IF NOT EXISTS RoadDureSkills (
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
                     RoadDureSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
                     RoadDureSkill1ID INTEGER NOT NULL CHECK (RoadDureSkill1ID >= 0), 
@@ -3126,7 +3564,13 @@ namespace MHFZ_Overlay
                     }
                     else
                     {
-                        CompareReferenceSchemaJSONFromLocalDatabaseFileToCurrentDatabaseSchema(conn);
+                        // Load the reference schema file
+                        var referenceSchemaJson = File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
+                        var referenceSchema = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, object>>>(referenceSchemaJson);
+
+                        // Create a dictionary to store the current schema
+                        var currentSchema = CreateReferenceSchemaJSONFromLocalDatabaseFile(conn, false);
+                        CompareDatabaseSchemas(referenceSchema, currentSchema);
                     }
 
                     // Commit the transaction
@@ -3281,6 +3725,7 @@ namespace MHFZ_Overlay
     }
 }
 /* TODO
+ * add checker for triggers and indexes changes
  * 
  * USE BLOB for attack buff list and hit count list.
  * data structure: list<int (timeint), int (hit count / attack buff)>
