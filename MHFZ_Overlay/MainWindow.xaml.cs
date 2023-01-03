@@ -64,7 +64,7 @@ namespace MHFZ_Overlay
     /// </summary>
     public partial class MainWindow : Window
     {
-        public DataLoader DataLoader { get; set; } = new();
+        public DataLoader DataLoader { get; set; }
 
         #region click through
 
@@ -352,8 +352,9 @@ namespace MHFZ_Overlay
             var splashScreen = new SplashScreen("UI/Icons/loading.png");
 
             splashScreen.Show(false);
-
+            DataLoader = new DataLoader();
             InitializeComponent();
+            
 
             Left = 0;
             Top = 0;

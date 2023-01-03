@@ -218,13 +218,13 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
-                        int? runID;
+                        int runID;
 
                         using (var cmd = new SQLiteCommand(conn))
                         {
                             cmd.CommandText = @"SELECT MAX(RunID) FROM Quests;";
                             var result = cmd.ExecuteScalar();
-                            if (result != null)
+                            if (result != null && result.ToString() != "")
                                 runID = Convert.ToInt32(result);
                             else
                                 runID = 1;// TODO test
@@ -246,7 +246,7 @@ namespace MHFZ_Overlay
                         RankNameID,
                         ObjectiveName, 
                         Date,
-                        YoutubeID,
+                        YouTubeID,
                         AttackBuffDictionary,
                         HitCountDictionary,
                         DamageDealtDictionary,
@@ -274,7 +274,7 @@ namespace MHFZ_Overlay
                         @RankNameID,
                         @ObjectiveName, 
                         @Date,
-                        @YoutubeID,
+                        @YouTubeID,
                         @AttackBuffDictionary,
                         @HitCountDictionary,
                         @DamageDealtDictionary,
@@ -410,7 +410,7 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@RankNameID", rankName);
                             cmd.Parameters.AddWithValue("@ObjectiveName", objectiveName);
                             cmd.Parameters.AddWithValue("@Date", date);
-                            cmd.Parameters.AddWithValue("@YoutubeID", youtubeID);
+                            cmd.Parameters.AddWithValue("@YouTubeID", youtubeID);
                             cmd.Parameters.AddWithValue("@AttackBuffDictionary", JsonConvert.SerializeObject(attackBuffDictionary));
                             cmd.Parameters.AddWithValue("@HitCountDictionary", JsonConvert.SerializeObject(hitCountDictionary));
                             cmd.Parameters.AddWithValue("@DamageDealtDictionary", JsonConvert.SerializeObject(damageDealtDictionary));
@@ -733,8 +733,8 @@ namespace MHFZ_Overlay
                         StyleRankSkill1ID,
                         StyleRankSkill2ID) 
                         VALUES (
-                        CreatedAt,
-                        CreatedBy,
+                        @CreatedAt,
+                        @CreatedBy,
                         @RunID,
                         @StyleRankSkill1ID,
                         @StyleRankSkill2ID)";
@@ -1500,8 +1500,73 @@ namespace MHFZ_Overlay
             {
                 try
                 {
+                    // TODO quests datfolder zenithskills automaticskills activeskills caravanskills stylerankskills playerinventory ammopouch roaddureskills playergear 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_updates
+                        AFTER UPDATE ON Quests
+                        WHEN NEW.YouTubeID = OLD.YouTubeID
+                        BEGIN
+                            SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;
+                        ";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_deletion
+                        AFTER DELETE ON Quests
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER UPDATE ON datFolder
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_deletion
+                        AFTER DELETE ON datFolder
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_player_gear_updates
+                        AFTER UPDATE ON PlayerGear
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_player_gear_deletion
+                        AFTER DELETE ON PlayerGear
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        //TODO: add playergear, datfolder, zenithskills, automaticskills, activeskills, playerinventory, roaddureskills, etc
+
                         // Create the trigger
                         cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS trigger_insert_quests_insert_audit 
                         AFTER INSERT ON Quests
@@ -1521,6 +1586,8 @@ namespace MHFZ_Overlay
 
                         cmd.ExecuteNonQuery();
                     }
+
+
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
@@ -1977,9 +2044,6 @@ namespace MHFZ_Overlay
                     var json1 = JsonConvert.SerializeObject(dataValue1);
                     var json2 = JsonConvert.SerializeObject(dataValue2);
 
-                    Debug.WriteLine(json1);
-                    Debug.WriteLine(json2);
-
                     // Check if the JSON representations are equal
                     if (json1 != json2)
                     {
@@ -2026,7 +2090,7 @@ namespace MHFZ_Overlay
                     {
                         cmd.CommandText = @"SELECT StartTime FROM Session WHERE SessionID = 1";
                         var result = cmd.ExecuteScalar();
-                        if (result != null)
+                        if (result != null && result.ToString() != "")
                             startTime = Convert.ToDateTime(result);
                         else
                             startTime = DateTime.MinValue;
@@ -2043,7 +2107,8 @@ namespace MHFZ_Overlay
                         PlayerName,
                         GuildName,
                         ServerName,
-                        Gender
+                        Gender,
+                        Nationality
                         ) VALUES (
                         @PlayerID, 
                         @PlayerAvatar,
@@ -2051,7 +2116,8 @@ namespace MHFZ_Overlay
                         @PlayerName,
                         @GuildName,
                         @ServerName,
-                        @Gender)";
+                        @Gender,
+                        @Nationality)";
 
                         // Add the parameter placeholders
                         cmd.Parameters.Add("@PlayerID", DbType.Int32);
@@ -2061,6 +2127,7 @@ namespace MHFZ_Overlay
                         cmd.Parameters.Add("@GuildName", DbType.String);
                         cmd.Parameters.Add("@ServerName", DbType.String);
                         cmd.Parameters.Add("@Gender", DbType.String);
+                        cmd.Parameters.Add("@Nationality", DbType.String);
 
                         // Iterate through the list of players
                         foreach (KeyValuePair<int, List<string>> kvp in PlayersList.PlayerIDs)
@@ -2073,6 +2140,7 @@ namespace MHFZ_Overlay
                             string guildName = playerInfo[3];
                             string serverName = playerInfo[4];
                             string gender = playerInfo[5];
+                            string nationality = playerInfo[6];
 
                             if (playerID == 1 && (startTime == DateTime.UnixEpoch || startTime == DateTime.MinValue))
                                 creationDate = DateTime.Now.Date.ToString();
@@ -2087,6 +2155,7 @@ namespace MHFZ_Overlay
                                 guildName = s.GuildName;
                                 serverName = s.ServerName;
                                 gender = s.GenderExport;
+                                nationality = s.PlayerNationality;
                             }
 
                             // Set the parameter values
@@ -2097,6 +2166,7 @@ namespace MHFZ_Overlay
                             cmd.Parameters["@GuildName"].Value = guildName;
                             cmd.Parameters["@ServerName"].Value = serverName;
                             cmd.Parameters["@Gender"].Value = gender;
+                            cmd.Parameters["@Nationality"].Value = nationality;
 
                             // Execute the SQL statement
                             cmd.ExecuteNonQuery();
@@ -2193,7 +2263,7 @@ namespace MHFZ_Overlay
                     try
                     {
                         // Execute the query
-                        string updateSql = "UPDATE Quests SET YoutubeID = @youtubeId WHERE RunID = @runId";
+                        string updateSql = "UPDATE Quests SET YouTubeID = @youtubeId WHERE RunID = @runId";
                         using (SQLiteCommand cmd = new SQLiteCommand(updateSql, conn))
                         {
                             // Add the parameters for the placeholders in the SQL query
@@ -2207,12 +2277,12 @@ namespace MHFZ_Overlay
                             if (rowsAffected > 0)
                             {
                                 // The update was successful
-                                MessageBox.Show("YoutubeID updated successfully");
+                                MessageBox.Show("YouTubeID updated successfully");
                             }
                             else
                             {
                                 // The update was not successful
-                                MessageBox.Show("Error updating YoutubeID");
+                                MessageBox.Show("Error updating YouTubeID");
                             }
                         }
 
@@ -2282,7 +2352,7 @@ namespace MHFZ_Overlay
                     RankNameID INTEGER NOT NULL CHECK (RankNameID >= 0), 
                     ObjectiveName TEXT NOT NULL, 
                     Date DATETIME NOT NULL,
-                    YoutubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YoutubeID is a Rick Roll video
+                    YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
                     -- DpsData TEXT NOT NULL,
                     AttackBuffDictionary TEXT NOT NULL,
                     HitCountDictionary TEXT NOT NULL,
@@ -2405,7 +2475,8 @@ namespace MHFZ_Overlay
                     PlayerName TEXT NOT NULL,
                     GuildName TEXT NOT NULL,
                     ServerName TEXT NOT NULL,
-                    Gender TEXT NOT NULL)";
+                    Gender TEXT NOT NULL,
+                    Nationality TEXT NOT NULL)";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.ExecuteNonQuery();

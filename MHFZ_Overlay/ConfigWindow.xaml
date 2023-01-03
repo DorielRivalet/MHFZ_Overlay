@@ -1850,6 +1850,8 @@
                                 <ToggleButton Grid.Row="2" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}" Checked="questLoggingToggle_Check"/>
                                 <TextBlock Margin="5,5,5,5" ToolTip="Set a player avatar image link" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Player Avatar Link" />
                                 <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAvatarLink}"/>
+                                <TextBlock Margin="5,5,5,5" ToolTip="Select nationality to display on website for quest records" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Player Nationality"/>
+                                <ComboBox SelectedIndex="0" SelectionChanged="CountryComboBox_SelectionChanged" Name="CountryComboBox" Margin="5,5,5,5" Grid.Column="2" Grid.Row="4"/>
                             </Grid>
                             <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Enable Quest Logging"/>
                         </Grid>

@@ -29,6 +29,9 @@ namespace MHFZ_Overlay
         // this loads first before MainWindow constructor is called. meaning this runs twice.
         public DataLoader()
         {
+            Debug.WriteLine("DataLoader constructor called. Call stack:");
+            Debug.WriteLine(new StackTrace().ToString());
+
             // run Squirrel first, as the app may exit after these run
             SquirrelAwareApp.HandleEvents(
                 onInitialInstall: OnAppInstall,

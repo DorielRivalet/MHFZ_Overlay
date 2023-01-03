@@ -8474,6 +8474,7 @@ namespace MHFZ_Overlay.addresses
             // Get the time of the first hit in the dictionary
             //int previousHitTime = damageDealtDictionary.First().Key;
             int previousHitTime = 0;
+
             // Iterate through the damageDealtDictionary and update the damageDealt and timeElapsed values
             foreach (KeyValuePair<int, int> hit in damageDealtDictionary)
             {

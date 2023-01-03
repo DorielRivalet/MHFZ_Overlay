@@ -1775,5 +1775,17 @@ namespace MHFZ_Overlay {
                 this["PlayerAvatarLink"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("World")]
+        public string PlayerNationality {
+            get {
+                return ((string)(this["PlayerNationality"]));
+            }
+            set {
+                this["PlayerNationality"] = value;
+            }
+        }
     }
 }

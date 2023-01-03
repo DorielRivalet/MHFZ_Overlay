@@ -440,5 +440,8 @@
     <Setting Name="PlayerAvatarLink" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/transcend.png</Value>
     </Setting>
+    <Setting Name="PlayerNationality" Type="System.String" Scope="User">
+      <Value Profile="(Default)">World</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
