@@ -87,6 +87,10 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowDamagePerSecond { get; set; } = true;
 
+        public bool ShowProgressBarIcon { get; set; } = true;
+
+        public bool ShowProgressBarDescription { get; set; } = true;
+
 
         #endregion
 

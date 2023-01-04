@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MHFZ_Overlay.addresses;
 
 namespace MHFZ_Overlay.controls
 {
@@ -89,6 +90,13 @@ namespace MHFZ_Overlay.controls
             get { return (Brush)GetValue(BarColorProperty); }
             set { SetValue(BarColorProperty, value); }
         }
+
+        public string IconSource
+        {
+            get { return (string)GetValue(IconSourceProperty); }
+            set { SetValue(IconSourceProperty, value); }
+        }
+
         #endregion
 
         #region BindingRegisters
@@ -104,6 +112,8 @@ namespace MHFZ_Overlay.controls
             DependencyProperty.Register("NumMax", typeof(int), typeof(CustomProgressBar), new PropertyMetadata(0));
         public static readonly DependencyProperty BarColorProperty =
             DependencyProperty.Register("BarColor", typeof(Brush), typeof(CustomProgressBar), new PropertyMetadata(null));
+        public static readonly DependencyProperty IconSourceProperty = 
+            DependencyProperty.Register("IconSource", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(""));
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -251,6 +261,41 @@ namespace MHFZ_Overlay.controls
             get { return Description; }
             set { Description = value; }
         }
+
+        public string Icon
+        {
+            get { return IconSource; }
+            set { IconSource = value; }
+        }
+
+        public string IconShown
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                if (s.ProgressBarIconsShown)
+                    return "Visible";
+                else
+                    return "Hidden";
+            }
+        }
+
+        public string DescriptionShown
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                if (s.ProgressBarIconsShown)
+                    return "Hidden";
+                else
+                    return "Visible";
+            }
+        }
+
+
+
         #endregion
     }
 }

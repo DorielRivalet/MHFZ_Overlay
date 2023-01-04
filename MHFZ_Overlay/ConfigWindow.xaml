@@ -275,7 +275,11 @@
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Close overlay when closed game" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Close Overlay when Closed Game"/>
                         <ToggleButton Grid.Row="22" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAutoClose}"/>
-                        <Button Grid.Row="23" Grid.Column="0" Grid.ColumnSpan="2" Content="Export user settings to JSON file" Click="ExportUserSettings_Click"/>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show progress bar icons" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Progress Bar Icons"/>
+                        <ToggleButton Grid.Row="23" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ProgressBarIconsShown}"/>
+
+                        <Button Grid.Row="24" Grid.Column="0" Grid.ColumnSpan="2" Content="Export user settings to JSON file" Click="ExportUserSettings_Click"/>
                     </Grid>
                 </ScrollViewer>
                 <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">

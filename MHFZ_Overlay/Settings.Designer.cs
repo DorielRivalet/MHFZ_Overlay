@@ -1799,5 +1799,17 @@ namespace MHFZ_Overlay {
                 this["DamagePerSecondShown"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ProgressBarIconsShown {
+            get {
+                return ((bool)(this["ProgressBarIconsShown"]));
+            }
+            set {
+                this["ProgressBarIconsShown"] = value;
+            }
+        }
     }
 }

@@ -208,6 +208,7 @@
             </Grid.RowDefinitions>
             <uc:CustomProgressBar  Foreground="#cba6f7" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" x:Name="MonsterPoisonBar" IsHitTestVisible="False"
                                Description="Poison"
+                               IconSource="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/poison.png"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.PoisonCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.PoisonMax}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonBarColor}" Row1Width="1" Row2Width="2" FontSize="16" FontFamily="{StaticResource Source Code Pro Bold}" />
@@ -223,6 +224,7 @@
             </Grid.RowDefinitions>
             <uc:CustomProgressBar  Foreground="#74c7ec" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" x:Name="MonsterSleepBar" IsHitTestVisible="False"
                                Description="Sleep"
+                               IconSource="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/sleep.png"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.SleepCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.SleepMax}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarColor}" Row1Width="1" Row2Width="2" />
@@ -238,6 +240,7 @@
             </Grid.RowDefinitions>
             <uc:CustomProgressBar  Foreground="#f9e2af" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" x:Name="MonsterParaBar" IsHitTestVisible="False"
                                Description="Para."
+                                   IconSource="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/paralysis.png"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.ParaCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.ParaMax}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}" Row1Width="1" Row2Width="2" />
@@ -253,6 +256,7 @@
             </Grid.RowDefinitions>
             <uc:CustomProgressBar  Foreground="#a6e3a1" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" x:Name="MonsterBlastBar" IsHitTestVisible="False"
                                Description="Blast"
+                                   IconSource="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/blast.png"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.BlastCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.BlastMax}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarColor}" Row1Width="1" Row2Width="2" />
@@ -268,6 +272,7 @@
             </Grid.RowDefinitions>
             <uc:CustomProgressBar  Foreground="#7f849c" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" x:Name="MonsterStunBar" IsHitTestVisible="False"
                                Description="Stun"
+                                   IconSource="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/stun.png"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.StunCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.StunMax}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}" Row1Width="1" Row2Width="2" />
