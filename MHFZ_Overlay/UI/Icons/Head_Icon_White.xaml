@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This file is NOT compatible with Silverlight-->
+<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+  <Canvas Name="svg4846" Width="16.933333" Height="16.933334">
+    <Canvas.RenderTransform>
+      <TranslateTransform X="0" Y="0"/>
+    </Canvas.RenderTransform>
+    <Canvas.Resources/>
+    <!--Unknown tag: sodipodi:namedview-->
+    <!--Unknown tag: metadata-->
+    <Canvas Name="layer1">
+      <Canvas.RenderTransform>
+        <TranslateTransform X="0" Y="-280.06665"/>
+      </Canvas.RenderTransform>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2030" Fill="#FFFFFFFF" StrokeThickness="0.5291667" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+        <Path.Data>
+          <PathGeometry Figures="m 12.7 293.56039 c 0 0 0.529167 0 0.529167 -0.52917 0 -0.52916 0 -8.46666 0 -8.46666 0 0 0 -0.79375 -0.793751 -0.79375 -0.79375 0 -6.6145825 0 -6.6145825 0 0 0 -0.79375 0 -0.79375 0.79375 0 0.79375 0 2.11666 0 2.11666 h -3.175 c 0 0 -0.529167 0 -0.529167 0.52917 0 0.52917 0 2.91042 0 2.91042 h 1.852084 v -0.52917 l 0.264583 -0.26458 h 1.0583331 l 0.2645838 0.26458 v 0.79375 h 1.5875 v -0.79375 l 0.2645831 -0.26458 h 1.322917 v 2.64583 h -1.322917 v -0.79375 H 4.7625004 v 0.79375 H 3.4395835 v -0.79375 h -1.5875 v 1.5875 c 0 0 0 0.79375 0.79375 0.79375 0.79375 0 10.0541665 0 10.0541665 0 z" FillRule="EvenOdd"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2032" StrokeThickness="0.5291667" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+        <Path.Data>
+          <PathGeometry Figures="M 13.229167 289.85622 H 9.7895836 c 0 0 -0.529167 0 -0.529167 0.52917 0 0.52917 0 1.05833 0 1.05833 0 0 0 0.52917 0.529167 0.52917 0.5291664 0 1.5874994 0 1.5874994 0 0 0 0.529167 0 0.529167 -0.52917 0 -0.52916 -0.529167 -0.52916 -0.529167 -0.52916 h -0.793749 v 0.26458" FillRule="EvenOdd"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2036" Fill="#FFD0D0D0" StrokeThickness="0.5291667" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+        <Path.Data>
+          <PathGeometry Figures="M 10.054167 286.15206 H 8.9958335 v 1.5875 h 2.3812495 v -1.5875 z" FillRule="EvenOdd"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2042" Fill="#FF4D4D4D" StrokeThickness="0.5291667" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+        <Path.Data>
+          <PathGeometry Figures="m 13.758332 285.88747 1e-6 -2.38125 h 0.79375 l 1.058334 1.05834 v 0.52916 l -1.058334 1.05834 h -0.793751 z" FillRule="EvenOdd"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path20428" Fill="#FF4D4D4D" StrokeThickness="0.5291667" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+        <Path.Data>
+          <PathGeometry Figures="m 13.758332 289.59164 v -2.38125 h 0.79375 l 1.058334 1.05833 v 0.52917 l -1.058334 1.05833 h -0.79375 z" FillRule="EvenOdd"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path204284" Fill="#FF4D4D4D" StrokeThickness="0.5291667" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+        <Path.Data>
+          <PathGeometry Figures="m 13.758332 293.29581 v -2.38125 h 0.79375 l 1.058334 1.05833 v 0.52917 l -1.058334 1.05833 h -0.79375 z" FillRule="EvenOdd"/>
+        </Path.Data>
+      </Path>
+    </Canvas>
+  </Canvas>
+</Viewbox>

@@ -734,6 +734,30 @@ namespace MHFZ_Overlay.addresses
             return (monsterId > 0 && monsterHp != 0) || Configuring || IsAlwaysShowingMonsterInfo();
         }
 
+        public bool ShowOverlayStatText
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                if (s.OverlayStatIconShown)
+                    return false;
+                else
+                    return true;
+            }
+        }
+
+        public bool ShowOverlayStatIcon
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                if (s.OverlayStatIconShown)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         //
         public bool? roadOverride()
         {
@@ -1364,6 +1388,24 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
+        public static bool ShowHighestMonsterAttackMultiplierColor()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableHighestMonsterAttackMultiplierColor)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool ShowLowestMonsterDefrateColor()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableLowestMonsterDefrateColor)
+                return true;
+            else
+                return false;
+        }
+
         public string isHighestAtk
         {
             get
@@ -1379,12 +1421,57 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                if (DPS == HighestDPS && ShowHighestDPSColor())
+                if (DPS+10 >= HighestDPS && ShowHighestDPSColor())
                     return "#f38ba8";
                 else
                     return "#f5e0dc";
             }
         }
+
+        private double HighestAttackMult { get; set; } = 0;
+        private decimal LowestMonsterDefrate { get; set; } = 1000;
+
+
+        public string isHighestMonsterAttackMultiplier
+        {
+            get
+            {
+                if (AtkMult == HighestAttackMult.ToString() && ShowHighestMonsterAttackMultiplierColor())
+                {
+                    MonsterAttackMultiplierIcon = "UI/Icons/png/dure_attack_red.png";
+                    return "#f38ba8";
+                }
+                else
+                {
+                    MonsterAttackMultiplierIcon = "UI/Icons/png/dure_attack.png";
+                    return "#f5e0dc";
+                }
+            }
+        }
+
+        public string isLowestMonsterDefrate
+        {
+            get
+            {
+                if (DefMult == LowestMonsterDefrate.ToString() && ShowLowestMonsterDefrateColor())
+                {
+                    MonsterDefrateIcon = "UI/Icons/png/dure_defense_red.png";
+                    return "#f38ba8";
+                }
+                else
+                {
+                    MonsterDefrateIcon = "UI/Icons/png/dure_defense.png";
+                    return "#f5e0dc";
+                }
+            }
+        }
+
+        public string MonsterAttackMultiplierIcon { get; set; } = "UI/Icons/png/dure_attack.png";
+        public string MonsterDefrateIcon { get; set; } = "UI/Icons/png/dure_defense.png";
+
+
+        // TODO red icons when monster defrate is the lowest
+        // and attack is highest
 
         ///<summary>
         ///<para>Player true raw</para>
@@ -1402,8 +1489,10 @@ namespace MHFZ_Overlay.addresses
                 {
                     HighestAtk = 0;
                     HighestDPS = 0;
+                    HighestAttackMult = 0;
+                    LowestMonsterDefrate = 1000; // should be enough
                 }
-
+                // TODO separate the logic
                 if (weaponRaw > HighestAtk)
                 {
                     HighestAtk = weaponRaw;
@@ -1412,6 +1501,16 @@ namespace MHFZ_Overlay.addresses
                 if (DPS > HighestDPS)
                 {
                     HighestDPS = DPS;
+                }
+
+                if (double.Parse(AtkMult) > HighestAttackMult)
+                {
+                    HighestAttackMult = double.Parse(AtkMult);
+                }
+
+                if (decimal.Parse(DefMult) < LowestMonsterDefrate && decimal.Parse(DefMult) != 0)
+                {
+                    LowestMonsterDefrate = decimal.Parse(DefMult);
                 }
 
                 return weaponRaw.ToString();
@@ -1533,6 +1632,29 @@ namespace MHFZ_Overlay.addresses
         }
 
         /// <summary>
+        /// Gets the defrate multiplier.
+        /// </summary>
+        /// <value>
+        /// The defrate multiplier.
+        /// </value>
+        public string DefMult
+        {
+            get
+            {
+
+                switch (SelectedMonster)
+                {
+                    case 0:
+                        return Monster1DefMult().ToString();
+                    case 1:
+                        return Monster2DefMult().ToString();
+                    default:
+                        return Monster1DefMult().ToString();
+                }
+            }
+        }
+
+        /// <summary>
         /// Displays the monster ehp.
         /// </summary>
         /// <param name="defrate">The defrate.</param>
@@ -1564,29 +1686,6 @@ namespace MHFZ_Overlay.addresses
                 SavedMonster3MaxHP = (int)(Monster3HPInt() / float.Parse("1", CultureInfo.InvariantCulture.NumberFormat));
             if (SavedMonster4MaxHP < Monster4HPInt())
                 SavedMonster4MaxHP = (int)(Monster4HPInt() / float.Parse("1", CultureInfo.InvariantCulture.NumberFormat));
-        }
-
-        /// <summary>
-        /// Gets the defrate multiplier.
-        /// </summary>
-        /// <value>
-        /// The defrate multiplier.
-        /// </value>
-        public string DefMult
-        {
-            get
-            {
-
-                switch (SelectedMonster)
-                {
-                    case 0:
-                        return string.Format("{0:0.0000}", Monster1DefMult());
-                    case 1:
-                        return Monster2DefMult().ToString();
-                    default:
-                        return string.Format("{0:0.0000}", Monster1DefMult());
-                }
-            }
         }
 
         #region monster status
@@ -2351,6 +2450,76 @@ namespace MHFZ_Overlay.addresses
                     id = 167;
 
                 return DetermineMonsterImage(id);
+            }
+        }
+
+        public string CurrentMonster2Icon
+        {
+            get
+            {
+                int id;
+
+                if (roadOverride() == false)
+                    id = RoadSelectedMonster() == 0 ? LargeMonster2ID() : LargeMonster1ID();
+                else if (CaravanOverride())
+                    id = CaravanMonster2ID();
+                else
+                    id = LargeMonster2ID();
+
+                //dure
+                if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
+                    id = 132;
+                else if (QuestID() == 23648 || QuestID() == 23649)
+                    id = 167;
+
+                return DetermineMonsterImage(id);
+            }
+        }
+
+        public string CurrentMonster3Icon
+        {
+            get
+            {
+                int id = LargeMonster3ID();
+
+                //dure
+                if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
+                    id = 132;
+                else if (QuestID() == 23648 || QuestID() == 23649)
+                    id = 167;
+
+                return DetermineMonsterImage(id);
+            }
+        }
+
+        public string CurrentMonster4Icon
+        {
+            get
+            {
+                int id = LargeMonster4ID();
+
+                //dure
+                if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
+                    id = 132;
+                else if (QuestID() == 23648 || QuestID() == 23649)
+                    id = 167;
+
+                return DetermineMonsterImage(id);
+            }
+        }
+
+        public string CurrentTimerIcon
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+                if (s.TimerMode == "Time Left")
+                    return "UI/Icons/png/sand_clock2.png";
+                else if (s.TimerMode == "Time Elapsed")
+                    return "UI/Icons/png/clock.png";
+                else
+                    return "UI/Icons/png/sand_clock.png";
             }
         }
 

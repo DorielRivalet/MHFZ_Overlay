@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This file is NOT compatible with Silverlight-->
+<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+  <Canvas Name="svg945" Width="16.933333" Height="16.933334">
+    <Canvas.RenderTransform>
+      <TranslateTransform X="0" Y="0"/>
+    </Canvas.RenderTransform>
+    <Canvas.Resources/>
+    <!--Unknown tag: sodipodi:namedview-->
+    <!--Unknown tag: metadata-->
+    <Canvas Name="layer1">
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path98901" Fill="#FF000000" StrokeThickness="0.264583" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+        <Path.Data>
+          <PathGeometry Figures="m 9.8070117 3.8363915 -0.0254 4.9049697 1.7027603 2.2872908 -0.91492 1.55027 -5.3878403 -0.45746 0.50829 -1.956891 1.4232 -1.7535898 -0.0762 -4.6254196 z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path9875" Fill="#FFD0D0D0" StrokeThickness="0.264583" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+        <Path.Data>
+          <PathGeometry Figures="m 5.7153017 11.028652 h 5.7690603 l 0.15248 1.32155 -0.81326 2.05856 -2.3569103 1.21988 -2.54806 -1.21988 -0.7370101 -2.2873 z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path8287" Fill="#FFFFFFFF" StrokeThickness="0.529167" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
+        <Path.Data>
+          <PathGeometry Figures="m 5.4964619 3.1595815 v 1.7330401 h 1.0142198 v 2.7438996 c 0 1.431431 -1.9464501 1.921851 -1.9464501 4.4814308 0 2.21468 1.4172901 4.19334 3.9024401 4.19334 2.4851503 0 3.9024403 -1.97866 3.9024403 -4.19334 0 -2.5595798 -1.94645 -3.0499998 -1.94645 -4.4814308 V 4.8926216 h 1.01422 V 3.1595815 H 8.9726617 v 5.4467897 c 0 0.84279 2.1076203 1.7140398 2.1076203 3.4930508 0 1.779 -1.3247403 2.70514 -2.6136103 2.70514 -1.28887 0 -2.61361 -0.92614 -2.61361 -2.70514 0 -1.779011 2.10762 -2.6502608 2.10762 -3.4930508 V 3.1595815 Z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path58615" Fill="#FFFFFFFF" StrokeThickness="0.529167" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+        <Path.Data>
+          <PathGeometry Figures="m 8.9760417 5.1615216 h -1.0128 v -0.84934 l -1.18161 -1.1890801 -0.006 -1.68934 0.8175 -0.81172035 1.67786 0.005 0.8279603 0.81424025 0.009 1.1980301 -0.7939403 0.6533799 h -0.844 l -0.5064 -0.50933 v -0.84934 h 0.844 v 0.5096 h 0.16879 v -0.16985 -0.33975 l -0.1688 -0.1698699 h -0.844 l -0.14065 0.13642 0.0127 0.89083 1.14074 1.18104 z" FillRule="EvenOdd"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path8323" Fill="#FFFFFFFF" StrokeThickness="0.529167" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
+        <Path.Data>
+          <PathGeometry Figures="m 1.4339617 2.7810715 v 1.7521401 1.7521396 l 1.75214 -1.7521396 z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path83256" Fill="#FFFFFFFF" StrokeThickness="0.529167" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
+        <Path.Data>
+          <PathGeometry Figures="m 1.4339617 6.8604212 v 1.752141 1.7521398 l 1.75214 -1.7521398 z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path8325904" Fill="#FFFFFFFF" StrokeThickness="0.529167" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
+        <Path.Data>
+          <PathGeometry Figures="m 1.4339617 10.957732 v 1.75214 1.75214 l 1.75214 -1.75214 z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path832497" Fill="#FFFFFFFF" StrokeThickness="0.529167" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
+        <Path.Data>
+          <PathGeometry Figures="M 15.499372 2.7810615 V 4.5332116 6.2853412 L 13.747232 4.5332116 Z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path832524" Fill="#FFFFFFFF" StrokeThickness="0.529167" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
+        <Path.Data>
+          <PathGeometry Figures="m 15.499372 6.8604212 v 1.752141 1.7521398 l -1.75214 -1.7521398 z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path83259817" Fill="#FFFFFFFF" StrokeThickness="0.529167" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
+        <Path.Data>
+          <PathGeometry Figures="m 15.499372 10.957732 v 1.75214 1.75214 l -1.75214 -1.75214 z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+    </Canvas>
+  </Canvas>
+</Viewbox>

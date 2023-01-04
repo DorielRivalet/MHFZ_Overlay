@@ -553,7 +553,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
         public double TimerX {
             get {
                 return ((double)(this["TimerX"]));
@@ -589,7 +589,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
         public double HitCountX {
             get {
                 return ((double)(this["HitCountX"]));
@@ -625,7 +625,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
         public double PlayerAtkX {
             get {
                 return ((double)(this["PlayerAtkX"]));
@@ -1009,7 +1009,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool Monster1IconShown {
             get {
                 return ((bool)(this["Monster1IconShown"]));
@@ -1033,7 +1033,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("420")]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
         public double Monster1IconY {
             get {
                 return ((double)(this["Monster1IconY"]));
@@ -1717,7 +1717,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
         public double PlayerDPSX {
             get {
                 return ((double)(this["PlayerDPSX"]));
@@ -1809,6 +1809,54 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["ProgressBarIconsShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool OverlayStatIconShown {
+            get {
+                return ((bool)(this["OverlayStatIconShown"]));
+            }
+            set {
+                this["OverlayStatIconShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterPartsIconShown {
+            get {
+                return ((bool)(this["MonsterPartsIconShown"]));
+            }
+            set {
+                this["MonsterPartsIconShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableHighestMonsterAttackMultiplierColor {
+            get {
+                return ((bool)(this["EnableHighestMonsterAttackMultiplierColor"]));
+            }
+            set {
+                this["EnableHighestMonsterAttackMultiplierColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableLowestMonsterDefrateColor {
+            get {
+                return ((bool)(this["EnableLowestMonsterDefrateColor"]));
+            }
+            set {
+                this["EnableLowestMonsterDefrateColor"] = value;
             }
         }
     }

@@ -44,13 +44,22 @@
     <None Remove="HuntedLogs\EXAMPLE.csv" />
     <None Remove="UI\Icons\armor_skills.png" />
     <None Remove="UI\Icons\attack.png" />
+    <None Remove="UI\Icons\attack_up.png" />
+    <None Remove="UI\Icons\blast.png" />
     <None Remove="UI\Icons\boggers.png" />
     <None Remove="UI\Icons\bone.png" />
     <None Remove="UI\Icons\book.png" />
+    <None Remove="UI\Icons\burst.png" />
     <None Remove="UI\Icons\caravan_skills.png" />
+    <None Remove="UI\Icons\clear.png" />
+    <None Remove="UI\Icons\clock.png" />
     <None Remove="UI\Icons\description_FILL0_wght400_GRAD0_opsz48.png" />
     <None Remove="UI\Icons\diva_prayer_gems.png" />
     <None Remove="UI\Icons\dure2.png" />
+    <None Remove="UI\Icons\dure_attack.png" />
+    <None Remove="UI\Icons\dure_attack_red.png" />
+    <None Remove="UI\Icons\dure_defense.png" />
+    <None Remove="UI\Icons\dure_defense_red.png" />
     <None Remove="UI\Icons\fire.png" />
     <None Remove="UI\Icons\guild_food.png" />
     <None Remove="UI\Icons\helm.png" />
@@ -60,29 +69,95 @@
     <None Remove="UI\Icons\monster_info.png" />
     <None Remove="UI\Icons\note_pink.png" />
     <None Remove="UI\Icons\page.png" />
+    <None Remove="UI\Icons\paralysis.png" />
     <None Remove="UI\Icons\photo.png" />
     <None Remove="UI\Icons\poison.png" />
+    <None Remove="UI\Icons\quest_host.png" />
     <None Remove="UI\Icons\quest_info.png" />
+    <None Remove="UI\Icons\red_soul.png" />
+    <None Remove="UI\Icons\sand_clock.png" />
+    <None Remove="UI\Icons\sand_clock2.png" />
     <None Remove="UI\Icons\sigils.png" />
+    <None Remove="UI\Icons\sleep.png" />
+    <None Remove="UI\Icons\study.png" />
+    <None Remove="UI\Icons\stun.png" />
     <None Remove="UI\Icons\unknown.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="UI\Icons\Antenna_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Armor_Sphere_Icon_White.xaml" />
     <Page Remove="UI\Icons\badge.xaml" />
+    <Page Remove="UI\Icons\Ball_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Blade_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Blade_Oil_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Bone_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Bug_Icon_White.xaml" />
     <Page Remove="UI\Icons\Cancel.xaml" />
+    <Page Remove="UI\Icons\Carapace_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Charm_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Claw_Icon_White.xaml" />
     <Page Remove="UI\Icons\Close.xaml" />
+    <Page Remove="UI\Icons\Coin_Icon_White.xaml" />
     <Page Remove="UI\Icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\description_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\Done.xaml" />
+    <Page Remove="UI\Icons\Dracolite_Icon_White.xaml" />
     <Page Remove="UI\Icons\DragDropControl.xaml" />
+    <Page Remove="UI\Icons\Drink_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Dung_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Eye_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Fang_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Feather_Icon_White.xaml" />
     <Page Remove="UI\Icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Page Remove="UI\Icons\Fin_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Flask_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Flipper_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Flower_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Fluid_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Frenzy_Crystal_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Fruit_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Head_Icon_White.xaml" />
     <Page Remove="UI\Icons\heart.xaml" />
+    <Page Remove="UI\Icons\Heart_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Herb_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Hide_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Horn_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Husk_Icon_White.xaml" />
     <Page Remove="UI\Icons\image_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\issues.xaml" />
+    <Page Remove="UI\Icons\Jelly_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Jewel_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Leg_Carve_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Mantle_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Mask_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Meat_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Medicine_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Monster_Part_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Nectar_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Ore_Icon_Special_001.xaml" />
+    <Page Remove="UI\Icons\Ore_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Pill_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Plate_Icon_White.xaml" />
     <Page Remove="UI\Icons\Refresh.xaml" />
+    <Page Remove="UI\Icons\Sac_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Scale_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Scrap_Icon_White.xaml" />
     <Page Remove="UI\Icons\Settings.xaml" />
+    <Page Remove="UI\Icons\Shell_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Spiderweb_Icon_White.xaml" />
     <Page Remove="UI\Icons\Star.xaml" />
+    <Page Remove="UI\Icons\Steak_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Sturdy_Shell_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Tail_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Talisman_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Tentacle_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Vial_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Voucher_Icon_White.xaml" />
     <Page Remove="UI\Icons\Watch.xaml" />
+    <Page Remove="UI\Icons\Webbing_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Wing_Icon_White.xaml" />
+    <Page Remove="UI\Icons\Wood_Icon_White.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -189,13 +264,65 @@
     <Resource Include="HuntedLogs\EXAMPLE.csv">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="UI\Icons\armor_skills.png" />
-    <Resource Include="UI\Icons\attack.png" />
-    <Resource Include="UI\Icons\boggers.png" />
-    <Resource Include="UI\Icons\bone.png" />
-    <Resource Include="UI\Icons\book.png">
+    <Resource Include="UI\Icons\Antenna_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Armor_Sphere_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Ball_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Blade_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Blade_Oil_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Bone_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Bug_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Carapace_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Charm_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Claw_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Coin_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Dracolite_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Drink_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Dung_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Eye_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Fang_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Feather_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Fin_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Flask_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Flipper_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Flower_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Fluid_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Frenzy_Crystal_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Fruit_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Head_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Heart_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Herb_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Hide_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Horn_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Husk_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Jelly_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Jewel_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Leg_Carve_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Mantle_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Mask_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Meat_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Medicine_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Monster_Part_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Nectar_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Ore_Icon_Special_001.xaml" />
+    <Resource Include="UI\Icons\Ore_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Pill_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Plate_Icon_White.xaml" />
+    <Resource Include="UI\Icons\png\armor_skills.png" />
+    <Resource Include="UI\Icons\png\attack.png" />
+    <Resource Include="UI\Icons\png\attack_up.png" />
+    <Resource Include="UI\Icons\png\blast.png" />
+    <Resource Include="UI\Icons\png\boggers.png" />
+    <Resource Include="UI\Icons\png\bone.png" />
+    <Resource Include="UI\Icons\png\book.png">
       <Generator></Generator>
     </Resource>
+    <Resource Include="UI\Icons\png\burst.png" />
+    <Resource Include="UI\Icons\png\clear.png" />
+    <Resource Include="UI\Icons\png\clock.png" />
+    <Resource Include="UI\Icons\png\dure_attack.png" />
+    <Resource Include="UI\Icons\png\dure_attack_red.png" />
+    <Resource Include="UI\Icons\png\dure_defense.png" />
+    <Resource Include="UI\Icons\png\dure_defense_red.png" />
     <Resource Include="UI\Icons\heart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -204,7 +331,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="UI\Icons\loading.png" />
+    <Resource Include="UI\Icons\png\loading.png" />
+    <Resource Include="UI\Icons\png\paralysis.png" />
+    <Resource Include="UI\Icons\png\quest_host.png" />
+    <Resource Include="UI\Icons\png\red_soul.png" />
+    <Resource Include="UI\Icons\png\sand_clock.png" />
+    <Resource Include="UI\Icons\png\sand_clock2.png" />
+    <Resource Include="UI\Icons\png\sleep.png" />
+    <Resource Include="UI\Icons\png\study.png" />
+    <Resource Include="UI\Icons\png\stun.png" />
+    <Resource Include="UI\Icons\Sac_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Scale_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Scrap_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Shell_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Spiderweb_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Steak_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Sturdy_Shell_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Tail_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Talisman_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Tentacle_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Vial_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Voucher_Icon_White.xaml" />
     <Resource Include="UI\Icons\watch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,7 +360,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="UI\Icons\caravan_skills.png" />
+    <Resource Include="UI\Icons\png\caravan_skills.png" />
     <Resource Include="UI\Icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
@@ -221,29 +368,29 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="UI\Icons\description_FILL0_wght400_GRAD0_opsz48.png" />
+    <Resource Include="UI\Icons\png\description_FILL0_wght400_GRAD0_opsz48.png" />
     <Resource Include="UI\Icons\description_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\diva_prayer_gems.png" />
-    <Resource Include="UI\Icons\dure2.png" />
+    <Resource Include="UI\Icons\png\diva_prayer_gems.png" />
+    <Resource Include="UI\Icons\png\dure2.png" />
     <Resource Include="UI\Icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="UI\Icons\fire.png" />
-    <Resource Include="UI\Icons\guild_food.png" />
-    <Resource Include="UI\Icons\helm.png">
+    <Resource Include="UI\Icons\png\fire.png" />
+    <Resource Include="UI\Icons\png\guild_food.png" />
+    <Resource Include="UI\Icons\png\helm.png">
       <Generator></Generator>
     </Resource>
     <Resource Include="UI\Icons\image_FILL0_wght400_GRAD0_opsz48.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="UI\Icons\knife.png" />
-    <Resource Include="UI\Icons\monster.png" />
-    <Resource Include="UI\Icons\monster_info.png" />
-    <Resource Include="UI\Icons\note_pink.png" />
-    <Resource Include="UI\Icons\page.png" />
-    <Resource Include="UI\Icons\photo.png" />
-    <Resource Include="UI\Icons\poison.png" />
-    <Resource Include="UI\Icons\quest_info.png" />
+    <Resource Include="UI\Icons\png\knife.png" />
+    <Resource Include="UI\Icons\png\monster.png" />
+    <Resource Include="UI\Icons\png\monster_info.png" />
+    <Resource Include="UI\Icons\png\note_pink.png" />
+    <Resource Include="UI\Icons\png\page.png" />
+    <Resource Include="UI\Icons\png\photo.png" />
+    <Resource Include="UI\Icons\png\poison.png" />
+    <Resource Include="UI\Icons\png\quest_info.png" />
     <Resource Include="UI\Icons\Refresh.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -264,8 +411,11 @@
     <Resource Include="UI\Icons\Settings.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="UI\Icons\sigils.png" />
-    <Resource Include="UI\Icons\unknown.png" />
+    <Resource Include="UI\Icons\png\sigils.png" />
+    <Resource Include="UI\Icons\png\unknown.png" />
+    <Resource Include="UI\Icons\Webbing_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Wing_Icon_White.xaml" />
+    <Resource Include="UI\Icons\Wood_Icon_White.xaml" />
   </ItemGroup>
 
   <ItemGroup>

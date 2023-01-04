@@ -170,7 +170,7 @@
         <TabItem ToolTip="General settings" Background="Transparent" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Background="Transparent" Orientation="Horizontal">
-                    <Image Name="generalImg" Source="UI/Icons/book.png" Width="32" Height="32"/>
+                    <Image Name="generalImg" Source="UI/Icons/png/book.png" Width="32" Height="32"/>
                     <TextBlock Background="Transparent" Text="General" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f5e0dc"/>
                 </StackPanel>
             </TabItem.Header>
@@ -279,7 +279,12 @@
                         <TextBlock Margin="5,5,5,5" ToolTip="Show progress bar icons" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Progress Bar Icons"/>
                         <ToggleButton Grid.Row="23" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ProgressBarIconsShown}"/>
 
-                        <Button Grid.Row="24" Grid.Column="0" Grid.ColumnSpan="2" Content="Export user settings to JSON file" Click="ExportUserSettings_Click"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show overlay stats icons (you may have to reposition the cut-off stat text description)" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Overlay Stats Icons"/>
+                        <ToggleButton Grid.Row="24" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayStatIconShown}"/>
+
+                        
+
+                        <Button Grid.Row="25" Grid.Column="0" Grid.ColumnSpan="2" Content="Export user settings to JSON file" Click="ExportUserSettings_Click"/>
                     </Grid>
                 </ScrollViewer>
                 <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">
@@ -297,7 +302,7 @@
         <TabItem ToolTip="Player settings" Background="#11111b" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                    <Image Name="playerimg" Source="UI/Icons/helm.png" Width="32" Height="32"/>
+                    <Image Name="playerimg" Source="UI/Icons/png/helm.png" Width="32" Height="32"/>
                     <TextBlock Text="Hunter Info" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f38ba8"/>
                 </StackPanel>
             </TabItem.Header>
@@ -549,7 +554,7 @@
                                 <TabItem ToolTip="View Image" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/photo.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/photo.png" Width="32" Height="32"/>
                                             <TextBlock Text="Image" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -638,7 +643,7 @@
                                 <TabItem ToolTip="View Text" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/page.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/page.png" Width="32" Height="32"/>
                                             <TextBlock Text="Text" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -653,7 +658,7 @@
                                 <TabItem ToolTip="View Hunted Monsters" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/bone.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/bone.png" Width="32" Height="32"/>
                                             <TextBlock Text="Hunt Log" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -745,7 +750,7 @@
                                 <TabItem ToolTip="View Caravan Skills" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/caravan_skills.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/caravan_skills.png" Width="32" Height="32"/>
                                             <TextBlock Text="Caravan" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -777,7 +782,7 @@
                                 <TabItem ToolTip="View Road/Duremudira Skills" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/dure2.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/dure2.png" Width="32" Height="32"/>
                                             <TextBlock Text="Road/Duremudira" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -792,7 +797,7 @@
                                 <TabItem ToolTip="View Armor Skills" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/armor_skills.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/armor_skills.png" Width="32" Height="32"/>
                                             <TextBlock Text="Armor" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -836,7 +841,7 @@
                                 <TabItem ToolTip="View Zenith Skills" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/boggers.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/boggers.png" Width="32" Height="32"/>
                                             <TextBlock Text="Zenith Skills" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -851,7 +856,7 @@
                                 <TabItem ToolTip="View Motion Values" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/unknown.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/unknown.png" Width="32" Height="32"/>
                                             <TextBlock Text="Motion Values" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -893,7 +898,7 @@
                                 <!--<TabItem ToolTip="View Hunting Horn Songs" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/note_pink.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/note_pink.png" Width="32" Height="32"/>
                                             <TextBlock Text="Hunting Horn Songs" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -908,7 +913,7 @@
                                 <TabItem ToolTip="View Weapon Information" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/attack.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/attack.png" Width="32" Height="32"/>
                                             <TextBlock Text="Weapons" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -959,7 +964,7 @@
                                 <TabItem ToolTip="View Sigils List" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/sigils.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/sigils.png" Width="32" Height="32"/>
                                             <TextBlock Text="Sigils" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -974,7 +979,7 @@
                                 <TabItem ToolTip="View Diva Prayer Gems and Questline" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/diva_prayer_gems.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/diva_prayer_gems.png" Width="32" Height="32"/>
                                             <TextBlock Text="Diva" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -989,7 +994,7 @@
                                 <TabItem ToolTip="View Style Rank Upgrades" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/knife.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/knife.png" Width="32" Height="32"/>
                                             <TextBlock Text="Style Rank" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -1334,7 +1339,7 @@
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0"  Text="DPS Y Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="35" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSY}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Highest DPS Color (resets per quest)" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0"  Text="Highest DPS Color"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Highest DPS Color (resets per quest, counts the highest 10)" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0"  Text="Highest DPS Color"/>
                         <ToggleButton Grid.Row="36" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestDPSColor}"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Total Current Sharpness Values" Style="{StaticResource ConfigTextBox}" Grid.Row="37" Grid.Column="0"  Text="Total Sharpness"/>
@@ -1369,7 +1374,7 @@
         <TabItem ToolTip="Monster HP settings" Background="#11111b" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                    <Image Name="hpimg" Source="UI/Icons/monster.png" Width="32" Height="32"/>
+                    <Image Name="hpimg" Source="UI/Icons/png/monster.png" Width="32" Height="32"/>
                     <TextBlock Foreground="#a6e3a1" Text="Monster HP Bars" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
@@ -1483,7 +1488,7 @@
         <TabItem ToolTip="Monster status settings" Background="#11111b" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                    <Image Name="statusImg" Source="UI/Icons/poison.png" Width="32" Height="32"/>
+                    <Image Name="statusImg" Source="UI/Icons/png/poison.png" Width="32" Height="32"/>
                     <TextBlock Foreground="#cba6f7" Text="Monster Status Info" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
@@ -1531,6 +1536,9 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Attack Multiplier" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Monster Attack Multiplier"/>
                         <ToggleButton Grid.Row="0" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterAtkMultShown}"/>
@@ -1538,62 +1546,66 @@
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Monster Attack Multiplier Y Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Defense Rate (lower = tankier)" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Monster Defense Rate"/>
-                        <ToggleButton Grid.Row="3" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterDefrateShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Monster Defense Rate X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterDefrateX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Monster Defense Rate Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterDefrateY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Size" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Monster Size"/>
-                        <ToggleButton Grid.Row="6" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSizeShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Monster Size X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Monster Size Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Poison Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Monster Poison Threshold"/>
-                        <ToggleButton Grid.Row="9" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterPoisonShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Monster Poison Threshold X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterPoisonX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Monster Poison Threshold Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterPoisonY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0" Text="Poison Bar Color"/>
-                        <xctk:ColorPicker Grid.Column="1" Grid.Row="12" Style="{StaticResource ConfigColorPicker}" 
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Highest Monster Attack Color (resets per quest and also changes the icon color)" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Highest Monster Attack Multiplier Color"/>
+                        <ToggleButton Grid.Row="3" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestMonsterAttackMultiplierColor}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Defense Rate (lower = tankier)" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Monster Defense Rate"/>
+                        <ToggleButton Grid.Row="4" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterDefrateShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Monster Defense Rate X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterDefrateX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Monster Defense Rate Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterDefrateY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Lowest Monster Defrate Color (resets per quest and also changes the icon color)" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Lowest Monster Defrate Color"/>
+                        <ToggleButton Grid.Row="7" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableLowestMonsterDefrateColor}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Size" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Monster Size"/>
+                        <ToggleButton Grid.Row="8" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSizeShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Monster Size X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Monster Size Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Poison Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Monster Poison Threshold"/>
+                        <ToggleButton Grid.Row="11" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterPoisonShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Monster Poison Threshold X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterPoisonX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster Poison Threshold Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterPoisonY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0" Text="Poison Bar Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="14" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonBarColor}"></xctk:ColorPicker>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Sleep Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster Sleep Threshold"/>
-                        <ToggleButton Grid.Row="13" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSleepShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Monster Sleep Threshold X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster Sleep Threshold Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="15" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="Sleep Bar Color"/>
-                        <xctk:ColorPicker Grid.Column="1" Grid.Row="16" Style="{StaticResource ConfigColorPicker}" 
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Sleep Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster Sleep Threshold"/>
+                        <ToggleButton Grid.Row="15" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSleepShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Monster Sleep Threshold X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster Sleep Threshold Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0" Text="Sleep Bar Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="18" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarColor}"></xctk:ColorPicker>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Paralysis Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster Paralysis Threshold"/>
-                        <ToggleButton Grid.Row="17" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterParaShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Monster Paralysis Threshold X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="18" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterParaX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Monster Paralysis Threshold Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="19" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterParaY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0" Text="Para Bar Color"/>
-                        <xctk:ColorPicker Grid.Column="1" Grid.Row="20" Style="{StaticResource ConfigColorPicker}" 
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Paralysis Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Monster Paralysis Threshold"/>
+                        <ToggleButton Grid.Row="19" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterParaShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Monster Paralysis Threshold X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="20" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterParaX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Monster Paralysis Threshold Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="21" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterParaY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0" Text="Para Bar Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="22" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}"></xctk:ColorPicker>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Blast Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Monster Blast Threshold"/>
-                        <ToggleButton Grid.Row="21" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBlastShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Monster Blast Threshold X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="22" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Monster Blast Threshold Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="23" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0" Text="Blast Bar Color"/>
-                        <xctk:ColorPicker Grid.Column="1" Grid.Row="24" Style="{StaticResource ConfigColorPicker}" 
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Blast Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Monster Blast Threshold"/>
+                        <ToggleButton Grid.Row="23" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBlastShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Monster Blast Threshold X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="24" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Monster Blast Threshold Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="25" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0" Text="Blast Bar Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="26" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarColor}"></xctk:ColorPicker>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Stun Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Monster Stun Threshold"/>
-                        <ToggleButton Grid.Row="25" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStunShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Monster Stun Threshold X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="26" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStunX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Monster Stun Threshold Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="27" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStunY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0" Text="Stun Bar Color"/>
-                        <xctk:ColorPicker Grid.Column="1" Grid.Row="28" Style="{StaticResource ConfigColorPicker}" 
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Stun Threshold" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Monster Stun Threshold"/>
+                        <ToggleButton Grid.Row="27" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStunShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0"  Text="Monster Stun Threshold X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="28" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStunX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0"  Text="Monster Stun Threshold Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="29" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStunY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0" Text="Stun Bar Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="30" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}"></xctk:ColorPicker>
                     </Grid>
                 </ScrollViewer>
@@ -1721,7 +1733,7 @@
         <TabItem ToolTip="Monster information" Background="#11111b" Foreground="#cdd6f4">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                    <Image Name="monsterinfoimg" Source="UI/Icons/monster_info.png" Width="32" Height="32"/>
+                    <Image Name="monsterinfoimg" Source="UI/Icons/png/monster_info.png" Width="32" Height="32"/>
                     <TextBlock Foreground="#fab387" Text="Monster Info" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>

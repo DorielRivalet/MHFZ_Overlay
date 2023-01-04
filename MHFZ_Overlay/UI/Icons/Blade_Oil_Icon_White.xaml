@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This file is NOT compatible with Silverlight-->
+<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+  <Canvas Name="svg8" Width="16.933333" Height="16.933334">
+    <Canvas.RenderTransform>
+      <TranslateTransform X="0" Y="0"/>
+    </Canvas.RenderTransform>
+    <Canvas.Resources/>
+    <!--Unknown tag: sodipodi:namedview-->
+    <!--Unknown tag: metadata-->
+    <Canvas Name="layer1" Visibility="Collapsed">
+      <Image xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="image843" Canvas.Left="1.8520832" Canvas.Top="1.8520832" Source="data:image/png;base64,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 iAEgHwkAAAAASUVORK5CYII= " Width="13.229167" Height="13.229167" Stretch="Fill"/>
+    </Canvas>
+    <Canvas Name="layer2">
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path961" Fill="#FFD0D0D0" StrokeThickness="0.52890208" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.998">
+        <Path.Data>
+          <PathGeometry Figures="M 5.7014914 3.7218362 11.606774 3.721918 13.70702 5.9555528 13.6744 13.966234 13.44599 15.450837 3.7222858 15.287689 3.1349486 13.966234 3.3633575 5.8250337 Z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path959" Fill="#FFFFFFFF" StrokeThickness="0.52890208" Stroke="#FF858585" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.995">
+        <Path.Data>
+          <PathGeometry Figures="M 7.0243294 11.366676 V 7.2315641 L 8.6692863 5.5866075 h 0.9542566 v 5.7800685 l -1.2749937 0.490761 z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path937" Fill="#FFFFFFFF" StrokeThickness="0.52890208" Stroke="#FF858585" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.995">
+        <Path.Data>
+          <PathGeometry Figures="m 7.6186824 11.901102 v 1.355709 h 0.7298667 0.7298667 v -1.355709 l -0.7298667 0.01294 z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path1028" Fill="#FF4D4D4D" StrokeThickness="0.52890208" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.995">
+        <Path.Data>
+          <PathGeometry Figures="m 5.539464 4.8988559 h 5.854405 L 11.606774 3.721918 h -6.06731 z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path867" Fill="#FF858585" StrokeThickness="1.999" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.998">
+        <Path.Data>
+          <PathGeometry Figures="M 9.9375 4.953125 L 9.9375 9.6816406 L 13.080078 14.066406 L 32 14.066406 L 50.919922 14.066406 L 54.0625 9.6816406 L 54.0625 4.953125 L 32 4.953125 L 9.9375 4.953125 z " FillRule="NonZero"/>
+        </Path.Data>
+        <Path.RenderTransform>
+          <ScaleTransform ScaleX="0.26458333" ScaleY="0.26458333"/>
+        </Path.RenderTransform>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path895" Fill="#FF858585" StrokeThickness="0.52890208" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.998">
+        <Path.Data>
+          <PathGeometry Figures="M 4.5016308 3.7218362 2.6293916 5.6140614 V 15.742568 h 5.837275 5.8372754 V 5.6140614 l -1.87224 -1.8922252 -1.037833 8.18e-5 v 1.1769378 l 1.638121 1.63812 V 13.966234 H 8.4666667 l -4.5653233 0 0 -7.4292582 1.6381206 -1.63812 V 3.721918 Z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path917" Fill="#FFFFFFFF" StrokeThickness="0.52890208" Stroke="#FF858585" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.995">
+        <Path.Data>
+          <PathGeometry Figures="m 6.4609044 11.366916 v 0.87213 h 1.8876447 1.8876439 v -0.87213 H 8.3485491 Z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path1088" Fill="#FF000000" StrokeThickness="0.370152" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.995">
+        <Path.Data>
+          <PathGeometry Figures="m 3.2615235 3.7175604 0 1.0306494 0.8477453 -0.3633195 0.392362 -0.6630543 z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path10880" Fill="#FF000000" StrokeThickness="0.370152" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.995">
+        <Path.Data>
+          <PathGeometry Figures="m 13.67181 3.7175612 v 1.030649 l -0.847746 -0.363319 -0.392362 -0.663055 z" FillRule="NonZero"/>
+        </Path.Data>
+      </Path>
+    </Canvas>
+  </Canvas>
+</Viewbox>

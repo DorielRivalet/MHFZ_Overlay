@@ -135,7 +135,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="TimerX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">8</Value>
+      <Value Profile="(Default)">-80</Value>
     </Setting>
     <Setting Name="TimerY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">560</Value>
@@ -144,7 +144,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="HitCountX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">8</Value>
+      <Value Profile="(Default)">-80</Value>
     </Setting>
     <Setting Name="HitCountY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">600</Value>
@@ -153,7 +153,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="PlayerAtkX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">8</Value>
+      <Value Profile="(Default)">-80</Value>
     </Setting>
     <Setting Name="PlayerAtkY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">640</Value>
@@ -249,13 +249,13 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Monster1IconShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Monster1IconX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="Monster1IconY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">420</Value>
+      <Value Profile="(Default)">300</Value>
     </Setting>
     <Setting Name="DiscordTimerMode" Type="System.String" Scope="User">
       <Value Profile="(Default)">Time Left</Value>
@@ -426,7 +426,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PlayerDPSX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">8</Value>
+      <Value Profile="(Default)">-80</Value>
     </Setting>
     <Setting Name="PlayerDPSY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">520</Value>
@@ -447,6 +447,18 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ProgressBarIconsShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="OverlayStatIconShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterPartsIconShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableHighestMonsterAttackMultiplierColor" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableLowestMonsterDefrateColor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

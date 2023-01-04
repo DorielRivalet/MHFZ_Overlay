@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This file is NOT compatible with Silverlight-->
+<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+  <Canvas Name="svg4846" Width="16.933333" Height="16.933334">
+    <Canvas.RenderTransform>
+      <TranslateTransform X="0" Y="0"/>
+    </Canvas.RenderTransform>
+    <Canvas.Resources/>
+    <!--Unknown tag: sodipodi:namedview-->
+    <!--Unknown tag: metadata-->
+    <Canvas Name="layer1">
+      <Canvas.RenderTransform>
+        <TranslateTransform X="0" Y="-280.06665"/>
+      </Canvas.RenderTransform>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path5725" Fill="#FFD5D5D5" StrokeThickness="2" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+        <Path.Data>
+          <PathGeometry Figures="M 20.5 9 C 20.5 9 18.5 8.9999874 18.5 11 L 18.5 14 L 21.5 17 L 29.5 17 L 29.5 9 L 20.5 9 z M 34.5 15 L 34.5 23 L 42.5 23 L 45.5 20 L 45.5 17 C 45.5 14.999987 43.5 15 43.5 15 L 34.5 15 z M 17.5 18 C 17.5 18 15.5 17.999987 15.5 20 L 15.5 23 L 18.5 26 L 29.5 26 L 29.5 18 L 17.5 18 z M 34.5 24 L 34.5 32 L 46.5 32 L 49.5 29 L 49.5 26 C 49.5 23.999987 47.5 24 47.5 24 L 34.5 24 z M 14.5 27 C 14.5 27 12.5 26.999987 12.5 29 L 12.5 32 L 15.5 35 L 29.5 35 L 29.5 27 L 14.5 27 z M 34.5 33 L 34.5 41 L 50.5 41 L 53.5 38 L 53.5 35 C 53.5 32.999987 51.5 33 51.5 33 L 34.5 33 z M 12.5 36 C 12.5 36 10.5 35.999987 10.5 38 L 10.5 41 L 13.5 44 L 29.5 44 L 29.5 36 L 12.5 36 z " FillRule="EvenOdd"/>
+        </Path.Data>
+        <Path.RenderTransform>
+          <MatrixTransform Matrix="0.26458334 0 0 0.26458334 0 280.06665"/>
+        </Path.RenderTransform>
+      </Path>
+      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path5723" Fill="#FFFFFFFF" StrokeThickness="0.5291667" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+        <Path.Data>
+          <PathGeometry Figures="m 9.9218747 293.82499 h -0.529167 v -1.5875 l 0.7937503 -0.79375 h 1.322917 c 0 0 0.79375 0 0.79375 1.05833 v 1.32292 c 0 0 0 1.5875 -1.5875 1.5875 H 9.1281247 c 0 0 -1.322917 0 -1.322917 -1.85209 v -11.37708 c 0 0 0 -0.52917 0.529167 -0.52917 h 0.264583 c 0.529167 0 0.529167 0.52917 0.529167 0.52917 v 11.1125 c 0 0 0 0.79375 0.79375 0.79375 h 0.5291663 c 0 0 0.529167 0 0.529167 -0.52917 v -0.52916 h -0.264583 v 0.79375 z" FillRule="EvenOdd"/>
+        </Path.Data>
+      </Path>
+    </Canvas>
+  </Canvas>
+</Viewbox>
