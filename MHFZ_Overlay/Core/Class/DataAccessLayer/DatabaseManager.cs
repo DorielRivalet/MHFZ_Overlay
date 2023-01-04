@@ -93,6 +93,24 @@ namespace MHFZ_Overlay
                     SQLiteConnection.CreateFile(_connectionString);
                 }
 
+                try
+                {
+                    using (var conn = new SQLiteConnection(dataSource))
+                    {
+                        conn.Open();
+
+                        using (SQLiteTransaction transaction = conn.BeginTransaction())
+                        {
+                            // file is a valid database file
+                        }
+                    }
+                }
+                catch (SQLiteException ex)
+                {
+                    MessageBox.Show(String.Format("Invalid database file. Delete both MHFZ_Overlay.sqlite and reference_schema.json if present, and rerun the program.\n\n{0}", ex),"Error",MessageBoxButton.OK,MessageBoxImage.Error);
+                    Environment.Exit(0);
+                }
+
                 using (var conn = new SQLiteConnection(dataSource))
                 {
                     conn.Open();
@@ -236,14 +254,13 @@ namespace MHFZ_Overlay
                         CreatedAt,
                         CreatedBy,
                         QuestID, 
-                        AreaID, 
                         FinalTimeValue, 
                         FinalTimeDisplay, 
                         ObjectiveImage, 
                         ObjectiveTypeID,
                         ObjectiveQuantity,
                         StarGrade,
-                        RankNameID,
+                        RankName,
                         ObjectiveName, 
                         Date,
                         YouTubeID,
@@ -264,14 +281,13 @@ namespace MHFZ_Overlay
                         @CreatedAt,
                         @CreatedBy,
                         @QuestID, 
-                        @AreaID, 
                         @FinalTimeValue,
                         @FinalTimeDisplay, 
                         @ObjectiveImage,
                         @ObjectiveTypeID, 
                         @ObjectiveQuantity, 
                         @StarGrade,
-                        @RankNameID,
+                        @RankName,
                         @ObjectiveName, 
                         @Date,
                         @YouTubeID,
@@ -292,7 +308,6 @@ namespace MHFZ_Overlay
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             int questID = model.QuestID();
-                            int areaID = model.AreaID();
                             int timeLeft = model.TimeInt(); // Example value of the TimeLeft variable
                             int finalTimeValue = timeLeft;
                             // Calculate the elapsed time of the quest
@@ -384,8 +399,8 @@ namespace MHFZ_Overlay
                             //                    SELECT LAST_INSERT_ROWID() as ZenithSkillsID;
 
                             string questData = string.Format(
-                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}",
-                                runID, createdAt, createdBy, questID, areaID,
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}",
+                                runID, createdAt, createdBy, questID,
                                 finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
                                 starGrade, rankName, objectiveName, date, attackBuffDictionary,
                                 hitCountDictionary, damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary, cartsDictionary,
@@ -400,14 +415,13 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
                             cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@QuestID", questID);
-                            cmd.Parameters.AddWithValue("@AreaID", areaID);
                             cmd.Parameters.AddWithValue("@FinalTimeValue", finalTimeValue);
                             cmd.Parameters.AddWithValue("@FinalTimeDisplay", finalTimeDisplay);
                             cmd.Parameters.AddWithValue("@ObjectiveImage", objectiveImage);
                             cmd.Parameters.AddWithValue("@ObjectiveTypeID", objectiveTypeID);
                             cmd.Parameters.AddWithValue("@ObjectiveQuantity", objectiveQuantity);
                             cmd.Parameters.AddWithValue("@StarGrade", starGrade);
-                            cmd.Parameters.AddWithValue("@RankNameID", rankName);
+                            cmd.Parameters.AddWithValue("@RankName", rankName);
                             cmd.Parameters.AddWithValue("@ObjectiveName", objectiveName);
                             cmd.Parameters.AddWithValue("@Date", date);
                             cmd.Parameters.AddWithValue("@YouTubeID", youtubeID);
@@ -1503,22 +1517,20 @@ namespace MHFZ_Overlay
                     // TODO quests datfolder zenithskills automaticskills activeskills caravanskills stylerankskills playerinventory ammopouch roaddureskills playergear 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_updates
-                        AFTER UPDATE ON Quests
-                        WHEN NEW.YouTubeID = OLD.YouTubeID
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER DELETE ON Audit
                         BEGIN
-                            SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
-                        END;
-                        ";
+                          SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
                         cmd.ExecuteNonQuery();
                     }
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_deletion
-                        AFTER DELETE ON Quests
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER UPDATE ON Audit
                         BEGIN
-                          SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
                         END;";
                         cmd.ExecuteNonQuery();
                     }
@@ -1539,6 +1551,166 @@ namespace MHFZ_Overlay
                         AFTER DELETE ON datFolder
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER DELETE ON ZenithSkills
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER UPDATE ON ZenithSkills
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER DELETE ON AutomaticSkills
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER UPDATE ON AutomaticSkills
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER DELETE ON ActiveSkills
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER UPDATE ON ActiveSkills
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER DELETE ON CaravanSkills
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER UPDATE ON CaravanSkills
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER DELETE ON StyleRankSkills
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER UPDATE ON StyleRankSkills
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER DELETE ON PlayerInventory
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER UPDATE ON PlayerInventory
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER DELETE ON AmmoPouch
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER UPDATE ON AmmoPouch
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER DELETE ON RoadDureSkills
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        AFTER UPDATE ON RoadDureSkills
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
                         END;";
                         cmd.ExecuteNonQuery();
                     }
@@ -1587,8 +1759,6 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
-
-
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
                         // Create the trigger
@@ -1614,8 +1784,10 @@ namespace MHFZ_Overlay
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
                         // Create the trigger
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS trigger_delete_quests_insert_audit 
-                        AFTER DELETE ON Quests
+                        // TODO this doesnt work
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_deletion
+                        BEFORE DELETE ON Quests
+                        FOR EACH ROW
                         BEGIN
                             INSERT INTO Audit (
                                 CreatedAt, 
@@ -1623,12 +1795,14 @@ namespace MHFZ_Overlay
                                 ChangeType,
                                 HashValue
                             ) VALUES (
-                                new.CreatedAt, 
-                                new.CreatedBy,
+                                datetime('now'), 
+                                OLD.CreatedBy,
                                 'DELETE',
-                                new.QuestHash
+                                OLD.QuestHash
                             );
-                        END;";
+                            SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;
+                        ";
 
                         cmd.ExecuteNonQuery();
                     }
@@ -2342,14 +2516,13 @@ namespace MHFZ_Overlay
                     CreatedBy TEXT NOT NULL,
                     RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
                     QuestID INTEGER NOT NULL CHECK (QuestID >= 0), 
-                    AreaID INTEGER NOT NULL CHECK (AreaID >= 0), 
                     FinalTimeValue INTEGER NOT NULL,
                     FinalTimeDisplay TEXT NOT NULL, 
                     ObjectiveImage TEXT NOT NULL,
                     ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0), 
                     ObjectiveQuantity INTEGER NOT NULL, 
                     StarGrade INTEGER NOT NULL, 
-                    RankNameID INTEGER NOT NULL CHECK (RankNameID >= 0), 
+                    RankName TEXT NOT NULL, 
                     ObjectiveName TEXT NOT NULL, 
                     Date DATETIME NOT NULL,
                     YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
@@ -2367,9 +2540,8 @@ namespace MHFZ_Overlay
                     PartySize INTEGER NOT NULL,
                     OverlayMode TEXT NOT NULL,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
-                    FOREIGN KEY(AreaID) REFERENCES Area(AreaID),
-                    FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID),
-                    FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
+                    FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
+                    -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {

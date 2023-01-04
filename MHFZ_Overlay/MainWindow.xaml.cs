@@ -2299,8 +2299,9 @@ namespace MHFZ_Overlay
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
             // Check if in quest and timer is NOT frozen
-            if (DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.TimeInt() % 30 == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt())
+            if (DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt())
             {
+                DataLoader.model.previousTimeInt = DataLoader.model.TimeInt();
                 DataLoader.model.InsertQuestInfoIntoDictionaries();
                 DataLoader.model.DPS = DataLoader.model.CalculateDPS();
             }

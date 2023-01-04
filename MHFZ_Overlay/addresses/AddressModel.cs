@@ -8534,10 +8534,10 @@ namespace MHFZ_Overlay.addresses
 
         public void InsertQuestInfoIntoDictionaries()
         {
-            if (TimeInt() == previousTimeInt)
-                return;
+            //if (TimeInt() == previousTimeInt)
+            //    return;
 
-            previousTimeInt = TimeInt();
+            //previousTimeInt = TimeInt();
 
             if (previousAttackBuffInt != WeaponRaw())
             {
