@@ -776,6 +776,7 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowMap = v && s.EnableMap;
             DataLoader.model.ShowFrameCounter = v && s.FrameCounterShown;
             DataLoader.model.ShowPlayerAttackGraph = v && s.PlayerAttackGraphShown;
+            DataLoader.model.ShowDamagePerSecond = v && s.DamagePerSecondShown;
         }
 
         #endregion
@@ -2059,6 +2060,11 @@ namespace MHFZ_Overlay
                 case "PlayerAtkInfo":
                     s.PlayerAtkX = (double)(pos.X - XOffset);
                     s.PlayerAtkY = (double)(pos.Y - YOffset);
+                    break;
+                // TODO graphs
+                case "DamagePerSecondInfo":
+                    s.PlayerDPSX = (double)(pos.X - XOffset);
+                    s.PlayerDPSY = (double)(pos.Y - XOffset);
                     break;
 
                 case "Monster1HpBar":

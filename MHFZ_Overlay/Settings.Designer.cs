@@ -1787,5 +1787,17 @@ namespace MHFZ_Overlay {
                 this["PlayerNationality"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DamagePerSecondShown {
+            get {
+                return ((bool)(this["DamagePerSecondShown"]));
+            }
+            set {
+                this["DamagePerSecondShown"] = value;
+            }
+        }
     }
 }

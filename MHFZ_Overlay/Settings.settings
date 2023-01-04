@@ -443,5 +443,8 @@
     <Setting Name="PlayerNationality" Type="System.String" Scope="User">
       <Value Profile="(Default)">World</Value>
     </Setting>
+    <Setting Name="DamagePerSecondShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

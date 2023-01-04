@@ -349,6 +349,10 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="13">
                             <Grid.RowDefinitions>
@@ -1317,26 +1321,29 @@
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Highest Attack Color (resets per quest)" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0"  Text="Highest Attack Color"/>
                         <ToggleButton Grid.Row="32" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestAtkColor}"/>
 
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0"  Text="DPS X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="33" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show DPS (resets per quest and doesn't calculate hit values over 1000)" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0"  Text="DPS Value"/>
+                        <ToggleButton Grid.Row="33" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=DamagePerSecondShown}"/>
 
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0"  Text="DPS Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="34" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0"  Text="DPS X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="34" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSX}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Highest DPS Color (resets per quest)" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0"  Text="Highest DPS Color"/>
-                        <ToggleButton Grid.Row="35" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestDPSColor}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0"  Text="DPS Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="35" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSY}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Total Current Sharpness Values" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0"  Text="Total Sharpness"/>
-                        <ToggleButton Grid.Row="36" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Highest DPS Color (resets per quest)" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0"  Text="Highest DPS Color"/>
+                        <ToggleButton Grid.Row="36" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestDPSColor}"/>
 
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="37" Grid.Column="0"  Text="Total Sharpness Info X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="37" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Total Current Sharpness Values" Style="{StaticResource ConfigTextBox}" Grid.Row="37" Grid.Column="0"  Text="Total Sharpness"/>
+                        <ToggleButton Grid.Row="37" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
 
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="38" Grid.Column="0"  Text="Total Sharpness Info Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="38" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="38" Grid.Column="0"  Text="Total Sharpness Info X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="38" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="39" Grid.Column="0"  Text="Current Sharpness as Percentage"/>
-                        <ToggleButton Grid.Row="39" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="39" Grid.Column="0"  Text="Total Sharpness Info Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="39" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="40" Grid.Column="0"  Text="Current Sharpness as Percentage"/>
+                        <ToggleButton Grid.Row="40" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
 
                         <!--<TextBlock Margin="5,5,5,5" ToolTip="Currently Equipped Weapon (includes Town Set)" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="{Binding CurrentWeaponName}"/>
                         <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="16" x:Name="playerWepTextBox" Text="{Binding CurrentWeaponName}"/>-->
@@ -1632,6 +1639,9 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
                         <TextBlock Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Foreground="#cdd6f4">
                                        1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
@@ -1845,7 +1855,7 @@
                                     <RowDefinition Height="40"/>
                                 </Grid.RowDefinitions>
                                 <Button ToolTip="Select the dat folder (which is in the same directory of where your game exe resides). This is needed because the overlay will read the *unique signatures* of the files within the folder and thus show which files you have used in a quest run" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="(Mandatory) Select dat Folder" Click="datFolderButton_Click"/>
-                                <TextBlock Margin="5,5,5,5" ToolTip="dat Folder Path" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Text="{Binding Source={StaticResource Settings}, Path=datFolderPath}"/>
+                                <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=datFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Text="Hover to view selected dat folder path"/>
                                 <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Quest Logging" />
                                 <ToggleButton Grid.Row="2" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}" Checked="questLoggingToggle_Check"/>
                                 <TextBlock Margin="5,5,5,5" ToolTip="Set a player avatar image link" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Player Avatar Link" />

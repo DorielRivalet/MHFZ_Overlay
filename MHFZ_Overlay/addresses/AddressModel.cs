@@ -85,6 +85,9 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowPlayerAttackGraph { get; set; } = true;
 
+        public bool ShowDamagePerSecond { get; set; } = true;
+
+
         #endregion
 
 
@@ -835,7 +838,7 @@ namespace MHFZ_Overlay.addresses
                 return "(Main Menu) ";
             else if (QuestID() == 0 && AreaID() == 200 && BlademasterWeaponID() == 0 && GunnerWeaponID() == 0)
                 return "(World Select) ";
-            else if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown)
+            else if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown || s.DamagePerSecondShown) //TODO graphs
                 return "";
             else if (s.TimerInfoShown)
                 return "(Speedrun) ";
