@@ -96,7 +96,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="EnableTimeLeftPercentage" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="DamageNumbersColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#fffab387</Value>
@@ -294,7 +294,7 @@
       <Value Profile="(Default)">80</Value>
     </Setting>
     <Setting Name="Monster3HealthBarShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Monster3HealthBarX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">800</Value>
@@ -303,7 +303,7 @@
       <Value Profile="(Default)">120</Value>
     </Setting>
     <Setting Name="Monster4HealthBarShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Monster4HealthBarX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">800</Value>
@@ -459,6 +459,9 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="EnableLowestMonsterDefrateColor" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableDamageNumbersEffects" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

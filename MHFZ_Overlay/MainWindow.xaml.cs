@@ -5,10 +5,12 @@ using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using Memory;
 using MHFZ_Overlay.addresses;
+using MHFZ_Overlay.UI.Class;
 using Microsoft.Data.Sqlite;
 using Octokit;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.Drawing;
@@ -24,6 +26,7 @@ using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
@@ -621,14 +624,14 @@ namespace MHFZ_Overlay
             Point newPoint = DamageNumbers.TranslatePoint(new Point(x, y), DamageNumbers);
 
             // Create a new instance of the OutlinedTextBlock class.
-            OutlinedTextBlock outlinedTextBlock = new OutlinedTextBlock();
+            OutlinedTextBlock damageOutlinedTextBlock = new OutlinedTextBlock();
 
             // Set the properties of the OutlinedTextBlock instance.
-            outlinedTextBlock.Text = damage.ToString();
-            outlinedTextBlock.FontFamily = new System.Windows.Media.FontFamily("MS Gothic Bold");
-            outlinedTextBlock.FontSize = 21;
-            outlinedTextBlock.StrokeThickness = 4;
-            outlinedTextBlock.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+            damageOutlinedTextBlock.Text = damage.ToString();
+            damageOutlinedTextBlock.FontFamily = new System.Windows.Media.FontFamily("MS Gothic Bold");
+            damageOutlinedTextBlock.FontSize = 21;
+            damageOutlinedTextBlock.StrokeThickness = 4;
+            damageOutlinedTextBlock.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
 
             //does not alter actual number displayed, only the text style
             double damageModifier = damage / (DataLoader.model.CurrentWeaponMultiplier / 2);
@@ -636,64 +639,196 @@ namespace MHFZ_Overlay
             switch (damageModifier)
             {
                 case < 15.0:
-                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xB4, 0xBE, 0xFE));
-                    outlinedTextBlock.FontSize = 22;
+                    damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xB4, 0xBE, 0xFE));
+                    damageOutlinedTextBlock.FontSize = 22;
                     break;
                 case < 35.0:
-                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
-                    outlinedTextBlock.FontSize = 22;
+                    damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
+                    damageOutlinedTextBlock.FontSize = 22;
                     break;
                 case < 75.0:
-                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x74, 0xC7, 0xEC));
-                    outlinedTextBlock.FontSize = 22;
+                    damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x74, 0xC7, 0xEC));
+                    damageOutlinedTextBlock.FontSize = 22;
                     break;
                 case < 200.0:
-                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xDC, 0xEB));
-                    outlinedTextBlock.FontSize = 22;
+                    damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xDC, 0xEB));
+                    damageOutlinedTextBlock.FontSize = 22;
                     break;
                 case < 250.0:
-                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x94, 0xE2, 0xD5));
-                    outlinedTextBlock.FontSize = 24;
+                    damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x94, 0xE2, 0xD5));
+                    damageOutlinedTextBlock.FontSize = 24;
                     break;
                 case < 300.0:
-                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xF9, 0xE2, 0xAF));
-                    outlinedTextBlock.FontSize = 24;
+                    damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xF9, 0xE2, 0xAF));
+                    damageOutlinedTextBlock.FontSize = 24;
                     break;
                 case < 350.0:
-                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x97));
-                    outlinedTextBlock.FontSize = 24;
-                    outlinedTextBlock.Text += "!";
+                    damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x97));
+                    damageOutlinedTextBlock.FontSize = 24;
+                    damageOutlinedTextBlock.Text += "!";
                     break;
                 case < 500.0:
-                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xEB, 0xA0, 0xAC));
-                    outlinedTextBlock.FontSize = 26;
-                    outlinedTextBlock.Text += "!!";
+                    damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xEB, 0xA0, 0xAC));
+                    damageOutlinedTextBlock.FontSize = 26;
+                    damageOutlinedTextBlock.Text += "!!";
                     break;
                 default:
-                    outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0x8B, 0xA8));
-                    outlinedTextBlock.FontSize = 30;
-                    outlinedTextBlock.Text += "!!!";
+                    damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0x8B, 0xA8));
+                    damageOutlinedTextBlock.FontSize = 30;
+                    damageOutlinedTextBlock.Text += "!!!";
                     break;
             }
 
+            // TODO add check for effects
             if (!ShowDamageNumbersMulticolor())
             {
                 //https://stackoverflow.com/questions/14601759/convert-color-to-byte-value
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 System.Drawing.Color color = ColorTranslator.FromHtml(s.DamageNumbersColor);
-                outlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+                damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
             }
 
-            Label damageLabel = new()
+            Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+            Brush whiteBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xCD, 0xD6, 0xF4));
+            Brush redBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0x8B, 0xA));
+            Brush originalFillBrush = damageOutlinedTextBlock.Fill;
+
+            damageOutlinedTextBlock.SetValue(Canvas.TopProperty, newPoint.Y);
+            damageOutlinedTextBlock.SetValue(Canvas.LeftProperty, newPoint.X);
+
+            DamageNumbers.Children.Add(damageOutlinedTextBlock);
+
+            // TODO: Animation, inspired by rise
+
+            // Create a Storyboard to animate the label's size, color and opacity
+            Storyboard fadeInIncreaseSizeFlashColorStoryboard = new Storyboard();
+
+            // Create a DoubleAnimation to animate the label's width
+            DoubleAnimation sizeIncreaseAnimation = new DoubleAnimation
             {
-                Content = outlinedTextBlock,
+                From = 0,
+                To = damageOutlinedTextBlock.FontSize*1.75,
+                Duration = TimeSpan.FromSeconds(.3),
+            };
+            Storyboard.SetTarget(sizeIncreaseAnimation, damageOutlinedTextBlock);
+            Storyboard.SetTargetProperty(sizeIncreaseAnimation, new PropertyPath(OutlinedTextBlock.FontSizeProperty));
+
+            DoubleAnimation fadeInAnimation = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = TimeSpan.FromSeconds(.3),
+            };
+            Storyboard.SetTarget(fadeInAnimation, damageOutlinedTextBlock);
+            Storyboard.SetTargetProperty(fadeInAnimation, new PropertyPath(OutlinedTextBlock.OpacityProperty));
+
+            BrushAnimation flashWhiteStrokeAnimation = new BrushAnimation
+            {
+                From = whiteBrush,
+                To = redBrush,
+                Duration = TimeSpan.FromSeconds(0.1),
+                //AutoReverse = true,
+                //RepeatBehavior = new RepeatBehavior(2),
+            };
+            Storyboard.SetTarget(flashWhiteStrokeAnimation, damageOutlinedTextBlock);
+            Storyboard.SetTargetProperty(flashWhiteStrokeAnimation, new PropertyPath(OutlinedTextBlock.StrokeProperty));
+
+            BrushAnimation flashWhiteFillAnimation = new BrushAnimation
+            {
+                From = whiteBrush,
+                To = redBrush,
+                Duration = TimeSpan.FromSeconds(0.1),
+                //AutoReverse = true,
+                //RepeatBehavior = new RepeatBehavior(2),
+            };
+            Storyboard.SetTarget(flashWhiteFillAnimation, damageOutlinedTextBlock);
+            Storyboard.SetTargetProperty(flashWhiteFillAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
+
+            fadeInIncreaseSizeFlashColorStoryboard.Children.Add(fadeInAnimation);
+            fadeInIncreaseSizeFlashColorStoryboard.Children.Add(sizeIncreaseAnimation);
+            fadeInIncreaseSizeFlashColorStoryboard.Children.Add(flashWhiteStrokeAnimation);
+            fadeInIncreaseSizeFlashColorStoryboard.Children.Add(flashWhiteFillAnimation);
+
+
+            Storyboard decreaseSizeShowColorStoryboard = new Storyboard();
+
+            // Create a DoubleAnimation to animate the label's width
+            DoubleAnimation sizeDecreaseAnimation = new DoubleAnimation
+            {
+                From = damageOutlinedTextBlock.FontSize * 1.75,
+                To = damageOutlinedTextBlock.FontSize,
+                Duration = TimeSpan.FromSeconds(.2),
+            };
+            Storyboard.SetTarget(sizeDecreaseAnimation, damageOutlinedTextBlock);
+            Storyboard.SetTargetProperty(sizeDecreaseAnimation, new PropertyPath(OutlinedTextBlock.FontSizeProperty));
+
+            BrushAnimation showColorStrokeAnimation = new BrushAnimation
+            {
+                From = redBrush,
+                //To = (Color)converter.ConvertFromString(damageOutlinedTextBlock.Stroke.ToString()),
+                To = blackBrush,
+                Duration = TimeSpan.FromSeconds(0.1),
+                //AutoReverse = true,
+                //RepeatBehavior = new RepeatBehavior(2),
+            };
+            Storyboard.SetTarget(showColorStrokeAnimation, damageOutlinedTextBlock);
+            Storyboard.SetTargetProperty(showColorStrokeAnimation, new PropertyPath(OutlinedTextBlock.StrokeProperty));
+
+            BrushAnimation showColorFillAnimation = new BrushAnimation
+            {
+                From = redBrush,
+                To = originalFillBrush,
+                Duration = TimeSpan.FromSeconds(0.1),
+                //AutoReverse = true,
+                //RepeatBehavior = new RepeatBehavior(2),
+            };
+            Storyboard.SetTarget(showColorFillAnimation, damageOutlinedTextBlock);
+            Storyboard.SetTargetProperty(showColorFillAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
+
+            decreaseSizeShowColorStoryboard.Children.Add(sizeDecreaseAnimation);
+            decreaseSizeShowColorStoryboard.Children.Add(showColorStrokeAnimation);
+            decreaseSizeShowColorStoryboard.Children.Add(showColorFillAnimation);
+
+
+            Storyboard fadeOutStoryboard = new Storyboard();
+
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation
+            {
+                From = 1,
+                To = 0,
+                Duration = TimeSpan.FromSeconds(.4),
             };
 
-            damageLabel.SetValue(Canvas.TopProperty, newPoint.Y);
-            damageLabel.SetValue(Canvas.LeftProperty, newPoint.X);
+            fadeOutAnimation.BeginTime = TimeSpan.FromSeconds(0.75);
 
-            DamageNumbers.Children.Add(damageLabel);
-            RemoveDamageNumberLabel(damageLabel);
+            Storyboard.SetTarget(fadeOutAnimation, damageOutlinedTextBlock);
+            Storyboard.SetTargetProperty(fadeOutAnimation, new PropertyPath(Label.OpacityProperty));
+
+            DoubleAnimation translateUpwardsAnimation = new DoubleAnimation
+            {
+                From = y,
+                To = y - 20,
+                Duration = TimeSpan.FromSeconds(.4),
+            };
+
+            translateUpwardsAnimation.BeginTime = TimeSpan.FromSeconds(0.75);
+
+            Storyboard.SetTarget(translateUpwardsAnimation, damageOutlinedTextBlock);
+            Storyboard.SetTargetProperty(translateUpwardsAnimation, new PropertyPath(Canvas.TopProperty));
+
+            fadeOutStoryboard.Children.Add(fadeOutAnimation);
+            fadeOutStoryboard.Children.Add(translateUpwardsAnimation);
+
+
+            // Set up event handlers to start the next animation in the sequence
+            fadeInIncreaseSizeFlashColorStoryboard.Completed += (s, e) => decreaseSizeShowColorStoryboard.Begin();
+            decreaseSizeShowColorStoryboard.Completed += (s, e) => fadeOutStoryboard.Begin();
+            fadeOutAnimation.Completed += (s, e) => DamageNumbers.Children.Remove(damageOutlinedTextBlock);
+
+            // Start the first animation
+            fadeInIncreaseSizeFlashColorStoryboard.Begin();
+
+            //RemoveDamageNumberLabel(damageLabel);
         }
 
         /// <summary>
@@ -703,7 +838,7 @@ namespace MHFZ_Overlay
         private void RemoveDamageNumberLabel(Label tb)
         {
             DispatcherTimer timer = new();
-            timer.Interval = new TimeSpan(0, 0, 0, 1);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 1200);
             //memory leak?
             timer.Tick += (o, e) => { DamageNumbers.Children.Remove(tb); };
             timer.Start();

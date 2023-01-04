@@ -397,7 +397,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool EnableTimeLeftPercentage {
             get {
                 return ((bool)(this["EnableTimeLeftPercentage"]));
@@ -1189,7 +1189,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool Monster3HealthBarShown {
             get {
                 return ((bool)(this["Monster3HealthBarShown"]));
@@ -1225,7 +1225,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool Monster4HealthBarShown {
             get {
                 return ((bool)(this["Monster4HealthBarShown"]));
@@ -1857,6 +1857,18 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["EnableLowestMonsterDefrateColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableDamageNumbersEffects {
+            get {
+                return ((bool)(this["EnableDamageNumbersEffects"]));
+            }
+            set {
+                this["EnableDamageNumbersEffects"] = value;
             }
         }
     }
