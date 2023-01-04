@@ -1514,10 +1514,20 @@ namespace MHFZ_Overlay
             {
                 try
                 {
-                    // TODO quests datfolder zenithskills automaticskills activeskills caravanskills stylerankskills playerinventory ammopouch roaddureskills playergear 
+                    // quests
+                    // datfolder
+                    // zenithskills
+                    // automaticskills
+                    // activeskills
+                    // caravanskills
+                    // stylerankskills
+                    // playerinventory
+                    // ammopouch
+                    // roaddureskills
+                    // playergear 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_audit_deletion
                         AFTER DELETE ON Audit
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1527,7 +1537,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_audit_updates
                         AFTER UPDATE ON Audit
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1557,7 +1567,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_zenith_skills_deletion
                         AFTER DELETE ON ZenithSkills
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1567,7 +1577,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_zenith_skills_updates
                         AFTER UPDATE ON ZenithSkills
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1577,7 +1587,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_automatic_skills_deletion
                         AFTER DELETE ON AutomaticSkills
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1587,7 +1597,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_automatic_skills_updates
                         AFTER UPDATE ON AutomaticSkills
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1597,7 +1607,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_active_skills_deletion
                         AFTER DELETE ON ActiveSkills
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1607,7 +1617,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_active_skills_updates
                         AFTER UPDATE ON ActiveSkills
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1617,7 +1627,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_caravan_skills_deletion
                         AFTER DELETE ON CaravanSkills
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1627,7 +1637,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_caravan_skills_updates
                         AFTER UPDATE ON CaravanSkills
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1637,7 +1647,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_style_rank_skills_deletion
                         AFTER DELETE ON StyleRankSkills
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1647,7 +1657,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_style_rank_skills_updates
                         AFTER UPDATE ON StyleRankSkills
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1657,7 +1667,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_player_inventory_deletion
                         AFTER DELETE ON PlayerInventory
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1667,7 +1677,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_player_inventory_updates
                         AFTER UPDATE ON PlayerInventory
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1677,7 +1687,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_ammo_pouch_deletion
                         AFTER DELETE ON AmmoPouch
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1687,7 +1697,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_ammo_pouch_updates
                         AFTER UPDATE ON AmmoPouch
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1697,7 +1707,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_road_dure_skills_deletion
                         AFTER DELETE ON RoadDureSkills
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
@@ -1707,7 +1717,7 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_road_dure_skills_updates
                         AFTER UPDATE ON RoadDureSkills
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
