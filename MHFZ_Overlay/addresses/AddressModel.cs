@@ -8460,10 +8460,6 @@ namespace MHFZ_Overlay.addresses
         // TODO
         public double CalculateDPS()
         {
-            // Initialize the damageDealt and timeElapsed variables to 0
-            double damageDealt = 0;
-            double timeElapsed = 0;
-
             // Check if the damageDealtDictionary is empty
             if (!damageDealtDictionary.Any())
             {
@@ -8471,26 +8467,12 @@ namespace MHFZ_Overlay.addresses
                 return 0;
             }
 
-            // Get the time of the first hit in the dictionary
-            //int previousHitTime = damageDealtDictionary.First().Key;
-            int previousHitTime = 0;
-
-            // Iterate through the damageDealtDictionary and update the damageDealt and timeElapsed values
-            foreach (KeyValuePair<int, int> hit in damageDealtDictionary)
-            {
-                // Update the damageDealt value by adding the damage dealt in the current hit
-                damageDealt += hit.Value;
-
-                // Update the timeElapsed value by calculating the time difference between the current hit and the previous hit
-                timeElapsed += hit.Key - previousHitTime;
-
-                // Update the previousHitTime value for the next iteration
-                previousHitTime = hit.Key;
-            }
+            double damageDealt = damageDealtDictionary.Values.Sum();
+            double timeElapsedIn30FPS = TimeDefInt() - TimeInt();
 
             // Calculate and return the DPS
-            return damageDealt / (timeElapsed/30);
-        }
+            return damageDealt / (timeElapsedIn30FPS/30);
+        }   
 
 
         // new entry every second during quest (use this for chart?)
@@ -8518,7 +8500,7 @@ namespace MHFZ_Overlay.addresses
         //int timeElapsed = 0;
 
         // Initialize the previousHitTime variable to 0
-        public int previousHitTime = 0; // is this used?
+        //public int previousHitTime = 0; // is this used?
 
         public int previousTimeInt = 0;
 
@@ -8531,6 +8513,14 @@ namespace MHFZ_Overlay.addresses
         public int previousAreaID = 0;
 
         public int previousCartsInt = 0;
+
+        public int previousMonster1HP = 0;
+
+        public int previousMonster2HP = 0;
+
+        public int previousMonster3HP = 0;
+
+        public int previousMonster4HP = 0;
 
         public void InsertQuestInfoIntoDictionaries()
         {
@@ -8568,18 +8558,37 @@ namespace MHFZ_Overlay.addresses
                 areaChangesDictionary.Add(TimeInt(), AreaID());
             }
 
-            Dictionary<int, int> monster1HPDictionaryMonsterInfo = new Dictionary<int, int>();
-            Dictionary<int, int> monster2HPDictionaryMonsterInfo = new Dictionary<int, int>();
-            Dictionary<int, int> monster3HPDictionaryMonsterInfo = new Dictionary<int, int>();
-            Dictionary<int, int> monster4HPDictionaryMonsterInfo = new Dictionary<int, int>();
-            monster1HPDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1HPInt());
-            monster2HPDictionaryMonsterInfo.Add(LargeMonster2ID(), Monster2HPInt());
-            monster3HPDictionaryMonsterInfo.Add(LargeMonster3ID(), Monster3HPInt());
-            monster4HPDictionaryMonsterInfo.Add(LargeMonster4ID(), Monster4HPInt());
-            monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
-            monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
-            monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
-            monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
+            if (previousMonster1HP != Monster1HPInt())
+            {
+                previousMonster1HP = Monster1HPInt();
+                Dictionary<int, int> monster1HPDictionaryMonsterInfo = new Dictionary<int, int>();
+                monster1HPDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1HPInt());
+                monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
+            }
+
+            if (previousMonster2HP != Monster2HPInt())
+            {
+                previousMonster2HP = Monster2HPInt();
+                Dictionary<int, int> monster2HPDictionaryMonsterInfo = new Dictionary<int, int>();
+                monster2HPDictionaryMonsterInfo.Add(LargeMonster2ID(), Monster2HPInt());
+                monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
+            }
+
+            if (previousMonster3HP != Monster3HPInt())
+            {
+                previousMonster3HP = Monster3HPInt();
+                Dictionary<int, int> monster3HPDictionaryMonsterInfo = new Dictionary<int, int>();
+                monster3HPDictionaryMonsterInfo.Add(LargeMonster3ID(), Monster3HPInt());
+                monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
+            }
+
+            if (previousMonster4HP != Monster4HPInt())
+            {
+                previousMonster4HP = Monster4HPInt();
+                Dictionary<int, int> monster4HPDictionaryMonsterInfo = new Dictionary<int, int>();
+                monster4HPDictionaryMonsterInfo.Add(LargeMonster4ID(), Monster4HPInt());
+                monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
+            }
         }
 
         public void resetQuestInfoVariables()
@@ -8654,6 +8663,10 @@ namespace MHFZ_Overlay.addresses
             previousHitCountInt = 0;
             previousAreaID = 0;
             previousCartsInt = 0;
+            previousMonster1HP = 0;
+            previousMonster2HP = 0;
+            previousMonster3HP = 0;
+            previousMonster4HP = 0;
         }
 
         public void clearQuestInfoDictionaries()

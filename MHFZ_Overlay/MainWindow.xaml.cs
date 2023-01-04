@@ -2302,8 +2302,8 @@ namespace MHFZ_Overlay
             if (DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt())
             {
                 DataLoader.model.previousTimeInt = DataLoader.model.TimeInt();
-                DataLoader.model.InsertQuestInfoIntoDictionaries();
                 DataLoader.model.DPS = DataLoader.model.CalculateDPS();
+                DataLoader.model.InsertQuestInfoIntoDictionaries();
             }
 
             if ((DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() == 0))
