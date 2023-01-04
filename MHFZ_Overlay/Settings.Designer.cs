@@ -1863,12 +1863,24 @@ namespace MHFZ_Overlay {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableDamageNumbersEffects {
+        public bool EnableDamageNumbersSize {
             get {
-                return ((bool)(this["EnableDamageNumbersEffects"]));
+                return ((bool)(this["EnableDamageNumbersSize"]));
             }
             set {
-                this["EnableDamageNumbersEffects"] = value;
+                this["EnableDamageNumbersSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableDamageNumbersFlash {
+            get {
+                return ((bool)(this["EnableDamageNumbersFlash"]));
+            }
+            set {
+                this["EnableDamageNumbersFlash"] = value;
             }
         }
     }

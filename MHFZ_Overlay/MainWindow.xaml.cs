@@ -618,6 +618,8 @@ namespace MHFZ_Overlay
         /// <param name="damage">The damage.</param>
         private void CreateDamageNumberLabel(int damage)
         {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
             Random random = new();
             double x = random.Next(450);
             double y = random.Next(254);
@@ -683,162 +685,178 @@ namespace MHFZ_Overlay
             if (!ShowDamageNumbersMulticolor())
             {
                 //https://stackoverflow.com/questions/14601759/convert-color-to-byte-value
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 System.Drawing.Color color = ColorTranslator.FromHtml(s.DamageNumbersColor);
                 damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
             }
-
-            Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-            Brush whiteBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xCD, 0xD6, 0xF4));
-            Brush redBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0x8B, 0xA));
-            Brush originalFillBrush = damageOutlinedTextBlock.Fill;
 
             damageOutlinedTextBlock.SetValue(Canvas.TopProperty, newPoint.Y);
             damageOutlinedTextBlock.SetValue(Canvas.LeftProperty, newPoint.X);
 
             DamageNumbers.Children.Add(damageOutlinedTextBlock);
 
-            // TODO: Animation, inspired by rise
-
-            // Create a Storyboard to animate the label's size, color and opacity
-            Storyboard fadeInIncreaseSizeFlashColorStoryboard = new Storyboard();
-
-            // Create a DoubleAnimation to animate the label's width
-            DoubleAnimation sizeIncreaseAnimation = new DoubleAnimation
+            if (!s.EnableDamageNumbersFlash && !s.EnableDamageNumbersSize)
             {
-                From = 0,
-                To = damageOutlinedTextBlock.FontSize*1.75,
-                Duration = TimeSpan.FromSeconds(.3),
-            };
-            Storyboard.SetTarget(sizeIncreaseAnimation, damageOutlinedTextBlock);
-            Storyboard.SetTargetProperty(sizeIncreaseAnimation, new PropertyPath(OutlinedTextBlock.FontSizeProperty));
+                RemoveDamageNumberLabel(damageOutlinedTextBlock);
 
-            DoubleAnimation fadeInAnimation = new DoubleAnimation
+            }
+            else
             {
-                From = 0,
-                To = 1,
-                Duration = TimeSpan.FromSeconds(.3),
-            };
-            Storyboard.SetTarget(fadeInAnimation, damageOutlinedTextBlock);
-            Storyboard.SetTargetProperty(fadeInAnimation, new PropertyPath(OutlinedTextBlock.OpacityProperty));
+                Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+                Brush whiteBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xCD, 0xD6, 0xF4));
+                Brush redBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0x8B, 0xA8));
+                Brush originalFillBrush = damageOutlinedTextBlock.Fill;
 
-            BrushAnimation flashWhiteStrokeAnimation = new BrushAnimation
-            {
-                From = whiteBrush,
-                To = redBrush,
-                Duration = TimeSpan.FromSeconds(0.1),
-                //AutoReverse = true,
-                //RepeatBehavior = new RepeatBehavior(2),
-            };
-            Storyboard.SetTarget(flashWhiteStrokeAnimation, damageOutlinedTextBlock);
-            Storyboard.SetTargetProperty(flashWhiteStrokeAnimation, new PropertyPath(OutlinedTextBlock.StrokeProperty));
+                // TODO: Animation, inspired by rise
 
-            BrushAnimation flashWhiteFillAnimation = new BrushAnimation
-            {
-                From = whiteBrush,
-                To = redBrush,
-                Duration = TimeSpan.FromSeconds(0.1),
-                //AutoReverse = true,
-                //RepeatBehavior = new RepeatBehavior(2),
-            };
-            Storyboard.SetTarget(flashWhiteFillAnimation, damageOutlinedTextBlock);
-            Storyboard.SetTargetProperty(flashWhiteFillAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
+                // Create a Storyboard to animate the label's size, color and opacity
+                Storyboard fadeInIncreaseSizeFlashColorStoryboard = new Storyboard();
 
-            fadeInIncreaseSizeFlashColorStoryboard.Children.Add(fadeInAnimation);
-            fadeInIncreaseSizeFlashColorStoryboard.Children.Add(sizeIncreaseAnimation);
-            fadeInIncreaseSizeFlashColorStoryboard.Children.Add(flashWhiteStrokeAnimation);
-            fadeInIncreaseSizeFlashColorStoryboard.Children.Add(flashWhiteFillAnimation);
+                // Create a DoubleAnimation to animate the label's width
+                DoubleAnimation sizeIncreaseAnimation = new DoubleAnimation
+                {
+                    From = 0,
+                    To = damageOutlinedTextBlock.FontSize * 1.5,
+                    Duration = TimeSpan.FromSeconds(.3),
+                };
+                Storyboard.SetTarget(sizeIncreaseAnimation, damageOutlinedTextBlock);
+                Storyboard.SetTargetProperty(sizeIncreaseAnimation, new PropertyPath(OutlinedTextBlock.FontSizeProperty));
 
+                DoubleAnimation fadeInAnimation = new DoubleAnimation
+                {
+                    From = 0,
+                    To = 1,
+                    Duration = TimeSpan.FromSeconds(.3),
+                };
+                Storyboard.SetTarget(fadeInAnimation, damageOutlinedTextBlock);
+                Storyboard.SetTargetProperty(fadeInAnimation, new PropertyPath(OutlinedTextBlock.OpacityProperty));
 
-            Storyboard decreaseSizeShowColorStoryboard = new Storyboard();
+                BrushAnimation flashWhiteStrokeAnimation = new BrushAnimation
+                {
+                    From = whiteBrush,
+                    To = redBrush,
+                    Duration = TimeSpan.FromSeconds(0.05),
+                    //AutoReverse = true,
+                    //RepeatBehavior = new RepeatBehavior(2),
+                };
+                Storyboard.SetTarget(flashWhiteStrokeAnimation, damageOutlinedTextBlock);
+                Storyboard.SetTargetProperty(flashWhiteStrokeAnimation, new PropertyPath(OutlinedTextBlock.StrokeProperty));
 
-            // Create a DoubleAnimation to animate the label's width
-            DoubleAnimation sizeDecreaseAnimation = new DoubleAnimation
-            {
-                From = damageOutlinedTextBlock.FontSize * 1.75,
-                To = damageOutlinedTextBlock.FontSize,
-                Duration = TimeSpan.FromSeconds(.2),
-            };
-            Storyboard.SetTarget(sizeDecreaseAnimation, damageOutlinedTextBlock);
-            Storyboard.SetTargetProperty(sizeDecreaseAnimation, new PropertyPath(OutlinedTextBlock.FontSizeProperty));
+                BrushAnimation flashWhiteFillAnimation = new BrushAnimation
+                {
+                    From = whiteBrush,
+                    To = redBrush,
+                    Duration = TimeSpan.FromSeconds(0.05),
+                    //AutoReverse = true,
+                    //RepeatBehavior = new RepeatBehavior(2),
+                };
+                Storyboard.SetTarget(flashWhiteFillAnimation, damageOutlinedTextBlock);
+                Storyboard.SetTargetProperty(flashWhiteFillAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
 
-            BrushAnimation showColorStrokeAnimation = new BrushAnimation
-            {
-                From = redBrush,
-                //To = (Color)converter.ConvertFromString(damageOutlinedTextBlock.Stroke.ToString()),
-                To = blackBrush,
-                Duration = TimeSpan.FromSeconds(0.1),
-                //AutoReverse = true,
-                //RepeatBehavior = new RepeatBehavior(2),
-            };
-            Storyboard.SetTarget(showColorStrokeAnimation, damageOutlinedTextBlock);
-            Storyboard.SetTargetProperty(showColorStrokeAnimation, new PropertyPath(OutlinedTextBlock.StrokeProperty));
+                fadeInIncreaseSizeFlashColorStoryboard.Children.Add(fadeInAnimation);
 
-            BrushAnimation showColorFillAnimation = new BrushAnimation
-            {
-                From = redBrush,
-                To = originalFillBrush,
-                Duration = TimeSpan.FromSeconds(0.1),
-                //AutoReverse = true,
-                //RepeatBehavior = new RepeatBehavior(2),
-            };
-            Storyboard.SetTarget(showColorFillAnimation, damageOutlinedTextBlock);
-            Storyboard.SetTargetProperty(showColorFillAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
+                if (s.EnableDamageNumbersSize)
+                    fadeInIncreaseSizeFlashColorStoryboard.Children.Add(sizeIncreaseAnimation);
 
-            decreaseSizeShowColorStoryboard.Children.Add(sizeDecreaseAnimation);
-            decreaseSizeShowColorStoryboard.Children.Add(showColorStrokeAnimation);
-            decreaseSizeShowColorStoryboard.Children.Add(showColorFillAnimation);
+                if (s.EnableDamageNumbersFlash)
+                {
+                    fadeInIncreaseSizeFlashColorStoryboard.Children.Add(flashWhiteStrokeAnimation);
+                    fadeInIncreaseSizeFlashColorStoryboard.Children.Add(flashWhiteFillAnimation);
+                }
 
 
-            Storyboard fadeOutStoryboard = new Storyboard();
+                Storyboard decreaseSizeShowColorStoryboard = new Storyboard();
 
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation
-            {
-                From = 1,
-                To = 0,
-                Duration = TimeSpan.FromSeconds(.4),
-            };
+                // Create a DoubleAnimation to animate the label's width
+                DoubleAnimation sizeDecreaseAnimation = new DoubleAnimation
+                {
+                    From = damageOutlinedTextBlock.FontSize * 1.5,
+                    To = damageOutlinedTextBlock.FontSize,
+                    Duration = TimeSpan.FromSeconds(.2),
+                };
+                Storyboard.SetTarget(sizeDecreaseAnimation, damageOutlinedTextBlock);
+                Storyboard.SetTargetProperty(sizeDecreaseAnimation, new PropertyPath(OutlinedTextBlock.FontSizeProperty));
 
-            fadeOutAnimation.BeginTime = TimeSpan.FromSeconds(0.75);
+                BrushAnimation showColorStrokeAnimation = new BrushAnimation
+                {
+                    From = redBrush,
+                    //To = (Color)converter.ConvertFromString(damageOutlinedTextBlock.Stroke.ToString()),
+                    To = blackBrush,
+                    Duration = TimeSpan.FromSeconds(0.05),
+                    //AutoReverse = true,
+                    //RepeatBehavior = new RepeatBehavior(2),
+                };
+                Storyboard.SetTarget(showColorStrokeAnimation, damageOutlinedTextBlock);
+                Storyboard.SetTargetProperty(showColorStrokeAnimation, new PropertyPath(OutlinedTextBlock.StrokeProperty));
 
-            Storyboard.SetTarget(fadeOutAnimation, damageOutlinedTextBlock);
-            Storyboard.SetTargetProperty(fadeOutAnimation, new PropertyPath(Label.OpacityProperty));
+                BrushAnimation showColorFillAnimation = new BrushAnimation
+                {
+                    From = redBrush,
+                    To = originalFillBrush,
+                    Duration = TimeSpan.FromSeconds(0.05),
+                    //AutoReverse = true,
+                    //RepeatBehavior = new RepeatBehavior(2),
+                };
+                Storyboard.SetTarget(showColorFillAnimation, damageOutlinedTextBlock);
+                Storyboard.SetTargetProperty(showColorFillAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
 
-            DoubleAnimation translateUpwardsAnimation = new DoubleAnimation
-            {
-                From = y,
-                To = y - 20,
-                Duration = TimeSpan.FromSeconds(.4),
-            };
+                if (s.EnableDamageNumbersSize)
+                    decreaseSizeShowColorStoryboard.Children.Add(sizeDecreaseAnimation);
 
-            translateUpwardsAnimation.BeginTime = TimeSpan.FromSeconds(0.75);
-
-            Storyboard.SetTarget(translateUpwardsAnimation, damageOutlinedTextBlock);
-            Storyboard.SetTargetProperty(translateUpwardsAnimation, new PropertyPath(Canvas.TopProperty));
-
-            fadeOutStoryboard.Children.Add(fadeOutAnimation);
-            fadeOutStoryboard.Children.Add(translateUpwardsAnimation);
+                if (s.EnableDamageNumbersFlash)
+                {
+                    decreaseSizeShowColorStoryboard.Children.Add(showColorStrokeAnimation);
+                    decreaseSizeShowColorStoryboard.Children.Add(showColorFillAnimation);
+                }
 
 
-            // Set up event handlers to start the next animation in the sequence
-            fadeInIncreaseSizeFlashColorStoryboard.Completed += (s, e) => decreaseSizeShowColorStoryboard.Begin();
-            decreaseSizeShowColorStoryboard.Completed += (s, e) => fadeOutStoryboard.Begin();
-            fadeOutAnimation.Completed += (s, e) => DamageNumbers.Children.Remove(damageOutlinedTextBlock);
+                Storyboard fadeOutStoryboard = new Storyboard();
 
-            // Start the first animation
-            fadeInIncreaseSizeFlashColorStoryboard.Begin();
+                DoubleAnimation fadeOutAnimation = new DoubleAnimation
+                {
+                    From = 1,
+                    To = 0,
+                    Duration = TimeSpan.FromSeconds(.4),
+                };
 
-            //RemoveDamageNumberLabel(damageLabel);
+                fadeOutAnimation.BeginTime = TimeSpan.FromSeconds(0.75);
+
+                Storyboard.SetTarget(fadeOutAnimation, damageOutlinedTextBlock);
+                Storyboard.SetTargetProperty(fadeOutAnimation, new PropertyPath(Label.OpacityProperty));
+
+                DoubleAnimation translateUpwardsAnimation = new DoubleAnimation
+                {
+                    From = y,
+                    To = y - 20,
+                    Duration = TimeSpan.FromSeconds(.4),
+                };
+
+                translateUpwardsAnimation.BeginTime = TimeSpan.FromSeconds(0.75);
+
+                Storyboard.SetTarget(translateUpwardsAnimation, damageOutlinedTextBlock);
+                Storyboard.SetTargetProperty(translateUpwardsAnimation, new PropertyPath(Canvas.TopProperty));
+
+                fadeOutStoryboard.Children.Add(fadeOutAnimation);
+                fadeOutStoryboard.Children.Add(translateUpwardsAnimation);
+
+
+                // Set up event handlers to start the next animation in the sequence
+                fadeInIncreaseSizeFlashColorStoryboard.Completed += (s, e) => decreaseSizeShowColorStoryboard.Begin();
+                decreaseSizeShowColorStoryboard.Completed += (s, e) => fadeOutStoryboard.Begin();
+                fadeOutAnimation.Completed += (s, e) => DamageNumbers.Children.Remove(damageOutlinedTextBlock);
+
+                // Start the first animation
+                fadeInIncreaseSizeFlashColorStoryboard.Begin();
+            }
         }
 
         /// <summary>
         /// Removes the damage number label.
         /// </summary>
         /// <param name="tb">The tb.</param>
-        private void RemoveDamageNumberLabel(Label tb)
+        private void RemoveDamageNumberLabel(OutlinedTextBlock tb)
         {
             DispatcherTimer timer = new();
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 1200);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             //memory leak?
             timer.Tick += (o, e) => { DamageNumbers.Children.Remove(tb); };
             timer.Start();

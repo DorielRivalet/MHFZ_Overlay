@@ -461,7 +461,10 @@
     <Setting Name="EnableLowestMonsterDefrateColor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="EnableDamageNumbersEffects" Type="System.Boolean" Scope="User">
+    <Setting Name="EnableDamageNumbersSize" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableDamageNumbersFlash" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
