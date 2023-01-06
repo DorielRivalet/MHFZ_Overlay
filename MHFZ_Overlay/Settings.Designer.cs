@@ -1883,5 +1883,17 @@ namespace MHFZ_Overlay {
                 this["EnableDamageNumbersFlash"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableQuestPaceColor {
+            get {
+                return ((bool)(this["EnableQuestPaceColor"]));
+            }
+            set {
+                this["EnableQuestPaceColor"] = value;
+            }
+        }
     }
 }

@@ -1433,6 +1433,15 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
+        public static bool ShowQuestPaceColor()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableQuestPaceColor)
+                return true;
+            else
+                return false;
+        }
+
         public static bool ShowHighestMonsterAttackMultiplierColor()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -1466,7 +1475,27 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                if (DPS+10 >= HighestDPS && ShowHighestDPSColor())
+                if (DPS + 10 >= HighestDPS && ShowHighestDPSColor())
+                    return "#f38ba8";
+                else
+                    return "#f5e0dc";
+            }
+        }
+
+        public string isOnPace
+        {
+            get
+            {
+                if (TimeDefInt() == 0 || int.Parse(Monster1MaxHP) <= 1)
+                    return "#f5e0dc";
+
+                if ((float)int.Parse(Monster1MaxHP) < Monster1HPInt() || (float)TimeDefInt() < TimeInt())
+                    return "#f5e0dc";
+
+                var timePercent = (float)TimeInt() / TimeDefInt() * 100.0;
+                var monster1HPPercent = (float)Monster1HPInt() / int.Parse(Monster1MaxHP) * 100.0;
+
+                if (timePercent >= monster1HPPercent && ShowQuestPaceColor())
                     return "#f38ba8";
                 else
                     return "#f5e0dc";
