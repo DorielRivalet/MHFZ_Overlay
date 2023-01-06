@@ -657,6 +657,51 @@ namespace MHFZ_Overlay.addresses
         abstract public uint GSRP();
         abstract public uint GRP();
 
+        abstract public int HunterHP();
+        abstract public int HunterStamina();
+
+        abstract public int QuestItemsUsed();
+        abstract public int AreaHitsTakenBlocked();
+
+        abstract public int PartnyaBagItem1ID();
+        abstract public int PartnyaBagItem1Qty();
+
+        abstract public int PartnyaBagItem2ID();
+
+        abstract public int PartnyaBagItem2Qty();
+
+        abstract public int PartnyaBagItem3ID();
+
+        abstract public int PartnyaBagItem3Qty();
+
+        abstract public int PartnyaBagItem4ID();
+
+        abstract public int PartnyaBagItem4Qty();
+
+        abstract public int PartnyaBagItem5ID();
+
+        abstract public int PartnyaBagItem5Qty();
+
+        abstract public int PartnyaBagItem6ID();
+
+        abstract public int PartnyaBagItem6Qty();
+
+        abstract public int PartnyaBagItem7ID();
+
+        abstract public int PartnyaBagItem7Qty();
+
+        abstract public int PartnyaBagItem8ID();
+
+        abstract public int PartnyaBagItem8Qty();
+
+        abstract public int PartnyaBagItem9ID();
+
+        abstract public int PartnyaBagItem9Qty();
+
+        abstract public int PartnyaBagItem10ID();
+
+        abstract public int PartnyaBagItem10Qty();
+
 
         #endregion
 
@@ -1468,10 +1513,6 @@ namespace MHFZ_Overlay.addresses
 
         public string MonsterAttackMultiplierIcon { get; set; } = "UI/Icons/png/dure_attack.png";
         public string MonsterDefrateIcon { get; set; } = "UI/Icons/png/dure_defense.png";
-
-
-        // TODO red icons when monster defrate is the lowest
-        // and attack is highest
 
         ///<summary>
         ///<para>Player true raw</para>
@@ -8144,15 +8185,9 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public static double GetPlayerAttackValue()
-        {
-            //var dl = new DataLoader();
-            //return dl.model.WeaponRaw();
-            return 0;
-        }
-
         #region graphs
 
+        // TODO
         public ISeries[] PlayerAttackSeries { get; set; }
            = new ISeries[]
            {
@@ -8162,12 +8197,6 @@ namespace MHFZ_Overlay.addresses
                     Fill = null
                 }
            };
-
-        private double[] ReadPlayerAttack()
-        {
-            // TODO: implement code to read the memory address and return the current player attack value
-            return new double[]{ GetPlayerAttackValue() };
-        }
 
         #endregion
 
@@ -8476,7 +8505,6 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        // TODO: change when loading into quest
         public int PouchItem1IDAtQuestStart = 0;
         public int PouchItem2IDAtQuestStart = 0;
         public int PouchItem3IDAtQuestStart = 0;
@@ -8602,7 +8630,7 @@ namespace MHFZ_Overlay.addresses
         public Dictionary<int, int> hitCountDictionary = new Dictionary<int, int>();
         public Dictionary<int, int> hitCountDictionaryDeserealized;
 
-        // same but the second int is the damage dealt when hitting monster. a new entry is added every 1 second.
+        // same but the second int is the damage dealt when hitting monster.
         public Dictionary<int, int> damageDealtDictionary = new Dictionary<int, int>();
         public Dictionary<int, int> damageDealtDictionaryDeserealized;
 
@@ -8633,7 +8661,6 @@ namespace MHFZ_Overlay.addresses
         //} 
         //}
 
-        // TODO
         public double CalculateDPS()
         {
             // Check if the damageDealtDictionary is empty
@@ -8671,6 +8698,18 @@ namespace MHFZ_Overlay.addresses
         public Dictionary<int, Dictionary<int, int>> monster3HPDictionaryDeserealized;
         public Dictionary<int, Dictionary<int, int>> monster4HPDictionaryDeserealized;
 
+        // time, itemid, itemquantity
+        // can calculate itemuse by counting rows
+        public Dictionary<int, Dictionary<List<int>, List<int>>> playerInventoryDictionary = new Dictionary<int, Dictionary<List<int>, List<int>>>();
+
+        public Dictionary<int, Dictionary<List<int>, List<int>>> playerAmmoPouchDictionary = new Dictionary<int, Dictionary<List<int>, List<int>>>();
+
+        public Dictionary<int, Dictionary<List<int>, List<int>>> partnyaBagDictionary = new Dictionary<int, Dictionary<List<int>, List<int>>>();
+
+        // time, areaid, hitstakenblocked
+        // can calculate total hits by area by checking areaid, or in total by all sum.
+        public Dictionary<int,Dictionary<int,int>> hitsTakenBlockedDictionary = new Dictionary<int, Dictionary<int, int>>();
+        
         // Initialize the damageDealt and timeElapsed variables to 0
         //int damageDealt = 0;
         //int timeElapsed = 0;
@@ -8697,6 +8736,14 @@ namespace MHFZ_Overlay.addresses
         public int previousMonster3HP = 0;
 
         public int previousMonster4HP = 0;
+
+        public int previousTotalInventoryItems = 0;
+
+        public int previousTotalAmmo = 0;
+
+        public int previousTotalPartnyaItems = 0;
+
+        public int previousHitsTakenBlocked = 0;
 
         public void InsertQuestInfoIntoDictionaries()
         {
@@ -8765,6 +8812,169 @@ namespace MHFZ_Overlay.addresses
                 monster4HPDictionaryMonsterInfo.Add(LargeMonster4ID(), Monster4HPInt());
                 monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
             }
+
+            //inventory
+            int inventorySum = 0;
+            if (playerInventoryDictionary.Values.Any())
+            {
+                // Get the last inserted dictionary
+                var lastInsertedDictionary = playerInventoryDictionary.Values.Last();
+                // Get the last inserted list
+                var lastInsertedList = lastInsertedDictionary.Values.Last();
+                // Sum the values in the list
+                inventorySum = lastInsertedList.Sum();
+            }
+
+            if (previousTotalInventoryItems != inventorySum)
+            {
+                previousTotalInventoryItems = inventorySum;
+                Dictionary<List<int>, List<int>> itemIDsQuantityList = new Dictionary<List<int>,List<int>>();
+                itemIDsQuantityList.Add(
+                    new List<int>() {
+                        PouchItem1ID(),
+                        PouchItem2ID(),
+                        PouchItem3ID(),
+                        PouchItem4ID(),
+                        PouchItem5ID(),
+                        PouchItem6ID(),
+                        PouchItem7ID(),
+                        PouchItem8ID(),
+                        PouchItem9ID(),
+                        PouchItem10ID(),
+                        PouchItem11ID(),
+                        PouchItem12ID(),
+                        PouchItem13ID(),
+                        PouchItem14ID(),
+                        PouchItem15ID(),
+                        PouchItem16ID(),
+                        PouchItem17ID(),
+                        PouchItem18ID(),
+                        PouchItem19ID(),
+                        PouchItem20ID()
+                    },
+                    new List<int>()
+                    {
+                        PouchItem1Qty(),
+                        PouchItem2Qty(),
+                        PouchItem3Qty(),
+                        PouchItem4Qty(),
+                        PouchItem5Qty(),
+                        PouchItem6Qty(),
+                        PouchItem7Qty(),
+                        PouchItem8Qty(),
+                        PouchItem9Qty(),
+                        PouchItem10Qty(),
+                        PouchItem11Qty(),
+                        PouchItem12Qty(),
+                        PouchItem13Qty(),
+                        PouchItem14Qty(),
+                        PouchItem15Qty(),
+                        PouchItem16Qty(),
+                        PouchItem17Qty(),
+                        PouchItem18Qty(),
+                        PouchItem19Qty(),
+                        PouchItem20Qty()
+                    });
+                playerInventoryDictionary.Add(TimeInt(), itemIDsQuantityList);
+            }
+
+            //ammo
+            int ammoSum = 0;
+            if (playerAmmoPouchDictionary.Values.Any())
+            {
+                // Get the last inserted dictionary
+                var lastInsertedDictionary = playerAmmoPouchDictionary.Values.Last();
+                // Get the last inserted list
+                var lastInsertedList = lastInsertedDictionary.Values.Last();
+                // Sum the values in the list
+                ammoSum = lastInsertedList.Sum();
+            }
+
+            if (previousTotalAmmo != ammoSum)
+            {
+                previousTotalAmmo = ammoSum;
+                Dictionary<List<int>, List<int>> itemIDsQuantityList = new Dictionary<List<int>, List<int>>();
+                itemIDsQuantityList.Add(
+                    new List<int>() {
+                        AmmoPouchItem1ID(),
+                        AmmoPouchItem2ID(),
+                        AmmoPouchItem3ID(),
+                        AmmoPouchItem4ID(),
+                        AmmoPouchItem5ID(),
+                        AmmoPouchItem6ID(),
+                        AmmoPouchItem7ID(),
+                        AmmoPouchItem8ID(),
+                        AmmoPouchItem9ID(),
+                        AmmoPouchItem10ID()
+                    },
+                    new List<int>()
+                    {
+                        AmmoPouchItem1Qty(),
+                        AmmoPouchItem2Qty(),
+                        AmmoPouchItem3Qty(),
+                        AmmoPouchItem4Qty(),
+                        AmmoPouchItem5Qty(),
+                        AmmoPouchItem6Qty(),
+                        AmmoPouchItem7Qty(),
+                        AmmoPouchItem8Qty(),
+                        AmmoPouchItem9Qty(),
+                        AmmoPouchItem10Qty()
+                    });
+                playerAmmoPouchDictionary.Add(TimeInt(), itemIDsQuantityList);
+            }
+
+            //partnya bag
+            int partnyaBagSum = 0;
+            if (partnyaBagDictionary.Values.Any())
+            {
+                // Get the last inserted dictionary
+                var lastInsertedDictionary = partnyaBagDictionary.Values.Last();
+                // Get the last inserted list
+                var lastInsertedList = lastInsertedDictionary.Values.Last();
+                // Sum the values in the list
+                partnyaBagSum = lastInsertedList.Sum();
+            }
+
+            if (previousTotalPartnyaItems != partnyaBagSum)
+            {
+                previousTotalPartnyaItems = partnyaBagSum;
+                Dictionary<List<int>, List<int>> itemIDsQuantityList = new Dictionary<List<int>, List<int>>();
+                itemIDsQuantityList.Add(
+                    new List<int>() {
+                        PartnyaBagItem1ID(),
+                        PartnyaBagItem2ID(),
+                        PartnyaBagItem3ID(),
+                        PartnyaBagItem4ID(),
+                        PartnyaBagItem5ID(),
+                        PartnyaBagItem6ID(),
+                        PartnyaBagItem7ID(),
+                        PartnyaBagItem8ID(),
+                        PartnyaBagItem9ID(),
+                        PartnyaBagItem10ID()
+                    },
+                    new List<int>()
+                    {
+                        PartnyaBagItem1Qty(),
+                        PartnyaBagItem2Qty(),
+                        PartnyaBagItem3Qty(),
+                        PartnyaBagItem4Qty(),
+                        PartnyaBagItem5Qty(),
+                        PartnyaBagItem6Qty(),
+                        PartnyaBagItem7Qty(),
+                        PartnyaBagItem8Qty(),
+                        PartnyaBagItem9Qty(),
+                        PartnyaBagItem10Qty()
+                    });
+                partnyaBagDictionary.Add(TimeInt(), itemIDsQuantityList);
+            }
+
+            if (previousHitsTakenBlocked != AreaHitsTakenBlocked())
+            {
+                previousHitsTakenBlocked = AreaHitsTakenBlocked();
+                Dictionary<int,int> hitsAreaPairs = new Dictionary<int, int>();
+                hitsAreaPairs.Add(AreaHitsTakenBlocked(), AreaID());
+                hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
+            }
         }
 
         public void resetQuestInfoVariables()
@@ -8831,6 +9041,7 @@ namespace MHFZ_Overlay.addresses
             AmmoPouchItem9QuantityAtQuestStart = 0;
             AmmoPouchItem10QuantityAtQuestStart = 0;
 
+            // are these needed?
             DPS = 0;
             HighestDPS = 0;
 
@@ -8843,6 +9054,10 @@ namespace MHFZ_Overlay.addresses
             previousMonster2HP = 0;
             previousMonster3HP = 0;
             previousMonster4HP = 0;
+            previousTotalInventoryItems = 0;
+            previousTotalAmmo = 0;
+            previousTotalPartnyaItems = 0;
+            previousHitsTakenBlocked = 0;
         }
 
         public void clearQuestInfoDictionaries()
@@ -8857,6 +9072,10 @@ namespace MHFZ_Overlay.addresses
             monster2HPDictionary.Clear();
             monster3HPDictionary.Clear();
             monster4HPDictionary.Clear();
+            playerInventoryDictionary.Clear();
+            playerAmmoPouchDictionary.Clear();
+            partnyaBagDictionary.Clear();
+            hitsTakenBlockedDictionary.Clear();
         }
 
 

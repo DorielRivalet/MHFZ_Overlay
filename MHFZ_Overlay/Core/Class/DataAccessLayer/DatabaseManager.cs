@@ -274,6 +274,7 @@ namespace MHFZ_Overlay
                         Monster2HPDictionary,
                         Monster3HPDictionary,
                         Monster4HPDictionary,
+                        HitsTakenBlockedDictionary,
                         PartySize,
                         OverlayMode
                         ) VALUES (
@@ -301,6 +302,7 @@ namespace MHFZ_Overlay
                         @Monster2HPDictionary,
                         @Monster3HPDictionary,
                         @Monster4HPDictionary,
+                        @HitsTakenBlockedDictionary,
                         @PartySize,
                         @OverlayMode
                         )";
@@ -384,6 +386,7 @@ namespace MHFZ_Overlay
                             Dictionary<int, Dictionary<int, int>> monster2HPDictionary = dataLoader.model.monster2HPDictionary;
                             Dictionary<int, Dictionary<int, int>> monster3HPDictionary = dataLoader.model.monster3HPDictionary;
                             Dictionary<int, Dictionary<int, int>> monster4HPDictionary = dataLoader.model.monster4HPDictionary;
+                            Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = dataLoader.model.hitsTakenBlockedDictionary;
                             int partySize = dataLoader.model.PartySize();
                             string overlayMode = dataLoader.model.GetOverlayMode();
                             overlayMode = overlayMode.Replace("(", "");
@@ -399,12 +402,12 @@ namespace MHFZ_Overlay
                             //                    SELECT LAST_INSERT_ROWID() as ZenithSkillsID;
 
                             string questData = string.Format(
-                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}",
-                                runID, createdAt, createdBy, questID,
-                                finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
-                                starGrade, rankName, objectiveName, date, attackBuffDictionary,
-                                hitCountDictionary, damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary, cartsDictionary,
-                                monster1HPDictionary, monster2HPDictionary, monster3HPDictionary, monster4HPDictionary, partySize,
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}",
+                                runID, createdAt, createdBy, questID, finalTimeValue, 
+                                finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity, starGrade, 
+                                rankName, objectiveName, date, attackBuffDictionary, hitCountDictionary, 
+                                damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary, cartsDictionary, monster1HPDictionary, 
+                                monster2HPDictionary, monster3HPDictionary, monster4HPDictionary, hitsTakenBlockedDictionary, partySize, 
                                 overlayMode
                                 );
 
@@ -435,6 +438,7 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@Monster2HPDictionary", JsonConvert.SerializeObject(monster2HPDictionary));
                             cmd.Parameters.AddWithValue("@Monster3HPDictionary", JsonConvert.SerializeObject(monster3HPDictionary));
                             cmd.Parameters.AddWithValue("@Monster4HPDictionary", JsonConvert.SerializeObject(monster4HPDictionary));
+                            cmd.Parameters.AddWithValue("@HitsTakenBlockedDictionary", hitsTakenBlockedDictionary);
                             cmd.Parameters.AddWithValue("@PartySize", partySize);
                             cmd.Parameters.AddWithValue("@OverlayMode", overlayMode);
 
@@ -1285,6 +1289,10 @@ namespace MHFZ_Overlay
                                 break;
                         }
 
+                        Dictionary<int, Dictionary<List<int>,List<int>>> playerInventoryDictionary = dataLoader.model.playerInventoryDictionary;
+                        Dictionary<int, Dictionary<List<int>, List<int>>> playerAmmoPouchDictionary = dataLoader.model.playerAmmoPouchDictionary;
+                        Dictionary<int, Dictionary<List<int>, List<int>>> partnyaBagDictionary = dataLoader.model.partnyaBagDictionary;
+
                         string insertSql = @"INSERT INTO PlayerGear (
                         PlayerGearHash,
                         CreatedAt,
@@ -1334,7 +1342,10 @@ namespace MHFZ_Overlay
                         PlayerInventoryID,-- INTEGER NOT NULL,
                         AmmoPouchID,-- INTEGER NOT NULL,
                         PoogieItemID,-- INTEGER NOT NULL,
-                        RoadDureSkillsID-- INTEGER NOT NULL,
+                        RoadDureSkillsID,-- INTEGER NOT NULL,
+                        PlayerInventoryDictionary,-- TEXT NOT NULL,
+                        PlayerAmmoPouchDictionary,-- TEXT NOT NULL,
+                        PartnyaBagDictionary-- TEXT NOT NULL,
                         ) VALUES (
                         @PlayerGearHash,
                         @CreatedAt,
@@ -1384,27 +1395,27 @@ namespace MHFZ_Overlay
                         @PlayerInventoryID,-- INTEGER NOT NULL,
                         @AmmoPouchID,-- INTEGER NOT NULL,
                         @PoogieItemID,-- INTEGER NOT NULL,
-                        @RoadDureSkillsID-- INTEGER NOT NULL,
+                        @RoadDureSkillsID,-- INTEGER NOT NULL,
+                        @PlayerInventoryDictionary,-- TEXT NOT NULL,
+                        @PlayerAmmoPouchDictionary,-- TEXT NOT NULL,
+                        @PartnyaBagDictionary-- TEXT NOT NULL,
                         )";
 
                         string playerGearData = string.Format(
-                            "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}",
-                            createdAt, createdBy, runID,
-                            playerID, gearName, styleID,
-                            weaponIconID, weaponClassID, weaponTypeID,
-                            blademasterWeaponID, gunnerWeaponID, weaponSlot1,
-                            weaponSlot2, weaponSlot3, headID,
-                            headSlot1, headSlot2, headSlot3,
-                            chestID, chestSlot1, chestSlot2,
-                            chestSlot3, armsID, armsSlot1,
-                            armsSlot2, armsSlot3, waistID,
-                            waistSlot1, waistSlot2, waistSlot3,
-                            legsID, legsSlot1, legsSlot2,
-                            legsSlot3, cuffSlot1, cuffSlot2,
-                            zenithSkillsID, automaticSkillsID, activeSkillsID,
-                            caravanSkillsID, divaSkillID, guildFoodID,
-                            styleRankSkillsID, playerInventoryID, ammoPouchID,
-                            poogieItemID, roadDureSkillsID
+                            "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}{47}{48}{49}",
+                            createdAt, createdBy, runID, playerID, 
+                            gearName, styleID, weaponIconID, weaponClassID,
+                            weaponTypeID, blademasterWeaponID, gunnerWeaponID, weaponSlot1,
+                            weaponSlot2, weaponSlot3, headID, headSlot1, 
+                            headSlot2, headSlot3, chestID, chestSlot1, 
+                            chestSlot2, chestSlot3, armsID, armsSlot1, 
+                            armsSlot2, armsSlot3, waistID, waistSlot1, 
+                            waistSlot2, waistSlot3, legsID, legsSlot1, 
+                            legsSlot2, legsSlot3, cuffSlot1, cuffSlot2, 
+                            zenithSkillsID, automaticSkillsID, activeSkillsID, caravanSkillsID, 
+                            divaSkillID, guildFoodID, styleRankSkillsID, playerInventoryID, 
+                            ammoPouchID, poogieItemID, roadDureSkillsID, playerInventoryDictionary,
+                            playerAmmoPouchDictionary, partnyaBagDictionary
                             );
                         string playerGearHash = CalculateStringHash(playerGearData);
 
@@ -1472,6 +1483,9 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@AmmoPouchID", ammoPouchID);
                             cmd.Parameters.AddWithValue("@PoogieItemID", poogieItemID);
                             cmd.Parameters.AddWithValue("@RoadDureSkillsID", roadDureSkillsID);
+                            cmd.Parameters.AddWithValue("@PlayerInventoryDictionary", playerInventoryDictionary);
+                            cmd.Parameters.AddWithValue("@PlayerAmmoPouchDictionary", playerAmmoPouchDictionary);
+                            cmd.Parameters.AddWithValue("@PartnyaBagDictionary", partnyaBagDictionary);
 
                             // Execute the stored procedure
                             cmd.ExecuteNonQuery();
@@ -2547,6 +2561,7 @@ namespace MHFZ_Overlay
                     Monster2HPDictionary TEXT NOT NULL,
                     Monster3HPDictionary TEXT NOT NULL,
                     Monster4HPDictionary TEXT NOT NULL,
+                    HitsTakenBlockedDictionary TEXT NOT NULL,
                     PartySize INTEGER NOT NULL,
                     OverlayMode TEXT NOT NULL,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
@@ -2842,6 +2857,9 @@ namespace MHFZ_Overlay
                     AmmoPouchID INTEGER NOT NULL,
                     PoogieItemID INTEGER NOT NULL,
                     RoadDureSkillsID INTEGER NOT NULL,
+                    PlayerInventoryDictionary TEXT NOT NULL,
+                    PlayerAmmoPouchDictionary TEXT NOT NULL,
+                    PartnyaBagDictionary TEXT NOT NULL,
                     FOREIGN KEY(RunID) REFERENCES Quests(RunID),
                     FOREIGN KEY(PlayerID) REFERENCES Players(PlayerID),
                     FOREIGN KEY(StyleID) REFERENCES WeaponStyles(StyleID),

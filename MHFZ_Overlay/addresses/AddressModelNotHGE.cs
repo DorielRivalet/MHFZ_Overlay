@@ -1,4 +1,6 @@
 ﻿using Memory;
+using System;
+using System.Windows.Media.Animation;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -606,6 +608,51 @@ namespace MHFZ_Overlay.addresses
 
         public override uint GSRP() => (uint)M.ReadInt("mhfo.dll+61041C8");
         public override uint GRP() => (uint)M.ReadInt("mhfo.dll+5BC82F8");
+
+        public override int HunterHP() => M.Read2Byte("mhfo.dll+5BC6548");
+        public override int HunterStamina() => M.Read2Byte("mhfo.dll+503438C");
+        public override int QuestItemsUsed() => M.Read2Byte("mhfo.dll+57EAE24");
+        public override int AreaHitsTakenBlocked() => M.Read2Byte("mhfo.dll+5034078");
+
+        // TODO Untested
+        public override int PartnyaBagItem1ID() => M.Read2Byte("mhfo.dll+5745788");
+        public override int PartnyaBagItem1Qty() => M.Read2Byte("mhfo.dll+574578A");
+
+        public override int PartnyaBagItem2ID() => M.Read2Byte("mhfo.dll+574578C");
+
+        public override int PartnyaBagItem2Qty() => M.Read2Byte("mhfo.dll+574578E");
+
+        public override int PartnyaBagItem3ID() => M.Read2Byte("mhfo.dll+5745790");
+
+        public override int PartnyaBagItem3Qty() => M.Read2Byte("mhfo.dll+5745792");
+
+        public override int PartnyaBagItem4ID() => M.Read2Byte("mhfo.dll+5745794");
+
+        public override int PartnyaBagItem4Qty() => M.Read2Byte("mhfo.dll+5745796");
+
+        public override int PartnyaBagItem5ID() => M.Read2Byte("mhfo.dll+5745798");
+
+        public override int PartnyaBagItem5Qty() => M.Read2Byte("mhfo.dll+574579A");
+
+        public override int PartnyaBagItem6ID() => M.Read2Byte("mhfo.dll+574579C");
+
+        public override int PartnyaBagItem6Qty() => M.Read2Byte("mhfo.dll+574579E");
+
+        public override int PartnyaBagItem7ID() => M.Read2Byte("mhfo.dll+57457A0");
+
+        public override int PartnyaBagItem7Qty() => M.Read2Byte("mhfo.dll+57457A2");
+
+        public override int PartnyaBagItem8ID() => M.Read2Byte("mhfo.dll+57457A4");
+
+        public override int PartnyaBagItem8Qty() => M.Read2Byte("mhfo.dll+57457A6");
+
+        public override int PartnyaBagItem9ID() => M.Read2Byte("mhfo.dll+57457A8");
+
+        public override int PartnyaBagItem9Qty() => M.Read2Byte("mhfo.dll+57457AA");
+
+        public override int PartnyaBagItem10ID() => M.Read2Byte("mhfo.dll+57457AC");
+
+        public override int PartnyaBagItem10Qty() => M.Read2Byte("mhfo.dll+57457AE");
 
     }
 }

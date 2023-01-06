@@ -311,7 +311,7 @@ namespace Dictionary
             {299, "Artillery God"},
             {300, "Pressure Large"},
             {301, "Capture Guru"},
-            {302, "Focus+2"},
+            {302, "Focus+2"},// TODO why is this before focus+1?
             {303, "Focus+1"},
             {304, "Distraction"},
             {305, "SnS Tech 【Sword Saint】"},
