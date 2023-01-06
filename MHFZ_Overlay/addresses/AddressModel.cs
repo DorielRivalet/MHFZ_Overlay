@@ -8709,7 +8709,11 @@ namespace MHFZ_Overlay.addresses
         // time, areaid, hitstakenblocked
         // can calculate total hits by area by checking areaid, or in total by all sum.
         public Dictionary<int,Dictionary<int,int>> hitsTakenBlockedDictionary = new Dictionary<int, Dictionary<int, int>>();
-        
+
+        public Dictionary<int, int> playerHPDictionary = new Dictionary<int, int>();
+        public Dictionary<int, int> playerStaminaDictionary = new Dictionary<int, int>();
+
+
         // Initialize the damageDealt and timeElapsed variables to 0
         //int damageDealt = 0;
         //int timeElapsed = 0;
@@ -8744,6 +8748,9 @@ namespace MHFZ_Overlay.addresses
         public int previousTotalPartnyaItems = 0;
 
         public int previousHitsTakenBlocked = 0;
+
+        public int previousPlayerHP = 0;
+        public int previousPlayerStamina = 0;
 
         public void InsertQuestInfoIntoDictionaries()
         {
@@ -8975,6 +8982,18 @@ namespace MHFZ_Overlay.addresses
                 hitsAreaPairs.Add(AreaHitsTakenBlocked(), AreaID());
                 hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
             }
+
+            if (previousPlayerHP != HunterHP())
+            {
+                previousPlayerHP = HunterHP();
+                playerHPDictionary.Add(TimeInt(), HunterHP());
+            }
+
+            if (previousPlayerStamina != HunterStamina())
+            {
+                previousPlayerStamina = HunterStamina();
+                playerStaminaDictionary.Add(TimeInt(), HunterStamina());
+            }
         }
 
         public void resetQuestInfoVariables()
@@ -9058,6 +9077,8 @@ namespace MHFZ_Overlay.addresses
             previousTotalAmmo = 0;
             previousTotalPartnyaItems = 0;
             previousHitsTakenBlocked = 0;
+            previousPlayerHP = 0;
+            previousPlayerStamina = 0;
         }
 
         public void clearQuestInfoDictionaries()
@@ -9076,6 +9097,8 @@ namespace MHFZ_Overlay.addresses
             playerAmmoPouchDictionary.Clear();
             partnyaBagDictionary.Clear();
             hitsTakenBlockedDictionary.Clear();
+            playerHPDictionary.Clear();
+            playerStaminaDictionary.Clear();
         }
 
 

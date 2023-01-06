@@ -275,6 +275,8 @@ namespace MHFZ_Overlay
                         Monster3HPDictionary,
                         Monster4HPDictionary,
                         HitsTakenBlockedDictionary,
+                        PlayerHPDictionary,
+                        PlayerStaminaDictionary,
                         PartySize,
                         OverlayMode
                         ) VALUES (
@@ -303,6 +305,8 @@ namespace MHFZ_Overlay
                         @Monster3HPDictionary,
                         @Monster4HPDictionary,
                         @HitsTakenBlockedDictionary,
+                        @PlayerHPDictionary,
+                        @PlayerStaminaDictionary,
                         @PartySize,
                         @OverlayMode
                         )";
@@ -387,6 +391,8 @@ namespace MHFZ_Overlay
                             Dictionary<int, Dictionary<int, int>> monster3HPDictionary = dataLoader.model.monster3HPDictionary;
                             Dictionary<int, Dictionary<int, int>> monster4HPDictionary = dataLoader.model.monster4HPDictionary;
                             Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = dataLoader.model.hitsTakenBlockedDictionary;
+                            Dictionary<int, int> playerHPDictionary = dataLoader.model.playerHPDictionary;
+                            Dictionary<int, int> playerStaminaDictionary = dataLoader.model.playerStaminaDictionary;
                             int partySize = dataLoader.model.PartySize();
                             string overlayMode = dataLoader.model.GetOverlayMode();
                             overlayMode = overlayMode.Replace("(", "");
@@ -402,13 +408,13 @@ namespace MHFZ_Overlay
                             //                    SELECT LAST_INSERT_ROWID() as ZenithSkillsID;
 
                             string questData = string.Format(
-                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}",
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}",
                                 runID, createdAt, createdBy, questID, finalTimeValue, 
                                 finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity, starGrade, 
                                 rankName, objectiveName, date, attackBuffDictionary, hitCountDictionary, 
                                 damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary, cartsDictionary, monster1HPDictionary, 
-                                monster2HPDictionary, monster3HPDictionary, monster4HPDictionary, hitsTakenBlockedDictionary, partySize, 
-                                overlayMode
+                                monster2HPDictionary, monster3HPDictionary, monster4HPDictionary, hitsTakenBlockedDictionary,
+                                playerHPDictionary, playerStaminaDictionary, partySize, overlayMode
                                 );
 
                             // Calculate the hash value for the data in the row
@@ -439,6 +445,8 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@Monster3HPDictionary", JsonConvert.SerializeObject(monster3HPDictionary));
                             cmd.Parameters.AddWithValue("@Monster4HPDictionary", JsonConvert.SerializeObject(monster4HPDictionary));
                             cmd.Parameters.AddWithValue("@HitsTakenBlockedDictionary", hitsTakenBlockedDictionary);
+                            cmd.Parameters.AddWithValue("@PlayerHPDictionary", playerHPDictionary);
+                            cmd.Parameters.AddWithValue("@PlayerStaminaDictionary", playerStaminaDictionary);
                             cmd.Parameters.AddWithValue("@PartySize", partySize);
                             cmd.Parameters.AddWithValue("@OverlayMode", overlayMode);
 
@@ -2562,6 +2570,8 @@ namespace MHFZ_Overlay
                     Monster3HPDictionary TEXT NOT NULL,
                     Monster4HPDictionary TEXT NOT NULL,
                     HitsTakenBlockedDictionary TEXT NOT NULL,
+                    PlayerHPDictionary TEXT NOT NULL,
+                    PlayerStaminaDictionary TEXT NOT NULL,
                     PartySize INTEGER NOT NULL,
                     OverlayMode TEXT NOT NULL,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
@@ -3267,49 +3277,6 @@ namespace MHFZ_Overlay
                     CreatedAt DATETIME NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     AmmoPouchID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    RunID INTEGER NOT NULL,
-                    Item1ID INTEGER NOT NULL CHECK (Item1ID >= 0), 
-                    Item1Quantity INTEGER NOT NULL,
-                    Item2ID INTEGER NOT NULL CHECK (Item2ID >= 0), 
-                    Item2Quantity INTEGER NOT NULL,
-                    Item3ID INTEGER NOT NULL CHECK (Item3ID >= 0), 
-                    Item3Quantity INTEGER NOT NULL,
-                    Item4ID INTEGER NOT NULL CHECK (Item4ID >= 0), 
-                    Item4Quantity INTEGER NOT NULL,
-                    Item5ID INTEGER NOT NULL CHECK (Item5ID >= 0), 
-                    Item5Quantity INTEGER NOT NULL,
-                    Item6ID INTEGER NOT NULL CHECK (Item6ID >= 0), 
-                    Item6Quantity INTEGER NOT NULL,
-                    Item7ID INTEGER NOT NULL CHECK (Item7ID >= 0), 
-                    Item7Quantity INTEGER NOT NULL,
-                    Item8ID INTEGER NOT NULL CHECK (Item8ID >= 0), 
-                    Item8Quantity INTEGER NOT NULL,
-                    Item9ID INTEGER NOT NULL CHECK (Item9ID >= 0), 
-                    Item9Quantity INTEGER NOT NULL,
-                    Item10ID INTEGER NOT NULL CHECK (Item10ID >= 0), 
-                    Item10Quantity INTEGER NOT NULL,
-                    FOREIGN KEY(RunID) REFERENCES Quests(RunID),
-                    FOREIGN KEY(Item1ID) REFERENCES Item(ItemID),
-                    FOREIGN KEY(Item2ID) REFERENCES Item(ItemID),
-                    FOREIGN KEY(Item3ID) REFERENCES Item(ItemID),
-                    FOREIGN KEY(Item4ID) REFERENCES Item(ItemID),
-                    FOREIGN KEY(Item5ID) REFERENCES Item(ItemID),
-                    FOREIGN KEY(Item6ID) REFERENCES Item(ItemID),
-                    FOREIGN KEY(Item7ID) REFERENCES Item(ItemID),
-                    FOREIGN KEY(Item8ID) REFERENCES Item(ItemID),
-                    FOREIGN KEY(Item9ID) REFERENCES Item(ItemID),
-                    FOREIGN KEY(Item10ID) REFERENCES Item(ItemID)
-                    )";
-                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    // TODO: addresses
-                    sql = @"CREATE TABLE IF NOT EXISTS PartnyaBag (
-                    CreatedAt DATETIME NOT NULL,
-                    CreatedBy TEXT NOT NULL,
-                    PartnyaBagID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
                     Item1ID INTEGER NOT NULL CHECK (Item1ID >= 0), 
                     Item1Quantity INTEGER NOT NULL,
