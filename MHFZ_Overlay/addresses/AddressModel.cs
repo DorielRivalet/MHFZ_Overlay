@@ -928,7 +928,8 @@ namespace MHFZ_Overlay.addresses
                 GetQuestNameFromID(QuestID()).Contains("Interception Quest≫") ||
                 GetQuestNameFromID(QuestID()).Contains("Interception Urgent Quest≫") ||
                 GetQuestNameFromID(QuestID()).Contains("Great Slaying Quest≫") ||
-                GetQuestNameFromID(QuestID()).Contains("G Rank Great Slaying≫"));
+                GetQuestNameFromID(QuestID()).Contains("G Rank Great Slaying≫") ||
+                GetQuestNameFromID(QuestID()).Contains("New Weapon Type Acquisition≫"));
         }
 
         private bool PreviousHubAreaIDIsAlternative()
@@ -1411,6 +1412,8 @@ namespace MHFZ_Overlay.addresses
 
         public double HighestDPS { get; set; } = 0;
 
+        public double HighestHitsPerSecond { get; set; } = 0;
+
         /// <summary>
         /// Shows the color of the highest atk.
         /// </summary>
@@ -1465,9 +1468,15 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 if (WeaponRaw() == HighestAtk && ShowHighestAtkColor())
+                {
+                    PlayerAttackIcon = "UI/Icons/png/attack_up_red.png";
                     return "#f38ba8";
+                }
                 else
+                {
+                    PlayerAttackIcon = "UI/Icons/png/attack_up.png";
                     return "#f5e0dc";
+                }
             }
         }
 
@@ -1476,9 +1485,15 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 if (DPS + 10 >= HighestDPS && ShowHighestDPSColor())
+                {
+                    DPSIcon = "UI/Icons/png/burst_red.png";
                     return "#f38ba8";
+                }
                 else
+                {
+                    DPSIcon = "UI/Icons/png/burst.png";
                     return "#f5e0dc";
+                }
             }
         }
 
@@ -1487,18 +1502,39 @@ namespace MHFZ_Overlay.addresses
             get
             {
                 if (TimeDefInt() == 0 || int.Parse(Monster1MaxHP) <= 1)
+                {
+                    QuestTimeIcon = "UI/Icons/png/sand_clock.png";
                     return "#f5e0dc";
+                }
 
                 if ((float)int.Parse(Monster1MaxHP) < Monster1HPInt() || (float)TimeDefInt() < TimeInt())
+                {
+                    QuestTimeIcon = "UI/Icons/png/sand_clock.png";
                     return "#f5e0dc";
+                }
 
                 var timePercent = (float)TimeInt() / TimeDefInt() * 100.0;
                 var monster1HPPercent = (float)Monster1HPInt() / int.Parse(Monster1MaxHP) * 100.0;
 
                 if (timePercent >= monster1HPPercent && ShowQuestPaceColor())
+                {
+                    if (GetTimerMode() == "Time Left")
+                        QuestTimeIcon = "UI/Icons/png/sand_clock2_red.png";
+                    else
+                        QuestTimeIcon = "UI/Icons/png/clock_red.png";
+
                     return "#f38ba8";
+
+                }
                 else
+                {
+                    if (GetTimerMode() == "Time Left")
+                        QuestTimeIcon = "UI/Icons/png/sand_clock2.png";
+                    else
+                        QuestTimeIcon = "UI/Icons/png/clock.png";
+
                     return "#f5e0dc";
+                }
             }
         }
 
@@ -1542,6 +1578,13 @@ namespace MHFZ_Overlay.addresses
 
         public string MonsterAttackMultiplierIcon { get; set; } = "UI/Icons/png/dure_attack.png";
         public string MonsterDefrateIcon { get; set; } = "UI/Icons/png/dure_defense.png";
+
+        //TODO
+        public string DPSIcon { get; set; } = "UI/Icons/png/burst.png";
+        public string QuestTimeIcon { get; set; } = "UI/Icons/png/clock.png";
+
+        public string PlayerAttackIcon { get; set; } = "UI/Icons/png/attack_up.png";
+        public string HitCountIcon { get; set; } = "UI/Icons/png/blue_soul.png";
 
         ///<summary>
         ///<para>Player true raw</para>
@@ -2575,21 +2618,6 @@ namespace MHFZ_Overlay.addresses
                     id = 167;
 
                 return DetermineMonsterImage(id);
-            }
-        }
-
-        public string CurrentTimerIcon
-        {
-            get
-            {
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
-                if (s.TimerMode == "Time Left")
-                    return "UI/Icons/png/sand_clock2.png";
-                else if (s.TimerMode == "Time Elapsed")
-                    return "UI/Icons/png/clock.png";
-                else
-                    return "UI/Icons/png/sand_clock.png";
             }
         }
 
@@ -7191,7 +7219,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return "The buffs are extremely powerful, but the actual weapon isn't. It does however have the benefit of being a free ticket to Raviente trains, due to the buffs being a large centerpiece for teams and also contributing KO damage.\t\t\t\t\t\t\t\t\t\r\nCan be a buffslut elsewhere too.\t\t\t\t\t\t\t\t\t\r\nHiden Skill Effects\t\t\t\t\t\t\t\t\t\r\nNotes come out 34% faster.\t\t\t\t\t\t\t\t\t\r\nNotes\t\t\t\t\t\t\t\t\t\r\nThe weapon uses a tweaked version of recital mode from Monster Hunter 2. The biggest difference is that notes are retained until you encore, play a debuff melody, or sheathe.\t\t\t\t\t\t\t\t\t\r\nAlways take up Encourage +2 for Horn Maestro and party-wide Evasion +2 . Encourage Up grants party-wide stamina benefits if you have it.\t\t\t\t\t\t\t\t\t\r\nEvery HH in the game has Attack Up Large, by virtue of Storm style's pink notes.\t\t\t\t\t\t\t\t\t\r\nChaining attacks into recitals plays the note faster than usual. If you were to start a melody with Purple, Hilt Stab > Recital is the fastest way to get your song going.\t\t\t\t\t\t\t\t\t\r\nHH has the lowest hit requirement of all weapons to ready a Transcend burst attack.\t\t\t\t\t\t\t\t\t\r\nHH is a good but also somewhat harsh learning tool in regards to fighting Raviente as part of a combat team, especially in regards to animation lock.\t\t\t\t\t\t\t\t\t\r\nIf you are using Cyan + Red notes, do not attempt to cross streams and go from AuL to DuL without encoring the former first if there are Adrenaline users. You will end up playing a Health Increase melody in the process, which will deactivate it.\t\t\t\t\t\t\t\t\t\n" +
+                return "The buffs are extremely powerful, but the actual weapon isn't. It does however have the benefit of being a free ticket to Raviente trains, due to the buffs being a large centerpiece for teams and also contributing KO damage.\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t\t\r\nHiden Skill Effects\t\t\t\t\t\t\t\t\t\r\nNotes come out 34% faster.\t\t\t\t\t\t\t\t\t\r\nNotes\t\t\t\t\t\t\t\t\t\r\nThe weapon uses a tweaked version of recital mode from Monster Hunter 2. The biggest difference is that notes are retained until you encore, play a debuff melody, or sheathe.\t\t\t\t\t\t\t\t\t\r\nAlways take up Encourage +2 for Horn Maestro and party-wide Evasion +2 . Encourage Up grants party-wide stamina benefits if you have it.\t\t\t\t\t\t\t\t\t\r\nEvery HH in the game has Attack Up Large, by virtue of Storm style's pink notes.\t\t\t\t\t\t\t\t\t\r\nChaining attacks into recitals plays the note faster than usual. If you were to start a melody with Purple, Hilt Stab > Recital is the fastest way to get your song going.\t\t\t\t\t\t\t\t\t\r\nHH has the lowest hit requirement of all weapons to ready a Transcend burst attack.\t\t\t\t\t\t\t\t\t\r\nHH is a good but also somewhat harsh learning tool in regards to fighting Raviente as part of a combat team, especially in regards to animation lock.\t\t\t\t\t\t\t\t\t\r\nIf you are using Cyan + Red notes, do not attempt to cross streams and go from AuL to DuL without encoring the former first if there are Adrenaline users. You will end up playing a Health Increase melody in the process, which will deactivate it.\t\t\t\t\t\t\t\t\t\n" +
                     "Going the heal-only route with items is not a great idea because you will already be trying to juggle buffs and damage on a relatively slow weapon. It's not worth it.\t\t\t\t\t\t\t\t\t\r\nThe sonic bomb and debuff song motions can reliably apply the effects of the Red & Blue Soul skills onto other hunters.\t\t\t\t\t\t\t\t\t\r\nThe offerings of Soul Up are pretty reasonable, so it's not uncommon for HH users to take up both Red Soul (via Blazing Majesty) and Blue Soul for extra buffs.\t\t\t\t\t\t\t\t\t\n\n" +
                     "Blue Tower for Poison, Z100 otherwise.\n\n" +
                     "HH Sigil Effects\t\t\t\t\r\nTech Boost\t\t\t\t\r\nMusical Attacks\tMotion value changes to all recital mode motions, all made roughly ~50% stronger\t\t\t\r\nBeatdown\tMotion value change on the hilt stab (16 > 27)\t\t\t\r\nNote Change (1, 2, 3)\tCan change the respective note's slot to the color listed on the sigil\t\t\t\r\nMisc\t\t\t\t\r\nStun Value\tNot HH-specific, but important\t\t\t\r\nSonic Bomb Range\tAlso extends the reach of the HH's sonic bomb effects\t\t\t\n\n" +
@@ -7386,9 +7414,34 @@ namespace MHFZ_Overlay.addresses
                     "Types" => GetGameWeaponTypesInfo,
                     "Sharpness" => GetGameSharpnessInfo,
                     "Damage Formula" => GetGameDamageInfo,
+                    "Unlocks" => GetGameWeaponUnlocks, 
                     _ => GetGameStatusEleBloatInfo,
                 };
             }
+        }
+
+        public static string GetGameWeaponUnlocks { 
+            get
+            {
+                return 
+@"Q: How do I unlock Tonfas/SA-F/Magnet spike? 
+
+A: Tonfas and SA-F are unlocked as soon as you enter G rank, all you have to do is make one of either weapon, equip it and then speak to the Guildmaster to unlock the styles for it.
+
+Magnet spike has its own quest line to unlock:
+1. Talk to the smithy
+2. Talk to Graham (The magnet spike Rasta in the Rasta bar)
+3. Talk to the apprentice cat at the entrance of Mezeporta
+4. Go back and talk to Graham
+5. Talk to the G rank quest receptionist and there should be a quest to hunt G Rank Gougarfs
+6. Talk to Graham again then the combiner (by the store)
+7. Hunt the Rebidiora at the top of the quest list
+8. Talk to Graham, the Smithy, Graham again, then the Road quest receptionist
+9. Post the GHC Rukodiora and kill it as hard as you can.
+10. Talk to Graham and then the Smithy
+
+After all that you’ve unlocked magnet spike! You should get a material to make the “Protospike α”";
+            } 
         }
 
         public static string GetGameMeleeStats
@@ -8668,6 +8721,9 @@ namespace MHFZ_Overlay.addresses
         // not according to the real-time, but then again, the time that passes in-game
         // is not real-time.
         public double DPS { get; set; } = 0;
+
+        public double HitsPerSecond { get; set; } = 0;
+
         //get
         //{
         //    if (damageDealtDictionary.Count <= 1)
@@ -8705,6 +8761,11 @@ namespace MHFZ_Overlay.addresses
             // Calculate and return the DPS
             return damageDealt / (timeElapsedIn30FPS/30);
         }   
+
+        public double CalculateHitsPerSecond()
+        {
+            return 0;
+        }
 
 
         // new entry every second during quest (use this for chart?)

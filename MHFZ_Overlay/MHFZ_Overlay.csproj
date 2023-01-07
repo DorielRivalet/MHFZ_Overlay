@@ -71,6 +71,11 @@
     <None Remove="UI\Icons\page.png" />
     <None Remove="UI\Icons\paralysis.png" />
     <None Remove="UI\Icons\photo.png" />
+    <None Remove="UI\Icons\png\attack_up_red.png" />
+    <None Remove="UI\Icons\png\blue_soul.png" />
+    <None Remove="UI\Icons\png\burst_red.png" />
+    <None Remove="UI\Icons\png\clock_red.png" />
+    <None Remove="UI\Icons\png\sand_clock2_red.png" />
     <None Remove="UI\Icons\poison.png" />
     <None Remove="UI\Icons\quest_host.png" />
     <None Remove="UI\Icons\quest_info.png" />
@@ -310,15 +315,19 @@
     <Resource Include="UI\Icons\png\armor_skills.png" />
     <Resource Include="UI\Icons\png\attack.png" />
     <Resource Include="UI\Icons\png\attack_up.png" />
+    <Resource Include="UI\Icons\png\attack_up_red.png" />
     <Resource Include="UI\Icons\png\blast.png" />
+    <Resource Include="UI\Icons\png\blue_soul.png" />
     <Resource Include="UI\Icons\png\boggers.png" />
     <Resource Include="UI\Icons\png\bone.png" />
     <Resource Include="UI\Icons\png\book.png">
       <Generator></Generator>
     </Resource>
     <Resource Include="UI\Icons\png\burst.png" />
+    <Resource Include="UI\Icons\png\burst_red.png" />
     <Resource Include="UI\Icons\png\clear.png" />
     <Resource Include="UI\Icons\png\clock.png" />
+    <Resource Include="UI\Icons\png\clock_red.png" />
     <Resource Include="UI\Icons\png\dure_attack.png" />
     <Resource Include="UI\Icons\png\dure_attack_red.png" />
     <Resource Include="UI\Icons\png\dure_defense.png" />
@@ -337,6 +346,7 @@
     <Resource Include="UI\Icons\png\red_soul.png" />
     <Resource Include="UI\Icons\png\sand_clock.png" />
     <Resource Include="UI\Icons\png\sand_clock2.png" />
+    <Resource Include="UI\Icons\png\sand_clock2_red.png" />
     <Resource Include="UI\Icons\png\sleep.png" />
     <Resource Include="UI\Icons\png\study.png" />
     <Resource Include="UI\Icons\png\stun.png" />

@@ -965,6 +965,7 @@
                                                         <ComboBoxItem>Types</ComboBoxItem>
                                                         <ComboBoxItem>Sharpness</ComboBoxItem>
                                                         <ComboBoxItem>Damage Formula</ComboBoxItem>
+                                                        <ComboBoxItem>Unlocks</ComboBoxItem>
                                                     </ComboBox>
                                                     <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Weapon Information" Text="{Binding GetGameWeaponInformation}" TextWrapping="Wrap"/>
                                                 </Grid>
