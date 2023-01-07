@@ -726,7 +726,36 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public int HitCount => HitCountInt();
+        public static bool ShowHitsPerSecond()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.HitsPerSecondShown)
+                return true;
+            else
+                return false;
+        }
+
+        public string HitCount
+        {
+            get
+            {
+
+                if (QuestID() == 0) //should work fine
+                {
+                    HighestHitsPerSecond = 0;
+                }
+
+                if (HitsPerSecond > HighestHitsPerSecond)
+                    HighestHitsPerSecond = HitsPerSecond;
+
+                string hitsPerSecond = "";
+
+                if (ShowHitsPerSecond())
+                    hitsPerSecond = string.Format(" ({0:0.00}/s)", HitsPerSecond);
+
+                return string.Format("{0}{1}", HitCountInt(), hitsPerSecond);
+            }
+        }
 
         public static string LoremImpsum
         {
@@ -1436,6 +1465,15 @@ namespace MHFZ_Overlay.addresses
                 return false;
         }
 
+        public static bool ShowAverageHitsPerSecondColor()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableAverageHitsPerSecondColor)
+                return true;
+            else
+                return false;
+        }
+
         public static bool ShowQuestPaceColor()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -1497,6 +1535,41 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string isHighestHitsPerSecond
+        {
+            get
+            {
+                if (HitsPerSecond >= GetAverageHitsPerSecond(WeaponType()) && ShowAverageHitsPerSecondColor())
+                {
+                    HitCountIcon = "UI/Icons/png/red_soul.png";
+                    return "#f38ba8";
+                }
+                else
+                {
+                    HitCountIcon = "UI/Icons/png/blue_soul.png";
+                    return "#f5e0dc";
+                }
+            }
+        }
+
+        public double GetAverageHitsPerSecond(int weaponTypeID)
+        {
+            bool weaponFound = Dictionary.WeaponCanUseReflect.WeaponTypeID.ContainsKey(weaponTypeID);
+            if (!weaponFound)
+                return 0;
+
+            bool averageFound = Dictionary.WeaponAverageHitsPerSecond.WeaponAverageHitsPerSecondID.ContainsKey(weaponTypeID);
+            if (!averageFound)
+                return 0;
+
+            double averageMultiplier = 1;
+
+            if (!Dictionary.WeaponCanUseReflect.WeaponTypeID[weaponTypeID])
+                averageMultiplier = 0.75;
+
+            return Dictionary.WeaponAverageHitsPerSecond.WeaponAverageHitsPerSecondID[weaponTypeID] * averageMultiplier;
+        }
+
         public string isOnPace
         {
             get
@@ -1507,7 +1580,7 @@ namespace MHFZ_Overlay.addresses
                     return "#f5e0dc";
                 }
 
-                if ((float)int.Parse(Monster1MaxHP) < Monster1HPInt() || (float)TimeDefInt() < TimeInt())
+                if (TimeDefInt() < TimeInt())
                 {
                     QuestTimeIcon = "UI/Icons/png/sand_clock.png";
                     return "#f5e0dc";
@@ -1602,29 +1675,22 @@ namespace MHFZ_Overlay.addresses
                 {
                     HighestAtk = 0;
                     HighestDPS = 0;
-                    HighestAttackMult = 0;
+                    HighestAttackMult = 0; // i get stackoverflow otherwise
                     LowestMonsterDefrate = 1000; // should be enough
+
                 }
-                // TODO separate the logic
+
                 if (weaponRaw > HighestAtk)
-                {
                     HighestAtk = weaponRaw;
-                }
 
                 if (DPS > HighestDPS)
-                {
                     HighestDPS = DPS;
-                }
 
                 if (double.Parse(AtkMult) > HighestAttackMult)
-                {
                     HighestAttackMult = double.Parse(AtkMult);
-                }
 
                 if (decimal.Parse(DefMult) < LowestMonsterDefrate && decimal.Parse(DefMult) != 0)
-                {
                     LowestMonsterDefrate = decimal.Parse(DefMult);
-                }
 
                 return weaponRaw.ToString();
             }
@@ -1754,7 +1820,6 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-
                 switch (SelectedMonster)
                 {
                     case 0:
@@ -8724,6 +8789,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public double HitsPerSecond { get; set; } = 0;
 
+
+        public double TotalHitsTakenBlocked { get; set; } = 0;
+        public double HitsTakenBlockedPerSecond { get; set; } = 0;
+
         //get
         //{
         //    if (damageDealtDictionary.Count <= 1)
@@ -8762,9 +8831,33 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return damageDealt / (timeElapsedIn30FPS/30);
         }   
 
+        // TODO
+        public double CalculateHitsTakenBlockedPerSecond()
+        {
+            // Check if the damageDealtDictionary is empty
+            if (!hitsTakenBlockedDictionary.Any())
+            {
+                // If the dictionary is empty, return 0 as the DPS value
+                return 0;
+            }
+
+            var hitsTakenBlockedByArea = hitsTakenBlockedDictionary.SelectMany(outerDict => outerDict.Value)
+                                                        .GroupBy(innerDict => innerDict.Key)
+                                                        .ToDictionary(group => group.Key, group => group.Sum(innerDict => innerDict.Value));
+
+            int totalHitsTakenBlocked = hitsTakenBlockedByArea.Values.Sum();
+            double timeElapsedIn30FPS = TimeDefInt() - TimeInt();
+
+            // Calculate and return the DPS
+            return totalHitsTakenBlocked / (timeElapsedIn30FPS / 30);
+        }
+
         public double CalculateHitsPerSecond()
         {
-            return 0;
+            if (!hitCountDictionary.Any())
+                return 0;
+
+            return (double)HitCountInt() / ((double)(TimeDefInt() - TimeInt()) / 30);
         }
 
 
@@ -8791,18 +8884,30 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         // time, itemid, itemquantity
         // can calculate itemuse by counting rows
         public Dictionary<int, Dictionary<List<int>, List<int>>> playerInventoryDictionary = new Dictionary<int, Dictionary<List<int>, List<int>>>();
+        public Dictionary<int, Dictionary<List<int>, List<int>>> playerInventoryDictionaryDeserealized;
 
         public Dictionary<int, Dictionary<List<int>, List<int>>> playerAmmoPouchDictionary = new Dictionary<int, Dictionary<List<int>, List<int>>>();
+        public Dictionary<int, Dictionary<List<int>, List<int>>> playerAmmoPouchDictionaryDeserealized;
 
         public Dictionary<int, Dictionary<List<int>, List<int>>> partnyaBagDictionary = new Dictionary<int, Dictionary<List<int>, List<int>>>();
+        public Dictionary<int, Dictionary<List<int>, List<int>>> partnyaBagDictionaryDeserealized;
 
         // time, areaid, hitstakenblocked
         // can calculate total hits by area by checking areaid, or in total by all sum.
-        public Dictionary<int,Dictionary<int,int>> hitsTakenBlockedDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int,Dictionary<int, int>> hitsTakenBlockedDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionaryDeserealized;
 
         public Dictionary<int, int> playerHPDictionary = new Dictionary<int, int>();
-        public Dictionary<int, int> playerStaminaDictionary = new Dictionary<int, int>();
+        public Dictionary<int, int> playerHPDictionaryDeserealized;
 
+        public Dictionary<int, int> playerStaminaDictionary = new Dictionary<int, int>();
+        public Dictionary<int, int> playerStaminaDictionaryDeserealized;
+
+        public Dictionary<int, double> hitsPerSecondDictionary = new Dictionary<int, double>();
+        public Dictionary<int, double> hitsPerSecondDictionaryDeserealized;
+
+        public Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = new Dictionary<int, double>();
+        public Dictionary<int, double> hitsTakenBlockedPerSecondDictionaryDeserealized;
 
         // Initialize the damageDealt and timeElapsed variables to 0
         //int damageDealt = 0;
@@ -8839,8 +8944,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public int previousHitsTakenBlocked = 0;
 
+        public double previousHitsTakenBlockedPerSecond = 0;
+
         public int previousPlayerHP = 0;
         public int previousPlayerStamina = 0;
+
+        public double previousHitsPerSecond = 0;
 
         public void InsertQuestInfoIntoDictionaries()
         {
@@ -9069,7 +9178,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             {
                 previousHitsTakenBlocked = AreaHitsTakenBlocked();
                 Dictionary<int,int> hitsAreaPairs = new Dictionary<int, int>();
-                hitsAreaPairs.Add(AreaHitsTakenBlocked(), AreaID());
+                hitsAreaPairs.Add(AreaID(), AreaHitsTakenBlocked());
                 hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
             }
 
@@ -9083,6 +9192,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             {
                 previousPlayerStamina = HunterStamina();
                 playerStaminaDictionary.Add(TimeInt(), HunterStamina());
+            }
+
+            if (previousHitsPerSecond != HitsPerSecond)
+            {
+                previousHitsPerSecond = HitsPerSecond;
+                hitsPerSecondDictionary.Add(TimeInt(), HitsPerSecond);
             }
         }
 
@@ -9150,10 +9265,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             AmmoPouchItem9QuantityAtQuestStart = 0;
             AmmoPouchItem10QuantityAtQuestStart = 0;
 
-            // are these needed?
-            DPS = 0;
-            HighestDPS = 0;
-
             previousAttackBuffInt = 0;
             previousDPS = 0;
             previousHitCountInt = 0;
@@ -9167,8 +9278,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             previousTotalAmmo = 0;
             previousTotalPartnyaItems = 0;
             previousHitsTakenBlocked = 0;
+            previousHitsTakenBlockedPerSecond = 0;
             previousPlayerHP = 0;
             previousPlayerStamina = 0;
+            previousHitsPerSecond = 0;
         }
 
         public void clearQuestInfoDictionaries()
@@ -9189,6 +9302,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             hitsTakenBlockedDictionary.Clear();
             playerHPDictionary.Clear();
             playerStaminaDictionary.Clear();
+            hitsPerSecondDictionary.Clear();
+            hitsTakenBlockedPerSecondDictionary.Clear();
         }
 
 

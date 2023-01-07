@@ -1907,5 +1907,17 @@ namespace MHFZ_Overlay {
                 this["EnableAverageHitsPerSecondColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool HitsPerSecondShown {
+            get {
+                return ((bool)(this["HitsPerSecondShown"]));
+            }
+            set {
+                this["HitsPerSecondShown"] = value;
+            }
+        }
     }
 }

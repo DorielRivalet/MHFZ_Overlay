@@ -266,6 +266,7 @@ namespace MHFZ_Overlay
                         YouTubeID,
                         AttackBuffDictionary,
                         HitCountDictionary,
+                        HitsPerSecondDictionary,
                         DamageDealtDictionary,
                         DamagePerSecondDictionary,
                         AreaChangesDictionary,
@@ -275,6 +276,7 @@ namespace MHFZ_Overlay
                         Monster3HPDictionary,
                         Monster4HPDictionary,
                         HitsTakenBlockedDictionary,
+                        HitsTakenBlockedPerSecondDictionary,
                         PlayerHPDictionary,
                         PlayerStaminaDictionary,
                         PartySize,
@@ -296,6 +298,7 @@ namespace MHFZ_Overlay
                         @YouTubeID,
                         @AttackBuffDictionary,
                         @HitCountDictionary,
+                        @HitsPerSecondDictionary,
                         @DamageDealtDictionary,
                         @DamagePerSecondDictionary,
                         @AreaChangesDictionary,
@@ -305,6 +308,7 @@ namespace MHFZ_Overlay
                         @Monster3HPDictionary,
                         @Monster4HPDictionary,
                         @HitsTakenBlockedDictionary,
+                        @HitsTakenBlockedPerSecondDictionary,
                         @PlayerHPDictionary,
                         @PlayerStaminaDictionary,
                         @PartySize,
@@ -381,6 +385,7 @@ namespace MHFZ_Overlay
                             string youtubeID = "dQw4w9WgXcQ";
                             Dictionary<int, int> attackBuffDictionary = dataLoader.model.attackBuffDictionary;
                             Dictionary<int, int> hitCountDictionary = dataLoader.model.hitCountDictionary;
+                            Dictionary<int, double> hitsPerSecondDictionary = dataLoader.model.hitsPerSecondDictionary;
                             Dictionary<int, int> damageDealtDictionary = dataLoader.model.damageDealtDictionary;
                             Dictionary<int, double> damagePerSecondDictionary = dataLoader.model.damagePerSecondDictionary;
                             Dictionary<int, int> areaChangesDictionary = dataLoader.model.areaChangesDictionary;
@@ -391,6 +396,7 @@ namespace MHFZ_Overlay
                             Dictionary<int, Dictionary<int, int>> monster3HPDictionary = dataLoader.model.monster3HPDictionary;
                             Dictionary<int, Dictionary<int, int>> monster4HPDictionary = dataLoader.model.monster4HPDictionary;
                             Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = dataLoader.model.hitsTakenBlockedDictionary;
+                            Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = dataLoader.model.hitsTakenBlockedPerSecondDictionary;
                             Dictionary<int, int> playerHPDictionary = dataLoader.model.playerHPDictionary;
                             Dictionary<int, int> playerStaminaDictionary = dataLoader.model.playerStaminaDictionary;
                             int partySize = dataLoader.model.PartySize();
@@ -408,13 +414,13 @@ namespace MHFZ_Overlay
                             //                    SELECT LAST_INSERT_ROWID() as ZenithSkillsID;
 
                             string questData = string.Format(
-                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}",
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}",
                                 runID, createdAt, createdBy, questID, finalTimeValue, 
                                 finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity, starGrade, 
-                                rankName, objectiveName, date, attackBuffDictionary, hitCountDictionary, 
-                                damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary, cartsDictionary, monster1HPDictionary, 
-                                monster2HPDictionary, monster3HPDictionary, monster4HPDictionary, hitsTakenBlockedDictionary,
-                                playerHPDictionary, playerStaminaDictionary, partySize, overlayMode
+                                rankName, objectiveName, date, attackBuffDictionary, hitCountDictionary,
+                                hitsPerSecondDictionary, damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary, cartsDictionary, 
+                                monster1HPDictionary, monster2HPDictionary, monster3HPDictionary, monster4HPDictionary, hitsTakenBlockedDictionary,
+                                hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary, partySize, overlayMode
                                 );
 
                             // Calculate the hash value for the data in the row
@@ -436,6 +442,7 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@YouTubeID", youtubeID);
                             cmd.Parameters.AddWithValue("@AttackBuffDictionary", JsonConvert.SerializeObject(attackBuffDictionary));
                             cmd.Parameters.AddWithValue("@HitCountDictionary", JsonConvert.SerializeObject(hitCountDictionary));
+                            cmd.Parameters.AddWithValue("@HitsPerSecondDictionary", JsonConvert.SerializeObject(hitsPerSecondDictionary));
                             cmd.Parameters.AddWithValue("@DamageDealtDictionary", JsonConvert.SerializeObject(damageDealtDictionary));
                             cmd.Parameters.AddWithValue("@DamagePerSecondDictionary", JsonConvert.SerializeObject(damagePerSecondDictionary));
                             cmd.Parameters.AddWithValue("@AreaChangesDictionary", JsonConvert.SerializeObject(areaChangesDictionary));
@@ -444,9 +451,10 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@Monster2HPDictionary", JsonConvert.SerializeObject(monster2HPDictionary));
                             cmd.Parameters.AddWithValue("@Monster3HPDictionary", JsonConvert.SerializeObject(monster3HPDictionary));
                             cmd.Parameters.AddWithValue("@Monster4HPDictionary", JsonConvert.SerializeObject(monster4HPDictionary));
-                            cmd.Parameters.AddWithValue("@HitsTakenBlockedDictionary", hitsTakenBlockedDictionary);
-                            cmd.Parameters.AddWithValue("@PlayerHPDictionary", playerHPDictionary);
-                            cmd.Parameters.AddWithValue("@PlayerStaminaDictionary", playerStaminaDictionary);
+                            cmd.Parameters.AddWithValue("@HitsTakenBlockedDictionary", JsonConvert.SerializeObject(hitsTakenBlockedDictionary));
+                            cmd.Parameters.AddWithValue("@HitsTakenBlockedPerSecondDictionary", JsonConvert.SerializeObject(hitsTakenBlockedPerSecondDictionary));
+                            cmd.Parameters.AddWithValue("@PlayerHPDictionary", JsonConvert.SerializeObject(playerHPDictionary));
+                            cmd.Parameters.AddWithValue("@PlayerStaminaDictionary", JsonConvert.SerializeObject(playerStaminaDictionary));
                             cmd.Parameters.AddWithValue("@PartySize", partySize);
                             cmd.Parameters.AddWithValue("@OverlayMode", overlayMode);
 
@@ -1491,9 +1499,9 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@AmmoPouchID", ammoPouchID);
                             cmd.Parameters.AddWithValue("@PoogieItemID", poogieItemID);
                             cmd.Parameters.AddWithValue("@RoadDureSkillsID", roadDureSkillsID);
-                            cmd.Parameters.AddWithValue("@PlayerInventoryDictionary", playerInventoryDictionary);
-                            cmd.Parameters.AddWithValue("@PlayerAmmoPouchDictionary", playerAmmoPouchDictionary);
-                            cmd.Parameters.AddWithValue("@PartnyaBagDictionary", partnyaBagDictionary);
+                            cmd.Parameters.AddWithValue("@PlayerInventoryDictionary", JsonConvert.SerializeObject(playerInventoryDictionary));
+                            cmd.Parameters.AddWithValue("@PlayerAmmoPouchDictionary", JsonConvert.SerializeObject(playerAmmoPouchDictionary));
+                            cmd.Parameters.AddWithValue("@PartnyaBagDictionary", JsonConvert.SerializeObject(partnyaBagDictionary));
 
                             // Execute the stored procedure
                             cmd.ExecuteNonQuery();
@@ -2561,6 +2569,7 @@ namespace MHFZ_Overlay
                     -- DpsData TEXT NOT NULL,
                     AttackBuffDictionary TEXT NOT NULL,
                     HitCountDictionary TEXT NOT NULL,
+                    HitsPerSecondDictionary TEXT NOT NULL,
                     DamageDealtDictionary TEXT NOT NULL,
                     DamagePerSecondDictionary TEXT NOT NULL,
                     AreaChangesDictionary TEXT NOT NULL,
@@ -2570,6 +2579,7 @@ namespace MHFZ_Overlay
                     Monster3HPDictionary TEXT NOT NULL,
                     Monster4HPDictionary TEXT NOT NULL,
                     HitsTakenBlockedDictionary TEXT NOT NULL,
+                    HitsTakenBlockedPerSecondDictionary TEXT NOT NULL,
                     PlayerHPDictionary TEXT NOT NULL,
                     PlayerStaminaDictionary TEXT NOT NULL,
                     PartySize INTEGER NOT NULL,
