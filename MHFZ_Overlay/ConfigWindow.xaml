@@ -216,6 +216,8 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="0" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
@@ -327,6 +329,9 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
@@ -1376,6 +1381,21 @@
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="43" Grid.Column="0"  Text="Current Sharpness as Percentage"/>
                         <ToggleButton Grid.Row="43" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Total Hits Taken/Blocked" Style="{StaticResource ConfigTextBox}" Grid.Row="44" Grid.Column="0"  Text="Hits Taken/Blocked"/>
+                        <ToggleButton Grid.Row="44" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=TotalHitsTakenBlockedShown}"/>
+
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="45" Grid.Column="0"  Text="Hits Taken/Blocked X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="45" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=TotalHitsTakenBlockedX}"  PreviewTextInput="ValidateNumber"/>
+
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="46" Grid.Column="0"  Text="Hits Taken/Blocked Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="46" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=TotalHitsTakenBlockedY}"  PreviewTextInput="ValidateNumber"/>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Hits Taken/Blocked per Second" Style="{StaticResource ConfigTextBox}" Grid.Row="47" Grid.Column="0"  Text="Hits Taken/Blocked per Second"/>
+                        <ToggleButton Grid.Row="47" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=TotalHitsTakenBlockedPerSecondShown}"/>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show color if a hit was not received and you are using a weapon that cannot utilize Reflect" Style="{StaticResource ConfigTextBox}" Grid.Row="48" Grid.Column="0"  Text="No Hit Color"/>
+                        <ToggleButton Grid.Row="48" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableTotalHitsTakenBlockedColor}"/>
 
                         <!--<TextBlock Margin="5,5,5,5" ToolTip="Currently Equipped Weapon (includes Town Set)" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="{Binding CurrentWeaponName}"/>
                         <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="16" x:Name="playerWepTextBox" Text="{Binding CurrentWeaponName}"/>-->
