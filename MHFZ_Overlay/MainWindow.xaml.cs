@@ -501,7 +501,7 @@ namespace MHFZ_Overlay
         int prevTime = 0;
 
         private bool showedNullError = false;
-        private bool showedDatFolderWarning = false;
+        private bool showedGameFolderWarning = false;
 
         //
         public void Timer_Tick(object? obj, EventArgs e)
@@ -535,11 +535,13 @@ namespace MHFZ_Overlay
             //{
             //    DataLoader.model.CalculateDPS();
             //}
-            if (!showedDatFolderWarning)
+            if (!showedGameFolderWarning)
             {
-                DataLoader.model.ValidateDatFolder();
-                showedDatFolderWarning = true;
+                DataLoader.model.ValidateGameFolder();
+                showedGameFolderWarning = true;
             }
+
+            DataLoader.CheckForExternalProcesses();
         }
 
         int curNum = 0;

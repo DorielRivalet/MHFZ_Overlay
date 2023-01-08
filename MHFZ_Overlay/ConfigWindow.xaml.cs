@@ -1172,7 +1172,7 @@ namespace MHFZ_Overlay
             }
         }
 
-        private void datFolderButton_Click(object sender, RoutedEventArgs e)
+        private void GameFolderButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new FolderBrowserDialog();
             DialogResult result = dialog.ShowDialog();
@@ -1182,7 +1182,7 @@ namespace MHFZ_Overlay
                 string selectedFolder = dialog.SelectedPath;
                 // You can use the selectedFolder variable to do something with the chosen folder, such as calculate its hash.
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
-                s.datFolderPath = selectedFolder;
+                s.GameFolderPath = selectedFolder;
             }
         }
 
@@ -1191,7 +1191,8 @@ namespace MHFZ_Overlay
             if (MainWindow == null)
                 return;
 
-            MainWindow.DataLoader.model.ValidateDatFolder();
+            MainWindow.DataLoader.model.ValidateGameFolder();
+
             if (MainWindow.DataLoader.databaseChanged)
             {
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");

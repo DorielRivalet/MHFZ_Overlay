@@ -422,7 +422,7 @@
     <Setting Name="EnableQuestLogging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="datFolderPath" Type="System.String" Scope="User">
+    <Setting Name="GameFolderPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PlayerDPSX" Type="System.Double" Scope="User">

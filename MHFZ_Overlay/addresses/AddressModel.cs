@@ -8765,32 +8765,35 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         #region dictionaries for graphs and database
 
-        public bool ValidateDatFolder()
+        public bool ValidateGameFolder()
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
             List<string> findFiles = new List<string>{ 
-                s.datFolderPath + @"\mhfdat.bin", 
-                s.datFolderPath + @"\mhfinf.bin", 
-                s.datFolderPath + @"\mhfemd.bin", 
-                s.datFolderPath + @"\mhfsqd.bin"};
+                s.GameFolderPath + @"\dat\mhfdat.bin", 
+                s.GameFolderPath + @"\dat\mhfinf.bin", 
+                s.GameFolderPath + @"\dat\mhfemd.bin", 
+                s.GameFolderPath + @"\dat\mhfsqd.bin",
+                s.GameFolderPath + @"\mhfo.dll",
+                s.GameFolderPath + @"\mhfo-hd.dll"
+                };
 
             //check if the folder is named dat and contains dat, emd, and sqd.
-            if (s.datFolderPath == "" || s.datFolderPath == null || !s.datFolderPath.Contains(@"\dat"))
+            if (s.GameFolderPath == "" || s.GameFolderPath == null)
             {
-                MessageBox.Show("Please provide a path to the dat folder by clicking the *Select dat Folder button* in Quest Logs section. See tooltip in Quest Logs for more information.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please provide a path to the game folder by clicking the *Select Game Folder* button in Quest Logs section. See tooltip in Quest Logs for more information.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
                 
                 s.EnableQuestLogging = false;
                 return false;
             }
 
-            // Get a list of file names in the dat folder
-            var datFolderFiles = Directory.EnumerateFiles(s.datFolderPath);
+            // Get a list of file names in the game folder
+            var gameFolderFiles = Directory.EnumerateFiles(s.GameFolderPath);
 
-            // Get the intersection of the findFiles list and the datFolderFiles list
-            var intersection = findFiles.Intersect(datFolderFiles);
+            // Get the intersection of the findFiles list and the gameFolderFiles list
+            var intersection = findFiles.Intersect(gameFolderFiles);
 
-            // If the intersection is not empty, it means that all the files in the findFiles list are present in the dat folder
+            // If the intersection is not empty, it means that all the files in the findFiles list are present in the game folder
             if (intersection.Any())
             {
                 // All required files are present
@@ -8799,9 +8802,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             else
             {
                 // Some required files are missing
-                MessageBox.Show("Some required files are missing from the dat folder. Please make sure that the dat folder contains the following files: "
+                MessageBox.Show("Some required files are missing from the game folder. Please make sure that the game folder contains the following files: "
                 + String.Join(", ", findFiles) + "\n" +
-                "datFolderFiles: " + String.Join(", ", datFolderFiles),
+                "gameFolderFiles: " + String.Join(", ", gameFolderFiles),
                 "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
                 s.EnableQuestLogging = false;
                 return false;

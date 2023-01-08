@@ -1706,12 +1706,12 @@ namespace MHFZ_Overlay {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string datFolderPath {
+        public string GameFolderPath {
             get {
-                return ((string)(this["datFolderPath"]));
+                return ((string)(this["GameFolderPath"]));
             }
             set {
-                this["datFolderPath"] = value;
+                this["GameFolderPath"] = value;
             }
         }
         

@@ -58,6 +58,7 @@ namespace MHFZ_Overlay
                 else
                     model = new AddressModelHGE(m);
 
+                CheckForExternalProcesses();
                 databaseChanged = databaseManager.SetupLocalDatabase(this);
             }
             else
@@ -66,6 +67,26 @@ namespace MHFZ_Overlay
 
                 //App.Current.Shutdown();
                 Environment.Exit(0);
+            }
+        }
+
+        private List<string> bannedProcesses = new List<string>()
+        {
+            "mhf_displayer","Cheat Engine","cheatengine","cheat","Cheat"
+        };
+
+        public void CheckForExternalProcesses()
+        {
+            var processList = System.Diagnostics.Process.GetProcesses();
+            foreach (var process in processList)
+            {
+                if (bannedProcesses.Any(s => process.ProcessName.Contains(s)))
+                {
+                    // processName is a substring of one of the banned process strings
+                    MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
+                    // Close the overlay program
+                    Environment.Exit(0);
+                }
             }
         }
 

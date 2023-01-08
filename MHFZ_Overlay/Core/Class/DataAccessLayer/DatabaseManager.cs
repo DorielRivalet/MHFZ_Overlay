@@ -213,7 +213,7 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (!dataLoader.model.ValidateDatFolder())
+            if (!dataLoader.model.ValidateGameFolder())
                 return;
 
             if (!s.EnableQuestLogging)
@@ -467,49 +467,57 @@ namespace MHFZ_Overlay
                             runID = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
-                        sql = @"INSERT INTO datFolder (
-                        datFolderHash,
+                        sql = @"INSERT INTO GameFolder (
+                        GameFolderHash,
                         CreatedAt,
                         CreatedBy,
                         RunID, 
-                        datFolderPath, 
+                        GameFolderPath, 
                         mhfdatHash, 
                         mhfemdHash,
                         mhfinfHash, 
-                        mhfsqdHash
+                        mhfsqdHash,
+                        mhfodllHash,
+                        mhfohddllHash
                         ) VALUES (
-                        @datFolderHash,
+                        @GameFolderHash,
                         @CreatedAt,
                         @CreatedBy,
                         @RunID, 
-                        @datFolderPath,
+                        @GameFolderPath,
                         @mhfdatHash,
                         @mhfemdHash,
                         @mhfinfHash,
-                        @mhfsqdHash)";
+                        @mhfsqdHash,
+                        @mhfodllHash,
+                        @mhfohddllHash)";
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
-                            string datFolderPath = s.datFolderPath;
-                            string mhfdatHash = CalculateFileHash(datFolderPath, @"\mhfdat.bin");
-                            string mhfemdHash = CalculateFileHash(datFolderPath, @"\mhfemd.bin");
-                            string mhfinfHash = CalculateFileHash(datFolderPath, @"\mhfinf.bin");
-                            string mhfsqdHash = CalculateFileHash(datFolderPath, @"\mhfsqd.bin");
+                            string gameFolderPath = s.GameFolderPath;
+                            string mhfdatHash = CalculateFileHash(gameFolderPath, @"\dat\mhfdat.bin");
+                            string mhfemdHash = CalculateFileHash(gameFolderPath, @"\dat\mhfemd.bin");
+                            string mhfinfHash = CalculateFileHash(gameFolderPath, @"\dat\mhfinf.bin");
+                            string mhfsqdHash = CalculateFileHash(gameFolderPath, @"\dat\mhfsqd.bin");
+                            string mhfodllHash = CalculateFileHash(gameFolderPath, @"\mhfo.dll");
+                            string mhfohddllHash = CalculateFileHash(gameFolderPath, @"\mhfo-hd.dll");
                             string datFolderData = string.Format(
-                                "{0}{1}{2}{3}{4}{5}{6}{7}",
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}",
                                 createdAt, createdBy, runID,
-                                datFolderPath, mhfdatHash, mhfemdHash,
-                                mhfinfHash, mhfsqdHash);
+                                gameFolderPath, mhfdatHash, mhfemdHash,
+                                mhfinfHash, mhfsqdHash, mhfodllHash, mhfohddllHash);
                             string datFolderHash = CalculateStringHash(datFolderData);
 
-                            cmd.Parameters.AddWithValue("@datFolderHash", datFolderHash);
+                            cmd.Parameters.AddWithValue("@GameFolderHash", datFolderHash);
                             cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
                             cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@RunID", runID);
-                            cmd.Parameters.AddWithValue("@datFolderPath", datFolderPath);
+                            cmd.Parameters.AddWithValue("@GameFolderPath", gameFolderPath);
                             cmd.Parameters.AddWithValue("@mhfdatHash", mhfdatHash);
                             cmd.Parameters.AddWithValue("@mhfemdHash", mhfemdHash);
                             cmd.Parameters.AddWithValue("@mhfinfHash", mhfinfHash);
                             cmd.Parameters.AddWithValue("@mhfsqdHash", mhfsqdHash);
+                            cmd.Parameters.AddWithValue("@mhfodllHash", mhfodllHash);
+                            cmd.Parameters.AddWithValue("@mhfohddllHash", mhfohddllHash);
                             cmd.ExecuteNonQuery();
                         }
 
@@ -1577,8 +1585,8 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_updates
-                        AFTER UPDATE ON datFolder
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_game_folder_updates
+                        AFTER UPDATE ON GameFolder
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
                         END;";
@@ -1587,8 +1595,8 @@ namespace MHFZ_Overlay
 
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_dat_folder_deletion
-                        AFTER DELETE ON datFolder
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_game_folder_deletion
+                        AFTER DELETE ON GameFolder
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Deleting rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
                         END;";
@@ -2739,17 +2747,19 @@ namespace MHFZ_Overlay
                         Diva defense related strings such as activating buffs and skills in second week of event.
                      */
                     sql = @"
-                    CREATE TABLE IF NOT EXISTS datFolder (
-                    datFolderHash TEXT NOT NULL,
+                    CREATE TABLE IF NOT EXISTS GameFolder (
+                    GameFolderHash TEXT NOT NULL,
                     CreatedAt DATETIME NOT NULL,
                     CreatedBy TEXT NOT NULL,
-                    datFolderID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    GameFolderID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
-                    datFolderPath TEXT NOT NULL,
+                    GameFolderPath TEXT NOT NULL,
                     mhfdatHash TEXT NOT NULL,
                     mhfemdHash TEXT NOT NULL,
                     mhfinfHash TEXT NOT NULL,
                     mhfsqdHash TEXT NOT NULL,
+                    mhfodllHash TEXT NOT NULL,
+                    mhfohddllHash TEXT NOT NULL,
                     FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
