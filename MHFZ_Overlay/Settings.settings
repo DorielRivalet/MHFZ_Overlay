@@ -138,7 +138,7 @@
       <Value Profile="(Default)">-80</Value>
     </Setting>
     <Setting Name="TimerY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">560</Value>
+      <Value Profile="(Default)">520</Value>
     </Setting>
     <Setting Name="HitCountShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -147,7 +147,7 @@
       <Value Profile="(Default)">-80</Value>
     </Setting>
     <Setting Name="HitCountY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">600</Value>
+      <Value Profile="(Default)">560</Value>
     </Setting>
     <Setting Name="PlayerAtkShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -156,7 +156,7 @@
       <Value Profile="(Default)">-80</Value>
     </Setting>
     <Setting Name="PlayerAtkY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">640</Value>
+      <Value Profile="(Default)">600</Value>
     </Setting>
     <Setting Name="TimerMode" Type="System.String" Scope="User">
       <Value Profile="(Default)">Time Left</Value>
@@ -429,7 +429,7 @@
       <Value Profile="(Default)">-80</Value>
     </Setting>
     <Setting Name="PlayerDPSY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">520</Value>
+      <Value Profile="(Default)">480</Value>
     </Setting>
     <Setting Name="EnableHighestDPSColor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -475,6 +475,21 @@
     </Setting>
     <Setting Name="HitsPerSecondShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TotalHitsTakenBlockedShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TotalHitsTakenBlockedPerSecondShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableTotalHitsTakenBlockedColor" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TotalHitsTakenBlockedX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">-80</Value>
+    </Setting>
+    <Setting Name="TotalHitsTakenBlockedY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">640</Value>
     </Setting>
   </Settings>
 </SettingsFile>

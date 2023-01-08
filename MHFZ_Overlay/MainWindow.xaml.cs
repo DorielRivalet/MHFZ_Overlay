@@ -924,6 +924,7 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowTimerInfo = v && s.TimerInfoShown;
             DataLoader.model.ShowHitCountInfo = v && s.HitCountShown;
             DataLoader.model.ShowPlayerAtkInfo = v && s.PlayerAtkShown;
+            DataLoader.model.ShowPlayerHitsTakenBlockedInfo = v && s.TotalHitsTakenBlockedShown;
             DataLoader.model.ShowSharpness = v && s.EnableSharpness;
 
             DataLoader.model.ShowMap = v && s.EnableMap;
@@ -2214,6 +2215,10 @@ namespace MHFZ_Overlay
                     s.PlayerAtkX = (double)(pos.X - XOffset);
                     s.PlayerAtkY = (double)(pos.Y - YOffset);
                     break;
+                case "PlayerHitsTakenBlockedInfo":
+                    s.TotalHitsTakenBlockedX = (double)(pos.X - XOffset);
+                    s.TotalHitsTakenBlockedY = (double)(pos.Y - YOffset);
+                    break;
                 // TODO graphs
                 case "DamagePerSecondInfo":
                     s.PlayerDPSX = (double)(pos.X - XOffset);
@@ -2461,8 +2466,9 @@ namespace MHFZ_Overlay
             if (DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt())
             {
                 DataLoader.model.previousTimeInt = DataLoader.model.TimeInt();
-                DataLoader.model.HitsTakenBlockedPerSecond = DataLoader.model.CalculateHitsTakenBlockedPerSecond();
+                DataLoader.model.TotalHitsTakenBlockedPerSecond = DataLoader.model.CalculateTotalHitsTakenBlockedPerSecond();
                 DataLoader.model.HitsPerSecond = DataLoader.model.CalculateHitsPerSecond();
+                DataLoader.model.TotalHitsTakenBlockedPerSecond = DataLoader.model.CalculateTotalHitsTakenBlockedPerSecond();
                 DataLoader.model.DPS = DataLoader.model.CalculateDPS();
                 DataLoader.model.InsertQuestInfoIntoDictionaries();
             }

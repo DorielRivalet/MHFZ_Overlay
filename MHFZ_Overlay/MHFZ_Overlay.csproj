@@ -75,6 +75,8 @@
     <None Remove="UI\Icons\png\blue_soul.png" />
     <None Remove="UI\Icons\png\burst_red.png" />
     <None Remove="UI\Icons\png\clock_red.png" />
+    <None Remove="UI\Icons\png\defense_down.png" />
+    <None Remove="UI\Icons\png\defense_up.png" />
     <None Remove="UI\Icons\png\sand_clock2_red.png" />
     <None Remove="UI\Icons\poison.png" />
     <None Remove="UI\Icons\quest_host.png" />
@@ -328,6 +330,8 @@
     <Resource Include="UI\Icons\png\clear.png" />
     <Resource Include="UI\Icons\png\clock.png" />
     <Resource Include="UI\Icons\png\clock_red.png" />
+    <Resource Include="UI\Icons\png\defense_down.png" />
+    <Resource Include="UI\Icons\png\defense_up.png" />
     <Resource Include="UI\Icons\png\dure_attack.png" />
     <Resource Include="UI\Icons\png\dure_attack_red.png" />
     <Resource Include="UI\Icons\png\dure_defense.png" />

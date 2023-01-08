@@ -565,7 +565,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("560")]
+        [global::System.Configuration.DefaultSettingValueAttribute("520")]
         public double TimerY {
             get {
                 return ((double)(this["TimerY"]));
@@ -601,7 +601,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("600")]
+        [global::System.Configuration.DefaultSettingValueAttribute("560")]
         public double HitCountY {
             get {
                 return ((double)(this["HitCountY"]));
@@ -637,7 +637,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("640")]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
         public double PlayerAtkY {
             get {
                 return ((double)(this["PlayerAtkY"]));
@@ -1729,7 +1729,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("520")]
+        [global::System.Configuration.DefaultSettingValueAttribute("480")]
         public double PlayerDPSY {
             get {
                 return ((double)(this["PlayerDPSY"]));
@@ -1917,6 +1917,66 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["HitsPerSecondShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TotalHitsTakenBlockedShown {
+            get {
+                return ((bool)(this["TotalHitsTakenBlockedShown"]));
+            }
+            set {
+                this["TotalHitsTakenBlockedShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TotalHitsTakenBlockedPerSecondShown {
+            get {
+                return ((bool)(this["TotalHitsTakenBlockedPerSecondShown"]));
+            }
+            set {
+                this["TotalHitsTakenBlockedPerSecondShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableTotalHitsTakenBlockedColor {
+            get {
+                return ((bool)(this["EnableTotalHitsTakenBlockedColor"]));
+            }
+            set {
+                this["EnableTotalHitsTakenBlockedColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
+        public double TotalHitsTakenBlockedX {
+            get {
+                return ((double)(this["TotalHitsTakenBlockedX"]));
+            }
+            set {
+                this["TotalHitsTakenBlockedX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("640")]
+        public double TotalHitsTakenBlockedY {
+            get {
+                return ((double)(this["TotalHitsTakenBlockedY"]));
+            }
+            set {
+                this["TotalHitsTakenBlockedY"] = value;
             }
         }
     }
