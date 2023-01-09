@@ -1979,5 +1979,101 @@ namespace MHFZ_Overlay {
                 this["TotalHitsTakenBlockedY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool KBMLayoutShown {
+            get {
+                return ((bool)(this["KBMLayoutShown"]));
+            }
+            set {
+                this["KBMLayoutShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double KBMLayoutX {
+            get {
+                return ((double)(this["KBMLayoutX"]));
+            }
+            set {
+                this["KBMLayoutX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double KBMLayoutY {
+            get {
+                return ((double)(this["KBMLayoutY"]));
+            }
+            set {
+                this["KBMLayoutY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ControllerLayoutShown {
+            get {
+                return ((bool)(this["ControllerLayoutShown"]));
+            }
+            set {
+                this["ControllerLayoutShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ControllerLayoutX {
+            get {
+                return ((double)(this["ControllerLayoutX"]));
+            }
+            set {
+                this["ControllerLayoutX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ControllerLayoutY {
+            get {
+                return ((double)(this["ControllerLayoutY"]));
+            }
+            set {
+                this["ControllerLayoutY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableKeyLogging {
+            get {
+                return ((bool)(this["EnableKeyLogging"]));
+            }
+            set {
+                this["EnableKeyLogging"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3840x2160")]
+        public string MaxResolution {
+            get {
+                return ((string)(this["MaxResolution"]));
+            }
+            set {
+                this["MaxResolution"] = value;
+            }
+        }
     }
 }

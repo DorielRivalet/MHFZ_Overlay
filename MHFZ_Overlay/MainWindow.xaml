@@ -10,7 +10,8 @@
         d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
         x:Name="Window"
-        Title="MHF-Z Overlay" Height="2160" Width="3840 " Background="Transparent" AllowsTransparency="True" WindowStyle="None" FontFamily="{StaticResource Source Code Pro Bold}"
+        Title="MHF-Z Overlay"         Height="{Binding ElementName=ResolutionComboBox, Path=SelectedValue.Height}"
+        Width="{Binding ElementName=ResolutionComboBox, Path=SelectedValue.Width}" Background="Transparent" AllowsTransparency="True" WindowStyle="None" FontFamily="{StaticResource Source Code Pro Bold}"
         Style="{StaticResource WinAll}">
     <Window.Resources>
         <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>

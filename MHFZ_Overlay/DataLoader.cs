@@ -70,7 +70,7 @@ namespace MHFZ_Overlay
             }
         }
 
-        private List<string> bannedProcesses = new List<string>()
+        private List<string> bannedProcessesName = new List<string>()
         {
             "mhf_displayer","Cheat Engine","cheatengine","cheat","Cheat"
         };
@@ -78,15 +78,39 @@ namespace MHFZ_Overlay
         public void CheckForExternalProcesses()
         {
             var processList = System.Diagnostics.Process.GetProcesses();
+            int overlayCount = 0;
+            int gameCount = 0;
             foreach (var process in processList)
             {
-                if (bannedProcesses.Any(s => process.ProcessName.Contains(s)))
+                if (bannedProcessesName.Any(s => process.ProcessName.Contains(s)))
                 {
                     // processName is a substring of one of the banned process strings
                     MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
                     // Close the overlay program
                     Environment.Exit(0);
                 }
+                if (process.ProcessName == "MHFZ_Overlay")
+                {
+                    overlayCount++;
+                }
+                if (process.ProcessName == "mhf")
+                {
+                    gameCount++;
+                }
+            }
+            if (overlayCount > 1)
+            {
+                // More than one "MHFZ_Overlay" process is running
+                MessageBox.Show("Close other instances of the overlay before opening a new one", "Error");
+                // Close the overlay program
+                Environment.Exit(0);
+            }
+            if (gameCount > 1)
+            {
+                // More than one game process is running
+                MessageBox.Show("Close other instances of the game before opening a new one", "Error");
+                // Close the overlay program
+                Environment.Exit(0);
             }
         }
 
