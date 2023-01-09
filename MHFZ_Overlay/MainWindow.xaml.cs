@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Dictionary;
 using DiscordRPC;
+using Gma.System.MouseKeyHook;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using Memory;
@@ -22,6 +23,7 @@ using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Forms;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -35,6 +37,8 @@ using DataFormats = System.Windows.DataFormats;
 using DataObject = System.Windows.DataObject;
 using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
+using Image = System.Windows.Controls.Image;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using Label = System.Windows.Controls.Label;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
@@ -340,6 +344,11 @@ namespace MHFZ_Overlay
 
         #region main
 
+        // Declare a dictionary to map keys to images
+        private readonly Dictionary<Keys, Image> _keyImages = new Dictionary<Keys, Image>();
+
+        private readonly Dictionary<MouseButtons, Image> _mouseImages = new Dictionary<MouseButtons, Image>();
+
         //Main entry point?        
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -402,6 +411,36 @@ namespace MHFZ_Overlay
             // Calculate the total time spent and update the TotalTimeSpent property
             DataLoader.model.TotalTimeSpent = databaseManager.CalculateTotalTimeSpent();
 
+            // Add the key-image pairs to the dictionary
+            _keyImages.Add(Keys.D1, Key1);
+            _keyImages.Add(Keys.D2, Key2);
+            _keyImages.Add(Keys.D3, Key3);
+            _keyImages.Add(Keys.D4, Key4);
+            _keyImages.Add(Keys.D5, Key5);
+            _keyImages.Add(Keys.Q, KeyQ);
+            _keyImages.Add(Keys.W, KeyW);
+            _keyImages.Add(Keys.E, KeyE);
+            _keyImages.Add(Keys.R, KeyR);
+            _keyImages.Add(Keys.T, KeyT);
+            _keyImages.Add(Keys.A, KeyA);
+            _keyImages.Add(Keys.S, KeyS);
+            _keyImages.Add(Keys.D, KeyD);
+            _keyImages.Add(Keys.F, KeyF);
+            _keyImages.Add(Keys.G, KeyG);
+            _keyImages.Add(Keys.LShiftKey, KeyShift);
+            _keyImages.Add(Keys.Z, KeyZ);
+            _keyImages.Add(Keys.X, KeyX);
+            _keyImages.Add(Keys.C, KeyC);
+            _keyImages.Add(Keys.V, KeyV);
+            _keyImages.Add(Keys.LControlKey, KeyCtrl);
+            _keyImages.Add(Keys.Space, KeySpace);
+
+            _mouseImages.Add(MouseButtons.Left, MouseLeftClick);
+            _mouseImages.Add(MouseButtons.Middle, MouseMiddleClick);
+            _mouseImages.Add(MouseButtons.Right, MouseRightClick);
+
+            // TODO controller
+            Subscribe();
         }
 
         GitHubClient ghClient = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
@@ -933,6 +972,8 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowFrameCounter = v && s.FrameCounterShown;
             DataLoader.model.ShowPlayerAttackGraph = v && s.PlayerAttackGraphShown;
             DataLoader.model.ShowDamagePerSecond = v && s.DamagePerSecondShown;
+
+            DataLoader.model.ShowKBMLayout = v && s.KBMLayoutShown;
         }
 
         #endregion
@@ -2226,6 +2267,10 @@ namespace MHFZ_Overlay
                     s.PlayerDPSX = (double)(pos.X - XOffset);
                     s.PlayerDPSY = (double)(pos.Y - XOffset);
                     break;
+                case "KMBLayoutGrid":
+                    s.KBMLayoutX = (double)(pos.X - XOffset);
+                    s.KBMLayoutY = (double)(pos.Y - XOffset);
+                    break;
 
                 case "Monster1HpBar":
                     s.Monster1HealthBarX = (double)(pos.X - XOffset);
@@ -2568,6 +2613,80 @@ namespace MHFZ_Overlay
             //    DataLoader.model.clearQuestInfoDictionaries();
             //}
         }
+
+        #endregion
+
+        #region input
+
+        private IKeyboardMouseEvents m_GlobalHook;
+
+        public void Subscribe()
+        {
+            // Note: for the application hook, use the Hook.AppEvents() instead
+            m_GlobalHook = Hook.GlobalEvents();
+
+            m_GlobalHook.MouseDownExt += GlobalHookMouseDownExt;
+            m_GlobalHook.MouseUpExt += GlobalHookMouseUpExt;
+            m_GlobalHook.KeyPress += GlobalHookKeyPress;
+            m_GlobalHook.KeyDown += GlobalHookKeyDown;
+            m_GlobalHook.KeyUp += GlobalHookKeyUp;
+
+        }
+
+        private void GlobalHookKeyPress(object sender, KeyPressEventArgs e)
+        {
+            Debug.WriteLine("KeyPress: \t{0}", e.KeyChar);
+        }
+
+        private void GlobalHookMouseDownExt(object sender, MouseEventExtArgs e)
+        {
+            if (_mouseImages.ContainsKey(e.Button))
+            {
+                _mouseImages[e.Button].Opacity = pressedKeyOpacity;
+            }
+            // uncommenting the following line will suppress the middle mouse button click
+            // if (e.Buttons == MouseButtons.Middle) { e.Handled = true; }
+        }
+
+        private void GlobalHookMouseUpExt(object sender, MouseEventExtArgs e)
+        {
+            if (_mouseImages.ContainsKey(e.Button))
+            {
+                _mouseImages[e.Button].Opacity = unpressedKeyOpacity;
+            }
+        }
+
+        public void Unsubscribe()
+        {
+            m_GlobalHook.MouseDownExt -= GlobalHookMouseDownExt;
+            m_GlobalHook.KeyPress -= GlobalHookKeyPress;
+
+            //It is recommened to dispose it
+            m_GlobalHook.Dispose();
+        }
+
+        private void GlobalHookKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (_keyImages.ContainsKey(e.KeyCode))
+            {
+                _keyImages[e.KeyCode].Opacity = pressedKeyOpacity;
+            }
+        }
+
+        private void GlobalHookKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (_keyImages.ContainsKey(e.KeyCode))
+            {
+                _keyImages[e.KeyCode].Opacity = unpressedKeyOpacity;
+            }
+        }
+
+        double pressedKeyOpacity = 0.5;
+        double unpressedKeyOpacity = 0.2;
+
+
+
+        
 
         #endregion
 

@@ -77,6 +77,9 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowMonsterPartHP { get; set; } = true;
 
+        public bool ShowKBMLayout { get; set; } = true;
+        public bool ShowControllerLayout { get; set; } = true;
+
         public bool ShowMonster1Icon { get; set; } = true;
 
         public bool ShowFrameCounter { get; set; } = true;
@@ -8991,19 +8994,23 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         // time, areaid, hitstakenblocked
         // can calculate total hits by area by checking areaid, or in total by all sum.
         public Dictionary<int,Dictionary<int, int>> hitsTakenBlockedDictionary = new Dictionary<int, Dictionary<int, int>>();
-        public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionaryDeserealized = new Dictionary<int, Dictionary<int, int>>();
 
         public Dictionary<int, int> playerHPDictionary = new Dictionary<int, int>();
-        public Dictionary<int, int> playerHPDictionaryDeserealized;
+        public Dictionary<int, int> playerHPDictionaryDeserealized = new Dictionary<int, int>();
 
         public Dictionary<int, int> playerStaminaDictionary = new Dictionary<int, int>();
-        public Dictionary<int, int> playerStaminaDictionaryDeserealized;
+        public Dictionary<int, int> playerStaminaDictionaryDeserealized = new Dictionary<int, int>();
 
         public Dictionary<int, double> hitsPerSecondDictionary = new Dictionary<int, double>();
-        public Dictionary<int, double> hitsPerSecondDictionaryDeserealized;
+        public Dictionary<int, double> hitsPerSecondDictionaryDeserealized = new Dictionary<int, double>();
 
         public Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = new Dictionary<int, double>();
-        public Dictionary<int, double> hitsTakenBlockedPerSecondDictionaryDeserealized;
+        public Dictionary<int, double> hitsTakenBlockedPerSecondDictionaryDeserealized = new Dictionary<int, double>();
+
+        Dictionary<int, string> keystrokeDictionary = new Dictionary<int, string>();
+        Dictionary<int, string> keystrokeDictionaryDeserealized = new Dictionary<int, string>();
+
 
         // Initialize the damageDealt and timeElapsed variables to 0
         //int damageDealt = 0;

@@ -1994,7 +1994,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("820")]
         public double KBMLayoutX {
             get {
                 return ((double)(this["KBMLayoutX"]));
@@ -2006,7 +2006,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("610")]
         public double KBMLayoutY {
             get {
                 return ((double)(this["KBMLayoutY"]));
@@ -2066,13 +2066,25 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3840x2160")]
-        public string MaxResolution {
+        [global::System.Configuration.DefaultSettingValueAttribute("3840")]
+        public int MaxResolutionWidth {
             get {
-                return ((string)(this["MaxResolution"]));
+                return ((int)(this["MaxResolutionWidth"]));
             }
             set {
-                this["MaxResolution"] = value;
+                this["MaxResolutionWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2160")]
+        public string MaxResolutionHeight {
+            get {
+                return ((string)(this["MaxResolutionHeight"]));
+            }
+            set {
+                this["MaxResolutionHeight"] = value;
             }
         }
     }

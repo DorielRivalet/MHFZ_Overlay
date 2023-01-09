@@ -74,10 +74,57 @@
     <None Remove="UI\Icons\png\attack_up_red.png" />
     <None Remove="UI\Icons\png\blue_soul.png" />
     <None Remove="UI\Icons\png\burst_red.png" />
+    <None Remove="UI\Icons\png\clear2.png" />
     <None Remove="UI\Icons\png\clock_red.png" />
+    <None Remove="UI\Icons\png\controller_a.png" />
+    <None Remove="UI\Icons\png\controller_b.png" />
+    <None Remove="UI\Icons\png\controller_dpad.png" />
+    <None Remove="UI\Icons\png\controller_joystick.png" />
+    <None Remove="UI\Icons\png\controller_l1.png" />
+    <None Remove="UI\Icons\png\controller_l2.png" />
+    <None Remove="UI\Icons\png\controller_lb.png" />
+    <None Remove="UI\Icons\png\controller_ls.png" />
+    <None Remove="UI\Icons\png\controller_lt.png" />
+    <None Remove="UI\Icons\png\controller_r1.png" />
+    <None Remove="UI\Icons\png\controller_r2.png" />
+    <None Remove="UI\Icons\png\controller_rb.png" />
+    <None Remove="UI\Icons\png\controller_rs.png" />
+    <None Remove="UI\Icons\png\controller_rt.png" />
+    <None Remove="UI\Icons\png\controller_select.png" />
+    <None Remove="UI\Icons\png\controller_start.png" />
+    <None Remove="UI\Icons\png\controller_x.png" />
+    <None Remove="UI\Icons\png\controller_y.png" />
     <None Remove="UI\Icons\png\defense_down.png" />
     <None Remove="UI\Icons\png\defense_up.png" />
+    <None Remove="UI\Icons\png\here.png" />
+    <None Remove="UI\Icons\png\key_1.png" />
+    <None Remove="UI\Icons\png\key_2.png" />
+    <None Remove="UI\Icons\png\key_3.png" />
+    <None Remove="UI\Icons\png\key_4.png" />
+    <None Remove="UI\Icons\png\key_5.png" />
+    <None Remove="UI\Icons\png\key_a.png" />
+    <None Remove="UI\Icons\png\key_c.png" />
+    <None Remove="UI\Icons\png\key_ctrl.png" />
+    <None Remove="UI\Icons\png\key_d.png" />
+    <None Remove="UI\Icons\png\key_e.png" />
+    <None Remove="UI\Icons\png\key_f.png" />
+    <None Remove="UI\Icons\png\key_g.png" />
+    <None Remove="UI\Icons\png\key_h.png" />
+    <None Remove="UI\Icons\png\key_q.png" />
+    <None Remove="UI\Icons\png\key_r.png" />
+    <None Remove="UI\Icons\png\key_s.png" />
+    <None Remove="UI\Icons\png\key_shift.png" />
+    <None Remove="UI\Icons\png\key_space.png" />
+    <None Remove="UI\Icons\png\key_t.png" />
+    <None Remove="UI\Icons\png\key_v.png" />
+    <None Remove="UI\Icons\png\key_w.png" />
+    <None Remove="UI\Icons\png\key_x.png" />
+    <None Remove="UI\Icons\png\key_z.png" />
+    <None Remove="UI\Icons\png\left_click.png" />
+    <None Remove="UI\Icons\png\middle_click.png" />
+    <None Remove="UI\Icons\png\right_click.png" />
     <None Remove="UI\Icons\png\sand_clock2_red.png" />
+    <None Remove="UI\Icons\png\world.png" />
     <None Remove="UI\Icons\poison.png" />
     <None Remove="UI\Icons\quest_host.png" />
     <None Remove="UI\Icons\quest_info.png" />
@@ -184,6 +231,7 @@
     <PackageReference Include="Memory.dll.x86" Version="1.2.24" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.1" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1418.22" />
+    <PackageReference Include="MouseKeyHook" Version="5.6.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Octokit" Version="4.0.1" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
@@ -328,8 +376,27 @@
     <Resource Include="UI\Icons\png\burst.png" />
     <Resource Include="UI\Icons\png\burst_red.png" />
     <Resource Include="UI\Icons\png\clear.png" />
+    <Resource Include="UI\Icons\png\clear2.png" />
     <Resource Include="UI\Icons\png\clock.png" />
     <Resource Include="UI\Icons\png\clock_red.png" />
+    <Resource Include="UI\Icons\png\controller_a.png" />
+    <Resource Include="UI\Icons\png\controller_b.png" />
+    <Resource Include="UI\Icons\png\controller_dpad.png" />
+    <Resource Include="UI\Icons\png\controller_joystick.png" />
+    <Resource Include="UI\Icons\png\controller_l1.png" />
+    <Resource Include="UI\Icons\png\controller_l2.png" />
+    <Resource Include="UI\Icons\png\controller_lb.png" />
+    <Resource Include="UI\Icons\png\controller_ls.png" />
+    <Resource Include="UI\Icons\png\controller_lt.png" />
+    <Resource Include="UI\Icons\png\controller_r1.png" />
+    <Resource Include="UI\Icons\png\controller_r2.png" />
+    <Resource Include="UI\Icons\png\controller_rb.png" />
+    <Resource Include="UI\Icons\png\controller_rs.png" />
+    <Resource Include="UI\Icons\png\controller_rt.png" />
+    <Resource Include="UI\Icons\png\controller_select.png" />
+    <Resource Include="UI\Icons\png\controller_start.png" />
+    <Resource Include="UI\Icons\png\controller_x.png" />
+    <Resource Include="UI\Icons\png\controller_y.png" />
     <Resource Include="UI\Icons\png\defense_down.png" />
     <Resource Include="UI\Icons\png\defense_up.png" />
     <Resource Include="UI\Icons\png\dure_attack.png" />
@@ -344,16 +411,44 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
+    <Resource Include="UI\Icons\png\here.png" />
+    <Resource Include="UI\Icons\png\key_1.png" />
+    <Resource Include="UI\Icons\png\key_2.png" />
+    <Resource Include="UI\Icons\png\key_3.png" />
+    <Resource Include="UI\Icons\png\key_4.png" />
+    <Resource Include="UI\Icons\png\key_5.png" />
+    <Resource Include="UI\Icons\png\key_a.png" />
+    <Resource Include="UI\Icons\png\key_c.png" />
+    <Resource Include="UI\Icons\png\key_ctrl.png" />
+    <Resource Include="UI\Icons\png\key_d.png" />
+    <Resource Include="UI\Icons\png\key_e.png" />
+    <Resource Include="UI\Icons\png\key_f.png" />
+    <Resource Include="UI\Icons\png\key_g.png" />
+    <Resource Include="UI\Icons\png\key_h.png" />
+    <Resource Include="UI\Icons\png\key_q.png" />
+    <Resource Include="UI\Icons\png\key_r.png" />
+    <Resource Include="UI\Icons\png\key_s.png" />
+    <Resource Include="UI\Icons\png\key_shift.png" />
+    <Resource Include="UI\Icons\png\key_space.png" />
+    <Resource Include="UI\Icons\png\key_t.png" />
+    <Resource Include="UI\Icons\png\key_v.png" />
+    <Resource Include="UI\Icons\png\key_w.png" />
+    <Resource Include="UI\Icons\png\key_x.png" />
+    <Resource Include="UI\Icons\png\key_z.png" />
+    <Resource Include="UI\Icons\png\left_click.png" />
     <Resource Include="UI\Icons\png\loading.png" />
+    <Resource Include="UI\Icons\png\middle_click.png" />
     <Resource Include="UI\Icons\png\paralysis.png" />
     <Resource Include="UI\Icons\png\quest_host.png" />
     <Resource Include="UI\Icons\png\red_soul.png" />
+    <Resource Include="UI\Icons\png\right_click.png" />
     <Resource Include="UI\Icons\png\sand_clock.png" />
     <Resource Include="UI\Icons\png\sand_clock2.png" />
     <Resource Include="UI\Icons\png\sand_clock2_red.png" />
     <Resource Include="UI\Icons\png\sleep.png" />
     <Resource Include="UI\Icons\png\study.png" />
     <Resource Include="UI\Icons\png\stun.png" />
+    <Resource Include="UI\Icons\png\world.png" />
     <Resource Include="UI\Icons\Sac_Icon_White.xaml" />
     <Resource Include="UI\Icons\Scale_Icon_White.xaml" />
     <Resource Include="UI\Icons\Scrap_Icon_White.xaml" />

@@ -495,10 +495,10 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="KBMLayoutX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">820</Value>
     </Setting>
     <Setting Name="KBMLayoutY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">610</Value>
     </Setting>
     <Setting Name="ControllerLayoutShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -512,8 +512,11 @@
     <Setting Name="EnableKeyLogging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="MaxResolution" Type="System.String" Scope="User">
-      <Value Profile="(Default)">3840x2160</Value>
+    <Setting Name="MaxResolutionWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3840</Value>
+    </Setting>
+    <Setting Name="MaxResolutionHeight" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2160</Value>
     </Setting>
   </Settings>
 </SettingsFile>
