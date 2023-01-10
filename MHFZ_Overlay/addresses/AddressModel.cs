@@ -8879,39 +8879,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     return 0;
                 }
 
-                //var hitsTakenBlockedByArea = hitsTakenBlockedDictionary.SelectMany(outerDict => outerDict.Value)
-                //                                            .GroupBy(innerDict => innerDict.Key)
-                //                                            .ToDictionary(group => group.Key, group => group.Sum(innerDict => innerDict.Value));
-
-                //return hitsTakenBlockedByArea.Values.Sum();
-
-                // Initialize a dictionary to store the maximum value of each key
-                Dictionary<int, int> maxValues = new Dictionary<int, int>();
-
-                // Iterate through the objects
-                foreach (var obj in hitsTakenBlockedDictionary)
-                {
-                    // Get the inner dictionary from the object
-                    var innerDict = obj.Value;
-
-                    // Iterate through the inner dictionary
-                    foreach (var kvp in innerDict)
-                    {
-                        // If the key does not exist in the maxValues dictionary, add it with the current value
-                        if (!maxValues.ContainsKey(kvp.Key))
-                        {
-                            maxValues[kvp.Key] = kvp.Value;
-                        }
-                        // Otherwise, update the value in the maxValues dictionary if the current value is higher
-                        else
-                        {
-                            maxValues[kvp.Key] = Math.Max(maxValues[kvp.Key], kvp.Value);
-                        }
-                    }
-                }
-
                 // Sum up the values in the maxValues dictionary to get the total amount
-                int totalAmount = maxValues.Values.Sum();
+                int totalAmount = hitsTakenBlockedDictionary.Count();
                 return totalAmount;
             }
         }
@@ -9322,7 +9291,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 partnyaBagDictionary.Add(TimeInt(), itemIDsQuantityList);
             }
 
-            if (previousHitsTakenBlocked != AreaHitsTakenBlocked())
+            if (previousHitsTakenBlocked != AreaHitsTakenBlocked() && AreaHitsTakenBlocked() != 0)
             {
                 previousHitsTakenBlocked = AreaHitsTakenBlocked();
                 Dictionary<int,int> hitsAreaPairs = new Dictionary<int, int>();

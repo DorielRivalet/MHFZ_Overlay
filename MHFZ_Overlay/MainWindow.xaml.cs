@@ -2520,7 +2520,6 @@ namespace MHFZ_Overlay
                 DataLoader.model.previousTimeInt = DataLoader.model.TimeInt();
                 DataLoader.model.TotalHitsTakenBlockedPerSecond = DataLoader.model.CalculateTotalHitsTakenBlockedPerSecond();
                 DataLoader.model.HitsPerSecond = DataLoader.model.CalculateHitsPerSecond();
-                DataLoader.model.TotalHitsTakenBlockedPerSecond = DataLoader.model.CalculateTotalHitsTakenBlockedPerSecond();
                 DataLoader.model.DPS = DataLoader.model.CalculateDPS();
                 DataLoader.model.APM = DataLoader.model.CalculateAPM();
                 DataLoader.model.InsertQuestInfoIntoDictionaries();
