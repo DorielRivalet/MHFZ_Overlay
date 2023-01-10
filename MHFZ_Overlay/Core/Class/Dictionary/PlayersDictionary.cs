@@ -20,7 +20,7 @@ namespace Dictionary
             // The creation dates are from youtube channel creation date or known date they joined frontier.
             // the gender are the characters most recent and prominent gender
             //Doriel
-            {2, new List<string>{"2019-09-05","https://yt3.ggpht.com/RbjaWxFESqX18_NYoWnRATISLZH0U94oG00jp-sTQ9iSciKazxgRRC8ecg3RXg4yI31kfXySQw=s176-c-k-c0x00ffffff-no-rj-mo","Doriel","DippinDots","Frontier Shenanigans","Male","Argentina"}},
+            {2, new List<string>{"2019-09-05","https://yt3.ggpht.com/RbjaWxFESqX18_NYoWnRATISLZH0U94oG00jp-sTQ9iSciKazxgRRC8ecg3RXg4yI31kfXySQw=s176-c-k-c0x00ffffff-no-rj-mo","Doriel","Unknown","Dancing Crab","Male","Argentina"}},
             //TOMOTAKA
             {3, new List<string>{"2017-04-03","https://yt3.googleusercontent.com/ytc/AMLnZu8z2zQVY19h79QdJlxhX4c2_XCVYqvlcAso8ztv=s176-c-k-c0x00ffffff-no-rj-mo","TOMOTAKA","Unknown","CAPCOM ONLINE GAMES Japan","Male","Japan"}},
             // Hygogg
@@ -33,8 +33,6 @@ namespace Dictionary
             {7, new List<string>{"2013-08-30","https://yt3.googleusercontent.com/ytc/AMLnZu_lgju1RLfdoHwZaBpCVXlqbaI9s5ZDVpxWB8zUog=s176-c-k-c0x00ffffff-no-rj-mo","Jun","Unknown","CAPCOM ONLINE GAMES Japan","Female","Japan"}},
             // Kairi
             {8, new List<string>{"2019-12-27","https://yt3.googleusercontent.com/ytc/AMLnZu_qx9rv53gJmvds8rE2BCbYQ3AUPbz0PBQEdMEJ=s176-c-k-c0x00ffffff-no-rj-mo","Kairi","Unknown","Local","Female","World"}},
-            // Sera
-            {9, new List<string>{"2019-10-19","https://yt3.ggpht.com/Iqmtb1_ZvpU9DQyfhODCy9qMqZDdQboBJ96LlywAf-0H4suIevRY9S08OZyI01hztwL3iMsR4aw=s176-c-k-c0x00ffffff-no-rj-mo","Sera","Unknown","Frontier EU","Female","Germany"}},
             // Nerscylia
             {10, new List<string>{"2022-08-29","https://yt3.ggpht.com/2LsZGiRbTZ6P64X4_H7B6rVhBvvONEGspYqKOD-RnEWg0ARN2s56CgY9MyHkwGqxMAWS_R64ZKE=s176-c-k-c0x00ffffff-no-rj-mo","Nerscylia","Unknown","Unknown","Male","World"}},
             

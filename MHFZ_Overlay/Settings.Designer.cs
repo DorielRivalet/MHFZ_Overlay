@@ -565,7 +565,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("520")]
+        [global::System.Configuration.DefaultSettingValueAttribute("440")]
         public double TimerY {
             get {
                 return ((double)(this["TimerY"]));
@@ -1729,7 +1729,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("480")]
+        [global::System.Configuration.DefaultSettingValueAttribute("520")]
         public double PlayerDPSY {
             get {
                 return ((double)(this["PlayerDPSY"]));
@@ -2085,6 +2085,54 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["MaxResolutionHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ActionsPerMinuteShown {
+            get {
+                return ((bool)(this["ActionsPerMinuteShown"]));
+            }
+            set {
+                this["ActionsPerMinuteShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
+        public double ActionsPerMinuteX {
+            get {
+                return ((double)(this["ActionsPerMinuteX"]));
+            }
+            set {
+                this["ActionsPerMinuteX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("480")]
+        public double ActionsPerMinuteY {
+            get {
+                return ((double)(this["ActionsPerMinuteY"]));
+            }
+            set {
+                this["ActionsPerMinuteY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableAverageActionsPerMinuteColor {
+            get {
+                return ((bool)(this["EnableAverageActionsPerMinuteColor"]));
+            }
+            set {
+                this["EnableAverageActionsPerMinuteColor"] = value;
             }
         }
     }

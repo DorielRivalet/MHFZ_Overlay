@@ -78,6 +78,8 @@ namespace MHFZ_Overlay.addresses
         public bool ShowMonsterPartHP { get; set; } = true;
 
         public bool ShowKBMLayout { get; set; } = true;
+        public bool ShowAPM { get; set; } = true;
+
         public bool ShowControllerLayout { get; set; } = true;
 
         public bool ShowMonster1Icon { get; set; } = true;
@@ -721,6 +723,11 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string GetFullCurrentProgramVersion()
+        {
+            return string.Format("Monster Hunter Frontier Z Overlay {0}", MainWindow.CurrentProgramVersion);
+        }
+
         public static string SimplifiedCurrentProgramVersion
         {
             get
@@ -751,15 +758,6 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-
-                if (QuestID() == 0) //should work fine
-                {
-                    HighestHitsPerSecond = 0;
-                }
-
-                if (HitsPerSecond > HighestHitsPerSecond)
-                    HighestHitsPerSecond = HitsPerSecond;
-
                 string hitsPerSecond = "";
 
                 if (ShowHitsPerSecond())
@@ -1453,8 +1451,6 @@ namespace MHFZ_Overlay.addresses
 
         public double HighestDPS { get; set; } = 0;
 
-        public double HighestHitsPerSecond { get; set; } = 0;
-
         /// <summary>
         /// Shows the color of the highest atk.
         /// </summary>
@@ -1481,6 +1477,15 @@ namespace MHFZ_Overlay.addresses
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableAverageHitsPerSecondColor)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool ShowAverageAPMColor()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableAverageActionsPerMinuteColor)
                 return true;
             else
                 return false;
@@ -1556,7 +1561,7 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public string isHighestHitsPerSecond
+        public string isAverageHitsPerSecond
         {
             get
             {
@@ -1568,6 +1573,24 @@ namespace MHFZ_Overlay.addresses
                 else
                 {
                     HitCountIcon = "UI/Icons/png/blue_soul.png";
+                    return "#f5e0dc";
+                }
+            }
+        }
+
+        public string isAverageAPM
+        {
+            get
+            {
+                // get the average hits of a weapon per second, multiply by 60 to get the minutes, multiply by 2 to account for other actions
+                if (APM >= GetAverageHitsPerSecond(WeaponType()) * 60 * 2 && ShowAverageAPMColor())
+                {
+                    APMIcon = "UI/Icons/png/flame_hc.png";
+                    return "#f38ba8";
+                }
+                else
+                {
+                    APMIcon = "UI/Icons/png/flame_ul.png";
                     return "#f5e0dc";
                 }
             }
@@ -1609,10 +1632,10 @@ namespace MHFZ_Overlay.addresses
             if (!averageFound)
                 return 0;
 
-            double averageMultiplier = 1;
+            double averageMultiplier = 0.5;
 
             if (!Dictionary.WeaponCanUseReflect.WeaponTypeID[weaponTypeID])
-                averageMultiplier = 0.75;
+                averageMultiplier = 0.4;
 
             return Dictionary.WeaponAverageHitsPerSecond.WeaponAverageHitsPerSecondID[weaponTypeID] * averageMultiplier;
         }
@@ -1706,6 +1729,9 @@ namespace MHFZ_Overlay.addresses
         public string PlayerAttackIcon { get; set; } = "UI/Icons/png/attack_up.png";
         public string PlayerHitsTakenBlockedIcon { get; set; } = "UI/Icons/png/defense_up.png";
         public string HitCountIcon { get; set; } = "UI/Icons/png/blue_soul.png";
+
+        public string APMIcon { get; set; } = "UI/Icons/png/flame_ul.png";
+
 
         ///<summary>
         ///<para>Player true raw</para>
@@ -8840,6 +8866,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public double HitsPerSecond { get; set; } = 0;
 
+        public double APM { get; set; } = 0;
 
         public double TotalHitsTakenBlocked
         {
@@ -8942,6 +8969,15 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return damageDealt / (timeElapsedIn30FPS/30);
         }   
 
+        public double CalculateAPM()
+        {
+            double totalInputs = gamepadInputDictionary.Count + keystrokesDictionary.Count + mouseInputDictionary.Count;
+            double timeElapsedIn30FPS = TimeDefInt() - TimeInt();
+
+            return totalInputs / (timeElapsedIn30FPS/1800);
+        }
+
+
         // TODO
         public double CalculateTotalHitsTakenBlockedPerSecond()
         {
@@ -9008,9 +9044,17 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = new Dictionary<int, double>();
         public Dictionary<int, double> hitsTakenBlockedPerSecondDictionaryDeserealized = new Dictionary<int, double>();
 
-        Dictionary<int, string> keystrokeDictionary = new Dictionary<int, string>();
-        Dictionary<int, string> keystrokeDictionaryDeserealized = new Dictionary<int, string>();
+        public Dictionary<int, string> keystrokesDictionary = new Dictionary<int, string>();
+        public Dictionary<int, string> keystrokesDictionaryDeserealized = new Dictionary<int, string>();
 
+        public Dictionary<int, string> gamepadInputDictionary = new Dictionary<int, string>();
+        public Dictionary<int, string> gamepadInputDictionaryDeserealized = new Dictionary<int, string>();
+
+        public Dictionary<int, string> mouseInputDictionary = new Dictionary<int, string>();
+        public Dictionary<int, string> mouseInputDictionaryDeserealized = new Dictionary<int, string>();
+
+        public Dictionary<int, double> actionsPerMinuteDictionary = new Dictionary<int, double>();
+        public Dictionary<int, double> actionsPerMinuteDictionaryDeserealized = new Dictionary<int, double>();
 
         // Initialize the damageDealt and timeElapsed variables to 0
         //int damageDealt = 0;
@@ -9053,6 +9097,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public int previousPlayerStamina = 0;
 
         public double previousHitsPerSecond = 0;
+        public double previousActionsPerMinute = 0;
 
         public void InsertQuestInfoIntoDictionaries()
         {
@@ -9308,6 +9353,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 previousTotalHitsTakenBlockedPerSecond = TotalHitsTakenBlockedPerSecond;
                 hitsTakenBlockedPerSecondDictionary.Add(TimeInt(), TotalHitsTakenBlockedPerSecond);
             }
+
+            if (previousActionsPerMinute != APM)
+            {
+                previousActionsPerMinute = APM;
+                actionsPerMinuteDictionary.Add(TimeInt(), APM);
+            }
         }
 
         public void resetQuestInfoVariables()
@@ -9391,6 +9442,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             previousPlayerHP = 0;
             previousPlayerStamina = 0;
             previousHitsPerSecond = 0;
+            previousActionsPerMinute = 0;
         }
 
         public void clearQuestInfoDictionaries()
@@ -9413,6 +9465,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             playerStaminaDictionary.Clear();
             hitsPerSecondDictionary.Clear();
             hitsTakenBlockedPerSecondDictionary.Clear();
+            keystrokesDictionary.Clear();
+            mouseInputDictionary.Clear();
+            gamepadInputDictionary.Clear();
+            actionsPerMinuteDictionary.Clear();
         }
 
 

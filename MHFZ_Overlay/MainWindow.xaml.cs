@@ -974,6 +974,7 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowDamagePerSecond = v && s.DamagePerSecondShown;
 
             DataLoader.model.ShowKBMLayout = v && s.KBMLayoutShown;
+            DataLoader.model.ShowAPM = v && s.ActionsPerMinuteShown;
         }
 
         #endregion
@@ -2267,9 +2268,13 @@ namespace MHFZ_Overlay
                     s.PlayerDPSX = (double)(pos.X - XOffset);
                     s.PlayerDPSY = (double)(pos.Y - XOffset);
                     break;
-                case "KMBLayoutGrid":
+                case "KBMLayoutGrid":
                     s.KBMLayoutX = (double)(pos.X - XOffset);
                     s.KBMLayoutY = (double)(pos.Y - XOffset);
+                    break;
+                case "ActionsPerMinuteInfo":
+                    s.ActionsPerMinuteX = (double)(pos.X - XOffset);
+                    s.ActionsPerMinuteY = (double)(pos.Y - XOffset);
                     break;
 
                 case "Monster1HpBar":
@@ -2517,6 +2522,7 @@ namespace MHFZ_Overlay
                 DataLoader.model.HitsPerSecond = DataLoader.model.CalculateHitsPerSecond();
                 DataLoader.model.TotalHitsTakenBlockedPerSecond = DataLoader.model.CalculateTotalHitsTakenBlockedPerSecond();
                 DataLoader.model.DPS = DataLoader.model.CalculateDPS();
+                DataLoader.model.APM = DataLoader.model.CalculateAPM();
                 DataLoader.model.InsertQuestInfoIntoDictionaries();
             }
 
@@ -2635,13 +2641,17 @@ namespace MHFZ_Overlay
 
         private void GlobalHookKeyPress(object sender, KeyPressEventArgs e)
         {
-            Debug.WriteLine("KeyPress: \t{0}", e.KeyChar);
         }
 
         private void GlobalHookMouseDownExt(object sender, MouseEventExtArgs e)
         {
             if (_mouseImages.ContainsKey(e.Button))
             {
+                Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+                if (s.EnableKeyLogging && !DataLoader.model.mouseInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _mouseImages[e.Button].Opacity == unpressedKeyOpacity)
+                    DataLoader.model.mouseInputDictionary.Add(DataLoader.model.TimeInt(), e.Button.ToString());
+
                 _mouseImages[e.Button].Opacity = pressedKeyOpacity;
             }
             // uncommenting the following line will suppress the middle mouse button click
@@ -2661,6 +2671,10 @@ namespace MHFZ_Overlay
             m_GlobalHook.MouseDownExt -= GlobalHookMouseDownExt;
             m_GlobalHook.KeyPress -= GlobalHookKeyPress;
 
+            m_GlobalHook.MouseUpExt -= GlobalHookMouseUpExt;
+            m_GlobalHook.KeyDown -= GlobalHookKeyDown;
+            m_GlobalHook.KeyUp -= GlobalHookKeyUp;
+
             //It is recommened to dispose it
             m_GlobalHook.Dispose();
         }
@@ -2669,6 +2683,11 @@ namespace MHFZ_Overlay
         {
             if (_keyImages.ContainsKey(e.KeyCode))
             {
+                Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+                if (s.EnableKeyLogging && !DataLoader.model.keystrokesDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _keyImages[e.KeyCode].Opacity == unpressedKeyOpacity)
+                    DataLoader.model.keystrokesDictionary.Add(DataLoader.model.TimeInt(), e.KeyCode.ToString());
+
                 _keyImages[e.KeyCode].Opacity = pressedKeyOpacity;
             }
         }

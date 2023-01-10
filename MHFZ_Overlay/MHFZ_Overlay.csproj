@@ -96,6 +96,8 @@
     <None Remove="UI\Icons\png\controller_y.png" />
     <None Remove="UI\Icons\png\defense_down.png" />
     <None Remove="UI\Icons\png\defense_up.png" />
+    <None Remove="UI\Icons\png\flame_hc.png" />
+    <None Remove="UI\Icons\png\flame_ul.png" />
     <None Remove="UI\Icons\png\here.png" />
     <None Remove="UI\Icons\png\key_1.png" />
     <None Remove="UI\Icons\png\key_2.png" />
@@ -411,6 +413,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
+    <Resource Include="UI\Icons\png\flame_hc.png" />
+    <Resource Include="UI\Icons\png\flame_ul.png" />
     <Resource Include="UI\Icons\png\here.png" />
     <Resource Include="UI\Icons\png\key_1.png" />
     <Resource Include="UI\Icons\png\key_2.png" />

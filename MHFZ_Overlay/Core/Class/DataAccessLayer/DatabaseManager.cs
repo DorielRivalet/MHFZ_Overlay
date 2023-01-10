@@ -228,7 +228,7 @@ namespace MHFZ_Overlay
                 var model = dataLoader.model;
                 string sql;
                 DateTime createdAt = DateTime.Now;
-                string createdBy = "Overlay";
+                string createdBy = dataLoader.model.GetFullCurrentProgramVersion();
                 // TODO: tomotaka is 2, hygogg is 3, etc. prob make a dictionary that holds these.
                 int playerID = 1;
 
@@ -279,6 +279,10 @@ namespace MHFZ_Overlay
                         HitsTakenBlockedPerSecondDictionary,
                         PlayerHPDictionary,
                         PlayerStaminaDictionary,
+                        KeystrokesDictionary,
+                        MouseInputDictionary,
+                        GamepadInputDictionary,
+                        ActionsPerMinuteDictionary,
                         PartySize,
                         OverlayMode
                         ) VALUES (
@@ -311,6 +315,10 @@ namespace MHFZ_Overlay
                         @HitsTakenBlockedPerSecondDictionary,
                         @PlayerHPDictionary,
                         @PlayerStaminaDictionary,
+                        @KeystrokesDictionary,
+                        @MouseInputDictionary,
+                        @GamepadInputDictionary,
+                        @ActionsPerMinuteDictionary,
                         @PartySize,
                         @OverlayMode
                         )";
@@ -399,6 +407,10 @@ namespace MHFZ_Overlay
                             Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = dataLoader.model.hitsTakenBlockedPerSecondDictionary;
                             Dictionary<int, int> playerHPDictionary = dataLoader.model.playerHPDictionary;
                             Dictionary<int, int> playerStaminaDictionary = dataLoader.model.playerStaminaDictionary;
+                            Dictionary<int, string> keystrokesDictionary = dataLoader.model.keystrokesDictionary;
+                            Dictionary<int, string> mouseInputDictionary = dataLoader.model.mouseInputDictionary;
+                            Dictionary<int, string> gamepadInputDictionary = dataLoader.model.gamepadInputDictionary;
+                            Dictionary<int, double> actionsPerMinuteDictionary = dataLoader.model.actionsPerMinuteDictionary;
                             int partySize = dataLoader.model.PartySize();
                             string overlayMode = dataLoader.model.GetOverlayMode();
                             overlayMode = overlayMode.Replace("(", "");
@@ -414,13 +426,14 @@ namespace MHFZ_Overlay
                             //                    SELECT LAST_INSERT_ROWID() as ZenithSkillsID;
 
                             string questData = string.Format(
-                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}",
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}",
                                 runID, createdAt, createdBy, questID, finalTimeValue, 
                                 finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity, starGrade, 
                                 rankName, objectiveName, date, attackBuffDictionary, hitCountDictionary,
                                 hitsPerSecondDictionary, damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary, cartsDictionary, 
                                 monster1HPDictionary, monster2HPDictionary, monster3HPDictionary, monster4HPDictionary, hitsTakenBlockedDictionary,
-                                hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary, partySize, overlayMode
+                                hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary, keystrokesDictionary, mouseInputDictionary,
+                                gamepadInputDictionary, actionsPerMinuteDictionary, partySize, overlayMode
                                 );
 
                             // Calculate the hash value for the data in the row
@@ -455,6 +468,10 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@HitsTakenBlockedPerSecondDictionary", JsonConvert.SerializeObject(hitsTakenBlockedPerSecondDictionary));
                             cmd.Parameters.AddWithValue("@PlayerHPDictionary", JsonConvert.SerializeObject(playerHPDictionary));
                             cmd.Parameters.AddWithValue("@PlayerStaminaDictionary", JsonConvert.SerializeObject(playerStaminaDictionary));
+                            cmd.Parameters.AddWithValue("@KeystrokesDictionary", JsonConvert.SerializeObject(keystrokesDictionary));
+                            cmd.Parameters.AddWithValue("@MouseInputDictionary", JsonConvert.SerializeObject(mouseInputDictionary));
+                            cmd.Parameters.AddWithValue("@GamepadInputDictionary", JsonConvert.SerializeObject(gamepadInputDictionary));
+                            cmd.Parameters.AddWithValue("@ActionsPerMinuteDictionary", JsonConvert.SerializeObject(actionsPerMinuteDictionary));
                             cmd.Parameters.AddWithValue("@PartySize", partySize);
                             cmd.Parameters.AddWithValue("@OverlayMode", overlayMode);
 
@@ -2590,6 +2607,10 @@ namespace MHFZ_Overlay
                     HitsTakenBlockedPerSecondDictionary TEXT NOT NULL,
                     PlayerHPDictionary TEXT NOT NULL,
                     PlayerStaminaDictionary TEXT NOT NULL,
+                    KeystrokesDictionary TEXT NOT NULL,
+                    MouseInputDictionary TEXT NOT NULL,
+                    GamepadInputDictionary TEXT NOT NULL,
+                    ActionsPerMinuteDictionary TEXT NOT NULL,
                     PartySize INTEGER NOT NULL,
                     OverlayMode TEXT NOT NULL,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
