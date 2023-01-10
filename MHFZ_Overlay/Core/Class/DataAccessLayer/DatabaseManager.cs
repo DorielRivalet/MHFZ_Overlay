@@ -1109,6 +1109,112 @@ namespace MHFZ_Overlay
                             ammoPouchID = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
+                        sql = @"INSERT INTO PartnyaBag (
+                            CreatedAt,
+                            CreatedBy,
+                            RunID,
+                            Item1ID , 
+                            Item1Quantity ,
+                            Item2ID , 
+                            Item2Quantity ,
+                            Item3ID , 
+                            Item3Quantity ,
+                            Item4ID , 
+                            Item4Quantity ,
+                            Item5ID , 
+                            Item5Quantity ,
+                            Item6ID , 
+                            Item6Quantity ,
+                            Item7ID , 
+                            Item7Quantity ,
+                            Item8ID , 
+                            Item8Quantity ,
+                            Item9ID , 
+                            Item9Quantity ,
+                            Item10ID , 
+                            Item10Quantity
+                            )
+                            VALUES (
+                            @CreatedAt,
+                            @CreatedBy,
+                            @RunID,
+                            @Item1ID , 
+                            @Item1Quantity ,
+                            @Item2ID , 
+                            @Item2Quantity ,
+                            @Item3ID , 
+                            @Item3Quantity ,
+                            @Item4ID , 
+                            @Item4Quantity ,
+                            @Item5ID , 
+                            @Item5Quantity ,
+                            @Item6ID , 
+                            @Item6Quantity ,
+                            @Item7ID , 
+                            @Item7Quantity ,
+                            @Item8ID , 
+                            @Item8Quantity ,
+                            @Item9ID , 
+                            @Item9Quantity ,
+                            @Item10ID , 
+                            @Item10Quantity)";
+
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            int item1ID = model.PartnyaBagItem1IDAtQuestStart;
+                            int item1Quantity = model.PartnyaBagItem1QuantityAtQuestStart;
+                            int item2ID = model.PartnyaBagItem2IDAtQuestStart;
+                            int item2Quantity = model.PartnyaBagItem2QuantityAtQuestStart;
+                            int item3ID = model.PartnyaBagItem3IDAtQuestStart;
+                            int item3Quantity = model.PartnyaBagItem3QuantityAtQuestStart;
+                            int item4ID = model.PartnyaBagItem4IDAtQuestStart;
+                            int item4Quantity = model.PartnyaBagItem4QuantityAtQuestStart;
+                            int item5ID = model.PartnyaBagItem5IDAtQuestStart;
+                            int item5Quantity = model.PartnyaBagItem5QuantityAtQuestStart;
+                            int item6ID = model.PartnyaBagItem6IDAtQuestStart;
+                            int item6Quantity = model.PartnyaBagItem6QuantityAtQuestStart;
+                            int item7ID = model.PartnyaBagItem7IDAtQuestStart;
+                            int item7Quantity = model.PartnyaBagItem7QuantityAtQuestStart;
+                            int item8ID = model.PartnyaBagItem8IDAtQuestStart;
+                            int item8Quantity = model.PartnyaBagItem8QuantityAtQuestStart;
+                            int item9ID = model.PartnyaBagItem9IDAtQuestStart;
+                            int item9Quantity = model.PartnyaBagItem9QuantityAtQuestStart;
+                            int item10ID = model.PartnyaBagItem10IDAtQuestStart;
+                            int item10Quantity = model.PartnyaBagItem10QuantityAtQuestStart;
+
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
+                            cmd.Parameters.AddWithValue("@RunID", runID);
+                            cmd.Parameters.AddWithValue("@Item1ID", item1ID);
+                            cmd.Parameters.AddWithValue("@Item1Quantity", item1Quantity);
+                            cmd.Parameters.AddWithValue("@Item2ID", item2ID);
+                            cmd.Parameters.AddWithValue("@Item2Quantity", item2Quantity);
+                            cmd.Parameters.AddWithValue("@Item3ID", item3ID);
+                            cmd.Parameters.AddWithValue("@Item3Quantity", item3Quantity);
+                            cmd.Parameters.AddWithValue("@Item4ID", item4ID);
+                            cmd.Parameters.AddWithValue("@Item4Quantity", item4Quantity);
+                            cmd.Parameters.AddWithValue("@Item5ID", item5ID);
+                            cmd.Parameters.AddWithValue("@Item5Quantity", item5Quantity);
+                            cmd.Parameters.AddWithValue("@Item6ID", item6ID);
+                            cmd.Parameters.AddWithValue("@Item6Quantity", item6Quantity);
+                            cmd.Parameters.AddWithValue("@Item7ID", item7ID);
+                            cmd.Parameters.AddWithValue("@Item7Quantity", item7Quantity);
+                            cmd.Parameters.AddWithValue("@Item8ID", item8ID);
+                            cmd.Parameters.AddWithValue("@Item8Quantity", item8Quantity);
+                            cmd.Parameters.AddWithValue("@Item9ID", item9ID);
+                            cmd.Parameters.AddWithValue("@Item9Quantity", item9Quantity);
+                            cmd.Parameters.AddWithValue("@Item10ID", item10ID);
+                            cmd.Parameters.AddWithValue("@Item10Quantity", item10Quantity);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        sql = "SELECT LAST_INSERT_ROWID()";
+                        int partnyaBagID;
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            partnyaBagID = Convert.ToInt32(cmd.ExecuteScalar());
+                        }
+
                         sql = @"INSERT INTO RoadDureSkills (
                         CreatedAt,
                         CreatedBy,
@@ -1330,9 +1436,9 @@ namespace MHFZ_Overlay
                                 break;
                         }
 
-                        Dictionary<int, Dictionary<List<int>,List<int>>> playerInventoryDictionary = dataLoader.model.playerInventoryDictionary;
-                        Dictionary<int, Dictionary<List<int>, List<int>>> playerAmmoPouchDictionary = dataLoader.model.playerAmmoPouchDictionary;
-                        Dictionary<int, Dictionary<List<int>, List<int>>> partnyaBagDictionary = dataLoader.model.partnyaBagDictionary;
+                        Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionary = dataLoader.model.playerInventoryDictionary;
+                        Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionary = dataLoader.model.playerAmmoPouchDictionary;
+                        Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionary = dataLoader.model.partnyaBagDictionary;
 
                         string insertSql = @"INSERT INTO PlayerGear (
                         PlayerGearHash,
@@ -1382,6 +1488,7 @@ namespace MHFZ_Overlay
                         StyleRankSkillsID,-- INTEGER NOT NULL,
                         PlayerInventoryID,-- INTEGER NOT NULL,
                         AmmoPouchID,-- INTEGER NOT NULL,
+                        PartnyaBagID,
                         PoogieItemID,-- INTEGER NOT NULL,
                         RoadDureSkillsID,-- INTEGER NOT NULL,
                         PlayerInventoryDictionary,-- TEXT NOT NULL,
@@ -1435,6 +1542,7 @@ namespace MHFZ_Overlay
                         @StyleRankSkillsID,-- INTEGER NOT NULL,
                         @PlayerInventoryID,-- INTEGER NOT NULL,
                         @AmmoPouchID,-- INTEGER NOT NULL,
+                        @PartnyaBagID,
                         @PoogieItemID,-- INTEGER NOT NULL,
                         @RoadDureSkillsID,-- INTEGER NOT NULL,
                         @PlayerInventoryDictionary,-- TEXT NOT NULL,
@@ -1443,20 +1551,18 @@ namespace MHFZ_Overlay
                         )";
 
                         string playerGearData = string.Format(
-                            "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}{47}{48}{49}",
-                            createdAt, createdBy, runID, playerID, 
-                            gearName, styleID, weaponIconID, weaponClassID,
-                            weaponTypeID, blademasterWeaponID, gunnerWeaponID, weaponSlot1,
-                            weaponSlot2, weaponSlot3, headID, headSlot1, 
-                            headSlot2, headSlot3, chestID, chestSlot1, 
-                            chestSlot2, chestSlot3, armsID, armsSlot1, 
-                            armsSlot2, armsSlot3, waistID, waistSlot1, 
-                            waistSlot2, waistSlot3, legsID, legsSlot1, 
-                            legsSlot2, legsSlot3, cuffSlot1, cuffSlot2, 
-                            zenithSkillsID, automaticSkillsID, activeSkillsID, caravanSkillsID, 
-                            divaSkillID, guildFoodID, styleRankSkillsID, playerInventoryID, 
-                            ammoPouchID, poogieItemID, roadDureSkillsID, playerInventoryDictionary,
-                            playerAmmoPouchDictionary, partnyaBagDictionary
+                            "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}{47}{48}{49}{50}",
+                            createdAt, createdBy, runID, playerID, gearName, 
+                            styleID, weaponIconID, weaponClassID, weaponTypeID, blademasterWeaponID,
+                            gunnerWeaponID, weaponSlot1, weaponSlot2, weaponSlot3, headID, 
+                            headSlot1, headSlot2, headSlot3, chestID, chestSlot1, 
+                            chestSlot2, chestSlot3, armsID, armsSlot1, armsSlot2, 
+                            armsSlot3, waistID, waistSlot1, waistSlot2, waistSlot3,
+                            legsID, legsSlot1, legsSlot2, legsSlot3, cuffSlot1, 
+                            cuffSlot2, zenithSkillsID, automaticSkillsID, activeSkillsID, caravanSkillsID, 
+                            divaSkillID, guildFoodID, styleRankSkillsID, playerInventoryID, ammoPouchID, 
+                            partnyaBagID, poogieItemID, roadDureSkillsID, playerInventoryDictionary, playerAmmoPouchDictionary, 
+                            partnyaBagDictionary
                             );
                         string playerGearHash = CalculateStringHash(playerGearData);
 
@@ -1522,6 +1628,7 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@StyleRankSkillsID", styleRankSkillsID);
                             cmd.Parameters.AddWithValue("@PlayerInventoryID", playerInventoryID);
                             cmd.Parameters.AddWithValue("@AmmoPouchID", ammoPouchID);
+                            cmd.Parameters.AddWithValue("@PartnyaBagID", partnyaBagID);
                             cmd.Parameters.AddWithValue("@PoogieItemID", poogieItemID);
                             cmd.Parameters.AddWithValue("@RoadDureSkillsID", roadDureSkillsID);
                             cmd.Parameters.AddWithValue("@PlayerInventoryDictionary", JsonConvert.SerializeObject(playerInventoryDictionary));
@@ -2906,6 +3013,7 @@ namespace MHFZ_Overlay
                     StyleRankSkillsID INTEGER NOT NULL,
                     PlayerInventoryID INTEGER NOT NULL,
                     AmmoPouchID INTEGER NOT NULL,
+                    PartnyaBagID INTEGER NOT NULL,
                     PoogieItemID INTEGER NOT NULL,
                     RoadDureSkillsID INTEGER NOT NULL,
                     PlayerInventoryDictionary TEXT NOT NULL,
@@ -2940,6 +3048,7 @@ namespace MHFZ_Overlay
                     FOREIGN KEY(StyleRankSkillsID) REFERENCES StyleRankSkills(StyleRankSkillsID),
                     FOREIGN KEY(PlayerInventoryID) REFERENCES PlayerInventory(PlayerInventoryID),
                     FOREIGN KEY(AmmoPouchID) REFERENCES AmmoPouch(AmmoPouchID),
+                    FOREIGN KEY(PartnyaBagID) REFERENCES PartnyaBag(PartnyaBagID),
                     FOREIGN KEY(PoogieItemID) REFERENCES Item(ItemID),
                     FOREIGN KEY(RoadDureSkillsID) REFERENCES RoadDureSkills(RoadDureSkillsID)
                     )";
@@ -3318,6 +3427,48 @@ namespace MHFZ_Overlay
                     CreatedAt DATETIME NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     AmmoPouchID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL,
+                    Item1ID INTEGER NOT NULL CHECK (Item1ID >= 0), 
+                    Item1Quantity INTEGER NOT NULL,
+                    Item2ID INTEGER NOT NULL CHECK (Item2ID >= 0), 
+                    Item2Quantity INTEGER NOT NULL,
+                    Item3ID INTEGER NOT NULL CHECK (Item3ID >= 0), 
+                    Item3Quantity INTEGER NOT NULL,
+                    Item4ID INTEGER NOT NULL CHECK (Item4ID >= 0), 
+                    Item4Quantity INTEGER NOT NULL,
+                    Item5ID INTEGER NOT NULL CHECK (Item5ID >= 0), 
+                    Item5Quantity INTEGER NOT NULL,
+                    Item6ID INTEGER NOT NULL CHECK (Item6ID >= 0), 
+                    Item6Quantity INTEGER NOT NULL,
+                    Item7ID INTEGER NOT NULL CHECK (Item7ID >= 0), 
+                    Item7Quantity INTEGER NOT NULL,
+                    Item8ID INTEGER NOT NULL CHECK (Item8ID >= 0), 
+                    Item8Quantity INTEGER NOT NULL,
+                    Item9ID INTEGER NOT NULL CHECK (Item9ID >= 0), 
+                    Item9Quantity INTEGER NOT NULL,
+                    Item10ID INTEGER NOT NULL CHECK (Item10ID >= 0), 
+                    Item10Quantity INTEGER NOT NULL,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID),
+                    FOREIGN KEY(Item1ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item2ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item3ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item4ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item5ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item6ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item7ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item8ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item9ID) REFERENCES Item(ItemID),
+                    FOREIGN KEY(Item10ID) REFERENCES Item(ItemID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS PartnyaBag (
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
+                    PartnyaBagID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
                     Item1ID INTEGER NOT NULL CHECK (Item1ID >= 0), 
                     Item1Quantity INTEGER NOT NULL,

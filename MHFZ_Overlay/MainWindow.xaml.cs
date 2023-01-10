@@ -2507,8 +2507,6 @@ namespace MHFZ_Overlay
 
         #region database
 
-        private bool loadedItemsAtQuestStart = false;
-
         //TODO
         private void CheckQuestStateForDatabaseLogging()
         {
@@ -2532,10 +2530,9 @@ namespace MHFZ_Overlay
                 DataLoader.model.resetQuestInfoVariables();
                 return;
             }
-
-            else if (!loadedItemsAtQuestStart && DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() != 0)
+            else if (!DataLoader.model.loadedItemsAtQuestStart && DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() != 0)
             {
-                loadedItemsAtQuestStart = true;
+                DataLoader.model.loadedItemsAtQuestStart = true;
                 DataLoader.model.PouchItem1IDAtQuestStart = DataLoader.model.PouchItem1ID();
                 DataLoader.model.PouchItem2IDAtQuestStart = DataLoader.model.PouchItem2ID();
                 DataLoader.model.PouchItem3IDAtQuestStart = DataLoader.model.PouchItem3ID();
@@ -2597,6 +2594,27 @@ namespace MHFZ_Overlay
                 DataLoader.model.AmmoPouchItem8QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
                 DataLoader.model.AmmoPouchItem9QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
                 DataLoader.model.AmmoPouchItem10QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
+
+                DataLoader.model.PartnyaBagItem1IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
+                DataLoader.model.PartnyaBagItem2IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
+                DataLoader.model.PartnyaBagItem3IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
+                DataLoader.model.PartnyaBagItem4IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
+                DataLoader.model.PartnyaBagItem5IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
+                DataLoader.model.PartnyaBagItem6IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
+                DataLoader.model.PartnyaBagItem7IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
+                DataLoader.model.PartnyaBagItem8IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
+                DataLoader.model.PartnyaBagItem9IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
+                DataLoader.model.PartnyaBagItem10IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
+                DataLoader.model.PartnyaBagItem1QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
+                DataLoader.model.PartnyaBagItem2QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
+                DataLoader.model.PartnyaBagItem3QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
+                DataLoader.model.PartnyaBagItem4QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
+                DataLoader.model.PartnyaBagItem5QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
+                DataLoader.model.PartnyaBagItem6QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
+                DataLoader.model.PartnyaBagItem7QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
+                DataLoader.model.PartnyaBagItem8QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
+                DataLoader.model.PartnyaBagItem9QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
+                DataLoader.model.PartnyaBagItem10QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
             }
 
             if (DataLoader.model.QuestState() == 0)
@@ -2606,7 +2624,7 @@ namespace MHFZ_Overlay
             if (DataLoader.model.QuestState() == 1 && !DataLoader.model.questCleared)
             {
                 DataLoader.model.questCleared = true;
-                loadedItemsAtQuestStart = false;
+                DataLoader.model.loadedItemsAtQuestStart = false;
                 if (s.EnableQuestLogging)
                     databaseManager.InsertQuestData(databaseManager.dataSource, DataLoader);
             }

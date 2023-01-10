@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
 using System.Windows.Automation;
+using System.Windows.Media.Animation;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -8726,6 +8727,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             }
         }
 
+        public bool loadedItemsAtQuestStart = false;
+
         public int PouchItem1IDAtQuestStart = 0;
         public int PouchItem2IDAtQuestStart = 0;
         public int PouchItem3IDAtQuestStart = 0;
@@ -8787,6 +8790,27 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public int AmmoPouchItem8QuantityAtQuestStart = 0;
         public int AmmoPouchItem9QuantityAtQuestStart = 0;
         public int AmmoPouchItem10QuantityAtQuestStart = 0;
+
+        public int PartnyaBagItem1IDAtQuestStart = 0;
+        public int PartnyaBagItem2IDAtQuestStart = 0;
+        public int PartnyaBagItem3IDAtQuestStart = 0;
+        public int PartnyaBagItem4IDAtQuestStart = 0;
+        public int PartnyaBagItem5IDAtQuestStart = 0;
+        public int PartnyaBagItem6IDAtQuestStart = 0;
+        public int PartnyaBagItem7IDAtQuestStart = 0;
+        public int PartnyaBagItem8IDAtQuestStart = 0;
+        public int PartnyaBagItem9IDAtQuestStart = 0;
+        public int PartnyaBagItem10IDAtQuestStart = 0;
+        public int PartnyaBagItem1QuantityAtQuestStart = 0;
+        public int PartnyaBagItem2QuantityAtQuestStart = 0;
+        public int PartnyaBagItem3QuantityAtQuestStart = 0;
+        public int PartnyaBagItem4QuantityAtQuestStart = 0;
+        public int PartnyaBagItem5QuantityAtQuestStart = 0;
+        public int PartnyaBagItem6QuantityAtQuestStart = 0;
+        public int PartnyaBagItem7QuantityAtQuestStart = 0;
+        public int PartnyaBagItem8QuantityAtQuestStart = 0;
+        public int PartnyaBagItem9QuantityAtQuestStart = 0;
+        public int PartnyaBagItem10QuantityAtQuestStart = 0;
 
         public TimeSpan TotalTimeSpent { get; set; }
 
@@ -8987,14 +9011,17 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         // time, itemid, itemquantity
         // can calculate itemuse by counting rows
-        public Dictionary<int, Dictionary<List<int>, List<int>>> playerInventoryDictionary = new Dictionary<int, Dictionary<List<int>, List<int>>>();
-        public Dictionary<int, Dictionary<List<int>, List<int>>> playerInventoryDictionaryDeserealized;
+        // this is a dicitonary where the first int is the quest time,
+        // the second int is the item id and the third int is the item quantity of that id.
+        // meaning that this is a dictionary of quest time and a list of item ids and quantities respectively.
+        public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionary = new Dictionary<int, List<Dictionary<int, int>>>();
+        public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionaryDeserealized;
 
-        public Dictionary<int, Dictionary<List<int>, List<int>>> playerAmmoPouchDictionary = new Dictionary<int, Dictionary<List<int>, List<int>>>();
-        public Dictionary<int, Dictionary<List<int>, List<int>>> playerAmmoPouchDictionaryDeserealized;
+        public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionary = new Dictionary<int, List<Dictionary<int, int>>>();
+        public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionaryDeserealized;
 
-        public Dictionary<int, Dictionary<List<int>, List<int>>> partnyaBagDictionary = new Dictionary<int, Dictionary<List<int>, List<int>>>();
-        public Dictionary<int, Dictionary<List<int>, List<int>>> partnyaBagDictionaryDeserealized;
+        public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionary = new Dictionary<int, List<Dictionary<int, int>>>();
+        public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionaryDeserealized;
 
         // time, areaid, hitstakenblocked
         // can calculate total hits by area by checking areaid, or in total by all sum.
@@ -9068,6 +9095,224 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public double previousHitsPerSecond = 0;
         public double previousActionsPerMinute = 0;
 
+        public List<Dictionary<int,int>> InsertInventoryDictionaryIntoList(string inventoryType)
+        {
+            List<Dictionary<int, int>> list =  new List<Dictionary<int,int>>();
+
+            int x = 20;
+            switch (inventoryType)
+            {
+                case "Pouch":
+                case "Ammo":
+                    x = 20;
+                    break;
+                case "Partnya Bag":
+                    x = 10;
+                    break;
+            }
+
+            for (int i = 1; i <= x; i++)
+            {
+                int itemID = 0;
+                int itemQty = 0;
+                Dictionary<int, int> itemIDQuantityDictionary = new Dictionary<int, int>();
+
+                if (inventoryType == "Pouch")
+                {
+                    switch (i)
+                    {
+                        case 1:
+                            itemID = PouchItem1ID();
+                            itemQty = PouchItem1Qty();
+                            break;
+                        case 2:
+                            itemID = PouchItem2ID();
+                            itemQty = PouchItem2Qty();
+                            break;
+                        case 3:
+                            itemID = PouchItem3ID();
+                            itemQty = PouchItem3Qty();
+                            break;
+                        case 4:
+                            itemID = PouchItem4ID();
+                            itemQty = PouchItem4Qty();
+                            break;
+                        case 5:
+                            itemID = PouchItem5ID();
+                            itemQty = PouchItem5Qty();
+                            break;
+                        case 6:
+                            itemID = PouchItem6ID();
+                            itemQty = PouchItem6Qty();
+                            break;
+                        case 7:
+                            itemID = PouchItem7ID();
+                            itemQty = PouchItem7Qty();
+                            break;
+                        case 8:
+                            itemID = PouchItem8ID();
+                            itemQty = PouchItem8Qty();
+                            break;
+                        case 9:
+                            itemID = PouchItem9ID();
+                            itemQty = PouchItem9Qty();
+                            break;
+                        case 10:
+                            itemID = PouchItem10ID();
+                            itemQty = PouchItem10Qty();
+                            break;
+                        case 11:
+                            itemID = PouchItem11ID();
+                            itemQty = PouchItem11Qty();
+                            break;
+                        case 12:
+                            itemID = PouchItem12ID();
+                            itemQty = PouchItem12Qty();
+                            break;
+                        case 13:
+                            itemID = PouchItem13ID();
+                            itemQty = PouchItem13Qty();
+                            break;
+                        case 14:
+                            itemID = PouchItem14ID();
+                            itemQty = PouchItem14Qty();
+                            break;
+                        case 15:
+                            itemID = PouchItem15ID();
+                            itemQty = PouchItem15Qty();
+                            break;
+                        case 16:
+                            itemID = PouchItem16ID();
+                            itemQty = PouchItem16Qty();
+                            break;
+                        case 17:
+                            itemID = PouchItem17ID();
+                            itemQty = PouchItem17Qty();
+                            break;
+                        case 18:
+                            itemID = PouchItem18ID();
+                            itemQty = PouchItem18Qty();
+                            break;
+                        case 19:
+                            itemID = PouchItem19ID();
+                            itemQty = PouchItem19Qty();
+                            break;
+                        case 20:
+                            itemID = PouchItem20ID();
+                            itemQty = PouchItem20Qty();
+                            break;
+                    }
+                } else if (inventoryType == "Ammo")
+                {
+                    switch (i)
+                    {
+                        case 1:
+                            itemID = AmmoPouchItem1ID();
+                            itemQty = AmmoPouchItem1Qty();
+                            break;
+                        case 2:
+                            itemID = AmmoPouchItem2ID();
+                            itemQty = AmmoPouchItem2Qty();
+                            break;
+                        case 3:
+                            itemID = AmmoPouchItem3ID();
+                            itemQty = AmmoPouchItem3Qty();
+                            break;
+                        case 4:
+                            itemID = AmmoPouchItem4ID();
+                            itemQty = AmmoPouchItem4Qty();
+                            break;
+                        case 5:
+                            itemID = AmmoPouchItem5ID();
+                            itemQty = AmmoPouchItem5Qty();
+                            break;
+                        case 6:
+                            itemID = AmmoPouchItem6ID();
+                            itemQty = AmmoPouchItem6Qty();
+                            break;
+                        case 7:
+                            itemID = AmmoPouchItem7ID();
+                            itemQty = AmmoPouchItem7Qty();
+                            break;
+                        case 8:
+                            itemID = AmmoPouchItem8ID();
+                            itemQty = AmmoPouchItem8Qty();
+                            break;
+                        case 9:
+                            itemID = AmmoPouchItem9ID();
+                            itemQty = AmmoPouchItem9Qty();
+                            break;
+                        case 10:
+                            itemID = AmmoPouchItem10ID();
+                            itemQty = AmmoPouchItem10Qty();
+                            break;
+                    }
+                } else if (inventoryType == "Partnya Bag")
+                {
+                    switch (i)
+                    {
+                        case 1:
+                            itemID = PartnyaBagItem1ID();
+                            itemQty = PartnyaBagItem1Qty();
+                            break;
+                        case 2:
+                            itemID = PartnyaBagItem2ID();
+                            itemQty = PartnyaBagItem2Qty();
+                            break;
+                        case 3:
+                            itemID = PartnyaBagItem3ID();
+                            itemQty = PartnyaBagItem3Qty();
+                            break;
+                        case 4:
+                            itemID = PartnyaBagItem4ID();
+                            itemQty = PartnyaBagItem4Qty();
+                            break;
+                        case 5:
+                            itemID = PartnyaBagItem5ID();
+                            itemQty = PartnyaBagItem5Qty();
+                            break;
+                        case 6:
+                            itemID = PartnyaBagItem6ID();
+                            itemQty = PartnyaBagItem6Qty();
+                            break;
+                        case 7:
+                            itemID = PartnyaBagItem7ID();
+                            itemQty = PartnyaBagItem7Qty();
+                            break;
+                        case 8:
+                            itemID = PartnyaBagItem8ID();
+                            itemQty = PartnyaBagItem8Qty();
+                            break;
+                        case 9:
+                            itemID = PartnyaBagItem9ID();
+                            itemQty = PartnyaBagItem9Qty();
+                            break;
+                        case 10:
+                            itemID = PartnyaBagItem10ID();
+                            itemQty = PartnyaBagItem10Qty();
+                            break;
+                    }
+                }
+
+                itemIDQuantityDictionary.Add(itemID, itemQty);
+                list.Add(itemIDQuantityDictionary);
+            }
+
+            return list;
+        }
+
+        public int CalculateTotalDictionaryValuesInList(List<Dictionary<int,int>> list)
+        {
+            if (list.Count > 0)
+            {
+                return list.SelectMany(x => x.Values).Sum();
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
         public void InsertQuestInfoIntoDictionaries()
         {
             //if (TimeInt() == previousTimeInt)
@@ -9137,157 +9382,267 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             }
 
             //inventory
-            int inventorySum = 0;
+            List<Dictionary<int, int>> currentInventoryList = InsertInventoryDictionaryIntoList("Pouch");
+            int currentInventorySum = CalculateTotalDictionaryValuesInList(currentInventoryList);
+            int lastInventorySum = 0;
+
             if (playerInventoryDictionary.Values.Any())
             {
-                // Get the last inserted dictionary
                 var lastInsertedDictionary = playerInventoryDictionary.Values.Last();
-                // Get the last inserted list
-                var lastInsertedList = lastInsertedDictionary.Values.Last();
                 // Sum the values in the list
-                inventorySum = lastInsertedList.Sum();
+                lastInventorySum = lastInsertedDictionary.SelectMany(x => x.Values).Sum();
             }
 
-            if (previousTotalInventoryItems != inventorySum)
+            if (currentInventorySum != lastInventorySum)
             {
-                previousTotalInventoryItems = inventorySum;
-                Dictionary<List<int>, List<int>> itemIDsQuantityList = new Dictionary<List<int>,List<int>>();
-                itemIDsQuantityList.Add(
-                    new List<int>() {
-                        PouchItem1ID(),
-                        PouchItem2ID(),
-                        PouchItem3ID(),
-                        PouchItem4ID(),
-                        PouchItem5ID(),
-                        PouchItem6ID(),
-                        PouchItem7ID(),
-                        PouchItem8ID(),
-                        PouchItem9ID(),
-                        PouchItem10ID(),
-                        PouchItem11ID(),
-                        PouchItem12ID(),
-                        PouchItem13ID(),
-                        PouchItem14ID(),
-                        PouchItem15ID(),
-                        PouchItem16ID(),
-                        PouchItem17ID(),
-                        PouchItem18ID(),
-                        PouchItem19ID(),
-                        PouchItem20ID()
-                    },
-                    new List<int>()
+                playerInventoryDictionary.Add(TimeInt(), currentInventoryList);
+            }
+            else if (loadedItemsAtQuestStart && !playerInventoryDictionary.Values.Any())
+            {
+                List<Dictionary<int, int>> itemIDsQuantityList = new List<Dictionary<int, int>>();
+                for (int i = 1; i <= 20; i++)
+                {
+                    int itemID = 0;
+                    int itemQty = 0;
+                    Dictionary<int, int> itemIDQuantityDictionary = new Dictionary<int, int>();
+                    switch (i)
                     {
-                        PouchItem1Qty(),
-                        PouchItem2Qty(),
-                        PouchItem3Qty(),
-                        PouchItem4Qty(),
-                        PouchItem5Qty(),
-                        PouchItem6Qty(),
-                        PouchItem7Qty(),
-                        PouchItem8Qty(),
-                        PouchItem9Qty(),
-                        PouchItem10Qty(),
-                        PouchItem11Qty(),
-                        PouchItem12Qty(),
-                        PouchItem13Qty(),
-                        PouchItem14Qty(),
-                        PouchItem15Qty(),
-                        PouchItem16Qty(),
-                        PouchItem17Qty(),
-                        PouchItem18Qty(),
-                        PouchItem19Qty(),
-                        PouchItem20Qty()
-                    });
+                        case 1:
+                            itemID = PouchItem1IDAtQuestStart;
+                            itemQty = PouchItem1QuantityAtQuestStart;
+                            break;
+                        case 2:
+                            itemID = PouchItem2IDAtQuestStart;
+                            itemQty = PouchItem2QuantityAtQuestStart;
+                            break;
+                        case 3:
+                            itemID = PouchItem3IDAtQuestStart;
+                            itemQty = PouchItem3QuantityAtQuestStart;
+                            break;
+                        case 4:
+                            itemID = PouchItem4IDAtQuestStart;
+                            itemQty = PouchItem4QuantityAtQuestStart;
+                            break;
+                        case 5:
+                            itemID = PouchItem5IDAtQuestStart;
+                            itemQty = PouchItem5QuantityAtQuestStart;
+                            break;
+                        case 6:
+                            itemID = PouchItem6IDAtQuestStart;
+                            itemQty = PouchItem6QuantityAtQuestStart;
+                            break;
+                        case 7:
+                            itemID = PouchItem7IDAtQuestStart;
+                            itemQty = PouchItem7QuantityAtQuestStart;
+                            break;
+                        case 8:
+                            itemID = PouchItem8IDAtQuestStart;
+                            itemQty = PouchItem8QuantityAtQuestStart;
+                            break;
+                        case 9:
+                            itemID = PouchItem9IDAtQuestStart;
+                            itemQty = PouchItem9QuantityAtQuestStart;
+                            break;
+                        case 10:
+                            itemID = PouchItem10IDAtQuestStart;
+                            itemQty = PouchItem10QuantityAtQuestStart;
+                            break;
+                        case 11:
+                            itemID = PouchItem11IDAtQuestStart;
+                            itemQty = PouchItem11QuantityAtQuestStart;
+                            break;
+                        case 12:
+                            itemID = PouchItem12IDAtQuestStart;
+                            itemQty = PouchItem12QuantityAtQuestStart;
+                            break;
+                        case 13:
+                            itemID = PouchItem13IDAtQuestStart;
+                            itemQty = PouchItem13QuantityAtQuestStart;
+                            break;
+                        case 14:
+                            itemID = PouchItem14IDAtQuestStart;
+                            itemQty = PouchItem14QuantityAtQuestStart;
+                            break;
+                        case 15:
+                            itemID = PouchItem15IDAtQuestStart;
+                            itemQty = PouchItem15QuantityAtQuestStart;
+                            break;
+                        case 16:
+                            itemID = PouchItem16IDAtQuestStart;
+                            itemQty = PouchItem16QuantityAtQuestStart;
+                            break;
+                        case 17:
+                            itemID = PouchItem17IDAtQuestStart;
+                            itemQty = PouchItem17QuantityAtQuestStart;
+                            break;
+                        case 18:
+                            itemID = PouchItem18IDAtQuestStart;
+                            itemQty = PouchItem18QuantityAtQuestStart;
+                            break;
+                        case 19:
+                            itemID = PouchItem19IDAtQuestStart;
+                            itemQty = PouchItem19QuantityAtQuestStart;
+                            break;
+                        case 20:
+                            itemID = PouchItem20IDAtQuestStart;
+                            itemQty = PouchItem20QuantityAtQuestStart;
+                            break;
+                    }
+
+                    itemIDQuantityDictionary.Add(itemID, itemQty);
+                    itemIDsQuantityList.Add(itemIDQuantityDictionary);
+                }
+
                 playerInventoryDictionary.Add(TimeInt(), itemIDsQuantityList);
             }
 
             //ammo
-            int ammoSum = 0;
+            List<Dictionary<int, int>> currentAmmoList = InsertInventoryDictionaryIntoList("Ammo");
+            int currentAmmoSum = CalculateTotalDictionaryValuesInList(currentAmmoList);
+            int lastAmmoSum = 0;
+
             if (playerAmmoPouchDictionary.Values.Any())
             {
-                // Get the last inserted dictionary
                 var lastInsertedDictionary = playerAmmoPouchDictionary.Values.Last();
-                // Get the last inserted list
-                var lastInsertedList = lastInsertedDictionary.Values.Last();
                 // Sum the values in the list
-                ammoSum = lastInsertedList.Sum();
+                lastAmmoSum = lastInsertedDictionary.SelectMany(x => x.Values).Sum();
             }
 
-            if (previousTotalAmmo != ammoSum)
+            if (currentAmmoSum != lastAmmoSum)
             {
-                previousTotalAmmo = ammoSum;
-                Dictionary<List<int>, List<int>> itemIDsQuantityList = new Dictionary<List<int>, List<int>>();
-                itemIDsQuantityList.Add(
-                    new List<int>() {
-                        AmmoPouchItem1ID(),
-                        AmmoPouchItem2ID(),
-                        AmmoPouchItem3ID(),
-                        AmmoPouchItem4ID(),
-                        AmmoPouchItem5ID(),
-                        AmmoPouchItem6ID(),
-                        AmmoPouchItem7ID(),
-                        AmmoPouchItem8ID(),
-                        AmmoPouchItem9ID(),
-                        AmmoPouchItem10ID()
-                    },
-                    new List<int>()
+                playerAmmoPouchDictionary.Add(TimeInt(), currentAmmoList);
+            }
+            else if (loadedItemsAtQuestStart && !playerAmmoPouchDictionary.Values.Any())
+            {
+                List<Dictionary<int, int>> itemIDsQuantityList = new List<Dictionary<int, int>>();
+                for (int i = 1; i <= 20; i++)
+                {
+                    int itemID = 0;
+                    int itemQty = 0;
+                    Dictionary<int, int> itemIDQuantityDictionary = new Dictionary<int, int>();
+                    switch (i)
                     {
-                        AmmoPouchItem1Qty(),
-                        AmmoPouchItem2Qty(),
-                        AmmoPouchItem3Qty(),
-                        AmmoPouchItem4Qty(),
-                        AmmoPouchItem5Qty(),
-                        AmmoPouchItem6Qty(),
-                        AmmoPouchItem7Qty(),
-                        AmmoPouchItem8Qty(),
-                        AmmoPouchItem9Qty(),
-                        AmmoPouchItem10Qty()
-                    });
+                        case 1:
+                            itemID = AmmoPouchItem1IDAtQuestStart;
+                            itemQty = AmmoPouchItem1QuantityAtQuestStart;
+                            break;
+                        case 2:
+                            itemID = AmmoPouchItem2IDAtQuestStart;
+                            itemQty = AmmoPouchItem2QuantityAtQuestStart;
+                            break;
+                        case 3:
+                            itemID = AmmoPouchItem3IDAtQuestStart;
+                            itemQty = AmmoPouchItem3QuantityAtQuestStart;
+                            break;
+                        case 4:
+                            itemID = AmmoPouchItem4IDAtQuestStart;
+                            itemQty = AmmoPouchItem4QuantityAtQuestStart;
+                            break;
+                        case 5:
+                            itemID = AmmoPouchItem5IDAtQuestStart;
+                            itemQty = AmmoPouchItem5QuantityAtQuestStart;
+                            break;
+                        case 6:
+                            itemID = AmmoPouchItem6IDAtQuestStart;
+                            itemQty = AmmoPouchItem6QuantityAtQuestStart;
+                            break;
+                        case 7:
+                            itemID = AmmoPouchItem7IDAtQuestStart;
+                            itemQty = AmmoPouchItem7QuantityAtQuestStart;
+                            break;
+                        case 8:
+                            itemID = AmmoPouchItem8IDAtQuestStart;
+                            itemQty = AmmoPouchItem8QuantityAtQuestStart;
+                            break;
+                        case 9:
+                            itemID = AmmoPouchItem9IDAtQuestStart;
+                            itemQty = AmmoPouchItem9QuantityAtQuestStart;
+                            break;
+                        case 10:
+                            itemID = AmmoPouchItem10IDAtQuestStart;
+                            itemQty = AmmoPouchItem10QuantityAtQuestStart;
+                            break;
+                    }
+
+                    itemIDQuantityDictionary.Add(itemID, itemQty);
+                    itemIDsQuantityList.Add(itemIDQuantityDictionary);
+                }
+
                 playerAmmoPouchDictionary.Add(TimeInt(), itemIDsQuantityList);
             }
 
             //partnya bag
-            int partnyaBagSum = 0;
+            List<Dictionary<int, int>> currentPartnyaBagList = InsertInventoryDictionaryIntoList("Partnya Bag");
+            int currentPartnyaBagSum = CalculateTotalDictionaryValuesInList(currentPartnyaBagList);
+            int lastPartnyaBagSum = 0;
+
             if (partnyaBagDictionary.Values.Any())
             {
-                // Get the last inserted dictionary
                 var lastInsertedDictionary = partnyaBagDictionary.Values.Last();
-                // Get the last inserted list
-                var lastInsertedList = lastInsertedDictionary.Values.Last();
                 // Sum the values in the list
-                partnyaBagSum = lastInsertedList.Sum();
+                lastPartnyaBagSum = lastInsertedDictionary.SelectMany(x => x.Values).Sum();
             }
 
-            if (previousTotalPartnyaItems != partnyaBagSum)
+            if (currentPartnyaBagSum != lastPartnyaBagSum)
             {
-                previousTotalPartnyaItems = partnyaBagSum;
-                Dictionary<List<int>, List<int>> itemIDsQuantityList = new Dictionary<List<int>, List<int>>();
-                itemIDsQuantityList.Add(
-                    new List<int>() {
-                        PartnyaBagItem1ID(),
-                        PartnyaBagItem2ID(),
-                        PartnyaBagItem3ID(),
-                        PartnyaBagItem4ID(),
-                        PartnyaBagItem5ID(),
-                        PartnyaBagItem6ID(),
-                        PartnyaBagItem7ID(),
-                        PartnyaBagItem8ID(),
-                        PartnyaBagItem9ID(),
-                        PartnyaBagItem10ID()
-                    },
-                    new List<int>()
+                partnyaBagDictionary.Add(TimeInt(), currentPartnyaBagList);
+            }
+            else if (loadedItemsAtQuestStart && !partnyaBagDictionary.Values.Any())
+            {
+                List<Dictionary<int, int>> itemIDsQuantityList = new List<Dictionary<int, int>>();
+                for (int i = 1; i <= 20; i++)
+                {
+                    int itemID = 0;
+                    int itemQty = 0;
+                    Dictionary<int, int> itemIDQuantityDictionary = new Dictionary<int, int>();
+                    switch (i)
                     {
-                        PartnyaBagItem1Qty(),
-                        PartnyaBagItem2Qty(),
-                        PartnyaBagItem3Qty(),
-                        PartnyaBagItem4Qty(),
-                        PartnyaBagItem5Qty(),
-                        PartnyaBagItem6Qty(),
-                        PartnyaBagItem7Qty(),
-                        PartnyaBagItem8Qty(),
-                        PartnyaBagItem9Qty(),
-                        PartnyaBagItem10Qty()
-                    });
+                        case 1:
+                            itemID = PartnyaBagItem1IDAtQuestStart;
+                            itemQty = PartnyaBagItem1QuantityAtQuestStart;
+                            break;
+                        case 2:
+                            itemID = PartnyaBagItem2IDAtQuestStart;
+                            itemQty = PartnyaBagItem2QuantityAtQuestStart;
+                            break;
+                        case 3:
+                            itemID = PartnyaBagItem3IDAtQuestStart;
+                            itemQty = PartnyaBagItem3QuantityAtQuestStart;
+                            break;
+                        case 4:
+                            itemID = PartnyaBagItem4IDAtQuestStart;
+                            itemQty = PartnyaBagItem4QuantityAtQuestStart;
+                            break;
+                        case 5:
+                            itemID = PartnyaBagItem5IDAtQuestStart;
+                            itemQty = PartnyaBagItem5QuantityAtQuestStart;
+                            break;
+                        case 6:
+                            itemID = PartnyaBagItem6IDAtQuestStart;
+                            itemQty = PartnyaBagItem6QuantityAtQuestStart;
+                            break;
+                        case 7:
+                            itemID = PartnyaBagItem7IDAtQuestStart;
+                            itemQty = PartnyaBagItem7QuantityAtQuestStart;
+                            break;
+                        case 8:
+                            itemID = PartnyaBagItem8IDAtQuestStart;
+                            itemQty = PartnyaBagItem8QuantityAtQuestStart;
+                            break;
+                        case 9:
+                            itemID = PartnyaBagItem9IDAtQuestStart;
+                            itemQty = PartnyaBagItem9QuantityAtQuestStart;
+                            break;
+                        case 10:
+                            itemID = PartnyaBagItem10IDAtQuestStart;
+                            itemQty = PartnyaBagItem10QuantityAtQuestStart;
+                            break;
+                    }
+
+                    itemIDQuantityDictionary.Add(itemID, itemQty);
+                    itemIDsQuantityList.Add(itemIDQuantityDictionary);
+                }
+
                 partnyaBagDictionary.Add(TimeInt(), itemIDsQuantityList);
             }
 
@@ -9393,6 +9748,27 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             AmmoPouchItem8QuantityAtQuestStart = 0;
             AmmoPouchItem9QuantityAtQuestStart = 0;
             AmmoPouchItem10QuantityAtQuestStart = 0;
+
+            PartnyaBagItem1IDAtQuestStart = 0;
+            PartnyaBagItem2IDAtQuestStart = 0;
+            PartnyaBagItem3IDAtQuestStart = 0;
+            PartnyaBagItem4IDAtQuestStart = 0;
+            PartnyaBagItem5IDAtQuestStart = 0;
+            PartnyaBagItem6IDAtQuestStart = 0;
+            PartnyaBagItem7IDAtQuestStart = 0;
+            PartnyaBagItem8IDAtQuestStart = 0;
+            PartnyaBagItem9IDAtQuestStart = 0;
+            PartnyaBagItem10IDAtQuestStart = 0;
+            PartnyaBagItem1QuantityAtQuestStart = 0;
+            PartnyaBagItem2QuantityAtQuestStart = 0;
+            PartnyaBagItem3QuantityAtQuestStart = 0;
+            PartnyaBagItem4QuantityAtQuestStart = 0;
+            PartnyaBagItem5QuantityAtQuestStart = 0;
+            PartnyaBagItem6QuantityAtQuestStart = 0;
+            PartnyaBagItem7QuantityAtQuestStart = 0;
+            PartnyaBagItem8QuantityAtQuestStart = 0;
+            PartnyaBagItem9QuantityAtQuestStart = 0;
+            PartnyaBagItem10QuantityAtQuestStart = 0;
 
             previousAttackBuffInt = 0;
             previousDPS = 0;
