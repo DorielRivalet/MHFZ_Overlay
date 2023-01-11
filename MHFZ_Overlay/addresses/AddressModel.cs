@@ -1610,7 +1610,8 @@ namespace MHFZ_Overlay.addresses
                 if (Dictionary.WeaponCanUseReflect.WeaponTypeID[WeaponType()])
                     hasReflect = true;
 
-                if (!hasReflect && TotalHitsTakenBlocked == 0 && ShowHitsTakenBlockedColor())
+                // for speedrunners to get hit by 1 small bomb at least. and 2 perfect guards to get max obscurity.
+                if ((!hasReflect && TotalHitsTakenBlocked <= 1) || (hasReflect && TotalHitsTakenBlocked <= 3) && ShowHitsTakenBlockedColor())
                 {
                     PlayerHitsTakenBlockedIcon = "UI/Icons/png/defense_up.png";
                     return "#f38ba8";

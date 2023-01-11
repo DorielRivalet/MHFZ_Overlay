@@ -501,13 +501,13 @@
       <Value Profile="(Default)">610</Value>
     </Setting>
     <Setting Name="ControllerLayoutShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ControllerLayoutX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">160</Value>
     </Setting>
     <Setting Name="ControllerLayoutY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">550</Value>
     </Setting>
     <Setting Name="EnableKeyLogging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

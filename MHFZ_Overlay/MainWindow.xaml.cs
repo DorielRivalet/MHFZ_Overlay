@@ -974,6 +974,7 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowDamagePerSecond = v && s.DamagePerSecondShown;
 
             DataLoader.model.ShowKBMLayout = v && s.KBMLayoutShown;
+            DataLoader.model.ShowControllerLayout = v && s.ControllerLayoutShown;
             DataLoader.model.ShowAPM = v && s.ActionsPerMinuteShown;
         }
 
@@ -2272,11 +2273,17 @@ namespace MHFZ_Overlay
                     s.KBMLayoutX = (double)(pos.X - XOffset);
                     s.KBMLayoutY = (double)(pos.Y - XOffset);
                     break;
+                case "ControllerLayoutGrid":
+                    s.ControllerLayoutX = (double)(pos.X - XOffset);
+                    s.ControllerLayoutY = (double)(pos.Y - XOffset);
+                    break;
                 case "ActionsPerMinuteInfo":
                     s.ActionsPerMinuteX = (double)(pos.X - XOffset);
                     s.ActionsPerMinuteY = (double)(pos.Y - XOffset);
                     break;
 
+
+                    // Monster
                 case "Monster1HpBar":
                     s.Monster1HealthBarX = (double)(pos.X - XOffset);
                     s.Monster1HealthBarY = (double)(pos.Y - YOffset);

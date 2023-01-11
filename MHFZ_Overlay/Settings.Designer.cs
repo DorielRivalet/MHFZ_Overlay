@@ -2018,7 +2018,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ControllerLayoutShown {
             get {
                 return ((bool)(this["ControllerLayoutShown"]));
@@ -2030,7 +2030,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("160")]
         public double ControllerLayoutX {
             get {
                 return ((double)(this["ControllerLayoutX"]));
@@ -2042,7 +2042,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("550")]
         public double ControllerLayoutY {
             get {
                 return ((double)(this["ControllerLayoutY"]));

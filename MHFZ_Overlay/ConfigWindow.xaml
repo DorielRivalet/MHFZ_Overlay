@@ -226,7 +226,13 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
-                            
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+
                         </Grid.RowDefinitions>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Max Resolution Width"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="0" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}"  PreviewTextInput="ValidateNumber"/>
@@ -310,16 +316,24 @@
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="31" Grid.Column="0"  Text="Keyboard and Mouse Layout Y Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="31" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutY}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and controller inputs)" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0"  Text="Actions per Minute"/>
-                        <ToggleButton Grid.Row="32" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0"  Text="Actions per Minute X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="33" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0"  Text="Actions per Minute Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="34" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0"  Text="Average Actions per Minute Color"/>
-                        <ToggleButton Grid.Row="35" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Gamepad Layout" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0"  Text="Controller/Gamepad Layout"/>
+                        <ToggleButton Grid.Row="32" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ControllerLayoutShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0"  Text="Controller/Gamepad Layout X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="33" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ControllerLayoutX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0"  Text="Controller/Gamepad Layout Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="34" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ControllerLayoutY}"  PreviewTextInput="ValidateNumber"/>
+
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and controller inputs)" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0"  Text="Actions per Minute"/>
+                        <ToggleButton Grid.Row="35" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0"  Text="Actions per Minute X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="36" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="37" Grid.Column="0"  Text="Actions per Minute Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="37" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="38" Grid.Column="0"  Text="Average Actions per Minute Color"/>
+                        <ToggleButton Grid.Row="38" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
                         
-                        <Button Grid.Row="36" Grid.Column="0" Grid.ColumnSpan="2" Content="Export user settings to JSON file" Click="ExportUserSettings_Click"/>
+                        <Button Grid.Row="39" Grid.Column="0" Grid.ColumnSpan="2" Content="Export user settings to JSON file" Click="ExportUserSettings_Click"/>
                     </Grid>
                 </ScrollViewer>
                 <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">

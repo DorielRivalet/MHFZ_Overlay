@@ -54,7 +54,7 @@
             <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="{Binding QuestTimeMode}" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
             <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isOnPace}" x:Name="timeRemainingTextBox" Text="{Binding Time}" Margin="4,0,0,0"/>
         </Grid>
-        <Grid x:Name="ActionsPerMinuteInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowActionsPerMinute, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="ActionsPerMinuteInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowAPM, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
@@ -186,6 +186,40 @@
             <Image x:Name="MouseLeftClick" Opacity="0.2" Source="UI/Icons/png/left_click.png" Grid.Row="4" Grid.Column="2"/>
             <Image x:Name="MouseMiddleClick" Opacity="0.2" Source="UI/Icons/png/middle_click.png" Grid.Row="4" Grid.Column="3"/>
             <Image x:Name="MouseRightClick" Opacity="0.2" Source="UI/Icons/png/right_click.png" Grid.Row="4" Grid.Column="4"/>
+        </Grid>
+        <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="ControllerLayoutGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=ControllerLayoutX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=ControllerLayoutY}" Width="150" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+              Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowControllerLayout, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Image x:Name="ButtonL2" Opacity="0.2" Source="UI/Icons/png/controller_l2.png" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image x:Name="ButtonR2" Opacity="0.2" Source="UI/Icons/png/controller_r2.png" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image x:Name="ButtonL1" Opacity="0.2" Source="UI/Icons/png/controller_l1.png" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image x:Name="ButtonR1" Opacity="0.2" Source="UI/Icons/png/controller_r1.png" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image x:Name="DPad" Opacity="0.2" Source="UI/Icons/png/controller_dpad.png" Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" />
+            <Image x:Name="LJoystick" Opacity="0.2" Source="UI/Icons/png/controller_joystick.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2"/>
+            <Image x:Name="RJoystick" Opacity="0.2" Source="UI/Icons/png/controller_joystick.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4" Grid.ColumnSpan="2"/>
+            <Image x:Name="ButtonA" Opacity="0.2" Source="UI/Icons/png/controller_a.png" Grid.Row="4" Grid.Column="6"/>
+            <Image x:Name="ButtonB" Opacity="0.2" Source="UI/Icons/png/controller_b.png" Grid.Row="3" Grid.Column="7"/>
+            <Image x:Name="ButtonX" Opacity="0.2" Source="UI/Icons/png/controller_x.png" Grid.Row="3" Grid.Column="5"/>
+            <Image x:Name="ButtonY" Opacity="0.2" Source="UI/Icons/png/controller_y.png" Grid.Row="2" Grid.Column="6"/>
+            <Image x:Name="ButtonSelect" Opacity="0.2" Source="UI/Icons/png/controller_select.png" Grid.Row="3" Grid.Column="3"/>
+            <Image x:Name="ButtonStart" Opacity="0.2" Source="UI/Icons/png/controller_start.png" Grid.Row="3" Grid.Column="4"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster1HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster1HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster1HealthBarY}" Width="500" Height="40" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonster1HPBar, Converter={StaticResource BoolToVis}}">
