@@ -59,6 +59,8 @@ namespace MHFZ_Overlay
             get { return new Uri(randomMonsterImage, UriKind.RelativeOrAbsolute); }
         }
 
+
+        //TODO put this in a readonly dictionary thing
         private MonsterLog[] Monsters = new MonsterLog[]
         {
           new MonsterLog(0, "None","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/none.png",0),
@@ -135,7 +137,7 @@ namespace MHFZ_Overlay
           new MonsterLog(71, "White Fatalis","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_fatalis.png",0,true),
           new MonsterLog(72, "Yama Tsukami","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yama_tsukami.png",0,true),
           new MonsterLog(73, "Ceanataur","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/ceanataur.png",0),
-          new MonsterLog(74, "Hypnocatrice","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hypnocatrice.png",0,true),
+          new MonsterLog(74, "Hypnocatrice","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hypnoc.png",0,true),
           new MonsterLog(75, "Lavasioth","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/lavasioth.png",0,true),
           new MonsterLog(76, "Tigrex","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/tigrex.png",0,true),
           new MonsterLog(77, "Akantor","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akantor.png",0,true),
@@ -231,7 +233,7 @@ namespace MHFZ_Overlay
           new MonsterLog(167, "Arrogant Duremudira","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/arrogant_duremudira.png",0,true),
           new MonsterLog(168, "Rocks","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
           new MonsterLog(169, "Seregios","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/seregios.png",0,true),
-          new MonsterLog(170, "Bogabadorumu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/bogabadorumu.png",0,true),
+          new MonsterLog(170, "Bogabadorumu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_bogabadorumu.gif",0,true),
           new MonsterLog(171, "Unknown Blue Barrel","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
           new MonsterLog(172, "Blitzkrieg Bogabadorumu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blitzkrieg_bogabadorumu.png",0,true),
           new MonsterLog(173, "Costumed Uruki","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/uruki.png",0),
