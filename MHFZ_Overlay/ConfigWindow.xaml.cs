@@ -21,6 +21,8 @@ using Clipboard = System.Windows.Clipboard;
 using MessageBox = System.Windows.MessageBox;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Window = System.Windows.Window;
+using RESTCountries.NET.Services;
+using RESTCountries.NET.Models;
 
 namespace MHFZ_Overlay
 {
@@ -1204,7 +1206,22 @@ namespace MHFZ_Overlay
 
         private void CountryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // TODO
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            s.PlayerNationalityIndex = CountryComboBox.SelectedIndex;
+        }
+
+        private void ControllerLayoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Feature not yet implemented. Go to issues page?", "【MHF-Z】Overlay Information Missing", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning, MessageBoxResult.No);
+            if (messageBoxResult.ToString() == "Yes")
+            {
+                string issueLink = "https://github.com/DorielRivalet/mhfz-overlay/issues/43";
+                var sInfo = new System.Diagnostics.ProcessStartInfo(issueLink)
+                {
+                    UseShellExecute = true,
+                };
+                System.Diagnostics.Process.Start(sInfo);
+            }
         }
     };
 

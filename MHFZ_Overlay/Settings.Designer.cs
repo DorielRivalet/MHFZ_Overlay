@@ -1778,13 +1778,13 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("World")]
-        public string PlayerNationality {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PlayerNationalityIndex {
             get {
-                return ((string)(this["PlayerNationality"]));
+                return ((int)(this["PlayerNationalityIndex"]));
             }
             set {
-                this["PlayerNationality"] = value;
+                this["PlayerNationalityIndex"] = value;
             }
         }
         
@@ -2018,7 +2018,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ControllerLayoutShown {
             get {
                 return ((bool)(this["ControllerLayoutShown"]));
@@ -2133,6 +2133,114 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["EnableAverageActionsPerMinuteColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PlayerInputHorizontalGridShown {
+            get {
+                return ((bool)(this["PlayerInputHorizontalGridShown"]));
+            }
+            set {
+                this["PlayerInputHorizontalGridShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public double PlayerInputHorizontalGridX {
+            get {
+                return ((double)(this["PlayerInputHorizontalGridX"]));
+            }
+            set {
+                this["PlayerInputHorizontalGridX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double PlayerInputHorizontalGridY {
+            get {
+                return ((double)(this["PlayerInputHorizontalGridY"]));
+            }
+            set {
+                this["PlayerInputHorizontalGridY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PlayerInputVerticalGridShown {
+            get {
+                return ((bool)(this["PlayerInputVerticalGridShown"]));
+            }
+            set {
+                this["PlayerInputVerticalGridShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double PlayerInputVerticalGridX {
+            get {
+                return ((double)(this["PlayerInputVerticalGridX"]));
+            }
+            set {
+                this["PlayerInputVerticalGridX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double PlayerInputVerticalGridY {
+            get {
+                return ((double)(this["PlayerInputVerticalGridY"]));
+            }
+            set {
+                this["PlayerInputVerticalGridY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Monster1OverviewShown {
+            get {
+                return ((bool)(this["Monster1OverviewShown"]));
+            }
+            set {
+                this["Monster1OverviewShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Monster1OverviewX {
+            get {
+                return ((double)(this["Monster1OverviewX"]));
+            }
+            set {
+                this["Monster1OverviewX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Monster1OverviewY {
+            get {
+                return ((double)(this["Monster1OverviewY"]));
+            }
+            set {
+                this["Monster1OverviewY"] = value;
             }
         }
     }

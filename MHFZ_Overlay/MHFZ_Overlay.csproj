@@ -71,8 +71,14 @@
     <None Remove="UI\Icons\page.png" />
     <None Remove="UI\Icons\paralysis.png" />
     <None Remove="UI\Icons\photo.png" />
+    <None Remove="UI\Icons\png\arrow_down.png" />
+    <None Remove="UI\Icons\png\arrow_left.png" />
+    <None Remove="UI\Icons\png\arrow_right.png" />
+    <None Remove="UI\Icons\png\arrow_up.png" />
+    <None Remove="UI\Icons\png\attack_icon.png" />
     <None Remove="UI\Icons\png\attack_up_red.png" />
     <None Remove="UI\Icons\png\blue_soul.png" />
+    <None Remove="UI\Icons\png\board.png" />
     <None Remove="UI\Icons\png\burst_red.png" />
     <None Remove="UI\Icons\png\clear2.png" />
     <None Remove="UI\Icons\png\clock_red.png" />
@@ -95,6 +101,7 @@
     <None Remove="UI\Icons\png\controller_x.png" />
     <None Remove="UI\Icons\png\controller_y.png" />
     <None Remove="UI\Icons\png\defense_down.png" />
+    <None Remove="UI\Icons\png\defense_icon.png" />
     <None Remove="UI\Icons\png\defense_up.png" />
     <None Remove="UI\Icons\png\flame_hc.png" />
     <None Remove="UI\Icons\png\flame_ul.png" />
@@ -124,6 +131,10 @@
     <None Remove="UI\Icons\png\key_z.png" />
     <None Remove="UI\Icons\png\left_click.png" />
     <None Remove="UI\Icons\png\middle_click.png" />
+    <None Remove="UI\Icons\png\point_down.png" />
+    <None Remove="UI\Icons\png\point_left.png" />
+    <None Remove="UI\Icons\png\point_right.png" />
+    <None Remove="UI\Icons\png\point_up.png" />
     <None Remove="UI\Icons\png\right_click.png" />
     <None Remove="UI\Icons\png\sand_clock2_red.png" />
     <None Remove="UI\Icons\png\world.png" />
@@ -236,10 +247,12 @@
     <PackageReference Include="MouseKeyHook" Version="5.6.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Octokit" Version="4.0.1" />
+    <PackageReference Include="RESTCountries.NET" Version="3.0.0" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.3" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    <PackageReference Include="XInput.Wrapper" Version="0.3.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -365,11 +378,17 @@
     <Resource Include="UI\Icons\Pill_Icon_White.xaml" />
     <Resource Include="UI\Icons\Plate_Icon_White.xaml" />
     <Resource Include="UI\Icons\png\armor_skills.png" />
+    <Resource Include="UI\Icons\png\arrow_down.png" />
+    <Resource Include="UI\Icons\png\arrow_left.png" />
+    <Resource Include="UI\Icons\png\arrow_right.png" />
+    <Resource Include="UI\Icons\png\arrow_up.png" />
     <Resource Include="UI\Icons\png\attack.png" />
+    <Resource Include="UI\Icons\png\attack_icon.png" />
     <Resource Include="UI\Icons\png\attack_up.png" />
     <Resource Include="UI\Icons\png\attack_up_red.png" />
     <Resource Include="UI\Icons\png\blast.png" />
     <Resource Include="UI\Icons\png\blue_soul.png" />
+    <Resource Include="UI\Icons\png\board.png" />
     <Resource Include="UI\Icons\png\boggers.png" />
     <Resource Include="UI\Icons\png\bone.png" />
     <Resource Include="UI\Icons\png\book.png">
@@ -400,6 +419,7 @@
     <Resource Include="UI\Icons\png\controller_x.png" />
     <Resource Include="UI\Icons\png\controller_y.png" />
     <Resource Include="UI\Icons\png\defense_down.png" />
+    <Resource Include="UI\Icons\png\defense_icon.png" />
     <Resource Include="UI\Icons\png\defense_up.png" />
     <Resource Include="UI\Icons\png\dure_attack.png" />
     <Resource Include="UI\Icons\png\dure_attack_red.png" />
@@ -443,6 +463,10 @@
     <Resource Include="UI\Icons\png\loading.png" />
     <Resource Include="UI\Icons\png\middle_click.png" />
     <Resource Include="UI\Icons\png\paralysis.png" />
+    <Resource Include="UI\Icons\png\point_down.png" />
+    <Resource Include="UI\Icons\png\point_left.png" />
+    <Resource Include="UI\Icons\png\point_right.png" />
+    <Resource Include="UI\Icons\png\point_up.png" />
     <Resource Include="UI\Icons\png\quest_host.png" />
     <Resource Include="UI\Icons\png\red_soul.png" />
     <Resource Include="UI\Icons\png\right_click.png" />

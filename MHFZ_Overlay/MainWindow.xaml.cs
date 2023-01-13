@@ -42,6 +42,9 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using Label = System.Windows.Controls.Label;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
+using XInput.Wrapper;
+using Button = System.Windows.Controls.Button;
+using System.Linq;
 
 namespace MHFZ_Overlay
 {
@@ -349,6 +352,8 @@ namespace MHFZ_Overlay
 
         private readonly Dictionary<MouseButtons, Image> _mouseImages = new Dictionary<MouseButtons, Image>();
 
+        private readonly Dictionary<X.Gamepad.GamepadButtons, Image> _controllerImages = new Dictionary<X.Gamepad.GamepadButtons, Image>();
+
         //Main entry point?        
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -403,7 +408,6 @@ namespace MHFZ_Overlay
                 .AddDarkTheme());
             //.AddLightTheme());
 
-            splashScreen.Close(TimeSpan.FromSeconds(0.1));
 
             // When the program starts
             ProgramStart = DateTime.Now;
@@ -411,36 +415,12 @@ namespace MHFZ_Overlay
             // Calculate the total time spent and update the TotalTimeSpent property
             DataLoader.model.TotalTimeSpent = databaseManager.CalculateTotalTimeSpent();
 
-            // Add the key-image pairs to the dictionary
-            _keyImages.Add(Keys.D1, Key1);
-            _keyImages.Add(Keys.D2, Key2);
-            _keyImages.Add(Keys.D3, Key3);
-            _keyImages.Add(Keys.D4, Key4);
-            _keyImages.Add(Keys.D5, Key5);
-            _keyImages.Add(Keys.Q, KeyQ);
-            _keyImages.Add(Keys.W, KeyW);
-            _keyImages.Add(Keys.E, KeyE);
-            _keyImages.Add(Keys.R, KeyR);
-            _keyImages.Add(Keys.T, KeyT);
-            _keyImages.Add(Keys.A, KeyA);
-            _keyImages.Add(Keys.S, KeyS);
-            _keyImages.Add(Keys.D, KeyD);
-            _keyImages.Add(Keys.F, KeyF);
-            _keyImages.Add(Keys.G, KeyG);
-            _keyImages.Add(Keys.LShiftKey, KeyShift);
-            _keyImages.Add(Keys.Z, KeyZ);
-            _keyImages.Add(Keys.X, KeyX);
-            _keyImages.Add(Keys.C, KeyC);
-            _keyImages.Add(Keys.V, KeyV);
-            _keyImages.Add(Keys.LControlKey, KeyCtrl);
-            _keyImages.Add(Keys.Space, KeySpace);
-
-            _mouseImages.Add(MouseButtons.Left, MouseLeftClick);
-            _mouseImages.Add(MouseButtons.Middle, MouseMiddleClick);
-            _mouseImages.Add(MouseButtons.Right, MouseRightClick);
+            MapPlayerInputImages();
 
             // TODO controller
             Subscribe();
+
+            splashScreen.Close(TimeSpan.FromSeconds(0.1));
         }
 
         GitHubClient ghClient = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
@@ -2661,6 +2641,10 @@ namespace MHFZ_Overlay
             m_GlobalHook.KeyDown += GlobalHookKeyDown;
             m_GlobalHook.KeyUp += GlobalHookKeyUp;
 
+            // Register the event handler for button presses
+            // TODO: do i really need this kind of interface?
+            //m_GlobalHook.KeyDown += HandleHorizontalInput;
+
         }
 
         private void GlobalHookKeyPress(object sender, KeyPressEventArgs e)
@@ -2699,6 +2683,8 @@ namespace MHFZ_Overlay
             m_GlobalHook.KeyDown -= GlobalHookKeyDown;
             m_GlobalHook.KeyUp -= GlobalHookKeyUp;
 
+            //m_GlobalHook.KeyDown -= HandleHorizontalInput;
+
             //It is recommened to dispose it
             m_GlobalHook.Dispose();
         }
@@ -2724,12 +2710,53 @@ namespace MHFZ_Overlay
             }
         }
 
+        private void MapPlayerInputImages()
+        {
+            // Add the key-image pairs to the dictionary
+            _keyImages.Add(Keys.D1, Key1);
+            _keyImages.Add(Keys.D2, Key2);
+            _keyImages.Add(Keys.D3, Key3);
+            _keyImages.Add(Keys.D4, Key4);
+            _keyImages.Add(Keys.D5, Key5);
+            _keyImages.Add(Keys.Q, KeyQ);
+            _keyImages.Add(Keys.W, KeyW);
+            _keyImages.Add(Keys.E, KeyE);
+            _keyImages.Add(Keys.R, KeyR);
+            _keyImages.Add(Keys.T, KeyT);
+            _keyImages.Add(Keys.A, KeyA);
+            _keyImages.Add(Keys.S, KeyS);
+            _keyImages.Add(Keys.D, KeyD);
+            _keyImages.Add(Keys.F, KeyF);
+            _keyImages.Add(Keys.G, KeyG);
+            _keyImages.Add(Keys.LShiftKey, KeyShift);
+            _keyImages.Add(Keys.Z, KeyZ);
+            _keyImages.Add(Keys.X, KeyX);
+            _keyImages.Add(Keys.C, KeyC);
+            _keyImages.Add(Keys.V, KeyV);
+            _keyImages.Add(Keys.LControlKey, KeyCtrl);
+            _keyImages.Add(Keys.Space, KeySpace);
+
+            _mouseImages.Add(MouseButtons.Left, MouseLeftClick);
+            _mouseImages.Add(MouseButtons.Middle, MouseMiddleClick);
+            _mouseImages.Add(MouseButtons.Right, MouseRightClick);
+
+            _controllerImages.Add(X.Gamepad.GamepadButtons.A, ButtonA);
+            _controllerImages.Add(X.Gamepad.GamepadButtons.B, ButtonB);
+            _controllerImages.Add(X.Gamepad.GamepadButtons.X, ButtonX);
+            _controllerImages.Add(X.Gamepad.GamepadButtons.Y, ButtonY);
+            _controllerImages.Add(X.Gamepad.GamepadButtons.Dpad_Up, DPad);
+            _controllerImages.Add(X.Gamepad.GamepadButtons.Dpad_Left, DPad);
+            _controllerImages.Add(X.Gamepad.GamepadButtons.Dpad_Down, DPad);
+            _controllerImages.Add(X.Gamepad.GamepadButtons.Dpad_Right, DPad);
+            _controllerImages.Add(X.Gamepad.GamepadButtons.Start, ButtonStart);
+            _controllerImages.Add(X.Gamepad.GamepadButtons.LeftStick, LJoystick);
+            _controllerImages.Add(X.Gamepad.GamepadButtons.RightStick, RJoystick);
+            _controllerImages.Add(X.Gamepad.GamepadButtons.LBumper, ButtonL1);
+            _controllerImages.Add(X.Gamepad.GamepadButtons.RBumper, ButtonR1);
+        }
+
         double pressedKeyOpacity = 0.5;
         double unpressedKeyOpacity = 0.2;
-
-
-
-        
 
         #endregion
 

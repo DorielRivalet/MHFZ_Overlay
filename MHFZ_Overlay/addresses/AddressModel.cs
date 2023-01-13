@@ -19,6 +19,8 @@ using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
 using System.Windows.Automation;
 using System.Windows.Media.Animation;
+using RESTCountries.NET.Models;
+using RESTCountries.NET.Services;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -951,9 +953,9 @@ namespace MHFZ_Overlay.addresses
                 return "(Main Menu) ";
             else if (QuestID() == 0 && AreaID() == 200 && BlademasterWeaponID() == 0 && GunnerWeaponID() == 0)
                 return "(World Select) ";
-            else if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown || s.DamagePerSecondShown) //TODO graphs
+            else if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown || s.DamagePerSecondShown || s.TotalHitsTakenBlockedShown || s.Monster1OverviewShown) //TODO graphs
                 return "";
-            else if (s.TimerInfoShown)
+            else if (s.TimerInfoShown && s.EnableKeyLogging && s.EnableQuestLogging) //TODO: update README
                 return "(Speedrun) ";
             else
                 return "(Zen) ";
@@ -9817,6 +9819,19 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             actionsPerMinuteDictionary.Clear();
         }
 
+
+        #endregion
+
+        #region countries
+
+        // Get all countries
+        public IEnumerable<Country> Countries 
+        { 
+            get
+            {
+                return RestCountriesService.GetAllCountries();
+            } 
+        }
 
         #endregion
 

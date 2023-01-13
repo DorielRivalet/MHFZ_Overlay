@@ -440,8 +440,8 @@
     <Setting Name="PlayerAvatarLink" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/transcend.png</Value>
     </Setting>
-    <Setting Name="PlayerNationality" Type="System.String" Scope="User">
-      <Value Profile="(Default)">World</Value>
+    <Setting Name="PlayerNationalityIndex" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="DamagePerSecondShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -501,7 +501,7 @@
       <Value Profile="(Default)">610</Value>
     </Setting>
     <Setting Name="ControllerLayoutShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ControllerLayoutX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">160</Value>
@@ -529,6 +529,33 @@
     </Setting>
     <Setting Name="EnableAverageActionsPerMinuteColor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PlayerInputHorizontalGridShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PlayerInputHorizontalGridX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="PlayerInputHorizontalGridY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="PlayerInputVerticalGridShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PlayerInputVerticalGridX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="PlayerInputVerticalGridY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Monster1OverviewShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Monster1OverviewX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Monster1OverviewY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

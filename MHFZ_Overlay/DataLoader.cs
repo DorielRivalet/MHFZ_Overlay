@@ -48,9 +48,12 @@ namespace MHFZ_Overlay
                 {
                     CreateCodeCave(PID);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    // hi
+                    System.Windows.MessageBox.Show($"Error creating overlay: wrong program. \n\n{ex}", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+
+                    //App.Current.Shutdown();
+                    Environment.Exit(0);
                 }
 
                 if (!isHighGradeEdition)
@@ -72,7 +75,7 @@ namespace MHFZ_Overlay
 
         private List<string> bannedProcessesName = new List<string>()
         {
-            "mhf_displayer","Cheat Engine","cheatengine","cheat","Cheat"
+            "displayer","Displayer","cheat","Cheat","overlay","Overlay"
         };
 
         public void CheckForExternalProcesses()
@@ -82,7 +85,7 @@ namespace MHFZ_Overlay
             int gameCount = 0;
             foreach (var process in processList)
             {
-                if (bannedProcessesName.Any(s => process.ProcessName.Contains(s)))
+                if (bannedProcessesName.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
                 {
                     // processName is a substring of one of the banned process strings
                     MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
@@ -177,6 +180,7 @@ namespace MHFZ_Overlay
         /// <param name="PID">The pid.</param>
         private void CreateCodeCave(int PID)
         {
+            //TODO why is this needed?
             Process? proc = LoadMHFODLL(PID);
             if (proc == null)
             {

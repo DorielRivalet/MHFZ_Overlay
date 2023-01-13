@@ -538,7 +538,7 @@ namespace MHFZ_Overlay
                             cmd.ExecuteNonQuery();
                         }
 
-                        InsertPlayerDictionaryDataIntoTable(conn);
+                        InsertPlayerDictionaryDataIntoTable(conn, dataLoader);
 
                         // Get the ID of the last inserted row in the Players table
                         //sql = "SELECT LAST_INSERT_ROWID()";
@@ -2423,7 +2423,7 @@ namespace MHFZ_Overlay
             return schemaChanged;
         }
 
-        private void InsertPlayerDictionaryDataIntoTable(SQLiteConnection conn)
+        private void InsertPlayerDictionaryDataIntoTable(SQLiteConnection conn, DataLoader dataLoader)
         {
             // Start a transaction
             using (SQLiteTransaction transaction = conn.BeginTransaction())
@@ -2501,7 +2501,8 @@ namespace MHFZ_Overlay
                                 guildName = s.GuildName;
                                 serverName = s.ServerName;
                                 gender = s.GenderExport;
-                                nationality = s.PlayerNationality;
+                                //TODO test
+                                nationality = dataLoader.model.Countries.ToList()[s.PlayerNationalityIndex].Name.Common;
                             }
 
                             // Set the parameter values
@@ -2834,8 +2835,8 @@ namespace MHFZ_Overlay
                     {
                         cmd.ExecuteNonQuery();
                     }
-
-                    InsertPlayerDictionaryDataIntoTable(conn);
+                    
+                    InsertPlayerDictionaryDataIntoTable(conn, dataLoader);
 
                     /*
                      * mhfdat.bin

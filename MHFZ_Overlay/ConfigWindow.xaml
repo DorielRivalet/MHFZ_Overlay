@@ -316,8 +316,8 @@
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="31" Grid.Column="0"  Text="Keyboard and Mouse Layout Y Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="31" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutY}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Gamepad Layout" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0"  Text="Controller/Gamepad Layout"/>
-                        <ToggleButton Grid.Row="32" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ControllerLayoutShown}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Gamepad Layout" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0"  Text="(Not Implemented) Controller/Gamepad Layout"/>
+                        <ToggleButton Grid.Row="32" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ControllerLayoutShown}" Checked="ControllerLayoutButton_Click"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0"  Text="Controller/Gamepad Layout X Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="33" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ControllerLayoutX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0"  Text="Controller/Gamepad Layout Y Coordinate"/>
@@ -1961,7 +1961,17 @@
                                 <TextBlock Margin="5,5,5,5" ToolTip="Set a player avatar image link" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Player Avatar Link" />
                                 <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAvatarLink}"/>
                                 <TextBlock Margin="5,5,5,5" ToolTip="Select nationality to display on website for quest records" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Player Nationality"/>
-                                <ComboBox SelectedIndex="0" SelectionChanged="CountryComboBox_SelectionChanged" Name="CountryComboBox" Margin="5,5,5,5" Grid.Column="2" Grid.Row="4"/>
+                                <ComboBox SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Margin="5,5,5,5" Grid.Column="1" Grid.Row="4"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="{Binding Flag.Png}" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                <TextBlock Text="{Binding Name.Common}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+
                                 <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of inputs (KBM + Controller) during quests and inserts the information into a local database. WARNING: the runs with this option disabled will not be displayed on leaderboards, in order to prevent cheating." Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Log Inputs during Quest" />
                                 <ToggleButton Grid.Row="5" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableKeyLogging}"/>
                                 <!--TODO: speedrun mode in overlay takes into account these settings + other things-->
