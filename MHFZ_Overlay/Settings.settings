@@ -437,9 +437,6 @@
     <Setting Name="ServerName" Type="System.String" Scope="User">
       <Value Profile="(Default)">ServerName</Value>
     </Setting>
-    <Setting Name="PlayerAvatarLink" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/transcend.png</Value>
-    </Setting>
     <Setting Name="PlayerNationalityIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>

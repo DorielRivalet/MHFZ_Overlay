@@ -2448,7 +2448,6 @@ namespace MHFZ_Overlay
                         // Set the command text to insert a single row
                         cmd.CommandText = @"INSERT OR REPLACE INTO Players (
                         PlayerID, 
-                        PlayerAvatar, 
                         CreationDate,
                         PlayerName,
                         GuildName,
@@ -2457,7 +2456,6 @@ namespace MHFZ_Overlay
                         Nationality
                         ) VALUES (
                         @PlayerID, 
-                        @PlayerAvatar,
                         @CreationDate,
                         @PlayerName,
                         @GuildName,
@@ -2467,7 +2465,6 @@ namespace MHFZ_Overlay
 
                         // Add the parameter placeholders
                         cmd.Parameters.Add("@PlayerID", DbType.Int32);
-                        cmd.Parameters.Add("@PlayerAvatar", DbType.String);
                         cmd.Parameters.Add("@CreationDate", DbType.String);
                         cmd.Parameters.Add("@PlayerName", DbType.String);
                         cmd.Parameters.Add("@GuildName", DbType.String);
@@ -2480,13 +2477,12 @@ namespace MHFZ_Overlay
                         {
                             int playerID = kvp.Key;
                             List<string> playerInfo = kvp.Value;
-                            string playerAvatar = playerInfo[0];
-                            string creationDate = playerInfo[1];
-                            string playerName = playerInfo[2];
-                            string guildName = playerInfo[3];
-                            string serverName = playerInfo[4];
-                            string gender = playerInfo[5];
-                            string nationality = playerInfo[6];
+                            string creationDate = playerInfo[0];
+                            string playerName = playerInfo[1];
+                            string guildName = playerInfo[2];
+                            string serverName = playerInfo[3];
+                            string gender = playerInfo[4];
+                            string nationality = playerInfo[5];
 
                             if (playerID == 1 && (startTime == DateTime.UnixEpoch || startTime == DateTime.MinValue))
                                 creationDate = DateTime.Now.Date.ToString();
@@ -2496,7 +2492,6 @@ namespace MHFZ_Overlay
                             if (playerID == 1)
                             {
                                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
-                                playerAvatar = s.PlayerAvatarLink;
                                 playerName = s.HunterName;
                                 guildName = s.GuildName;
                                 serverName = s.ServerName;
@@ -2507,7 +2502,6 @@ namespace MHFZ_Overlay
 
                             // Set the parameter values
                             cmd.Parameters["@PlayerID"].Value = playerID;
-                            cmd.Parameters["@PlayerAvatar"].Value = playerAvatar;
                             cmd.Parameters["@CreationDate"].Value = creationDate;
                             cmd.Parameters["@PlayerName"].Value = playerName;
                             cmd.Parameters["@GuildName"].Value = guildName;
@@ -2824,7 +2818,6 @@ namespace MHFZ_Overlay
                     sql = @"
                     CREATE TABLE IF NOT EXISTS Players (
                     PlayerID INTEGER PRIMARY KEY, 
-                    PlayerAvatar TEXT NOT NULL DEFAULT 'https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/transcend.png',
                     CreationDate DATE NOT NULL,
                     PlayerName TEXT NOT NULL,
                     GuildName TEXT NOT NULL,

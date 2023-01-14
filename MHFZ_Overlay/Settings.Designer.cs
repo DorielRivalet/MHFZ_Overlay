@@ -1765,19 +1765,6 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/transc" +
-            "end.png")]
-        public string PlayerAvatarLink {
-            get {
-                return ((string)(this["PlayerAvatarLink"]));
-            }
-            set {
-                this["PlayerAvatarLink"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int PlayerNationalityIndex {
             get {
