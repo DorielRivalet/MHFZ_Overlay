@@ -99,6 +99,8 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowProgressBarDescription { get; set; } = true;
 
+        public bool ShowOverlayModeWatermark { get; set; } = true;
+
 
         #endregion
 
@@ -955,8 +957,15 @@ namespace MHFZ_Overlay.addresses
                 return "(World Select) ";
             else if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown || s.DamagePerSecondShown || s.TotalHitsTakenBlockedShown || s.Monster1OverviewShown) //TODO graphs
                 return "";
-            else if (s.TimerInfoShown && s.EnableKeyLogging && s.EnableQuestLogging) //TODO: update README
-                return "(Speedrun) ";
+            else if (s.TimerInfoShown && s.EnableKeyLogging && s.EnableQuestLogging && PartySize() == 1 && s.OverlayModeWatermarkShown) //TODO: update README
+            {
+                if (DivaSkillUsesLeft() == 0 && StyleRank1() != 15 && StyleRank2() != 15)
+                    return "(Time Attack) ";
+                else if (StyleRank1() == 15 || StyleRank2() == 15)
+                    return "(Freestyle) ";
+                else
+                    return "(Freestyle No Secret Tech) ";
+            }
             else
                 return "(Zen) ";
         }
@@ -9835,6 +9844,21 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         #endregion
 
+        public string OverlayModeWatermarkText
+        {
+            get
+            {
+                string overlayMode = GetOverlayMode();
+                overlayMode = overlayMode.Replace("(", "");
+                overlayMode = overlayMode.Replace(")", "");
+                overlayMode = overlayMode.Trim();
+                if (overlayMode == null || overlayMode == "")
+                    overlayMode = "Standard";
+
+                return overlayMode;
+            }
+        }
+        
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>

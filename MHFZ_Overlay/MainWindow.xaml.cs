@@ -956,6 +956,7 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowKBMLayout = v && s.KBMLayoutShown;
             DataLoader.model.ShowControllerLayout = v && s.ControllerLayoutShown;
             DataLoader.model.ShowAPM = v && s.ActionsPerMinuteShown;
+            DataLoader.model.ShowOverlayModeWatermark = v && s.OverlayModeWatermarkShown;
         }
 
         #endregion
@@ -2261,9 +2262,16 @@ namespace MHFZ_Overlay
                     s.ActionsPerMinuteX = (double)(pos.X - XOffset);
                     s.ActionsPerMinuteY = (double)(pos.Y - XOffset);
                     break;
+                case "MapImage":
+                    s.MapX = (double)(pos.X - XOffset);
+                    s.MapY = (double)(pos.Y - YOffset);
+                    break;
+                case "OverlayModeWatermark":
+                    s.OverlayModeWatermarkX = (double)(pos.X - XOffset);
+                    s.OverlayModeWatermarkY = (double)(pos.Y - YOffset);
+                    break;
 
-
-                    // Monster
+                // Monster
                 case "Monster1HpBar":
                     s.Monster1HealthBarX = (double)(pos.X - XOffset);
                     s.Monster1HealthBarY = (double)(pos.Y - YOffset);
@@ -2324,10 +2332,6 @@ namespace MHFZ_Overlay
                 case "Monster1Icon":
                     s.Monster1IconX = (double)(pos.X - XOffset);
                     s.Monster1IconY = (double)(pos.Y - YOffset);
-                    break;
-                case "MapImage":
-                    s.MapX = (double)(pos.X - XOffset);
-                    s.MapY = (double)(pos.Y - YOffset);
                     break;
             }
 

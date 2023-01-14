@@ -2230,5 +2230,149 @@ namespace MHFZ_Overlay {
                 this["Monster1OverviewY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Monster2OverviewShown {
+            get {
+                return ((bool)(this["Monster2OverviewShown"]));
+            }
+            set {
+                this["Monster2OverviewShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Monster2OverviewX {
+            get {
+                return ((double)(this["Monster2OverviewX"]));
+            }
+            set {
+                this["Monster2OverviewX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Monster2OverviewY {
+            get {
+                return ((double)(this["Monster2OverviewY"]));
+            }
+            set {
+                this["Monster2OverviewY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Monster3OverviewShown {
+            get {
+                return ((bool)(this["Monster3OverviewShown"]));
+            }
+            set {
+                this["Monster3OverviewShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Monster3OverviewX {
+            get {
+                return ((double)(this["Monster3OverviewX"]));
+            }
+            set {
+                this["Monster3OverviewX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Monster3OverviewY {
+            get {
+                return ((double)(this["Monster3OverviewY"]));
+            }
+            set {
+                this["Monster3OverviewY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Monster4OverviewShown {
+            get {
+                return ((bool)(this["Monster4OverviewShown"]));
+            }
+            set {
+                this["Monster4OverviewShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Monster4OverviewX {
+            get {
+                return ((double)(this["Monster4OverviewX"]));
+            }
+            set {
+                this["Monster4OverviewX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Monster4OverviewY {
+            get {
+                return ((double)(this["Monster4OverviewY"]));
+            }
+            set {
+                this["Monster4OverviewY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool OverlayModeWatermarkShown {
+            get {
+                return ((bool)(this["OverlayModeWatermarkShown"]));
+            }
+            set {
+                this["OverlayModeWatermarkShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public double OverlayModeWatermarkX {
+            get {
+                return ((double)(this["OverlayModeWatermarkX"]));
+            }
+            set {
+                this["OverlayModeWatermarkX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        public double OverlayModeWatermarkY {
+            get {
+                return ((double)(this["OverlayModeWatermarkY"]));
+            }
+            set {
+                this["OverlayModeWatermarkY"] = value;
+            }
+        }
     }
 }
