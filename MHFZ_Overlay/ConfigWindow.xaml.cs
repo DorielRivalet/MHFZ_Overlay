@@ -23,6 +23,9 @@ using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Window = System.Windows.Window;
 using RESTCountries.NET.Services;
 using RESTCountries.NET.Models;
+using System.Collections.ObjectModel;
+using MHFZ_Overlay.controls;
+using Newtonsoft.Json.Linq;
 
 namespace MHFZ_Overlay
 {
@@ -484,6 +487,7 @@ namespace MHFZ_Overlay
             string background5 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/5.png";
             string background6 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/6.png";
             string background7 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/7.png";
+            string background8 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/8.png";
 
             //https://stackoverflow.com/questions/30839173/change-background-image-in-wpf-using-c-sharp
             GeneralContent.Background = new ImageBrush(new BitmapImage(new Uri(background1)));
@@ -493,6 +497,7 @@ namespace MHFZ_Overlay
             DiscordRPCContent.Background = new ImageBrush(new BitmapImage(new Uri(background5)));
             CreditsContent.Background = new ImageBrush(new BitmapImage(new Uri(background6)));
             MonsterInfoContent.Background = new ImageBrush(new BitmapImage(new Uri(background7)));
+            QuestLogContent.Background = new ImageBrush(new BitmapImage(new Uri(background8)));
 
             //TODO: test this
             DataContext = MainWindow.DataLoader.model;

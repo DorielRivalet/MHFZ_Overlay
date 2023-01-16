@@ -21,6 +21,7 @@ using System.Windows.Automation;
 using System.Windows.Media.Animation;
 using RESTCountries.NET.Models;
 using RESTCountries.NET.Services;
+using MHFZ_Overlay.controls;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -9844,6 +9845,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         #endregion
 
+        #region speedrun watermark
         public string OverlayModeWatermarkText
         {
             get
@@ -9858,7 +9860,50 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 return overlayMode;
             }
         }
-        
+        #endregion
+
+        #region personal best times embed
+
+        public string SelectedQuestName { get; set; } = "Destructive White Winds";
+        public string SelectedQuestObjective { get; set; } = "Slay 1 Blinking Nargacuga";
+        public string SelectedQuestObjectiveImage { get; set; } = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blinking_nargacuga.png";
+        public string SwordAndShieldPBTime { get; set; } = "--:--";
+        public string SwordAndShieldPBRunID { get; set; } = "ID 000001";
+        public string DualSwordsPBTime { get; set; } = "--:--";
+        public string DualSwordsPBRunID { get; set; } = "ID 000002";
+        public string GreatSwordPBTime { get; set; } = "--:--";
+        public string GreatSwordPBRunID { get; set; } = "ID 000003";
+        public string LongSwordPBTime { get; set; } = "--:--";
+        public string LongSwordPBRunID { get; set; } = "ID 000004";
+        public string HammerPBTime { get; set; } = "--:--";
+        public string HammerPBRunID { get; set; } = "ID 000005";
+        public string HuntingHornPBTime { get; set; } = "--:--";
+        public string HuntingHornPBRunID { get; set; } = "ID 000006";
+        public string LancePBTime { get; set; } = "--:--";
+        public string LancePBRunID { get; set; } = "ID 000007";
+        public string GunlancePBTime { get; set; } = "--:--";
+        public string GunlancePBRunID { get; set; } = "ID 000008";
+        public string TonfaPBTime { get; set; } = "--:--";
+        public string TonfaPBRunID { get; set; } = "ID 000009";
+        public string SwitchAxeFPBTime { get; set; } = "--:--";
+        public string SwitchAxeFPBRunID { get; set; } = "ID 000010";
+        public string MagnetSpikePBTime { get; set; } = "--:--";
+        public string MagnetSpikePBRunID { get; set; } = "ID 000011";
+        public string LightBowgunPBTime { get; set; } = "--:--";
+        public string LightBowgunPBRunID { get; set; } = "ID 000012";
+        public string HeavyBowgunPBTime { get; set; } = "--:--";
+        public string HeavyBowgunPBRunID { get; set; } = "ID 000013";
+        public string BowPBTime { get; set; } = "--:--";
+        public string BowPBRunID { get; set; } = "ID 000014";
+        public int SelectedQuestID { get; set; } = 0;
+
+        public int SelectedRunID { get; set; } = 0;
+
+
+
+
+        #endregion
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>

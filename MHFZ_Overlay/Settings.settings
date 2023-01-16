@@ -582,7 +582,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="OverlayModeWatermarkShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="OverlayModeWatermarkX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">8</Value>

@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+        xmlns:uc="clr-namespace:MHFZ_Overlay.controls"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
@@ -364,7 +365,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="1" x:Name="PlayerInfo" Margin="20,20,20,20">
+                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="1" x:Name="PlayerInfo" Margin="20,5,20,20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
@@ -440,12 +441,12 @@
                                     <RowDefinition Height="80"/>
                                     <RowDefinition Height="80"/>
                                 </Grid.RowDefinitions>
-                                <Button Background="Transparent" Grid.Row="0" x:Name="BtnSaveFile" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/file_download_FILL0_wght400_GRAD0_opsz48.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="40" Width="40" ToolTip="Save gear to text file" Click="BtnSaveFile_Click"/>
-                                <Button Background="Transparent" Grid.Row="1" x:Name="BtnCopyFile" ToolTip="Copy gear to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/content_copy_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnCopyFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
-                                <Button Background="Transparent" Grid.Row="2" x:Name="BtnImageFile" ToolTip="Save gear image to disk and copy to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/image_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40" Click="BtnImageFile_Click"/>
-                                <Button Background="Transparent" Grid.Row="3" x:Name="BtnLogFile" ToolTip="Export hunted monsters log as Comma Separated Values" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/description_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnLogFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
-                                <Button Background="Transparent" Grid.Row="4" x:Name="BtnGuildCardFile" ToolTip="Save guild card image to disk and copy to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/badge.xaml'}"  Click="BtnGuildCardFile_Click" Width="40" Style="{StaticResource ConfigBottomButtons}" Height="40"/>
-                                <TextBlock Foreground="#cdd6f4" Margin="5,5,5,5"  Text="Reopen config. to update gear" TextWrapping="Wrap" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <Button Background="Transparent" Grid.Row="0" x:Name="BtnSaveFile" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/file_download_FILL0_wght400_GRAD0_opsz48.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="50" Width="50" ToolTip="Save gear to text file" Click="BtnSaveFile_Click"/>
+                                <Button Background="Transparent" Grid.Row="1" x:Name="BtnCopyFile" ToolTip="Copy gear to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/content_copy_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnCopyFile_Click" Width="50" Style="{StaticResource ConfigBottomButtons}" Height="50"/>
+                                <Button Background="Transparent" Grid.Row="2" x:Name="BtnImageFile" ToolTip="Save gear image to disk and copy to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/image_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="50" Style="{StaticResource ConfigBottomButtons}" Height="50" Click="BtnImageFile_Click"/>
+                                <Button Background="Transparent" Grid.Row="3" x:Name="BtnLogFile" ToolTip="Export hunted monsters log as Comma Separated Values" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/description_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnLogFile_Click" Width="50" Style="{StaticResource ConfigBottomButtons}" Height="50"/>
+                                <Button Background="Transparent" Grid.Row="4" x:Name="BtnGuildCardFile" ToolTip="Save guild card image to disk and copy to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/badge.xaml'}"  Click="BtnGuildCardFile_Click" Width="50" Style="{StaticResource ConfigBottomButtons}" Height="50"/>
+                                <TextBlock Foreground="#cdd6f4" Text="Reopen config. to update gear" TextWrapping="Wrap" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Grid>
 
                             <TabControl Margin="5" BorderBrush="Transparent" Background="Transparent" Grid.Row="0" Grid.Column="1">
@@ -642,7 +643,7 @@
                                                 </Grid.RowDefinitions>
                                                 <Image Panel.ZIndex="1" ToolTip="Program" Grid.Row="0" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/mhfzoverlayicon256.png"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Metadata" Grid.Row="1" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/transcend.png"/>
-                                                <Image Panel.ZIndex="1" ToolTip="Gear Description" Grid.Row="2" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/page.png"/>
+                                                <Image Panel.ZIndex="1" ToolTip="Gear Description" Grid.Row="2" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/ticket.png"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Weapon" Grid.Row="3" Grid.Column="0" Source="{Binding GetWeaponIcon, Mode=OneTime}"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Head" Grid.Row="4" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/helm.png"/>
                                                 <Image Panel.ZIndex="1" ToolTip="Chest" Grid.Row="5" Grid.Column="0" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/chest.png"/>
@@ -703,7 +704,7 @@
                                 <TabItem ToolTip="View Text" Background="#11111b" Foreground="#cdd6f4">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="UI/Icons/png/page.png" Width="32" Height="32"/>
+                                            <Image Source="UI/Icons/png/ticket.png" Width="32" Height="32"/>
                                             <TextBlock Text="Text" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -1924,62 +1925,345 @@
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/scroll.png" Width="32" Height="32"/>
-                    <TextBlock Foreground="#cdd6f4" Text="Quest Log" Margin="4,0,0,0" VerticalAlignment="Center" />
+                    <TextBlock Text="Quest Log" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#cdd6f4"/>
                 </StackPanel>
             </TabItem.Header>
-            <Grid>
-                <DockPanel Margin="5,5,5,5">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="QuestLogGrid" Margin="5,5,5,5">
+            <Grid x:Name="QuestLogContent">
+                <TabControl BorderBrush="Transparent" Background="Transparent">
+                    <TabControl.Resources>
+                        <Style TargetType="TabItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <Border Name="Border" BorderThickness=".5,.5,.5,0" BorderBrush="#b4befe" CornerRadius="4,4,0,0" Margin="2,0">
+                                            <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                        </Border>
+
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#585b70" />
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#1e1e2e" />
+
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+
+                                    </ControlTemplate>
+
+                                </Setter.Value>
+
+                            </Setter>
+                        </Style>
+                    </TabControl.Resources>
+                    <TabControl.Template>
+                        <ControlTemplate TargetType="TabControl">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Hidden" >
+                                    <TabPanel x:Name="HeaderPanel"
+                          Panel.ZIndex ="1" 
+                          KeyboardNavigation.TabIndex="1"
+                          Grid.Column="0"
+                          Grid.Row="0"
+                          Margin="2,2,2,0"
+                          IsItemsHost="true"/>
+                                </ScrollViewer>
+                                <ContentPresenter x:Name="PART_SelectedContentHost"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      Margin="{TemplateBinding Padding}"
+                                      ContentSource="SelectedContent" Grid.Row="1"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </TabControl.Template>
+
+
+
+                    <TabItem ToolTip="View Quest Statistics" Background="#11111b" Foreground="#cdd6f4">
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/table_chart_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="32" Height="32"/>
+                                <TextBlock Text="Quest Runs" Margin="4,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <Grid Margin="5,5,5,5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Search by Quest ID">
+                                        <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/search_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="40" Height="40"/>
+                                        <TextBox IsUndoEnabled="False" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedQuestID}"  PreviewTextInput="ValidateNumber" Width="350"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" ToolTip="Search by Run ID">
+                                        <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/search_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="40" Height="40"/>
+                                        <TextBox IsUndoEnabled="False" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedRunID}"  PreviewTextInput="ValidateNumber" Width="350"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" ToolTip="Search Option">
+                                        <TextBlock ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Search Option"/>
+                                        <ComboBox Grid.Column="1" Grid.Row="0" Width="300" Margin="5">
+                                            <ComboBoxItem>Gear</ComboBoxItem>
+                                            <ComboBoxItem>Top 20</ComboBoxItem>
+                                            <ComboBoxItem>Weapon Usage</ComboBoxItem>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <Grid x:Name="DiscordEmbedWeaponPersonalBest" Grid.Row="1" Background="#7f1e1e2e">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="24" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
+                                        
+                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="2">
+                                            <Image Source="{Binding SelectedQuestObjectiveImage}" Width="48" Height="48" Margin="0,0,5,0" />
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding SelectedQuestName}" VerticalAlignment="Center"  HorizontalAlignment="Center" FontWeight="Bold"/>
+                                                <TextBlock Text="{Binding SelectedQuestObjective}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" />
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_sns.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Sword and Shield" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding SwordAndShieldPBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding SwordAndShieldPBRunID}" Margin="0,0,5,0"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="2" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_ds.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Dual Swords" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding DualSwordsPBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding DualSwordsPBRunID}" Margin="0,0,5,0"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_gs.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Great Sword" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding GreatSwordPBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding GreatSwordPBRunID}" Margin="0,0,5,0"/>
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="3" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_ls.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Long Sword" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding LongSwordPBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding LongSwordPBRunID}" Margin="0,0,5,0"/>
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_hammer.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Hammer" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding HammerPBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding HammerPBRunID}" Margin="0,0,5,0"/>
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="4" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_hh.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Hunting Horn" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding HuntingHornPBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding HuntingHornPBRunID}" Margin="0,0,5,0"/>
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="5" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_lance.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Lance" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding LancePBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding LancePBRunID}" Margin="0,0,5,0"/>
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="5" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_gl.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Gunlance" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding GunlancePBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding GunlancePBRunID}" Margin="0,0,5,0"/>
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="6" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_tonfa.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Tonfa" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                           </StackPanel>
+                                                <TextBlock Text="{Binding TonfaPBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding TonfaPBRunID}" Margin="0,0,5,0"/>
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="6" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_saf.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Switch Axe F" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding SwitchAxeFPBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding SwitchAxeFPBRunID}" Margin="0,0,5,0"/>
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="7" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_ms.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Magnet Spike" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding MagnetSpikePBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding MagnetSpikePBRunID}" Margin="0,0,5,0"/>
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="7" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_lbg.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Light Bowgun" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding LightBowgunPBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding LightBowgunPBRunID}" Margin="0,0,5,0"/>
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="8" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_hbg.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Heavy Bowgun" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding HeavyBowgunPBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding HeavyBowgunPBRunID}" Margin="0,0,5,0"/>
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="8" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="UI/Icons/png/small_bow.png" Width="32" Height="32"/>
+                                                <TextBlock Text="Bow" FontWeight="Bold" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding BowPBTime}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding BowPBRunID}" Margin="0,0,5,0"/>
+
+                                        </StackPanel>
+                                        
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem ToolTip="Database Settings" Background="#11111b" Foreground="#cdd6f4">
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Settings.xaml'}" Width="32" Height="32"/>
+                                <TextBlock Foreground="#cdd6f4" Text="Settings" Margin="4,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </TabItem.Header>
+
+                        <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Height="Auto" Width="Auto">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="100"/>
                             </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Background="Transparent" Style="{StaticResource ConfigSingleGrid}">
+                            <DockPanel>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Margin="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                        </Grid.RowDefinitions>
+                                        <Button ToolTip="Select the game folder (which is in the same directory of where your game exe resides). This is needed because the overlay will read the *unique signatures* of the files within the folder and thus show which files you have used in a quest run" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="(Mandatory) Select Game Folder" Click="GameFolderButton_Click"/>
+                                        <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=GameFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"  Text="Hover to view selected game folder path"/>
+                                        <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Quest Logging" />
+                                        <ToggleButton Grid.Row="2" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}" Checked="questLoggingToggle_Check"/>
+                                        <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of inputs (KBM + Controller) during quests and inserts the information into a local database. WARNING: the runs with this option disabled will not be displayed on leaderboards, in order to prevent cheating." Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Log Inputs during Quest" />
+                                        <ToggleButton Grid.Row="3" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableKeyLogging}"/>
+                                        <TextBlock Margin="5,5,5,5" ToolTip="Select nationality to display on website for quest records" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Player Nationality"/>
+                                        <ComboBox SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Margin="5,5,5,5" Grid.Column="1" Grid.Row="4"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="{Binding Flag.Png}" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="{Binding Name.Common}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <TextBlock Margin="5,5,5,5" ToolTip="Show a watermark that has to be visible at all times during a YouTube video of a quest run in order for the run to be verified" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Overlay Mode Watermark" />
+                                        <ToggleButton Grid.Row="5" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayModeWatermarkShown}"/>
+
+                                        <!--TODO: speedrun mode in overlay takes into account these settings + other things-->
+                                    </Grid>
+                                </ScrollViewer>
+                            </DockPanel>
+                            <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="40"/>
-                                    <RowDefinition Height="40"/>
-                                    <RowDefinition Height="40"/>
-                                    <RowDefinition Height="40"/>
-                                    <RowDefinition Height="40"/>
-                                    <RowDefinition Height="40"/>
-                                    <RowDefinition Height="40"/>
-                                </Grid.RowDefinitions>
-                                <Button ToolTip="Select the game folder (which is in the same directory of where your game exe resides). This is needed because the overlay will read the *unique signatures* of the files within the folder and thus show which files you have used in a quest run" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="(Mandatory) Select Game Folder" Click="GameFolderButton_Click"/>
-                                <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=GameFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"  Text="Hover to view selected game folder path"/>
-                                <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Quest Logging" />
-                                <ToggleButton Grid.Row="2" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}" Checked="questLoggingToggle_Check"/>
-                                <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of inputs (KBM + Controller) during quests and inserts the information into a local database. WARNING: the runs with this option disabled will not be displayed on leaderboards, in order to prevent cheating." Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Log Inputs during Quest" />
-                                <ToggleButton Grid.Row="3" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableKeyLogging}"/>
-                                <TextBlock Margin="5,5,5,5" ToolTip="Select nationality to display on website for quest records" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Player Nationality"/>
-                                <ComboBox SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Margin="5,5,5,5" Grid.Column="1" Grid.Row="4"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="{Binding Flag.Png}" Width="20" Height="20" Margin="0,0,5,0"/>
-                                                <TextBlock Text="{Binding Name.Common}"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                                <TextBlock Margin="5,5,5,5" ToolTip="Show a watermark that has to be visible at all times during a YouTube video of a quest run in order for the run to be verified" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Overlay Mode Watermark" />
-                                <ToggleButton Grid.Row="2" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}" Checked="questLoggingToggle_Check"/>
-
-                                <!--TODO: speedrun mode in overlay takes into account these settings + other things-->
+                                <Button Background="Transparent" Grid.Column="0" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
+                                <Button Background="Transparent" Grid.Column="1" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                                <Button Background="Transparent" Grid.Column="2" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
                             </Grid>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Enable Quest Logging"/>
                         </Grid>
-                    </ScrollViewer>
-                </DockPanel>
+                    </TabItem>
+                </TabControl>
             </Grid>
         </TabItem>
         <!--TODO: ID Viewer (select id FROM table)-->
