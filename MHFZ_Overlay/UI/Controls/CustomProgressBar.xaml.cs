@@ -55,6 +55,12 @@ namespace MHFZ_Overlay.controls
             set { SetValue(DescriptionProperty, value); }
         }
 
+        public string BarType
+        {
+            get { return (string)GetValue(BarTypeProperty); }
+            set { SetValue(BarTypeProperty, value); }
+        }
+
         /// <summary>
         /// Gets or sets the current number.
         /// </summary>
@@ -91,6 +97,12 @@ namespace MHFZ_Overlay.controls
             set { SetValue(BarColorProperty, value); }
         }
 
+        public Brush StrokeColor
+        {
+            get { return (Brush)GetValue(StrokeColorProperty); }
+            set { SetValue(StrokeColorProperty, value); }
+        }
+
         public string IconSource
         {
             get { return (string)GetValue(IconSourceProperty); }
@@ -114,6 +126,10 @@ namespace MHFZ_Overlay.controls
             DependencyProperty.Register("BarColor", typeof(Brush), typeof(CustomProgressBar), new PropertyMetadata(null));
         public static readonly DependencyProperty IconSourceProperty = 
             DependencyProperty.Register("IconSource", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(""));
+        public static readonly DependencyProperty StrokeColorProperty =
+            DependencyProperty.Register("StrokeColor", typeof(Brush), typeof(CustomProgressBar), new PropertyMetadata(null));
+        public static readonly DependencyProperty BarTypeProperty =
+           DependencyProperty.Register("BarType", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(""));
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

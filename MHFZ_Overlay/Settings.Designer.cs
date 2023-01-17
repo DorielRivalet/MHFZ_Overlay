@@ -2434,5 +2434,113 @@ namespace MHFZ_Overlay {
                 this["EnableMonsterHPBarsAutomaticColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#1e1e2e")]
+        public string Monster1BarStrokeColor {
+            get {
+                return ((string)(this["Monster1BarStrokeColor"]));
+            }
+            set {
+                this["Monster1BarStrokeColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#1e1e2e")]
+        public string Monster2BarStrokeColor {
+            get {
+                return ((string)(this["Monster2BarStrokeColor"]));
+            }
+            set {
+                this["Monster2BarStrokeColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#1e1e2e")]
+        public string Monster3BarStrokeColor {
+            get {
+                return ((string)(this["Monster3BarStrokeColor"]));
+            }
+            set {
+                this["Monster3BarStrokeColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#1e1e2e")]
+        public string Monster4BarStrokeColor {
+            get {
+                return ((string)(this["Monster4BarStrokeColor"]));
+            }
+            set {
+                this["Monster4BarStrokeColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#1e1e2e")]
+        public string MonsterPoisonStrokeColor {
+            get {
+                return ((string)(this["MonsterPoisonStrokeColor"]));
+            }
+            set {
+                this["MonsterPoisonStrokeColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#1e1e2e")]
+        public string MonsterSleepStrokeColor {
+            get {
+                return ((string)(this["MonsterSleepStrokeColor"]));
+            }
+            set {
+                this["MonsterSleepStrokeColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#1e1e2e")]
+        public string MonsterParaStrokeColor {
+            get {
+                return ((string)(this["MonsterParaStrokeColor"]));
+            }
+            set {
+                this["MonsterParaStrokeColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#1e1e2e")]
+        public string MonsterBlastStrokeColor {
+            get {
+                return ((string)(this["MonsterBlastStrokeColor"]));
+            }
+            set {
+                this["MonsterBlastStrokeColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#1e1e2e")]
+        public string MonsterStunStrokeColor {
+            get {
+                return ((string)(this["MonsterStunStrokeColor"]));
+            }
+            set {
+                this["MonsterStunStrokeColor"] = value;
+            }
+        }
     }
 }

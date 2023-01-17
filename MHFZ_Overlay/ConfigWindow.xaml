@@ -1504,6 +1504,10 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
                     
                     <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="0" Text="Monster HP Background Color" Style="{StaticResource ConfigTextBox}"/>
@@ -1564,7 +1568,19 @@
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Automatically set the color of the HP bars depending on monster selected" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Automatic Bar Colors"/>
                         <ToggleButton Grid.Row="24" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMonsterHPBarsAutomaticColor}"/>
-                        
+
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0" Text="Monster 1 Bar Stroke Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="25" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarStrokeColor}"></xctk:ColorPicker>
+
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0" Text="Monster 2 Bar Stroke Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="26" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarStrokeColor}"></xctk:ColorPicker>
+
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0" Text="Monster 3 Bar Stroke Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="27" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarStrokeColor}"></xctk:ColorPicker>
+
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0" Text="Monster 4 Bar Stroke Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="28" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarStrokeColor}"></xctk:ColorPicker>
+
                     </Grid>
                 </ScrollViewer>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">
@@ -1601,6 +1617,11 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
@@ -1701,6 +1722,17 @@
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0" Text="Stun Bar Color"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="30" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}"></xctk:ColorPicker>
+
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="31" Grid.Column="0" Text="Monster Poison Stroke Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="31" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonStrokeColor}"></xctk:ColorPicker>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0" Text="Monster Sleep Stroke Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="32" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterSleepStrokeColor}"></xctk:ColorPicker>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0" Text="Monster Paralysis Stroke Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="33" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterParaStrokeColor}"></xctk:ColorPicker>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0" Text="Monster Blast Stroke Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="34" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterBlastStrokeColor}"></xctk:ColorPicker>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0" Text="Monster Stun Stroke Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="35" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunStrokeColor}"></xctk:ColorPicker>
                     </Grid>
                 </ScrollViewer>
                 <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">

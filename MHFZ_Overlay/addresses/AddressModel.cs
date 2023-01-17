@@ -2877,6 +2877,148 @@ namespace MHFZ_Overlay.addresses
                 return GetAlternateMonsterImage(id);
         }
 
+        public string DetermineMonsterHPBarColor(int n)
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            string barColorSetting = "#1e1e2e";
+            int monsterID = 0;
+
+            switch (n)
+            {
+                case 1:
+                    barColorSetting = s.Monster1BarColor;
+                    monsterID = LargeMonster1ID();
+                    break;
+                case 2:
+                    barColorSetting = s.Monster2BarColor;
+                    monsterID = LargeMonster2ID();
+                    break;
+                case 3:
+                    barColorSetting = s.Monster3BarColor;
+                    monsterID = LargeMonster3ID();
+                    break;
+                case 4:
+                    barColorSetting = s.Monster4BarColor;
+                    monsterID = LargeMonster4ID();
+                    break;
+            }
+
+            bool keyFound = MonsterColorDictionary.MonsterColorID.TryGetValue(monsterID, out string? color);
+            if (color == null)
+                color = barColorSetting;
+            if (keyFound && s.EnableMonsterHPBarsAutomaticColor)
+                return color;
+            else
+                return barColorSetting;
+        }
+
+        public string DetermineMonsterStrokeColor(int n)
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            string barColor = DetermineMonsterHPBarColor(n);
+            string strokeColorSetting = "";
+            string color = "";
+
+            switch (barColor)
+            {
+                case "#1e1e2e":
+                case "#181825":
+                case "#11111b":
+                    color = "#f5e0dc";
+                    break;
+                default:
+                    color = "#1e1e2e";
+                    break;
+            }
+
+            switch (n)
+            {
+                case 1:
+                    strokeColorSetting = s.Monster1BarStrokeColor;
+                    break;
+                case 2:
+                    strokeColorSetting = s.Monster2BarStrokeColor;
+                    break;
+                case 3:
+                    strokeColorSetting = s.Monster3BarStrokeColor;
+                    break;
+                case 4:
+                    strokeColorSetting = s.Monster4BarStrokeColor;
+                    break;
+            }
+
+            if (s.EnableMonsterHPBarsAutomaticColor)
+                return color;
+            else
+                return strokeColorSetting;
+        }
+
+        public string Monster1HPBarColor
+        {
+            get
+            {
+                return DetermineMonsterHPBarColor(1);
+            }
+        }
+
+        public string Monster2HPBarColor
+        {
+            get
+            {
+                return DetermineMonsterHPBarColor(2);
+            }
+        }
+
+        public string Monster3HPBarColor
+        {
+            get
+            {
+                return DetermineMonsterHPBarColor(3);
+            }
+        }
+
+        public string Monster4HPBarColor
+        {
+            get
+            {
+                return DetermineMonsterHPBarColor(4);
+            }
+        }
+
+        public string Monster1StrokeColor
+        {
+            get
+            {
+                return DetermineMonsterStrokeColor(1);
+            }
+        }
+
+        public string Monster2StrokeColor
+        {
+            get
+            {
+                return DetermineMonsterStrokeColor(2);
+            }
+        }
+
+        public string Monster3StrokeColor
+        {
+            get
+            {
+                return DetermineMonsterStrokeColor(3);
+            }
+        }
+
+        public string Monster4StrokeColor
+        {
+            get
+            {
+                return DetermineMonsterStrokeColor(4);
+            }
+        }
+
         public string CurrentMap
         {
             get

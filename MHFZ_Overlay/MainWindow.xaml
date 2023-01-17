@@ -240,7 +240,10 @@
                                IconSource="{Binding ElementName=Window, Path=DataLoader.model.CurrentMonster1Image}"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.Monster1HP}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.Monster1MaxHP}"
-                               BarColor="{Binding Source={StaticResource Settings},Path=Monster1BarColor}" Row1Width="4" Row2Width="3" />
+                               BarColor="{Binding  ElementName=Window, Path=DataLoader.model.Monster1HPBarColor}" 
+                               StrokeColor="{Binding  ElementName=Window, Path=DataLoader.model.Monster1StrokeColor}"
+                               Row1Width="4" 
+                               Row2Width="3" />
         </Grid>
 
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster2HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster2HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster2HealthBarY}" Width="500" Height="40" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -254,7 +257,10 @@
                                Description="{Binding ElementName=Window, Path=DataLoader.model.Monster2Name}"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.Monster2HP}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.Monster2MaxHP}"
-                               BarColor="{Binding Source={StaticResource Settings},Path=Monster2BarColor}" Row1Width="4" Row2Width="3"/>
+                               BarColor="{Binding  ElementName=Window, Path=DataLoader.model.Monster2HPBarColor}" 
+                               StrokeColor="{Binding  ElementName=Window, Path=DataLoader.model.Monster2StrokeColor}"
+                                   Row1Width="4" 
+                                   Row2Width="3"/>
         </Grid>
 
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster3HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster3HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster3HealthBarY}" Width="500" Height="40" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -269,7 +275,10 @@
                                Description="{Binding ElementName=Window, Path=DataLoader.model.Monster3Name}"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.Monster3HP}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.Monster3MaxHP}"
-                               BarColor="{Binding Source={StaticResource Settings},Path=Monster3BarColor}" Row1Width="4" Row2Width="3" />
+                               BarColor="{Binding  ElementName=Window, Path=DataLoader.model.Monster3HPBarColor}" 
+                               StrokeColor="{Binding  ElementName=Window, Path=DataLoader.model.Monster3StrokeColor}"
+                                  Row1Width="4" 
+                                  Row2Width="3" />
         </Grid>
 
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster4HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster4HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster4HealthBarY}" Width="500" Height="40" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -284,7 +293,10 @@
                                Description="{Binding ElementName=Window, Path=DataLoader.model.Monster4Name}"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.Monster4HP}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.Monster4MaxHP}"
-                               BarColor="{Binding Source={StaticResource Settings},Path=Monster4BarColor}" Row1Width="4" Row2Width="3" />
+                               BarColor="{Binding  ElementName=Window, Path=DataLoader.model.Monster4HPBarColor}" 
+                               StrokeColor="{Binding  ElementName=Window, Path=DataLoader.model.Monster4StrokeColor}"
+                                   Row1Width="4" 
+                                   Row2Width="3" />
         </Grid>
 
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterAtkMultInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}" Width="250" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -342,7 +354,9 @@
                                IconSource="../../UI/Icons/png/poison.png"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.PoisonCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.PoisonMax}"
-                               BarColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonBarColor}" Row1Width="1" Row2Width="2" FontSize="16" FontFamily="{StaticResource Source Code Pro Bold}" />
+                               BarColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonBarColor}" 
+                                                                  StrokeColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonStrokeColor}"
+                                   Row1Width="1" Row2Width="2" FontSize="16" FontFamily="{StaticResource Source Code Pro Bold}" />
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterSleepInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterSleepX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterSleepY}" Width="300" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterSleep, Converter={StaticResource BoolToVis}}">
@@ -358,6 +372,7 @@
                                IconSource="../../UI/Icons/png/sleep.png"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.SleepCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.SleepMax}"
+                                   StrokeColor="{Binding Source={StaticResource Settings},Path=MonsterSleepStrokeColor}"
                                BarColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarColor}" Row1Width="1" Row2Width="2" />
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterParaInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterParaX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterParaY}" Width="300" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -374,7 +389,9 @@
                                    IconSource="../../UI/Icons/png/paralysis.png"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.ParaCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.ParaMax}"
-                               BarColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}" Row1Width="1" Row2Width="2" />
+                               BarColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}"
+                                   StrokeColor="{Binding Source={StaticResource Settings},Path=MonsterParaStrokeColor}"
+                                   Row1Width="1" Row2Width="2" />
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterBlastInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterBlastX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterBlastY}" Width="300" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterBlast, Converter={StaticResource BoolToVis}}">
@@ -390,7 +407,9 @@
                                    IconSource="../../UI/Icons/png/blast.png"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.BlastCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.BlastMax}"
-                               BarColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarColor}" Row1Width="1" Row2Width="2" />
+                               BarColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarColor}" 
+                                   StrokeColor="{Binding Source={StaticResource Settings},Path=MonsterBlastStrokeColor}"
+                                   Row1Width="1" Row2Width="2" />
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterStunInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterStunX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterStunY}" Width="300" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterStun, Converter={StaticResource BoolToVis}}">
@@ -406,7 +425,9 @@
                                IconSource="../../UI/Icons/png/stun.png"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.StunCurrent}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.StunMax}"
-                               BarColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}" Row1Width="1" Row2Width="2" />
+                               BarColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}"
+                                   StrokeColor="{Binding Source={StaticResource Settings},Path=MonsterStunStrokeColor}"
+                                   Row1Width="1" Row2Width="2" />
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="Monster1Icon" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster1IconY}" Width="64" Height="64" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonster1Icon, Converter={StaticResource BoolToVis}}">

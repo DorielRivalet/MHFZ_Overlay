@@ -605,5 +605,32 @@
     <Setting Name="EnableMonsterHPBarsAutomaticColor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="Monster1BarStrokeColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#1e1e2e</Value>
+    </Setting>
+    <Setting Name="Monster2BarStrokeColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#1e1e2e</Value>
+    </Setting>
+    <Setting Name="Monster3BarStrokeColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#1e1e2e</Value>
+    </Setting>
+    <Setting Name="Monster4BarStrokeColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#1e1e2e</Value>
+    </Setting>
+    <Setting Name="MonsterPoisonStrokeColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#1e1e2e</Value>
+    </Setting>
+    <Setting Name="MonsterSleepStrokeColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#1e1e2e</Value>
+    </Setting>
+    <Setting Name="MonsterParaStrokeColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#1e1e2e</Value>
+    </Setting>
+    <Setting Name="MonsterBlastStrokeColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#1e1e2e</Value>
+    </Setting>
+    <Setting Name="MonsterStunStrokeColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#1e1e2e</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
