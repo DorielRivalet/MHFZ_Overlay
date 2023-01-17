@@ -46,6 +46,7 @@ using XInput.Wrapper;
 using Button = System.Windows.Controls.Button;
 using System.Linq;
 
+
 namespace MHFZ_Overlay
 {
     /// <summary>
@@ -243,10 +244,11 @@ namespace MHFZ_Overlay
             get
             {
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
-                if (s.ServerName.Length >= 1)
-                    return s.ServerName;
+                bool serverNameFound = Dictionary.DiscordServersList.DiscordServerID.TryGetValue(s.DiscordServerID, out string? value);
+                if (serverNameFound)
+                    return value;
                 else
-                    return "Server Name";
+                    return "Unknown Server";
             }
         }
 
@@ -957,6 +959,7 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowControllerLayout = v && s.ControllerLayoutShown;
             DataLoader.model.ShowAPM = v && s.ActionsPerMinuteShown;
             DataLoader.model.ShowOverlayModeWatermark = v && s.OverlayModeWatermarkShown;
+            DataLoader.model.ShowQuestID = v && s.QuestIDShown;
         }
 
         #endregion
@@ -2269,6 +2272,10 @@ namespace MHFZ_Overlay
                 case "OverlayModeWatermark":
                     s.OverlayModeWatermarkX = (double)(pos.X - XOffset);
                     s.OverlayModeWatermarkY = (double)(pos.Y - YOffset);
+                    break;
+                case "QuestIDGrid":
+                    s.QuestIDX = (double)(pos.X - XOffset);
+                    s.QuestIDY = (double)(pos.Y - YOffset);
                     break;
 
                 // Monster

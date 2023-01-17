@@ -1753,13 +1753,13 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ServerName")]
-        public string ServerName {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public long DiscordServerID {
             get {
-                return ((string)(this["ServerName"]));
+                return ((long)(this["DiscordServerID"]));
             }
             set {
-                this["ServerName"] = value;
+                this["DiscordServerID"] = value;
             }
         }
         
@@ -2372,6 +2372,42 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["OverlayModeWatermarkY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool QuestIDShown {
+            get {
+                return ((bool)(this["QuestIDShown"]));
+            }
+            set {
+                this["QuestIDShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double QuestIDX {
+            get {
+                return ((double)(this["QuestIDX"]));
+            }
+            set {
+                this["QuestIDX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public double QuestIDY {
+            get {
+                return ((double)(this["QuestIDY"]));
+            }
+            set {
+                this["QuestIDY"] = value;
             }
         }
     }

@@ -2451,7 +2451,7 @@ namespace MHFZ_Overlay
                         CreationDate,
                         PlayerName,
                         GuildName,
-                        ServerName,
+                        DiscordServerID,
                         Gender,
                         Nationality
                         ) VALUES (
@@ -2459,7 +2459,7 @@ namespace MHFZ_Overlay
                         @CreationDate,
                         @PlayerName,
                         @GuildName,
-                        @ServerName,
+                        @DiscordServerID,
                         @Gender,
                         @Nationality)";
 
@@ -2468,7 +2468,7 @@ namespace MHFZ_Overlay
                         cmd.Parameters.Add("@CreationDate", DbType.String);
                         cmd.Parameters.Add("@PlayerName", DbType.String);
                         cmd.Parameters.Add("@GuildName", DbType.String);
-                        cmd.Parameters.Add("@ServerName", DbType.String);
+                        cmd.Parameters.Add("@DiscordServerID", DbType.Int64);
                         cmd.Parameters.Add("@Gender", DbType.String);
                         cmd.Parameters.Add("@Nationality", DbType.String);
 
@@ -2480,7 +2480,7 @@ namespace MHFZ_Overlay
                             string creationDate = playerInfo[0];
                             string playerName = playerInfo[1];
                             string guildName = playerInfo[2];
-                            string serverName = playerInfo[3];
+                            long discordServerID = int.Parse(playerInfo[3]);
                             string gender = playerInfo[4];
                             string nationality = playerInfo[5];
 
@@ -2494,7 +2494,7 @@ namespace MHFZ_Overlay
                                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                                 playerName = s.HunterName;
                                 guildName = s.GuildName;
-                                serverName = s.ServerName;
+                                discordServerID = s.DiscordServerID;
                                 gender = s.GenderExport;
                                 //TODO test
                                 nationality = dataLoader.model.Countries.ToList()[s.PlayerNationalityIndex].Name.Common;
@@ -2505,7 +2505,7 @@ namespace MHFZ_Overlay
                             cmd.Parameters["@CreationDate"].Value = creationDate;
                             cmd.Parameters["@PlayerName"].Value = playerName;
                             cmd.Parameters["@GuildName"].Value = guildName;
-                            cmd.Parameters["@ServerName"].Value = serverName;
+                            cmd.Parameters["@DiscordServerID"].Value = discordServerID;
                             cmd.Parameters["@Gender"].Value = gender;
                             cmd.Parameters["@Nationality"].Value = nationality;
 
@@ -2821,7 +2821,7 @@ namespace MHFZ_Overlay
                     CreationDate DATE NOT NULL,
                     PlayerName TEXT NOT NULL,
                     GuildName TEXT NOT NULL,
-                    ServerName TEXT NOT NULL,
+                    DiscordServerID INTEGER NOT NULL,
                     Gender TEXT NOT NULL,
                     Nationality TEXT NOT NULL)";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))

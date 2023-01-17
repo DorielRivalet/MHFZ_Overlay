@@ -434,8 +434,8 @@
     <Setting Name="EnableHighestDPSColor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="ServerName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ServerName</Value>
+    <Setting Name="DiscordServerID" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="PlayerNationalityIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -589,6 +589,15 @@
     </Setting>
     <Setting Name="OverlayModeWatermarkY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">400</Value>
+    </Setting>
+    <Setting Name="QuestIDShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="QuestIDX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="QuestIDY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">50</Value>
     </Setting>
   </Settings>
 </SettingsFile>
