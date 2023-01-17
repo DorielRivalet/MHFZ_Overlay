@@ -422,6 +422,8 @@ namespace MHFZ_Overlay
             // TODO controller
             Subscribe();
 
+            DataLoader.model.ShowSaveIcon = false;
+
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
         }
 

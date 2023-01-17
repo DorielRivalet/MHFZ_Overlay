@@ -85,6 +85,8 @@ namespace MHFZ_Overlay
 
         public bool SetupLocalDatabase(DataLoader dataLoader)
         {
+            dataLoader.model.ShowSaveIcon = true;
+
             if (!isDatabaseSetup)
             {
                 isDatabaseSetup = true;
@@ -146,6 +148,9 @@ namespace MHFZ_Overlay
                     MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
+
+            dataLoader.model.ShowSaveIcon = false;
+
             return schemaChanged;
         }
 
@@ -211,6 +216,8 @@ namespace MHFZ_Overlay
 
         public void InsertQuestData(string connectionString, DataLoader dataLoader)
         {
+            dataLoader.model.ShowSaveIcon = true;
+
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
             if (!dataLoader.model.ValidateGameFolder())
@@ -1668,6 +1675,8 @@ namespace MHFZ_Overlay
                     }
                 }
             }
+
+            dataLoader.model.ShowSaveIcon = false;
         }
 
         private void CreateDatabaseTriggers(SQLiteConnection conn)

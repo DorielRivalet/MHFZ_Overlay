@@ -454,6 +454,15 @@
             <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Quest ID" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
             <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" Text="{Binding QuestIDBind}" Margin="4,0,0,0"/>
         </Grid>
+        <Grid x:Name="SaveIconGrid" Canvas.Left="0" Canvas.Top="0" Width="64" Height="64" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowSaveIcon, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/save_FILL0_wght400_GRAD0_opsz48.xaml'}" Grid.Column="0" Grid.Row="0"/>
+        </Grid>
         <Canvas x:Name="DamageNumbers" Visibility="{Binding Source={StaticResource Settings},Path=EnableDamageNumbers, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}" Height="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}" Canvas.Left="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"/>
         <Button x:Name="ExitDragAndDrop" Visibility="Hidden" HorizontalAlignment="Left"  Foreground="#f5e0dc"  Style="{StaticResource DefaultButton}"  Click="ExitDragAndDrop_Click" Canvas.Left="850" Canvas.Top="1">
             <Button.Content>

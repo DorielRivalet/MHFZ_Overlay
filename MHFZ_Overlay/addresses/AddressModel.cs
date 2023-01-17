@@ -104,6 +104,8 @@ namespace MHFZ_Overlay.addresses
 
         public bool ShowOverlayModeWatermark { get; set; } = true;
 
+        public bool ShowSaveIcon { get; set; } = true;
+
 
         #endregion
 
