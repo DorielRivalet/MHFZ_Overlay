@@ -2410,5 +2410,29 @@ namespace MHFZ_Overlay {
                 this["QuestIDY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableMonsterRenders {
+            get {
+                return ((bool)(this["EnableMonsterRenders"]));
+            }
+            set {
+                this["EnableMonsterRenders"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableMonsterHPBarsAutomaticColor {
+            get {
+                return ((bool)(this["EnableMonsterHPBarsAutomaticColor"]));
+            }
+            set {
+                this["EnableMonsterHPBarsAutomaticColor"] = value;
+            }
+        }
     }
 }

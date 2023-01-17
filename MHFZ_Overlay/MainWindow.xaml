@@ -237,7 +237,7 @@
             <uc:CustomProgressBar FontFamily="{StaticResource Source Code Pro Bold}" Foreground="#f5e0dc" x:Name="Monster1HPBar"  Grid.Row="0" Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" IsHitTestVisible="False"
                                Visibility="{Binding ElementName=Window, Path=DataLoader.model.HasMonster1, Converter={StaticResource BoolToVis}}"
                                Description="{Binding ElementName=Window, Path=DataLoader.model.Monster1Name}"
-                               IconSource="{Binding ElementName=Window, Path=DataLoader.model.CurrentMonster1Icon}"
+                               IconSource="{Binding ElementName=Window, Path=DataLoader.model.CurrentMonster1Image}"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.Monster1HP}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.Monster1MaxHP}"
                                BarColor="{Binding Source={StaticResource Settings},Path=Monster1BarColor}" Row1Width="4" Row2Width="3" />
@@ -250,7 +250,7 @@
             </Grid.RowDefinitions>
             <uc:CustomProgressBar  FontFamily="{StaticResource Source Code Pro Bold}" Foreground="#f5e0dc" x:Name="Monster2HPBar" Grid.Row="0"  Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" IsHitTestVisible="False"
                                Visibility="{Binding ElementName=Window, Path=DataLoader.model.HasMonster2, Converter={StaticResource BoolToVis}}"
-                               IconSource="{Binding ElementName=Window, Path=DataLoader.model.CurrentMonster2Icon}"
+                               IconSource="{Binding ElementName=Window, Path=DataLoader.model.CurrentMonster2Image}"
                                Description="{Binding ElementName=Window, Path=DataLoader.model.Monster2Name}"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.Monster2HP}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.Monster2MaxHP}"
@@ -265,7 +265,7 @@
 
             <uc:CustomProgressBar FontFamily="{StaticResource Source Code Pro Bold}" Foreground="#f5e0dc" x:Name="Monster3HPBar"  Grid.Row="0" Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" IsHitTestVisible="False"
                                Visibility="{Binding ElementName=Window, Path=DataLoader.model.HasMonster3, Converter={StaticResource BoolToVis}}"
-                               IconSource="{Binding ElementName=Window, Path=DataLoader.model.CurrentMonster3Icon}"
+                               IconSource="{Binding ElementName=Window, Path=DataLoader.model.CurrentMonster3Image}"
                                Description="{Binding ElementName=Window, Path=DataLoader.model.Monster3Name}"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.Monster3HP}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.Monster3MaxHP}"
@@ -280,7 +280,7 @@
 
             <uc:CustomProgressBar  Foreground="#f5e0dc" x:Name="Monster4HPBar" Grid.Row="0" Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" IsHitTestVisible="False"
                                Visibility="{Binding ElementName=Window, Path=DataLoader.model.HasMonster4, Converter={StaticResource BoolToVis}}"
-                               IconSource="{Binding ElementName=Window, Path=DataLoader.model.CurrentMonster4Icon}"
+                               IconSource="{Binding ElementName=Window, Path=DataLoader.model.CurrentMonster4Image}"
                                Description="{Binding ElementName=Window, Path=DataLoader.model.Monster4Name}"
                                NumCurr="{Binding  ElementName=Window, Path=DataLoader.model.Monster4HP}"
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.model.Monster4MaxHP}"

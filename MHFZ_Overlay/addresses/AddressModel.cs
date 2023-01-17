@@ -2723,6 +2723,94 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string CurrentMonster1Image
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                string monsterIcon = CurrentMonster1Icon;
+
+                if (s.EnableMonsterRenders)
+                {
+                    bool renderFound = Dictionary.MonsterRenderDictionary.MonsterRender.ContainsKey(monsterIcon);
+                    if (renderFound)
+                        return Dictionary.MonsterRenderDictionary.MonsterRender[monsterIcon];
+                    else
+                        return "https://i.imgur.com/3pQEtzw.png";
+                }
+                else
+                {
+                    return monsterIcon;
+                }
+            }
+        }
+
+        public string CurrentMonster2Image
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                string monsterIcon = CurrentMonster2Icon;
+
+                if (s.EnableMonsterRenders)
+                {
+                    bool renderFound = Dictionary.MonsterRenderDictionary.MonsterRender.ContainsKey(monsterIcon);
+                    if (renderFound)
+                        return Dictionary.MonsterRenderDictionary.MonsterRender[monsterIcon];
+                    else
+                        return "https://i.imgur.com/3pQEtzw.png";
+                }
+                else
+                {
+                    return monsterIcon;
+                }
+            }
+        }
+
+        public string CurrentMonster3Image
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                string monsterIcon = CurrentMonster3Icon;
+
+                if (s.EnableMonsterRenders)
+                {
+                    bool renderFound = Dictionary.MonsterRenderDictionary.MonsterRender.ContainsKey(monsterIcon);
+                    if (renderFound)
+                        return Dictionary.MonsterRenderDictionary.MonsterRender[monsterIcon];
+                    else
+                        return "https://i.imgur.com/3pQEtzw.png";
+                }
+                else
+                {
+                    return monsterIcon;
+                }
+            }
+        }
+
+        public string CurrentMonster4Image
+        {
+            get
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                string monsterIcon = CurrentMonster4Icon;
+
+                if (s.EnableMonsterRenders)
+                {
+                    bool renderFound = Dictionary.MonsterRenderDictionary.MonsterRender.ContainsKey(monsterIcon);
+                    if (renderFound)
+                        return Dictionary.MonsterRenderDictionary.MonsterRender[monsterIcon];
+                    else
+                        return "https://i.imgur.com/3pQEtzw.png";
+                }
+                else
+                {
+                    return monsterIcon;
+                }
+            }
+        }
+
         public string CurrentMonster2Icon
         {
             get
