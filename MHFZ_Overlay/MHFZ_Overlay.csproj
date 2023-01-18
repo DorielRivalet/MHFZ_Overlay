@@ -24,6 +24,18 @@
     <None Remove="UI\Background\6.png" />
     <None Remove="UI\Background\7.png" />
     <None Remove="UI\Background\8.png" />
+    <None Remove="UI\Fonts\OpenSans-Bold.ttf" />
+    <None Remove="UI\Fonts\OpenSans-BoldItalic.ttf" />
+    <None Remove="UI\Fonts\OpenSans-ExtraBold.ttf" />
+    <None Remove="UI\Fonts\OpenSans-ExtraBoldItalic.ttf" />
+    <None Remove="UI\Fonts\OpenSans-Italic.ttf" />
+    <None Remove="UI\Fonts\OpenSans-Light.ttf" />
+    <None Remove="UI\Fonts\OpenSans-LightItalic.ttf" />
+    <None Remove="UI\Fonts\OpenSans-Medium.ttf" />
+    <None Remove="UI\Fonts\OpenSans-MediumItalic.ttf" />
+    <None Remove="UI\Fonts\OpenSans-Regular.ttf" />
+    <None Remove="UI\Fonts\OpenSans-SemiBold.ttf" />
+    <None Remove="UI\Fonts\OpenSans-SemiBoldItalic.ttf" />
     <None Remove="UI\Fonts\SourceCodePro-Black.ttf" />
     <None Remove="UI\Fonts\SourceCodePro-BlackItalic.ttf" />
     <None Remove="UI\Fonts\SourceCodePro-Bold.ttf" />
@@ -259,6 +271,18 @@
   <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dorielrivalet_mhfz_overlay\CSharp\SonarLint.xml" Link="SonarLint.xml" />
     <Content Include="mhfzoverlayicon256.ico" />
+    <Resource Include="UI\Fonts\OpenSans-Bold.ttf" />
+    <Resource Include="UI\Fonts\OpenSans-BoldItalic.ttf" />
+    <Resource Include="UI\Fonts\OpenSans-ExtraBold.ttf" />
+    <Resource Include="UI\Fonts\OpenSans-ExtraBoldItalic.ttf" />
+    <Resource Include="UI\Fonts\OpenSans-Italic.ttf" />
+    <Resource Include="UI\Fonts\OpenSans-Light.ttf" />
+    <Resource Include="UI\Fonts\OpenSans-LightItalic.ttf" />
+    <Resource Include="UI\Fonts\OpenSans-Medium.ttf" />
+    <Resource Include="UI\Fonts\OpenSans-MediumItalic.ttf" />
+    <Resource Include="UI\Fonts\OpenSans-Regular.ttf" />
+    <Resource Include="UI\Fonts\OpenSans-SemiBold.ttf" />
+    <Resource Include="UI\Fonts\OpenSans-SemiBoldItalic.ttf" />
     <Resource Include="UI\Icons\bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\database_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\leaderboard_FILL0_wght400_GRAD0_opsz48.xaml" />

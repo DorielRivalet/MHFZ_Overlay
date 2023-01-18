@@ -144,6 +144,10 @@
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
             <FontFamily x:Key="Source Code Pro">pack://application:,,,UI/Fonts/#Source Code Pro</FontFamily>
             <FontFamily x:Key="Source Code Pro Bold">pack://application:,,,UI/Fonts/#Source Code Pro Bold</FontFamily>
+            <FontFamily x:Key="Open Sans">pack://application:,,,UI/Fonts/#Open Sans Regular</FontFamily>
+            <FontFamily x:Key="Open Sans Bold">pack://application:,,,UI/Fonts/#Open Sans Bold</FontFamily>
+            <FontFamily x:Key="Open Sans Italic">pack://application:,,,UI/Fonts/#Open Sans Italic</FontFamily>
+
             <!--<ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>

@@ -26,6 +26,118 @@
     <!--Background="#1e1e2e"-->
     <Window.Resources>
         <ResourceDictionary>
+            <DataTemplate x:Key="DefaultTemplate">
+                <Grid Background="#7f1e1e2e">
+                    <TextBlock Text="No option selected" Margin="5"/>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="GearTemplate">
+                <!-- Grid structure for the "Gear" option -->
+                <Grid Background="#7f1e1e2e">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="64" Width="5" Margin="0,0,5,0" Background="#a6e3a1" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="Top20Template">
+                <!-- Grid structure for the "Top 20" option -->
+                <Grid Background="#7f1e1e2e">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="64" Width="5" Margin="0,0,5,0" Background="#b4befe" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="WeaponUsageTemplate">
+                <!-- Grid structure for the "Weapon Usage" option -->
+                <Grid Background="#7f1e1e2e">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="64" Width="5" Margin="0,0,5,0" Background="#74c7ec" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="MostRecentTemplate">
+                <!-- Grid structure for the "Most Recent" option -->
+                <Grid Background="#7f1e1e2e">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="64" Width="5" Margin="0,0,5,0" Background="#f9e2af	" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="YouTubeTemplate">
+                <!-- Grid structure for the "YouTube" option -->
+                <Grid Background="#7f1e1e2e">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="64" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                </Grid>
+            </DataTemplate>
+            <local:OptionToTemplateConverter x:Key="OptionToTemplateConverter" />
+            <local:OptionToVisibilityConverter x:Key="OptionToVisibilityConverter" />
             <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
             <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
             <Setter Property="Template">
@@ -2056,12 +2168,7 @@
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" ToolTip="Search Option">
                                         <TextBlock ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Search Option"/>
-                                        <ComboBox Grid.Column="1" Grid.Row="0" Width="300" Margin="5">
-                                            <ComboBoxItem>Gear</ComboBoxItem>
-                                            <ComboBoxItem>Top 20</ComboBoxItem>
-                                            <ComboBoxItem>Weapon Usage</ComboBoxItem>
-                                            <ComboBoxItem>Most Recent</ComboBoxItem>
-                                        </ComboBox>
+                                        <ComboBox x:Name="QuestLogSearchOptionComboBox"  Grid.Column="1" Grid.Row="0" Width="300" Margin="5" ItemsSource="{Binding QuestLogsSearchOption}" SelectedItem="{Binding SelectedOption}" DisplayMemberPath="Name"/>
                                     </StackPanel>
                                     <Grid x:Name="DiscordEmbedWeaponPersonalBest" Grid.Row="1" Background="#7f1e1e2e">
                                         <Grid.RowDefinitions>
@@ -2100,16 +2207,16 @@
                                         
                                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="2">
                                             <Image Source="{Binding SelectedQuestObjectiveImage}" Width="48" Height="48" Margin="0,0,5,0" />
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding SelectedQuestName}" VerticalAlignment="Center"  HorizontalAlignment="Center" FontWeight="Bold"/>
-                                                <TextBlock Text="{Binding SelectedQuestObjective}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" />
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="{Binding SelectedQuestName}" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                <TextBlock Text="{Binding SelectedQuestObjective}" FontFamily="{StaticResource Open Sans Italic}"/>
                                             </StackPanel>
                                         </StackPanel>
 
                                         <StackPanel Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_sns.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Sword and Shield" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Sword and Shield" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding SwordAndShieldPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding SwordAndShieldPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2117,7 +2224,7 @@
                                         <StackPanel Grid.Row="2" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_ds.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Dual Swords" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Dual Swords" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding DualSwordsPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding DualSwordsPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2125,7 +2232,7 @@
                                         <StackPanel Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_gs.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Great Sword" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Great Sword" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding GreatSwordPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding GreatSwordPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2134,7 +2241,7 @@
                                         <StackPanel Grid.Row="3" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_ls.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Long Sword" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Long Sword" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding LongSwordPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding LongSwordPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2143,7 +2250,7 @@
                                         <StackPanel Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_hammer.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Hammer" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Hammer" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding HammerPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding HammerPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2152,7 +2259,7 @@
                                         <StackPanel Grid.Row="4" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_hh.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Hunting Horn" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Hunting Horn" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding HuntingHornPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding HuntingHornPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2161,7 +2268,7 @@
                                         <StackPanel Grid.Row="5" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_lance.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Lance" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Lance" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding LancePBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding LancePBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2170,7 +2277,7 @@
                                         <StackPanel Grid.Row="5" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_gl.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Gunlance" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Gunlance" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding GunlancePBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding GunlancePBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2179,7 +2286,7 @@
                                         <StackPanel Grid.Row="6" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_tonfa.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Tonfa" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Tonfa" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                            </StackPanel>
                                             <TextBlock Text="{Binding TonfaPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding TonfaPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2188,7 +2295,7 @@
                                         <StackPanel Grid.Row="6" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_saf.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Switch Axe F" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Switch Axe F" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding SwitchAxeFPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding SwitchAxeFPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2197,7 +2304,7 @@
                                         <StackPanel Grid.Row="7" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_ms.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Magnet Spike" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Magnet Spike" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding MagnetSpikePBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding MagnetSpikePBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2206,7 +2313,7 @@
                                         <StackPanel Grid.Row="7" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_lbg.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Light Bowgun" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Light Bowgun" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding LightBowgunPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding LightBowgunPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2215,7 +2322,7 @@
                                         <StackPanel Grid.Row="8" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_hbg.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Heavy Bowgun" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Heavy Bowgun" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding HeavyBowgunPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding HeavyBowgunPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2224,7 +2331,7 @@
                                         <StackPanel Grid.Row="8" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_bow.png" Width="32" Height="32"/>
-                                                <TextBlock Text="Bow" FontWeight="Bold" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Bow" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
                                             <TextBlock Text="{Binding BowPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding BowPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -2232,6 +2339,7 @@
                                         </StackPanel>
                                         
                                     </Grid>
+                                    <ContentControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="{Binding SelectedOption}" ContentTemplateSelector="{StaticResource OptionToTemplateConverter}" />
                                 </Grid>
                             </Grid>
                         </ScrollViewer>
