@@ -534,8 +534,28 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
 
                         </Grid.RowDefinitions>
+                        <!--grid for player info tabs below-->
                         <Grid Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="13">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
@@ -1551,6 +1571,55 @@
                         <TextBlock Margin="5,5,5,5" ToolTip="Show color if a hit was not received and you are using a weapon that cannot utilize Reflect" Style="{StaticResource ConfigTextBox}" Grid.Row="48" Grid.Column="0"  Text="No Hit Color"/>
                         <ToggleButton Grid.Row="48" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableTotalHitsTakenBlockedColor}"/>
 
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Player Attack Graph" Style="{StaticResource ConfigTextBox}" Grid.Row="49" Grid.Column="0"  Text="Player Attack Graph"/>
+                        <ToggleButton Grid.Row="49" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAttackGraphShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="50" Grid.Column="0"  Text="Player Attack Graph X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="50" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="51" Grid.Column="0"  Text="Player Attack Graph Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="51" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="52" Grid.Column="0" Text="Player Attack Graph Line Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="52" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphColor}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="53" Grid.Column="0" Text="Player Attack Graph Background Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="53" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphBackground}"/>
+
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Player DPS Graph" Style="{StaticResource ConfigTextBox}" Grid.Row="54" Grid.Column="0"  Text="Player DPS Graph"/>
+                        <ToggleButton Grid.Row="54" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerDPSGraphShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="55" Grid.Column="0"  Text="Player DPS Graph X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="55" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="56" Grid.Column="0"  Text="Player DPS Graph Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="56" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="57" Grid.Column="0" Text="Player DPS Graph Line Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="57" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphColor}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="58" Grid.Column="0" Text="Player DPS Graph Background Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="58" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphBackground}"/>
+                        
+                        
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Player Hits per Second Graph" Style="{StaticResource ConfigTextBox}" Grid.Row="59" Grid.Column="0"  Text="Player Hits Per Second Graph"/>
+                        <ToggleButton Grid.Row="59" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerHitsPerSecondGraphShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="60" Grid.Column="0"  Text="Player Hits per Second Graph X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="60" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="61" Grid.Column="0"  Text="Player Hits per Second Graph Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="61" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="62" Grid.Column="0" Text="Player Hits per Second Graph Line Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="62" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphColor}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="63" Grid.Column="0" Text="Player Hits per Second Graph Background Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="63" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphBackground}"/>
+                        
+                        
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Player Actions per Minute Graph" Style="{StaticResource ConfigTextBox}" Grid.Row="64" Grid.Column="0"  Text="Player Actions per Minute Graph"/>
+                        <ToggleButton Grid.Row="64" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAPMGraphShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="65" Grid.Column="0"  Text="Player Actions per Minute Graph X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="65" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="66" Grid.Column="0"  Text="Player Actions per Minute Graph Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="66" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="67" Grid.Column="0" Text="Player Actions per Minute Graph Line Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="67" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphColor}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="68" Grid.Column="0" Text="Player Actions per Minute Graph Background Color"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="68" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphBackground}"/>
+                        
+                        
+                        
                         <!--<TextBlock Margin="5,5,5,5" ToolTip="Currently Equipped Weapon (includes Town Set)" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="{Binding CurrentWeaponName}"/>
                         <TextBlock IsHitTestVisible="False" Style="{StaticResource ValueTextBox}" Grid.Column="1" Grid.Row="16" x:Name="playerWepTextBox" Text="{Binding CurrentWeaponName}"/>-->
 

@@ -1669,7 +1669,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
         public double PlayerAttackGraphX {
             get {
                 return ((double)(this["PlayerAttackGraphX"]));
@@ -1681,7 +1681,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("280")]
         public double PlayerAttackGraphY {
             get {
                 return ((double)(this["PlayerAttackGraphY"]));
@@ -2540,6 +2540,210 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["MonsterStunStrokeColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayerDPSGraphShown {
+            get {
+                return ((bool)(this["PlayerDPSGraphShown"]));
+            }
+            set {
+                this["PlayerDPSGraphShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public double PlayerDPSGraphX {
+            get {
+                return ((double)(this["PlayerDPSGraphX"]));
+            }
+            set {
+                this["PlayerDPSGraphX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("280")]
+        public double PlayerDPSGraphY {
+            get {
+                return ((double)(this["PlayerDPSGraphY"]));
+            }
+            set {
+                this["PlayerDPSGraphY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayerHitsPerSecondGraphShown {
+            get {
+                return ((bool)(this["PlayerHitsPerSecondGraphShown"]));
+            }
+            set {
+                this["PlayerHitsPerSecondGraphShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public double PlayerHitsPerSecondGraphX {
+            get {
+                return ((double)(this["PlayerHitsPerSecondGraphX"]));
+            }
+            set {
+                this["PlayerHitsPerSecondGraphX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("280")]
+        public double PlayerHitsPerSecondGraphY {
+            get {
+                return ((double)(this["PlayerHitsPerSecondGraphY"]));
+            }
+            set {
+                this["PlayerHitsPerSecondGraphY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayerAPMGraphShown {
+            get {
+                return ((bool)(this["PlayerAPMGraphShown"]));
+            }
+            set {
+                this["PlayerAPMGraphShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public double PlayerAPMGraphX {
+            get {
+                return ((double)(this["PlayerAPMGraphX"]));
+            }
+            set {
+                this["PlayerAPMGraphX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("280")]
+        public double PlayerAPMGraphY {
+            get {
+                return ((double)(this["PlayerAPMGraphY"]));
+            }
+            set {
+                this["PlayerAPMGraphY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#fab387")]
+        public string PlayerAttackGraphColor {
+            get {
+                return ((string)(this["PlayerAttackGraphColor"]));
+            }
+            set {
+                this["PlayerAttackGraphColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#001e1e2e")]
+        public string PlayerAttackGraphBackground {
+            get {
+                return ((string)(this["PlayerAttackGraphBackground"]));
+            }
+            set {
+                this["PlayerAttackGraphBackground"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#f38ba8")]
+        public string PlayerDPSGraphColor {
+            get {
+                return ((string)(this["PlayerDPSGraphColor"]));
+            }
+            set {
+                this["PlayerDPSGraphColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#001e1e2e")]
+        public string PlayerDPSGraphBackground {
+            get {
+                return ((string)(this["PlayerDPSGraphBackground"]));
+            }
+            set {
+                this["PlayerDPSGraphBackground"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#f9e2af")]
+        public string PlayerHitsPerSecondGraphColor {
+            get {
+                return ((string)(this["PlayerHitsPerSecondGraphColor"]));
+            }
+            set {
+                this["PlayerHitsPerSecondGraphColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#001e1e2e")]
+        public string PlayerHitsPerSecondGraphBackground {
+            get {
+                return ((string)(this["PlayerHitsPerSecondGraphBackground"]));
+            }
+            set {
+                this["PlayerHitsPerSecondGraphBackground"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#eba0ac")]
+        public string PlayerAPMGraphColor {
+            get {
+                return ((string)(this["PlayerAPMGraphColor"]));
+            }
+            set {
+                this["PlayerAPMGraphColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#001e1e2e")]
+        public string PlayerAPMGraphBackground {
+            get {
+                return ((string)(this["PlayerAPMGraphBackground"]));
+            }
+            set {
+                this["PlayerAPMGraphBackground"] = value;
             }
         }
     }

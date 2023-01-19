@@ -414,10 +414,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="PlayerAttackGraphX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="PlayerAttackGraphY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">280</Value>
     </Setting>
     <Setting Name="EnableQuestLogging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -631,6 +631,57 @@
     </Setting>
     <Setting Name="MonsterStunStrokeColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#1e1e2e</Value>
+    </Setting>
+    <Setting Name="PlayerDPSGraphShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PlayerDPSGraphX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="PlayerDPSGraphY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">280</Value>
+    </Setting>
+    <Setting Name="PlayerHitsPerSecondGraphShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PlayerHitsPerSecondGraphX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="PlayerHitsPerSecondGraphY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">280</Value>
+    </Setting>
+    <Setting Name="PlayerAPMGraphShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PlayerAPMGraphX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="PlayerAPMGraphY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">280</Value>
+    </Setting>
+    <Setting Name="PlayerAttackGraphColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#fab387</Value>
+    </Setting>
+    <Setting Name="PlayerAttackGraphBackground" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#001e1e2e</Value>
+    </Setting>
+    <Setting Name="PlayerDPSGraphColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#f38ba8</Value>
+    </Setting>
+    <Setting Name="PlayerDPSGraphBackground" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#001e1e2e</Value>
+    </Setting>
+    <Setting Name="PlayerHitsPerSecondGraphColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#f9e2af</Value>
+    </Setting>
+    <Setting Name="PlayerHitsPerSecondGraphBackground" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#001e1e2e</Value>
+    </Setting>
+    <Setting Name="PlayerAPMGraphColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#eba0ac</Value>
+    </Setting>
+    <Setting Name="PlayerAPMGraphBackground" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#001e1e2e</Value>
     </Setting>
   </Settings>
 </SettingsFile>

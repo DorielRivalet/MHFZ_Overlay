@@ -45,7 +45,9 @@ using Point = System.Windows.Point;
 using XInput.Wrapper;
 using Button = System.Windows.Controls.Button;
 using System.Linq;
-
+using LiveChartsCore.Defaults;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 
 namespace MHFZ_Overlay
 {
@@ -407,8 +409,8 @@ namespace MHFZ_Overlay
 
                 // select a theme, default is Light
                 // OPTIONAL
-                .AddDarkTheme());
-            //.AddLightTheme());
+                //.AddDarkTheme());
+                .AddLightTheme());
 
 
             // When the program starts
@@ -424,8 +426,24 @@ namespace MHFZ_Overlay
 
             DataLoader.model.ShowSaveIcon = false;
 
+            //TODO graphs
+            //https://stackoverflow.com/questions/74719777/livecharts2-binding-continuously-changing-data-to-graph
+            //inspired by HunterPie
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            DataLoader.model.attackBuffSeries.Add(new LineSeries<ObservablePoint>
+            {
+                Values = DataLoader.model.attackBuffCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor,"7f")), new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
         }
+
+
 
         GitHubClient ghClient = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
 
@@ -955,6 +973,10 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowMap = v && s.EnableMap;
             DataLoader.model.ShowFrameCounter = v && s.FrameCounterShown;
             DataLoader.model.ShowPlayerAttackGraph = v && s.PlayerAttackGraphShown;
+            DataLoader.model.ShowPlayerDPSGraph = v && s.PlayerDPSGraphShown;
+            DataLoader.model.ShowPlayerAPMGraph = v && s.PlayerAPMGraphShown;
+            DataLoader.model.ShowPlayerHitsPerSecondGraph = v && s.PlayerHitsPerSecondGraphShown;
+
             DataLoader.model.ShowDamagePerSecond = v && s.DamagePerSecondShown;
 
             DataLoader.model.ShowKBMLayout = v && s.KBMLayoutShown;
@@ -2250,7 +2272,26 @@ namespace MHFZ_Overlay
                     s.TotalHitsTakenBlockedX = (double)(pos.X - XOffset);
                     s.TotalHitsTakenBlockedY = (double)(pos.Y - YOffset);
                     break;
+
                 // TODO graphs
+                case "PlayerAttackGraphGrid":
+                    s.PlayerAttackGraphX = (double)(pos.X - XOffset);
+                    s.PlayerAttackGraphY = (double)(pos.Y - YOffset);
+                    break;
+                case "PlayerDPSGraphGrid":
+                    s.PlayerDPSGraphX = (double)(pos.X - XOffset);
+                    s.PlayerDPSGraphY = (double)(pos.Y - YOffset);
+                    break;
+                case "PlayerAPMGraphGrid":
+                    s.PlayerAPMGraphX = (double)(pos.X - XOffset);
+                    s.PlayerAPMGraphY = (double)(pos.Y - YOffset);
+                    break;
+                case "PlayerHitsPerSecondGraphGrid":
+                    s.PlayerHitsPerSecondGraphX = (double)(pos.X - XOffset);
+                    s.PlayerHitsPerSecondGraphY = (double)(pos.Y - YOffset);
+                    break;
+
+
                 case "DamagePerSecondInfo":
                     s.PlayerDPSX = (double)(pos.X - XOffset);
                     s.PlayerDPSY = (double)(pos.Y - XOffset);
@@ -2527,6 +2568,7 @@ namespace MHFZ_Overlay
             {
                 DataLoader.model.questCleared = false;
                 DataLoader.model.clearQuestInfoDictionaries();
+                DataLoader.model.clearGraphCollections();
                 DataLoader.model.resetQuestInfoVariables();
                 return;
             }

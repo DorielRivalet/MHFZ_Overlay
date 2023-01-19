@@ -439,7 +439,7 @@
             </Grid.RowDefinitions>
             <Image Source="{Binding CurrentMonster1Icon}" Grid.Column="0" Grid.Row="0"/>
         </Grid>
-        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="PlayerAttackGraphName" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphY}" Width="256" Height="256" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+        <Grid x:Name="PlayerAttackGraphGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphY}" Width="300" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPlayerAttackGraph, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="1*" />
@@ -447,9 +447,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <!--<lvc:CartesianChart
-        Series="{Binding PlayerAttackSeries}">
-            </lvc:CartesianChart>-->
+            <lvc:CartesianChart Background="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphBackground}" Series="{Binding attackBuffSeries}" SyncContext="{Binding attackBuffSync}" XAxes="{Binding XAxes}" YAxes="{Binding attackBuffYAxes}"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MapImage" Canvas.Left="{Binding Source={StaticResource Settings},Path=MapX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MapY}" Width="{Binding Source={StaticResource Settings},Path=MapAreaWidth}" Height="{Binding Source={StaticResource Settings},Path=MapAreaHeight}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMap, Converter={StaticResource BoolToVis}}">

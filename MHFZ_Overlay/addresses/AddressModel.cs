@@ -22,6 +22,10 @@ using System.Windows.Media.Animation;
 using RESTCountries.NET.Models;
 using RESTCountries.NET.Services;
 using MHFZ_Overlay.controls;
+using LiveChartsCore.Defaults;
+using LiveChartsCore.SkiaSharpView.Painting.Effects;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -95,6 +99,17 @@ namespace MHFZ_Overlay.addresses
         public bool ShowMap { get; set; } = true;
 
         public bool ShowPlayerAttackGraph { get; set; } = true;
+
+        public bool ShowPlayerDPSGraph { get; set; } = true;
+
+
+        public bool ShowPlayerAPMGraph { get; set; } = true;
+
+
+        public bool ShowPlayerHitsPerSecondGraph { get; set; } = true;
+
+
+
 
         public bool ShowDamagePerSecond { get; set; } = true;
 
@@ -8657,15 +8672,70 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         #region graphs
 
         // TODO
-        public ISeries[] PlayerAttackSeries { get; set; }
-           = new ISeries[]
-           {
-                new LineSeries<double>
-                {
-                    Values = new double[]{1,1,1,2},
-                    Fill = null
+
+        public ObservableCollection<ObservablePoint> attackBuffCollection = new();
+        public ObservableCollection<ObservablePoint> damagePerSecondCollection = new();
+        public ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new();
+        public ObservableCollection<ObservablePoint> hitsPerSecondCollection = new();
+
+        public object attackBuffSync { get; } = new();
+        public object damagePerSecondSync { get; } = new();
+        public object actionsPerMinuteSync { get; } = new();
+        public object hitsPerSecondSync { get; } = new();
+
+        public List<ISeries> attackBuffSeries { get; set; } = new();
+        public List<ISeries> damagePerSecondSeries { get; set; } = new();
+        public List<ISeries> actionsPerMinuteSeries { get; set; } = new();
+        public List<ISeries> hitsPerSecondSeries { get; set; } = new();
+
+
+        public static string GetTimeElapsed(double seconds)
+        {
+            var elapsedTime = TimeSpan.FromSeconds(seconds);
+            var elapsedTimeString = elapsedTime.ToString("mm\\:ss");
+            return elapsedTimeString;
+        }
+
+        static Settings staticSettings = (Settings)Application.Current.TryFindResource("Settings");
+
+        // since the x axis for all of my graphs is the time elapsed in seconds in a quest, i only need 1 definition
+        public Axis[] XAxes { get; set; } =
+        {
+            new Axis
+            {
+                // Now the Y axis we will display labels as currency
+                // LiveCharts provides some common formatters
+                // in this case we are using the currency formatter.
+                //Name= "Seconds",
+                //NameTextSize= 12,
+                TextSize=12,
+                Labeler = (value) => GetTimeElapsed(value),
+                NamePaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
+                // you could also build your own currency formatter
+                // for example:
+                // Labeler = (value) => value.ToString("C")
+
+                // But the one that LiveCharts provides creates shorter labels when
+                // the amount is in millions or trillions
                 }
-           };
+        };
+
+        public Axis[] attackBuffYAxes { get; set; } =
+        {
+            new Axis
+            {
+                NameTextSize= 12,
+                TextSize=12,
+                NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
+                Name="ATK",
+            }
+        };
+
+
+
 
         #endregion
 
@@ -8677,6 +8747,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public string GetObjectiveNameFromID(int id, bool isLargeImageText = false)
         {
             if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            //TODO dictionary
             return id switch
             {
                 0 => "Nothing ",
@@ -9560,6 +9631,14 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             }
         }
 
+        public double GetCurrentQuestElapsedTimeInSeconds()
+        {
+            if (TimeDefInt() <= 0)
+                return 0;
+
+            return (double)(TimeDefInt() - TimeInt())/30;
+        }
+
         public void InsertQuestInfoIntoDictionaries()
         {
             //if (TimeInt() == previousTimeInt)
@@ -9571,6 +9650,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             {
                 previousAttackBuffInt = WeaponRaw();
                 attackBuffDictionary.Add(TimeInt(), WeaponRaw());
+
+                //TODO the very last value gets put which is 0 when going back to mezeporta
+                lock (attackBuffSync)
+                {
+                    // Any changes including adding, clearing, etc must be synced.
+                    attackBuffCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), WeaponRaw()));
+                }
             }
 
             if (previousHitCountInt != HitCountInt())
@@ -10063,6 +10149,16 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             actionsPerMinuteDictionary.Clear();
         }
 
+        public void clearGraphCollections()
+        {
+            lock (attackBuffSync)
+            {
+                // Any changes including adding, clearing, etc must be synced.
+                attackBuffCollection.Clear();
+            }
+            
+        }
+
 
         #endregion
 
@@ -10134,8 +10230,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public int SelectedRunID { get; set; } = 0;
 
 
-
-
         #endregion
 
         public string QuestIDBind 
@@ -10154,6 +10248,68 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             new Option{Name = "Most Recent", IsSelected = false},
             new Option{Name = "YouTube", IsSelected = false}
         };
+
+        public string ReplaceAlphaChannel(string hexColor, string alphaChannel)
+        {
+            int index = hexColor.IndexOf("ff");
+            if (index != -1)
+            {
+                hexColor = hexColor.Remove(index, 2).Insert(index, alphaChannel);
+            }
+
+            return hexColor;
+        }
+
+        public static string StaticReplaceFirstFF(string hexColor)
+        {
+            int index = hexColor.IndexOf("ff");
+            if (index != -1)
+            {
+                hexColor = hexColor.Remove(index, 2).Insert(index, "00");
+            }
+
+            return hexColor;
+        }
+
+        public uint HexColorToDecimal(string hexColor, string? alphaChannel = "ff")
+        {
+            if (hexColor.StartsWith("#"))
+            {
+                hexColor = hexColor.Substring(1);
+            }
+
+            if (hexColor.Length == 6)
+                hexColor = hexColor.Insert(0, "ff");
+            else
+                hexColor = hexColor.Remove(0,2).Insert(0, "ff");
+
+            if (alphaChannel != null && alphaChannel != "ff")
+            {
+                hexColor = ReplaceAlphaChannel(hexColor, alphaChannel);
+            }
+
+            return uint.Parse(hexColor, System.Globalization.NumberStyles.HexNumber);
+        }
+
+        public static uint StaticHexColorToDecimal(string hexColor, bool? toTransparent = false)
+        {
+            if (hexColor.StartsWith("#"))
+            {
+                hexColor = hexColor.Substring(1);
+            }
+
+            if (hexColor.Length == 6)
+                hexColor = hexColor.Insert(0, "ff");
+            else
+                hexColor = hexColor.Remove(0, 2).Insert(0, "ff");
+
+            if (toTransparent != null && toTransparent == true)
+            {
+                hexColor = StaticReplaceFirstFF(hexColor);
+            }
+
+            return uint.Parse(hexColor, System.Globalization.NumberStyles.HexNumber);
+        }
 
 
         public Option SelectedOption { get; set; } = new Option { Name = "Weapon Usage", IsSelected = true};
