@@ -82,9 +82,9 @@ namespace MHFZ_Overlay
 
         private List<string> bannedProcessesName = new List<string>()
         {
-            "displayer","Displayer","cheat","Cheat","overlay","Overlay"
+            "displayer","Displayer","cheat","Cheat","overlay","Overlay","Wireshark"
         };
-
+        
         public void CheckForExternalProcesses()
         {
             var processList = System.Diagnostics.Process.GetProcesses();
