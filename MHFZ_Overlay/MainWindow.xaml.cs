@@ -424,8 +424,15 @@ namespace MHFZ_Overlay
             // TODO controller
             Subscribe();
 
+            SetGraphSeries();
+
             DataLoader.model.ShowSaveIcon = false;
 
+            splashScreen.Close(TimeSpan.FromSeconds(0.1));
+        }
+
+        private void SetGraphSeries()
+        {
             //TODO graphs
             //https://stackoverflow.com/questions/74719777/livecharts2-binding-continuously-changing-data-to-graph
             //inspired by HunterPie
@@ -437,13 +444,36 @@ namespace MHFZ_Overlay
                 LineSmoothness = .5,
                 GeometrySize = 0,
                 Stroke = new SolidColorPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor))) { StrokeThickness = 2 },
-                Fill = new LinearGradientPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor,"7f")), new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+                Fill = new LinearGradientPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "7f")), new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
             });
 
-            splashScreen.Close(TimeSpan.FromSeconds(0.1));
+            DataLoader.model.damagePerSecondSeries.Add(new LineSeries<ObservablePoint>
+            {
+                Values = DataLoader.model.damagePerSecondCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "7f")), new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            DataLoader.model.actionsPerMinuteSeries.Add(new LineSeries<ObservablePoint>
+            {
+                Values = DataLoader.model.actionsPerMinuteCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "7f")), new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            DataLoader.model.hitsPerSecondSeries.Add(new LineSeries<ObservablePoint>
+            {
+                Values = DataLoader.model.hitsPerSecondCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
         }
-
-
 
         GitHubClient ghClient = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
 

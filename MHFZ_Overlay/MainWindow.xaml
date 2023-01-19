@@ -449,6 +449,36 @@
             </Grid.RowDefinitions>
             <lvc:CartesianChart Background="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphBackground}" Series="{Binding attackBuffSeries}" SyncContext="{Binding attackBuffSync}" XAxes="{Binding XAxes}" YAxes="{Binding attackBuffYAxes}"/>
         </Grid>
+        <Grid x:Name="PlayerDPSGraphGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphY}" Width="300" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPlayerDPSGraph, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <lvc:CartesianChart Background="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphBackground}" Series="{Binding damagePerSecondSeries}" SyncContext="{Binding damagePerSecondSync}" XAxes="{Binding XAxes}" YAxes="{Binding damagePerSecondYAxes}"/>
+        </Grid>
+        <Grid x:Name="PlayerAPMGraphGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphY}" Width="300" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPlayerAPMGraph, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <lvc:CartesianChart Background="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphBackground}" Series="{Binding actionsPerMinuteSeries}" SyncContext="{Binding actionsPerMinuteSync}" XAxes="{Binding XAxes}" YAxes="{Binding actionsPerMinuteYAxes}"/>
+        </Grid>
+        <Grid x:Name="PlayerHitsPerSecondGraphGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphY}" Width="300" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPlayerHitsPerSecondGraph, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <lvc:CartesianChart Background="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphBackground}" Series="{Binding hitsPerSecondSeries}" SyncContext="{Binding hitsPerSecondSync}" XAxes="{Binding XAxes}" YAxes="{Binding hitsPerSecondYAxes}"/>
+        </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MapImage" Canvas.Left="{Binding Source={StaticResource Settings},Path=MapX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MapY}" Width="{Binding Source={StaticResource Settings},Path=MapAreaWidth}" Height="{Binding Source={StaticResource Settings},Path=MapAreaHeight}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMap, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >

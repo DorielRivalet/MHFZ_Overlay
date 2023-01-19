@@ -414,10 +414,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="PlayerAttackGraphX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">8</Value>
+      <Value Profile="(Default)">740</Value>
     </Setting>
     <Setting Name="PlayerAttackGraphY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">280</Value>
+      <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="EnableQuestLogging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -645,22 +645,22 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="PlayerHitsPerSecondGraphX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">8</Value>
+      <Value Profile="(Default)">430</Value>
     </Setting>
     <Setting Name="PlayerHitsPerSecondGraphY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">280</Value>
+      <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="PlayerAPMGraphShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="PlayerAPMGraphX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">8</Value>
+      <Value Profile="(Default)">510</Value>
     </Setting>
     <Setting Name="PlayerAPMGraphY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">280</Value>
+      <Value Profile="(Default)">530</Value>
     </Setting>
     <Setting Name="PlayerAttackGraphColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#fab387</Value>
+      <Value Profile="(Default)">#a6e3a1</Value>
     </Setting>
     <Setting Name="PlayerAttackGraphBackground" Type="System.String" Scope="User">
       <Value Profile="(Default)">#001e1e2e</Value>
@@ -678,7 +678,7 @@
       <Value Profile="(Default)">#001e1e2e</Value>
     </Setting>
     <Setting Name="PlayerAPMGraphColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#eba0ac</Value>
+      <Value Profile="(Default)">#cba6f7</Value>
     </Setting>
     <Setting Name="PlayerAPMGraphBackground" Type="System.String" Scope="User">
       <Value Profile="(Default)">#001e1e2e</Value>

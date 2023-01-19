@@ -63,6 +63,7 @@ namespace MHFZ_Overlay
 
                 CheckForExternalProcesses();
                 databaseChanged = databaseManager.SetupLocalDatabase(this);
+                CheckIfLoadedInMezeporta();
             }
             else
             {
@@ -71,6 +72,12 @@ namespace MHFZ_Overlay
                 //App.Current.Shutdown();
                 Environment.Exit(0);
             }
+        }
+
+        private void CheckIfLoadedInMezeporta()
+        {
+            if (model.AreaID() != 200)
+                System.Windows.MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
         }
 
         private List<string> bannedProcessesName = new List<string>()

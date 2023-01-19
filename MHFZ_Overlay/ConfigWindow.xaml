@@ -296,7 +296,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="0" x:Name="General" Margin="20,20,20,20" >
+                    <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="0" x:Name="General" Margin="20,20,20,20" >
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
@@ -477,7 +477,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="1" x:Name="PlayerInfo" Margin="20,5,20,20">
+                    <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="1" x:Name="PlayerInfo" Margin="20,5,20,20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
@@ -1654,7 +1654,7 @@
                 </Grid.ColumnDefinitions>
                 <!--https://stackoverflow.com/questions/17946487/how-to-scroll-a-grid-->
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="1" x:Name="MonsterBars" Margin="20,20,20,20" Grid.ColumnSpan="2">
+                    <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="1" x:Name="MonsterBars" Margin="20,20,20,20" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="1*"/>
@@ -1792,7 +1792,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="MonsterStatus" Margin="20,20,20,20" Grid.ColumnSpan="9">
+                    <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="MonsterStatus" Margin="20,20,20,20" Grid.ColumnSpan="9">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
@@ -1944,29 +1944,29 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="DiscordRichPresence" Margin="20,20,20,20" Grid.ColumnSpan="9">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Foreground="#cdd6f4">
+                    <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="DiscordRichPresence" Margin="20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Foreground="#cdd6f4">
                                        1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
                                        <LineBreak/>
                                        2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
@@ -2216,7 +2216,7 @@
                             </StackPanel>
                         </TabItem.Header>
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <Grid Margin="5,5,5,5">
+                            <Grid Margin="5,5,5,5" Height="Auto" Width="Auto">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*"/>
@@ -2431,8 +2431,7 @@
                             </Grid.RowDefinitions>
                             <DockPanel>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-
-                                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Margin="0">
+                                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Margin="0" Height="Auto" Width="Auto">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="1*"/>
@@ -2517,7 +2516,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="Credits" Margin="20,20,20,20" Grid.ColumnSpan="9">
+                    <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="Credits" Margin="20,20,20,20" Grid.ColumnSpan="9">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="2*"/>

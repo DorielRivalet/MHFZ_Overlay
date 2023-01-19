@@ -8734,6 +8734,45 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             }
         };
 
+        public Axis[] hitsPerSecondYAxes { get; set; } =
+{
+            new Axis
+            {
+                NameTextSize= 12,
+                TextSize=12,
+                NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
+                Name="HPS",
+            }
+        };
+
+        public Axis[] damagePerSecondYAxes { get; set; } =
+{
+            new Axis
+            {
+                NameTextSize= 12,
+                TextSize=12,
+                NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
+                Name="DPS",
+            }
+        };
+
+        public Axis[] actionsPerMinuteYAxes { get; set; } =
+{
+            new Axis
+            {
+                NameTextSize= 12,
+                TextSize=12,
+                NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
+                Name="APM",
+            }
+        };
+
 
 
 
@@ -9669,6 +9708,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             {
                 previousDPS = DPS;
                 damagePerSecondDictionary.Add(TimeInt(), DPS);
+
+                lock (damagePerSecondSync)
+                {
+                    // Any changes including adding, clearing, etc must be synced.
+                    damagePerSecondCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), DPS));
+                }
             }
 
             if (previousCartsInt != CurrentFaints())
@@ -10003,6 +10048,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             {
                 previousHitsPerSecond = HitsPerSecond;
                 hitsPerSecondDictionary.Add(TimeInt(), HitsPerSecond);
+
+                lock (hitsPerSecondSync)
+                {
+                    // Any changes including adding, clearing, etc must be synced.
+                    hitsPerSecondCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), HitsPerSecond));
+                }
             }
 
             if (previousTotalHitsTakenBlockedPerSecond != TotalHitsTakenBlockedPerSecond)
@@ -10015,6 +10066,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             {
                 previousActionsPerMinute = APM;
                 actionsPerMinuteDictionary.Add(TimeInt(), APM);
+
+                lock (actionsPerMinuteSync)
+                {
+                    // Any changes including adding, clearing, etc must be synced.
+                    actionsPerMinuteCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), APM));
+                }
             }
         }
 
@@ -10156,7 +10213,18 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 // Any changes including adding, clearing, etc must be synced.
                 attackBuffCollection.Clear();
             }
-            
+            lock (actionsPerMinuteSync)
+            {
+                actionsPerMinuteCollection.Clear();
+            }
+            lock (damagePerSecondSync)
+            {
+                damagePerSecondCollection.Clear();
+            }
+            lock (hitsPerSecondSync)
+            {
+                hitsPerSecondCollection.Clear();
+            }
         }
 
 

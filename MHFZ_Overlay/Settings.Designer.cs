@@ -1669,7 +1669,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        [global::System.Configuration.DefaultSettingValueAttribute("740")]
         public double PlayerAttackGraphX {
             get {
                 return ((double)(this["PlayerAttackGraphX"]));
@@ -1681,7 +1681,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("280")]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
         public double PlayerAttackGraphY {
             get {
                 return ((double)(this["PlayerAttackGraphY"]));
@@ -2593,7 +2593,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        [global::System.Configuration.DefaultSettingValueAttribute("430")]
         public double PlayerHitsPerSecondGraphX {
             get {
                 return ((double)(this["PlayerHitsPerSecondGraphX"]));
@@ -2605,7 +2605,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("280")]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
         public double PlayerHitsPerSecondGraphY {
             get {
                 return ((double)(this["PlayerHitsPerSecondGraphY"]));
@@ -2629,7 +2629,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        [global::System.Configuration.DefaultSettingValueAttribute("510")]
         public double PlayerAPMGraphX {
             get {
                 return ((double)(this["PlayerAPMGraphX"]));
@@ -2641,7 +2641,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("280")]
+        [global::System.Configuration.DefaultSettingValueAttribute("530")]
         public double PlayerAPMGraphY {
             get {
                 return ((double)(this["PlayerAPMGraphY"]));
@@ -2653,7 +2653,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#fab387")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#a6e3a1")]
         public string PlayerAttackGraphColor {
             get {
                 return ((string)(this["PlayerAttackGraphColor"]));
@@ -2725,7 +2725,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#eba0ac")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#cba6f7")]
         public string PlayerAPMGraphColor {
             get {
                 return ((string)(this["PlayerAPMGraphColor"]));
