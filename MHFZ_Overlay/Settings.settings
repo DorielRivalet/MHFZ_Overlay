@@ -47,24 +47,6 @@
     <Setting Name="TextColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#f5e0dc</Value>
     </Setting>
-    <Setting Name="HealthBarsX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">831</Value>
-    </Setting>
-    <Setting Name="HealthBarsY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">33</Value>
-    </Setting>
-    <Setting Name="HealthBarsShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="PlayerInfoX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">10</Value>
-    </Setting>
-    <Setting Name="PlayerInfoY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">358</Value>
-    </Setting>
-    <Setting Name="PlayerInfoShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="MonsterStatusInfoX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1087</Value>
     </Setting>
@@ -633,7 +615,7 @@
       <Value Profile="(Default)">#1e1e2e</Value>
     </Setting>
     <Setting Name="PlayerDPSGraphShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="PlayerDPSGraphX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">8</Value>

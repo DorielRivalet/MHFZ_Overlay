@@ -975,14 +975,14 @@ namespace MHFZ_Overlay.addresses
                 return "(Main Menu) ";
             else if (QuestID() == 0 && AreaID() == 200 && BlademasterWeaponID() == 0 && GunnerWeaponID() == 0)
                 return "(World Select) ";
-            else if (!(inQuest) || s.EnableDamageNumbers || s.HealthBarsShown || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown || s.DamagePerSecondShown || s.TotalHitsTakenBlockedShown || s.Monster1OverviewShown) //TODO graphs
+            else if (!((QuestID() != 0 && TimeDefInt() > TimeInt() && int.Parse(ATK) > 0) || (IsRoad() || IsDure())) || s.EnableDamageNumbers || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown || s.DamagePerSecondShown || s.TotalHitsTakenBlockedShown || s.PlayerAPMGraphShown || s.PlayerAttackGraphShown || s.PlayerDPSGraphShown || s.PlayerHitsPerSecondGraphShown || s.EnableQuestPaceColor || s.Monster1HealthBarShown || s.Monster2HealthBarShown || s.Monster3HealthBarShown || s.Monster4HealthBarShown) //TODO monster 1 overview? and update README
                 return "";
             else if (s.TimerInfoShown && s.EnableKeyLogging && s.EnableQuestLogging && PartySize() == 1 && s.OverlayModeWatermarkShown) //TODO: update README
             {
                 if (DivaSkillUsesLeft() == 0 && StyleRank1() != 15 && StyleRank2() != 15)
                     return "(Time Attack) ";
                 else if (StyleRank1() == 15 || StyleRank2() == 15)
-                    return "(Freestyle) ";
+                    return "(Freestyle w/ Secret Tech) ";
                 else
                     return "(Freestyle No Secret Tech) ";
             }
@@ -9409,6 +9409,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public Dictionary<int, double> actionsPerMinuteDictionary = new Dictionary<int, double>();
         public Dictionary<int, double> actionsPerMinuteDictionaryDeserealized = new Dictionary<int, double>();
 
+        public Dictionary<int, string> overlayModeDictionary = new Dictionary<int, string>();
+
         // Initialize the damageDealt and timeElapsed variables to 0
         //int damageDealt = 0;
         //int timeElapsed = 0;
@@ -9451,6 +9453,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public double previousHitsPerSecond = 0;
         public double previousActionsPerMinute = 0;
+
+        public string previousOverlayMode = "N/A";
 
         public List<Dictionary<int,int>> InsertInventoryDictionaryIntoList(string inventoryType)
         {
@@ -10073,6 +10077,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     actionsPerMinuteCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), APM));
                 }
             }
+
+            if (previousOverlayMode != GetOverlayMode())
+            {
+                previousOverlayMode = GetOverlayMode();
+                overlayModeDictionary.Add(TimeInt(), GetOverlayMode());
+            }
         }
 
         public void resetQuestInfoVariables()
@@ -10178,6 +10188,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             previousPlayerStamina = 0;
             previousHitsPerSecond = 0;
             previousActionsPerMinute = 0;
+            previousOverlayMode = "N/A";
         }
 
         public void clearQuestInfoDictionaries()
@@ -10204,6 +10215,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             mouseInputDictionary.Clear();
             gamepadInputDictionary.Clear();
             actionsPerMinuteDictionary.Clear();
+            overlayModeDictionary.Clear();
         }
 
         public void clearGraphCollections()

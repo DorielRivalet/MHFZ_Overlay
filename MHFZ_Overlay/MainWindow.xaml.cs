@@ -969,7 +969,7 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowMonsterBlast = v && s.MonsterBlastShown;
             DataLoader.model.ShowMonsterStun = v && s.MonsterStunShown;
 
-            DataLoader.model.ShowMonsterHPBars = v && s.HealthBarsShown;
+            //DataLoader.model.ShowMonsterHPBars = v && s.HealthBarsShown;
             DataLoader.model.ShowMonster1HPBar = v && s.Monster1HealthBarShown;
             DataLoader.model.ShowMonster2HPBar = v && s.Monster2HealthBarShown;
             DataLoader.model.ShowMonster3HPBar = v && s.Monster3HealthBarShown;
@@ -2501,7 +2501,7 @@ namespace MHFZ_Overlay
 
             if (configWindow == null || !configWindow.IsLoaded)
                 configWindow = new(this);
-            configWindow.Show();
+            configWindow.Show();//memory error?
             DataLoader.model.Configuring = true;
         }
 

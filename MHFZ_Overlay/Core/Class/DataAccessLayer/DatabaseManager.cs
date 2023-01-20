@@ -290,8 +290,8 @@ namespace MHFZ_Overlay
                         MouseInputDictionary,
                         GamepadInputDictionary,
                         ActionsPerMinuteDictionary,
-                        PartySize,
-                        OverlayMode
+                        OverlayModeDictionary,
+                        PartySize
                         ) VALUES (
                         @QuestHash,
                         @CreatedAt,
@@ -326,8 +326,8 @@ namespace MHFZ_Overlay
                         @MouseInputDictionary,
                         @GamepadInputDictionary,
                         @ActionsPerMinuteDictionary,
-                        @PartySize,
-                        @OverlayMode
+                        @OverlayModeDictionary,
+                        @PartySize
                         )";
 
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -418,13 +418,9 @@ namespace MHFZ_Overlay
                             Dictionary<int, string> mouseInputDictionary = dataLoader.model.mouseInputDictionary;
                             Dictionary<int, string> gamepadInputDictionary = dataLoader.model.gamepadInputDictionary;
                             Dictionary<int, double> actionsPerMinuteDictionary = dataLoader.model.actionsPerMinuteDictionary;
+                            Dictionary<int, string> overlayModeDictionary = dataLoader.model.overlayModeDictionary;
                             int partySize = dataLoader.model.PartySize();
-                            string overlayMode = dataLoader.model.GetOverlayMode();
-                            overlayMode = overlayMode.Replace("(", "");
-                            overlayMode = overlayMode.Replace(")", "");
-                            overlayMode = overlayMode.Trim();
-                            if (overlayMode == null || overlayMode == "")
-                                overlayMode = "Standard";
+
                             //                    --Insert data into the ZenithSkills table
                             //INSERT INTO ZenithSkills(ZenithSkill1, ZenithSkill2, ZenithSkill3, ZenithSkill4, ZenithSkill5, ZenithSkill6)
                             //VALUES(zenithSkillsID, zenithSkillsID, zenithSkillsID, zenithSkillsID, zenithSkillsID, zenithSkillsID);
@@ -440,7 +436,7 @@ namespace MHFZ_Overlay
                                 hitsPerSecondDictionary, damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary, cartsDictionary, 
                                 monster1HPDictionary, monster2HPDictionary, monster3HPDictionary, monster4HPDictionary, hitsTakenBlockedDictionary,
                                 hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary, keystrokesDictionary, mouseInputDictionary,
-                                gamepadInputDictionary, actionsPerMinuteDictionary, partySize, overlayMode
+                                gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary, partySize
                                 );
 
                             // Calculate the hash value for the data in the row
@@ -479,8 +475,8 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@MouseInputDictionary", JsonConvert.SerializeObject(mouseInputDictionary));
                             cmd.Parameters.AddWithValue("@GamepadInputDictionary", JsonConvert.SerializeObject(gamepadInputDictionary));
                             cmd.Parameters.AddWithValue("@ActionsPerMinuteDictionary", JsonConvert.SerializeObject(actionsPerMinuteDictionary));
+                            cmd.Parameters.AddWithValue("@OverlayModeDictionary", JsonConvert.SerializeObject(overlayModeDictionary));
                             cmd.Parameters.AddWithValue("@PartySize", partySize);
-                            cmd.Parameters.AddWithValue("@OverlayMode", overlayMode);
 
                             cmd.ExecuteNonQuery();
                         }
@@ -2722,8 +2718,8 @@ namespace MHFZ_Overlay
                     MouseInputDictionary TEXT NOT NULL,
                     GamepadInputDictionary TEXT NOT NULL,
                     ActionsPerMinuteDictionary TEXT NOT NULL,
+                    OverlayModeDictionary TEXT NOT NULL,
                     PartySize INTEGER NOT NULL,
-                    OverlayMode TEXT NOT NULL,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
                     -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)

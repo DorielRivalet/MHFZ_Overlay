@@ -205,78 +205,6 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("831")]
-        public double HealthBarsX {
-            get {
-                return ((double)(this["HealthBarsX"]));
-            }
-            set {
-                this["HealthBarsX"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("33")]
-        public double HealthBarsY {
-            get {
-                return ((double)(this["HealthBarsY"]));
-            }
-            set {
-                this["HealthBarsY"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool HealthBarsShown {
-            get {
-                return ((bool)(this["HealthBarsShown"]));
-            }
-            set {
-                this["HealthBarsShown"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public double PlayerInfoX {
-            get {
-                return ((double)(this["PlayerInfoX"]));
-            }
-            set {
-                this["PlayerInfoX"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("358")]
-        public double PlayerInfoY {
-            get {
-                return ((double)(this["PlayerInfoY"]));
-            }
-            set {
-                this["PlayerInfoY"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool PlayerInfoShown {
-            get {
-                return ((bool)(this["PlayerInfoShown"]));
-            }
-            set {
-                this["PlayerInfoShown"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1087")]
         public double MonsterStatusInfoX {
             get {
@@ -2545,7 +2473,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool PlayerDPSGraphShown {
             get {
                 return ((bool)(this["PlayerDPSGraphShown"]));

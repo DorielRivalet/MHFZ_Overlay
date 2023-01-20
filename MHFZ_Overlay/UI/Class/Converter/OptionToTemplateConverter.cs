@@ -16,8 +16,8 @@ namespace MHFZ_Overlay
             if (option == null)
                 return null;
 
-            if (option.Name == "Gear")
-                return (DataTemplate)((FrameworkElement)container).FindResource("GearTemplate");
+            if (option.Name == "Stats")//gear + graphs
+                return (DataTemplate)((FrameworkElement)container).FindResource("StatsTemplate");
             else if (option.Name == "Top 20")
                 return (DataTemplate)((FrameworkElement)container).FindResource("Top20Template");
             else if (option.Name == "Weapon Usage")
