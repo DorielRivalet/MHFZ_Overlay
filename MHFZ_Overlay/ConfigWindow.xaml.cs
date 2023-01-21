@@ -1232,6 +1232,62 @@ namespace MHFZ_Overlay
                 System.Diagnostics.Process.Start(sInfo);
             }
         }
+
+        private void QuestIDButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(QuestIDTextBox.Text))
+            {
+                SetDefaultTextInQuestIDWeaponSection();
+                DatabaseManager.GetInstance().QuestIDButton_Click(sender, e, this);
+            }
+        }
+
+        private void SetDefaultTextInQuestIDWeaponSection()
+        {
+
+            SwordAndShieldBestTimeTextBlock.Text = "--:--.--";
+            SwordAndShieldRunIDTextBlock.Text = "Run Not Found";
+                               
+            GreatSwordBestTimeTextBlock.Text = "--:--.--";
+            GreatSwordRunIDTextBlock.Text = "Run Not Found";
+             
+            DualSwordsBestTimeTextBlock.Text = "--:--.--";
+            DualSwordsRunIDTextBlock.Text = "Run Not Found";
+                           
+            LongSwordBestTimeTextBlock.Text = "--:--.--";
+            LongSwordRunIDTextBlock.Text = "Run Not Found";
+                            
+            LanceBestTimeTextBlock.Text = "--:--.--";
+            LanceRunIDTextBlock.Text = "Run Not Found";
+                          
+            GunlanceBestTimeTextBlock.Text = "--:--.--";
+            GunlanceRunIDTextBlock.Text = "Run Not Found";
+                       
+            HammerBestTimeTextBlock.Text = "--:--.--";
+            HammerRunIDTextBlock.Text = "Run Not Found";
+                         
+            HuntingHornBestTimeTextBlock.Text = "--:--.--";
+            HuntingHornRunIDTextBlock.Text = "Run Not Found";
+                         
+            TonfaBestTimeTextBlock.Text = "--:--.--";
+            TonfaRunIDTextBlock.Text = "Run Not Found";
+                         
+            SwitchAxeFBestTimeTextBlock.Text = "--:--.--";
+            SwitchAxeFRunIDTextBlock.Text = "Run Not Found";
+                          
+            MagnetSpikeBestTimeTextBlock.Text = "--:--.--";
+            MagnetSpikeRunIDTextBlock.Text = "Run Not Found";
+                         
+            LightBowgunBestTimeTextBlock.Text = "--:--.--";
+            LightBowgunRunIDTextBlock.Text = "Run Not Found";
+                           
+            HeavyBowgunBestTimeTextBlock.Text = "--:--.--";
+            HeavyBowgunRunIDTextBlock.Text = "Run Not Found";
+                          
+            BowBestTimeTextBlock.Text = "--:--.--";
+            BowRunIDTextBlock.Text = "Run Not Found";
+            
+        }
     };
 
     /* LoadConfig on startup

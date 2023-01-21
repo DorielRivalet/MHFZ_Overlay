@@ -2227,12 +2227,12 @@
                                         <RowDefinition Height="1*"/>
                                     </Grid.RowDefinitions>
                                     <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Search by Quest ID">
-                                        <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/search_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="40" Height="40"/>
-                                        <TextBox IsUndoEnabled="False" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedQuestID}"  PreviewTextInput="ValidateNumber" Width="350"/>
+                                        <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/search_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="40" Height="40" Click="QuestIDButton_Click"/>
+                                        <TextBox x:Name="QuestIDTextBox" IsUndoEnabled="False" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="350" MaxLength="8"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" ToolTip="Search by Run ID">
-                                        <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/search_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="40" Height="40"/>
-                                        <TextBox IsUndoEnabled="False" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedRunID}"  PreviewTextInput="ValidateNumber" Width="350"/>
+                                        <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/search_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="40" Height="40" />
+                                        <TextBox x:Name="RunIDTextBox" IsUndoEnabled="False" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="350" MaxLength="8"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" ToolTip="Search Option">
                                         <TextBlock ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Search Option"/>
@@ -2274,10 +2274,10 @@
                                         <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="24" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
                                         
                                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="2">
-                                            <Image Source="{Binding SelectedQuestObjectiveImage}" Width="48" Height="48" Margin="0,0,5,0" />
+                                            <Image x:Name="SelectedQuestObjectiveImage" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blinking_nargacuga.png" Width="48" Height="48" Margin="0,0,5,0" />
                                             <StackPanel Orientation="Vertical">
-                                                <TextBlock Text="{Binding SelectedQuestName}" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                <TextBlock Text="{Binding SelectedQuestObjective}" FontFamily="{StaticResource Open Sans Italic}"/>
+                                                <TextBlock x:Name="SelectedQuestNameTextBlock" Text="Destructive White Winds" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                <TextBlock x:Name="SelectedQuestObjectiveTextBlock" Text="Slay 1 Blinking Nargacuga" FontFamily="{StaticResource Open Sans Italic}"/>
                                             </StackPanel>
                                         </StackPanel>
 
@@ -2286,124 +2286,112 @@
                                                 <Image Source="UI/Icons/png/small_sns.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Sword and Shield" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding SwordAndShieldPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding SwordAndShieldPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="SwordAndShieldBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="SwordAndShieldRunIDTextBlock" Text="Run ID 000001" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="2" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_ds.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Dual Swords" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding DualSwordsPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding DualSwordsPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="DualSwordsBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="DualSwordsRunIDTextBlock" Text="Run ID 000002" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_gs.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Great Sword" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding GreatSwordPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding GreatSwordPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-
+                                            <TextBlock x:Name="GreatSwordBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="GreatSwordRunIDTextBlock" Text="Run ID 000003" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="3" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_ls.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Long Sword" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding LongSwordPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding LongSwordPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-
+                                            <TextBlock x:Name="LongSwordBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="LongSwordRunIDTextBlock" Text="Run ID 000004" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_hammer.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Hammer" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding HammerPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding HammerPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-
+                                            <TextBlock x:Name="HammerBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="HammerRunIDTextBlock" Text="Run ID 000005" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="4" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_hh.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Hunting Horn" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding HuntingHornPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding HuntingHornPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-
+                                            <TextBlock x:Name="HuntingHornBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="HuntingHornRunIDTextBlock" Text="Run ID 000006" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="5" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_lance.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Lance" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding LancePBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding LancePBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-
+                                            <TextBlock x:Name="LanceBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="LanceRunIDTextBlock" Text="Run ID 000007" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="5" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_gl.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Gunlance" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding GunlancePBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding GunlancePBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-
+                                            <TextBlock x:Name="GunlanceBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="GunlanceRunIDTextBlock" Text="Run ID 000008" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="6" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_tonfa.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Tonfa" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                            </StackPanel>
-                                            <TextBlock Text="{Binding TonfaPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding TonfaPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-
+                                            <TextBlock x:Name="TonfaBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="TonfaRunIDTextBlock" Text="Run ID 000009" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="6" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_saf.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Switch Axe F" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding SwitchAxeFPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding SwitchAxeFPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-
+                                            <TextBlock x:Name="SwitchAxeFBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="SwitchAxeFRunIDTextBlock" Text="Run ID 000010" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="7" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_ms.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Magnet Spike" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding MagnetSpikePBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding MagnetSpikePBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-
+                                            <TextBlock x:Name="MagnetSpikeBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="MagnetSpikeRunIDTextBlock" Text="Run ID 000011" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="7" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_lbg.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Light Bowgun" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding LightBowgunPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding LightBowgunPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-
+                                            <TextBlock x:Name="LightBowgunBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="LightBowgunRunIDTextBlock" Text="Run ID 000012" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="8" Grid.Column="1" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_hbg.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Heavy Bowgun" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding HeavyBowgunPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding HeavyBowgunPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-
+                                            <TextBlock x:Name="HeavyBowgunBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="HeavyBowgunRunIDTextBlock" Text="Run ID 000013" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="8" Grid.Column="2" Margin="5,5,5,5" Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/small_bow.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Bow" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                             </StackPanel>
-                                            <TextBlock Text="{Binding BowPBTime}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding BowPBRunID}" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-
+                                            <TextBlock x:Name="BowBestTimeTextBlock" Text="--:--.--" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            <TextBlock x:Name="BowRunIDTextBlock" Text="Run ID 000014" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
                                         </StackPanel>
                                         
                                     </Grid>
