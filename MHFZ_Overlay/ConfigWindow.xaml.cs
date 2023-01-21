@@ -977,6 +977,9 @@ namespace MHFZ_Overlay
                 MonsterFeriasOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].FeriasLink);
             }
 
+            //TODO can be handled more elegantly
+            //see this
+            //string selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
             string selectedName = MonsterNameListBox.SelectedItem.ToString() + "";
             selectedName = selectedName.Replace("System.Windows.Controls.ComboBoxItem: ", "");
 
@@ -1237,12 +1240,12 @@ namespace MHFZ_Overlay
         {
             if (!string.IsNullOrEmpty(QuestIDTextBox.Text))
             {
-                SetDefaultTextInQuestIDWeaponSection();
+                SetDefaultInfoInQuestIDWeaponSection();
                 DatabaseManager.GetInstance().QuestIDButton_Click(sender, e, this);
             }
         }
 
-        private void SetDefaultTextInQuestIDWeaponSection()
+        private void SetDefaultInfoInQuestIDWeaponSection()
         {
 
             SwordAndShieldBestTimeTextBlock.Text = "--:--.--";
@@ -1286,7 +1289,12 @@ namespace MHFZ_Overlay
                           
             BowBestTimeTextBlock.Text = "--:--.--";
             BowRunIDTextBlock.Text = "Run Not Found";
-            
+
+            SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri("https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png"));
+            SelectedQuestNameTextBlock.Text = "Quest Not Found";
+            SelectedQuestObjectiveTextBlock.Text = "Invalid Quest";
+            CurrentTimeTextBlock.Text = "N/A";
+
         }
     };
 

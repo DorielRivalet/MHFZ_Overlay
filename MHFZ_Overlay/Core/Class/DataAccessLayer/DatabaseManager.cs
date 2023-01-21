@@ -27,6 +27,11 @@ using Newtonsoft.Json.Linq;
 using TextBox = System.Windows.Controls.TextBox;
 using System.Xml;
 using Formatting = Newtonsoft.Json.Formatting;
+using System.Windows.Media.Imaging;
+using System.Diagnostics.Metrics;
+using System.Drawing;
+using LiveChartsCore.Measure;
+using static System.Net.Mime.MediaTypeNames;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -295,6 +300,7 @@ namespace MHFZ_Overlay
                         GamepadInputDictionary,
                         ActionsPerMinuteDictionary,
                         OverlayModeDictionary,
+                        ActualOverlayMode,
                         PartySize
                         ) VALUES (
                         @QuestHash,
@@ -332,6 +338,7 @@ namespace MHFZ_Overlay
                         @GamepadInputDictionary,
                         @ActionsPerMinuteDictionary,
                         @OverlayModeDictionary,
+                        @ActualOverlayMode,
                         @PartySize
                         )";
 
@@ -424,6 +431,25 @@ namespace MHFZ_Overlay
                             Dictionary<int, string> gamepadInputDictionary = dataLoader.model.gamepadInputDictionary;
                             Dictionary<int, double> actionsPerMinuteDictionary = dataLoader.model.actionsPerMinuteDictionary;
                             Dictionary<int, string> overlayModeDictionary = dataLoader.model.overlayModeDictionary;
+                            string actualOverlayMode;
+                            //check if its grabbing a TimeDefInt from a previous quest
+                            //TODO is this enough?
+                            if ((overlayModeDictionary.Count == 2 && overlayModeDictionary.Last().Value == "") ||
+                                (overlayModeDictionary.Count == 1 && overlayModeDictionary.First().Value == "") ||
+                                overlayModeDictionary.Count > 2)
+                                actualOverlayMode = "Standard";
+                            else
+                            {
+                                if (overlayModeDictionary.Count == 2)
+                                    actualOverlayMode = overlayModeDictionary.Last().Value;
+                                else
+                                    actualOverlayMode = overlayModeDictionary.First().Value;
+
+                                actualOverlayMode = actualOverlayMode.Replace(")", "");
+                                actualOverlayMode = actualOverlayMode.Replace("(", "");
+                                actualOverlayMode = actualOverlayMode.Trim();
+                            }
+
                             int partySize = dataLoader.model.PartySize();
 
                             //                    --Insert data into the ZenithSkills table
@@ -434,14 +460,15 @@ namespace MHFZ_Overlay
                             //                    SELECT LAST_INSERT_ROWID() as ZenithSkillsID;
 
                             string questData = string.Format(
-                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}",
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}",
                                 runID, createdAt, createdBy, questID, timeLeft, 
                                 finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity, 
                                 starGrade, rankName, objectiveName, date, attackBuffDictionary, 
                                 hitCountDictionary, hitsPerSecondDictionary, damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary, 
                                 cartsDictionary, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary, monster4HPDictionary, 
                                 hitsTakenBlockedDictionary, hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary, keystrokesDictionary, 
-                                mouseInputDictionary, gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary, partySize
+                                mouseInputDictionary, gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary, actualOverlayMode,
+                                partySize
                                 );
 
                             // Calculate the hash value for the data in the row
@@ -482,6 +509,7 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@GamepadInputDictionary", JsonConvert.SerializeObject(gamepadInputDictionary));
                             cmd.Parameters.AddWithValue("@ActionsPerMinuteDictionary", JsonConvert.SerializeObject(actionsPerMinuteDictionary));
                             cmd.Parameters.AddWithValue("@OverlayModeDictionary", JsonConvert.SerializeObject(overlayModeDictionary));
+                            cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
                             cmd.Parameters.AddWithValue("@PartySize", partySize);
 
                             cmd.ExecuteNonQuery();
@@ -2005,6 +2033,18 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
+                    using (var cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_updates
+                        AFTER UPDATE ON Quests
+                        FOR EACH ROW
+                        WHEN NEW.YoutubeID = OLD.YoutubeID
+                        BEGIN
+                            SELECT RAISE(ABORT, 'Cannot update quest fields');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
                     // Commit the transaction
                     transaction.Commit();
                 }
@@ -2726,6 +2766,7 @@ namespace MHFZ_Overlay
                     GamepadInputDictionary TEXT NOT NULL,
                     ActionsPerMinuteDictionary TEXT NOT NULL,
                     OverlayModeDictionary TEXT NOT NULL,
+                    ActualOverlayMode TEXT NOT NULL,
                     PartySize INTEGER NOT NULL,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
@@ -4157,104 +4198,177 @@ namespace MHFZ_Overlay
             //        }
             //    }
             //}
-
+                
             // Execute query with only Quest ID
             int questID = int.Parse(configWindow.QuestIDTextBox.Text);
+            string selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
+            // idk if this is needed
+            if (selectedOverlayMode == "" || selectedOverlayMode == null)
+                selectedOverlayMode = "Standard";
+
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(
-                    @"SELECT pg.WeaponTypeID, MIN(q.FinalTimeValue) as BestTime, q.RunID 
-                    FROM Quests q 
-                    JOIN PlayerGear pg ON q.RunID = pg.RunID 
-                    WHERE q.QuestID = @QuestID AND q.PartySize = 1
-                    GROUP BY pg.WeaponTypeID
-                    ", conn
-                    )
-                )
+
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
                 {
-                    cmd.Parameters.AddWithValue("@QuestID", questID);
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    try
                     {
-                        if (!reader.HasRows)
+                        using (SQLiteCommand cmd = new SQLiteCommand(
+                        @"SELECT 
+                            q.ObjectiveImage,
+                            q.ObjectiveTypeID,
+                            q.ObjectiveQuantity,
+                            q.ObjectiveName,
+                            qn.QuestNameName
+                        FROM 
+                            Quests q 
+                        INNER JOIN QuestName qn ON q.QuestID = qn.QuestNameID
+                        WHERE q.QuestID = @QuestID
+                            AND q.PartySize = 1
+                            AND q.ActualOverlayMode = @SelectedOverlayMode", conn
+                        ))
                         {
-                            MessageBox.Show("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID", "MHF-Z Overlay Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
-                        while (reader.Read())
-                        {
-                            Dictionary.WeaponTypes.WeaponTypeID.TryGetValue(Convert.ToInt32(reader["WeaponTypeID"]), out string? weaponType);
-                            int bestTime;
-                            if (reader["BestTime"] == DBNull.Value)
-                                bestTime = -1;
-                            else
-                                bestTime = int.Parse(reader["BestTime"].ToString());
-                            int runID;
-                            if (reader["RunID"] == DBNull.Value)
-                                runID = -1;
-                            else
-                                runID = int.Parse(reader["RunID"].ToString());
-                            switch (weaponType)
+
+                            cmd.Parameters.AddWithValue("@QuestID", questID);
+                            cmd.Parameters.AddWithValue("@SelectedOverlayMode", selectedOverlayMode);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
                             {
-                                case "Sword and Shield":
-                                    configWindow.SwordAndShieldBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.SwordAndShieldRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Great Sword":
-                                    configWindow.GreatSwordBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.GreatSwordRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Dual Swords":
-                                    configWindow.DualSwordsBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.DualSwordsRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Long Sword":
-                                    configWindow.LongSwordBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.LongSwordRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Lance":
-                                    configWindow.LanceBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.LanceRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Gunlance":
-                                    configWindow.GunlanceBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.GunlanceRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Hammer":
-                                    configWindow.HammerBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.HammerRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Hunting Horn":
-                                    configWindow.HuntingHornBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.HuntingHornRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Tonfa":
-                                    configWindow.TonfaBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.TonfaRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Switch Axe F":
-                                    configWindow.SwitchAxeFBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.SwitchAxeFRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Magnet Spike":
-                                    configWindow.MagnetSpikeBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.MagnetSpikeRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Light Bowgun":
-                                    configWindow.LightBowgunBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.LightBowgunRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Heavy Bowgun":
-                                    configWindow.HeavyBowgunBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.HeavyBowgunRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                case "Bow":
-                                    configWindow.BowBestTimeTextBlock.Text = FormatTime(bestTime);
-                                    configWindow.BowRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
-                                    break;
-                                    // Add more cases for other weapon types
+                                if (!reader.HasRows)
+                                {
+                                    MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), "MHF-Z Overlay Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
+                                else
+                                {
+                                    reader.Read();
+                                    configWindow.SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri(reader["ObjectiveImage"].ToString()));
+                                    configWindow.SelectedQuestNameTextBlock.Text = reader["QuestNameName"].ToString();
+                                    configWindow.SelectedQuestObjectiveTextBlock.Text = string.Format("{0} {1} {2}", Dictionary.ObjectiveTypeList.ObjectiveTypeID[int.Parse(reader["ObjectiveTypeID"].ToString())], reader["ObjectiveQuantity"], reader["ObjectiveName"]);
+                                    configWindow.CurrentTimeTextBlock.Text = DateTime.Now.ToString();
+
+                                }
                             }
                         }
+
+
+                        using (SQLiteCommand cmd = new SQLiteCommand(
+                        @"SELECT 
+                                pg.WeaponTypeID, 
+                                MIN(q.FinalTimeValue) as BestTime, 
+                                q.RunID
+                            FROM 
+                                Quests q 
+                            JOIN 
+                                PlayerGear pg ON q.RunID = pg.RunID 
+                            WHERE 
+                                q.QuestID = @QuestID 
+                                AND q.PartySize = 1 
+                                AND q.ActualOverlayMode = @SelectedOverlayMode
+                            GROUP BY 
+                                pg.WeaponTypeID
+                            ", conn
+                        )
+                        )
+                        {
+
+                            cmd.Parameters.AddWithValue("@QuestID", questID);
+                            cmd.Parameters.AddWithValue("@SelectedOverlayMode", selectedOverlayMode);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (!reader.HasRows)
+                                {
+                                    MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), "MHF-Z Overlay Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
+                                while (reader.Read())
+                                {
+                                    Dictionary.WeaponTypes.WeaponTypeID.TryGetValue(Convert.ToInt32(reader["WeaponTypeID"]), out string? weaponType);
+
+                                    int bestTime;
+                                    if (reader["BestTime"] == DBNull.Value)
+                                        bestTime = -1;
+                                    else
+                                        bestTime = int.Parse(reader["BestTime"].ToString());
+
+                                    int runID;
+                                    if (reader["RunID"] == DBNull.Value)
+                                        runID = -1;
+                                    else
+                                        runID = int.Parse(reader["RunID"].ToString());
+
+                                    switch (weaponType)
+                                    {
+                                        case "Sword and Shield":
+                                            configWindow.SwordAndShieldBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.SwordAndShieldRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Great Sword":
+                                            configWindow.GreatSwordBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.GreatSwordRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Dual Swords":
+                                            configWindow.DualSwordsBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.DualSwordsRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Long Sword":
+                                            configWindow.LongSwordBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.LongSwordRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Lance":
+                                            configWindow.LanceBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.LanceRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Gunlance":
+                                            configWindow.GunlanceBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.GunlanceRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Hammer":
+                                            configWindow.HammerBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.HammerRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Hunting Horn":
+                                            configWindow.HuntingHornBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.HuntingHornRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Tonfa":
+                                            configWindow.TonfaBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.TonfaRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Switch Axe F":
+                                            configWindow.SwitchAxeFBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.SwitchAxeFRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Magnet Spike":
+                                            configWindow.MagnetSpikeBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.MagnetSpikeRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Light Bowgun":
+                                            configWindow.LightBowgunBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.LightBowgunRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Heavy Bowgun":
+                                            configWindow.HeavyBowgunBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.HeavyBowgunRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                        case "Bow":
+                                            configWindow.BowBestTimeTextBlock.Text = FormatTime(bestTime);
+                                            configWindow.BowRunIDTextBlock.Text = string.Format("Run ID: {0}", runID);
+                                            break;
+                                            // Add more cases for other weapon types
+                                    }
+
+                                }
+                            }
+                        }
+                    // Commit the transaction
+                    transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
                     }
                 }
             }
