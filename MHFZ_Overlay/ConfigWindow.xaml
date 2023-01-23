@@ -104,20 +104,20 @@
                         <lvc:CartesianChart Loaded="weaponUsageChart_Loaded" Grid.Column="1" Grid.Row="1" x:Name="weaponUsageChart" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" >
-                            <Image Margin="40,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/sns.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/ds.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/gs.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/ls.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/hammer.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/hh.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/lance.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/gl.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/tonfa.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/saf.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/ms.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/lbg.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/hbg.png"/>
-                            <Image Margin="23,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/bow.png"/>
+                            <Image Margin="38,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/sns.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/ds.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/gs.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/ls.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/hammer.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/hh.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/lance.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/gl.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/tonfa.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/saf.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/ms.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/lbg.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/hbg.png"/>
+                            <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/bow.png"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

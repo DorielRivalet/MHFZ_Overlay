@@ -8746,6 +8746,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public ObservableCollection<long> weaponUsageMagnetSpikeExtremeStyleCollection = new();
 
+        public ObservableCollection<long> weaponUsageEarthStyle = new();
+        public ObservableCollection<long> weaponUsageHeavenStyle = new();
+        public ObservableCollection<long> weaponUsageStormStyle = new();
+        public ObservableCollection<long> weaponUsageExtremeStyle = new();
+
+
+
 
         public object attackBuffSync { get; } = new();
         public object damagePerSecondSync { get; } = new();

@@ -4183,7 +4183,7 @@ namespace MHFZ_Overlay
             return $"{minutes:D2}:{seconds:D2}.{(int)(milliseconds * 100):D2}";
         }
 
-        public List<WeaponUsageMapper> CalculateTotalWeaponUsage(ConfigWindow configWindow, DataLoader dataLoader)
+        public List<WeaponUsageMapper> CalculateTotalWeaponUsage(ConfigWindow configWindow, DataLoader dataLoader, bool isByQuestID = false)
         {
             List<WeaponUsageMapper> weaponUsageData = new List<WeaponUsageMapper>();
 
@@ -4195,18 +4195,40 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
+                        string sql = "";
+                        long questID = 0;
 
-                        using (SQLiteCommand cmd = new SQLiteCommand(
-                        @"SELECT 
+                        if (isByQuestID)
+                        {
+                            questID = long.Parse(configWindow.QuestIDTextBox.Text.Trim());
+                            sql = @"SELECT 
+                            WeaponTypeID, 
+                            StyleID, 
+                            COUNT(*) AS RunCount 
+                        FROM 
+                            PlayerGear 
+                            JOIN Quests ON PlayerGear.RunID = Quests.RunID
+                        WHERE 
+                            Quests.QuestID = @QuestID
+                        GROUP BY 
+                            WeaponTypeID, StyleID";
+                        }
+                        else
+                        {
+                            sql = @"SELECT 
                             WeaponTypeID, 
                             StyleID, 
                             COUNT(*) AS RunCount 
                         FROM 
                             PlayerGear 
                         GROUP BY 
-                            WeaponTypeID, StyleID", conn
-                        ))
+                            WeaponTypeID, StyleID";
+                        }
+
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
+                            if (isByQuestID)
+                                cmd.Parameters.AddWithValue("@QuestID", questID);
 
                             using (SQLiteDataReader reader = cmd.ExecuteReader())
                             {
@@ -4254,6 +4276,7 @@ namespace MHFZ_Overlay
             }
             return weaponUsageData;
         }
+
 
         public void QuestIDButton_Click(object sender, RoutedEventArgs e, ConfigWindow configWindow)
         {
