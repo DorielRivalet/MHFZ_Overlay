@@ -606,28 +606,8 @@
 
             </TabItem.Resources>
             <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel.Triggers>
-                        <EventTrigger RoutedEvent="Loaded">
-                            <BeginStoryboard>
-                                <Storyboard RepeatBehavior="Forever">
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="gifImage" Storyboard.TargetProperty="Source">
-                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
-                                            <DiscreteObjectKeyFrame.Value>
-                                                <BitmapImage UriSource="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/scroll_rainbow.gif"/>
-                                            </DiscreteObjectKeyFrame.Value>
-                                        </DiscreteObjectKeyFrame>
-                                        <DiscreteObjectKeyFrame KeyTime="0:0:1">
-                                            <DiscreteObjectKeyFrame.Value>
-                                                <BitmapImage UriSource="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/scroll_rainbow.gif"/>
-                                            </DiscreteObjectKeyFrame.Value>
-                                        </DiscreteObjectKeyFrame>
-                                    </ObjectAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </StackPanel.Triggers>
-                    <Image x:Name="gifScroll"  Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/scroll_rainbow.gif" Width="32" Height="32" IsEnabled="True"/>
+                <StackPanel Orientation="Horizontal" Background="Transparent">
+                    <MediaElement x:Name="gifScroll" UnloadedBehavior="Manual" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/scroll_rainbow.gif" LoadedBehavior="Play"/>
                     <TextBlock Text="Quest Log" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#94e2d5">
                         <TextBlock.Triggers>
                             <EventTrigger RoutedEvent="Loaded">
