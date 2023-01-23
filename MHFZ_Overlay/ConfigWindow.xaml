@@ -36,8 +36,8 @@
                     </TextBlock>
                 </Grid>
             </DataTemplate>
-            <DataTemplate x:Key="StatsTemplate">
-                <!-- Grid structure for the "Gear"+graphs option -->
+            <DataTemplate x:Key="GearTemplate">
+                <!-- Grid structure for the "Gear" option -->
                 <Grid Background="#7f1e1e2e">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -233,6 +233,29 @@
                 </StackPanel>
                 </Grid>
             </DataTemplate>
+            <DataTemplate x:Key="GraphsTemplate">
+                <!-- Grid structure for the "Graphs" option -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
+
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
+
+                    <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="5">
+                        
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+
             <local:OptionToTemplateConverter x:Key="OptionToTemplateConverter" />
             <local:OptionToVisibilityConverter x:Key="OptionToVisibilityConverter" />
             <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
@@ -560,10 +583,58 @@
         </TabItem>
         <!--TODO: Make this similar to Hunter Info layout. first tab is Settings, second tab is Quest Records (Read), third tab is Weapon Usage, fourth tab is Youtube, fifth tab could be Run Manager (Create, Update, Delete)-->
         <TabItem x:Name="questLogsTabItem" ToolTip="Quest Database" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem.Resources>
+                <Storyboard x:Key="rainbowAnimation">
+                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" RepeatBehavior="Forever">
+                        <EasingColorKeyFrame KeyTime="0:0:0" Value="#f5e0dc" />
+                        <EasingColorKeyFrame KeyTime="0:0:2" Value="#f2cdcd" />
+                        <EasingColorKeyFrame KeyTime="0:0:4" Value="#f5c2e7" />
+                        <EasingColorKeyFrame KeyTime="0:0:6" Value="#cba6f7" />
+                        <EasingColorKeyFrame KeyTime="0:0:8" Value="#f38ba8" />
+                        <EasingColorKeyFrame KeyTime="0:0:10" Value="#eba0ac" />
+                        <EasingColorKeyFrame KeyTime="0:0:12" Value="#fab387" />
+                        <EasingColorKeyFrame KeyTime="0:0:14" Value="#f9e2af" />
+                        <EasingColorKeyFrame KeyTime="0:0:16" Value="#a6e3a1" />
+                        <EasingColorKeyFrame KeyTime="0:0:18" Value="#94e2d5" />
+                        <EasingColorKeyFrame KeyTime="0:0:20" Value="#89dceb" />
+                        <EasingColorKeyFrame KeyTime="0:0:22" Value="#74c7ec" />
+                        <EasingColorKeyFrame KeyTime="0:0:24" Value="#89b4fa" />
+                        <EasingColorKeyFrame KeyTime="0:0:26" Value="#b4befe" />
+                        <EasingColorKeyFrame KeyTime="0:0:28" Value="#cdd6f4" />
+                    </ColorAnimationUsingKeyFrames>
+                </Storyboard>
+
+            </TabItem.Resources>
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/scroll_teal.png" Width="32" Height="32"/>
-                    <TextBlock Text="Quest Log" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#94e2d5"/>
+                    <StackPanel.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard RepeatBehavior="Forever">
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="gifImage" Storyboard.TargetProperty="Source">
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                                            <DiscreteObjectKeyFrame.Value>
+                                                <BitmapImage UriSource="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/scroll_rainbow.gif"/>
+                                            </DiscreteObjectKeyFrame.Value>
+                                        </DiscreteObjectKeyFrame>
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:1">
+                                            <DiscreteObjectKeyFrame.Value>
+                                                <BitmapImage UriSource="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/scroll_rainbow.gif"/>
+                                            </DiscreteObjectKeyFrame.Value>
+                                        </DiscreteObjectKeyFrame>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </StackPanel.Triggers>
+                    <Image x:Name="gifScroll"  Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/scroll_rainbow.gif" Width="32" Height="32" IsEnabled="True"/>
+                    <TextBlock Text="Quest Log" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#94e2d5">
+                        <TextBlock.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard Storyboard="{StaticResource rainbowAnimation}" />
+                            </EventTrigger>
+                        </TextBlock.Triggers>
+                    </TextBlock>
                 </StackPanel>
             </TabItem.Header>
             <Grid x:Name="QuestLogContent">

@@ -17,8 +17,8 @@ namespace MHFZ_Overlay
                 return null;
 
             //this only needs run id
-            if (option.Name == "Stats")//gear + graphs
-                return (DataTemplate)((FrameworkElement)container).FindResource("StatsTemplate");
+            if (option.Name == "Gear")//gear
+                return (DataTemplate)((FrameworkElement)container).FindResource("GearTemplate");
             //this only needs quest id
             else if (option.Name == "Top 20")
                 return (DataTemplate)((FrameworkElement)container).FindResource("Top20Template");
@@ -31,6 +31,9 @@ namespace MHFZ_Overlay
             //this only needs run id
             else if (option.Name == "YouTube")
                 return (DataTemplate)((FrameworkElement)container).FindResource("YouTubeTemplate");
+            //idk
+            else if (option.Name == "Graphs")
+                return (DataTemplate)((FrameworkElement)container).FindResource("GraphsTemplate");
             else
                 return (DataTemplate)((FrameworkElement)container).FindResource("DefaultTemplate");
         }
