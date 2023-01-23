@@ -74,6 +74,7 @@
     <None Remove="UI\Icons\dure_defense.png" />
     <None Remove="UI\Icons\dure_defense_red.png" />
     <None Remove="UI\Icons\fire.png" />
+    <None Remove="UI\Icons\gif\scroll_rainbow.gif" />
     <None Remove="UI\Icons\guild_food.png" />
     <None Remove="UI\Icons\helm.png" />
     <None Remove="UI\Icons\knife.png" />
@@ -285,6 +286,7 @@
     <Resource Include="UI\Fonts\OpenSans-SemiBoldItalic.ttf" />
     <Resource Include="UI\Icons\bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\database_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Resource Include="UI\Icons\gif\scroll_rainbow.gif" />
     <Resource Include="UI\Icons\leaderboard_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\manage_history_FILL0_wght400_GRAD0_opsz48.xaml" />
   </ItemGroup>
@@ -310,6 +312,7 @@
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.3" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
     <PackageReference Include="XInput.Wrapper" Version="0.3.1" />
   </ItemGroup>
 
