@@ -145,23 +145,24 @@
             </DataTemplate>
             <DataTemplate x:Key="YouTubeTemplate">
                 <!-- Grid structure for the "YouTube" option -->
-                <Grid Background="#7f1e1e2e">
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="64" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="test" Margin="0,100,0,0"/>
+                <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
+
+                <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
+
+                <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="5">
+                    <TextBlock VerticalAlignment="Center" Text="YouTube Link for the Run ID" Margin="5"/>
+                    <TextBox VerticalContentAlignment="Center" Margin="5" ToolTip="Enter the YouTube link for the Run ID inputted at the top" Width="150" Height="Auto" IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" MaxLength="12" Loaded="YoutubeLinkTextBox_Loaded"/>
+                    <Button BorderThickness="0" Foreground="#f38ba8" Background="Transparent" Margin="5" Content="&#xf03d;" ToolTip="Add Link" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Free Solid" Click="UpdateYoutubeLink_ButtonClick" Loaded="UpdateYoutubeLink_Loaded"/>
+                    <Button BorderThickness="0" Foreground="Red" Background="Transparent" Margin="5" Content="&#xf167;" ToolTip="Open Link in Browser" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Click="YoutubeIconButton_Click"/>
+                </StackPanel>
                 </Grid>
             </DataTemplate>
             <local:OptionToTemplateConverter x:Key="OptionToTemplateConverter" />

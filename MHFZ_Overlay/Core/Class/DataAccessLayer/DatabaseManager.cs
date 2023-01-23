@@ -4183,6 +4183,91 @@ namespace MHFZ_Overlay
             return $"{minutes:D2}:{seconds:D2}.{(int)(milliseconds * 100):D2}";
         }
 
+        public string GetYoutubeLinkForRunID(long runID)
+        {
+            string youtubeLink = "";
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT YoutubeID FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    youtubeLink = (string)reader["YoutubeID"];
+                                }
+                                else
+                                {
+                                    youtubeLink = "";
+                                }
+                            }
+                        }
+
+                        // Commit the transaction
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+
+            return "https://youtube.com/watch?v="+youtubeLink;
+        }
+
+        public bool UpdateYoutubeLink(object sender, RoutedEventArgs e, ConfigWindow configWindow, long runID, string youtubeLink)
+        {
+            bool success = false;
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT COUNT(*) FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            long count = (long)cmd.ExecuteScalar();
+                            if (count > 0)
+                            {
+                                using (SQLiteCommand cmd2 = new SQLiteCommand("UPDATE Quests SET YoutubeID = @youtubeLink WHERE RunID = @runID", conn))
+                                {
+                                    cmd2.Parameters.AddWithValue("@youtubeLink", youtubeLink);
+                                    cmd2.Parameters.AddWithValue("@runID", runID);
+
+                                    int rowsAffected = cmd2.ExecuteNonQuery();
+                                    if (rowsAffected > 0)
+                                    {
+                                        success = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return success;
+        }
+
+
         public List<WeaponUsageMapper> CalculateTotalWeaponUsage(ConfigWindow configWindow, DataLoader dataLoader, bool isByQuestID = false)
         {
             List<WeaponUsageMapper> weaponUsageData = new List<WeaponUsageMapper>();
