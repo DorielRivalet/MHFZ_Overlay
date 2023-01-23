@@ -32,6 +32,8 @@ using System.Diagnostics.Metrics;
 using System.Drawing;
 using LiveChartsCore.Measure;
 using static System.Net.Mime.MediaTypeNames;
+using LiveChartsCore.Defaults;
+using MHFZ_Overlay.UI.Class.Mapper;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -4179,6 +4181,78 @@ namespace MHFZ_Overlay
             int seconds = (framesElapsed % (30 * 60)) / 30;
             double milliseconds = ((framesElapsed % (30 * 60)) % 30) / 30.0;
             return $"{minutes:D2}:{seconds:D2}.{(int)(milliseconds * 100):D2}";
+        }
+
+        public List<WeaponUsageMapper> CalculateTotalWeaponUsage(ConfigWindow configWindow, DataLoader dataLoader)
+        {
+            List<WeaponUsageMapper> weaponUsageData = new List<WeaponUsageMapper>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+
+                        using (SQLiteCommand cmd = new SQLiteCommand(
+                        @"SELECT 
+                            WeaponTypeID, 
+                            StyleID, 
+                            COUNT(*) AS RunCount 
+                        FROM 
+                            PlayerGear 
+                        GROUP BY 
+                            WeaponTypeID, StyleID", conn
+                        ))
+                        {
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (!reader.HasRows)
+                                {
+                                    //MessageBox.Show(String.Format("Runs not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), "MHF-Z Overlay Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return weaponUsageData;
+                                }
+                                else
+                                {
+                                    while (reader.Read())
+                                    {
+                                        long weaponTypeID = (long)reader["WeaponTypeID"];
+                                        long styleID = (long)reader["StyleID"];
+                                        long runCount = (long)reader["RunCount"];
+
+                                        string weaponType = "";
+                                        string style = "";
+
+                                        lock (dataLoader.model.weaponUsageSync)
+                                        {
+                                            // Use the weaponTypeID, styleID, and runCount values to populate your
+                                            // livechart graph
+                                            // use a switch statement or a lookup table to convert the
+                                            // weaponTypeID and styleID to their corresponding string names
+
+                                            weaponType = Dictionary.WeaponTypes.WeaponTypeID[int.Parse(weaponTypeID.ToString())];
+                                            style = Dictionary.WeaponStyles.WeaponStyleID[int.Parse(styleID.ToString())];
+                                            weaponUsageData.Add(new WeaponUsageMapper(weaponType, style, (int)runCount));
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                        // Commit the transaction
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return weaponUsageData;
         }
 
         public void QuestIDButton_Click(object sender, RoutedEventArgs e, ConfigWindow configWindow)

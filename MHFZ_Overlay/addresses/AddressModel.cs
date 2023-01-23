@@ -8679,10 +8679,79 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new();
         public ObservableCollection<ObservablePoint> hitsPerSecondCollection = new();
 
+        public ObservableCollection<long> weaponUsageSwordAndShieldEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageSwordAndShieldHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageSwordAndShieldStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageSwordAndShieldExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageDualSwordsEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageDualSwordsHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageDualSwordsStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageDualSwordsExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageGreatSwordEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageGreatSwordHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageGreatSwordStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageGreatSwordExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageLongSwordEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageLongSwordHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageLongSwordStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageLongSwordExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageHammerEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageHammerHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageHammerStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageHammerExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageHuntingHornEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageHuntingHornHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageHuntingHornStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageHuntingHornExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageLanceEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageLanceHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageLanceStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageLanceExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageGunlanceEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageGunlanceHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageGunlanceStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageGunlanceExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageTonfaEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageTonfaHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageTonfaStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageTonfaExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageSwitchAxeFEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageSwitchAxeFHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageSwitchAxeFStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageSwitchAxeFExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageLightBowgunEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageLightBowgunHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageLightBowgunStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageLightBowgunExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageHeavyBowgunEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageHeavyBowgunHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageHeavyBowgunStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageHeavyBowgunExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageBowEarthStyleCollection = new();
+        public ObservableCollection<long> weaponUsageBowHeavenStyleCollection = new();
+        public ObservableCollection<long> weaponUsageBowStormStyleCollection = new();
+        public ObservableCollection<long> weaponUsageBowExtremeStyleCollection = new();
+
+        public ObservableCollection<long> weaponUsageMagnetSpikeExtremeStyleCollection = new();
+
+
         public object attackBuffSync { get; } = new();
         public object damagePerSecondSync { get; } = new();
         public object actionsPerMinuteSync { get; } = new();
         public object hitsPerSecondSync { get; } = new();
+        public object weaponUsageSync { get; set; } = new();
 
         public List<ISeries> attackBuffSeries { get; set; } = new();
         public List<ISeries> damagePerSecondSeries { get; set; } = new();
@@ -10421,7 +10490,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
 
 
-        public Option SelectedOption { get; set; } = new Option { Name = "Weapon Usage", IsSelected = true};
+        public Option SelectedOption { get; set; } = new Option { Name = "Default", IsSelected = true};
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
