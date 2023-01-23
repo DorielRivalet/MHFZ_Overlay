@@ -47,6 +47,7 @@ using SQLitePCL;
 using Dictionary;
 using Button = System.Windows.Controls.Button;
 using TextBox = System.Windows.Controls.TextBox;
+using ListView = System.Windows.Controls.ListView;
 
 namespace MHFZ_Overlay
 {
@@ -2101,6 +2102,7 @@ namespace MHFZ_Overlay
         private CartesianChart weaponUsageChart;
         private Button updateYoutubeLinkButton;
         private TextBox youtubeLinkTextBox;
+        private ListView mostRecentRunsListView;
 
         private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
         {
@@ -2139,6 +2141,15 @@ namespace MHFZ_Overlay
         private void YoutubeLinkTextBox_Loaded(object sender, RoutedEventArgs e)
         {
             youtubeLinkTextBox = (TextBox)sender;
+        }
+
+        private void MostRecentRuns_ListViewLoaded(object sender, RoutedEventArgs e)
+        {
+            mostRecentRunsListView = (ListView)sender;
+            MainWindow.DataLoader.model.RecentRuns = DatabaseManager.GetInstance().GetRecentRuns();
+            mostRecentRunsListView.ItemsSource = MainWindow.DataLoader.model.RecentRuns;
+            mostRecentRunsListView.DataContext = MainWindow.DataLoader.model.RecentRuns;
+            mostRecentRunsListView.Items.Refresh();
         }
     }
     /* LoadConfig on startup

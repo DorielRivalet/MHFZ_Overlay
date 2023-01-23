@@ -27,6 +27,7 @@ using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using LiveChartsCore.Measure;
+using MHFZ_Overlay.UI.Class;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -10424,6 +10425,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 return QuestID().ToString();
             } 
         }
+
+        public List<RecentRuns> RecentRuns { get; set; } = new();
 
         public ObservableCollection<Option> QuestLogsSearchOption { get; set; } = new ObservableCollection<Option>()
         {

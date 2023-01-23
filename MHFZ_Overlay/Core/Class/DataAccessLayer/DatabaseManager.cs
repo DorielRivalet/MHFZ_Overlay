@@ -34,6 +34,7 @@ using LiveChartsCore.Measure;
 using static System.Net.Mime.MediaTypeNames;
 using LiveChartsCore.Defaults;
 using MHFZ_Overlay.UI.Class.Mapper;
+using MHFZ_Overlay.UI.Class;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -4266,6 +4267,75 @@ namespace MHFZ_Overlay
             }
             return success;
         }
+
+
+        public List<RecentRuns> GetRecentRuns()
+        {
+            List<RecentRuns> recentRuns = new List<RecentRuns>();
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand(
+                        @"SELECT 
+                            ObjectiveImage, 
+                            qn.QuestNameName, 
+                            RunID, 
+                            QuestID, 
+                            YoutubeID, 
+                            FinalTimeDisplay, 
+                            Date, 
+                            ActualOverlayMode, 
+                            PartySize
+                        FROM 
+                            Quests q
+                        JOIN
+                            QuestName qn ON q.QuestID = qn.QuestNameID
+                        ORDER BY 
+                            Date DESC
+                        LIMIT 10", conn
+                        ))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader == null || !reader.HasRows)
+                                    return recentRuns;
+                                if (reader.HasRows)
+                                {
+                                    while (reader.Read())
+                                    {
+                                        RecentRuns recentRun = new RecentRuns
+                                        {
+                                            ObjectiveImage = (string)reader["ObjectiveImage"],
+                                            QuestName = (string)reader["QuestNameName"],
+                                            RunID = (long)reader["RunID"],
+                                            QuestID = (long)reader["QuestID"],
+                                            YoutubeID = (string)reader["YoutubeID"],
+                                            FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
+                                            Date = (DateTime)reader["Date"],
+                                            ActualOverlayMode = (string)reader["ActualOverlayMode"],
+                                            PartySize = (long)reader["PartySize"]
+                                        };
+                                        recentRuns.Add(recentRun);
+                                    }
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return recentRuns;
+        }
+
+
 
 
         public List<WeaponUsageMapper> CalculateTotalWeaponUsage(ConfigWindow configWindow, DataLoader dataLoader, bool isByQuestID = false)
