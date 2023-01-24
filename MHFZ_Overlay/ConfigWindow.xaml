@@ -76,75 +76,83 @@
                     <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#94e2d5" />
 
                     <!--listview here-->
-                    <ListView x:Name="Top20RunsListView" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Loaded="Top20Runs_ListViewLoaded">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Objective" Width="128">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Image ToolTip="Objective Image" Source="{Binding ObjectiveImage}" Width="64" Height="64" HorizontalAlignment="Center" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="250"  Header="Quest Name">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding QuestName}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="128" Header="Run ID">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding RunID}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="128" Header="Quest ID">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding QuestID}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="128" Header="YouTube">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock ToolTip="Youtube ID" Text="{Binding YoutubeID}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="128" Header="Elapsed">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock ToolTip="Final Time Elapsed on Completion" Text="{Binding FinalTimeDisplay}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="128" Header="Date">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Date}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="96" Header="Mode">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock ToolTip="Overlay Mode" Text="{Binding ActualOverlayMode}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="96" Header="Party">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock ToolTip="Party Size" Text="{Binding PartySize}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <StackPanel  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="5">
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox x:Name="weaponListTop20RunsComboBox" Width="150" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="weaponListTop20RunsComboBox_SelectionChanged">
+                                <ComboBoxItem>All Weapons</ComboBoxItem>
+                                <ComboBoxItem>Sword and Shield</ComboBoxItem>
+                                <ComboBoxItem>Dual Swords</ComboBoxItem>
+                                <ComboBoxItem>Great Sword</ComboBoxItem>
+                                <ComboBoxItem>Long Sword</ComboBoxItem>
+                                <ComboBoxItem>Hammer</ComboBoxItem>
+                                <ComboBoxItem>Hunting Horn</ComboBoxItem>
+                                <ComboBoxItem>Lance</ComboBoxItem>
+                                <ComboBoxItem>Gunlance</ComboBoxItem>
+                                <ComboBoxItem>Tonfa</ComboBoxItem>
+                                <ComboBoxItem>Switch Axe F</ComboBoxItem>
+                                <ComboBoxItem>Magnet Spike</ComboBoxItem>
+                                <ComboBoxItem>Light Bowgun</ComboBoxItem>
+                                <ComboBoxItem>Heavy Bowgun</ComboBoxItem>
+                                <ComboBoxItem>Bow</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Top 20 fastest solo runs of quest ID by category"/>
+                        </StackPanel>
+                        <ListView x:Name="Top20RunsListView" Loaded="Top20Runs_ListViewLoaded">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Objective" Width="128">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Image ToolTip="Objective Image" Source="{Binding ObjectiveImage}" Width="64" Height="64" HorizontalAlignment="Center" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="250"  Header="Quest Name">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding QuestName}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="128" Header="Run ID">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding RunID}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="128" Header="Quest ID">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding QuestID}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="128" Header="YouTube">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock ToolTip="Youtube ID" Text="{Binding YoutubeID}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="128" Header="Elapsed">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock ToolTip="Final Time Elapsed on Completion" Text="{Binding FinalTimeDisplay}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="128" Header="Date">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Date}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="WeaponUsageTemplate">

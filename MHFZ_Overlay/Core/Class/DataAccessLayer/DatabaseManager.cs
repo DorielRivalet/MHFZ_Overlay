@@ -4270,70 +4270,118 @@ namespace MHFZ_Overlay
         }
 
         //TODO add check if there are runs for the quest id
-        public List<FastestRun> GetFastestRuns(long questID)
+        public List<FastestRun> GetFastestRuns(ConfigWindow configWindow, string weaponName = "All Weapons")
         {
             List<FastestRun> fastestRuns = new List<FastestRun>();
-            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            if (long.TryParse(configWindow.QuestIDTextBox.Text.Trim(), out long questID))
             {
-                conn.Open();
-                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                using (SQLiteConnection conn = new SQLiteConnection(dataSource))
                 {
-                    try
+                    conn.Open();
+                    using (SQLiteTransaction transaction = conn.BeginTransaction())
                     {
-                        using (SQLiteCommand cmd = new SQLiteCommand(
-                        @"SELECT 
-                            ObjectiveImage, 
-                            qn.QuestNameName, 
-                            RunID, 
-                            QuestID, 
-                            YoutubeID, 
-                            FinalTimeDisplay, 
-                            Date, 
-                            ActualOverlayMode, 
-                            PartySize
-                        FROM 
-                            Quests q
-                        JOIN 
-                            QuestName qn ON q.QuestID = qn.QuestNameID
-                        WHERE 
-                            q.QuestID = @questID
-                        ORDER BY 
-                            FinalTimeValue ASC
-                        LIMIT 10", conn))
+                        try
                         {
+                            string sql = "";
+                            int weaponTypeID = 0;
+                            
 
-                            cmd.Parameters.AddWithValue("@questID", questID);
-
-                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            if (weaponName == "All Weapons")
                             {
-                                if (reader == null || !reader.HasRows)
-                                    return fastestRuns;
-                                if (reader.HasRows)
-                                {
-                                    while (reader.Read())
-                                    {
-                                        fastestRuns.Add(new FastestRun
-                                        {
-                                            ObjectiveImage = (string)reader["ObjectiveImage"],
-                                            QuestName = (string)reader["QuestNameName"],
-                                            RunID = (long)reader["RunID"],
-                                            QuestID = (long)reader["QuestID"],
-                                            YoutubeID = (string)reader["YoutubeID"],
-                                            FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
-                                            Date = (DateTime)reader["Date"],
-                                            ActualOverlayMode = (string)reader["ActualOverlayMode"],
-                                            PartySize = (long)reader["PartySize"]
-                                        });
-                                    }
-                                }
-                                
+                                sql = @"SELECT 
+                                            ObjectiveImage, 
+                                            qn.QuestNameName, 
+                                            RunID, 
+                                            QuestID, 
+                                            YoutubeID, 
+                                            FinalTimeDisplay, 
+                                            Date, 
+                                            ActualOverlayMode, 
+                                            PartySize
+                                        FROM 
+                                            Quests q
+                                        JOIN 
+                                            QuestName qn ON q.QuestID = qn.QuestNameID
+                                        WHERE 
+                                            q.QuestID = @questID 
+                                            AND q.PartySize = 1
+                                            AND q.ActualOverlayMode = @SelectedOverlayMode
+                                        ORDER BY 
+                                            FinalTimeValue ASC
+                                        LIMIT 20";
                             }
+                            else
+                            {
+                                sql = @"SELECT 
+                                            ObjectiveImage, 
+                                            qn.QuestNameName, 
+                                            RunID, 
+                                            QuestID, 
+                                            YoutubeID, 
+                                            FinalTimeDisplay, 
+                                            Date, 
+                                            ActualOverlayMode, 
+                                            PartySize,
+                                            pg.WeaponTypeID
+                                        FROM 
+                                            Quests q
+                                        JOIN 
+                                            QuestName qn ON q.QuestID = qn.QuestNameID
+                                        JOIN
+                                            PlayerGear pg ON q.RunID =  pg.RunID
+                                        WHERE 
+                                            q.QuestID = @questID 
+                                            AND q.PartySize = 1
+                                            AND q.ActualOverlayMode = @SelectedOverlayMode
+                                            AND pg.WeaponTypeID = @SelectedWeaponTypeID
+                                        ORDER BY 
+                                            FinalTimeValue ASC
+                                        LIMIT 20";
+                                weaponTypeID = WeaponTypes.WeaponTypeID.FirstOrDefault(x => x.Value == weaponName).Key;
+                            }
+
+                            using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                            {
+                                string selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
+                                // idk if this is needed
+                                if (selectedOverlayMode == "" || selectedOverlayMode == null)
+                                    selectedOverlayMode = "Standard";
+
+                                cmd.Parameters.AddWithValue("@questID", questID);
+                                cmd.Parameters.AddWithValue("@SelectedOverlayMode", selectedOverlayMode);
+
+                                if (weaponName != "All Weapons")
+                                    cmd.Parameters.AddWithValue("@SelectedWeaponTypeID", weaponTypeID);
+
+                                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                                {
+                                    if (reader == null || !reader.HasRows)
+                                        return fastestRuns;
+                                    if (reader.HasRows)
+                                    {
+                                        while (reader.Read())
+                                        {
+                                            fastestRuns.Add(new FastestRun
+                                            {
+                                                ObjectiveImage = (string)reader["ObjectiveImage"],
+                                                QuestName = (string)reader["QuestNameName"],
+                                                RunID = (long)reader["RunID"],
+                                                QuestID = (long)reader["QuestID"],
+                                                YoutubeID = (string)reader["YoutubeID"],
+                                                FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
+                                                Date = (DateTime)reader["Date"]
+                                            });
+                                        }
+                                    }
+
+                                }
+                            }
+                            transaction.Commit();
                         }
-                        transaction.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        HandleError(transaction, ex);
+                        catch (Exception ex)
+                        {
+                            HandleError(transaction, ex);
+                        }
                     }
                 }
             }
@@ -4547,8 +4595,10 @@ namespace MHFZ_Overlay
                             qn.QuestNameName
                         FROM 
                             Quests q 
-                        INNER JOIN QuestName qn ON q.QuestID = qn.QuestNameID
-                        WHERE q.QuestID = @QuestID
+                        INNER JOIN 
+                            QuestName qn ON q.QuestID = qn.QuestNameID
+                        WHERE 
+                            q.QuestID = @QuestID
                             AND q.PartySize = 1
                             AND q.ActualOverlayMode = @SelectedOverlayMode", conn
                         ))

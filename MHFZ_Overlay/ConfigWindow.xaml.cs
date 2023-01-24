@@ -2216,13 +2216,15 @@ namespace MHFZ_Overlay
         private void Top20Runs_ListViewLoaded(object sender, RoutedEventArgs e)
         {
             top20RunsListView = (ListView)sender;
-            if (long.TryParse(QuestIDTextBox.Text.Trim(), out long questID))
-            {
-                MainWindow.DataLoader.model.FastestRuns = DatabaseManager.GetInstance().GetFastestRuns(questID);
-                top20RunsListView.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
-                top20RunsListView.DataContext = MainWindow.DataLoader.model.FastestRuns;
-                top20RunsListView.Items.Refresh();
-            }
+            MainWindow.DataLoader.model.FastestRuns = DatabaseManager.GetInstance().GetFastestRuns(this);
+            top20RunsListView.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
+            top20RunsListView.DataContext = MainWindow.DataLoader.model.FastestRuns;
+            top20RunsListView.Items.Refresh();
+        }
+
+        private void weaponListTop20RunsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
     /* LoadConfig on startup

@@ -16,7 +16,5 @@ namespace MHFZ_Overlay.UI.Class
         public string YoutubeID { get; set; }
         public string FinalTimeDisplay { get; set; }
         public DateTime Date { get; set; }
-        public string ActualOverlayMode { get; set; }
-        public long PartySize { get; set; }
     }
 }
