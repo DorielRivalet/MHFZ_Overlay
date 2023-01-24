@@ -31,7 +31,7 @@ namespace MHFZ_Overlay
             //this only needs run id
             else if (option.Name == "YouTube")
                 return (DataTemplate)((FrameworkElement)container).FindResource("YouTubeTemplate");
-            //idk
+            //quest id, run id, or nothing. quest id: general stats for that quest. run id: stats for that run. nothing: general stats for all of ur runs. or monster/gear info in general.
             else if (option.Name == "Graphs")
                 return (DataTemplate)((FrameworkElement)container).FindResource("GraphsTemplate");
             else

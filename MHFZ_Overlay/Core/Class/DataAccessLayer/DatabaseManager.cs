@@ -35,6 +35,7 @@ using static System.Net.Mime.MediaTypeNames;
 using LiveChartsCore.Defaults;
 using MHFZ_Overlay.UI.Class.Mapper;
 using MHFZ_Overlay.UI.Class;
+using RESTCountries.NET.Models;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -4266,6 +4267,77 @@ namespace MHFZ_Overlay
                 }
             }
             return success;
+        }
+
+        //TODO add check if there are runs for the quest id
+        public List<FastestRun> GetFastestRuns(long questID)
+        {
+            List<FastestRun> fastestRuns = new List<FastestRun>();
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand(
+                        @"SELECT 
+                            ObjectiveImage, 
+                            qn.QuestNameName, 
+                            RunID, 
+                            QuestID, 
+                            YoutubeID, 
+                            FinalTimeDisplay, 
+                            Date, 
+                            ActualOverlayMode, 
+                            PartySize
+                        FROM 
+                            Quests q
+                        JOIN 
+                            QuestName qn ON q.QuestID = qn.QuestNameID
+                        WHERE 
+                            q.QuestID = @questID
+                        ORDER BY 
+                            FinalTimeValue ASC
+                        LIMIT 10", conn))
+                        {
+
+                            cmd.Parameters.AddWithValue("@questID", questID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader == null || !reader.HasRows)
+                                    return fastestRuns;
+                                if (reader.HasRows)
+                                {
+                                    while (reader.Read())
+                                    {
+                                        fastestRuns.Add(new FastestRun
+                                        {
+                                            ObjectiveImage = (string)reader["ObjectiveImage"],
+                                            QuestName = (string)reader["QuestNameName"],
+                                            RunID = (long)reader["RunID"],
+                                            QuestID = (long)reader["QuestID"],
+                                            YoutubeID = (string)reader["YoutubeID"],
+                                            FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
+                                            Date = (DateTime)reader["Date"],
+                                            ActualOverlayMode = (string)reader["ActualOverlayMode"],
+                                            PartySize = (long)reader["PartySize"]
+                                        });
+                                    }
+                                }
+                                
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fastestRuns;
         }
 
 

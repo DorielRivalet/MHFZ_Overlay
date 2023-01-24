@@ -10427,6 +10427,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
 
         public List<RecentRuns> RecentRuns { get; set; } = new();
+        public List<FastestRun> FastestRuns { get; set; } = new();
+
 
         public ObservableCollection<Option> QuestLogsSearchOption { get; set; } = new ObservableCollection<Option>()
         {

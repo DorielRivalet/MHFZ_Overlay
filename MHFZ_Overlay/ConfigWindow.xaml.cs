@@ -558,20 +558,21 @@ namespace MHFZ_Overlay
 
             replaceAllMonsterInfoFeriasLinks();
 
-            LiveCharts.Configure(config =>
-            config
-                // registers SkiaSharp as the library backend
-                // REQUIRED unless you build your own
-                .AddSkiaSharp()
+            //is this needed?
+            //LiveCharts.Configure(config =>
+            //config
+            //    // registers SkiaSharp as the library backend
+            //    // REQUIRED unless you build your own
+            //    .AddSkiaSharp()
 
-                // adds the default supported types
-                // OPTIONAL but highly recommend
-                .AddDefaultMappers()
+            //    // adds the default supported types
+            //    // OPTIONAL but highly recommend
+            //    .AddDefaultMappers()
 
-                // select a theme, default is Light
-                // OPTIONAL
-                //.AddDarkTheme());
-                .AddLightTheme());
+            //    // select a theme, default is Light
+            //    // OPTIONAL
+            //    //.AddDarkTheme());
+            //    .AddLightTheme());
 
             weaponUsageData = DatabaseManager.GetInstance().CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
         }
@@ -2162,6 +2163,7 @@ namespace MHFZ_Overlay
         private Button updateYoutubeLinkButton;
         private TextBox youtubeLinkTextBox;
         private ListView mostRecentRunsListView;
+        private ListView top20RunsListView;
 
         private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
         {
@@ -2209,6 +2211,18 @@ namespace MHFZ_Overlay
             mostRecentRunsListView.ItemsSource = MainWindow.DataLoader.model.RecentRuns;
             mostRecentRunsListView.DataContext = MainWindow.DataLoader.model.RecentRuns;
             mostRecentRunsListView.Items.Refresh();
+        }
+
+        private void Top20Runs_ListViewLoaded(object sender, RoutedEventArgs e)
+        {
+            top20RunsListView = (ListView)sender;
+            if (long.TryParse(QuestIDTextBox.Text.Trim(), out long questID))
+            {
+                MainWindow.DataLoader.model.FastestRuns = DatabaseManager.GetInstance().GetFastestRuns(questID);
+                top20RunsListView.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
+                top20RunsListView.DataContext = MainWindow.DataLoader.model.FastestRuns;
+                top20RunsListView.Items.Refresh();
+            }
         }
     }
     /* LoadConfig on startup
