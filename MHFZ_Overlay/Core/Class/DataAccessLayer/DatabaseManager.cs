@@ -4284,14 +4284,13 @@ namespace MHFZ_Overlay
                         {
                             string sql = "";
                             int weaponTypeID = 0;
-                            
 
                             if (weaponName == "All Weapons")
                             {
                                 sql = @"SELECT 
                                             ObjectiveImage, 
                                             qn.QuestNameName, 
-                                            RunID, 
+                                            q.RunID, 
                                             QuestID, 
                                             YoutubeID, 
                                             FinalTimeDisplay, 
@@ -4315,7 +4314,7 @@ namespace MHFZ_Overlay
                                 sql = @"SELECT 
                                             ObjectiveImage, 
                                             qn.QuestNameName, 
-                                            RunID, 
+                                            q.RunID, 
                                             QuestID, 
                                             YoutubeID, 
                                             FinalTimeDisplay, 

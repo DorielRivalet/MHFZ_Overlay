@@ -2224,7 +2224,20 @@ namespace MHFZ_Overlay
 
         private void weaponListTop20RunsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            //top20RunsListView = (ListView)sender;
+            if (top20RunsListView == null)
+                return;
+            var comboBox = sender as ComboBox;
+            var selectedItem = comboBox.SelectedItem;
+            // You can now use the selectedItem variable to get the data or value of the selected option
+            string selectedWeapon = selectedItem.ToString();
+            selectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ","");
+            if (selectedWeapon == "")
+                return;
+            MainWindow.DataLoader.model.FastestRuns = DatabaseManager.GetInstance().GetFastestRuns(this,selectedWeapon);
+            top20RunsListView.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
+            top20RunsListView.DataContext = MainWindow.DataLoader.model.FastestRuns;
+            top20RunsListView.Items.Refresh();
         }
     }
     /* LoadConfig on startup
