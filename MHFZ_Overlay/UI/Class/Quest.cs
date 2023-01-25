@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 namespace MHFZ_Overlay.UI.Class
 {
     //TODO: ORM
-    // get teh graphs from here
+    // get the graphs from here
     public class Quest
     {
         public string QuestHash { get; set; }

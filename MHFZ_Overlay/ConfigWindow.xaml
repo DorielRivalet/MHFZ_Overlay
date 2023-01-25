@@ -27,6 +27,9 @@
     <!--Background="#1e1e2e"-->
     <Window.Resources>
         <ResourceDictionary>
+            <local:OptionToTemplateConverter x:Key="OptionToTemplateConverter" />
+            <local:OptionToVisibilityConverter x:Key="OptionToVisibilityConverter" />
+            <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
             <!--TODO: change embed border colors-->
             <DataTemplate x:Key="DefaultTemplate">
                 <Grid Background="#7f1e1e2e">
@@ -54,83 +57,21 @@
 
                     <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#74c7ec" />
 
-                    <TabControl Margin="5" BorderBrush="Transparent" Background="Transparent" Grid.Row="0" Grid.Column="1">
-                        <TabControl.Resources>
-                            <Style TargetType="TabItem">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="TabItem">
-                                            <Border Name="Border" BorderThickness=".5,.5,.5,0" BorderBrush="#b4befe" CornerRadius="4,4,0,0" Margin="2,0">
-                                                <ContentPresenter x:Name="ContentSite"
-                                        VerticalAlignment="Center"
-                                        
-                                        ContentSource="Header"
-                                        Margin="10,2"/>
-                                            </Border>
-
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsSelected" Value="True">
-                                                    <Setter TargetName="Border" Property="Background" Value="#585b70" />
-                                                </Trigger>
-                                                <Trigger Property="IsSelected" Value="False">
-                                                    <Setter TargetName="Border" Property="Background" Value="#1e1e2e" />
-
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-
-                                        </ControlTemplate>
-
-                                    </Setter.Value>
-
-                                </Setter>
-                            </Style>
-                        </TabControl.Resources>
-                        <TabControl.Template>
-                            <ControlTemplate TargetType="TabControl">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <ScrollViewer HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Hidden" >
-                                        <TabPanel x:Name="HeaderPanel"
-                          Panel.ZIndex ="1" 
-                          KeyboardNavigation.TabIndex="1"
-                          Grid.Column="0"
-                          Grid.Row="0"
-                          Margin="2,2,2,0"
-                          IsItemsHost="true"/>
-                                    </ScrollViewer>
-                                    <ContentPresenter x:Name="PART_SelectedContentHost"
-                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                      Margin="{TemplateBinding Padding}"
-                                      ContentSource="SelectedContent" Grid.Row="1"/>
-                                </Grid>
-                            </ControlTemplate>
-                        </TabControl.Template>
-
-                        <TabItem ToolTip="View Gear" Background="#11111b" Foreground="#cdd6f4">
-                            <TabItem.Header>
+                    <Grid x:Name="QuestLogGearTextGrid" Grid.Row="0" Grid.Column="1">
+                        <DockPanel Margin="5,5,5,5">
+                            <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/favicon-32x32-2.png" Width="32" Height="32"/>
-                                    <TextBlock Text="Gear" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                    <Button Background="Transparent" Margin="5,0,0,0" Grid.Row="0" x:Name="QuestLogGearBtnSaveFile" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/file_download_FILL0_wght400_GRAD0_opsz48.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="50" Width="50" ToolTip="Save gear to text file"/>
+                                    <Button Background="Transparent" Margin="5,0,0,0" Grid.Row="1" x:Name="QuestLogGearBtnCopyFile" ToolTip="Copy gear to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/content_copy_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="50" Style="{StaticResource ConfigBottomButtons}" Height="50"/>
                                 </StackPanel>
-                            </TabItem.Header>
-                            <Grid Margin="5,5,5,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="20"/>
-                                    <RowDefinition Height="20"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="Text" Grid.Row="0" Grid.Column="0"/>
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="2"/>
-                    </TabControl>
-                    
+                            
+                                <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
+                                    <TextBlock ToolTip="Gear Info" Text="{Binding GetGearStats,Mode=OneTime}" Name="QuestLogGearStats" TextWrapping="Wrap"/>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </DockPanel>
+                    </Grid>
+
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="Top20Template">
@@ -408,9 +349,7 @@
                 </Grid>
             </DataTemplate>
 
-            <local:OptionToTemplateConverter x:Key="OptionToTemplateConverter" />
-            <local:OptionToVisibilityConverter x:Key="OptionToVisibilityConverter" />
-            <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
+
             <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
             <Setter Property="Template">
                 <Setter.Value>

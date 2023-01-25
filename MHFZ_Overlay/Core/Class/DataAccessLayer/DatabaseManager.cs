@@ -4269,6 +4269,49 @@ namespace MHFZ_Overlay
             return success;
         }
 
+        public string GetActiveSkills(ConfigWindow configWindow)
+        {
+            long runID = long.Parse(configWindow.RunIDTextBox.Text.Trim());
+            string activeSkills = "";
+
+            // Use a SQL query to retrieve the ActiveSkills for the specific RunID from the database
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT ActiveSkill1ID, ActiveSkill2ID, ActiveSkill3ID, ActiveSkill4ID, ActiveSkill5ID, ActiveSkill6ID, ActiveSkill7ID, ActiveSkill8ID, ActiveSkill9ID, ActiveSkill10ID, ActiveSkill11ID, ActiveSkill12ID, ActiveSkill13ID, ActiveSkill14ID, ActiveSkill15ID, ActiveSkill16ID, ActiveSkill17ID, ActiveSkill18ID, ActiveSkill19ID FROM ActiveSkills WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    for (int i = 1; i <= 19; i++)
+                                    {
+                                        activeSkills += reader["ActiveSkill" + i + "ID"].ToString() + ", ";
+                                    }
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            // Remove the last comma and space from the string
+            activeSkills = activeSkills.TrimEnd(',', ' ');
+            // Display the ActiveSkills in the TextBlock
+            //configWindow.ActiveSkillsTextBlock.Text = activeSkills;
+            return activeSkills;
+        }
+
         public PlayerGear GetGearUsed(ConfigWindow configWindow)
         {
             PlayerGear? gearUsed = null;
