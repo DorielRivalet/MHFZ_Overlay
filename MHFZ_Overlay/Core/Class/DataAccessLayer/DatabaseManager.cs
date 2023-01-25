@@ -4269,7 +4269,110 @@ namespace MHFZ_Overlay
             return success;
         }
 
-        //TODO add check if there are runs for the quest id
+        public PlayerGear GetGearUsed(ConfigWindow configWindow)
+        {
+            PlayerGear? gearUsed = null;
+            long runID = long.Parse(configWindow.RunIDTextBox.Text.Trim());
+
+            // Use a SQL query to retrieve the gear used for the specific RunID from the database
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand(
+                            @"SELECT 
+                                * 
+                            FROM 
+                                PlayerGear 
+                            WHERE 
+                                RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    gearUsed = new PlayerGear()
+                                    {
+                                        PlayerGearHash = reader["PlayerGearHash"].ToString(),
+                                        CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
+                                        CreatedBy = reader["CreatedBy"].ToString(),
+                                        PlayerGearID = long.Parse(reader["PlayerGearID"].ToString()),
+                                        RunID = long.Parse(reader["RunID"].ToString()),
+                                        PlayerID = long.Parse(reader["PlayerID"].ToString()),
+                                        GearName = reader["GearName"].ToString(),
+                                        StyleID = long.Parse(reader["StyleID"].ToString()),
+                                        WeaponIconID = long.Parse(reader["WeaponIconID"].ToString()),
+                                        WeaponClassID = long.Parse(reader["WeaponClassID"].ToString()),
+                                        WeaponTypeID = long.Parse(reader["WeaponTypeID"].ToString()),
+                                        BlademasterWeaponID = reader["BlademasterWeaponID"] == DBNull.Value ? null : (long?)long.Parse(reader["BlademasterWeaponID"].ToString()),
+                                        GunnerWeaponID = reader["GunnerWeaponID"] == DBNull.Value ? null : (long?)long.Parse(reader["GunnerWeaponID"].ToString()),
+                                        WeaponSlot1 = reader["WeaponSlot1"].ToString(),
+                                        WeaponSlot2 = reader["WeaponSlot2"].ToString(),
+                                        WeaponSlot3 = reader["WeaponSlot3"].ToString(),
+
+                                        HeadID = long.Parse(reader["HeadID"].ToString()),
+                                        HeadSlot1ID = long.Parse(reader["HeadSlot1ID"].ToString()),
+                                        HeadSlot2ID = long.Parse(reader["HeadSlot2ID"].ToString()),
+                                        HeadSlot3ID = long.Parse(reader["HeadSlot3ID"].ToString()),
+
+                                        ChestID = long.Parse(reader["ChestID"].ToString()),
+                                        ChestSlot1ID = long.Parse(reader["ChestSlot1ID"].ToString()),
+                                        ChestSlot2ID = long.Parse(reader["ChestSlot2ID"].ToString()),
+                                        ChestSlot3ID = long.Parse(reader["ChestSlot3ID"].ToString()),
+
+                                        ArmsID = long.Parse(reader["ArmsID"].ToString()),
+                                        ArmsSlot1ID = long.Parse(reader["ArmsSlot1ID"].ToString()),
+                                        ArmsSlot2ID = long.Parse(reader["ArmsSlot2ID"].ToString()),
+                                        ArmsSlot3ID = long.Parse(reader["ArmsSlot3ID"].ToString()),
+
+                                        WaistID = long.Parse(reader["WaistID"].ToString()),
+                                        WaistSlot1ID = long.Parse(reader["WaistSlot1ID"].ToString()),
+                                        WaistSlot2ID = long.Parse(reader["WaistSlot2ID"].ToString()),
+                                        WaistSlot3ID = long.Parse(reader["WaistSlot3ID"].ToString()),
+
+                                        LegsID = long.Parse(reader["LegsID"].ToString()),
+                                        LegsSlot1ID = long.Parse(reader["LegsSlot1ID"].ToString()),
+                                        LegsSlot2ID = long.Parse(reader["LegsSlot2ID"].ToString()),
+                                        LegsSlot3ID = long.Parse(reader["LegsSlot3ID"].ToString()),
+
+                                        Cuff1ID = long.Parse(reader["Cuff1ID"].ToString()),
+                                        Cuff2ID = long.Parse(reader["Cuff2ID"].ToString()),
+                                        ZenithSkillsID = long.Parse(reader["ZenithSkillsID"].ToString()),
+                                        AutomaticSkillsID = long.Parse(reader["AutomaticSkillsID"].ToString()),
+                                        ActiveSkillsID = long.Parse(reader["ActiveSkillsID"].ToString()),
+                                        CaravanSkillsID = long.Parse(reader["CaravanSkillsID"].ToString()),
+                                        DivaSkillID = long.Parse(reader["DivaSkillID"].ToString()),
+                                        GuildFoodID = long.Parse(reader["GuildFoodID"].ToString()),
+                                        StyleRankSkillsID = long.Parse(reader["StyleRankSkillsID"].ToString()),
+                                        PlayerInventoryID = long.Parse(reader["PlayerInventoryID"].ToString()),
+                                        AmmoPouchID = long.Parse(reader["AmmoPouchID"].ToString()),
+                                        PartnyaBagID = long.Parse(reader["PartnyaBagID"].ToString()),
+                                        PoogieItemID = long.Parse(reader["PoogieItemID"].ToString()),
+                                        RoadDureSkillsID = long.Parse(reader["RoadDureSkillsID"].ToString()),
+                                        PlayerInventoryDictionary = reader["PlayerInventoryDictionary"].ToString(),
+                                        PlayerAmmoPouchDictionary = reader["PlayerAmmoPouchDictionary"].ToString(),
+                                        PartnyaBagDictionary = reader["PartnyaBagDictionary"].ToString()
+                                    };
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return gearUsed;
+        }
+
+        //TODO add check if there are runs for the quest id?
         public List<FastestRun> GetFastestRuns(ConfigWindow configWindow, string weaponName = "All Weapons")
         {
             List<FastestRun> fastestRuns = new List<FastestRun>();
