@@ -61,8 +61,9 @@
                         <DockPanel Margin="5,5,5,5">
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Background="Transparent" Margin="5,0,0,0" Grid.Row="0" x:Name="QuestLogGearBtnSaveFile" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/file_download_FILL0_wght400_GRAD0_opsz48.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="50" Width="50" ToolTip="Save gear to text file"/>
-                                    <Button Background="Transparent" Margin="5,0,0,0" Grid.Row="1" x:Name="QuestLogGearBtnCopyFile" ToolTip="Copy gear to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/content_copy_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="50" Style="{StaticResource ConfigBottomButtons}" Height="50"/>
+                                    <Button Background="Transparent" Margin="10,0,0,0" x:Name="QuestLogGearBtnSaveFile" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/file_download_FILL0_wght400_GRAD0_opsz48.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="50" Width="50" ToolTip="Save gear to text file"/>
+                                    <Button Background="Transparent" Margin="10,0,0,0" x:Name="QuestLogGearBtnCopyFile" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy gear to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/content_copy_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="50" Style="{StaticResource ConfigBottomButtons}" Height="50"/>
+                                    <TextBlock Text="Gear associated with the Run ID" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </StackPanel>
                             
                                 <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
@@ -319,9 +320,9 @@
                 <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
 
                 <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="5">
-                    <TextBlock VerticalAlignment="Center" Text="YouTube Link for the Run ID" Margin="5"/>
-                    <TextBox VerticalContentAlignment="Center" Margin="5" ToolTip="Enter the YouTube link for the Run ID entered at the top" Width="150" Height="Auto" IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" MaxLength="12" Loaded="YoutubeLinkTextBox_Loaded"/>
-                    <Button BorderThickness="0" Foreground="#f38ba8" Background="Transparent" Margin="5" Content="&#xf03d;" ToolTip="Add Link" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Free Solid" Click="UpdateYoutubeLink_ButtonClick" Loaded="UpdateYoutubeLink_Loaded"/>
+                    <TextBlock VerticalAlignment="Center" Text="YouTube ID for the Run ID" Margin="5"/>
+                    <TextBox VerticalContentAlignment="Center" Margin="5" ToolTip="Enter the YouTube video ID for the Run ID entered at the top" Width="150" Height="Auto" IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" MaxLength="12" Loaded="YoutubeLinkTextBox_Loaded"/>
+                    <Button BorderThickness="0" Foreground="#f38ba8" Background="Transparent" Margin="5" Content="&#xf03d;" ToolTip="Add ID" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Free Solid" Click="UpdateYoutubeLink_ButtonClick" Loaded="UpdateYoutubeLink_Loaded"/>
                     <Button BorderThickness="0" Foreground="Red" Background="Transparent" Margin="5" Content="&#xf167;" ToolTip="Open Link in Browser" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Click="YoutubeIconButton_Click"/>
                 </StackPanel>
                 </Grid>

@@ -36,6 +36,7 @@ using LiveChartsCore.Defaults;
 using MHFZ_Overlay.UI.Class.Mapper;
 using MHFZ_Overlay.UI.Class;
 using RESTCountries.NET.Models;
+using System.Windows.Media;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -4226,7 +4227,7 @@ namespace MHFZ_Overlay
             return "https://youtube.com/watch?v="+youtubeLink;
         }
 
-        public bool UpdateYoutubeLink(object sender, RoutedEventArgs e, ConfigWindow configWindow, long runID, string youtubeLink)
+        public bool UpdateYoutubeLink(object sender, RoutedEventArgs e, long runID, string youtubeLink)
         {
             bool success = false;
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
@@ -4269,12 +4270,11 @@ namespace MHFZ_Overlay
             return success;
         }
 
-        public string GetActiveSkills(ConfigWindow configWindow)
+        public AmmoPouch GetAmmoPouch(long runID)
         {
-            long runID = long.Parse(configWindow.RunIDTextBox.Text.Trim());
-            string activeSkills = "";
+            AmmoPouch ammoPouch = new AmmoPouch();
 
-            // Use a SQL query to retrieve the ActiveSkills for the specific RunID from the database
+            // Use a SQL query to retrieve the AmmoPouch data for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -4282,7 +4282,7 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
-                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT ActiveSkill1ID, ActiveSkill2ID, ActiveSkill3ID, ActiveSkill4ID, ActiveSkill5ID, ActiveSkill6ID, ActiveSkill7ID, ActiveSkill8ID, ActiveSkill9ID, ActiveSkill10ID, ActiveSkill11ID, ActiveSkill12ID, ActiveSkill13ID, ActiveSkill14ID, ActiveSkill15ID, ActiveSkill16ID, ActiveSkill17ID, ActiveSkill18ID, ActiveSkill19ID FROM ActiveSkills WHERE RunID = @runID", conn))
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT AmmoPouchID, RunID, Item1ID, Item1Quantity, Item2ID, Item2Quantity, Item3ID, Item3Quantity, Item4ID, Item4Quantity, Item5ID, Item5Quantity, Item6ID, Item6Quantity, Item7ID, Item7Quantity, Item8ID, Item8Quantity, Item9ID, Item9Quantity, Item10ID, Item10Quantity, CreatedAt, CreatedBy FROM AmmoPouch WHERE RunID = @runID", conn))
                         {
                             cmd.Parameters.AddWithValue("@runID", runID);
 
@@ -4290,10 +4290,15 @@ namespace MHFZ_Overlay
                             {
                                 if (reader.Read())
                                 {
-                                    for (int i = 1; i <= 19; i++)
+                                    ammoPouch.AmmoPouchID = long.Parse(reader["AmmoPouchID"].ToString());
+                                    ammoPouch.RunID = runID;
+                                    for (int i = 1; i <= 10; i++)
                                     {
-                                        activeSkills += reader["ActiveSkill" + i + "ID"].ToString() + ", ";
+                                        ammoPouch.GetType().GetProperty($"Item{i}ID").SetValue(ammoPouch, long.Parse(reader[$"Item{i}ID"].ToString()));
+                                        ammoPouch.GetType().GetProperty($"Item{i}Quantity").SetValue(ammoPouch, long.Parse(reader[$"Item{i}Quantity"].ToString()));
                                     }
+                                    ammoPouch.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                                    ammoPouch.CreatedBy = reader["CreatedBy"].ToString();
                                 }
                             }
                         }
@@ -4305,16 +4310,429 @@ namespace MHFZ_Overlay
                     }
                 }
             }
-            // Remove the last comma and space from the string
-            activeSkills = activeSkills.TrimEnd(',', ' ');
-            // Display the ActiveSkills in the TextBlock
-            //configWindow.ActiveSkillsTextBlock.Text = activeSkills;
+
+            return ammoPouch;
+        }
+
+        public PartnyaBag GetPartnyaBag(long runID)
+        {
+            PartnyaBag partnyaBag = new PartnyaBag();
+
+            // Use a SQL query to retrieve the PartnyaBag data for the specific RunID from the database
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT PartnyaBagID, RunID, Item1ID, Item1Quantity, Item2ID, Item2Quantity, Item3ID, Item3Quantity, Item4ID, Item4Quantity, Item5ID, Item5Quantity, Item6ID, Item6Quantity, Item7ID, Item7Quantity, Item8ID, Item8Quantity, Item9ID, Item9Quantity, Item10ID, Item10Quantity, CreatedAt, CreatedBy FROM PartnyaBag WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    partnyaBag.PartnyaBagID = long.Parse(reader["PartnyaBagID"].ToString());
+                                    partnyaBag.RunID = runID;
+                                    for (int i = 1; i <= 10; i++)
+                                    {
+                                        partnyaBag.GetType().GetProperty("Item" + i + "ID").SetValue(partnyaBag, long.Parse(reader["Item" + i + "ID"].ToString()));
+                                        partnyaBag.GetType().GetProperty("Item" + i + "Quantity").SetValue(partnyaBag, long.Parse(reader["Item" + i + "Quantity"].ToString()));
+                                    }
+                                    partnyaBag.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                                    partnyaBag.CreatedBy = reader["CreatedBy"].ToString();
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return partnyaBag;
+        }
+
+        public PlayerInventory GetPlayerInventory(long runID)
+        {
+            PlayerInventory playerInventory = new PlayerInventory();
+
+            // Use a SQL query to retrieve the PlayerInventory for the specific RunID from the database
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT PlayerInventoryID, RunID, Item1ID, Item1Quantity, Item2ID, Item2Quantity, Item3ID, Item3Quantity, Item4ID, Item4Quantity, Item5ID, Item5Quantity, Item6ID, Item6Quantity, Item7ID, Item7Quantity, Item8ID, Item8Quantity, Item9ID, Item9Quantity, Item10ID, Item10Quantity, Item11ID, Item11Quantity, Item12ID, Item12Quantity, Item13ID, Item13Quantity, Item14ID, Item14Quantity, Item15ID, Item15Quantity, Item16ID, Item16Quantity, Item17ID, Item17Quantity, Item18ID, Item18Quantity, Item19ID, Item19Quantity, Item20ID, Item20Quantity, CreatedAt, CreatedBy FROM PlayerInventory WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    playerInventory.PlayerInventoryID = long.Parse(reader["PlayerInventoryID"].ToString());
+                                    playerInventory.RunID = runID;
+                                    for (int i = 1; i <= 20; i++)
+                                    {
+                                        playerInventory.GetType().GetProperty("Item" + i + "ID").SetValue(playerInventory, long.Parse(reader["Item" + i + "ID"].ToString()));
+                                        playerInventory.GetType().GetProperty("Item" + i + "Quantity").SetValue(playerInventory, long.Parse(reader["Item" + i + "Quantity"].ToString()));
+                                    }
+                                    playerInventory.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                                    playerInventory.CreatedBy = reader["CreatedBy"].ToString();
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return playerInventory;
+        }
+
+        public Quest GetQuest(long runID)
+        {
+            Quest quest = new Quest();
+            // Use a SQL query to retrieve the Quest for the specific RunID from the database
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT QuestHash, CreatedAt, CreatedBy, RunID, QuestID, TimeLeft, FinalTimeValue, FinalTimeDisplay, ObjectiveImage, ObjectiveTypeID, ObjectiveQuantity, StarGrade, RankName, ObjectiveName, Date, YouTubeID, AttackBuffDictionary, HitCountDictionary, HitsPerSecondDictionary, DamageDealtDictionary, DamagePerSecondDictionary, AreaChangesDictionary, CartsDictionary, Monster1HPDictionary, Monster2HPDictionary, Monster3HPDictionary, Monster4HPDictionary, HitsTakenBlockedDictionary, HitsTakenBlockedPerSecondDictionary, PlayerHPDictionary, PlayerStaminaDictionary, KeyStrokesDictionary, MouseInputDictionary, GamepadInputDictionary, ActionsPerMinuteDictionary, OverlayModeDictionary, ActualOverlayMode, PartySize FROM Quest WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    quest.QuestHash = reader["QuestHash"].ToString();
+                                    quest.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                                    quest.CreatedBy = reader["CreatedBy"].ToString();
+                                    quest.RunID = runID;
+                                    quest.QuestID = long.Parse(reader["QuestID"].ToString());
+                                    quest.TimeLeft = long.Parse(reader["TimeLeft"].ToString());
+                                    quest.FinalTimeValue = long.Parse(reader["FinalTimeValue"].ToString());
+                                    quest.FinalTimeDisplay = reader["FinalTimeDisplay"].ToString();
+                                    quest.ObjectiveImage = reader["ObjectiveImage"].ToString();
+                                    quest.ObjectiveTypeID = long.Parse(reader["ObjectiveTypeID"].ToString());
+                                    quest.ObjectiveQuantity = long.Parse(reader["ObjectiveQuantity"].ToString());
+                                    quest.StarGrade = long.Parse(reader["StarGrade"].ToString());
+                                    quest.RankName = reader["RankName"].ToString();
+                                    quest.ObjectiveName = reader["ObjectiveName"].ToString();
+                                    quest.Date = DateTime.Parse(reader["Date"].ToString());
+                                    quest.YouTubeID = reader["YouTubeID"].ToString();
+                                    quest.AttackBuffDictionary = reader["AttackBuffDictionary"].ToString();
+                                    quest.HitCountDictionary = reader["HitCountDictionary"].ToString();
+                                    quest.HitsPerSecondDictionary = reader["HitsPerSecondDictionary"].ToString();
+                                    quest.DamageDealtDictionary = reader["DamageDealtDictionary"].ToString();
+                                    quest.DamagePerSecondDictionary = reader["DamagePerSecondDictionary"].ToString();
+                                    quest.AreaChangesDictionary = reader["AreaChangesDictionary"].ToString();
+                                    quest.CartsDictionary = reader["CartsDictionary"].ToString();
+
+                                    quest.Monster1HPDictionary = reader["Monster1HPDictionary"].ToString();
+                                    quest.Monster2HPDictionary = reader["Monster2HPDictionary"].ToString();
+                                    quest.Monster3HPDictionary = reader["Monster3HPDictionary"].ToString();
+                                    quest.Monster4HPDictionary = reader["Monster4HPDictionary"].ToString();
+
+                                    quest.HitsTakenBlockedDictionary = reader["HitsTakenBlockedDictionary"].ToString();
+                                    quest.HitsTakenBlockedPerSecondDictionary = reader["HitsTakenBlockedPerSecondDictionary"].ToString();
+                                    quest.PlayerHPDictionary = reader["PlayerHPDictionary"].ToString();
+                                    quest.PlayerStaminaDictionary = reader["PlayerStaminaDictionary"].ToString();
+                                    quest.KeyStrokesDictionary = reader["KeyStrokesDictionary"].ToString();
+                                    quest.MouseInputDictionary = reader["MouseInputDictionary"].ToString();
+                                    quest.GamepadInputDictionary = reader["GamepadInputDictionary"].ToString();
+
+                                    quest.ActionsPerMinuteDictionary = reader["ActionsPerMinuteDictionary"].ToString();
+                                    quest.OverlayModeDictionary = reader["OverlayModeDictionary"].ToString();
+                                    quest.ActualOverlayMode = reader["ActualOverlayMode"].ToString();
+                                    quest.PartySize = long.Parse(reader["PartySize"].ToString());
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return quest;
+        }
+
+        public UI.Class.RoadDureSkills GetRoadDureSkills(long runID)
+        {
+            UI.Class.RoadDureSkills roadDureSkills = new UI.Class.RoadDureSkills();
+
+            // Use a SQL query to retrieve the RoadDureSkills data for the specific RunID from the database
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT RoadDureSkillsID, RunID, RoadDureSkill1ID, RoadDureSkill1Level, RoadDureSkill2ID, RoadDureSkill2Level, RoadDureSkill3ID, RoadDureSkill3Level, RoadDureSkill4ID, RoadDureSkill4Level, RoadDureSkill5ID, RoadDureSkill5Level, RoadDureSkill6ID, RoadDureSkill6Level, RoadDureSkill7ID, RoadDureSkill7Level, RoadDureSkill8ID, RoadDureSkill8Level, RoadDureSkill9ID, RoadDureSkill9Level, RoadDureSkill10ID, RoadDureSkill10Level, RoadDureSkill11ID, RoadDureSkill11Level, RoadDureSkill12ID, RoadDureSkill12Level, RoadDureSkill13ID, RoadDureSkill13Level, RoadDureSkill14ID, RoadDureSkill14Level, RoadDureSkill15ID, RoadDureSkill15Level, RoadDureSkill16ID, RoadDureSkill16Level, CreatedAt, CreatedBy FROM RoadDureSkills WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    roadDureSkills.RoadDureSkillsID = long.Parse(reader["RoadDureSkillsID"].ToString());
+                                    roadDureSkills.RunID = runID;
+                                    for (int i = 1; i <= 16; i++)
+                                    {
+                                        roadDureSkills.GetType().GetProperty("RoadDureSkill" + i + "ID").SetValue(roadDureSkills, long.Parse(reader["RoadDureSkill" + i + "ID"].ToString()));
+                                        roadDureSkills.GetType().GetProperty("RoadDureSkill" + i + "Level").SetValue(roadDureSkills, long.Parse(reader["RoadDureSkill" + i + "Level"].ToString()));
+                                    }
+                                    roadDureSkills.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                                    roadDureSkills.CreatedBy = reader["CreatedBy"].ToString();
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return roadDureSkills;
+        }
+
+        public StyleRankSkills GetStyleRankSkills(long runID)
+        {
+            StyleRankSkills styleRankSkills = new StyleRankSkills();
+
+            // Use a SQL query to retrieve the StyleRankSkills data for the specific RunID from the database
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT StyleRankSkillsID, RunID, StyleRankSkill1ID, StyleRankSkill2ID, CreatedAt, CreatedBy FROM StyleRankSkills WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    styleRankSkills.StyleRankSkillsID = long.Parse(reader["StyleRankSkillsID"].ToString());
+                                    styleRankSkills.RunID = runID;
+                                    styleRankSkills.StyleRankSkill1ID = long.Parse(reader["StyleRankSkill1ID"].ToString());
+                                    styleRankSkills.StyleRankSkill2ID = long.Parse(reader["StyleRankSkill2ID"].ToString());
+                                    styleRankSkills.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                                    styleRankSkills.CreatedBy = reader["CreatedBy"].ToString();
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return styleRankSkills;
+        }
+
+
+        public AutomaticSkills GetAutomaticSkills(long runID)
+        {
+            AutomaticSkills automaticSkills = new AutomaticSkills();
+
+            // Use a SQL query to retrieve the AutomaticSkills data for the specific RunID from the database
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT AutomaticSkillsID, RunID, AutomaticSkill1ID, AutomaticSkill2ID, AutomaticSkill3ID, AutomaticSkill4ID, AutomaticSkill5ID, AutomaticSkill6ID, CreatedAt, CreatedBy FROM AutomaticSkills WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    automaticSkills.AutomaticSkillsID = long.Parse(reader["AutomaticSkillsID"].ToString());
+                                    automaticSkills.RunID = runID;
+                                    for (int i = 1; i <= 6; i++)
+                                    {
+                                        automaticSkills.GetType().GetProperty("AutomaticSkill" + i + "ID").SetValue(automaticSkills, long.Parse(reader["AutomaticSkill" + i + "ID"].ToString()));
+                                    }
+                                    automaticSkills.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                                    automaticSkills.CreatedBy = reader["CreatedBy"].ToString();
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return automaticSkills;
+        }
+
+        public ZenithSkills GetZenithSkills(long runID)
+        {
+            ZenithSkills zenithSkills = new ZenithSkills();
+
+            // Use a SQL query to retrieve the ZenithSkills data for the specific RunID from the database
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT ZenithSkillsID, RunID, ZenithSkill1ID, ZenithSkill2ID, ZenithSkill3ID, ZenithSkill4ID, ZenithSkill5ID, ZenithSkill6ID, ZenithSkill7ID, CreatedAt, CreatedBy FROM ZenithSkills WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    zenithSkills.ZenithSkillsID = long.Parse(reader["ZenithSkillsID"].ToString());
+                                    zenithSkills.RunID = runID;
+                                    for (int i = 1; i <= 7; i++)
+                                    {
+                                        zenithSkills.GetType().GetProperty("ZenithSkill" + i + "ID").SetValue(zenithSkills, long.Parse(reader["ZenithSkill" + i + "ID"].ToString()));
+                                    }
+                                    zenithSkills.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                                    zenithSkills.CreatedBy = reader["CreatedBy"].ToString();
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return zenithSkills;
+        }
+
+
+
+        public CaravanSkills GetCaravanSkills(long runID)
+        {
+            CaravanSkills caravanSkills = new CaravanSkills();
+
+            // Use a SQL query to retrieve the CaravanSkills data for the specific RunID from the database
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT CaravanSkillsID, RunID, CaravanSkill1ID, CaravanSkill2ID, CaravanSkill3ID, CreatedAt, CreatedBy FROM CaravanSkills WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    caravanSkills.CaravanSkillsID = long.Parse(reader["CaravanSkillsID"].ToString());
+                                    caravanSkills.RunID = runID;
+                                    for (int i = 1; i <= 3; i++)
+                                    {
+                                        caravanSkills.GetType().GetProperty("CaravanSkill" + i + "ID").SetValue(caravanSkills, long.Parse(reader["CaravanSkill" + i + "ID"].ToString()));
+                                    }
+                                    caravanSkills.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                                    caravanSkills.CreatedBy = reader["CreatedBy"].ToString();
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return caravanSkills;
+        }
+
+
+
+        public ActiveSkills GetActiveSkills(long runID)
+        {
+            // = long.Parse(configWindow.RunIDTextBox.Text.Trim());
+            ActiveSkills activeSkills = new ActiveSkills();
+
+            // Use a SQL query to retrieve the ActiveSkills for the specific RunID from the database
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT ActiveSkill1ID, ActiveSkill2ID, ActiveSkill3ID, ActiveSkill4ID, ActiveSkill5ID, ActiveSkill6ID, ActiveSkill7ID, ActiveSkill8ID, ActiveSkill9ID, ActiveSkill10ID, ActiveSkill11ID, ActiveSkill12ID, ActiveSkill13ID, ActiveSkill14ID, ActiveSkill15ID, ActiveSkill16ID, ActiveSkill17ID, ActiveSkill18ID, ActiveSkill19ID, CreatedAt, CreatedBy FROM ActiveSkills WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    activeSkills.RunID = runID;
+                                    for (int i = 1; i <= 19; i++)
+                                    {
+                                        activeSkills.GetType().GetProperty("ActiveSkill" + i + "ID").SetValue(activeSkills, long.Parse(reader["ActiveSkill" + i + "ID"].ToString()));
+                                    }
+                                    activeSkills.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                                    activeSkills.CreatedBy = reader["CreatedBy"].ToString();
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
             return activeSkills;
         }
 
         public PlayerGear GetGearUsed(ConfigWindow configWindow)
         {
-            PlayerGear? gearUsed = null;
+            PlayerGear gearUsed = new PlayerGear();
             long runID = long.Parse(configWindow.RunIDTextBox.Text.Trim());
 
             // Use a SQL query to retrieve the gear used for the specific RunID from the database

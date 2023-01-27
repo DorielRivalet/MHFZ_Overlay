@@ -2170,7 +2170,7 @@ namespace MHFZ_Overlay
             // Get the quest ID and new YouTube link from the textboxes
             long runID = long.Parse(RunIDTextBox.Text);
             string youtubeLink = youtubeLinkTextBox.Text;
-            if (DatabaseManager.GetInstance().UpdateYoutubeLink(sender, e, this, runID, youtubeLink))
+            if (DatabaseManager.GetInstance().UpdateYoutubeLink(sender, e, runID, youtubeLink))
                 MessageBox.Show(String.Format("Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink), "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             else
                 MessageBox.Show(String.Format("Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -2229,6 +2229,8 @@ namespace MHFZ_Overlay
                 return;
             var comboBox = sender as ComboBox;
             var selectedItem = comboBox.SelectedItem;
+            if (selectedItem == null)
+                return;
             // You can now use the selectedItem variable to get the data or value of the selected option
             string selectedWeapon = selectedItem.ToString();
             selectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ","");
