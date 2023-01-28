@@ -6566,6 +6566,7 @@ namespace MHFZ_Overlay.addresses
                 UI.Class.RoadDureSkills roadDureSkills = DatabaseManager.GetInstance().GetRoadDureSkills((long)runID);
                 StyleRankSkills styleRankSkills = DatabaseManager.GetInstance().GetStyleRankSkills((long)runID);
                 ZenithSkills zenithSkills = DatabaseManager.GetInstance().GetZenithSkills((long)runID);
+                Quest quest = DatabaseManager.GetInstance().GetQuest((long)runID);
 
                 var createdBy = playerGear.CreatedBy;
                 if (createdBy == null)
@@ -6597,13 +6598,20 @@ namespace MHFZ_Overlay.addresses
                 var ammo = GetItemsForRunID(new int[] { (int)ammoPouch.Item1ID, (int)ammoPouch.Item2ID, (int)ammoPouch.Item3ID, (int)ammoPouch.Item4ID, (int)ammoPouch.Item5ID, (int)ammoPouch.Item6ID, (int)ammoPouch.Item7ID, (int)ammoPouch.Item8ID, (int)ammoPouch.Item9ID, (int)ammoPouch.Item10ID });
                 var poogieItem = GetItemName((int)playerGear.PoogieItemID);
                 var roadDureSkillsList = GetRoadDureSkillsForRunID(new int[] { (int)roadDureSkills.RoadDureSkill1ID, (int)roadDureSkills.RoadDureSkill2ID, (int)roadDureSkills.RoadDureSkill3ID, (int)roadDureSkills.RoadDureSkill4ID, (int)roadDureSkills.RoadDureSkill5ID, (int)roadDureSkills.RoadDureSkill6ID, (int)roadDureSkills.RoadDureSkill7ID, (int)roadDureSkills.RoadDureSkill8ID, (int)roadDureSkills.RoadDureSkill9ID, (int)roadDureSkills.RoadDureSkill10ID, (int)roadDureSkills.RoadDureSkill11ID, (int)roadDureSkills.RoadDureSkill12ID, (int)roadDureSkills.RoadDureSkill13ID, (int)roadDureSkills.RoadDureSkill14ID, (int)roadDureSkills.RoadDureSkill15ID, (int)roadDureSkills.RoadDureSkill16ID});
+                var questName = Dictionary.Quests.QuestIDs[(int)quest.QuestID];
+                var questObjectiveType = Dictionary.ObjectiveTypeList.ObjectiveTypeID[(int)quest.ObjectiveTypeID];
+                var questObjectiveQuantity = quest.ObjectiveQuantity;
+                var questObjectiveName = quest.ObjectiveName;
+                var questCategory = quest.ActualOverlayMode;
+                var partySize = quest.PartySize;
+                
                 //TODO: fix
                 //var partnyaBagItems = GetItemsForRunID(new int[] { (int)partnyaBag.Item1ID, (int)partnyaBag.Item2ID, (int)partnyaBag.Item3ID, (int)partnyaBag.Item4ID, (int)partnyaBag.Item5ID, (int)partnyaBag.Item6ID, (int)partnyaBag.Item7ID, (int)partnyaBag.Item8ID, (int)partnyaBag.Item9ID, (int)partnyaBag.Item10ID });
 
                 return string.Format(
 @"{0} {1}({2}){3}
 
-{4}
+Set Name: {4}
 {5}: {6}
 Head: {7}
 Chest: {8}
@@ -6645,7 +6653,12 @@ Poogie Item:
 {25}
 
 Road/Duremudira Skills:
-{26}",
+{26}
+
+Quest: {27}
+{28} {29} {30}
+Category: {31}
+Party Size: {32}",
                 createdBy,
                 weaponClass,
                 gender,
@@ -6672,8 +6685,14 @@ Road/Duremudira Skills:
                 inventory,
                 ammo,
                 poogieItem,
-                roadDureSkillsList
+                roadDureSkillsList,
                 //partnyaBagItems
+                questName,
+                questObjectiveType,
+                questObjectiveQuantity,
+                questObjectiveName,
+                questCategory,
+                partySize
                 );
             }
         }

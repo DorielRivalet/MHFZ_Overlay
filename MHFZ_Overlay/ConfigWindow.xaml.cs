@@ -2280,6 +2280,11 @@ namespace MHFZ_Overlay
             return;
         }
 
+        private void GraphsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
         //Quest quest = DatabaseManager.GetInstance().GetQuest(runID);   
     }
     /* LoadConfig on startup

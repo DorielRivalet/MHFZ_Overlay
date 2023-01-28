@@ -446,7 +446,8 @@ namespace MHFZ_Overlay
                                 actualOverlayMode = "Standard";
                             else
                             {
-                                if (overlayModeDictionary.Count == 2)
+                                //TODO: test
+                                if (overlayModeDictionary.Count == 2 && overlayModeDictionary.First().Value == "")
                                     actualOverlayMode = overlayModeDictionary.Last().Value;
                                 else
                                     actualOverlayMode = overlayModeDictionary.First().Value;
@@ -4478,7 +4479,7 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
-                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT QuestHash, CreatedAt, CreatedBy, RunID, QuestID, TimeLeft, FinalTimeValue, FinalTimeDisplay, ObjectiveImage, ObjectiveTypeID, ObjectiveQuantity, StarGrade, RankName, ObjectiveName, Date, YouTubeID, AttackBuffDictionary, HitCountDictionary, HitsPerSecondDictionary, DamageDealtDictionary, DamagePerSecondDictionary, AreaChangesDictionary, CartsDictionary, Monster1HPDictionary, Monster2HPDictionary, Monster3HPDictionary, Monster4HPDictionary, HitsTakenBlockedDictionary, HitsTakenBlockedPerSecondDictionary, PlayerHPDictionary, PlayerStaminaDictionary, KeyStrokesDictionary, MouseInputDictionary, GamepadInputDictionary, ActionsPerMinuteDictionary, OverlayModeDictionary, ActualOverlayMode, PartySize FROM Quest WHERE RunID = @runID", conn))
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT QuestHash, CreatedAt, CreatedBy, RunID, QuestID, TimeLeft, FinalTimeValue, FinalTimeDisplay, ObjectiveImage, ObjectiveTypeID, ObjectiveQuantity, StarGrade, RankName, ObjectiveName, Date, YouTubeID, AttackBuffDictionary, HitCountDictionary, HitsPerSecondDictionary, DamageDealtDictionary, DamagePerSecondDictionary, AreaChangesDictionary, CartsDictionary, Monster1HPDictionary, Monster2HPDictionary, Monster3HPDictionary, Monster4HPDictionary, HitsTakenBlockedDictionary, HitsTakenBlockedPerSecondDictionary, PlayerHPDictionary, PlayerStaminaDictionary, KeyStrokesDictionary, MouseInputDictionary, GamepadInputDictionary, ActionsPerMinuteDictionary, OverlayModeDictionary, ActualOverlayMode, PartySize FROM Quests WHERE RunID = @runID", conn))
                         {
                             cmd.Parameters.AddWithValue("@runID", runID);
 
