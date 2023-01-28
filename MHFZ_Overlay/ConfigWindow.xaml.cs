@@ -2249,6 +2249,35 @@ namespace MHFZ_Overlay
             var textBlock = sender as TextBlock;
             long runID = long.Parse(RunIDTextBox.Text.Trim());
             textBlock.Text = MainWindow.DataLoader.model.GenerateGearStats(runID);
+            questLogGearStatsTextBlock = textBlock;
+        }
+
+        private void QuestLogGearBtnSaveFile_Click(object sender, RoutedEventArgs e)
+        {
+            string textToSave = questLogGearStatsTextBlock.Text;
+            textToSave = string.Format("```text\n{0}\n```", textToSave);
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
+            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
+            string dateTime = DateTime.Now.ToString();
+            dateTime = dateTime.Replace("/", "-");
+            dateTime = dateTime.Replace(" ", "_");
+            dateTime = dateTime.Replace(":", "-");
+            saveFileDialog.FileName = "Run-"+RunIDTextBox.Text.Trim()+"-Set-" + dateTime;
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(saveFileDialog.FileName, textToSave);
+            }
+        }
+
+        private void QuestLogGearBtnCopyFile_Click(object sender, RoutedEventArgs e)
+        {
+            string textToSave = questLogGearStatsTextBlock.Text;
+            questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+            CopyUIElementToClipboard(questLogGearStatsTextBlock);
+            questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+            return;
         }
 
         //Quest quest = DatabaseManager.GetInstance().GetQuest(runID);   
