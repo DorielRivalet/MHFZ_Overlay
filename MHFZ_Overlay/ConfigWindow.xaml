@@ -1023,6 +1023,8 @@
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
                                         </Grid.RowDefinitions>
                                         <Button ToolTip="Select the game folder (which is in the same directory of where your game exe resides). This is needed because the overlay will read the *unique signatures* of the files within the folder and thus show which files you have used in a quest run" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="(Mandatory) Select Game Folder" Click="GameFolderButton_Click"/>
                                         <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=GameFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"  Text="Hover to view selected game folder path"/>
@@ -1050,7 +1052,15 @@
                                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestIDX}"  PreviewTextInput="ValidateNumber"/>
                                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Quest ID Y Coordinate"/>
                                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestIDY}"  PreviewTextInput="ValidateNumber"/>
-                                        <Grid Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2">
+
+                                        <TextBlock Margin="5,5,5,5" ToolTip="Show the personal best of the selected quest with the selected weapon type and overlay mode" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Personal Best" />
+                                        <ToggleButton Grid.Row="9" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestShown}"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Personal Best X Coordinate"/>
+                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestX}"  PreviewTextInput="ValidateNumber"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Personal Best Y Coordinate"/>
+                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestY}"  PreviewTextInput="ValidateNumber"/>
+
+                                        <Grid Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2">
                                             <StackPanel Orientation="Horizontal">
                                                 <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/save_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="32" Height="32"/>
                                                 <TextBlock Text="If you see this save icon in the top left corner, do not close the game or the overlay. The database is saving your quest information while it is being shown." Margin="4,0,0,0" VerticalAlignment="Center" />
