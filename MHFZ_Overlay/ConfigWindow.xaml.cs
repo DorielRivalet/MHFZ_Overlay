@@ -48,6 +48,7 @@ using Dictionary;
 using Button = System.Windows.Controls.Button;
 using TextBox = System.Windows.Controls.TextBox;
 using ListView = System.Windows.Controls.ListView;
+using MHFZ_Overlay.UI.Class;
 
 namespace MHFZ_Overlay
 {
@@ -2164,12 +2165,13 @@ namespace MHFZ_Overlay
         private TextBox youtubeLinkTextBox;
         private ListView mostRecentRunsListView;
         private ListView top20RunsListView;
+        private TextBlock questLogGearStatsTextBlock;
 
         private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
         {
             // Get the quest ID and new YouTube link from the textboxes
-            long runID = long.Parse(RunIDTextBox.Text);
-            string youtubeLink = youtubeLinkTextBox.Text;
+            long runID = long.Parse(RunIDTextBox.Text.Trim());
+            string youtubeLink = youtubeLinkTextBox.Text.Trim();
             if (DatabaseManager.GetInstance().UpdateYoutubeLink(sender, e, runID, youtubeLink))
                 MessageBox.Show(String.Format("Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink), "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             else
@@ -2183,7 +2185,7 @@ namespace MHFZ_Overlay
 
         private void YoutubeIconButton_Click(object sender, RoutedEventArgs e)
         {
-            long runID = long.Parse(RunIDTextBox.Text);
+            long runID = long.Parse(RunIDTextBox.Text.Trim());
             string youtubeLink = DatabaseManager.GetInstance().GetYoutubeLinkForRunID(runID);
             if (youtubeLink != "")
             {
@@ -2241,6 +2243,15 @@ namespace MHFZ_Overlay
             top20RunsListView.DataContext = MainWindow.DataLoader.model.FastestRuns;
             top20RunsListView.Items.Refresh();
         }
+
+        private void QuestLogGearStats_Loaded(object sender, RoutedEventArgs e)
+        {
+            var textBlock = sender as TextBlock;
+            long runID = long.Parse(RunIDTextBox.Text.Trim());
+            textBlock.Text = MainWindow.DataLoader.model.GenerateGearStats(runID);
+        }
+
+        //Quest quest = DatabaseManager.GetInstance().GetQuest(runID);   
     }
     /* LoadConfig on startup
      * Load Config on window open to have extra copy

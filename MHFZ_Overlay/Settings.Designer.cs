@@ -493,7 +493,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("440")]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
         public double TimerY {
             get {
                 return ((double)(this["TimerY"]));
@@ -961,7 +961,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        [global::System.Configuration.DefaultSettingValueAttribute("260")]
         public double Monster1IconY {
             get {
                 return ((double)(this["Monster1IconY"]));
@@ -2293,7 +2293,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        [global::System.Configuration.DefaultSettingValueAttribute("360")]
         public double OverlayModeWatermarkY {
             get {
                 return ((double)(this["OverlayModeWatermarkY"]));
@@ -2497,7 +2497,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("280")]
+        [global::System.Configuration.DefaultSettingValueAttribute("240")]
         public double PlayerDPSGraphY {
             get {
                 return ((double)(this["PlayerDPSGraphY"]));
@@ -2672,6 +2672,42 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["PlayerAPMGraphBackground"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PersonalBestShown {
+            get {
+                return ((bool)(this["PersonalBestShown"]));
+            }
+            set {
+                this["PersonalBestShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
+        public double PersonalBestX {
+            get {
+                return ((double)(this["PersonalBestX"]));
+            }
+            set {
+                this["PersonalBestX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("440")]
+        public double PersonalBestY {
+            get {
+                return ((double)(this["PersonalBestY"]));
+            }
+            set {
+                this["PersonalBestY"] = value;
             }
         }
     }

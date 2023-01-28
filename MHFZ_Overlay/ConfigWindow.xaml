@@ -67,7 +67,7 @@
                                 </StackPanel>
                             
                                 <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
-                                    <TextBlock ToolTip="Gear Info" Text="{Binding GetGearStats,Mode=OneTime}" Name="QuestLogGearStats" TextWrapping="Wrap"/>
+                                    <TextBlock ToolTip="Gear Info" Name="QuestLogGearStats" TextWrapping="Wrap" Loaded="QuestLogGearStats_Loaded"/>
                                 </ScrollViewer>
                             </StackPanel>
                         </DockPanel>

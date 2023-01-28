@@ -46,7 +46,21 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <local:OutlinedTextBlock Opacity=".5" HorizontalAlignment="Left" Text="{Binding OverlayModeWatermarkText}" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+            <local:OutlinedTextBlock x:Name="OverlayModeWatermarkTextBlock" Opacity=".5" HorizontalAlignment="Left" Text="{Binding OverlayModeWatermarkText}" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+        </Grid>
+        <Grid x:Name="PersonalBestInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PersonalBestX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PersonalBestY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPersonalBestInfo, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="2*" />
+                <ColumnDefinition  Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Image Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding PersonalBestIcon}"/>
+
+            <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="PB" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="personalBestTextBlock" Text="--:--.--" Margin="4,0,0,0"/>
         </Grid>
         <Grid x:Name="TimerInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=TimerX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=TimerY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowTimerInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >

@@ -48,6 +48,7 @@ using System.Linq;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
+using static XInput.Wrapper.X.Gamepad.Battery;
 
 namespace MHFZ_Overlay
 {
@@ -1014,6 +1015,8 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowAPM = v && s.ActionsPerMinuteShown;
             DataLoader.model.ShowOverlayModeWatermark = v && s.OverlayModeWatermarkShown;
             DataLoader.model.ShowQuestID = v && s.QuestIDShown;
+
+            DataLoader.model.ShowPersonalBestInfo = v && s.PersonalBestShown;
         }
 
         #endregion
@@ -2285,10 +2288,13 @@ namespace MHFZ_Overlay
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             switch (MovingObject.Name)
             {
-
                 case "TimerInfo":
                     s.TimerX = (double)(pos.X - XOffset);
                     s.TimerY = (double)(pos.Y - YOffset);
+                    break;
+                case "PersonalBestInfo":
+                    s.PersonalBestX = (double)(pos.X - XOffset);
+                    s.PersonalBestY = (double)(pos.Y - YOffset);
                     break;
                 case "HitCountInfo":
                     s.HitCountX = (double)(pos.X - XOffset);
@@ -2578,6 +2584,8 @@ namespace MHFZ_Overlay
 
         #region database
 
+        private bool calculatedPersonalBest = false;
+
         //TODO
         private void CheckQuestStateForDatabaseLogging()
         {
@@ -2592,6 +2600,13 @@ namespace MHFZ_Overlay
                 DataLoader.model.DPS = DataLoader.model.CalculateDPS();
                 DataLoader.model.APM = DataLoader.model.CalculateAPM();
                 DataLoader.model.InsertQuestInfoIntoDictionaries();
+
+                //TODO: test on dure/etc
+                if (!calculatedPersonalBest && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0)
+                {
+                    calculatedPersonalBest = true;
+                    personalBestTextBlock.Text = databaseManager.GetPersonalBest(DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text, DataLoader.model.QuestTimeMode, DataLoader);
+                }
             }
 
             if ((DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() == 0))
@@ -2600,6 +2615,8 @@ namespace MHFZ_Overlay
                 DataLoader.model.clearQuestInfoDictionaries();
                 DataLoader.model.clearGraphCollections();
                 DataLoader.model.resetQuestInfoVariables();
+                personalBestTextBlock.Text = "--:--.--";
+                calculatedPersonalBest = false;
                 return;
             }
             else if (!DataLoader.model.loadedItemsAtQuestStart && DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() != 0)
@@ -2687,6 +2704,7 @@ namespace MHFZ_Overlay
                 DataLoader.model.PartnyaBagItem8QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
                 DataLoader.model.PartnyaBagItem9QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
                 DataLoader.model.PartnyaBagItem10QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
+
             }
 
             if (DataLoader.model.QuestState() == 0)

@@ -151,6 +151,7 @@
     <None Remove="UI\Icons\png\point_right.png" />
     <None Remove="UI\Icons\png\point_up.png" />
     <None Remove="UI\Icons\png\quest_1.png" />
+    <None Remove="UI\Icons\png\quest_clock.png" />
     <None Remove="UI\Icons\png\right_click.png" />
     <None Remove="UI\Icons\png\sand_clock2_red.png" />
     <None Remove="UI\Icons\png\small_bow.png" />
@@ -535,6 +536,7 @@
     <Resource Include="UI\Icons\png\point_right.png" />
     <Resource Include="UI\Icons\png\point_up.png" />
     <Resource Include="UI\Icons\png\quest_1.png" />
+    <Resource Include="UI\Icons\png\quest_clock.png" />
     <Resource Include="UI\Icons\png\quest_host.png" />
     <Resource Include="UI\Icons\png\red_soul.png" />
     <Resource Include="UI\Icons\png\right_click.png" />

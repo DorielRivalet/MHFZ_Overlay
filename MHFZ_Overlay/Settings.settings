@@ -120,7 +120,7 @@
       <Value Profile="(Default)">-80</Value>
     </Setting>
     <Setting Name="TimerY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">440</Value>
+      <Value Profile="(Default)">400</Value>
     </Setting>
     <Setting Name="HitCountShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -237,7 +237,7 @@
       <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="Monster1IconY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">300</Value>
+      <Value Profile="(Default)">260</Value>
     </Setting>
     <Setting Name="DiscordTimerMode" Type="System.String" Scope="User">
       <Value Profile="(Default)">Time Left</Value>
@@ -570,7 +570,7 @@
       <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="OverlayModeWatermarkY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">400</Value>
+      <Value Profile="(Default)">360</Value>
     </Setting>
     <Setting Name="QuestIDShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -621,7 +621,7 @@
       <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="PlayerDPSGraphY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">280</Value>
+      <Value Profile="(Default)">240</Value>
     </Setting>
     <Setting Name="PlayerHitsPerSecondGraphShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -664,6 +664,15 @@
     </Setting>
     <Setting Name="PlayerAPMGraphBackground" Type="System.String" Scope="User">
       <Value Profile="(Default)">#001e1e2e</Value>
+    </Setting>
+    <Setting Name="PersonalBestShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PersonalBestX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">-80</Value>
+    </Setting>
+    <Setting Name="PersonalBestY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">440</Value>
     </Setting>
   </Settings>
 </SettingsFile>

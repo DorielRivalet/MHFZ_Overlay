@@ -37,6 +37,7 @@ using MHFZ_Overlay.UI.Class.Mapper;
 using MHFZ_Overlay.UI.Class;
 using RESTCountries.NET.Models;
 using System.Windows.Media;
+using System.Reactive;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -4270,6 +4271,72 @@ namespace MHFZ_Overlay
             return success;
         }
 
+        public string GetPersonalBest(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader)
+        {
+            string personalBest = "--:--.--";
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand(
+                            @"SELECT 
+                                TimeLeft, 
+                                FinalTimeValue,
+                                FinalTimeDisplay,
+                                ActualOverlayMode,
+                                pg.WeaponTypeID
+                            FROM 
+                                Quests q
+                            JOIN
+                                PlayerGear pg ON q.RunID = pg.RunID
+                            WHERE 
+                                QuestID = @questID
+                                AND pg.WeaponTypeID = @weaponTypeID
+                                AND ActualOverlayMode = @category
+                                AND PartySize = 1
+                            ORDER BY 
+                                FinalTimeValue ASC
+                            LIMIT 1", conn))
+                            {
+                            cmd.Parameters.AddWithValue("@questID", questID);
+                            cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                            cmd.Parameters.AddWithValue("@category", category);
+
+                            var reader = cmd.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                long time = 0;
+                                if (timerMode == "Elapsed")
+                                {
+                                    time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                                }
+                                else
+                                {
+                                    time = reader.GetInt64(reader.GetOrdinal("TimeLeft"));
+                                }
+                                personalBest = dataLoader.model.GetMinutesSecondsMillisecondsFromFrames(time);
+                            }
+                            else
+                            {
+                                personalBest = "--:--.--";
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+
+            return personalBest;
+        }
+
         public AmmoPouch GetAmmoPouch(long runID)
         {
             AmmoPouch ammoPouch = new AmmoPouch();
@@ -4730,10 +4797,9 @@ namespace MHFZ_Overlay
             return activeSkills;
         }
 
-        public PlayerGear GetGearUsed(ConfigWindow configWindow)
+        public PlayerGear GetPlayerGear(long runID)
         {
             PlayerGear gearUsed = new PlayerGear();
-            long runID = long.Parse(configWindow.RunIDTextBox.Text.Trim());
 
             // Use a SQL query to retrieve the gear used for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
