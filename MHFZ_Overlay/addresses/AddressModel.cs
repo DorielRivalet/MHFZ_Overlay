@@ -28,6 +28,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using LiveChartsCore.Measure;
 using MHFZ_Overlay.UI.Class;
+using System.Net;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -3091,12 +3092,22 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// Gets the weapon class
         /// </summary>
-        public string GetWeaponClass()
+        public string GetWeaponClass(int? weaponClass = null)
         {
-            if (CurrentWeaponName == "Light Bowgun" || CurrentWeaponName == "Heavy Bowgun" || CurrentWeaponName == "Bow")
-                return "Gunner";
+            if (weaponClass == null)
+            {
+                if (CurrentWeaponName == "Light Bowgun" || CurrentWeaponName == "Heavy Bowgun" || CurrentWeaponName == "Bow")
+                    return "Gunner";
+                else
+                    return "Blademaster";
+            }
             else
-                return "Blademaster";
+            {
+                if (weaponClass == 1 || weaponClass == 5 || weaponClass == 10)
+                    return "Gunner";
+                else
+                    return "Blademaster";
+            }
         }
 
         /// <summary>
@@ -3173,6 +3184,37 @@ namespace MHFZ_Overlay.addresses
                 }
             }
         }
+
+        public string GetRealWeaponNameForRunID(string className, string weaponName, long styleID, long weaponID, string weaponSlot1, string weaponSlot2, string weaponSlot3)
+        {
+            var style = styleID switch
+            {
+                0 => "Earth Style",
+                1 => "Heaven Style",
+                2 => "Storm Style",
+                3 => "Extreme Style",
+                _ => "Earth Style"
+            };
+
+            if (className == "Blademaster")
+            {
+                Dictionary.BlademasterWeapons.BlademasterWeaponIDs.TryGetValue((int)weaponID, out string? wepname);
+                string address = weaponID.ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
+
+                return string.Format("{0} ({1}) | {2}\n{3} | {4} | {5}", wepname, address, style, weaponSlot1, weaponSlot2, weaponSlot3);
+            }
+            else if (className == "Gunner")
+            {
+                Dictionary.GunnerWeapons.GunnerWeaponIDs.TryGetValue((int)weaponID, out string? wepname);
+                string address = weaponID.ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
+                return string.Format("{0} ({1}) | {2}\n{3} | {4} | {5}", wepname, address, style, weaponSlot1, weaponSlot2, weaponSlot3);
+            }
+            else
+            {
+                return "None";
+            }
+        }
+
 
         public string GetAmmoPouch
         {
@@ -3528,6 +3570,53 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string GetItemsForRunID(int[] items)
+        {
+            string name = "";
+            for (int i = 0; i < items.Length; i++)
+            {
+                int id = items[i];
+                if (Dictionary.Items.ItemIDs.TryGetValue(id, out string value))
+                {
+                    if (value != "None" && value != "")
+                    {
+                        name += value;
+                        if (i != items.Length - 1)
+                            name += ", ";
+                        if (i % 5 == 4)
+                            name += "\n";
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(name))
+                return "None";
+            return name;
+        }
+
+        //TODO: Levels
+        public string GetRoadDureSkillsForRunID(int[] skills)
+        {
+            string name = "";
+            for (int i = 0; i < skills.Length; i++)
+            {
+                int id = skills[i];
+                if (Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(id, out string value))
+                {
+                    if (value != "None" && value != "")
+                    {
+                        name += value;
+                        if (i != skills.Length - 1)
+                            name += ", ";
+                        if (i % 5 == 4)
+                            name += "\n";
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(name))
+                return "None";
+            return name;
+        }
+
 
         /// <summary>
         /// Gets the name of the head piece.
@@ -3547,6 +3636,14 @@ namespace MHFZ_Overlay.addresses
                 string address = ArmorHeadID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorHeadDeco1ID()), GetDecoName(ArmorHeadDeco2ID()), GetDecoName(ArmorHeadDeco3ID()));
             }
+        }
+
+        public string GetArmorHeadNameForRunID(int armorHeadID, int headSlot1ID, int headslot2ID, int headSlot3ID)
+        {
+            Dictionary.ArmorHeads.ArmorHeadIDs.TryGetValue(armorHeadID, out string? piecename);
+
+            string address = armorHeadID.ToString("X4").ToUpper();
+            return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(headSlot1ID), GetDecoName(headslot2ID), GetDecoName(headSlot3ID));
         }
 
         /// <summary>
@@ -3569,6 +3666,14 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string GetArmorChestNameForRunID(int armorID, int slot1ID, int slot2ID, int slot3ID)
+        {
+                Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(armorID, out string? piecename);
+
+                string address = armorID.ToString("X4").ToUpper();
+                return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(slot1ID), GetDecoName(slot2ID), GetDecoName(slot3ID));
+        }
+
         /// <summary>
         /// Gets the name of the arms piece.
         /// </summary>
@@ -3587,6 +3692,14 @@ namespace MHFZ_Overlay.addresses
                 string address = ArmorArmsID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorArmsDeco1ID()), GetDecoName(ArmorArmsDeco2ID()), GetDecoName(ArmorArmsDeco3ID()));
             }
+        }
+
+        public string GetArmorArmNameForRunID(int armorID, int slot1ID, int slot2ID, int slot3ID)
+        {
+            Dictionary.ArmorArms.ArmorArmIDs.TryGetValue(armorID, out string? piecename);
+
+            string address = armorID.ToString("X4").ToUpper();
+            return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(slot1ID), GetDecoName(slot2ID), GetDecoName(slot3ID));
         }
 
         /// <summary>
@@ -3609,6 +3722,14 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string GetArmorWaistNameForRunID(int armorID, int slot1ID, int slot2ID, int slot3ID)
+        {
+            Dictionary.ArmorWaists.ArmorWaistIDs.TryGetValue(armorID, out string? piecename);
+
+            string address = armorID.ToString("X4").ToUpper();
+            return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(slot1ID), GetDecoName(slot2ID), GetDecoName(slot3ID));
+        }
+
         /// <summary>
         /// Gets the name of the head piece.
         /// </summary>
@@ -3627,6 +3748,14 @@ namespace MHFZ_Overlay.addresses
                 string address = ArmorLegsID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorLegsDeco1ID()), GetDecoName(ArmorLegsDeco2ID()), GetDecoName(ArmorLegsDeco3ID()));
             }
+        }
+
+        public string GetArmorLegNameForRunID(int armorID, int slot1ID, int slot2ID, int slot3ID)
+        {
+            Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(armorID, out string? piecename);
+
+            string address = armorID.ToString("X4").ToUpper();
+            return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(slot1ID), GetDecoName(slot2ID), GetDecoName(slot3ID));
         }
 
         /// <summary>
@@ -3871,6 +4000,13 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string GetCuffName(int cuffID)
+        {
+            Dictionary.Items.ItemIDs.TryGetValue(cuffID, out string? cuffname);
+            string address = cuffID.ToString("X4").ToUpper();
+            return string.Format("{0} ({1})", cuffname, address);
+        }
+
         /// <summary>
         /// Gets the name of the second cuff.
         /// </summary>
@@ -3902,6 +4038,14 @@ namespace MHFZ_Overlay.addresses
 
                 return string.Format("{0} | {1}", cuff1, cuff2);
             }
+        }
+
+        public string GetCuffsForRunID(long cuff1ID, long cuff2ID)
+        {
+            string cuff1 = GetCuffName((int)cuff1ID);
+            string cuff2 = GetCuffName((int)cuff2ID);
+
+            return string.Format("{0} | {1}", cuff1, cuff2);
         }
 
         /// <summary>
@@ -3995,6 +4139,30 @@ namespace MHFZ_Overlay.addresses
                 else
                     return caravanSkillName1 + ", " + caravanSkillName2 + ", " + caravanSkillName3;
             }
+        }
+
+        public string GetCaravanSkillsForRunID(int skill1, int skill2, int skill3)
+        {
+            string SkillName = "";
+            int[] skills = new int[] { skill1, skill2, skill3 };
+            for (int i = 0; i < skills.Length; i++)
+            {
+                int skillId = skills[i];
+                if (Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(skillId, out string skillName))
+                {
+                    if (skillName != "None" && skillName != "")
+                    {
+                        SkillName += skillName;
+                        if (i != skills.Length - 1)
+                            SkillName += ", ";
+                        if (i % 5 == 4)
+                            SkillName += "\n";
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(SkillName))
+                return "None";
+            return SkillName;
         }
 
         /// <summary>
@@ -4417,6 +4585,32 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string GetZenithSkillsForRunID(int skill1, int skill2, int skill3, int skill4, int skill5, int skill6, int skill7)
+        {
+            string SkillName = "";
+            int[] skills = new int[] { skill1, skill2, skill3, skill4, skill5, skill6, skill7 };
+            for (int i = 0; i < skills.Length; i++)
+            {
+                int skillId = skills[i];
+                if (Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(skillId, out string skillName))
+                {
+                    if (skillName != "None" && skillName != "")
+                    {
+                        SkillName += skillName;
+                        if (i != skills.Length - 1)
+                            SkillName += ", ";
+                        if (i % 5 == 4)
+                            SkillName += "\n";
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(SkillName))
+                return "None";
+            return SkillName;
+        }
+
+
+
         /// <summary>
         /// Gets the gou boost mode.
         /// </summary>
@@ -4723,6 +4917,31 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string GetArmorSkillsForRunID(int skill1, int skill2, int skill3, int skill4, int skill5, int skill6, int skill7, int skill8, int skill9, int skill10, int skill11, int skill12, int skill13, int skill14, int skill15, int skill16, int skill17, int skill18, int skill19)
+        {
+            string SkillName = "";
+            int[] skills = new int[] { skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8, skill9, skill10, skill11, skill12, skill13, skill14, skill15, skill16, skill17, skill18, skill19 };
+            for (int i = 0; i < skills.Length; i++)
+            {
+                int skillId = skills[i];
+                if (Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(skillId, out string skillName))
+                {
+                    if (skillName != "None" && skillName != "")
+                    {
+                        SkillName += skillName;
+                        if (i != skills.Length - 1)
+                            SkillName += ", ";
+                        if (i % 5 == 4)
+                            SkillName += "\n";
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(SkillName))
+                return "None";
+            return SkillName;
+        }
+
+
         /// <summary>
         /// Gets the diva skill name from identifier.
         /// </summary>
@@ -4939,6 +5158,30 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string GetAutomaticSkillsForRunID(int skill1, int skill2, int skill3, int skill4, int skill5, int skill6)
+        {
+            string SkillName = "";
+            int[] skills = new int[] { skill1, skill2, skill3, skill4, skill5, skill6 };
+            for (int i = 0; i < skills.Length; i++)
+            {
+                int skillId = skills[i];
+                if (Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(skillId, out string skillName))
+                {
+                    if (skillName != "None" && skillName != "")
+                    {
+                        SkillName += skillName;
+                        if (i != skills.Length - 1)
+                            SkillName += ", ";
+                        if (i % 5 == 4)
+                            SkillName += "\n";
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(SkillName))
+                return "None";
+            return SkillName;
+        }
+
         /// <summary>
         /// Gets the total GSR weapon unlocks.
         /// </summary>
@@ -5057,6 +5300,30 @@ namespace MHFZ_Overlay.addresses
 
                 return string.Format("{0}{1}", SkillName1, SkillName2);
             }
+        }
+
+        public string GetGSRSkillsForRunID(int skill1, int skill2)
+        {
+            string SkillName = "";
+            int[] skills = new int[] { skill1, skill2 };
+            for (int i = 0; i < skills.Length; i++)
+            {
+                int skillId = skills[i];
+                if (Dictionary.StyleRankSkillList.StyleRankSkillID.TryGetValue(skillId, out string skillName))
+                {
+                    if (skillName != "None" && skillName != "")
+                    {
+                        SkillName += skillName;
+                        if (i != skills.Length - 1)
+                            SkillName += ", ";
+                        if (i % 5 == 4)
+                            SkillName += "\n";
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(SkillName))
+                return "None";
+            return SkillName;
         }
 
         /// <summary>
@@ -6274,17 +6541,19 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         public string GenerateGearStats(long? runID = null)
         {
-            //save gear to variable
-            string showGouBoost = "";
-
-            if (GetGouBoostMode())
-                showGouBoost = " (After Gou/Muscle Boost)";
-            //zp in bold for markdown
-            //fruits and speedrunner items also in bold
-            SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
-            MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n\n**Road/Duremudira Skills:**\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
             if (runID == null)
+            {
+                //save gear to variable
+                string showGouBoost = "";
+
+                if (GetGouBoostMode())
+                    showGouBoost = " (After Gou/Muscle Boost)";
+                //zp in bold for markdown
+                //fruits and speedrunner items also in bold
+                SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
+                MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n\n**Road/Duremudira Skills:**\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
                 return string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
+            }
             else
             {
                 ActiveSkills activeSkills = DatabaseManager.GetInstance().GetActiveSkills((long)runID);
@@ -6297,8 +6566,115 @@ namespace MHFZ_Overlay.addresses
                 UI.Class.RoadDureSkills roadDureSkills = DatabaseManager.GetInstance().GetRoadDureSkills((long)runID);
                 StyleRankSkills styleRankSkills = DatabaseManager.GetInstance().GetStyleRankSkills((long)runID);
                 ZenithSkills zenithSkills = DatabaseManager.GetInstance().GetZenithSkills((long)runID);
-                return string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
 
+                var createdBy = playerGear.CreatedBy;
+                if (createdBy == null)
+                    return "Run Not Found.\n\nReload the section.";
+                var weaponClass = GetWeaponClass((int?)playerGear.WeaponClassID);
+                var gender = GetGender();
+                var metadata = GetMetadata;
+                var gearName = playerGear.GearName;
+                var weaponName = GetWeaponNameFromType((int)playerGear.WeaponTypeID);
+                long weaponID = (long)(playerGear.BlademasterWeaponID == null ? playerGear.GunnerWeaponID : playerGear.BlademasterWeaponID);
+                var realweaponName = GetRealWeaponNameForRunID(GetWeaponClass((int?)playerGear.WeaponClassID), GetWeaponNameFromType((int)playerGear.WeaponTypeID), playerGear.StyleID, weaponID, playerGear.WeaponSlot1, playerGear.WeaponSlot2, playerGear.WeaponSlot3);
+                var head = GetArmorHeadNameForRunID((int)playerGear.HeadID, (int)playerGear.HeadSlot1ID, (int)playerGear.HeadSlot2ID, (int)playerGear.HeadSlot3ID);
+                var chest = GetArmorChestNameForRunID((int)playerGear.ChestID, (int)playerGear.ChestSlot1ID, (int)playerGear.ChestSlot2ID, (int)playerGear.ChestSlot3ID);
+                var arms = GetArmorArmNameForRunID((int)playerGear.ArmsID, (int)playerGear.ArmsSlot1ID, (int)playerGear.ArmsSlot2ID, (int)playerGear.ArmsSlot3ID);
+                var waist = GetArmorWaistNameForRunID((int)playerGear.WaistID, (int)playerGear.WaistSlot1ID, (int)playerGear.WaistSlot2ID, (int)playerGear.WaistSlot3ID);
+                var legs = GetArmorLegNameForRunID((int)playerGear.LegsID, (int)playerGear.LegsSlot1ID, (int)playerGear.LegsSlot2ID, (int)playerGear.LegsSlot3ID);
+                var cuffs = GetCuffsForRunID(playerGear.Cuff1ID, playerGear.Cuff2ID);
+                var date = playerGear.CreatedAt;
+                var hash =  playerGear.PlayerGearHash;
+                var zenithSkillsList = GetZenithSkillsForRunID((int)zenithSkills.ZenithSkill1ID, (int)zenithSkills.ZenithSkill2ID, (int)zenithSkills.ZenithSkill3ID, (int)zenithSkills.ZenithSkill4ID, (int)zenithSkills.ZenithSkill5ID, (int)zenithSkills.ZenithSkill6ID, (int)zenithSkills.ZenithSkill7ID);
+                var automaticSkillsList = GetAutomaticSkillsForRunID((int)automaticSkills.AutomaticSkill1ID, (int)automaticSkills.AutomaticSkill2ID, (int)automaticSkills.AutomaticSkill3ID, (int)automaticSkills.AutomaticSkill4ID, (int)automaticSkills.AutomaticSkill5ID, (int)automaticSkills.AutomaticSkill6ID);
+                var gouBoost = "";
+                var armorSkills = GetArmorSkillsForRunID((int)activeSkills.ActiveSkill1ID, (int)activeSkills.ActiveSkill2ID, (int)activeSkills.ActiveSkill3ID, (int)activeSkills.ActiveSkill4ID, (int)activeSkills.ActiveSkill5ID, (int)activeSkills.ActiveSkill6ID, (int)activeSkills.ActiveSkill7ID, (int)activeSkills.ActiveSkill8ID, (int)activeSkills.ActiveSkill9ID, (int)activeSkills.ActiveSkill10ID, (int)activeSkills.ActiveSkill11ID, (int)activeSkills.ActiveSkill12ID, (int)activeSkills.ActiveSkill13ID, (int)activeSkills.ActiveSkill14ID, (int)activeSkills.ActiveSkill15ID, (int)activeSkills.ActiveSkill16ID, (int)activeSkills.ActiveSkill17ID, (int)activeSkills.ActiveSkill18ID, (int)activeSkills.ActiveSkill19ID);
+                var caravanSkillsList = GetCaravanSkillsForRunID((int)caravanSkills.CaravanSkill1ID, (int)caravanSkills.CaravanSkill2ID, (int)caravanSkills.CaravanSkill3ID);
+                var divaSkill = GetDivaSkillNameFromID((int)playerGear.DivaSkillID);
+                var guildFood = GetArmorSkill((int)playerGear.GuildFoodID);
+                var styleRankSkillsList = GetGSRSkillsForRunID((int)styleRankSkills.StyleRankSkill1ID, (int)styleRankSkills.StyleRankSkill2ID);
+                var inventory = GetItemsForRunID(new int[] { (int)playerInventory.Item1ID, (int)playerInventory.Item2ID, (int)playerInventory.Item3ID, (int)playerInventory.Item4ID, (int)playerInventory.Item5ID, (int)playerInventory.Item6ID, (int)playerInventory.Item7ID, (int)playerInventory.Item8ID, (int)playerInventory.Item9ID, (int)playerInventory.Item10ID, (int)playerInventory.Item11ID, (int)playerInventory.Item12ID, (int)playerInventory.Item13ID, (int)playerInventory.Item14ID, (int)playerInventory.Item15ID, (int)playerInventory.Item16ID, (int)playerInventory.Item17ID, (int)playerInventory.Item18ID, (int)playerInventory.Item19ID, (int)playerInventory.Item20ID });
+                var ammo = GetItemsForRunID(new int[] { (int)ammoPouch.Item1ID, (int)ammoPouch.Item2ID, (int)ammoPouch.Item3ID, (int)ammoPouch.Item4ID, (int)ammoPouch.Item5ID, (int)ammoPouch.Item6ID, (int)ammoPouch.Item7ID, (int)ammoPouch.Item8ID, (int)ammoPouch.Item9ID, (int)ammoPouch.Item10ID });
+                var poogieItem = GetItemName((int)playerGear.PoogieItemID);
+                var roadDureSkillsList = GetRoadDureSkillsForRunID(new int[] { (int)roadDureSkills.RoadDureSkill1ID, (int)roadDureSkills.RoadDureSkill2ID, (int)roadDureSkills.RoadDureSkill3ID, (int)roadDureSkills.RoadDureSkill4ID, (int)roadDureSkills.RoadDureSkill5ID, (int)roadDureSkills.RoadDureSkill6ID, (int)roadDureSkills.RoadDureSkill7ID, (int)roadDureSkills.RoadDureSkill8ID, (int)roadDureSkills.RoadDureSkill9ID, (int)roadDureSkills.RoadDureSkill10ID, (int)roadDureSkills.RoadDureSkill11ID, (int)roadDureSkills.RoadDureSkill12ID, (int)roadDureSkills.RoadDureSkill13ID, (int)roadDureSkills.RoadDureSkill14ID, (int)roadDureSkills.RoadDureSkill15ID, (int)roadDureSkills.RoadDureSkill16ID});
+                //TODO: fix
+                //var partnyaBagItems = GetItemsForRunID(new int[] { (int)partnyaBag.Item1ID, (int)partnyaBag.Item2ID, (int)partnyaBag.Item3ID, (int)partnyaBag.Item4ID, (int)partnyaBag.Item5ID, (int)partnyaBag.Item6ID, (int)partnyaBag.Item7ID, (int)partnyaBag.Item8ID, (int)partnyaBag.Item9ID, (int)partnyaBag.Item10ID });
+
+                return string.Format(
+@"{0} {1}({2}){3}
+
+{4}
+{5}: {6}
+Head: {7}
+Chest: {8}
+Arms: {9}
+Waist: {10}
+Legs: {11}
+Cuffs: {12}
+
+Run Date: {13} | Run Hash: {14}
+
+Zenith Skills:
+{15}
+
+Automatic Skills:
+{16}
+
+Active Skills{17}:
+{18}
+
+Caravan Skills:
+{19}
+
+Diva Skill:
+{20}
+
+Guild Food:
+{21}
+
+Style Rank:
+{22}
+
+Items:
+{23}
+
+Ammo:
+{24}
+
+Poogie Item:
+{25}
+
+Road/Duremudira Skills:
+{26}",
+                createdBy,
+                weaponClass,
+                gender,
+                metadata,
+                gearName,
+                weaponName,
+                realweaponName,
+                head,
+                chest,
+                arms,
+                waist,
+                legs,
+                cuffs,
+                date,
+                hash,
+                zenithSkillsList,
+                automaticSkillsList,
+                gouBoost,
+                armorSkills,
+                caravanSkillsList,
+                divaSkill,
+                guildFood,
+                styleRankSkillsList,
+                inventory,
+                ammo,
+                poogieItem,
+                roadDureSkillsList
+                //partnyaBagItems
+                );
             }
         }
 
