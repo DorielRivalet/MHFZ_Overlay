@@ -5378,6 +5378,49 @@ namespace MHFZ_Overlay
             }
         }
 
+        public Dictionary<int, int> GetMostQuestCompletions()
+        {
+            Dictionary<int, int> questCompletions = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql = 
+                            @"SELECT 
+                                QuestID, 
+                                COUNT(*) as completions 
+                            FROM 
+                                Quests
+                            GROUP BY 
+                                QuestID 
+                            ORDER BY completions DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int questID = reader.GetInt32(0);
+                                    int completions = reader.GetInt32(1);
+                                    questCompletions.Add(questID, completions);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return questCompletions;
+        }
+
 
         #endregion
     }

@@ -49,6 +49,9 @@ using Button = System.Windows.Controls.Button;
 using TextBox = System.Windows.Controls.TextBox;
 using ListView = System.Windows.Controls.ListView;
 using MHFZ_Overlay.UI.Class;
+using DiscordRPC;
+using System.Threading;
+using System.Windows.Documents;
 
 namespace MHFZ_Overlay
 {
@@ -2166,6 +2169,7 @@ namespace MHFZ_Overlay
         private ListView mostRecentRunsListView;
         private ListView top20RunsListView;
         private TextBlock questLogGearStatsTextBlock;
+        private CartesianChart graphChart;
 
         private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
         {
@@ -2280,9 +2284,197 @@ namespace MHFZ_Overlay
             return;
         }
 
+        public ISeries[] Series { get; set; }
+        public Axis[] XAxes { get; set; }
+        public Axis[] YAxes { get; set; }
+
+        public void SetChartDataForMostQuestCompletions(Dictionary<int, int> questCompletions)
+        {
+            Series = new ISeries[questCompletions.Count];
+            int i = 0;
+            foreach (var quest in questCompletions)
+            {
+                Series[i] = new ColumnSeries<double>
+                {
+                    Name = quest.Key.ToString(),
+                    Values = new double[] { quest.Value }
+                };
+                i++;
+            }
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    Labels = questCompletions.Keys.Select(x => x.ToString()).ToArray(),
+                    LabelsRotation = 0,
+                    SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
+                    TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
+                }
+            };
+        }
+
         private void GraphsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ComboBox comboBox = (ComboBox)sender;
 
+            var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+            string selectedOption = selectedItem.Content.ToString();
+
+            if (graphChart == null || selectedOption == null || selectedOption == "")
+                return;
+
+            Series = new ISeries[0];
+            //XAxes = new Axis[0];
+            //YAxes = new Axis[0];
+
+            switch (selectedOption)
+            {
+                case "(General) Most Quest Completions":
+                    // Assume your Dictionary is called questCompletions and is already populated with data
+                    Dictionary<int, int> questCompletions = DatabaseManager.GetInstance().GetMostQuestCompletions();
+
+                    SetChartDataForMostQuestCompletions(questCompletions);
+                    break;
+                case "(General) Quest Durations":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Objective Types":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Star Grades":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Rank Bands":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Objective":
+                    
+                    //insert data
+                    break;
+                case "(General) Quests Completed by Date":
+                    
+                    //insert data
+                    break;
+                case "(General) Player Input":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Party Size":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Set Name":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Weapon Name":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Head Piece":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Chest Piece":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Arms Piece":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Waist Piece":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Legs Piece":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Diva Skill":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Guild Food":
+                    
+                    //insert data
+                    break;
+                case "(General) Most Common Style Rank Skills":
+                    
+                    //insert data
+                    break;
+                case "(Run ID) Attack Buff":
+                    
+                    //insert data
+                    break;
+                case "(Run ID) Hit Count":
+                    
+                    //insert data
+                    break;
+                case "(Run ID) Hits per Second":
+                    
+                    //insert data
+                    break;
+                case "(Run ID) Damage Dealt":
+                    
+                    //insert data
+                    break;
+                case "(Run ID) Damage per Second":
+                    //insert data
+                    break;
+                case "(Run ID) Area Changes":
+                    //insert data
+                    break;
+                case "(Run ID) Carts":
+                    //insert data
+                    break;
+                case "(Run ID) Monster HP":
+                    //insert data
+                    break;
+                case "(Run ID) Hits Taken/Blocked":
+                    //insert data
+                    break;
+                case "(Run ID) Hits Taken/Blocked per Second":
+                    //insert data
+                    break;
+                case "(Run ID) Player Health and Stamina":
+                    //insert data
+                    break;
+                case "(Run ID) Player Input":
+                    //insert data
+                    break;
+                case "(Run ID) Actions per Minute":
+                    //insert data
+                    break;
+                case "(Run ID) Inventory":
+                    //insert data
+                    break;
+                case "(Run ID) Ammo":
+                    //insert data
+                    break;
+                case "(Run ID) Partnya Bag":
+                    //insert data
+                    break;
+            }
+
+            graphChart.Series = Series;
+            //graphChart.XAxes = XAxes;
+            //graphChart.YAxes = YAxes;
+        }
+
+        private void GraphsChart_Loaded(object sender, RoutedEventArgs e)
+        {
+            graphChart = (CartesianChart)sender;
+
+            //graphChart.Series = new List<ISeries>();
+
+            //weaponUsageChart.SyncContext = MainWindow.DataLoader.model.weaponUsageSync;
+
+            //SetWeaponUsageChart(weaponUsageChart);
         }
 
         //Quest quest = DatabaseManager.GetInstance().GetQuest(runID);   

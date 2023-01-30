@@ -341,9 +341,8 @@
 
                     <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#74c7ec" />
 
-
                     <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
-                        <ComboBox x:Name="graphsComboBox" Width="100" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
+                        <ComboBox x:Name="graphsComboBox" Width="330" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
                             <ComboBoxItem>(General) Most Quest Completions</ComboBoxItem>
                             <ComboBoxItem>(General) Quest Durations</ComboBoxItem>
                             <ComboBoxItem>(General) Most Common Objective Types</ComboBoxItem>
@@ -353,7 +352,7 @@
                             <ComboBoxItem>(General) Quests Completed by Date</ComboBoxItem>
                             <ComboBoxItem>(General) Player Input</ComboBoxItem>
                             <ComboBoxItem>(General) Most Common Party Size</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Gear Name</ComboBoxItem>
+                            <ComboBoxItem>(General) Most Common Set Name</ComboBoxItem>
                             <ComboBoxItem>(General) Most Common Weapon Name</ComboBoxItem>
                             <ComboBoxItem>(General) Most Common Head Piece</ComboBoxItem>
                             <ComboBoxItem>(General) Most Common Chest Piece</ComboBoxItem>
@@ -381,7 +380,7 @@
                             <ComboBoxItem>(Run ID) Partnya Bag</ComboBoxItem>
                         </ComboBox>
 
-                        <lvc:CartesianChart Loaded="weaponUsageChart_Loaded" Grid.Column="1" Grid.Row="1" x:Name="weaponUsageChart" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <lvc:CartesianChart Loaded="GraphsChart_Loaded" Grid.Column="1" Grid.Row="1" x:Name="GraphsChart" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                     </StackPanel>
                 </Grid>
