@@ -5421,6 +5421,226 @@ namespace MHFZ_Overlay
             return questCompletions;
         }
 
+        public Dictionary<int, int> GetMostCommonObjectiveTypes()
+        {
+            Dictionary<int, int> objectiveCounts = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        ObjectiveTypeID, 
+                        COUNT(*) as count
+                    FROM 
+                        Quests
+                    GROUP BY 
+                        ObjectiveTypeID 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int objectiveTypeID = reader.GetInt32(0);
+                                    int count = reader.GetInt32(1);
+                                    objectiveCounts.Add(objectiveTypeID, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return objectiveCounts;
+        }
+
+        public Dictionary<int, int> GetMostCommonStarGrades()
+        {
+            Dictionary<int, int> fieldCounts = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        StarGrade, 
+                        COUNT(*) as count
+                    FROM 
+                        Quests
+                    GROUP BY 
+                        StarGrade 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int field = reader.GetInt32(0);
+                                    int count = reader.GetInt32(1);
+                                    fieldCounts.Add(field, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
+
+
+        public Dictionary<string, int> GetMostCommonRankBands()
+        {
+            Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        RankName, 
+                        COUNT(*) as count
+                    FROM 
+                        Quests
+                    GROUP BY 
+                        RankName 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    string field = reader.GetString(0);
+                                    int count = reader.GetInt32(1);
+                                    fieldCounts.Add(field, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
+
+
+        public Dictionary<string, int> GetMostCommonObjectives()
+        {
+            Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        ObjectiveName, 
+                        COUNT(*) as count
+                    FROM 
+                        Quests
+                    GROUP BY 
+                        ObjectiveName 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    string field = reader.GetString(0);
+                                    int count = reader.GetInt32(1);
+                                    fieldCounts.Add(field, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
+
+
+        public Dictionary<int, int> GetMostCommonPartySize()
+        {
+            Dictionary<int, int> fieldCounts = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        PartySize, 
+                        COUNT(*) as count
+                    FROM 
+                        Quests
+                    GROUP BY 
+                        PartySize 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int field = reader.GetInt32(0);
+                                    int count = reader.GetInt32(1);
+                                    fieldCounts.Add(field, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
+
+
+
         public Dictionary<int, int> GetTotalTimeSpentInQuests()
         {
             Dictionary<int, int> questTimeSpent = new Dictionary<int, int>();

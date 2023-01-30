@@ -2292,16 +2292,16 @@ namespace MHFZ_Overlay
         public Axis[] XAxes { get; set; }
         public Axis[] YAxes { get; set; }
 
-        public void SetChartDataForMostQuestCompletions(Dictionary<int, int> questCompletions)
+        public void SetColumnSeriesForDictionaryIntInt(Dictionary<int, int> data)
         {
-            Series = new ISeries[questCompletions.Count];
+            Series = new ISeries[data.Count];
             int i = 0;
-            foreach (var quest in questCompletions)
+            foreach (var entry in data)
             {
                 Series[i] = new ColumnSeries<double>
                 {
-                    Name = quest.Key.ToString(),
-                    Values = new double[] { quest.Value }
+                    Name = entry.Key.ToString(),
+                    Values = new double[] { entry.Value }
                 };
                 i++;
             }
@@ -2309,7 +2309,34 @@ namespace MHFZ_Overlay
             {
                 new Axis
                 {
-                    Labels = questCompletions.Keys.Select(x => x.ToString()).ToArray(),
+                    Labels = data.Keys.Select(x => x.ToString()).ToArray(),
+                    LabelsRotation = 0,
+                    SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
+                    TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8")))
+                }
+            };
+        }
+
+        public void SetColumnSeriesForDictionaryStringInt(Dictionary<string, int> data)
+        {
+            Series = new ISeries[data.Count];
+            int i = 0;
+            foreach (var entry in data)
+            {
+                Series[i] = new ColumnSeries<double>
+                {
+                    Name = entry.Key.ToString(),
+                    Values = new double[] { entry.Value }
+                };
+                i++;
+            }
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    Labels = data.Keys.Select(x => x.ToString()).ToArray(),
                     LabelsRotation = 0,
                     SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
                     TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
@@ -2395,29 +2422,23 @@ namespace MHFZ_Overlay
             {
                 case "(General) Most Quest Completions":
                     // Assume your Dictionary is called questCompletions and is already populated with data
-                    Dictionary<int, int> questCompletions = DatabaseManager.GetInstance().GetMostQuestCompletions();
-
-                    SetChartDataForMostQuestCompletions(questCompletions);
+                    SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostQuestCompletions());
                     break;
                 case "(General) Quest Durations":
                     Dictionary<int, int> questDurations = DatabaseManager.GetInstance().GetTotalTimeSpentInQuests();
                     CreateQuestDurationStackedChart(questDurations);
                     break;
                 case "(General) Most Common Objective Types":
-                    
-                    //insert data
+                    SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostCommonObjectiveTypes());
                     break;
                 case "(General) Most Common Star Grades":
-                    
-                    //insert data
+                    SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostCommonStarGrades());
                     break;
                 case "(General) Most Common Rank Bands":
-                    
-                    //insert data
+                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonRankBands());
                     break;
                 case "(General) Most Common Objective":
-                    
-                    //insert data
+                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonObjectives());
                     break;
                 case "(General) Quests Completed by Date":
                     
@@ -2428,8 +2449,7 @@ namespace MHFZ_Overlay
                     //insert data
                     break;
                 case "(General) Most Common Party Size":
-                    
-                    //insert data
+                    SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostCommonPartySize());
                     break;
                 case "(General) Most Common Set Name":
                     
