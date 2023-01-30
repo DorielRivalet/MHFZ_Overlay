@@ -52,6 +52,10 @@ using MHFZ_Overlay.UI.Class;
 using DiscordRPC;
 using System.Threading;
 using System.Windows.Documents;
+using System.Reflection.Emit;
+using System.Runtime.Serialization;
+using SharpCompress.Common;
+using XInput.Wrapper;
 
 namespace MHFZ_Overlay
 {
@@ -2309,23 +2313,83 @@ namespace MHFZ_Overlay
                     LabelsRotation = 0,
                     SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
                     TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8")))
                 }
             };
         }
+
+        public void CreateQuestDurationStackedChart(Dictionary<int, int> questDurations)
+        {
+            var series = new List<StackedColumnSeries<int>>();
+
+            foreach (var questDuration in questDurations)
+            {
+                series.Add(new StackedColumnSeries<int>
+                {
+                    Values = new List<int> { questDuration.Value },
+                    Name = questDuration.Key.ToString(),
+                    DataLabelsPosition = DataLabelsPosition.Middle,
+                    DataLabelsSize = 6,
+                    //DataLabelsPadding = 2,
+                    TooltipLabelFormatter = value => questDuration.Key.ToString() + " "+TimeSpan.FromSeconds(value.PrimaryValue / 30.0).ToString(@"hh\:mm\:ss"),
+                    DataLabelsFormatter = value => TimeSpan.FromSeconds(value.PrimaryValue / 30.0).ToString(@"hh\:mm\:ss")
+                    //{
+                    //    var time = TimeSpan.FromSeconds((double)value);
+                    //    return time.ToString(@"hh\:mm\:ss");
+                    //};
+                }) ;
+            }
+
+            Series = series.ToArray();
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    Labeler = (value) => TimeSpan.FromSeconds(value / 30.0).ToString(@"hh\:mm\:ss"),
+                    LabelsRotation = 0,
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
+                    TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
+                }
+            };          
+        }
+
 
         private void GraphsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
 
             var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+
+            if (selectedItem == null)
+                return;
+
             string selectedOption = selectedItem.Content.ToString();
 
             if (graphChart == null || selectedOption == null || selectedOption == "")
                 return;
 
-            Series = new ISeries[0];
-            //XAxes = new Axis[0];
-            //YAxes = new Axis[0];
+            Series = null;
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
 
             switch (selectedOption)
             {
@@ -2336,8 +2400,8 @@ namespace MHFZ_Overlay
                     SetChartDataForMostQuestCompletions(questCompletions);
                     break;
                 case "(General) Quest Durations":
-                    
-                    //insert data
+                    Dictionary<int, int> questDurations = DatabaseManager.GetInstance().GetTotalTimeSpentInQuests();
+                    CreateQuestDurationStackedChart(questDurations);
                     break;
                 case "(General) Most Common Objective Types":
                     
@@ -2462,8 +2526,8 @@ namespace MHFZ_Overlay
             }
 
             graphChart.Series = Series;
-            //graphChart.XAxes = XAxes;
-            //graphChart.YAxes = YAxes;
+            graphChart.XAxes = XAxes;
+            graphChart.YAxes = YAxes;
         }
 
         private void GraphsChart_Loaded(object sender, RoutedEventArgs e)

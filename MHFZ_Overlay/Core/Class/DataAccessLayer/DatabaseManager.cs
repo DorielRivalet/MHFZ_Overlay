@@ -5421,6 +5421,48 @@ namespace MHFZ_Overlay
             return questCompletions;
         }
 
+        public Dictionary<int, int> GetTotalTimeSpentInQuests()
+        {
+            Dictionary<int, int> questTimeSpent = new Dictionary<int, int>();
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                                QuestID, 
+                                SUM(FinalTimeValue) as timeSpent 
+                            FROM 
+                                Quests
+                            GROUP BY 
+                                QuestID 
+                            ORDER BY timeSpent DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int questID = reader.GetInt32(0);
+                                    int timeSpent = reader.GetInt32(1);
+                                    questTimeSpent.Add(questID, timeSpent);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return questTimeSpent;
+        }
+
 
         #endregion
     }
