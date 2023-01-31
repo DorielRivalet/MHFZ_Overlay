@@ -5421,9 +5421,9 @@ namespace MHFZ_Overlay
             return questCompletions;
         }
 
-        public Dictionary<int, int> GetMostCommonObjectiveTypes()
+        public Dictionary<string, int> GetMostCommonObjectiveTypes()
         {
-            Dictionary<int, int> objectiveCounts = new Dictionary<int, int>();
+            Dictionary<string, int> objectiveCounts = new Dictionary<string, int>();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5448,8 +5448,9 @@ namespace MHFZ_Overlay
                                 while (reader.Read())
                                 {
                                     int objectiveTypeID = reader.GetInt32(0);
+                                    string objectiveTypeName = ObjectiveTypeList.ObjectiveTypeID[objectiveTypeID];
                                     int count = reader.GetInt32(1);
-                                    objectiveCounts.Add(objectiveTypeID, count);
+                                    objectiveCounts.Add(objectiveTypeName, count);
                                 }
                             }
                         }
@@ -5493,6 +5494,314 @@ namespace MHFZ_Overlay
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
                                     fieldCounts.Add(field, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
+
+        public Dictionary<string, int> GetMostCommonHeadPieces()
+        {
+            Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        HeadID, 
+                        COUNT(*) as count
+                    FROM 
+                        PlayerGear
+                    GROUP BY 
+                        HeadID 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int field = reader.GetInt32(0);
+                                    int count = reader.GetInt32(1);
+                                    string pieceName = ArmorHeads.ArmorHeadIDs[field];
+                                    fieldCounts.Add(pieceName, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
+
+        public Dictionary<string, int> GetMostCommonChestPieces()
+        {
+            Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        ChestID, 
+                        COUNT(*) as count
+                    FROM 
+                        PlayerGear
+                    GROUP BY 
+                        ChestID 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int field = reader.GetInt32(0);
+                                    int count = reader.GetInt32(1);
+                                    string pieceName = ArmorChests.ArmorChestIDs[field];
+                                    fieldCounts.Add(pieceName, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
+
+        public Dictionary<string, int> GetMostCommonArmsPieces()
+        {
+            Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        ArmsID, 
+                        COUNT(*) as count
+                    FROM 
+                        PlayerGear
+                    GROUP BY 
+                        ArmsID 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int field = reader.GetInt32(0);
+                                    int count = reader.GetInt32(1);
+                                    string pieceName = ArmorArms.ArmorArmIDs[field];
+                                    fieldCounts.Add(pieceName, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
+
+        public Dictionary<string, int> GetMostCommonWaistPieces()
+        {
+            Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        WaistID, 
+                        COUNT(*) as count
+                    FROM 
+                        PlayerGear
+                    GROUP BY 
+                        WaistID 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int field = reader.GetInt32(0);
+                                    int count = reader.GetInt32(1);
+                                    string pieceName = ArmorWaists.ArmorWaistIDs[field];
+                                    fieldCounts.Add(pieceName, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
+
+        public Dictionary<string, int> GetMostCommonLegsPieces()
+        {
+            Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        LegsID, 
+                        COUNT(*) as count
+                    FROM 
+                        PlayerGear
+                    GROUP BY 
+                        LegsID 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int field = reader.GetInt32(0);
+                                    int count = reader.GetInt32(1);
+                                    string pieceName = ArmorLegs.ArmorLegIDs[field];
+                                    fieldCounts.Add(pieceName, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
+
+        public Dictionary<string, int> GetMostCommonDivaSkill()
+        {
+            Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        DivaSkillID, 
+                        COUNT(*) as count
+                    FROM 
+                        PlayerGear
+                    GROUP BY 
+                        DivaSkillID 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int field = reader.GetInt32(0);
+                                    int count = reader.GetInt32(1);
+                                    string name = DivaSkillList.DivaSkillID[field];
+                                    fieldCounts.Add(name, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
+
+        public Dictionary<string, int> GetMostCommonGuildFood()
+        {
+            Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        GuildFoodID, 
+                        COUNT(*) as count
+                    FROM 
+                        PlayerGear
+                    GROUP BY 
+                        GuildFoodID 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int field = reader.GetInt32(0);
+                                    int count = reader.GetInt32(1);
+                                    string name = ArmorSkillList.ArmorSkillID[field];
+                                    fieldCounts.Add(name, count);
                                 }
                             }
                         }
@@ -5594,6 +5903,51 @@ namespace MHFZ_Overlay
             }
             return fieldCounts;
         }
+
+        public Dictionary<string, int> GetMostCommonSetNames()
+        {
+            Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        GearName, 
+                        COUNT(*) as count
+                    FROM 
+                        PlayerGear
+                    GROUP BY 
+                        GearName 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    string field = reader.GetString(0);
+                                    int count = reader.GetInt32(1);
+                                    fieldCounts.Add(field, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
+
+        
 
 
         public Dictionary<int, int> GetMostCommonPartySize()
