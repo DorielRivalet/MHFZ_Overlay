@@ -2692,6 +2692,121 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
+        public Dictionary<int, int> CalculateMonsterHP(Dictionary<int, Dictionary<int, int>> monsterHP)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            int i = 1;
+            foreach (var entry in monsterHP)
+            {
+                int time = int.Parse(entry.Key.ToString());
+                // get the value of the inner dictionary
+                int hp = entry.Value.Values.First();
+                dictionary.Add(time, hp);
+                i++;
+            }
+
+            return dictionary;
+        }
+
+        public void SetMonsterHP(Dictionary<int, int> monster1, Dictionary<int, int> monster2, Dictionary<int,int> monster3, Dictionary<int,int> monster4)
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            List<ISeries> series = new();
+            ObservableCollection<ObservablePoint> monster1Collection = new();
+            ObservableCollection<ObservablePoint> monster2Collection = new();
+            ObservableCollection<ObservablePoint> monster3Collection = new();
+            ObservableCollection<ObservablePoint> monster4Collection = new();
+
+            Dictionary<int, int> newMonster1 = GetElapsedTime(monster1);
+            Dictionary<int, int> newMonster2 = GetElapsedTime(monster2);
+            Dictionary<int, int> newMonster3 = GetElapsedTime(monster3);
+            Dictionary<int, int> newMonster4 = GetElapsedTime(monster4);
+
+            foreach (var entry in newMonster1)
+            {
+                monster1Collection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            foreach (var entry in newMonster2)
+            {
+                monster2Collection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            foreach (var entry in newMonster3)
+            {
+                monster3Collection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            foreach (var entry in newMonster4)
+            {
+                monster4Collection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = monster1Collection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = monster2Collection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff9e2af"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff9e2af", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = monster3Collection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ff94e2d5"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ff94e2d5", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ff94e2d5", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = monster4Collection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ffcba6f7"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ffcba6f7", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ffcba6f7", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    TextSize=12,
+                    Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    NameTextSize= 12,
+                    TextSize=12,
+                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            graphChart.Series = series;
+            graphChart.XAxes = XAxes;
+            graphChart.YAxes = YAxes;
+        }
 
         private void GraphsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -2813,7 +2928,7 @@ namespace MHFZ_Overlay
                     SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetCartsDictionary(runID));
                     return;
                 case "(Run ID) Monster HP":
-                    //insert data
+                    SetMonsterHP(CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster1HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster2HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster3HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster4HPDictionary(runID)));
                     return;
                 case "(Run ID) Hits Taken/Blocked":
                     SetHitsTakenBlocked(DatabaseManager.GetInstance().GetHitsTakenBlockedDictionary(runID));
