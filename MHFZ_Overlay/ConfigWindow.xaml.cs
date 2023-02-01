@@ -2506,6 +2506,59 @@ namespace MHFZ_Overlay
             graphChart.YAxes = YAxes;
         }
 
+        public void SetHitsTakenBlocked(Dictionary<int, Dictionary<int,int>> data)
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            List<ISeries> series = new();
+            ObservableCollection<ObservablePoint> collection = new();
+
+            Dictionary<int, int> hitsTakenBlocked = CalculateHitsTakenBlocked(data);
+
+            Dictionary<int, int> newData = GetElapsedTime(hitsTakenBlocked);
+
+            foreach (var entry in newData)
+            {
+                collection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = collection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    TextSize=12,
+                    Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    NameTextSize= 12,
+                    TextSize=12,
+                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            graphChart.Series = series;
+            graphChart.XAxes = XAxes;
+            graphChart.YAxes = YAxes;
+        }
+
         public void SetPlayerHealthStamina(Dictionary<int, int> hp, Dictionary<int,int> stamina)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -2621,6 +2674,22 @@ namespace MHFZ_Overlay
             return combinedDictionary
                 .OrderByDescending(kvp => kvp.Value)
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        }
+
+        public Dictionary<int,int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int,int>> hitsTakenBlocked)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            int i = 1;
+            foreach (var entry in hitsTakenBlocked)
+            {
+                int time = int.Parse(entry.Key.ToString());
+                int count = i;
+                dictionary.Add(time, count);
+                i++;
+            }
+
+            return dictionary;
         }
 
 
@@ -2747,7 +2816,7 @@ namespace MHFZ_Overlay
                     //insert data
                     return;
                 case "(Run ID) Hits Taken/Blocked":
-                    //SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetHitsTakenBlockedDictionary(runID));
+                    SetHitsTakenBlocked(DatabaseManager.GetInstance().GetHitsTakenBlockedDictionary(runID));
                     return;
                 case "(Run ID) Hits Taken/Blocked per Second":
                     SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetHitsTakenBlockedPerSecondDictionary(runID));
