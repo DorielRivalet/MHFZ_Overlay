@@ -1,14 +1,25 @@
 ﻿using CsvHelper;
+using Dictionary;
+using LiveChartsCore;
+using LiveChartsCore.Defaults;
+using LiveChartsCore.Measure;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.WPF;
 using MHFZ_Overlay.Core.Class;
+using MHFZ_Overlay.UI.Class.Mapper;
 using Newtonsoft.Json;
 using Octokit;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,49 +28,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Application = System.Windows.Application;
+using Button = System.Windows.Controls.Button;
 using Clipboard = System.Windows.Clipboard;
+using ComboBox = System.Windows.Controls.ComboBox;
+using File = System.IO.File;
+using ListView = System.Windows.Controls.ListView;
 using MessageBox = System.Windows.MessageBox;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
-using Window = System.Windows.Window;
-using RESTCountries.NET.Services;
-using RESTCountries.NET.Models;
-using System.Collections.ObjectModel;
-using MHFZ_Overlay.controls;
-using Newtonsoft.Json.Linq;
-using static System.Windows.Forms.Design.AxImporter;
-using ComboBox = System.Windows.Controls.ComboBox;
-using LiveChartsCore.Defaults;
-using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView;
-using SkiaSharp;
-using LiveChartsCore.Measure;
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView.WPF;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
-using TabItem = System.Windows.Controls.TabItem;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Data.BindingOperations;
-using LiveChartsCore.Kernel.Sketches;
-using MHFZ_Overlay.UI.Class.Mapper;
-using static LiveChartsCore.LiveCharts;
-using System.Security.Policy;
-using SQLitePCL;
-using Dictionary;
-using Button = System.Windows.Controls.Button;
 using TextBox = System.Windows.Controls.TextBox;
-using ListView = System.Windows.Controls.ListView;
-using MHFZ_Overlay.UI.Class;
-using DiscordRPC;
-using System.Threading;
-using System.Windows.Documents;
-using System.Reflection.Emit;
-using System.Runtime.Serialization;
-using SharpCompress.Common;
-using XInput.Wrapper;
-using static System.Net.WebRequestMethods;
-using System.Windows.Ink;
-using File = System.IO.File;
-using System.Text;
+using Window = System.Windows.Window;
 
 namespace MHFZ_Overlay
 {
@@ -74,7 +51,7 @@ namespace MHFZ_Overlay
         /// <value>
         /// The main window.
         /// </value>
-        private MainWindow MainWindow { get;}
+        private MainWindow MainWindow { get; }
 
         private static string randomMonsterImage = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png";
 
@@ -1407,43 +1384,43 @@ namespace MHFZ_Overlay
 
             SwordAndShieldBestTimeTextBlock.Text = "--:--.--";
             SwordAndShieldRunIDTextBlock.Text = "Run Not Found";
-                               
+
             GreatSwordBestTimeTextBlock.Text = "--:--.--";
             GreatSwordRunIDTextBlock.Text = "Run Not Found";
-             
+
             DualSwordsBestTimeTextBlock.Text = "--:--.--";
             DualSwordsRunIDTextBlock.Text = "Run Not Found";
-                           
+
             LongSwordBestTimeTextBlock.Text = "--:--.--";
             LongSwordRunIDTextBlock.Text = "Run Not Found";
-                            
+
             LanceBestTimeTextBlock.Text = "--:--.--";
             LanceRunIDTextBlock.Text = "Run Not Found";
-                          
+
             GunlanceBestTimeTextBlock.Text = "--:--.--";
             GunlanceRunIDTextBlock.Text = "Run Not Found";
-                       
+
             HammerBestTimeTextBlock.Text = "--:--.--";
             HammerRunIDTextBlock.Text = "Run Not Found";
-                         
+
             HuntingHornBestTimeTextBlock.Text = "--:--.--";
             HuntingHornRunIDTextBlock.Text = "Run Not Found";
-                         
+
             TonfaBestTimeTextBlock.Text = "--:--.--";
             TonfaRunIDTextBlock.Text = "Run Not Found";
-                         
+
             SwitchAxeFBestTimeTextBlock.Text = "--:--.--";
             SwitchAxeFRunIDTextBlock.Text = "Run Not Found";
-                          
+
             MagnetSpikeBestTimeTextBlock.Text = "--:--.--";
             MagnetSpikeRunIDTextBlock.Text = "Run Not Found";
-                         
+
             LightBowgunBestTimeTextBlock.Text = "--:--.--";
             LightBowgunRunIDTextBlock.Text = "Run Not Found";
-                           
+
             HeavyBowgunBestTimeTextBlock.Text = "--:--.--";
             HeavyBowgunRunIDTextBlock.Text = "Run Not Found";
-                          
+
             BowBestTimeTextBlock.Text = "--:--.--";
             BowRunIDTextBlock.Text = "Run Not Found";
 
@@ -1572,7 +1549,8 @@ namespace MHFZ_Overlay
             if (comboBox.SelectedIndex == 0)
             {
                 weaponUsageData = DatabaseManager.GetInstance().CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
-            } else if (comboBox.SelectedIndex == 1)
+            }
+            else if (comboBox.SelectedIndex == 1)
             {
                 weaponUsageData = DatabaseManager.GetInstance().CalculateTotalWeaponUsage(this, MainWindow.DataLoader, true);
             }
@@ -1764,10 +1742,10 @@ namespace MHFZ_Overlay
                 return;
             // You can now use the selectedItem variable to get the data or value of the selected option
             string selectedWeapon = selectedItem.ToString();
-            selectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ","");
+            selectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ", "");
             if (selectedWeapon == "")
                 return;
-            MainWindow.DataLoader.model.FastestRuns = DatabaseManager.GetInstance().GetFastestRuns(this,selectedWeapon);
+            MainWindow.DataLoader.model.FastestRuns = DatabaseManager.GetInstance().GetFastestRuns(this, selectedWeapon);
             top20RunsListView.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
             top20RunsListView.DataContext = MainWindow.DataLoader.model.FastestRuns;
             top20RunsListView.Items.Refresh();
@@ -1793,7 +1771,7 @@ namespace MHFZ_Overlay
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
-            saveFileDialog.FileName = "Run-"+RunIDTextBox.Text.Trim()+"-Set-" + dateTime;
+            saveFileDialog.FileName = "Run-" + RunIDTextBox.Text.Trim() + "-Set-" + dateTime;
             if (saveFileDialog.ShowDialog() == true)
             {
                 File.WriteAllText(saveFileDialog.FileName, textToSave);
@@ -1929,7 +1907,7 @@ namespace MHFZ_Overlay
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> collection = new();
 
-            Dictionary<int,int> newData = GetElapsedTime(data);
+            Dictionary<int, int> newData = GetElapsedTime(data);
 
             foreach (var entry in newData)
             {
@@ -2024,7 +2002,7 @@ namespace MHFZ_Overlay
             graphChart.YAxes = YAxes;
         }
 
-        public void SetHitsTakenBlocked(Dictionary<int, Dictionary<int,int>> data)
+        public void SetHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> data)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
@@ -2077,7 +2055,7 @@ namespace MHFZ_Overlay
             graphChart.YAxes = YAxes;
         }
 
-        public void SetPlayerHealthStamina(Dictionary<int, int> hp, Dictionary<int,int> stamina)
+        public void SetPlayerHealthStamina(Dictionary<int, int> hp, Dictionary<int, int> stamina)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
@@ -2157,9 +2135,9 @@ namespace MHFZ_Overlay
                     DataLabelsPosition = DataLabelsPosition.Middle,
                     DataLabelsSize = 6,
                     //DataLabelsPadding = 2,
-                    TooltipLabelFormatter = value => questDuration.Key.ToString() + " "+TimeSpan.FromSeconds(value.PrimaryValue / 30.0).ToString(@"hh\:mm\:ss"),
+                    TooltipLabelFormatter = value => questDuration.Key.ToString() + " " + TimeSpan.FromSeconds(value.PrimaryValue / 30.0).ToString(@"hh\:mm\:ss"),
                     DataLabelsFormatter = value => TimeSpan.FromSeconds(value.PrimaryValue / 30.0).ToString(@"hh\:mm\:ss")
-                }) ;
+                });
             }
 
             Series = series.ToArray();
@@ -2174,7 +2152,7 @@ namespace MHFZ_Overlay
                     SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
                     TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
                 }
-            };          
+            };
         }
 
         public Dictionary<string, int> GetMostCommonInputs(long runID)
@@ -2190,7 +2168,7 @@ namespace MHFZ_Overlay
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
-        public Dictionary<int,int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int,int>> hitsTakenBlocked)
+        public Dictionary<int, int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> hitsTakenBlocked)
         {
             Dictionary<int, int> dictionary = new Dictionary<int, int>();
 
@@ -2223,7 +2201,7 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public void SetMonsterHP(Dictionary<int, int> monster1, Dictionary<int, int> monster2, Dictionary<int,int> monster3, Dictionary<int,int> monster4)
+        public void SetMonsterHP(Dictionary<int, int> monster1, Dictionary<int, int> monster2, Dictionary<int, int> monster3, Dictionary<int, int> monster4)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
@@ -2350,7 +2328,7 @@ namespace MHFZ_Overlay
             {
                 new Axis
                 {
-                    
+
                     NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                     LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                 }
@@ -2500,7 +2478,7 @@ namespace MHFZ_Overlay
             foreach (var entry in inventory)
             {
                 int time = entry.Key;
-                string timeString = TimeSpan.FromSeconds((double)time/30).ToString(@"mm\:ss\.ff");
+                string timeString = TimeSpan.FromSeconds((double)time / 30).ToString(@"mm\:ss\.ff");
                 var items = entry.Value;
 
                 var itemString = "";
@@ -2540,7 +2518,7 @@ namespace MHFZ_Overlay
         private void InventoriesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
-            
+
             var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
             if (selectedItem == null || inventoriesTextBlock == null)
@@ -2561,10 +2539,10 @@ namespace MHFZ_Overlay
                     inventoriesTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPlayerInventoryDictionary(runID));
                     break;
                 case "Ammo":
-                    inventoriesTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetAmmoDictionary(runID)); 
+                    inventoriesTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetAmmoDictionary(runID));
                     break;
                 case "Partnya Bag":
-                    inventoriesTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPartnyaBagDictionary(runID)); 
+                    inventoriesTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPartnyaBagDictionary(runID));
                     break;
             }
         }

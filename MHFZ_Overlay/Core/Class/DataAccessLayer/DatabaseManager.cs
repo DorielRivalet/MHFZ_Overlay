@@ -1,43 +1,20 @@
 ﻿using Dictionary;
+using MHFZ_Overlay.UI.Class;
+using MHFZ_Overlay.UI.Class.Mapper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Data.SQLite;
-using System.Windows.Media.Media3D;
-using System.Windows;
 using System.Globalization;
-using System.Windows.Documents;
-using System.Windows.Markup;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Transactions;
-using System.Collections;
-using Octokit;
-using System.Windows.Controls;
-using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
-using Newtonsoft.Json;
-using System.Reflection;
-using Microsoft.VisualBasic;
-using Newtonsoft.Json.Linq;
-using TextBox = System.Windows.Controls.TextBox;
-using System.Xml;
-using Formatting = Newtonsoft.Json.Formatting;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using System.Diagnostics.Metrics;
-using System.Drawing;
-using LiveChartsCore.Measure;
-using static System.Net.Mime.MediaTypeNames;
-using LiveChartsCore.Defaults;
-using MHFZ_Overlay.UI.Class.Mapper;
-using MHFZ_Overlay.UI.Class;
-using RESTCountries.NET.Models;
-using System.Windows.Media;
-using System.Reactive;
+using Formatting = Newtonsoft.Json.Formatting;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -123,7 +100,7 @@ namespace MHFZ_Overlay
                 }
                 catch (SQLiteException ex)
                 {
-                    MessageBox.Show(String.Format("Invalid database file. Delete both MHFZ_Overlay.sqlite and reference_schema.json if present, and rerun the program.\n\n{0}", ex),"Error",MessageBoxButton.OK,MessageBoxImage.Error);
+                    MessageBox.Show(String.Format("Invalid database file. Delete both MHFZ_Overlay.sqlite and reference_schema.json if present, and rerun the program.\n\n{0}", ex), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     Environment.Exit(0);
                 }
 
@@ -433,12 +410,12 @@ namespace MHFZ_Overlay
 
                             string questData = string.Format(
                                 "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}",
-                                runID, createdAt, createdBy, questID, timeLeft, 
-                                finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity, 
-                                starGrade, rankName, objectiveName, date, attackBuffDictionary, 
-                                hitCountDictionary, hitsPerSecondDictionary, damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary, 
-                                cartsDictionary, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary, monster4HPDictionary, 
-                                hitsTakenBlockedDictionary, hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary, keystrokesDictionary, 
+                                runID, createdAt, createdBy, questID, timeLeft,
+                                finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
+                                starGrade, rankName, objectiveName, date, attackBuffDictionary,
+                                hitCountDictionary, hitsPerSecondDictionary, damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary,
+                                cartsDictionary, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary, monster4HPDictionary,
+                                hitsTakenBlockedDictionary, hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary, keystrokesDictionary,
                                 mouseInputDictionary, gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary, actualOverlayMode,
                                 partySize
                                 );
@@ -1553,16 +1530,16 @@ namespace MHFZ_Overlay
 
                         string playerGearData = string.Format(
                             "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}{47}{48}{49}{50}",
-                            createdAt, createdBy, runID, playerID, gearName, 
+                            createdAt, createdBy, runID, playerID, gearName,
                             styleID, weaponIconID, weaponClassID, weaponTypeID, blademasterWeaponID,
-                            gunnerWeaponID, weaponSlot1, weaponSlot2, weaponSlot3, headID, 
-                            headSlot1, headSlot2, headSlot3, chestID, chestSlot1, 
-                            chestSlot2, chestSlot3, armsID, armsSlot1, armsSlot2, 
+                            gunnerWeaponID, weaponSlot1, weaponSlot2, weaponSlot3, headID,
+                            headSlot1, headSlot2, headSlot3, chestID, chestSlot1,
+                            chestSlot2, chestSlot3, armsID, armsSlot1, armsSlot2,
                             armsSlot3, waistID, waistSlot1, waistSlot2, waistSlot3,
-                            legsID, legsSlot1, legsSlot2, legsSlot3, cuffSlot1, 
-                            cuffSlot2, zenithSkillsID, automaticSkillsID, activeSkillsID, caravanSkillsID, 
-                            divaSkillID, guildFoodID, styleRankSkillsID, playerInventoryID, ammoPouchID, 
-                            partnyaBagID, poogieItemID, roadDureSkillsID, playerInventoryDictionary, playerAmmoPouchDictionary, 
+                            legsID, legsSlot1, legsSlot2, legsSlot3, cuffSlot1,
+                            cuffSlot2, zenithSkillsID, automaticSkillsID, activeSkillsID, caravanSkillsID,
+                            divaSkillID, guildFoodID, styleRankSkillsID, playerInventoryID, ammoPouchID,
+                            partnyaBagID, poogieItemID, roadDureSkillsID, playerInventoryDictionary, playerAmmoPouchDictionary,
                             partnyaBagDictionary
                             );
                         string playerGearHash = CalculateStringHash(playerGearData);
@@ -2420,9 +2397,9 @@ namespace MHFZ_Overlay
         //TODO: Test
         private bool CompareDatabaseSchemas(Dictionary<string, Dictionary<string, object>> referenceSchema, Dictionary<string, Dictionary<string, object>> currentSchema)
         {
-    
+
             if (!CompareDictionaries(referenceSchema, currentSchema))
-            { 
+            {
                 schemaChanged = true;
             }
 
@@ -2601,10 +2578,10 @@ namespace MHFZ_Overlay
                         // Commit the transaction
                         transaction.Commit();
                     }
-                } 
+                }
                 catch (Exception ex)
                 {
-                    HandleError(transaction, ex); 
+                    HandleError(transaction, ex);
                 }
             }
         }
@@ -2845,7 +2822,7 @@ namespace MHFZ_Overlay
                     {
                         cmd.ExecuteNonQuery();
                     }
-                    
+
                     InsertPlayerDictionaryDataIntoTable(conn, dataLoader);
 
                     /*
@@ -3115,7 +3092,7 @@ namespace MHFZ_Overlay
                     sql = @"CREATE TABLE IF NOT EXISTS AllBlademasterWeapons (
                       BlademasterWeaponID INTEGER PRIMARY KEY,
                       BlademasterWeaponName TEXT NOT NULL
-                    )"; 
+                    )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.ExecuteNonQuery();
@@ -4109,7 +4086,7 @@ namespace MHFZ_Overlay
         void RetreiveQuestsFromDatabase()
         {
             SQLiteConnection conn = new SQLiteConnection(dataSource);
-            
+
             conn.Open();
 
             // Create the Quests table
@@ -4183,7 +4160,7 @@ namespace MHFZ_Overlay
                 }
             }
 
-            return "https://youtube.com/watch?v="+youtubeLink;
+            return "https://youtube.com/watch?v=" + youtubeLink;
         }
 
         public bool UpdateYoutubeLink(object sender, RoutedEventArgs e, long runID, string youtubeLink)
@@ -4259,7 +4236,7 @@ namespace MHFZ_Overlay
                             ORDER BY 
                                 FinalTimeValue ASC
                             LIMIT 1", conn))
-                            {
+                        {
                             cmd.Parameters.AddWithValue("@questID", questID);
                             cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
                             cmd.Parameters.AddWithValue("@category", category);
@@ -4719,9 +4696,9 @@ namespace MHFZ_Overlay
             return (double)(start - current) / 30;
         }
 
-        public Dictionary<int,int> GetAttackBuffDictionary(long runID)
+        public Dictionary<int, int> GetAttackBuffDictionary(long runID)
         {
-            Dictionary<int,int> attackBuffDictionary = new Dictionary<int, int>();
+            Dictionary<int, int> attackBuffDictionary = new Dictionary<int, int>();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -4950,9 +4927,9 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public Dictionary<int, Dictionary<int,int>> GetMonster1HPDictionary(long runID)
+        public Dictionary<int, Dictionary<int, int>> GetMonster1HPDictionary(long runID)
         {
-            Dictionary<int, Dictionary<int,int>> dictionary = new Dictionary<int, Dictionary<int,int>>();
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -4969,7 +4946,7 @@ namespace MHFZ_Overlay
 
                             if (result != null)
                             {
-                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int,int>>>((string)result);
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
                             }
                         }
                         transaction.Commit();
@@ -5181,7 +5158,7 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public Dictionary<int, Dictionary<int,int>> GetHitsTakenBlockedDictionary(long runID)
+        public Dictionary<int, Dictionary<int, int>> GetHitsTakenBlockedDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
 
@@ -5412,7 +5389,7 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public Dictionary<string,int> GetMostCommonCategory()
+        public Dictionary<string, int> GetMostCommonCategory()
         {
             Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
 
@@ -6049,8 +6026,8 @@ namespace MHFZ_Overlay
                                 }
                             }
                         }
-                    // Commit the transaction
-                    transaction.Commit();
+                        // Commit the transaction
+                        transaction.Commit();
                     }
                     catch (Exception ex)
                     {
@@ -6071,7 +6048,7 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
-                        string sql = 
+                        string sql =
                             @"SELECT 
                                 QuestID, 
                                 COUNT(*) as completions 

@@ -692,7 +692,7 @@ namespace MHFZ_Overlay.addresses
         public override int PartnyaBagItem4Qty() => M.Read2Byte("mhfo-hd.dll+E37D356");
 
         public override int PartnyaBagItem5ID() => M.Read2Byte("mhfo-hd.dll+E37D358");
-    
+
         public override int PartnyaBagItem5Qty() => M.Read2Byte("mhfo-hd.dll+E37D35A");
 
         public override int PartnyaBagItem6ID() => M.Read2Byte("mhfo-hd.dll+E37D35C");

@@ -207,7 +207,7 @@ namespace Dictionary
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/starving_deviljho.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/starving_deviljho.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burning_freezing_elzelion.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/burning_freezing_elzelion.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/elzelion.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/elzelion.png"}
-        
+
         };
     }
 }

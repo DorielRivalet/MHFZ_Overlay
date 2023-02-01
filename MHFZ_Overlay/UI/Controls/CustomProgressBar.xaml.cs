@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using MHFZ_Overlay.addresses;
 
 namespace MHFZ_Overlay.controls
 {
@@ -124,7 +123,7 @@ namespace MHFZ_Overlay.controls
             DependencyProperty.Register("NumMax", typeof(int), typeof(CustomProgressBar), new PropertyMetadata(0));
         public static readonly DependencyProperty BarColorProperty =
             DependencyProperty.Register("BarColor", typeof(Brush), typeof(CustomProgressBar), new PropertyMetadata(null));
-        public static readonly DependencyProperty IconSourceProperty = 
+        public static readonly DependencyProperty IconSourceProperty =
             DependencyProperty.Register("IconSource", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(""));
         public static readonly DependencyProperty StrokeColorProperty =
             DependencyProperty.Register("StrokeColor", typeof(Brush), typeof(CustomProgressBar), new PropertyMetadata(null));

@@ -1,8 +1,4 @@
-﻿using LiveChartsCore.SkiaSharpView.Painting.ImageFilters;
-using System.Collections.Generic;
-using static System.Net.Mime.MediaTypeNames;
-using System.Reflection.Metadata;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 
 namespace Dictionary
 {
@@ -37,10 +33,10 @@ namespace Dictionary
     //Mantle	#181825	rgb(24, 24, 37)	hsl(240, 21%, 12%)
     //Crust	#11111b	rgb(17, 17, 27)	hsl(240, 23%, 9%)
     public static class CatppuccinMochaColorsDictionary
-	{
-		public static IReadOnlyDictionary<string, string> CatppuccinMochaColors { get; } = new Dictionary<string, string>
-		{
-			{"Rosewater","#f5e0dc" },
+    {
+        public static IReadOnlyDictionary<string, string> CatppuccinMochaColors { get; } = new Dictionary<string, string>
+        {
+            {"Rosewater","#f5e0dc" },
             { "Flamingo","#f2cdcd"},
             { "Pink","#f5c2e7"},
             { "Mauve","#cba6f7"},
@@ -67,5 +63,5 @@ namespace Dictionary
             { "Mantle","#181825"},
             { "Crust","#11111b"}
         };
-	}
+    }
 }

@@ -1,35 +1,24 @@
 ﻿using Dictionary;
-using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
+using LiveChartsCore.Defaults;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Security.Permissions;
-using Application = System.Windows.Application;
-using System.Data.SQLite;
-using System.Windows;
-using System.IO;
-using System.Threading;
-using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Windows.Input;
-using System.Windows.Automation;
-using System.Windows.Media.Animation;
+using MHFZ_Overlay.UI.Class;
 using RESTCountries.NET.Models;
 using RESTCountries.NET.Services;
-using MHFZ_Overlay.controls;
-using LiveChartsCore.Defaults;
-using LiveChartsCore.SkiaSharpView.Painting.Effects;
-using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
-using LiveChartsCore.Measure;
-using MHFZ_Overlay.UI.Class;
-using System.Net;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Text;
+using System.Windows;
+using System.Windows.Automation;
+using Application = System.Windows.Application;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -991,7 +980,7 @@ namespace MHFZ_Overlay.addresses
                 else
                     return "(Freestyle No Secret Tech) ";
             }
-            else 
+            else
                 return "(Zen) ";
         }
 
@@ -3479,10 +3468,10 @@ namespace MHFZ_Overlay.addresses
 
         public string GetArmorChestNameForRunID(int armorID, int slot1ID, int slot2ID, int slot3ID)
         {
-                Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(armorID, out string? piecename);
+            Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(armorID, out string? piecename);
 
-                string address = armorID.ToString("X4").ToUpper();
-                return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(slot1ID), GetDecoName(slot2ID), GetDecoName(slot3ID));
+            string address = armorID.ToString("X4").ToUpper();
+            return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(slot1ID), GetDecoName(slot2ID), GetDecoName(slot3ID));
         }
 
         /// <summary>
@@ -5934,7 +5923,7 @@ namespace MHFZ_Overlay.addresses
                 var legs = GetArmorLegNameForRunID((int)playerGear.LegsID, (int)playerGear.LegsSlot1ID, (int)playerGear.LegsSlot2ID, (int)playerGear.LegsSlot3ID);
                 var cuffs = GetCuffsForRunID(playerGear.Cuff1ID, playerGear.Cuff2ID);
                 var date = playerGear.CreatedAt;
-                var hash =  playerGear.PlayerGearHash;
+                var hash = playerGear.PlayerGearHash;
                 var zenithSkillsList = GetZenithSkillsForRunID((int)zenithSkills.ZenithSkill1ID, (int)zenithSkills.ZenithSkill2ID, (int)zenithSkills.ZenithSkill3ID, (int)zenithSkills.ZenithSkill4ID, (int)zenithSkills.ZenithSkill5ID, (int)zenithSkills.ZenithSkill6ID, (int)zenithSkills.ZenithSkill7ID);
                 var automaticSkillsList = GetAutomaticSkillsForRunID((int)automaticSkills.AutomaticSkill1ID, (int)automaticSkills.AutomaticSkill2ID, (int)automaticSkills.AutomaticSkill3ID, (int)automaticSkills.AutomaticSkill4ID, (int)automaticSkills.AutomaticSkill5ID, (int)automaticSkills.AutomaticSkill6ID);
                 var gouBoost = "";
@@ -5946,14 +5935,14 @@ namespace MHFZ_Overlay.addresses
                 var inventory = GetItemsForRunID(new int[] { (int)playerInventory.Item1ID, (int)playerInventory.Item2ID, (int)playerInventory.Item3ID, (int)playerInventory.Item4ID, (int)playerInventory.Item5ID, (int)playerInventory.Item6ID, (int)playerInventory.Item7ID, (int)playerInventory.Item8ID, (int)playerInventory.Item9ID, (int)playerInventory.Item10ID, (int)playerInventory.Item11ID, (int)playerInventory.Item12ID, (int)playerInventory.Item13ID, (int)playerInventory.Item14ID, (int)playerInventory.Item15ID, (int)playerInventory.Item16ID, (int)playerInventory.Item17ID, (int)playerInventory.Item18ID, (int)playerInventory.Item19ID, (int)playerInventory.Item20ID });
                 var ammo = GetItemsForRunID(new int[] { (int)ammoPouch.Item1ID, (int)ammoPouch.Item2ID, (int)ammoPouch.Item3ID, (int)ammoPouch.Item4ID, (int)ammoPouch.Item5ID, (int)ammoPouch.Item6ID, (int)ammoPouch.Item7ID, (int)ammoPouch.Item8ID, (int)ammoPouch.Item9ID, (int)ammoPouch.Item10ID });
                 var poogieItem = GetItemName((int)playerGear.PoogieItemID);
-                var roadDureSkillsList = GetRoadDureSkillsForRunID(new int[] { (int)roadDureSkills.RoadDureSkill1ID, (int)roadDureSkills.RoadDureSkill2ID, (int)roadDureSkills.RoadDureSkill3ID, (int)roadDureSkills.RoadDureSkill4ID, (int)roadDureSkills.RoadDureSkill5ID, (int)roadDureSkills.RoadDureSkill6ID, (int)roadDureSkills.RoadDureSkill7ID, (int)roadDureSkills.RoadDureSkill8ID, (int)roadDureSkills.RoadDureSkill9ID, (int)roadDureSkills.RoadDureSkill10ID, (int)roadDureSkills.RoadDureSkill11ID, (int)roadDureSkills.RoadDureSkill12ID, (int)roadDureSkills.RoadDureSkill13ID, (int)roadDureSkills.RoadDureSkill14ID, (int)roadDureSkills.RoadDureSkill15ID, (int)roadDureSkills.RoadDureSkill16ID});
+                var roadDureSkillsList = GetRoadDureSkillsForRunID(new int[] { (int)roadDureSkills.RoadDureSkill1ID, (int)roadDureSkills.RoadDureSkill2ID, (int)roadDureSkills.RoadDureSkill3ID, (int)roadDureSkills.RoadDureSkill4ID, (int)roadDureSkills.RoadDureSkill5ID, (int)roadDureSkills.RoadDureSkill6ID, (int)roadDureSkills.RoadDureSkill7ID, (int)roadDureSkills.RoadDureSkill8ID, (int)roadDureSkills.RoadDureSkill9ID, (int)roadDureSkills.RoadDureSkill10ID, (int)roadDureSkills.RoadDureSkill11ID, (int)roadDureSkills.RoadDureSkill12ID, (int)roadDureSkills.RoadDureSkill13ID, (int)roadDureSkills.RoadDureSkill14ID, (int)roadDureSkills.RoadDureSkill15ID, (int)roadDureSkills.RoadDureSkill16ID });
                 var questName = Dictionary.Quests.QuestIDs[(int)quest.QuestID];
                 var questObjectiveType = Dictionary.ObjectiveTypeList.ObjectiveTypeID[(int)quest.ObjectiveTypeID];
                 var questObjectiveQuantity = quest.ObjectiveQuantity;
                 var questObjectiveName = quest.ObjectiveName;
                 var questCategory = quest.ActualOverlayMode;
                 var partySize = quest.PartySize;
-                
+
                 //TODO: fix
                 //var partnyaBagItems = GetItemsForRunID(new int[] { (int)partnyaBag.Item1ID, (int)partnyaBag.Item2ID, (int)partnyaBag.Item3ID, (int)partnyaBag.Item4ID, (int)partnyaBag.Item5ID, (int)partnyaBag.Item6ID, (int)partnyaBag.Item7ID, (int)partnyaBag.Item8ID, (int)partnyaBag.Item9ID, (int)partnyaBag.Item10ID });
 
@@ -7582,16 +7571,17 @@ Party Size: {32}",
                     "Types" => GetGameWeaponTypesInfo,
                     "Sharpness" => GetGameSharpnessInfo,
                     "Damage Formula" => GetGameDamageInfo,
-                    "Unlocks" => GetGameWeaponUnlocks, 
+                    "Unlocks" => GetGameWeaponUnlocks,
                     _ => GetGameStatusEleBloatInfo,
                 };
             }
         }
 
-        public static string GetGameWeaponUnlocks { 
+        public static string GetGameWeaponUnlocks
+        {
             get
             {
-                return 
+                return
 @"Q: How do I unlock Tonfas/SA-F/Magnet spike? 
 
 A: Tonfas and SA-F are unlocked as soon as you enter G rank, all you have to do is make one of either weapon, equip it and then speak to the Guildmaster to unlock the styles for it.
@@ -7609,7 +7599,7 @@ Magnet spike has its own quest line to unlock:
 10. Talk to Graham and then the Smithy
 
 After all that you’ve unlocked magnet spike! You should get a material to make the “Protospike α”";
-            } 
+            }
         }
 
         public static string GetGameMeleeStats
@@ -8531,11 +8521,11 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public List<ISeries> hitsPerSecondSeries { get; set; } = new();
 
         public List<ISeries> weaponUsageSeries { get; set; } = new();
-    
+
 
         public string GetTimeElapsed(double frames)
         {
-            var elapsedTime = TimeSpan.FromSeconds(frames/30);
+            var elapsedTime = TimeSpan.FromSeconds(frames / 30);
             var elapsedTimeString = elapsedTime.ToString("mm\\:ss");
             return elapsedTimeString;
         }
@@ -8549,7 +8539,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public string GetMinutesSecondsMillisecondsFromFrames(long frames)
         {
-            var elapsedTime = TimeSpan.FromSeconds((double)frames/30);
+            var elapsedTime = TimeSpan.FromSeconds((double)frames / 30);
             var elapsedTimeString = elapsedTime.ToString("mm\\:ss\\.ff");
             return elapsedTimeString;
         }
@@ -9037,10 +9027,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-            List<string> findFiles = new List<string>{ 
-                s.GameFolderPath + @"\dat\mhfdat.bin", 
-                s.GameFolderPath + @"\dat\mhfinf.bin", 
-                s.GameFolderPath + @"\dat\mhfemd.bin", 
+            List<string> findFiles = new List<string>{
+                s.GameFolderPath + @"\dat\mhfdat.bin",
+                s.GameFolderPath + @"\dat\mhfinf.bin",
+                s.GameFolderPath + @"\dat\mhfemd.bin",
                 s.GameFolderPath + @"\dat\mhfsqd.bin",
                 s.GameFolderPath + @"\mhfo.dll",
                 s.GameFolderPath + @"\mhfo-hd.dll"
@@ -9050,7 +9040,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             if (s.GameFolderPath == "" || s.GameFolderPath == null)
             {
                 MessageBox.Show("Please provide a path to the game folder by clicking the *Select Game Folder* button in Quest Logs, Settings section. See tooltip in Quest Logs for more information. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-                
+
                 s.EnableQuestLogging = false;
                 return false;
             }
@@ -9082,7 +9072,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         // all dictionaries get a new entry every 1 second. freezes on quest state 1, resets on quest id = 0.
         // use modulo
         //int for timeint() which is current quest time, second int for current attack buff
-        public Dictionary<int, int> attackBuffDictionary = new Dictionary<int,int>();
+        public Dictionary<int, int> attackBuffDictionary = new Dictionary<int, int>();
         // the deserealized are used for displays
         public Dictionary<int, int> attackBuffDictionaryDeserealized;
 
@@ -9149,15 +9139,15 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             double timeElapsedIn30FPS = TimeDefInt() - TimeInt();
 
             // Calculate and return the DPS
-            return damageDealt / (timeElapsedIn30FPS/30);
-        }   
+            return damageDealt / (timeElapsedIn30FPS / 30);
+        }
 
         public double CalculateAPM()
         {
             double totalInputs = gamepadInputDictionary.Count + keystrokesDictionary.Count + mouseInputDictionary.Count;
             double timeElapsedIn30FPS = TimeDefInt() - TimeInt();
 
-            return totalInputs / (timeElapsedIn30FPS/1800);
+            return totalInputs / (timeElapsedIn30FPS / 1800);
         }
 
 
@@ -9190,7 +9180,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public Dictionary<int, int> cartsDictionaryDeserealized;
 
         // time <monsterid, monsterhp>
-        public Dictionary<int, Dictionary<int, int>> monster1HPDictionary = new Dictionary<int, Dictionary<int,int>>();
+        public Dictionary<int, Dictionary<int, int>> monster1HPDictionary = new Dictionary<int, Dictionary<int, int>>();
         public Dictionary<int, Dictionary<int, int>> monster2HPDictionary = new Dictionary<int, Dictionary<int, int>>();
         public Dictionary<int, Dictionary<int, int>> monster3HPDictionary = new Dictionary<int, Dictionary<int, int>>();
         public Dictionary<int, Dictionary<int, int>> monster4HPDictionary = new Dictionary<int, Dictionary<int, int>>();
@@ -9215,7 +9205,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         // time, areaid, hitstakenblocked
         // can calculate total hits by area by checking areaid, or in total by all sum.
-        public Dictionary<int,Dictionary<int, int>> hitsTakenBlockedDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = new Dictionary<int, Dictionary<int, int>>();
         public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionaryDeserealized = new Dictionary<int, Dictionary<int, int>>();
 
         public Dictionary<int, int> playerHPDictionary = new Dictionary<int, int>();
@@ -9289,9 +9279,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public string previousOverlayMode = "N/A";
 
-        public List<Dictionary<int,int>> InsertInventoryDictionaryIntoList(string inventoryType)
+        public List<Dictionary<int, int>> InsertInventoryDictionaryIntoList(string inventoryType)
         {
-            List<Dictionary<int, int>> list =  new List<Dictionary<int,int>>();
+            List<Dictionary<int, int>> list = new List<Dictionary<int, int>>();
 
             int x = 20;
             switch (inventoryType)
@@ -9396,7 +9386,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                             itemQty = PouchItem20Qty();
                             break;
                     }
-                } else if (inventoryType == "Ammo")
+                }
+                else if (inventoryType == "Ammo")
                 {
                     switch (i)
                     {
@@ -9441,7 +9432,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                             itemQty = AmmoPouchItem10Qty();
                             break;
                     }
-                } else if (inventoryType == "Partnya Bag")
+                }
+                else if (inventoryType == "Partnya Bag")
                 {
                     switch (i)
                     {
@@ -9495,7 +9487,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return list;
         }
 
-        public int CalculateTotalDictionaryValuesInList(List<Dictionary<int,int>> list)
+        public int CalculateTotalDictionaryValuesInList(List<Dictionary<int, int>> list)
         {
             if (list.Count > 0)
             {
@@ -9512,7 +9504,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             if (TimeDefInt() <= 0)
                 return 0;
 
-            return (double)(TimeDefInt() - TimeInt())/30;
+            return (double)(TimeDefInt() - TimeInt()) / 30;
         }
 
         public void InsertQuestInfoIntoDictionaries()
@@ -9859,7 +9851,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             if (previousHitsTakenBlocked != AreaHitsTakenBlocked() && AreaHitsTakenBlocked() != 0 && hitsTakenBlockedDictionary.TryGetValue(TimeInt(), out var hitsTakenBlocked) == false)
             {
                 previousHitsTakenBlocked = AreaHitsTakenBlocked();
-                Dictionary<int,int> hitsAreaPairs = new Dictionary<int, int>();
+                Dictionary<int, int> hitsAreaPairs = new Dictionary<int, int>();
                 hitsAreaPairs.Add(AreaID(), AreaHitsTakenBlocked());
                 hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
             }
@@ -9894,7 +9886,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 hitsTakenBlockedPerSecondDictionary.Add(TimeInt(), TotalHitsTakenBlockedPerSecond);
             }
 
-            if (previousActionsPerMinute != APM && actionsPerMinuteDictionary.TryGetValue(TimeInt(),out double value) == false)
+            if (previousActionsPerMinute != APM && actionsPerMinuteDictionary.TryGetValue(TimeInt(), out double value) == false)
             {
                 previousActionsPerMinute = APM;
                 actionsPerMinuteDictionary.Add(TimeInt(), APM);
@@ -10073,12 +10065,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         #region countries
 
         // Get all countries
-        public IEnumerable<Country> Countries 
-        { 
+        public IEnumerable<Country> Countries
+        {
             get
             {
                 return RestCountriesService.GetAllCountries();
-            } 
+            }
         }
 
         #endregion
@@ -10140,12 +10132,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         #endregion
 
-        public string QuestIDBind 
+        public string QuestIDBind
         {
             get
             {
                 return QuestID().ToString();
-            } 
+            }
         }
 
         public List<RecentRuns> RecentRuns { get; set; } = new();
@@ -10195,7 +10187,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             if (hexColor.Length == 6)
                 hexColor = hexColor.Insert(0, "ff");
             else
-                hexColor = hexColor.Remove(0,2).Insert(0, "ff");
+                hexColor = hexColor.Remove(0, 2).Insert(0, "ff");
 
             if (alphaChannel != null && alphaChannel != "ff")
             {
@@ -10226,7 +10218,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
 
 
-        public Option SelectedOption { get; set; } = new Option { Name = "Default", IsSelected = true};
+        public Option SelectedOption { get; set; } = new Option { Name = "Default", IsSelected = true };
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

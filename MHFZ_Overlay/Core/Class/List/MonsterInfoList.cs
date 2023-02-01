@@ -1810,5 +1810,5 @@ namespace Dictionary
                 "https://monsterhunter.fandom.com/wiki/Zinogre"
                 )
             };
-        };
-    }
+    };
+}

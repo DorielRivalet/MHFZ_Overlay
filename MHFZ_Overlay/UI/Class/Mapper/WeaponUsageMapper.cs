@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MHFZ_Overlay.UI.Class.Mapper
+﻿namespace MHFZ_Overlay.UI.Class.Mapper
 {
     public class WeaponUsageMapper
     {

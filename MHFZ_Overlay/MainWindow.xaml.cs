@@ -1,35 +1,31 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using Dictionary;
+﻿using Dictionary;
 using DiscordRPC;
 using Gma.System.MouseKeyHook;
 using LiveChartsCore;
+using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
-using MHFZ_Overlay.addresses;
 using MHFZ_Overlay.UI.Class;
-using Microsoft.Data.Sqlite;
 using Octokit;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.SQLite;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Forms;
-using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using XInput.Wrapper;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
@@ -38,17 +34,9 @@ using DataObject = System.Windows.DataObject;
 using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
 using Image = System.Windows.Controls.Image;
-using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using Label = System.Windows.Controls.Label;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
-using XInput.Wrapper;
-using Button = System.Windows.Controls.Button;
-using System.Linq;
-using LiveChartsCore.Defaults;
-using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
-using static XInput.Wrapper.X.Gamepad.Battery;
 
 namespace MHFZ_Overlay
 {
@@ -376,7 +364,7 @@ namespace MHFZ_Overlay
             splashScreen.Show(false);
             DataLoader = new DataLoader();
             InitializeComponent();
-            
+
 
             Left = 0;
             Top = 0;

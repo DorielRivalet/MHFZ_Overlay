@@ -1,8 +1,4 @@
-﻿using LiveChartsCore.SkiaSharpView.Painting.ImageFilters;
-using System.Collections.Generic;
-using static System.Net.Mime.MediaTypeNames;
-using System.Reflection.Metadata;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 
 namespace Dictionary
 {

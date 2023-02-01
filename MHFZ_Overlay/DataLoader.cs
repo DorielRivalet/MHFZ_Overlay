@@ -1,22 +1,12 @@
-﻿using Dictionary;
-using Memory;
+﻿using Memory;
 using MHFZ_Overlay.addresses;
-using SQLitePCL;
-using Octokit;
 using Squirrel;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Data.SQLite;
-using SharpCompress.Common;
-using MHFZ_Overlay.controls;
-using System.Data;
-using System.Data.Common;
 
 namespace MHFZ_Overlay
 {
@@ -82,7 +72,7 @@ namespace MHFZ_Overlay
         {
             "displayer","Displayer","cheat","Cheat","overlay","Overlay","Wireshark"
         };
-        
+
         public void CheckForExternalProcesses()
         {
             var processList = System.Diagnostics.Process.GetProcesses();

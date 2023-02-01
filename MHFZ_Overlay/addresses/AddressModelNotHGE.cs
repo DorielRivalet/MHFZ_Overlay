@@ -1,6 +1,4 @@
 ﻿using Memory;
-using System;
-using System.Windows.Media.Animation;
 
 namespace MHFZ_Overlay.addresses
 {
