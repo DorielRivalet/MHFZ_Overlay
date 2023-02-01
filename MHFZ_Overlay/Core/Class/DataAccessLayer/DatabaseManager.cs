@@ -4993,9 +4993,13 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public Dictionary<int, int> GetMonster1HPDictionary(long runID)
+
+        //TODO
+        //{"89998":{"103":2000},"89488":{"103":1283},"89481":{"103":1130},
+        //"89463":{"103":469},"89454":{"103":315}}
+        public Dictionary<int, Dictionary<int,int>> GetMonster1HPDictionary(long runID)
         {
-            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+            Dictionary<int, Dictionary<int,int>> dictionary = new Dictionary<int, Dictionary<int,int>>();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5012,7 +5016,7 @@ namespace MHFZ_Overlay
 
                             if (result != null)
                             {
-                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int,int>>>((string)result);
                             }
                         }
                         transaction.Commit();
@@ -5026,9 +5030,9 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public Dictionary<int, int> GetMonster2HPDictionary(long runID)
+        public Dictionary<int, Dictionary<int, int>> GetMonster2HPDictionary(long runID)
         {
-            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5045,7 +5049,7 @@ namespace MHFZ_Overlay
 
                             if (result != null)
                             {
-                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
                             }
                         }
                         transaction.Commit();
@@ -5059,9 +5063,9 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public Dictionary<int, int> GetMonster3HPDictionary(long runID)
+        public Dictionary<int, Dictionary<int, int>> GetMonster3HPDictionary(long runID)
         {
-            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5078,7 +5082,7 @@ namespace MHFZ_Overlay
 
                             if (result != null)
                             {
-                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
                             }
                         }
                         transaction.Commit();
@@ -5092,9 +5096,9 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public Dictionary<int, int> GetMonster4HPDictionary(long runID)
+        public Dictionary<int, Dictionary<int, int>> GetMonster4HPDictionary(long runID)
         {
-            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5111,7 +5115,7 @@ namespace MHFZ_Overlay
 
                             if (result != null)
                             {
-                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
                             }
                         }
                         transaction.Commit();
@@ -5124,6 +5128,106 @@ namespace MHFZ_Overlay
             }
             return dictionary;
         }
+
+        public Dictionary<int, List<Dictionary<int, int>>> GetPlayerInventoryDictionary(long runID)
+        {
+            Dictionary<int, List<Dictionary<int, int>>> dictionary = new Dictionary<int, List<Dictionary<int, int>>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT HitsTakenBlockedDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, List<Dictionary<int, int>>> GetAmmoDictionary(long runID)
+        {
+            Dictionary<int, List<Dictionary<int, int>>> dictionary = new Dictionary<int, List<Dictionary<int, int>>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT HitsTakenBlockedDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, List<Dictionary<int, int>>> GetPartnyaBagDictionary(long runID)
+        {
+            Dictionary<int, List<Dictionary<int, int>>> dictionary = new Dictionary<int, List<Dictionary<int, int>>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT HitsTakenBlockedDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
 
         public Dictionary<int, int> GetHitsTakenBlockedDictionary(long runID)
         {

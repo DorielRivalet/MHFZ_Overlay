@@ -342,45 +342,47 @@
                     <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#74c7ec" />
 
                     <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
-                        <ComboBox x:Name="graphsComboBox" Width="330" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
-                            <ComboBoxItem>(General) Most Quest Completions</ComboBoxItem>
-                            <ComboBoxItem>(General) Quest Durations</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Objective Types</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Star Grades</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Rank Bands</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Objective</ComboBoxItem>
-                            <ComboBoxItem>(General) Quests Completed by Date</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Party Size</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Set Name</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Weapon Name</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Head Piece</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Chest Piece</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Arms Piece</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Waist Piece</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Legs Piece</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Diva Skill</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Guild Food</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Style Rank Skills</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Caravan Skills</ComboBoxItem>
-                            <ComboBoxItem>(General) Most Common Category</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Attack Buff</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Hit Count</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Hits per Second</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Damage Dealt</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Damage per Second</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Area Changes</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Carts</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Monster HP</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Hits Taken/Blocked</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Hits Taken/Blocked per Second</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Player Health and Stamina</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Player Input</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Actions per Minute</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Inventory</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Ammo</ComboBoxItem>
-                            <ComboBoxItem>(Run ID) Partnya Bag</ComboBoxItem>
-                        </ComboBox>
-
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox x:Name="graphsComboBox" Width="330" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
+                                <ComboBoxItem>(General) Most Quest Completions</ComboBoxItem>
+                                <ComboBoxItem>(General) Quest Durations</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Objective Types</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Star Grades</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Rank Bands</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Objective</ComboBoxItem>
+                                <ComboBoxItem>(General) Quests Completed by Date</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Party Size</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Set Name</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Weapon Name</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Head Piece</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Chest Piece</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Arms Piece</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Waist Piece</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Legs Piece</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Diva Skill</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Guild Food</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Style Rank Skills</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Caravan Skills</ComboBoxItem>
+                                <ComboBoxItem>(General) Most Common Category</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Attack Buff</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Hit Count</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Hits per Second</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Damage Dealt</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Damage per Second</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Area Changes</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Carts</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Monster HP</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Hits Taken/Blocked</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Hits Taken/Blocked per Second</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Player Health and Stamina</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Player Input</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Actions per Minute</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Inventory</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Ammo</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Partnya Bag</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Multiplayer runs may not display the correct data"/>
+                        </StackPanel>
                         <lvc:CartesianChart Loaded="GraphsChart_Loaded" Grid.Column="1" Grid.Row="1" x:Name="GraphsChart" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                     </StackPanel>

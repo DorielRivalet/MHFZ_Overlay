@@ -2378,8 +2378,11 @@ namespace MHFZ_Overlay
 
         public Dictionary<int, int> GetElapsedTime(Dictionary<int, int> timeAttackDict)
         {
-            int initialTime = timeAttackDict.First().Key;
             Dictionary<int, int> elapsedTimeDict = new Dictionary<int, int>();
+            if (timeAttackDict == null || !timeAttackDict.Any())
+                return elapsedTimeDict;
+
+            int initialTime = timeAttackDict.First().Key;
             foreach (var entry in timeAttackDict)
             {
                 elapsedTimeDict[initialTime - entry.Key] = entry.Value;
@@ -2406,8 +2409,8 @@ namespace MHFZ_Overlay
                 Values = collection,
                 LineSmoothness = .5,
                 GeometrySize = 0,
-                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor))) { StrokeThickness = 2 },
-                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
             });
 
             XAxes = new Axis[]
@@ -2579,34 +2582,31 @@ namespace MHFZ_Overlay
                     SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetAttackBuffDictionary(runID));
                     return;
                 case "(Run ID) Hit Count":
-                    
-                    //insert data
+                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetHitCountDictionary(runID));
                     break;
                 case "(Run ID) Hits per Second":
-                    
-                    //insert data
+                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetHitsPerSecondDictionary(runID));
                     break;
                 case "(Run ID) Damage Dealt":
-                    
-                    //insert data
+                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetDamageDealtDictionary(runID));
                     break;
                 case "(Run ID) Damage per Second":
-                    //insert data
+                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetDamagePerSecondDictionary(runID));
                     break;
                 case "(Run ID) Area Changes":
-                    //insert data
+                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetAreaChangesDictionary(runID));
                     break;
                 case "(Run ID) Carts":
-                    //insert data
+                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetCartsDictionary(runID));
                     break;
                 case "(Run ID) Monster HP":
                     //insert data
                     break;
                 case "(Run ID) Hits Taken/Blocked":
-                    //insert data
+                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetHitsTakenBlockedDictionary(runID));
                     break;
                 case "(Run ID) Hits Taken/Blocked per Second":
-                    //insert data
+                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetHitsTakenBlockedPerSecondDictionary(runID));
                     break;
                 case "(Run ID) Player Health and Stamina":
                     //insert data
@@ -2615,7 +2615,7 @@ namespace MHFZ_Overlay
                     //insert data
                     break;
                 case "(Run ID) Actions per Minute":
-                    //insert data
+                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetActionsPerMinuteDictionary(runID));
                     break;
                 case "(Run ID) Inventory":
                     //insert data
