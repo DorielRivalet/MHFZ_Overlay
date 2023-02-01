@@ -29,6 +29,7 @@ using SkiaSharp;
 using LiveChartsCore.Measure;
 using MHFZ_Overlay.UI.Class;
 using System.Net;
+using System.Text;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -990,7 +991,7 @@ namespace MHFZ_Overlay.addresses
                 else
                     return "(Freestyle No Secret Tech) ";
             }
-            else //if (s.EnableQuestLogging == true || s.EnableQuestLogging == false)
+            else 
                 return "(Zen) ";
         }
 
@@ -3320,259 +3321,68 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                int Item1 = PouchItem1ID();
-                int Item2 = PouchItem2ID();
-                int Item3 = PouchItem3ID();
-                int Item4 = PouchItem4ID();
-                int Item5 = PouchItem5ID();
-                int Item6 = PouchItem6ID();
-                int Item7 = PouchItem7ID();
-                int Item8 = PouchItem8ID();
-                int Item9 = PouchItem9ID();
-                int Item10 = PouchItem10ID();
-                int Item11 = PouchItem11ID();
-                int Item12 = PouchItem12ID();
-                int Item13 = PouchItem13ID();
-                int Item14 = PouchItem14ID();
-                int Item15 = PouchItem15ID();
-                int Item16 = PouchItem16ID();
-                int Item17 = PouchItem17ID();
-                int Item18 = PouchItem18ID();
-                int Item19 = PouchItem19ID();
-                int Item20 = PouchItem20ID();
-
-                Dictionary.Items.ItemIDs.TryGetValue(Item1, out string? ItemName1);
-                Dictionary.Items.ItemIDs.TryGetValue(Item2, out string? ItemName2);
-                Dictionary.Items.ItemIDs.TryGetValue(Item3, out string? ItemName3);
-                Dictionary.Items.ItemIDs.TryGetValue(Item4, out string? ItemName4);
-                Dictionary.Items.ItemIDs.TryGetValue(Item5, out string? ItemName5);
-                Dictionary.Items.ItemIDs.TryGetValue(Item6, out string? ItemName6);
-                Dictionary.Items.ItemIDs.TryGetValue(Item7, out string? ItemName7);
-                Dictionary.Items.ItemIDs.TryGetValue(Item8, out string? ItemName8);
-                Dictionary.Items.ItemIDs.TryGetValue(Item9, out string? ItemName9);
-                Dictionary.Items.ItemIDs.TryGetValue(Item10, out string? ItemName10);
-                Dictionary.Items.ItemIDs.TryGetValue(Item11, out string? ItemName11);
-                Dictionary.Items.ItemIDs.TryGetValue(Item12, out string? ItemName12);
-                Dictionary.Items.ItemIDs.TryGetValue(Item13, out string? ItemName13);
-                Dictionary.Items.ItemIDs.TryGetValue(Item14, out string? ItemName14);
-                Dictionary.Items.ItemIDs.TryGetValue(Item15, out string? ItemName15);
-                Dictionary.Items.ItemIDs.TryGetValue(Item16, out string? ItemName16);
-                Dictionary.Items.ItemIDs.TryGetValue(Item17, out string? ItemName17);
-                Dictionary.Items.ItemIDs.TryGetValue(Item18, out string? ItemName18);
-                Dictionary.Items.ItemIDs.TryGetValue(Item19, out string? ItemName19);
-                Dictionary.Items.ItemIDs.TryGetValue(Item20, out string? ItemName20);
-
-                // pls
-                if (GetTextFormat() == "Markdown")
+                int[] itemIDs = new int[20]
                 {
-                    if (IsMetaItem(Item1) && (ItemName1 != null || ItemName1 != "None" || ItemName1 != ""))
-                        ItemName1 = string.Format("**{0}**", ItemName1);
+            PouchItem1ID(),
+            PouchItem2ID(),
+            PouchItem3ID(),
+            PouchItem4ID(),
+            PouchItem5ID(),
+            PouchItem6ID(),
+            PouchItem7ID(),
+            PouchItem8ID(),
+            PouchItem9ID(),
+            PouchItem10ID(),
+            PouchItem11ID(),
+            PouchItem12ID(),
+            PouchItem13ID(),
+            PouchItem14ID(),
+            PouchItem15ID(),
+            PouchItem16ID(),
+            PouchItem17ID(),
+            PouchItem18ID(),
+            PouchItem19ID(),
+            PouchItem20ID()
+                };
 
-                    if (IsMetaItem(Item2) && (ItemName2 != null || ItemName2 != "None" || ItemName2 != ""))
-                        ItemName2 = string.Format("**{0}**", ItemName2);
-
-                    if (IsMetaItem(Item3) && (ItemName3 != null || ItemName3 != "None" || ItemName3 != ""))
-                        ItemName3 = string.Format("**{0}**", ItemName3);
-
-                    if (IsMetaItem(Item4) && (ItemName4 != null || ItemName4 != "None" || ItemName4 != ""))
-                        ItemName4 = string.Format("**{0}**", ItemName4);
-
-                    if (IsMetaItem(Item5) && (ItemName5 != null || ItemName5 != "None" || ItemName5 != ""))
-                        ItemName5 = string.Format("**{0}**", ItemName5);
-
-                    if (IsMetaItem(Item6) && (ItemName6 != null || ItemName6 != "None" || ItemName6 != ""))
-                        ItemName6 = string.Format("**{0}**", ItemName6);
-
-                    if (IsMetaItem(Item7) && (ItemName7 != null || ItemName7 != "None" || ItemName7 != ""))
-                        ItemName7 = string.Format("**{0}**", ItemName7);
-
-                    if (IsMetaItem(Item8) && (ItemName8 != null || ItemName8 != "None" || ItemName8 != ""))
-                        ItemName8 = string.Format("**{0}**", ItemName8);
-
-                    if (IsMetaItem(Item9) && (ItemName9 != null || ItemName9 != "None" || ItemName9 != ""))
-                        ItemName9 = string.Format("**{0}**", ItemName9);
-
-                    if (IsMetaItem(Item10) && (ItemName10 != null || ItemName10 != "None" || ItemName10 != ""))
-                        ItemName10 = string.Format("**{0}**", ItemName10);
-
-                    if (IsMetaItem(Item11) && (ItemName11 != null || ItemName11 != "None" || ItemName11 != ""))
-                        ItemName11 = string.Format("**{0}**", ItemName11);
-
-                    if (IsMetaItem(Item12) && (ItemName12 != null || ItemName12 != "None" || ItemName12 != ""))
-                        ItemName12 = string.Format("**{0}**", ItemName12);
-
-                    if (IsMetaItem(Item13) && (ItemName13 != null || ItemName13 != "None" || ItemName13 != ""))
-                        ItemName13 = string.Format("**{0}**", ItemName13);
-
-                    if (IsMetaItem(Item14) && (ItemName14 != null || ItemName14 != "None" || ItemName14 != ""))
-                        ItemName14 = string.Format("**{0}**", ItemName14);
-
-                    if (IsMetaItem(Item15) && (ItemName15 != null || ItemName15 != "None" || ItemName15 != ""))
-                        ItemName15 = string.Format("**{0}**", ItemName15);
-
-                    if (IsMetaItem(Item16) && (ItemName16 != null || ItemName16 != "None" || ItemName16 != ""))
-                        ItemName16 = string.Format("**{0}**", ItemName16);
-
-                    if (IsMetaItem(Item17) && (ItemName17 != null || ItemName17 != "None" || ItemName17 != ""))
-                        ItemName17 = string.Format("**{0}**", ItemName17);
-
-                    if (IsMetaItem(Item18) && (ItemName18 != null || ItemName18 != "None" || ItemName18 != ""))
-                        ItemName18 = string.Format("**{0}**", ItemName18);
-
-                    if (IsMetaItem(Item19) && (ItemName19 != null || ItemName19 != "None" || ItemName19 != ""))
-                        ItemName19 = string.Format("**{0}**", ItemName19);
-
-                    if (IsMetaItem(Item20) && (ItemName20 != null || ItemName20 != "None" || ItemName20 != ""))
-                        ItemName20 = string.Format("**{0}**", ItemName20);
+                string[] itemNames = new string[20];
+                for (int i = 0; i < 20; i++)
+                {
+                    if (Dictionary.Items.ItemIDs.TryGetValue(itemIDs[i], out string? itemName))
+                    {
+                        if (GetTextFormat() == "Markdown" && IsMetaItem(itemIDs[i]) && itemName != null && itemName != "None" && itemName != "")
+                        {
+                            itemName = string.Format("**{0}**", itemName);
+                        }
+                    }
+                    else
+                    {
+                        itemName = "None";
+                    }
+                    itemNames[i] = itemName;
                 }
 
-                //. also the values have to be skipped if item slot is empty
-                if (ItemName1 == null || ItemName1 == "None" || ItemName1 == "" || PouchItem1Qty() == 0)
-                    ItemName1 = "Empty, ";
-                else if (ItemName2 == null || ItemName2 == "None" || ItemName2 == "" || PouchItem2Qty() == 0)
-                    ItemName1 += ", ";
-                else
-                    ItemName1 += ", ";
-
-                if (ItemName2 == null || ItemName2 == "None" || ItemName2 == "" || PouchItem2Qty() == 0)
-                    ItemName2 = "Empty, ";
-                else if (ItemName3 == null || ItemName3 == "None" || ItemName3 == "" || PouchItem3Qty() == 0)
-                    ItemName2 += ", ";
-                else
-                    ItemName2 += ", ";
-
-                if (ItemName3 == null || ItemName3 == "None" || ItemName3 == "" || PouchItem3Qty() == 0)
-                    ItemName3 = "Empty, ";
-                else if (ItemName4 == null || ItemName4 == "None" || ItemName4 == "" || PouchItem4Qty() == 0)
-                    ItemName3 += ", ";
-                else
-                    ItemName3 += ", ";
-
-                if (ItemName4 == null || ItemName4 == "None" || ItemName4 == "" || PouchItem4Qty() == 0)
-                    ItemName4 = "Empty, ";
-                else if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || PouchItem5Qty() == 0)
-                    ItemName4 += ", ";
-                else
-                    ItemName4 += ", ";
-
-                if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || PouchItem5Qty() == 0)
-                    ItemName5 = "Empty, \n";
-                else if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || PouchItem6Qty() == 0)
-                    ItemName5 += "";
-                else
-                    ItemName5 += "\n";
-
-                if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || PouchItem6Qty() == 0)
-                    ItemName6 = "Empty, ";
-                else if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || PouchItem7Qty() == 0)
-                    ItemName6 += ", ";
-                else
-                    ItemName6 += ", ";
-
-                if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || PouchItem7Qty() == 0)
-                    ItemName7 = "Empty, ";
-                else if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || PouchItem8Qty() == 0)
-                    ItemName7 += ", ";
-                else
-                    ItemName7 += ", ";
-
-                if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || PouchItem8Qty() == 0)
-                    ItemName8 = "Empty, ";
-                else if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || PouchItem9Qty() == 0)
-                    ItemName8 += ", ";
-                else
-                    ItemName8 += ", ";
-
-                if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || PouchItem9Qty() == 0)
-                    ItemName9 = "Empty, ";
-                else if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || PouchItem10Qty() == 0)
-                    ItemName9 += ", ";
-                else
-                    ItemName9 += ", ";
-
-                if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || PouchItem10Qty() == 0)
-                    ItemName10 = "Empty, \n";
-                else if (ItemName11 == null || ItemName11 == "None" || ItemName11 == "" || PouchItem11Qty() == 0)
-                    ItemName10 += "";
-                else
-                    ItemName10 += "\n";
-
-                if (ItemName11 == null || ItemName11 == "None" || ItemName11 == "" || PouchItem11Qty() == 0)
-                    ItemName11 = "Empty, ";
-                else if (ItemName12 == null || ItemName12 == "None" || ItemName12 == "" || PouchItem12Qty() == 0)
-                    ItemName11 += ", ";
-                else
-                    ItemName11 += ", ";
-
-                if (ItemName12 == null || ItemName12 == "None" || ItemName12 == "" || PouchItem12Qty() == 0)
-                    ItemName12 = "Empty, ";
-                else if (ItemName13 == null || ItemName13 == "None" || ItemName13 == "" || PouchItem13Qty() == 0)
-                    ItemName12 += ", ";
-                else
-                    ItemName12 += ", ";
-
-                if (ItemName13 == null || ItemName13 == "None" || ItemName13 == "" || PouchItem13Qty() == 0)
-                    ItemName13 = "Empty, ";
-                else if (ItemName14 == null || ItemName14 == "None" || ItemName14 == "" || PouchItem14Qty() == 0)
-                    ItemName13 += ", ";
-                else
-                    ItemName13 += ", ";
-
-                if (ItemName14 == null || ItemName14 == "None" || ItemName14 == "" || PouchItem14Qty() == 0)
-                    ItemName14 = "Empty, ";
-                else if (ItemName15 == null || ItemName15 == "None" || ItemName15 == "" || PouchItem15Qty() == 0)
-                    ItemName14 += ", ";
-                else
-                    ItemName14 += ", ";
-
-                if (ItemName15 == null || ItemName15 == "None" || ItemName15 == "" || PouchItem15Qty() == 0)
-                    ItemName15 = "Empty, \n";
-                else if (ItemName16 == null || ItemName16 == "None" || ItemName16 == "" || PouchItem16Qty() == 0)
-                    ItemName15 += "";
-                else
-                    ItemName15 += "\n";
-
-                if (ItemName16 == null || ItemName16 == "None" || ItemName16 == "" || PouchItem16Qty() == 0)
-                    ItemName16 = "Empty, ";
-                else if (ItemName17 == null || ItemName17 == "None" || ItemName17 == "" || PouchItem17Qty() == 0)
-                    ItemName16 += ", ";
-                else
-                    ItemName16 += ", ";
-
-                if (ItemName17 == null || ItemName17 == "None" || ItemName17 == "" || PouchItem16Qty() == 0)
-                    ItemName17 = "Empty, ";
-                else if (ItemName18 == null || ItemName18 == "None" || ItemName18 == "" || PouchItem18Qty() == 0)
-                    ItemName17 += ", ";
-                else
-                    ItemName17 += ", ";
-
-                if (ItemName18 == null || ItemName18 == "None" || ItemName18 == "" || PouchItem17Qty() == 0)
-                    ItemName18 = "Empty, ";
-                else if (ItemName19 == null || ItemName19 == "None" || ItemName19 == "" || PouchItem19Qty() == 0)
-                    ItemName18 += "";
-                else
-                    ItemName18 += ", ";
-
-                if (ItemName19 == null || ItemName19 == "None" || ItemName19 == "" || PouchItem18Qty() == 0)
-                    ItemName19 = "Empty, ";
-                else if (ItemName20 == null || ItemName20 == "None" || ItemName20 == "" || PouchItem20Qty() == 0)
-                    ItemName19 += ", ";
-                else
-                    ItemName19 += ", ";
-
-                if (ItemName20 == null || ItemName20 == "None" || ItemName20 == "" || PouchItem20Qty() == 0)
-                    ItemName20 = "Empty";
-
-                else
-                    ItemName20 += "";
-
-                return string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}", ItemName1, ItemName2, ItemName3, ItemName4, ItemName5, ItemName6, ItemName7, ItemName8, ItemName9, ItemName10, ItemName11, ItemName12, ItemName13, ItemName14, ItemName15, ItemName16, ItemName17, ItemName18, ItemName19, ItemName20);
+                string itemPouch = "";
+                for (int i = 0; i < 20; i++)
+                {
+                    itemPouch += itemNames[i];
+                    if ((i + 1) % 5 == 0)
+                    {
+                        itemPouch += "\n";
+                    }
+                    else if (i != 19)
+                    {
+                        itemPouch += ", ";
+                    }
+                }
+                return itemPouch;
             }
         }
 
         public string GetItemsForRunID(int[] items)
         {
-            string name = "";
+            StringBuilder sb = new StringBuilder();
+            int counter = 0;
             for (int i = 0; i < items.Length; i++)
             {
                 int id = items[i];
@@ -3580,17 +3390,24 @@ namespace MHFZ_Overlay.addresses
                 {
                     if (value != "None" && value != "")
                     {
-                        name += value;
-                        if (i != items.Length - 1)
-                            name += ", ";
-                        if (i % 5 == 4)
-                            name += "\n";
+                        sb.Append(value);
+                        counter++;
+                        if (counter % 5 == 0)
+                        {
+                            sb.Append("\n");
+                        }
+                        else if (i != items.Length - 1)
+                        {
+                            sb.Append(", ");
+                        }
                     }
                 }
             }
-            if (string.IsNullOrEmpty(name))
+            if (sb.Length == 0)
+            {
                 return "None";
-            return name;
+            }
+            return sb.ToString();
         }
 
         //TODO: Levels
@@ -3600,23 +3417,17 @@ namespace MHFZ_Overlay.addresses
             for (int i = 0; i < skills.Length; i++)
             {
                 int id = skills[i];
-                if (Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(id, out string value))
+                if (Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(id, out string value) && value != "None" && value != "")
                 {
-                    if (value != "None" && value != "")
-                    {
-                        name += value;
-                        if (i != skills.Length - 1)
-                            name += ", ";
-                        if (i % 5 == 4)
-                            name += "\n";
-                    }
+                    name += value;
+                    if (i != skills.Length - 1)
+                        name += ", ";
+                    if (i % 5 == 4)
+                        name += "\n";
                 }
             }
-            if (string.IsNullOrEmpty(name))
-                return "None";
-            return name;
+            return string.IsNullOrEmpty(name) ? "None" : name;
         }
-
 
         /// <summary>
         /// Gets the name of the head piece.
@@ -3800,189 +3611,42 @@ namespace MHFZ_Overlay.addresses
         /// </value>
         public string GetSigilName(int slot)
         {
-            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil1Name1(), out string? Sigil1Type1);
-            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil1Name2(), out string? Sigil1Type2);
-            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil1Name3(), out string? Sigil1Type3);
-            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil2Name1(), out string? Sigil2Type1);
-            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil2Name2(), out string? Sigil2Type2);
-            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil2Name3(), out string? Sigil2Type3);
-            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil3Name1(), out string? Sigil3Type1);
-            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil3Name2(), out string? Sigil3Type2);
-            Dictionary.SigilSkillList.SigilSkillID.TryGetValue(Sigil3Name3(), out string? Sigil3Type3);
-
-            string value1;
-            string value2;
-            string value3;
-            string type1;
-            string type2;
-            string type3;
-
-            string Sigil1Type1Value = Sigil1Value1().ToString();
-            string Sigil1Type2Value = Sigil1Value2().ToString();
-            string Sigil1Type3Value = Sigil1Value3().ToString();
-            string Sigil2Type1Value = Sigil2Value1().ToString();
-            string Sigil2Type2Value = Sigil2Value2().ToString();
-            string Sigil2Type3Value = Sigil2Value3().ToString();
-            string Sigil3Type1Value = Sigil3Value1().ToString();
-            string Sigil3Type2Value = Sigil3Value2().ToString();
-            string Sigil3Type3Value = Sigil3Value3().ToString();
-
-            switch (slot)
+            Dictionary<int, string> sigilSkillList = (Dictionary<int, string>)Dictionary.SigilSkillList.SigilSkillID;
+            int[] sigilNames = new int[] { Sigil1Name1(), Sigil1Name2(), Sigil1Name3(), Sigil2Name1(), Sigil2Name2(), Sigil2Name3(), Sigil3Name1(), Sigil3Name2(), Sigil3Name3() };
+            int[] sigilValues = new int[] { Sigil1Value1(), Sigil1Value2(), Sigil1Value3(), Sigil2Value1(), Sigil2Value2(), Sigil2Value3(), Sigil3Value1(), Sigil3Value2(), Sigil3Value3() };
+            string[] sigilTypes = new string[9];
+            for (int i = 0; i < 9; i++)
             {
-                default:
-
-                    return "Empty";
-
-                case 1:
-
-                    if (Sigil1Type1Value == "0" || Sigil1Name1() == 0)
-                        return "Empty";
-                    else
-                    {
-                        type1 = Sigil1Type1 + ": ";
-
-                        if (int.Parse(Sigil1Type1Value) > 127)
-                            value1 = (int.Parse(Sigil1Type1Value) - 256).ToString() + ", ";
-                        else
-                            value1 = "+" + Sigil1Type1Value + ", ";
-
-                    }
-
-                    if (Sigil1Type2Value == "0" || Sigil1Name2() == 0)
-                    {
-                        value2 = "";
-                        type2 = "Empty, ";
-                    }
-                    else
-                    {
-
-                        if (int.Parse(Sigil1Type2Value) > 127)
-                            value2 = (int.Parse(Sigil1Type2Value) - 256).ToString() + ", ";
-                        else
-                            value2 = "+" + Sigil1Type2Value + ", ";
-
-                        type2 = Sigil1Type2 + ": ";
-                    }
-
-                    if (Sigil1Type3Value == "0" || Sigil1Name3() == 0)
-                    {
-                        value3 = "";
-                        type3 = "Empty";
-                    }
-                    else
-                    {
-
-                        if (int.Parse(Sigil1Type3Value) > 127)
-                            value3 = (int.Parse(Sigil1Type3Value) - 256).ToString() + ", ";
-                        else
-                            value3 = "+" + Sigil1Type3Value + ", ";
-
-                        type3 = Sigil1Type3 + ": ";
-                    }
-
-                    break;
-
-                case 2:
-
-                    if (Sigil2Type1Value == "0" || Sigil2Name1() == 0)
-                        return "Empty";
-                    else
-                    {
-                        type1 = Sigil2Type1 + ": ";
-
-                        if (int.Parse(Sigil2Type1Value) > 127)
-                            value1 = (int.Parse(Sigil2Type1Value) - 256).ToString() + ", ";
-                        else
-                            value1 = "+" + Sigil2Type1Value + ", ";
-
-                    }
-
-                    if (Sigil2Type2Value == "0" || Sigil2Name2() == 0)
-                    {
-                        value2 = "";
-                        type2 = "None, ";
-                    }
-                    else
-                    {
-
-                        if (int.Parse(Sigil2Type2Value) > 127)
-                            value2 = (int.Parse(Sigil2Type2Value) - 256).ToString() + ", ";
-                        else
-                            value2 = "+" + Sigil2Type2Value + ", ";
-
-                        type2 = Sigil2Type2 + ": ";
-                    }
-
-                    if (Sigil2Type3Value == "0" || Sigil2Name3() == 0)
-                    {
-                        value3 = "";
-                        type3 = "None";
-                    }
-                    else
-                    {
-
-                        if (int.Parse(Sigil2Type3Value) > 127)
-                            value3 = (int.Parse(Sigil2Type3Value) - 256).ToString() + ", ";
-                        else
-                            value3 = "+" + Sigil2Type3Value + ", ";
-
-                        type3 = Sigil2Type3 + ": ";
-                    }
-
-                    break;
-
-                case 3:
-
-                    if (Sigil3Type1Value == "0" || Sigil3Name1() == 0)
-                        return "Empty";
-                    else
-                    {
-                        type1 = Sigil3Type1 + ": ";
-
-                        if (int.Parse(Sigil3Type1Value) > 127)
-                            value1 = (int.Parse(Sigil3Type1Value) - 256).ToString() + ", ";
-                        else
-                            value1 = "+" + Sigil3Type1Value + ", ";
-
-                    }
-
-                    if (Sigil3Type2Value == "0" || Sigil3Name2() == 0)
-                    {
-                        value2 = "";
-                        type2 = "None, ";
-                    }
-                    else
-                    {
-
-                        if (int.Parse(Sigil3Type2Value) > 127)
-                            value2 = (int.Parse(Sigil3Type2Value) - 256).ToString() + ", ";
-                        else
-                            value2 = "+" + Sigil3Type2Value + ", ";
-
-                        type2 = Sigil3Type2 + ": ";
-                    }
-
-                    if (Sigil3Type3Value == "0" || Sigil3Name3() == 0)
-                    {
-                        value3 = "";
-                        type3 = "None";
-                    }
-                    else
-                    {
-
-                        if (int.Parse(Sigil3Type3Value) > 127)
-                            value3 = (int.Parse(Sigil3Type3Value) - 256).ToString() + ", ";
-                        else
-                            value3 = "+" + Sigil3Type3Value + ", ";
-
-                        type3 = Sigil3Type3 + ": ";
-                    }
-
-                    break;
+                sigilSkillList.TryGetValue(sigilNames[i], out string? type);
+                sigilTypes[i] = type ?? "";
             }
 
-            return string.Format("{0}{1}{2}{3}{4}{5}", type1, value1, type2, value2, type3, value3);
+            int index = (slot - 1) * 3;
+            if (sigilValues[index] == 0 || sigilNames[index] == 0)
+                return "Empty";
+
+            string type1 = sigilTypes[index] + ": ";
+            string value1 = (sigilValues[index] > 127 ? sigilValues[index] - 256 : sigilValues[index]).ToString();
+            string type2 = "Empty, ";
+            string value2 = "";
+            string type3 = "Empty";
+            string value3 = "";
+
+            if (sigilValues[index + 1] != 0 && sigilNames[index + 1] != 0)
+            {
+                type2 = sigilTypes[index + 1] + ": ";
+                value2 = (sigilValues[index + 1] > 127 ? sigilValues[index + 1] - 256 : sigilValues[index + 1]).ToString();
+            }
+
+            if (sigilValues[index + 2] != 0 && sigilNames[index + 2] != 0)
+            {
+                type3 = sigilTypes[index + 2] + ": ";
+                value3 = (sigilValues[index + 2] > 127 ? sigilValues[index + 2] - 256 : sigilValues[index + 2]).ToString();
+            }
+
+            return type1 + (value1 != "" && !value1.Contains("-") ? "+" : "") + value1 + ", " + type2 + (value2 != "" && !value2.Contains("-") ? "+" : "") + value2 + ", " + type3 + (value3 != "" && !value3.Contains("-") ? "+" : "") + value3;
         }
+
 
         /// <summary>
         /// Gets the name of the first cuff.
@@ -4148,21 +3812,17 @@ namespace MHFZ_Overlay.addresses
             for (int i = 0; i < skills.Length; i++)
             {
                 int skillId = skills[i];
-                if (Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(skillId, out string skillName))
+                if (Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(skillId, out string skillName)
+                    && skillName != "None" && skillName != "")
                 {
-                    if (skillName != "None" && skillName != "")
-                    {
-                        SkillName += skillName;
-                        if (i != skills.Length - 1)
-                            SkillName += ", ";
-                        if (i % 5 == 4)
-                            SkillName += "\n";
-                    }
+                    SkillName += skillName;
+                    if (i != skills.Length - 1)
+                        SkillName += ", ";
+                    if (i % 5 == 4)
+                        SkillName += "\n";
                 }
             }
-            if (string.IsNullOrEmpty(SkillName))
-                return "None";
-            return SkillName;
+            return string.IsNullOrEmpty(SkillName) ? "None" : SkillName;
         }
 
         /// <summary>
@@ -4496,94 +4156,38 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill1(), out string? SkillName1);
-                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill2(), out string? SkillName2);
-                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill3(), out string? SkillName3);
-                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill4(), out string? SkillName4);
-                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill5(), out string? SkillName5);
-                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill6(), out string? SkillName6);
-                Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(ZenithSkill7(), out string? SkillName7);
-
-                // pls
-                if (GetTextFormat() == "Markdown")
+                var skills = new string[7];
+                for (int i = 0; i < 7; i++)
                 {
-                    if (IsMaxZenithSkill(ZenithSkill1()) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
-                        SkillName1 = string.Format("**{0}**", SkillName1);
-
-                    if (IsMaxZenithSkill(ZenithSkill2()) && (SkillName2 != null || SkillName2 != "None" || SkillName2 != ""))
-                        SkillName2 = string.Format("**{0}**", SkillName2);
-
-                    if (IsMaxZenithSkill(ZenithSkill3()) && (SkillName3 != null || SkillName3 != "None" || SkillName3 != ""))
-                        SkillName3 = string.Format("**{0}**", SkillName3);
-
-                    if (IsMaxZenithSkill(ZenithSkill4()) && (SkillName4 != null || SkillName4 != "None" || SkillName4 != ""))
-                        SkillName4 = string.Format("**{0}**", SkillName4);
-
-                    if (IsMaxZenithSkill(ZenithSkill5()) && (SkillName5 != null || SkillName5 != "None" || SkillName5 != ""))
-                        SkillName5 = string.Format("**{0}**", SkillName5);
-
-                    if (IsMaxZenithSkill(ZenithSkill6()) && (SkillName6 != null || SkillName6 != "None" || SkillName6 != ""))
-                        SkillName6 = string.Format("**{0}**", SkillName6);
-
-                    if (IsMaxZenithSkill(ZenithSkill7()) && (SkillName7 != null || SkillName7 != "None" || SkillName7 != ""))
-                        SkillName7 = string.Format("**{0}**", SkillName7);
+                    int skillNum = i + 1;
+                    int skillID = (int)this.GetType().GetMethod($"ZenithSkill{skillNum}").Invoke(this, null);
+                    if (Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(skillID, out string skillName))
+                    {
+                        if (IsMaxZenithSkill(skillID) && skillName != "None" && skillName != "")
+                        {
+                            skillName = "**" + skillName + "**";
+                        }
+                        skills[i] = skillName;
+                    }
                 }
 
-                //
-                if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
-                    SkillName1 = "";
-                else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
-                    SkillName1 += "";
-                else
-                    SkillName1 += ", ";
+                var result = string.Join(", ", skills.Where(s => s != "None" && s != "").Take(5));
+                for (int i = 5; i < 7; i++)
+                {
+                    if (skills[i] != "None" && skills[i] != "")
+                    {
+                        result += "\n" + skills[i];
+                        if (i < 6 && skills[i + 1] != "None" && skills[i + 1] != "")
+                        {
+                            result += ", ";
+                        }
+                    }
+                }
 
-                if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
-                    SkillName2 = "";
-                else if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
-                    SkillName2 += "";
-                else
-                    SkillName2 += ", ";
-
-                if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
-                    SkillName3 = "";
-                else if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
-                    SkillName3 += "";
-                else
-                    SkillName3 += ", ";
-
-                if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
-                    SkillName4 = "";
-                else if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
-                    SkillName4 += "";
-                else
-                    SkillName4 += ", ";
-
-                if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
-                    SkillName5 = "";
-                else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
-                    SkillName5 += "";
-                else
-                    SkillName5 += "\n";
-
-                if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
-                    SkillName6 = "";
-                else if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
-                    SkillName6 += "";
-                else
-                    SkillName6 += ", ";
-
-                if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
-                    SkillName7 = "";
-
-                else
-                    SkillName7 += "";
-
-                if (SkillName1 == "")
-                    SkillName1 = "None";
-
-                return string.Format("{0}{1}{2}{3}{4}{5}{6}", SkillName1, SkillName2, SkillName3, SkillName4, SkillName5, SkillName6, SkillName7);
+                return result;
             }
         }
+
 
         public string GetZenithSkillsForRunID(int skill1, int skill2, int skill3, int skill4, int skill5, int skill6, int skill7)
         {
@@ -4609,8 +4213,6 @@ namespace MHFZ_Overlay.addresses
             return SkillName;
         }
 
-
-
         /// <summary>
         /// Gets the gou boost mode.
         /// </summary>
@@ -4634,288 +4236,35 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                int Skill1;
-                int Skill2;
-                int Skill3;
-                int Skill4;
-                int Skill5;
-                int Skill6;
-                int Skill7;
-                int Skill8;
-                int Skill9;
-                int Skill10;
-                int Skill11;
-                int Skill12;
-                int Skill13;
-                int Skill14;
-                int Skill15;
-                int Skill16;
-                int Skill17;
-                int Skill18;
-                int Skill19;
-
-                if (GetGouBoostMode())
+                int[] skills = new int[19];
+                for (int i = 0; i < 19; i++)
                 {
-                    Skill1 = GetGouBoostSkill(ArmorSkill1());
-                    Skill2 = GetGouBoostSkill(ArmorSkill2());
-                    Skill3 = GetGouBoostSkill(ArmorSkill3());
-                    Skill4 = GetGouBoostSkill(ArmorSkill4());
-                    Skill5 = GetGouBoostSkill(ArmorSkill5());
-                    Skill6 = GetGouBoostSkill(ArmorSkill6());
-                    Skill7 = GetGouBoostSkill(ArmorSkill7());
-                    Skill8 = GetGouBoostSkill(ArmorSkill8());
-                    Skill9 = GetGouBoostSkill(ArmorSkill9());
-                    Skill10 = GetGouBoostSkill(ArmorSkill10());
-                    Skill11 = GetGouBoostSkill(ArmorSkill11());
-                    Skill12 = GetGouBoostSkill(ArmorSkill12());
-                    Skill13 = GetGouBoostSkill(ArmorSkill13());
-                    Skill14 = GetGouBoostSkill(ArmorSkill14());
-                    Skill15 = GetGouBoostSkill(ArmorSkill15());
-                    Skill16 = GetGouBoostSkill(ArmorSkill16());
-                    Skill17 = GetGouBoostSkill(ArmorSkill17());
-                    Skill18 = GetGouBoostSkill(ArmorSkill18());
-                    Skill19 = GetGouBoostSkill(ArmorSkill19());
-                }
-                else
-                {
-                    Skill1 = ArmorSkill1();
-                    Skill2 = ArmorSkill2();
-                    Skill3 = ArmorSkill3();
-                    Skill4 = ArmorSkill4();
-                    Skill5 = ArmorSkill5();
-                    Skill6 = ArmorSkill6();
-                    Skill7 = ArmorSkill7();
-                    Skill8 = ArmorSkill8();
-                    Skill9 = ArmorSkill9();
-                    Skill10 = ArmorSkill10();
-                    Skill11 = ArmorSkill11();
-                    Skill12 = ArmorSkill12();
-                    Skill13 = ArmorSkill13();
-                    Skill14 = ArmorSkill14();
-                    Skill15 = ArmorSkill15();
-                    Skill16 = ArmorSkill16();
-                    Skill17 = ArmorSkill17();
-                    Skill18 = ArmorSkill18();
-                    Skill19 = ArmorSkill19();
+                    skills[i] = GetGouBoostMode()
+                        ? GetGouBoostSkill((int)this.GetType().GetMethod("ArmorSkill" + (i + 1)).Invoke(this, null))
+                        : (int)this.GetType().GetMethod("ArmorSkill" + (i + 1)).Invoke(this, null);
                 }
 
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill1, out string? SkillName1);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill2, out string? SkillName2);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill3, out string? SkillName3);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill4, out string? SkillName4);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill5, out string? SkillName5);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill6, out string? SkillName6);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill7, out string? SkillName7);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill8, out string? SkillName8);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill9, out string? SkillName9);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill10, out string? SkillName10);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill11, out string? SkillName11);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill12, out string? SkillName12);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill13, out string? SkillName13);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill14, out string? SkillName14);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill15, out string? SkillName15);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill16, out string? SkillName16);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill17, out string? SkillName17);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill18, out string? SkillName18);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(Skill19, out string? SkillName19);
-
-                // pls
-                if (GetTextFormat() == "Markdown")
+                string[] skillNames = new string[19];
+                for (int i = 0; i < 19; i++)
                 {
-                    if (IsMaxSkillLevel(Skill1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
-                        SkillName1 = string.Format("**{0}**", SkillName1);
-
-                    if (IsMaxSkillLevel(Skill2) && (SkillName2 != null || SkillName2 != "None" || SkillName2 != ""))
-                        SkillName2 = string.Format("**{0}**", SkillName2);
-
-                    if (IsMaxSkillLevel(Skill3) && (SkillName3 != null || SkillName3 != "None" || SkillName3 != ""))
-                        SkillName3 = string.Format("**{0}**", SkillName3);
-
-                    if (IsMaxSkillLevel(Skill4) && (SkillName4 != null || SkillName4 != "None" || SkillName4 != ""))
-                        SkillName4 = string.Format("**{0}**", SkillName4);
-
-                    if (IsMaxSkillLevel(Skill5) && (SkillName5 != null || SkillName5 != "None" || SkillName5 != ""))
-                        SkillName5 = string.Format("**{0}**", SkillName5);
-
-                    if (IsMaxSkillLevel(Skill6) && (SkillName6 != null || SkillName6 != "None" || SkillName6 != ""))
-                        SkillName6 = string.Format("**{0}**", SkillName6);
-
-                    if (IsMaxSkillLevel(Skill7) && (SkillName7 != null || SkillName7 != "None" || SkillName7 != ""))
-                        SkillName7 = string.Format("**{0}**", SkillName7);
-
-                    if (IsMaxSkillLevel(Skill8) && (SkillName8 != null || SkillName8 != "None" || SkillName8 != ""))
-                        SkillName8 = string.Format("**{0}**", SkillName8);
-
-                    if (IsMaxSkillLevel(Skill9) && (SkillName9 != null || SkillName9 != "None" || SkillName9 != ""))
-                        SkillName9 = string.Format("**{0}**", SkillName9);
-
-                    if (IsMaxSkillLevel(Skill10) && (SkillName10 != null || SkillName10 != "None" || SkillName10 != ""))
-                        SkillName10 = string.Format("**{0}**", SkillName10);
-
-                    if (IsMaxSkillLevel(Skill11) && (SkillName11 != null || SkillName11 != "None" || SkillName11 != ""))
-                        SkillName11 = string.Format("**{0}**", SkillName11);
-
-                    if (IsMaxSkillLevel(Skill12) && (SkillName12 != null || SkillName12 != "None" || SkillName12 != ""))
-                        SkillName12 = string.Format("**{0}**", SkillName12);
-
-                    if (IsMaxSkillLevel(Skill13) && (SkillName13 != null || SkillName13 != "None" || SkillName13 != ""))
-                        SkillName13 = string.Format("**{0}**", SkillName13);
-
-                    if (IsMaxSkillLevel(Skill14) && (SkillName14 != null || SkillName14 != "None" || SkillName14 != ""))
-                        SkillName14 = string.Format("**{0}**", SkillName14);
-
-                    if (IsMaxSkillLevel(Skill15) && (SkillName15 != null || SkillName15 != "None" || SkillName15 != ""))
-                        SkillName15 = string.Format("**{0}**", SkillName15);
-
-                    if (IsMaxSkillLevel(Skill16) && (SkillName16 != null || SkillName16 != "None" || SkillName16 != ""))
-                        SkillName16 = string.Format("**{0}**", SkillName16);
-
-                    if (IsMaxSkillLevel(Skill17) && (SkillName17 != null || SkillName17 != "None" || SkillName17 != ""))
-                        SkillName17 = string.Format("**{0}**", SkillName17);
-
-                    if (IsMaxSkillLevel(Skill18) && (SkillName18 != null || SkillName18 != "None" || SkillName18 != ""))
-                        SkillName18 = string.Format("**{0}**", SkillName18);
-
-                    if (IsMaxSkillLevel(Skill19) && (SkillName19 != null || SkillName19 != "None" || SkillName19 != ""))
-                        SkillName19 = string.Format("**{0}**", SkillName19);
+                    Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(skills[i], out string? skillName);
+                    skillNames[i] = skillName ?? "";
                 }
 
-                //
-                if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
-                    SkillName1 = "";
-                else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
-                    SkillName1 += "";
-                else
-                    SkillName1 += ", ";
+                string result = "";
+                for (int i = 0; i < 19; i++)
+                {
+                    if (GetTextFormat() == "Markdown" && IsMaxSkillLevel(skills[i]) && skillNames[i] != "" && skillNames[i] != "None")
+                    {
+                        skillNames[i] = string.Format("**{0}**", skillNames[i]);
+                    }
+                    result += skillNames[i] + (i == 18 ? "" : i % 5 == 4 ? "\n" : ", ");
+                }
 
-                if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
-                    SkillName2 = "";
-                else if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
-                    SkillName2 += "";
-                else
-                    SkillName2 += ", ";
-
-                if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
-                    SkillName3 = "";
-                else if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
-                    SkillName3 += "";
-                else
-                    SkillName3 += ", ";
-
-                if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
-                    SkillName4 = "";
-                else if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
-                    SkillName4 += "";
-                else
-                    SkillName4 += ", ";
-
-                if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
-                    SkillName5 = "";
-                else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
-                    SkillName5 += "";
-                else
-                    SkillName5 += "\n";
-
-                if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
-                    SkillName6 = "";
-                else if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
-                    SkillName6 += "";
-                else
-                    SkillName6 += ", ";
-
-                if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
-                    SkillName7 = "";
-                else if (SkillName8 == null || SkillName8 == "None" || SkillName8 == "")
-                    SkillName7 += "";
-                else
-                    SkillName7 += ", ";
-
-                if (SkillName8 == null || SkillName8 == "None" || SkillName8 == "")
-                    SkillName8 = "";
-                else if (SkillName9 == null || SkillName9 == "None" || SkillName9 == "")
-                    SkillName8 += "";
-                else
-                    SkillName8 += ", ";
-
-                if (SkillName9 == null || SkillName9 == "None" || SkillName9 == "")
-                    SkillName9 = "";
-                else if (SkillName10 == null || SkillName10 == "None" || SkillName10 == "")
-                    SkillName9 += "";
-                else
-                    SkillName9 += ", ";
-
-                if (SkillName10 == null || SkillName10 == "None" || SkillName10 == "")
-                    SkillName10 = "";
-                else if (SkillName11 == null || SkillName11 == "None" || SkillName11 == "")
-                    SkillName10 += "";
-                else
-                    SkillName10 += "\n";
-
-                if (SkillName11 == null || SkillName11 == "None" || SkillName11 == "")
-                    SkillName11 = "";
-                else if (SkillName12 == null || SkillName12 == "None" || SkillName12 == "")
-                    SkillName11 += "";
-                else
-                    SkillName11 += ", ";
-
-                if (SkillName12 == null || SkillName12 == "None" || SkillName12 == "")
-                    SkillName12 = "";
-                else if (SkillName13 == null || SkillName13 == "None" || SkillName13 == "")
-                    SkillName12 += "";
-                else
-                    SkillName12 += ", ";
-
-                if (SkillName13 == null || SkillName13 == "None" || SkillName13 == "")
-                    SkillName13 = "";
-                else if (SkillName14 == null || SkillName14 == "None" || SkillName14 == "")
-                    SkillName13 += "";
-                else
-                    SkillName13 += ", ";
-
-                if (SkillName14 == null || SkillName14 == "None" || SkillName14 == "")
-                    SkillName14 = "";
-                else if (SkillName15 == null || SkillName15 == "None" || SkillName15 == "")
-                    SkillName14 += "";
-                else
-                    SkillName14 += ", ";
-
-                if (SkillName15 == null || SkillName15 == "None" || SkillName15 == "")
-                    SkillName15 = "";
-                else if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
-                    SkillName15 += "";
-                else
-                    SkillName15 += "\n";
-
-                if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
-                    SkillName16 = "";
-                else if (SkillName17 == null || SkillName17 == "None" || SkillName17 == "")
-                    SkillName16 += "";
-                else
-                    SkillName16 += ", ";
-
-                if (SkillName17 == null || SkillName17 == "None" || SkillName17 == "")
-                    SkillName17 = "";
-                else if (SkillName18 == null || SkillName18 == "None" || SkillName18 == "")
-                    SkillName17 += "";
-                else
-                    SkillName17 += ", ";
-
-                if (SkillName18 == null || SkillName18 == "None" || SkillName18 == "")
-                    SkillName18 = "";
-                else if (SkillName19 == null || SkillName19 == "None" || SkillName19 == "")
-                    SkillName18 += "";
-                else
-                    SkillName18 += ", ";
-
-                if (SkillName19 == null || SkillName19 == "None" || SkillName19 == "")
-                    SkillName19 = "";
-
-                else
-                    SkillName19 += "";
-
-                return string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}", SkillName1, SkillName2, SkillName3, SkillName4, SkillName5, SkillName6, SkillName7, SkillName8, SkillName9, SkillName10, SkillName11, SkillName12, SkillName13, SkillName14, SkillName15, SkillName16, SkillName17, SkillName18, SkillName19);
+                return result;
             }
         }
+
 
         public string GetArmorSkillsForRunID(int skill1, int skill2, int skill3, int skill4, int skill5, int skill6, int skill7, int skill8, int skill9, int skill10, int skill11, int skill12, int skill13, int skill14, int skill15, int skill16, int skill17, int skill18, int skill19)
         {
@@ -9182,33 +8531,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public List<ISeries> hitsPerSecondSeries { get; set; } = new();
 
         public List<ISeries> weaponUsageSeries { get; set; } = new();
-        //{
-        //    new StackedColumnSeries<int>
-        //    {
-        //        Values = new List<int> { 3, 5, -3, 2, 5, -4, -2 },
-        //        Stroke = null,
-        //        DataLabelsPaint = new SolidColorPaint(new SKColor(45, 45, 45)),
-        //        DataLabelsSize = 14,
-        //        DataLabelsPosition = DataLabelsPosition.Middle
-        //    },
-        //    new StackedColumnSeries<int>
-        //    {
-        //        Values = new List<int> { 4, 2, -3, 2, 3, 4, -2 },
-        //        Stroke = null,
-        //        DataLabelsPaint = new SolidColorPaint(new SKColor(45, 45, 45)),
-        //        DataLabelsSize = 14,
-        //        DataLabelsPosition = DataLabelsPosition.Middle
-        //    },
-        //    new StackedColumnSeries<int>
-        //    {
-        //        Values = new List<int> { -2, 6, 6, 5, 4, 3, -2 },
-        //        Stroke = null,
-        //        DataLabelsPaint = new SolidColorPaint(new SKColor(45, 45, 45)),
-        //        DataLabelsSize = 14,
-        //        DataLabelsPosition = DataLabelsPosition.Middle
-        //    }
-        //};
-
+    
 
         public string GetTimeElapsed(double frames)
         {
@@ -9758,9 +9081,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         // all dictionaries get a new entry every 1 second. freezes on quest state 1, resets on quest id = 0.
         // use modulo
-        //  if (timeint() % 30 == 0)
-        //      insertPlayerQuestInfoIntoDictionaries();
-        //      insertQuestDictionariesInfoIntoDatabase();
         //int for timeint() which is current quest time, second int for current attack buff
         public Dictionary<int, int> attackBuffDictionary = new Dictionary<int,int>();
         // the deserealized are used for displays
@@ -9815,28 +9135,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
 
         public double TotalHitsTakenBlockedPerSecond { get; set; } = 0;
-
-        //get
-        //{
-        //    if (damageDealtDictionary.Count <= 1)
-        //        return 0;
-
-        //    double sum = 0;
-        //    double numHits = 0;
-
-        //    foreach (KeyValuePair<int, int> hit in damageDealtDictionary)
-        //    {
-        //        int timeDifference = TimeInt() - hit.Key;
-        //        if (timeDifference <= 1)
-        //        {
-        //            sum += hit.Value;
-        //            numHits++;
-        //        }
-        //    }
-
-        //    return sum / numHits;
-        //} 
-        //}
 
         public double CalculateDPS()
         {
@@ -10219,11 +9517,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public void InsertQuestInfoIntoDictionaries()
         {
-            //if (TimeInt() == previousTimeInt)
-            //    return;
-
-            //previousTimeInt = TimeInt();
-
             if (previousAttackBuffInt != WeaponRaw() && attackBuffDictionary.TryGetValue(TimeInt(), out int atk) == false)
             {
                 previousAttackBuffInt = WeaponRaw();

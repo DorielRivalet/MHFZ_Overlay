@@ -68,7 +68,7 @@ namespace MHFZ_Overlay
             return false;
         }
 
-        public object[] ConvertBack(object value, Type[] targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();
         }
@@ -603,10 +603,6 @@ namespace MHFZ_Overlay
                 showedNullError = true;
             }
 
-            //if (DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() != 0)
-            //{
-            //    DataLoader.model.CalculateDPS();
-            //}
             if (!showedGameFolderWarning)
             {
                 DataLoader.model.ValidateGameFolder();
@@ -650,7 +646,6 @@ namespace MHFZ_Overlay
                     isFirstAttack = false;
                     CreateDamageNumberLabel(damage);
                     DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), damage);
-                    //DataLoader.model.DPS = DataLoader.model.CalculateDPS();
                 }
                 else if (curNum < 0)
                 {
@@ -658,7 +653,6 @@ namespace MHFZ_Overlay
                     curNum += 1000;
                     CreateDamageNumberLabel(curNum);
                     DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
-                    //DataLoader.model.DPS = DataLoader.model.CalculateDPS();
                 }
                 else
                 {
@@ -666,7 +660,6 @@ namespace MHFZ_Overlay
                     {
                         CreateDamageNumberLabel(curNum);
                         DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
-                        //DataLoader.model.DPS = DataLoader.model.CalculateDPS();
                     }
                 }
             }
@@ -970,7 +963,6 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowMonsterBlast = v && s.MonsterBlastShown;
             DataLoader.model.ShowMonsterStun = v && s.MonsterStunShown;
 
-            //DataLoader.model.ShowMonsterHPBars = v && s.HealthBarsShown;
             DataLoader.model.ShowMonster1HPBar = v && s.Monster1HealthBarShown;
             DataLoader.model.ShowMonster2HPBar = v && s.Monster2HealthBarShown;
             DataLoader.model.ShowMonster3HPBar = v && s.Monster3HealthBarShown;
@@ -2718,13 +2710,6 @@ namespace MHFZ_Overlay
                 if (s.EnableQuestLogging)
                     databaseManager.InsertQuestData(databaseManager.dataSource, DataLoader);
             }
-            // going back to Mezeporta or w/e
-            // TODO: i think this never runs?
-            //else if (DataLoader.model.QuestState() != 1 && DataLoader.model.QuestID() == 0 && int.Parse(DataLoader.model.ATK) == 0)
-            //{
-            //    DataLoader.model.questCleared = false;
-            //    DataLoader.model.clearQuestInfoDictionaries();
-            //}
         }
 
         #endregion
@@ -2753,6 +2738,7 @@ namespace MHFZ_Overlay
 
         private void GlobalHookKeyPress(object sender, KeyPressEventArgs e)
         {
+            // goodbye world
         }
 
         private void GlobalHookMouseDownExt(object sender, MouseEventExtArgs e)

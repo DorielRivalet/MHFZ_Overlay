@@ -168,34 +168,6 @@ namespace MHFZ_Overlay
             return schemaChanged;
         }
 
-        // Calculate the finalTimeDisplay value in the "mm:ss.mm" format
-        //string finalTimeDisplay = TimeSpan.FromSeconds(timeLeft / 30.0).ToString();
-
-        //// Insert the TimeLeft value into the FinalTimeValue field and the finalTimeDisplay value into the FinalTimeString field of the Quests table
-        //string sql = "INSERT INTO Quests (QuestID, FinalTimeValue, FinalTimeString) VALUES (@QuestID, @FinalTimeValue, @FinalTimeString)";
-        //using (SQLiteCommand cmd1 = new SQLiteCommand(sql, conn))
-        //{
-        //    cmd1.Parameters.AddWithValue("@QuestID", 1);
-        //    cmd1.Parameters.AddWithValue("@FinalTimeValue", timeLeft);
-        //    cmd1.Parameters.AddWithValue("@FinalTimeString", finalTimeDisplay.ToString("mm\\:ss\\.ff"));
-        //    cmd1.ExecuteNonQuery();
-        //}
-
-        //sql = "SELECT FinalTimeValue, FinalTimeString FROM Quests WHERE QuestID = @QuestID ORDER BY FinalTimeValue ASC";
-        //using (SQLiteCommand cmd1 = new SQLiteCommand(sql, conn))
-        //{
-        //    cmd1.Parameters.AddWithValue("@QuestID", 1);
-        //    using (SQLiteDataReader reader = cmd1.ExecuteReader())
-        //    {
-        //        while (reader.Read())
-        //        {
-        //            int finalTimeValue = reader.GetInt32(0);
-        //            string finalTimeString = reader.GetString(1);
-        //            // Do something with the finalTimeValue and finalTimeString values
-        //        }
-        //    }
-        //}
-
         public void InsertAllExternalPlayerQuestsData()
         {
             // TODO: hygogg, etc.
@@ -459,13 +431,6 @@ namespace MHFZ_Overlay
 
                             int partySize = dataLoader.model.PartySize();
 
-                            //                    --Insert data into the ZenithSkills table
-                            //INSERT INTO ZenithSkills(ZenithSkill1, ZenithSkill2, ZenithSkill3, ZenithSkill4, ZenithSkill5, ZenithSkill6)
-                            //VALUES(zenithSkillsID, zenithSkillsID, zenithSkillsID, zenithSkillsID, zenithSkillsID, zenithSkillsID);
-
-                            //                    --Get the ZenithSkillsID that was generated
-                            //                    SELECT LAST_INSERT_ROWID() as ZenithSkillsID;
-
                             string questData = string.Format(
                                 "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}",
                                 runID, createdAt, createdBy, questID, timeLeft, 
@@ -583,14 +548,6 @@ namespace MHFZ_Overlay
                         }
 
                         InsertPlayerDictionaryDataIntoTable(conn, dataLoader);
-
-                        // Get the ID of the last inserted row in the Players table
-                        //sql = "SELECT LAST_INSERT_ROWID()";
-                        //int playerID;
-                        //using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                        //{
-                        //    playerID = Convert.ToInt32(cmd.ExecuteScalar());
-                        //}
 
                         // Insert data into the ZenithSkills table
                         sql = @"INSERT INTO ZenithSkills (
@@ -5500,7 +5457,6 @@ namespace MHFZ_Overlay
 
         public ActiveSkills GetActiveSkills(long runID)
         {
-            // = long.Parse(configWindow.RunIDTextBox.Text.Trim());
             ActiveSkills activeSkills = new ActiveSkills();
 
             // Use a SQL query to retrieve the ActiveSkills for the specific RunID from the database
@@ -5927,22 +5883,6 @@ namespace MHFZ_Overlay
 
         public void QuestIDButton_Click(object sender, RoutedEventArgs e, ConfigWindow configWindow)
         {
-            // Execute query with only Quest ID
-            //int questID = int.Parse(QuestIDTextBox.Text);
-            //using (SQLiteConnection conn = new SQLiteConnection(dataSource))
-            //{
-            //    conn.Open();
-            //    using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM Quests WHERE QuestID = @QuestID", conn))
-            //    {
-            //        cmd.Parameters.AddWithValue("@QuestID", questID);
-            //        using (SQLiteDataReader reader = cmd.ExecuteReader())
-            //        {
-            //            // Update sections of the UI that should be displayed when only Quest ID is provided
-            //            dataGrid.ItemsSource = reader;
-            //        }
-            //    }
-            //}
-                
             // Execute query with only Quest ID
             int questID = int.Parse(configWindow.QuestIDTextBox.Text);
             string selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();

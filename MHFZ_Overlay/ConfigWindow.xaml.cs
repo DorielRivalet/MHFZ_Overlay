@@ -570,22 +570,6 @@ namespace MHFZ_Overlay
 
             replaceAllMonsterInfoFeriasLinks();
 
-            //is this needed?
-            //LiveCharts.Configure(config =>
-            //config
-            //    // registers SkiaSharp as the library backend
-            //    // REQUIRED unless you build your own
-            //    .AddSkiaSharp()
-
-            //    // adds the default supported types
-            //    // OPTIONAL but highly recommend
-            //    .AddDefaultMappers()
-
-            //    // select a theme, default is Light
-            //    // OPTIONAL
-            //    //.AddDarkTheme());
-            //    .AddLightTheme());
-
             weaponUsageData = DatabaseManager.GetInstance().CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
         }
 
@@ -599,122 +583,41 @@ namespace MHFZ_Overlay
 
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-            //Debug.WriteLine(JsonConvert.SerializeObject(weaponUsageData));
+            var weaponStyles = new[] { "Earth Style", "Heaven Style", "Storm Style", "Extreme Style" };
+            var weaponTypes = new[] { "Sword and Shield", "Dual Swords", "Great Sword", "Long Sword",
+                              "Hammer", "Hunting Horn", "Lance", "Gunlance", "Tonfa",
+                              "Switch Axe F", "Magnet Spike", "Light Bowgun", "Heavy Bowgun",
+                              "Bow"};
 
-            long swordAndShieldEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Sword and Shield" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long swordAndShieldHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Sword and Shield" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long swordAndShieldStormStyle = weaponUsageData.Where(x => x.WeaponType == "Sword and Shield" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long swordAndShieldExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Sword and Shield" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long dualSwordsEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Dual Swords" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long dualSwordsHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Dual Swords" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long dualSwordsStormStyle = weaponUsageData.Where(x => x.WeaponType == "Dual Swords" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long dualSwordsExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Dual Swords" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long greatSwordEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Great Sword" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long greatSwordHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Great Sword" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long greatSwordStormStyle = weaponUsageData.Where(x => x.WeaponType == "Great Sword" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long greatSwordExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Great Sword" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long longSwordEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Long Sword" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long longSwordHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Long Sword" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long longSwordStormStyle = weaponUsageData.Where(x => x.WeaponType == "Long Sword" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long longSwordExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Long Sword" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long hammerEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Hammer" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long hammerHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Hammer" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long hammerStormStyle = weaponUsageData.Where(x => x.WeaponType == "Hammer" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long hammerExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Hammer" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long huntingHornEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Hunting Horn" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long huntingHornHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Hunting Horn" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long huntingHornStormStyle = weaponUsageData.Where(x => x.WeaponType == "Hunting Horn" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long huntingHornExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Hunting Horn" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long lanceEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Lance" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long lanceHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Lance" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long lanceStormStyle = weaponUsageData.Where(x => x.WeaponType == "Lance" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long lanceExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Lance" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long gunlanceEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Gunlance" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long gunlanceHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Gunlance" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long gunlanceStormStyle = weaponUsageData.Where(x => x.WeaponType == "Gunlance" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long gunlanceExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Gunlance" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long tonfaEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Tonfa" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long tonfaHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Tonfa" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long tonfaStormStyle = weaponUsageData.Where(x => x.WeaponType == "Tonfa" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long tonfaExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Tonfa" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long switchAxeFEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Switch Axe F" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long switchAxeFHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Switch Axe F" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long switchAxeFStormStyle = weaponUsageData.Where(x => x.WeaponType == "Switch Axe F" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long switchAxeFExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Switch Axe F" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long lightBowgunEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Light Bowgun" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long lightBowgunHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Light Bowgun" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long lightBowgunStormStyle = weaponUsageData.Where(x => x.WeaponType == "Light Bowgun" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long lightBowgunExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Light Bowgun" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long heavyBowgunEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Heavy Bowgun" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long heavyBowgunHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Heavy Bowgun" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long heavyBowgunStormStyle = weaponUsageData.Where(x => x.WeaponType == "Heavy Bowgun" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long heavyBowgunExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Heavy Bowgun" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long BowEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Bow" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long BowHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Bow" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long BowStormStyle = weaponUsageData.Where(x => x.WeaponType == "Bow" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long BowExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Bow" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long magnetSpikeEarthStyle = 0;
-            long magnetSpikeHeavenStyle = 0;
-            long magnetSpikeStormStyle = 0;
-            long magnetSpikeExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Magnet Spike" && x.Style == "Extreme").Sum(x => x.RunCount);
-
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(swordAndShieldEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(swordAndShieldHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(swordAndShieldStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(swordAndShieldExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(dualSwordsEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(dualSwordsHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(dualSwordsStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(dualSwordsExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(greatSwordEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(greatSwordHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(greatSwordStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(greatSwordExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(longSwordEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(longSwordHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(longSwordStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(longSwordExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(hammerEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(hammerHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(hammerStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(hammerExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(huntingHornEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(huntingHornHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(huntingHornStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(huntingHornExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(lanceEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(lanceHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(lanceStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(lanceExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(gunlanceEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(gunlanceHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(gunlanceStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(gunlanceExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(tonfaEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(tonfaHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(tonfaStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(tonfaExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(switchAxeFEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(switchAxeFHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(switchAxeFStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(switchAxeFExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(magnetSpikeEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(magnetSpikeHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(magnetSpikeStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(magnetSpikeExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(lightBowgunEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(lightBowgunHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(lightBowgunStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(lightBowgunExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(heavyBowgunEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(heavyBowgunHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(heavyBowgunStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(heavyBowgunExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(BowEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(BowHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(BowStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(BowExtremeStyle);
-
+            foreach (var weaponType in weaponTypes)
+            {
+                foreach (var weaponStyle in weaponStyles)
+                {
+                    switch (weaponStyle)
+                    {
+                        case "Earth Style":
+                            var weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                                                                          .Sum(x => x.RunCount);
+                            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(weaponUsageCount);
+                            break;
+                        case "Heaven Style":
+                            weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                                                                          .Sum(x => x.RunCount);
+                            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(weaponUsageCount);
+                            break;
+                        case "Storm Style":
+                            weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                                                                          .Sum(x => x.RunCount);
+                            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(weaponUsageCount);
+                            break;
+                        case "Extreme Style":
+                            weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                                                                          .Sum(x => x.RunCount);
+                            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(weaponUsageCount);
+                            break;
+                    }
+                }
+            }
 
             MainWindow.DataLoader.model.weaponUsageSeries.Add(new StackedColumnSeries<long>
             {
@@ -792,264 +695,6 @@ namespace MHFZ_Overlay
                     }
             };
         }
-
-
-        private string GetColorByStyle(string style)
-        {
-            switch (style)
-            {
-                case "Earth":
-                    return "#ffffffff";
-                case "Heaven":
-                    return "#ff00ffff";
-                case "Storm":
-                    return "#ff0000ff";
-                case "Extreme":
-                    return "#ff00000f";
-                default:
-                    return "#ff0f0f0f";
-            }
-        }
-
-        // Create a method to get the color for a specific weapon type and style
-        private Color GetColorForWeaponTypeAndStyle(string weaponType, string style)
-        {
-            // Example of how to set colors based on weapon type and style
-            if (weaponType == "Sword and Shield" && style == "Earth") return Color.FromRgb(255, 0, 0);
-            if (weaponType == "Sword and Shield" && style == "Heaven") return Color.FromRgb(200, 0, 0);
-            if (weaponType == "Sword and Shield" && style == "Storm") return Color.FromRgb(150, 0, 0);
-            if (weaponType == "Sword and Shield" && style == "Extreme") return Color.FromRgb(100, 0, 0);
-
-            // Add more cases for other weapon types and styles
-
-            // Default color
-            return Color.FromRgb(0, 0, 0);
-        }
-
-        private string GetColorForWeaponStyle(string weaponType, string style)
-        {
-            string color = "#ffffffff";
-            if (weaponType == "Sword and Shield")
-            {
-                if (style == "Earth Style")
-                    color = "#ff6666ff";
-                else if (style == "Heaven Style")
-                    color = "#ff666fff";
-                else if (style == "Storm Style")
-                    color = "#ff66ffff";
-                else if (style == "Extreme Style")
-                    color = "#ff6fffff";
-            }
-            else if (weaponType == "Dual Swords")
-            {
-                if (style == "Earth Style")
-                    color = "#ff5555ff";
-                else if (style == "Heaven Style")
-                    color = "#ff555fff";
-                else if (style == "Storm Style")
-                    color = "#ff55ffff";
-                else if (style == "Extreme Style")
-                    color = "#ff5fffff";
-            }
-            else if (weaponType == "Great Sword")
-            {
-                if (style == "Earth Style")
-                    color = "#ff4444ff";
-                else if (style == "Heaven Style")
-                    color = "#ff444fff";
-                else if (style == "Storm Style")
-                    color = "#ff44ffff";
-                else if (style == "Extreme Style")
-                    color = "#ff4fffff";
-            }
-            else if (weaponType == "Long Sword")
-            {
-                if (style == "Earth Style")
-                    color = "#ff3333ff";
-                else if (style == "Heaven Style")
-                    color = "#ff333fff";
-                else if (style == "Storm Style")
-                    color = "#ff33ffff";
-                else if (style == "Extreme Style")
-                    color = "#ff3fffff";
-            }
-            else if (weaponType == "Hammer")
-            {
-                if (style == "Earth Style")
-                    color = "#ff2222ff";
-                else if (style == "Heaven Style")
-                    color = "#ff222fff";
-                else if (style == "Storm Style")
-                    color = "#ff22ffff";
-                else if (style == "Extreme Style")
-                    color = "#ff2fffff";
-            }
-            else if (weaponType == "Hunting Horn")
-            {
-                if (style == "Earth Style")
-                    color = "#ff1111ff";
-                else if (style == "Heaven Style")
-                    color = "#ff111fff";
-                else if (style == "Storm Style")
-                    color = "#ff11ffff";
-                else if (style == "Extreme Style")
-                    color = "#ff1fffff";
-            }
-            else if (weaponType == "Lance")
-            {
-                if (style == "Earth Style")
-                    color = "#ffff1111";
-                else if (style == "Heaven Style")
-                    color = "#fffff111";
-                else if (style == "Storm Style")
-                    color = "#ffffff11";
-                else if (style == "Extreme Style")
-                    color = "#fffffff1";
-            }
-            else if (weaponType == "Gunlance")
-            {
-                if (style == "Earth Style")
-                    color = "#ffff2222";
-                else if (style == "Heaven Style")
-                    color = "#fffff222";
-                else if (style == "Storm Style")
-                    color = "#ffffff22";
-                else if (style == "Extreme Style")
-                    color = "#fffffff2";
-            }
-            else if (weaponType == "Switch Axe F")
-            {
-                if (style == "Earth Style")
-                    color = "#ffff3333";
-                else if (style == "Heaven Style")
-                    color = "#fffff333";
-                else if (style == "Storm Style")
-                    color = "#ffffff33";
-                else if (style == "Extreme Style")
-                    color = "#fffffff3";
-            }
-            else if (weaponType == "Magnet Spike")
-            {
-                if (style == "Earth Style")
-                    color = "#ffff4444";
-                else if (style == "Heaven Style")
-                    color = "#fffff444";
-                else if (style == "Storm Style")
-                    color = "#ffffff44";
-                else if (style == "Extreme Style")
-                    color = "#fffffff4";
-            }
-            else if (weaponType == "Tonfa")
-            {
-                if (style == "Earth Style")
-                    color = "#ffff6666";
-                else if (style == "Heaven Style")
-                    color = "#fffff666";
-                else if (style == "Storm Style")
-                    color = "#ffffff66";
-                else if (style == "Extreme Style")
-                    color = "#fffffff6";
-            }
-            else if (weaponType == "Light Bowgun")
-            {
-                if (style == "Earth Style")
-                    color = "#ffff5555";
-                else if (style == "Heaven Style")
-                    color = "#fffff555";
-                else if (style == "Storm Style")
-                    color = "#fffff55";
-                else if (style == "Extreme Style")
-                    color = "#fffffff5";
-            }
-            else if (weaponType == "Heavy Bowgun")
-            {
-                if (style == "Earth Style")
-                    color = "#ffff7777";
-                else if (style == "Heaven Style")
-                    color = "#fffff777";
-                else if (style == "Storm Style")
-                    color = "#ffffff77";
-                else if (style == "Extreme Style")
-                    color = "#fffffff7";
-            }
-            else if (weaponType == "Bow")
-            {
-                if (style == "Earth Style")
-                    color = "#fffffff0";
-                else if (style == "Heaven Style")
-                    color = "#ffffff00";
-                else if (style == "Storm Style")
-                    color = "#fffff000";
-                else if (style == "Extreme Style")
-                    color = "#ffff0000";
-            }
-            // add more else if statements for the other weapon types
-            return color;
-        }
-
-        private string GetColorForWeaponType(string weaponType)
-        {
-            // Return the color for the weapon type.
-            // You can use a switch statement or a dictionary to map weapon types to colors.
-            // Example:
-            switch (weaponType)
-            {
-                case "Sword and Shield": return "#ff0000ff";
-                case "Dual Swords": return "#ff00ffff";
-                case "Great Sword": return "#ffff00ff";
-                case "Long Sword": return "#ff00000f";
-                case "Hammer": return "#ff00f0ff";
-                case "Hunting Horn": return "#fff000ff";
-                case "Lance": return "#ff0000ff";
-                case "Gunlance": return "#ffffff00";
-                case "Tonfa": return "#ff0f00ff";
-                case "Switch Axe F": return "#ff0000ff";
-                case "Magnet Spike": return "#ffffffff";
-                case "Light Bowgun": return "#ff000fff";
-                case "Heavy Bowgun": return "#ff0fffff";
-                case "Bow": return "#ff0000f0";
-                default: return "#ff000000";
-            }
-        }
-
-                    //Dictionary<string, int> weaponTypeMap = new Dictionary<string, int>()
-                    //{
-                    //    {"Sword", 1},
-                    //    {"Hammer", 2},
-                    //    {"Lance", 3},
-                    //    {"Gunlance", 4}
-                    //    // Add more weapon types as needed
-                    //};
-
-
-
-                    //foreach (var data in weaponUsageData)
-                    //{
-                    //    seriesList.Add(new StackedColumnSeries<long>
-                    //    {
-                    //        Name = string.Format("{0} {1}",data.WeaponType,data.Style),
-                    //        Values = new ObservableCollection<long> { data.RunCount },
-                    //        DataLabelsPaint = new SolidColorPaint(new SKColor(45, 45, 45)),
-                    //        DataLabelsSize = 14,
-                    //        DataLabelsPosition = DataLabelsPosition.Middle,
-                    //        //Stroke = null,
-                    //        Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-                    //        Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 }
-                    //        //DataLabels = true
-                    //    });
-                    //}
-                    //MainWindow.DataLoader.model.weaponUsageSeries.Add(new StackedColumnSeries<long>
-                    //{
-                    //    Values = MainWindow.DataLoader.model.weaponUsageMagnetSpikeExtremeStyleCollection,
-                    //    //Stroke = null,
-                    //    DataLabelsPaint = new SolidColorPaint(new SKColor(45, 45, 45)),
-                    //    DataLabelsSize = 14,
-                    //    Name = "Magnet Spike Extreme Style",
-
-                    //    DataLabelsPosition = DataLabelsPosition.Middle,
-                    //    Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
-                    //    Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
-                    //});
 
         private void replaceAllMonsterInfoFeriasLinks()
         {
@@ -1809,16 +1454,14 @@ namespace MHFZ_Overlay
 
         }
 
-        //private bool weaponUsageChartLoaded = false;
-
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            // nothing
         }
 
         private void QuestLogsSectionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            // nothing
         }
 
         private T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
@@ -1863,24 +1506,9 @@ namespace MHFZ_Overlay
             return foundChild;
         }
 
-        private T FindAncestor<T>(DependencyObject current) where T : DependencyObject
-        {
-            do
-            {
-                if (current is T)
-                {
-                    return (T)current;
-                }
-                current = VisualTreeHelper.GetParent(current);
-            }
-            while (current != null);
-            return null;
-        }
-
         private void WeaponUsageGraphComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
-            //Debug.WriteLine("Clicked an option:{0}", comboBox.SelectedIndex);
             if (weaponUsageChart == null)
                 return;
 
@@ -1953,151 +1581,41 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            long swordAndShieldEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Sword and Shield" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long swordAndShieldHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Sword and Shield" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long swordAndShieldStormStyle = weaponUsageData.Where(x => x.WeaponType == "Sword and Shield" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long swordAndShieldExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Sword and Shield" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long dualSwordsEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Dual Swords" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long dualSwordsHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Dual Swords" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long dualSwordsStormStyle = weaponUsageData.Where(x => x.WeaponType == "Dual Swords" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long dualSwordsExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Dual Swords" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long greatSwordEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Great Sword" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long greatSwordHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Great Sword" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long greatSwordStormStyle = weaponUsageData.Where(x => x.WeaponType == "Great Sword" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long greatSwordExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Great Sword" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long longSwordEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Long Sword" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long longSwordHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Long Sword" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long longSwordStormStyle = weaponUsageData.Where(x => x.WeaponType == "Long Sword" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long longSwordExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Long Sword" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long hammerEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Hammer" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long hammerHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Hammer" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long hammerStormStyle = weaponUsageData.Where(x => x.WeaponType == "Hammer" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long hammerExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Hammer" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long huntingHornEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Hunting Horn" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long huntingHornHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Hunting Horn" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long huntingHornStormStyle = weaponUsageData.Where(x => x.WeaponType == "Hunting Horn" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long huntingHornExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Hunting Horn" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long lanceEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Lance" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long lanceHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Lance" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long lanceStormStyle = weaponUsageData.Where(x => x.WeaponType == "Lance" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long lanceExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Lance" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long gunlanceEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Gunlance" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long gunlanceHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Gunlance" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long gunlanceStormStyle = weaponUsageData.Where(x => x.WeaponType == "Gunlance" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long gunlanceExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Gunlance" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long tonfaEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Tonfa" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long tonfaHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Tonfa" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long tonfaStormStyle = weaponUsageData.Where(x => x.WeaponType == "Tonfa" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long tonfaExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Tonfa" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long switchAxeFEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Switch Axe F" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long switchAxeFHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Switch Axe F" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long switchAxeFStormStyle = weaponUsageData.Where(x => x.WeaponType == "Switch Axe F" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long switchAxeFExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Switch Axe F" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long lightBowgunEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Light Bowgun" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long lightBowgunHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Light Bowgun" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long lightBowgunStormStyle = weaponUsageData.Where(x => x.WeaponType == "Light Bowgun" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long lightBowgunExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Light Bowgun" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long heavyBowgunEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Heavy Bowgun" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long heavyBowgunHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Heavy Bowgun" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long heavyBowgunStormStyle = weaponUsageData.Where(x => x.WeaponType == "Heavy Bowgun" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long heavyBowgunExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Heavy Bowgun" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long BowEarthStyle = weaponUsageData.Where(x => x.WeaponType == "Bow" && x.Style == "Earth Style").Sum(x => x.RunCount);
-            long BowHeavenStyle = weaponUsageData.Where(x => x.WeaponType == "Bow" && x.Style == "Heaven Style").Sum(x => x.RunCount);
-            long BowStormStyle = weaponUsageData.Where(x => x.WeaponType == "Bow" && x.Style == "Storm Style").Sum(x => x.RunCount);
-            long BowExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Bow" && x.Style == "Extreme Style").Sum(x => x.RunCount);
-            long magnetSpikeEarthStyle = 0;
-            long magnetSpikeHeavenStyle = 0;
-            long magnetSpikeStormStyle = 0;
-            long magnetSpikeExtremeStyle = weaponUsageData.Where(x => x.WeaponType == "Magnet Spike" && x.Style == "Extreme").Sum(x => x.RunCount);
+            var weaponStyles = new[] { "Earth Style", "Heaven Style", "Storm Style", "Extreme Style" };
+            var weaponTypes = new[] { "Sword and Shield", "Dual Swords", "Great Sword", "Long Sword",
+                              "Hammer", "Hunting Horn", "Lance", "Gunlance", "Tonfa",
+                              "Switch Axe F", "Magnet Spike", "Light Bowgun", "Heavy Bowgun",
+                              "Bow"};
 
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(swordAndShieldEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(swordAndShieldHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(swordAndShieldStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(swordAndShieldExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(dualSwordsEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(dualSwordsHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(dualSwordsStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(dualSwordsExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(greatSwordEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(greatSwordHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(greatSwordStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(greatSwordExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(longSwordEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(longSwordHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(longSwordStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(longSwordExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(hammerEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(hammerHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(hammerStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(hammerExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(huntingHornEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(huntingHornHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(huntingHornStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(huntingHornExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(lanceEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(lanceHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(lanceStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(lanceExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(gunlanceEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(gunlanceHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(gunlanceStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(gunlanceExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(tonfaEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(tonfaHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(tonfaStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(tonfaExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(switchAxeFEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(switchAxeFHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(switchAxeFStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(switchAxeFExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(magnetSpikeEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(magnetSpikeHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(magnetSpikeStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(magnetSpikeExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(lightBowgunEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(lightBowgunHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(lightBowgunStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(lightBowgunExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(heavyBowgunEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(heavyBowgunHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(heavyBowgunStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(heavyBowgunExtremeStyle);
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(BowEarthStyle);
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(BowHeavenStyle);
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(BowStormStyle);
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(BowExtremeStyle);
-
-            //if (!weaponUsageChartLoaded)
-            //{
-
-            //    ComboBox comboBox = (ComboBox)sender;
-            //    int selectedIndex = comboBox.SelectedIndex;
-            //    string[] options = { "All-Time", "By Quest"};
-            //    string selectedOption = options[selectedIndex];
-
-            //    if (!weaponUsageChartLoaded && selectedOption == "All-Time")
-            //    {
-            //        ContentControl contentControl = (ContentControl)QuestLogsContentControl;
-            //        if (contentControl != null)
-            //        {
-            //            var grid = VisualTreeHelper.GetChild(contentControl, 0) as Grid;
-            //            if (grid != null && grid.Name == "WeaponUsageGrid")
-            //            {
-            //                CartesianChart chart = (CartesianChart)grid.FindName("WeaponUsageChart");
-            //                if (chart != null)
-            //                {
-            //                    weaponUsageChartLoaded = true;
-
-            //                    chart.SyncContext = MainWindow.DataLoader.model.weaponUsageSync;
-            //                    chart.Series = MainWindow.DataLoader.model.weaponUsageSeries;
-            //                }
-            //            }
-            //        }
-
-            //        //    weaponUsageChart.SyncContext = MainWindow.DataLoader.model.weaponUsageSync;
-            //        //weaponUsageChart.Series = MainWindow.DataLoader.model.weaponUsageSeries;
-            //    }
-            //}
+            foreach (var weaponType in weaponTypes)
+            {
+                foreach (var weaponStyle in weaponStyles)
+                {
+                    switch (weaponStyle)
+                    {
+                        case "Earth Style":
+                            var weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                                                                          .Sum(x => x.RunCount);
+                            MainWindow.DataLoader.model.weaponUsageEarthStyle.Add(weaponUsageCount);
+                            break;
+                        case "Heaven Style":
+                            weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                                                                          .Sum(x => x.RunCount);
+                            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Add(weaponUsageCount);
+                            break;
+                        case "Storm Style":
+                            weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                                                                          .Sum(x => x.RunCount);
+                            MainWindow.DataLoader.model.weaponUsageStormStyle.Add(weaponUsageCount);
+                            break;
+                        case "Extreme Style":
+                            weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                                                                          .Sum(x => x.RunCount);
+                            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Add(weaponUsageCount);
+                            break;
+                    }
+                }
+            }
         }
 
         private void weaponUsageChart_Loaded(object sender, RoutedEventArgs e)
@@ -2166,8 +1684,6 @@ namespace MHFZ_Overlay
                 weaponUsageChart.SyncContext = MainWindow.DataLoader.model.weaponUsageSync;
 
                 SetWeaponUsageChart(weaponUsageChart);
-
-                //chart.Series = MainWindow.DataLoader.model.weaponUsageSeries;
             }
         }
 
@@ -2643,10 +2159,6 @@ namespace MHFZ_Overlay
                     //DataLabelsPadding = 2,
                     TooltipLabelFormatter = value => questDuration.Key.ToString() + " "+TimeSpan.FromSeconds(value.PrimaryValue / 30.0).ToString(@"hh\:mm\:ss"),
                     DataLabelsFormatter = value => TimeSpan.FromSeconds(value.PrimaryValue / 30.0).ToString(@"hh\:mm\:ss")
-                    //{
-                    //    var time = TimeSpan.FromSeconds((double)value);
-                    //    return time.ToString(@"hh\:mm\:ss");
-                    //};
                 }) ;
             }
 
@@ -2957,12 +2469,6 @@ namespace MHFZ_Overlay
         private void GraphsChart_Loaded(object sender, RoutedEventArgs e)
         {
             graphChart = (CartesianChart)sender;
-
-            //graphChart.Series = new List<ISeries>();
-
-            //weaponUsageChart.SyncContext = MainWindow.DataLoader.model.weaponUsageSync;
-
-            //SetWeaponUsageChart(weaponUsageChart);
         }
 
         private void InventoriesTextBlock_Loaded(object sender, RoutedEventArgs e)
@@ -3062,8 +2568,6 @@ namespace MHFZ_Overlay
                     break;
             }
         }
-
-        //Quest quest = DatabaseManager.GetInstance().GetQuest(runID);   
     }
     /* LoadConfig on startup
      * Load Config on window open to have extra copy

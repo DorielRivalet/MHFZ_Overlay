@@ -52,7 +52,6 @@ namespace MHFZ_Overlay
                 {
                     System.Windows.MessageBox.Show($"Error creating overlay: wrong program. \n\n{ex}", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
 
-                    //App.Current.Shutdown();
                     Environment.Exit(0);
                 }
 
@@ -69,7 +68,6 @@ namespace MHFZ_Overlay
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
 
-                //App.Current.Shutdown();
                 Environment.Exit(0);
             }
         }
@@ -192,7 +190,6 @@ namespace MHFZ_Overlay
             if (proc == null)
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                //App.Current.Shutdown();
                 Environment.Exit(0);
                 return;
             }
