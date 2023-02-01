@@ -2177,6 +2177,7 @@ namespace MHFZ_Overlay
         private ListView top20RunsListView;
         private TextBlock questLogGearStatsTextBlock;
         private CartesianChart graphChart;
+        private TextBlock inventoriesTextBlock;
 
         private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
         {
@@ -2945,15 +2946,6 @@ namespace MHFZ_Overlay
                 case "(Run ID) Actions per Minute":
                     SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetActionsPerMinuteDictionary(runID));
                     return;
-                case "(Run ID) Inventory":
-                    //insert data
-                    break;
-                case "(Run ID) Ammo":
-                    //insert data
-                    break;
-                case "(Run ID) Partnya Bag":
-                    //insert data
-                    break;
             }
 
             graphChart.Series = Series;
@@ -2970,6 +2962,41 @@ namespace MHFZ_Overlay
             //weaponUsageChart.SyncContext = MainWindow.DataLoader.model.weaponUsageSync;
 
             //SetWeaponUsageChart(weaponUsageChart);
+        }
+
+        private void InventoriesTextBlock_Loaded(object sender, RoutedEventArgs e)
+        {
+            inventoriesTextBlock = (TextBlock)sender;
+        }
+
+        private void InventoriesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+
+            var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+
+            if (selectedItem == null)
+                return;
+
+            string selectedOption = selectedItem.Content.ToString();
+
+            if (inventoriesTextBlock == null || selectedOption == null || selectedOption == "")
+                return;
+
+            long runID = long.Parse(RunIDTextBox.Text.Trim());
+
+            //switch (selectedOption)
+            //{
+            //    case "Inventory":
+            //        SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostQuestCompletions());
+            //        break;
+            //    case "Ammo":
+            //        CreateQuestDurationStackedChart(DatabaseManager.GetInstance().GetTotalTimeSpentInQuests());
+            //        break;
+            //    case "Partnya Bag":
+            //        SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonObjectiveTypes());
+            //        break;
+            //}
         }
 
         //Quest quest = DatabaseManager.GetInstance().GetQuest(runID);   

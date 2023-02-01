@@ -377,14 +377,39 @@
                                 <ComboBoxItem>(Run ID) Player Health and Stamina</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Most Common Player Input</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Actions per Minute</ComboBoxItem>
-                                <ComboBoxItem>(Run ID) Inventory</ComboBoxItem>
-                                <ComboBoxItem>(Run ID) Ammo</ComboBoxItem>
-                                <ComboBoxItem>(Run ID) Partnya Bag</ComboBoxItem>
                             </ComboBox>
                             <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Multiplayer runs may not display the correct data"/>
                         </StackPanel>
                         <lvc:CartesianChart Loaded="GraphsChart_Loaded" Grid.Column="1" Grid.Row="1" x:Name="GraphsChart" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="InventoriesTemplate">
+                <!-- Grid structure for the "Inventories" option -->
+                <Grid x:Name="InventoriesGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
 
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#74c7ec" />
+
+                    <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox x:Name="inventoriesComboBox" Width="330" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="InventoriesComboBox_SelectionChanged">
+                                <ComboBoxItem>Inventory</ComboBoxItem>
+                                <ComboBoxItem>Ammo</ComboBoxItem>
+                                <ComboBoxItem>Partnya Bag</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Input a Run ID beforehand. Multiplayer runs may not display the correct data"/>
+                        </StackPanel>
+                        <TextBlock Loaded="InventoriesTextBlock_Loaded" Text="" x:Name="InventoriesTextBlock" Margin="5" Width="Auto" Height="Auto"/>
                     </StackPanel>
                 </Grid>
             </DataTemplate>
