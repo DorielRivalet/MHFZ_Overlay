@@ -361,6 +361,8 @@
                             <ComboBoxItem>(General) Most Common Diva Skill</ComboBoxItem>
                             <ComboBoxItem>(General) Most Common Guild Food</ComboBoxItem>
                             <ComboBoxItem>(General) Most Common Style Rank Skills</ComboBoxItem>
+                            <ComboBoxItem>(General) Most Common Caravan Skills</ComboBoxItem>
+                            <ComboBoxItem>(General) Most Common Category</ComboBoxItem>
                             <ComboBoxItem>(Run ID) Attack Buff</ComboBoxItem>
                             <ComboBoxItem>(Run ID) Hit Count</ComboBoxItem>
                             <ComboBoxItem>(Run ID) Hits per Second</ComboBoxItem>

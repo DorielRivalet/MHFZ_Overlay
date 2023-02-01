@@ -56,6 +56,9 @@ using System.Reflection.Emit;
 using System.Runtime.Serialization;
 using SharpCompress.Common;
 using XInput.Wrapper;
+using static System.Net.WebRequestMethods;
+using System.Windows.Ink;
+using File = System.IO.File;
 
 namespace MHFZ_Overlay
 {
@@ -2373,6 +2376,68 @@ namespace MHFZ_Overlay
             };
         }
 
+        public Dictionary<int, int> GetElapsedTime(Dictionary<int, int> timeAttackDict)
+        {
+            int initialTime = timeAttackDict.First().Key;
+            Dictionary<int, int> elapsedTimeDict = new Dictionary<int, int>();
+            foreach (var entry in timeAttackDict)
+            {
+                elapsedTimeDict[initialTime - entry.Key] = entry.Value;
+            }
+            return elapsedTimeDict;
+        }
+
+        public void SetLineSeriesForDictionaryIntInt(Dictionary<int, int> data)
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            List<ISeries> series = new();
+            ObservableCollection<ObservablePoint> collection = new();
+
+            Dictionary<int,int> newData = GetElapsedTime(data);
+
+            foreach (var entry in newData)
+            {
+                collection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = collection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    TextSize=12,
+                    Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    NameTextSize= 12,
+                    TextSize=12,
+                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            graphChart.Series = series;
+            graphChart.XAxes = XAxes;
+            graphChart.YAxes = YAxes;
+        }
+
 
         public void CreateQuestDurationStackedChart(Dictionary<int, int> questDurations)
         {
@@ -2446,14 +2511,15 @@ namespace MHFZ_Overlay
                 }
             };
 
+            long runID = long.Parse(RunIDTextBox.Text.Trim());
+
             switch (selectedOption)
             {
                 case "(General) Most Quest Completions":
                     SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostQuestCompletions());
                     break;
                 case "(General) Quest Durations":
-                    Dictionary<int, int> questDurations = DatabaseManager.GetInstance().GetTotalTimeSpentInQuests();
-                    CreateQuestDurationStackedChart(questDurations);
+                    CreateQuestDurationStackedChart(DatabaseManager.GetInstance().GetTotalTimeSpentInQuests());
                     break;
                 case "(General) Most Common Objective Types":
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonObjectiveTypes());
@@ -2477,7 +2543,6 @@ namespace MHFZ_Overlay
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonSetNames());
                     break;
                 case "(General) Most Common Weapon Name":
-                    //TODO: test gunners
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonWeaponNames());
                     break;
                 case "(General) Most Common Head Piece":
@@ -2502,13 +2567,17 @@ namespace MHFZ_Overlay
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonGuildFood());
                     break;
                 case "(General) Most Common Style Rank Skills":
-                    
-                    //insert data
+                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonStyleRankSkills());
+                    break;
+                case "(General) Most Common Caravan Skills":
+                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonCaravanSkills());
+                    break;
+                case "(General) Most Common Category":
+                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonCategory());
                     break;
                 case "(Run ID) Attack Buff":
-                    
-                    //insert data
-                    break;
+                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetAttackBuffDictionary(runID));
+                    return;
                 case "(Run ID) Hit Count":
                     
                     //insert data

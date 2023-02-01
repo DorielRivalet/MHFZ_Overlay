@@ -4754,7 +4754,650 @@ namespace MHFZ_Overlay
             return caravanSkills;
         }
 
+        public static double GetCurrentQuestElapsedTimeInSecondsForRunID(int start, int current)
+        {
+            if (start <= 0)
+                return 0;
 
+            return (double)(start - current) / 30;
+        }
+
+        public Dictionary<int,int> GetAttackBuffDictionary(long runID)
+        {
+            Dictionary<int,int> attackBuffDictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT AttackBuffDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                attackBuffDictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return attackBuffDictionary;
+        }
+
+        public Dictionary<int, int> GetHitCountDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT HitCountDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetHitsPerSecondDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT HitsPerSecondDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetDamageDealtDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT DamageDealtDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetDamagePerSecondDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT DamagePerSecondDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetAreaChangesDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT AreaChangesDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetCartsDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT CartsDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetMonster1HPDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1HPDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetMonster2HPDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster2HPDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetMonster3HPDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster3HPDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetMonster4HPDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster4HPDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetHitsTakenBlockedDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT HitsTakenBlockedDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetHitsTakenBlockedPerSecondDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT HitsTakenBlockedPerSecondDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetPlayerHPDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT PlayerHPDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetPlayerStaminaDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT PlayerStaminaDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetKeystrokesDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT KeystrokesDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetMouseInputDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT MouseInputDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, int> GetActionsPerMinuteDictionary(long runID)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT ActionsPerMinuteDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<string,int> GetMostCommonCategory()
+        {
+            Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        ActualOverlayMode, 
+                        COUNT(*) as count
+                    FROM 
+                        Quests
+                    GROUP BY 
+                        ActualOverlayMode 
+                    ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    string field = reader.GetString(0);
+                                    int count = reader.GetInt32(1);
+                                    fieldCounts.Add(field, count);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return fieldCounts;
+        }
 
         public ActiveSkills GetActiveSkills(long runID)
         {
@@ -6047,7 +6690,131 @@ namespace MHFZ_Overlay
             return weaponCounts;
         }
 
+        public Dictionary<string, int> GetMostCommonStyleRankSkills()
+        {
+            Dictionary<string, int> skillCounts = new Dictionary<string, int>();
 
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                    StyleRankSkill1ID, 
+                    COUNT(*) as count
+                FROM 
+                    StyleRankSkills
+                GROUP BY 
+                    StyleRankSkill1ID 
+                UNION
+                SELECT 
+                    StyleRankSkill2ID, 
+                    COUNT(*) as count
+                FROM 
+                    StyleRankSkills
+                GROUP BY 
+                    StyleRankSkill2ID 
+                ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int skillID = reader.GetInt32(0);
+                                    int count = reader.GetInt32(1);
+                                    string skillName = StyleRankSkillList.StyleRankSkillID[skillID];
+                                    if (!skillCounts.ContainsKey(skillName))
+                                    {
+                                        skillCounts.Add(skillName, count);
+                                    }
+                                    else
+                                    {
+                                        skillCounts[skillName] += count;
+                                    }
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return skillCounts;
+        }
+
+        public Dictionary<string, int> GetMostCommonCaravanSkills()
+        {
+            Dictionary<string, int> skillCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                    CaravanSkill1ID, 
+                    COUNT(*) as count
+                FROM 
+                    CaravanSkills
+                GROUP BY 
+                    CaravanSkill1ID 
+                UNION
+                SELECT 
+                    CaravanSkill2ID, 
+                    COUNT(*) as count
+                FROM 
+                    CaravanSkills
+                GROUP BY 
+                    CaravanSkill2ID 
+                UNION
+                SELECT 
+                    CaravanSkill3ID, 
+                    COUNT(*) as count
+                FROM 
+                    CaravanSkills
+                GROUP BY 
+                    CaravanSkill3ID 
+                ORDER BY count DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int skillID = reader.GetInt32(0);
+                                    int count = reader.GetInt32(1);
+                                    string skillName = CaravanSkillList.CaravanSkillID[skillID];
+                                    if (!skillCounts.ContainsKey(skillName))
+                                    {
+                                        skillCounts.Add(skillName, count);
+                                    }
+                                    else
+                                    {
+                                        skillCounts[skillName] += count;
+                                    }
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return skillCounts;
+        }
 
         public Dictionary<int, int> GetMostCommonPartySize()
         {

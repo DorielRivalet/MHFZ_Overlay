@@ -9210,7 +9210,14 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         //};
 
 
-        public static string GetTimeElapsed(double seconds)
+        public string GetTimeElapsed(double frames)
+        {
+            var elapsedTime = TimeSpan.FromSeconds(frames/30);
+            var elapsedTimeString = elapsedTime.ToString("mm\\:ss");
+            return elapsedTimeString;
+        }
+
+        public static string StaticGetTimeElapsed(double seconds)
         {
             var elapsedTime = TimeSpan.FromSeconds(seconds);
             var elapsedTimeString = elapsedTime.ToString("mm\\:ss");
@@ -9237,7 +9244,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 //Name= "Seconds",
                 //NameTextSize= 12,
                 TextSize=12,
-                Labeler = (value) => GetTimeElapsed(value),
+                Labeler = (value) => StaticGetTimeElapsed(value),
                 NamePaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
                 // you could also build your own currency formatter
