@@ -5947,7 +5947,106 @@ namespace MHFZ_Overlay
             return fieldCounts;
         }
 
-        
+        public Dictionary<DateTime, int> GetQuestsCompletedByDate()
+        {
+            Dictionary<DateTime, int> questsCompletedByDate = new Dictionary<DateTime, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                        DATE(CreatedAt) as DateOnly, 
+                        COUNT(*) as completions 
+                    FROM 
+                        Quests
+                    GROUP BY 
+                        DateOnly 
+                    ORDER BY DateOnly ASC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    DateTime date = reader.GetDateTime(0);
+                                    int completions = reader.GetInt32(1);
+                                    questsCompletedByDate.Add(date, completions);
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return questsCompletedByDate;
+        }
+
+        public Dictionary<string, int> GetMostCommonWeaponNames()
+        {
+            Dictionary<string, int> weaponCounts = new Dictionary<string, int>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql =
+                            @"SELECT 
+                                WeaponClassID,
+                                COALESCE(BlademasterWeaponID, GunnerWeaponID) as WeaponID,
+                                COUNT(*) as Frequency
+                            FROM 
+                                PlayerGear
+                            GROUP BY 
+                                WeaponID
+                            ORDER BY Frequency DESC";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            using (SQLiteDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int weaponClassID = reader.GetInt32(0);
+                                    int weaponID = reader.GetInt32(1);
+                                    int frequency = reader.GetInt32(2);
+                                    string weaponName = "";
+                                    if (BlademasterWeapons.BlademasterWeaponIDs.ContainsKey(weaponID) && WeaponClass.WeaponClassID[weaponClassID] == "Blademaster")
+                                    {
+                                        weaponName = BlademasterWeapons.BlademasterWeaponIDs[weaponID];
+                                    }
+                                    else if (GunnerWeapons.GunnerWeaponIDs.ContainsKey(weaponID) && WeaponClass.WeaponClassID[weaponClassID] == "Gunner")
+                                    {
+                                        weaponName = GunnerWeapons.GunnerWeaponIDs[weaponID];
+                                    }
+                                    if (!string.IsNullOrEmpty(weaponName))
+                                    {
+                                        weaponCounts[weaponName] = frequency;
+                                    }
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return weaponCounts;
+        }
+
 
 
         public Dictionary<int, int> GetMostCommonPartySize()

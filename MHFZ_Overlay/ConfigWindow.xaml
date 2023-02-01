@@ -350,7 +350,6 @@
                             <ComboBoxItem>(General) Most Common Rank Bands</ComboBoxItem>
                             <ComboBoxItem>(General) Most Common Objective</ComboBoxItem>
                             <ComboBoxItem>(General) Quests Completed by Date</ComboBoxItem>
-                            <ComboBoxItem>(General) Player Input</ComboBoxItem>
                             <ComboBoxItem>(General) Most Common Party Size</ComboBoxItem>
                             <ComboBoxItem>(General) Most Common Set Name</ComboBoxItem>
                             <ComboBoxItem>(General) Most Common Weapon Name</ComboBoxItem>

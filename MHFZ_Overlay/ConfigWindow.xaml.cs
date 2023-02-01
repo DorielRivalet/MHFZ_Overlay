@@ -2346,6 +2346,34 @@ namespace MHFZ_Overlay
             };
         }
 
+        public void SetColumnSeriesForDictionaryDateInt(Dictionary<DateTime, int> data)
+        {
+            Series = new ISeries[data.Count];
+            int i = 0;
+            foreach (var entry in data)
+            {
+                Series[i] = new ColumnSeries<double>
+                {
+                    Name = entry.Key.ToString("yyyy-MM-dd"),
+                    Values = new double[] { entry.Value }
+                };
+                i++;
+            }
+            XAxes = new Axis[]
+            {
+        new Axis
+        {
+            Labels = data.Keys.Select(x => x.ToString("yyyy-MM-dd")).ToArray(),
+            LabelsRotation = 0,
+            SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
+            TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
+            NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+            LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8")))
+        }
+            };
+        }
+
+
         public void CreateQuestDurationStackedChart(Dictionary<int, int> questDurations)
         {
             var series = new List<StackedColumnSeries<int>>();
@@ -2421,7 +2449,6 @@ namespace MHFZ_Overlay
             switch (selectedOption)
             {
                 case "(General) Most Quest Completions":
-                    // Assume your Dictionary is called questCompletions and is already populated with data
                     SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostQuestCompletions());
                     break;
                 case "(General) Quest Durations":
@@ -2441,12 +2468,7 @@ namespace MHFZ_Overlay
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonObjectives());
                     break;
                 case "(General) Quests Completed by Date":
-                    
-                    //insert data
-                    break;
-                case "(General) Player Input":
-                    
-                    //insert data
+                    SetColumnSeriesForDictionaryDateInt(DatabaseManager.GetInstance().GetQuestsCompletedByDate());
                     break;
                 case "(General) Most Common Party Size":
                     SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostCommonPartySize());
@@ -2455,35 +2477,29 @@ namespace MHFZ_Overlay
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonSetNames());
                     break;
                 case "(General) Most Common Weapon Name":
-                    
-                    //insert data
+                    //TODO: test gunners
+                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonWeaponNames());
                     break;
                 case "(General) Most Common Head Piece":
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonHeadPieces());
                     break;
                 case "(General) Most Common Chest Piece":
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonChestPieces());
-
                     break;
                 case "(General) Most Common Arms Piece":
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonArmsPieces());
-
                     break;
                 case "(General) Most Common Waist Piece":
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonWaistPieces());
-
                     break;
                 case "(General) Most Common Legs Piece":
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonLegsPieces());
-
                     break;
                 case "(General) Most Common Diva Skill":
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonDivaSkill());
-
                     break;
                 case "(General) Most Common Guild Food":
                     SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonGuildFood());
-
                     break;
                 case "(General) Most Common Style Rank Skills":
                     
