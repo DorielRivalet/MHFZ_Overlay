@@ -4828,9 +4828,9 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public Dictionary<int, int> GetHitsPerSecondDictionary(long runID)
+        public Dictionary<int, double> GetHitsPerSecondDictionary(long runID)
         {
-            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+            Dictionary<int, double> dictionary = new Dictionary<int, double>();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -4847,7 +4847,7 @@ namespace MHFZ_Overlay
 
                             if (result != null)
                             {
-                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, double>>((string)result);
                             }
                         }
                         transaction.Commit();
@@ -4894,9 +4894,9 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public Dictionary<int, int> GetDamagePerSecondDictionary(long runID)
+        public Dictionary<int, double> GetDamagePerSecondDictionary(long runID)
         {
-            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+            Dictionary<int, double> dictionary = new Dictionary<int, double>();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -4913,7 +4913,7 @@ namespace MHFZ_Overlay
 
                             if (result != null)
                             {
-                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, double>>((string)result);
                             }
                         }
                         transaction.Commit();
@@ -5262,9 +5262,9 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public Dictionary<int, int> GetHitsTakenBlockedPerSecondDictionary(long runID)
+        public Dictionary<int, double> GetHitsTakenBlockedPerSecondDictionary(long runID)
         {
-            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+            Dictionary<int, double> dictionary = new Dictionary<int, double>();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5281,7 +5281,7 @@ namespace MHFZ_Overlay
 
                             if (result != null)
                             {
-                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, double>>((string)result);
                             }
                         }
                         transaction.Commit();
@@ -5427,9 +5427,9 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public Dictionary<int, int> GetActionsPerMinuteDictionary(long runID)
+        public Dictionary<int, double> GetActionsPerMinuteDictionary(long runID)
         {
-            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+            Dictionary<int, double> dictionary = new Dictionary<int, double>();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5446,7 +5446,7 @@ namespace MHFZ_Overlay
 
                             if (result != null)
                             {
-                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, double>>((string)result);
                             }
                         }
                         transaction.Commit();
