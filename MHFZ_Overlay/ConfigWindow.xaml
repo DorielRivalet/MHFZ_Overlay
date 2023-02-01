@@ -375,7 +375,7 @@
                                 <ComboBoxItem>(Run ID) Hits Taken/Blocked</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Hits Taken/Blocked per Second</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Player Health and Stamina</ComboBoxItem>
-                                <ComboBoxItem>(Run ID) Player Input</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Most Common Player Input</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Actions per Minute</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Inventory</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Ammo</ComboBoxItem>

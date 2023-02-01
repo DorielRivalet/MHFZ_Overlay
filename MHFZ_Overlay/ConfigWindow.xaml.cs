@@ -2506,6 +2506,73 @@ namespace MHFZ_Overlay
             graphChart.YAxes = YAxes;
         }
 
+        public void SetPlayerHealthStamina(Dictionary<int, int> hp, Dictionary<int,int> stamina)
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            List<ISeries> series = new();
+            ObservableCollection<ObservablePoint> healthCollection = new();
+            ObservableCollection<ObservablePoint> staminaCollection = new();
+
+            Dictionary<int, int> newHP = GetElapsedTime(hp);
+            Dictionary<int, int> newStamina = GetElapsedTime(stamina);
+
+            foreach (var entry in newHP)
+            {
+                healthCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            foreach (var entry in newStamina)
+            {
+                staminaCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = healthCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ffa6e3a1"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ffa6e3a1", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ffa6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = staminaCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff9e2af"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff9e2af", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    TextSize=12,
+                    Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    NameTextSize= 12,
+                    TextSize=12,
+                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            graphChart.Series = series;
+            graphChart.XAxes = XAxes;
+            graphChart.YAxes = YAxes;
+        }
+
         public void CreateQuestDurationStackedChart(Dictionary<int, int> questDurations)
         {
             var series = new List<StackedColumnSeries<int>>();
@@ -2541,6 +2608,19 @@ namespace MHFZ_Overlay
                     TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
                 }
             };          
+        }
+
+        public Dictionary<string, int> GetMostCommonInputs(long runID)
+        {
+            var keystrokesDictionary = DatabaseManager.GetInstance().GetKeystrokesDictionary(runID);
+            var mouseInputDictionary = DatabaseManager.GetInstance().GetMouseInputDictionary(runID);
+            var combinedDictionary = keystrokesDictionary.Concat(mouseInputDictionary)
+                .GroupBy(kvp => kvp.Value)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            return combinedDictionary
+                .OrderByDescending(kvp => kvp.Value)
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
 
@@ -2665,18 +2745,18 @@ namespace MHFZ_Overlay
                     return;
                 case "(Run ID) Monster HP":
                     //insert data
-                    break;
+                    return;
                 case "(Run ID) Hits Taken/Blocked":
-                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetHitsTakenBlockedDictionary(runID));
+                    //SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetHitsTakenBlockedDictionary(runID));
                     return;
                 case "(Run ID) Hits Taken/Blocked per Second":
                     SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetHitsTakenBlockedPerSecondDictionary(runID));
                     return;
                 case "(Run ID) Player Health and Stamina":
-                    //insert data
-                    break;
-                case "(Run ID) Player Input":
-                    //insert data
+                    SetPlayerHealthStamina(DatabaseManager.GetInstance().GetPlayerHPDictionary(runID), DatabaseManager.GetInstance().GetPlayerStaminaDictionary(runID));
+                    return;
+                case "(Run ID) Most Common Player Input":
+                    SetColumnSeriesForDictionaryStringInt(GetMostCommonInputs(runID));
                     break;
                 case "(Run ID) Actions per Minute":
                     SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetActionsPerMinuteDictionary(runID));
