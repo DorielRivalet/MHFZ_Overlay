@@ -10224,7 +10224,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
             //previousTimeInt = TimeInt();
 
-            if (previousAttackBuffInt != WeaponRaw())
+            if (previousAttackBuffInt != WeaponRaw() && attackBuffDictionary.TryGetValue(TimeInt(), out int atk) == false)
             {
                 previousAttackBuffInt = WeaponRaw();
                 attackBuffDictionary.Add(TimeInt(), WeaponRaw());
@@ -10237,13 +10237,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
             }
 
-            if (previousHitCountInt != HitCountInt())
+            if (previousHitCountInt != HitCountInt() && hitCountDictionary.TryGetValue(TimeInt(), out int hitCount) == false)
             {
                 previousHitCountInt = HitCountInt();
                 hitCountDictionary.Add(TimeInt(), HitCountInt());
             }
 
-            if (previousDPS != DPS)
+            if (previousDPS != DPS && damagePerSecondDictionary.TryGetValue(TimeInt(), out double dps) == false)
             {
                 previousDPS = DPS;
                 damagePerSecondDictionary.Add(TimeInt(), DPS);
@@ -10255,7 +10255,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
             }
 
-            if (previousCartsInt != CurrentFaints())
+            if (previousCartsInt != CurrentFaints() && cartsDictionary.TryGetValue(TimeInt(), out int carts) == false)
             {
                 previousCartsInt = CurrentFaints();
                 cartsDictionary.Add(TimeInt(), CurrentFaints());
@@ -10266,7 +10266,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 areaChangesDictionary.Add(TimeInt(), AreaID());
             }
 
-            if (previousMonster1HP != Monster1HPInt())
+            if (previousMonster1HP != Monster1HPInt() && monster1HPDictionary.TryGetValue(TimeInt(), out var monster1HP) == false)
             {
                 previousMonster1HP = Monster1HPInt();
                 Dictionary<int, int> monster1HPDictionaryMonsterInfo = new Dictionary<int, int>();
@@ -10274,7 +10274,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
             }
 
-            if (previousMonster2HP != Monster2HPInt())
+            if (previousMonster2HP != Monster2HPInt() && monster2HPDictionary.TryGetValue(TimeInt(), out var monster2HP) == false)
             {
                 previousMonster2HP = Monster2HPInt();
                 Dictionary<int, int> monster2HPDictionaryMonsterInfo = new Dictionary<int, int>();
@@ -10282,7 +10282,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
             }
 
-            if (previousMonster3HP != Monster3HPInt())
+            if (previousMonster3HP != Monster3HPInt() && monster3HPDictionary.TryGetValue(TimeInt(), out var monster3HP) == false)
             {
                 previousMonster3HP = Monster3HPInt();
                 Dictionary<int, int> monster3HPDictionaryMonsterInfo = new Dictionary<int, int>();
@@ -10290,7 +10290,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
             }
 
-            if (previousMonster4HP != Monster4HPInt())
+            if (previousMonster4HP != Monster4HPInt() && monster4HPDictionary.TryGetValue(TimeInt(), out var monster4HP) == false)
             {
                 previousMonster4HP = Monster4HPInt();
                 Dictionary<int, int> monster4HPDictionaryMonsterInfo = new Dictionary<int, int>();
@@ -10563,7 +10563,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 partnyaBagDictionary.Add(TimeInt(), itemIDsQuantityList);
             }
 
-            if (previousHitsTakenBlocked != AreaHitsTakenBlocked() && AreaHitsTakenBlocked() != 0)
+            if (previousHitsTakenBlocked != AreaHitsTakenBlocked() && AreaHitsTakenBlocked() != 0 && hitsTakenBlockedDictionary.TryGetValue(TimeInt(), out var hitsTakenBlocked) == false)
             {
                 previousHitsTakenBlocked = AreaHitsTakenBlocked();
                 Dictionary<int,int> hitsAreaPairs = new Dictionary<int, int>();
@@ -10571,19 +10571,19 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
             }
 
-            if (previousPlayerHP != HunterHP())
+            if (previousPlayerHP != HunterHP() && playerHPDictionary.TryGetValue(TimeInt(), out var hp) == false)
             {
                 previousPlayerHP = HunterHP();
                 playerHPDictionary.Add(TimeInt(), HunterHP());
             }
 
-            if (previousPlayerStamina != HunterStamina())
+            if (previousPlayerStamina != HunterStamina() && playerStaminaDictionary.TryGetValue(TimeInt(), out var stamina) == false)
             {
                 previousPlayerStamina = HunterStamina();
                 playerStaminaDictionary.Add(TimeInt(), HunterStamina());
             }
 
-            if (previousHitsPerSecond != HitsPerSecond)
+            if (previousHitsPerSecond != HitsPerSecond && hitsPerSecondDictionary.TryGetValue(TimeInt(), out var hps) == false)
             {
                 previousHitsPerSecond = HitsPerSecond;
                 hitsPerSecondDictionary.Add(TimeInt(), HitsPerSecond);
@@ -10595,13 +10595,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
             }
 
-            if (previousTotalHitsTakenBlockedPerSecond != TotalHitsTakenBlockedPerSecond)
+            if (previousTotalHitsTakenBlockedPerSecond != TotalHitsTakenBlockedPerSecond && hitsTakenBlockedPerSecondDictionary.TryGetValue(TimeInt(), out var totalHitsTakenBlockedPerSecond) == false)
             {
                 previousTotalHitsTakenBlockedPerSecond = TotalHitsTakenBlockedPerSecond;
                 hitsTakenBlockedPerSecondDictionary.Add(TimeInt(), TotalHitsTakenBlockedPerSecond);
             }
 
-            if (previousActionsPerMinute != APM)
+            if (previousActionsPerMinute != APM && actionsPerMinuteDictionary.TryGetValue(TimeInt(),out double value) == false)
             {
                 previousActionsPerMinute = APM;
                 actionsPerMinuteDictionary.Add(TimeInt(), APM);
@@ -10613,7 +10613,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
             }
 
-            if (previousOverlayMode != GetOverlayMode())
+            if (previousOverlayMode != GetOverlayMode() && overlayModeDictionary.TryGetValue(TimeInt(), out var mode) == false)
             {
                 previousOverlayMode = GetOverlayMode();
                 overlayModeDictionary.Add(TimeInt(), GetOverlayMode());

@@ -59,6 +59,7 @@ using XInput.Wrapper;
 using static System.Net.WebRequestMethods;
 using System.Windows.Ink;
 using File = System.IO.File;
+using System.Text;
 
 namespace MHFZ_Overlay
 {
@@ -2969,13 +2970,74 @@ namespace MHFZ_Overlay
             inventoriesTextBlock = (TextBlock)sender;
         }
 
+        public Dictionary<int, List<Dictionary<int, int>>> GetElapsedTimeForInventories(Dictionary<int, List<Dictionary<int, int>>> dictionary)
+        {
+            Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new Dictionary<int, List<Dictionary<int, int>>>();
+            if (dictionary == null || !dictionary.Any())
+                return elapsedTimeDict;
+
+            int initialTime = dictionary.First().Key;
+            foreach (var entry in dictionary)
+            {
+                elapsedTimeDict[initialTime - entry.Key] = entry.Value;
+            }
+            return elapsedTimeDict;
+        }
+
+        public string FormatInventory(Dictionary<int, List<Dictionary<int, int>>> inventory)
+        {
+            var formattedInventory = "";
+            inventory = GetElapsedTimeForInventories(inventory);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var entry in inventory)
+            {
+                int time = entry.Key;
+                string timeString = TimeSpan.FromSeconds((double)time/30).ToString(@"mm\:ss\.ff");
+                var items = entry.Value;
+
+                var itemString = "";
+                int count = 0;
+                sb.AppendLine(timeString + " ");
+                foreach (var item in items)
+                {
+                    foreach (var itemData in item)
+                    {
+                        if (itemData.Value > 0)
+                        {
+                            string itemName = GetItemName(itemData.Key);
+                            sb.Append(itemName + " x" + itemData.Value + ", ");
+                            count++;
+                        }
+                        if (count == 5)
+                        {
+                            sb.AppendLine();
+                            count = 0;
+                        }
+                    }
+                }
+                sb.AppendLine();
+                sb.AppendLine();
+            }
+            return sb.ToString();
+        }
+
+        private string GetItemName(int itemID)
+        {
+            // implement code to get item name based on itemID
+            Items.ItemIDs.TryGetValue(itemID, out string value);
+            return value;
+        }
+
+
         private void InventoriesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
-
+            
             var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
-            if (selectedItem == null)
+            if (selectedItem == null || inventoriesTextBlock == null)
                 return;
 
             string selectedOption = selectedItem.Content.ToString();
@@ -2983,20 +3045,22 @@ namespace MHFZ_Overlay
             if (inventoriesTextBlock == null || selectedOption == null || selectedOption == "")
                 return;
 
+            inventoriesTextBlock.Text = "";
+
             long runID = long.Parse(RunIDTextBox.Text.Trim());
 
-            //switch (selectedOption)
-            //{
-            //    case "Inventory":
-            //        SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostQuestCompletions());
-            //        break;
-            //    case "Ammo":
-            //        CreateQuestDurationStackedChart(DatabaseManager.GetInstance().GetTotalTimeSpentInQuests());
-            //        break;
-            //    case "Partnya Bag":
-            //        SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonObjectiveTypes());
-            //        break;
-            //}
+            switch (selectedOption)
+            {
+                case "Inventory":
+                    inventoriesTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPlayerInventoryDictionary(runID));
+                    break;
+                case "Ammo":
+                    inventoriesTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetAmmoDictionary(runID)); 
+                    break;
+                case "Partnya Bag":
+                    inventoriesTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPartnyaBagDictionary(runID)); 
+                    break;
+            }
         }
 
         //Quest quest = DatabaseManager.GetInstance().GetQuest(runID);   

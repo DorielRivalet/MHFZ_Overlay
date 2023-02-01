@@ -30,7 +30,6 @@
             <local:OptionToTemplateConverter x:Key="OptionToTemplateConverter" />
             <local:OptionToVisibilityConverter x:Key="OptionToVisibilityConverter" />
             <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
-            <!--TODO: change embed border colors-->
             <DataTemplate x:Key="DefaultTemplate">
                 <Grid Background="#7f1e1e2e">
                     <TextBlock TextWrapping="Wrap" MaxWidth="500" MaxHeight="500" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -55,7 +54,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
 
-                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#74c7ec" />
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#94e2d5" />
 
                     <Grid x:Name="QuestLogGearTextGrid" Grid.Row="0" Grid.Column="1">
                         <DockPanel Margin="5,5,5,5">
@@ -88,7 +87,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
 
-                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#94e2d5" />
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#fab387" />
 
                     <!--listview here-->
                     <StackPanel  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="5">
@@ -184,7 +183,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
 
-                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#74c7ec" />
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#cba6f7" />
 
 
                     <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
@@ -229,7 +228,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
 
-                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#94e2d5" />
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#a6e3a1" />
 
                     <!--listview here-->
                     <ListView x:Name="RecentRunsListView" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Loaded="MostRecentRuns_ListViewLoaded">
@@ -339,7 +338,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
 
-                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#74c7ec" />
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#89b4fa" />
 
                     <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
@@ -398,7 +397,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
 
-                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#74c7ec" />
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#b4befe" />
 
                     <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
@@ -407,14 +406,12 @@
                                 <ComboBoxItem>Ammo</ComboBoxItem>
                                 <ComboBoxItem>Partnya Bag</ComboBoxItem>
                             </ComboBox>
-                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Input a Run ID beforehand. Multiplayer runs may not display the correct data"/>
+                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Enter a Run ID beforehand. Multiplayer runs may not display the correct data"/>
                         </StackPanel>
                         <TextBlock Loaded="InventoriesTextBlock_Loaded" Text="" x:Name="InventoriesTextBlock" Margin="5" Width="Auto" Height="Auto"/>
                     </StackPanel>
                 </Grid>
             </DataTemplate>
-
-
             <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
             <Setter Property="Template">
                 <Setter.Value>

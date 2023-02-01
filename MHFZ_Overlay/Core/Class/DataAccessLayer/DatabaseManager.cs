@@ -4993,10 +4993,6 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-
-        //TODO
-        //{"89998":{"103":2000},"89488":{"103":1283},"89481":{"103":1130},
-        //"89463":{"103":469},"89454":{"103":315}}
         public Dictionary<int, Dictionary<int,int>> GetMonster1HPDictionary(long runID)
         {
             Dictionary<int, Dictionary<int,int>> dictionary = new Dictionary<int, Dictionary<int,int>>();
@@ -5140,7 +5136,7 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
-                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT HitsTakenBlockedDictionary FROM Quests WHERE RunID = @runID", conn))
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT PlayerInventoryDictionary FROM PlayerGear WHERE RunID = @runID", conn))
                         {
                             cmd.Parameters.AddWithValue("@runID", runID);
 
@@ -5173,7 +5169,7 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
-                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT HitsTakenBlockedDictionary FROM Quests WHERE RunID = @runID", conn))
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT PlayerAmmoPouchDictionary FROM PlayerGear WHERE RunID = @runID", conn))
                         {
                             cmd.Parameters.AddWithValue("@runID", runID);
 
@@ -5206,7 +5202,7 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
-                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT HitsTakenBlockedDictionary FROM Quests WHERE RunID = @runID", conn))
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT PartnyaBagDictionary FROM PlayerGear WHERE RunID = @runID", conn))
                         {
                             cmd.Parameters.AddWithValue("@runID", runID);
 
