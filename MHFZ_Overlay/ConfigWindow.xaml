@@ -36,6 +36,9 @@
                         Welcome to the Quest Logs statistics section! Here you can modify the YouTube link of your runs, view weapon usage, see your most recent quest times and much more!
                         <LineBreak/>
                         <LineBreak/>
+                        Please keep in mind that if you update the overlay version, the database file may get overwritten.
+                        <LineBreak/>
+                        <LineBreak/>
                         Select an option from the Section drop-down menu in order to view these statistics.
                     </TextBlock>
                 </Grid>

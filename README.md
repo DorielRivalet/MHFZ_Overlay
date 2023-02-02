@@ -72,31 +72,51 @@ If the monster HP shown is less than what its actual values should be, restart b
 
 - [x] Monster Effective HP Bars (*e.g.* Burning Freezing Elzelion's 1,000,000 HP!)
 
-![Monster HP Bars](./demo/hp1.png)
-![Monster HP Bars](./demo/hp2.png)
+![Monster HP Bars 1](./demo/hp1.png)
+![Monster HP Bars 2](./demo/hp2.png)
+
+You can also see the monster icons or renders, and there is an option for automatic bar colors depending on the monster!
+
+![Monster HP Bars 3](./demo/hp3.png)
+![Monster HP Bars 4](./demo/hp4.png)
 
 - [x] Sharpness Numbers (colorized by current sharpness tier!)
 
-![Sharpness Numbers](./demo/sharpness1.png)
-![Sharpness Numbers](./demo/sharpness2.png)
-![Sharpness Numbers](./demo/sharpness3.png)
+![Sharpness Numbers 1](./demo/sharpness1.png)
+![Sharpness Numbers 2](./demo/sharpness2.png)
+![Sharpness Numbers 3](./demo/sharpness3.png)
 
 - [x] Quest Timer (Two modes: elapsed time and time left. Down to the centiseconds in accuracy!)
 - [x] Hit Count (counts *Reflect*, *Stylish Up*, Heatblade, *Fencing+2* and more!)
 
 ![Player Stats](./demo/playerstat1.png)
 
-- [x] Player True Raw (current highest value shown in red!)
+Includes icons!
+
+![Player Stats Icons](./demo/playerstat2.png)
+
+- [x] Player Input (KBM)
+
+![Player Input](./demo/kbm.gif)
+
+- [x] Player Stats Graphs (Actions per Minute, Damage Per Second, Hits per Second and True Raw!)
+
+![Player APM](./demo/apm.gif)
+![Player Graphs](./demo/graphs.png)
+
+- [x] Player True Raw (currently highest value shown in red!)
 
 ![Player Attack](./demo/playeratk1.png)
 
-- [x] Monster Stats (attack multiplier, defense rate and size!)
+- [x] Monster Stats + Icons (attack multiplier, defense rate and size!)
 
 ![Monster Stats](./demo/monsterstat1.png)
+![Monster Stats Icons](./demo/monsterstat2.png)
 
-- [x] Monster Status Ailments (Poison, Sleep, Paralysis, Blast, Stun!)
+- [x] Monster Status Ailments + Icons (Poison, Sleep, Paralysis, Blast, Stun!)
 
 ![Monster Ailments](./demo/ailments1.png)
+![Monster Ailments Icons](./demo/ailments2.png)
 
 - [x] Monster Body Parts (up to 10 parts!)
 
@@ -104,7 +124,7 @@ If the monster HP shown is less than what its actual values should be, restart b
 
 - [x] Damage Numbers (dynamic colors and size!)
 
-![Damage Numbers](./demo/damagenumbers1.png)
+![Damage Numbers](./demo/hits.gif)
 
 - [x] [Discord Rich Presence](#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area, [speedrun mode, zen mode](#how-to-enable-speedrun--zen-modes), and more!)
 
@@ -114,6 +134,28 @@ If the monster HP shown is less than what its actual values should be, restart b
 ![Discord Rich Presence](./demo/discord9.png)
 
 ![Discord Rich Presence](./demo/discord9.gif)
+
+![Discord Rich Presence](./demo/discord7.png)
+
+- [x] Run Category Watermarks and Personal Best Times for your speedrun videos!
+
+![Watermarks](./demo/speedrun.png)
+
+- [x] Quest Runs Database (check weapon usage, set YouTube URLs, view past statistics, see your personal best times, etc!)
+
+![Weapon Usage](./demo/databaseweaponusage.png)
+
+![Top 20](./demo/databasetop20.png)
+
+![Gear](./demo/databasegear.png)
+
+![Graphs](./demo/databasegraphs.png)
+
+![Most Recent](./demo/databasemostrecent.png)
+
+![YouTube](./demo/databaseyoutube.png)
+
+![Inventories](./demo/databaseinventories.png)
 
 ## Configuration Preview
 
@@ -178,9 +220,6 @@ If the HP shows 0/1 then change area for it to load.
 - Allow lock-on to be used to select monsters
 - Overlay font options
 - Add shortcut for saving
-- Damage graph
-- Weapon stats import/export
-- Quest stats import/export
 - Monster stats import/export
 - Automatically set default positions according to screen resolution
 - Global damage number labels
@@ -224,15 +263,15 @@ If the HP shows 0/1 then change area for it to load.
 
 ![Discord Rich Presence](./demo/discord6.gif)
 
-## How to Enable Speedrun & Zen Modes
+## How to Enable Speedrun Categories & Zen Mode
 
-- Speedrunner Mode: Disable **everything** (Monster Icon, Quest Timer and Discord Rich Presence optional)
+- Speedrun Mode Categories: SOLO ONLY. Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, Personal Best and Discord Rich Presence optional)
 
-![Discord Rich Presence](./demo/discord7.png)
+![Discord Rich Presence](./demo/discord8.png)
 
 - Zen Mode: Disable **everything** (Monster Icon and Discord Rich Presence optional)
 
-![Discord Rich Presence](./demo/discord8.png)
+![Discord Rich Presence](./demo/discord11.png)
 
 ~~Congrats, now you won't be accused of cheating~~
 
