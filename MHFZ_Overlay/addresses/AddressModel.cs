@@ -5898,7 +5898,6 @@ namespace MHFZ_Overlay.addresses
                 AmmoPouch ammoPouch = DatabaseManager.GetInstance().GetAmmoPouch((long)runID);
                 AutomaticSkills automaticSkills = DatabaseManager.GetInstance().GetAutomaticSkills((long)runID);
                 CaravanSkills caravanSkills = DatabaseManager.GetInstance().GetCaravanSkills((long)runID);
-                PartnyaBag partnyaBag = DatabaseManager.GetInstance().GetPartnyaBag((long)runID);
                 PlayerGear playerGear = DatabaseManager.GetInstance().GetPlayerGear((long)runID);
                 PlayerInventory playerInventory = DatabaseManager.GetInstance().GetPlayerInventory((long)runID);
                 UI.Class.RoadDureSkills roadDureSkills = DatabaseManager.GetInstance().GetRoadDureSkills((long)runID);
@@ -8429,77 +8428,77 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         // TODO
 
-        public ObservableCollection<ObservablePoint> attackBuffCollection = new();
-        public ObservableCollection<ObservablePoint> damagePerSecondCollection = new();
-        public ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new();
-        public ObservableCollection<ObservablePoint> hitsPerSecondCollection = new();
+        private ObservableCollection<ObservablePoint> attackBuffCollection = new();
+        private ObservableCollection<ObservablePoint> damagePerSecondCollection = new();
+        private ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new();
+        private ObservableCollection<ObservablePoint> hitsPerSecondCollection = new();
 
-        public ObservableCollection<long> weaponUsageSwordAndShieldEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageSwordAndShieldHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageSwordAndShieldStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageSwordAndShieldExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageSwordAndShieldEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageSwordAndShieldHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageSwordAndShieldStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageSwordAndShieldExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageDualSwordsEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageDualSwordsHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageDualSwordsStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageDualSwordsExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageDualSwordsEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageDualSwordsHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageDualSwordsStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageDualSwordsExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageGreatSwordEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageGreatSwordHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageGreatSwordStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageGreatSwordExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageGreatSwordEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageGreatSwordHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageGreatSwordStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageGreatSwordExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageLongSwordEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageLongSwordHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageLongSwordStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageLongSwordExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageLongSwordEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageLongSwordHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageLongSwordStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageLongSwordExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageHammerEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageHammerHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageHammerStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageHammerExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageHammerEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageHammerHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageHammerStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageHammerExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageHuntingHornEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageHuntingHornHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageHuntingHornStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageHuntingHornExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageHuntingHornEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageHuntingHornHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageHuntingHornStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageHuntingHornExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageLanceEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageLanceHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageLanceStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageLanceExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageLanceEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageLanceHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageLanceStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageLanceExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageGunlanceEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageGunlanceHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageGunlanceStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageGunlanceExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageGunlanceEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageGunlanceHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageGunlanceStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageGunlanceExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageTonfaEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageTonfaHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageTonfaStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageTonfaExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageTonfaEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageTonfaHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageTonfaStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageTonfaExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageSwitchAxeFEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageSwitchAxeFHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageSwitchAxeFStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageSwitchAxeFExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageSwitchAxeFEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageSwitchAxeFHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageSwitchAxeFStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageSwitchAxeFExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageLightBowgunEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageLightBowgunHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageLightBowgunStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageLightBowgunExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageLightBowgunEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageLightBowgunHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageLightBowgunStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageLightBowgunExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageHeavyBowgunEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageHeavyBowgunHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageHeavyBowgunStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageHeavyBowgunExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageHeavyBowgunEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageHeavyBowgunHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageHeavyBowgunStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageHeavyBowgunExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageBowEarthStyleCollection = new();
-        public ObservableCollection<long> weaponUsageBowHeavenStyleCollection = new();
-        public ObservableCollection<long> weaponUsageBowStormStyleCollection = new();
-        public ObservableCollection<long> weaponUsageBowExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageBowEarthStyleCollection = new();
+        private ObservableCollection<long> weaponUsageBowHeavenStyleCollection = new();
+        private ObservableCollection<long> weaponUsageBowStormStyleCollection = new();
+        private ObservableCollection<long> weaponUsageBowExtremeStyleCollection = new();
 
-        public ObservableCollection<long> weaponUsageMagnetSpikeExtremeStyleCollection = new();
+        private ObservableCollection<long> weaponUsageMagnetSpikeExtremeStyleCollection = new();
 
         public ObservableCollection<long> weaponUsageEarthStyle = new();
         public ObservableCollection<long> weaponUsageHeavenStyle = new();
@@ -9234,13 +9233,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public Dictionary<int, string> overlayModeDictionary = new Dictionary<int, string>();
 
-        // Initialize the damageDealt and timeElapsed variables to 0
-        //int damageDealt = 0;
-        //int timeElapsed = 0;
-
-        // Initialize the previousHitTime variable to 0
-        //public int previousHitTime = 0; // is this used?
-
         public int previousTimeInt = 0;
 
         public int previousAttackBuffInt = 0;
@@ -9509,7 +9501,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public void InsertQuestInfoIntoDictionaries()
         {
-            if (previousAttackBuffInt != WeaponRaw() && attackBuffDictionary.TryGetValue(TimeInt(), out int atk) == false)
+            if (previousAttackBuffInt != WeaponRaw() && !attackBuffDictionary.TryGetValue(TimeInt(), out int atk))
             {
                 previousAttackBuffInt = WeaponRaw();
                 attackBuffDictionary.Add(TimeInt(), WeaponRaw());
@@ -9522,13 +9514,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
             }
 
-            if (previousHitCountInt != HitCountInt() && hitCountDictionary.TryGetValue(TimeInt(), out int hitCount) == false)
+            if (previousHitCountInt != HitCountInt() && !hitCountDictionary.TryGetValue(TimeInt(), out int hitCount))
             {
                 previousHitCountInt = HitCountInt();
                 hitCountDictionary.Add(TimeInt(), HitCountInt());
             }
 
-            if (previousDPS != DPS && damagePerSecondDictionary.TryGetValue(TimeInt(), out double dps) == false)
+            if (previousDPS != DPS && !damagePerSecondDictionary.TryGetValue(TimeInt(), out double dps))
             {
                 previousDPS = DPS;
                 damagePerSecondDictionary.Add(TimeInt(), DPS);
@@ -9540,7 +9532,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
             }
 
-            if (previousCartsInt != CurrentFaints() && cartsDictionary.TryGetValue(TimeInt(), out int carts) == false)
+            if (previousCartsInt != CurrentFaints() && !cartsDictionary.TryGetValue(TimeInt(), out int carts))
             {
                 previousCartsInt = CurrentFaints();
                 cartsDictionary.Add(TimeInt(), CurrentFaints());
@@ -9551,7 +9543,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 areaChangesDictionary.Add(TimeInt(), AreaID());
             }
 
-            if (previousMonster1HP != Monster1HPInt() && monster1HPDictionary.TryGetValue(TimeInt(), out var monster1HP) == false)
+            if (previousMonster1HP != Monster1HPInt() && !monster1HPDictionary.TryGetValue(TimeInt(), out var monster1HP))
             {
                 previousMonster1HP = Monster1HPInt();
                 Dictionary<int, int> monster1HPDictionaryMonsterInfo = new Dictionary<int, int>();
@@ -9559,7 +9551,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
             }
 
-            if (previousMonster2HP != Monster2HPInt() && monster2HPDictionary.TryGetValue(TimeInt(), out var monster2HP) == false)
+            if (previousMonster2HP != Monster2HPInt() && !monster2HPDictionary.TryGetValue(TimeInt(), out var monster2HP))
             {
                 previousMonster2HP = Monster2HPInt();
                 Dictionary<int, int> monster2HPDictionaryMonsterInfo = new Dictionary<int, int>();
@@ -9567,7 +9559,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
             }
 
-            if (previousMonster3HP != Monster3HPInt() && monster3HPDictionary.TryGetValue(TimeInt(), out var monster3HP) == false)
+            if (previousMonster3HP != Monster3HPInt() && !monster3HPDictionary.TryGetValue(TimeInt(), out var monster3HP))
             {
                 previousMonster3HP = Monster3HPInt();
                 Dictionary<int, int> monster3HPDictionaryMonsterInfo = new Dictionary<int, int>();
@@ -9575,7 +9567,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
             }
 
-            if (previousMonster4HP != Monster4HPInt() && monster4HPDictionary.TryGetValue(TimeInt(), out var monster4HP) == false)
+            if (previousMonster4HP != Monster4HPInt() && !monster4HPDictionary.TryGetValue(TimeInt(), out var monster4HP))
             {
                 previousMonster4HP = Monster4HPInt();
                 Dictionary<int, int> monster4HPDictionaryMonsterInfo = new Dictionary<int, int>();
@@ -9848,7 +9840,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 partnyaBagDictionary.Add(TimeInt(), itemIDsQuantityList);
             }
 
-            if (previousHitsTakenBlocked != AreaHitsTakenBlocked() && AreaHitsTakenBlocked() != 0 && hitsTakenBlockedDictionary.TryGetValue(TimeInt(), out var hitsTakenBlocked) == false)
+            if (previousHitsTakenBlocked != AreaHitsTakenBlocked() && AreaHitsTakenBlocked() != 0 && !hitsTakenBlockedDictionary.TryGetValue(TimeInt(), out var hitsTakenBlocked))
             {
                 previousHitsTakenBlocked = AreaHitsTakenBlocked();
                 Dictionary<int, int> hitsAreaPairs = new Dictionary<int, int>();
@@ -9862,13 +9854,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 playerHPDictionary.Add(TimeInt(), HunterHP());
             }
 
-            if (previousPlayerStamina != HunterStamina() && playerStaminaDictionary.TryGetValue(TimeInt(), out var stamina) == false)
+            if (previousPlayerStamina != HunterStamina() && !playerStaminaDictionary.TryGetValue(TimeInt(), out var stamina))
             {
                 previousPlayerStamina = HunterStamina();
                 playerStaminaDictionary.Add(TimeInt(), HunterStamina());
             }
 
-            if (previousHitsPerSecond != HitsPerSecond && hitsPerSecondDictionary.TryGetValue(TimeInt(), out var hps) == false)
+            if (previousHitsPerSecond != HitsPerSecond && !hitsPerSecondDictionary.TryGetValue(TimeInt(), out var hps))
             {
                 previousHitsPerSecond = HitsPerSecond;
                 hitsPerSecondDictionary.Add(TimeInt(), HitsPerSecond);
@@ -9880,13 +9872,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
             }
 
-            if (previousTotalHitsTakenBlockedPerSecond != TotalHitsTakenBlockedPerSecond && hitsTakenBlockedPerSecondDictionary.TryGetValue(TimeInt(), out var totalHitsTakenBlockedPerSecond) == false)
+            if (previousTotalHitsTakenBlockedPerSecond != TotalHitsTakenBlockedPerSecond && !hitsTakenBlockedPerSecondDictionary.TryGetValue(TimeInt(), out var totalHitsTakenBlockedPerSecond))
             {
                 previousTotalHitsTakenBlockedPerSecond = TotalHitsTakenBlockedPerSecond;
                 hitsTakenBlockedPerSecondDictionary.Add(TimeInt(), TotalHitsTakenBlockedPerSecond);
             }
 
-            if (previousActionsPerMinute != APM && actionsPerMinuteDictionary.TryGetValue(TimeInt(), out double value) == false)
+            if (previousActionsPerMinute != APM && !actionsPerMinuteDictionary.TryGetValue(TimeInt(), out double value))
             {
                 previousActionsPerMinute = APM;
                 actionsPerMinuteDictionary.Add(TimeInt(), APM);
@@ -9898,7 +9890,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
             }
 
-            if (previousOverlayMode != GetOverlayMode() && overlayModeDictionary.TryGetValue(TimeInt(), out var mode) == false)
+            if (previousOverlayMode != GetOverlayMode() && !overlayModeDictionary.TryGetValue(TimeInt(), out var mode))
             {
                 previousOverlayMode = GetOverlayMode();
                 overlayModeDictionary.Add(TimeInt(), GetOverlayMode());

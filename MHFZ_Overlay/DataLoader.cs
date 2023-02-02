@@ -68,7 +68,7 @@ namespace MHFZ_Overlay
                 System.Windows.MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
         }
 
-        private List<string> bannedProcessesName = new List<string>()
+        private readonly List<string> bannedProcessesName = new List<string>()
         {
             "displayer","Displayer","cheat","Cheat","overlay","Overlay","Wireshark"
         };
@@ -167,7 +167,7 @@ namespace MHFZ_Overlay
             if (firstRun) MessageBox.Show("【MHF-Z】Overlay is now running! Thanks for installing【MHF-Z】Overlay.\n\nHotkeys: Shift+F1 (Configuration) | Shift+F5 (Restart) | Shift+F6 (Close)\n\nPress Alt+Enter if your game resolution changed.\n\nThe overlay might take some time to start due to databases.\n\nHappy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        DatabaseManager databaseManager = DatabaseManager.GetInstance();
+        readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
 
         /// <summary>
         /// Creates the code cave.

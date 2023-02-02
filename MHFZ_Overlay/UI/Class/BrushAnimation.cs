@@ -7,21 +7,6 @@ using System.Windows.Media.Animation;
 namespace MHFZ_Overlay.UI.Class
 {
     //https://stackoverflow.com/questions/8096852/brush-to-brush-animation
-    /*
-     * var animation = new BrushAnimation
-{
-    From = Brushes.Red,
-    To = new LinearGradientBrush (Colors.Green, Colors.Yellow, 45),
-    Duration = new Duration(TimeSpan.FromSeconds(5)),
-};
-animation.Completed += new EventHandler(animation_Completed);
-Storyboard.SetTarget(animation, border);
-Storyboard.SetTargetProperty(animation, new PropertyPath("Background"));
-
-var sb = new Storyboard();
-sb.Children.Add(animation);
-sb.Begin();
-     */
     public class BrushAnimation : AnimationTimeline
     {
         public override Type TargetPropertyType

@@ -550,7 +550,7 @@ namespace MHFZ_Overlay
             weaponUsageData = DatabaseManager.GetInstance().CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
         }
 
-        private List<WeaponUsageMapper> weaponUsageData = new List<WeaponUsageMapper>();
+        private List<WeaponUsageMapper> weaponUsageData = new();
 
         private void SetWeaponUsageChart(CartesianChart weaponUsageChart)
         {
@@ -1780,11 +1780,9 @@ namespace MHFZ_Overlay
 
         private void QuestLogGearBtnCopyFile_Click(object sender, RoutedEventArgs e)
         {
-            string textToSave = questLogGearStatsTextBlock.Text;
             questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
             CopyUIElementToClipboard(questLogGearStatsTextBlock);
             questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
-            return;
         }
 
         public ISeries[] Series { get; set; }
@@ -1902,8 +1900,6 @@ namespace MHFZ_Overlay
 
         public void SetLineSeriesForDictionaryIntInt(Dictionary<int, int> data)
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> collection = new();
 
@@ -1953,8 +1949,6 @@ namespace MHFZ_Overlay
 
         public void SetLineSeriesForDictionaryIntDouble(Dictionary<int, double> data)
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> collection = new();
 
@@ -2004,8 +1998,6 @@ namespace MHFZ_Overlay
 
         public void SetHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> data)
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> collection = new();
 
@@ -2057,8 +2049,6 @@ namespace MHFZ_Overlay
 
         public void SetPlayerHealthStamina(Dictionary<int, int> hp, Dictionary<int, int> stamina)
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> healthCollection = new();
             ObservableCollection<ObservablePoint> staminaCollection = new();
@@ -2203,8 +2193,6 @@ namespace MHFZ_Overlay
 
         public void SetMonsterHP(Dictionary<int, int> monster1, Dictionary<int, int> monster2, Dictionary<int, int> monster3, Dictionary<int, int> monster4)
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> monster1Collection = new();
             ObservableCollection<ObservablePoint> monster2Collection = new();

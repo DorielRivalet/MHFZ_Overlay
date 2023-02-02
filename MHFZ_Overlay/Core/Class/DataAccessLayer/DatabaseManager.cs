@@ -305,7 +305,6 @@ namespace MHFZ_Overlay
                             // Calculate the elapsed time of the quest
                             string finalTimeDisplay = dataLoader.GetQuestTimeCompletion();
                             // Convert the elapsed time to a DateTime object
-                            DateTime endTime = DateTime.ParseExact(finalTimeDisplay, @"mm\:ss\.ff", CultureInfo.InvariantCulture);
                             string objectiveImage;
                             //Gathering/etc
                             if ((dataLoader.model.ObjectiveType() == 0x0 || dataLoader.model.ObjectiveType() == 0x02 || dataLoader.model.ObjectiveType() == 0x1002) && (dataLoader.model.QuestID() != 23527 && dataLoader.model.QuestID() != 23628 && dataLoader.model.QuestID() != 21731 && dataLoader.model.QuestID() != 21749 && dataLoader.model.QuestID() != 21746 && dataLoader.model.QuestID() != 21750))
@@ -1355,7 +1354,6 @@ namespace MHFZ_Overlay
 
                         int weaponTypeID = model.WeaponType();
                         int weaponClassID = weaponTypeID;
-                        int weaponID = model.BlademasterWeaponID();//ranged and melee are the same afaik
                         string weaponSlot1 = model.GetDecoName(model.WeaponDeco1ID(), 1);// no sigils in database ig
                         string weaponSlot2 = model.GetDecoName(model.WeaponDeco2ID(), 2);
                         string weaponSlot3 = model.GetDecoName(model.WeaponDeco3ID(), 3);
@@ -1381,7 +1379,6 @@ namespace MHFZ_Overlay
                         int legsSlot3 = model.ArmorLegsDeco3ID();
                         int cuffSlot1 = model.Cuff1ID();
                         int cuffSlot2 = model.Cuff2ID();
-                        string questName = model.GetQuestNameFromID(model.QuestID());
                         int styleID = model.WeaponStyle();
                         int weaponIconID = weaponTypeID;
                         int divaSkillID = model.DivaSkill();
@@ -2121,7 +2118,6 @@ namespace MHFZ_Overlay
         {
             try
             {
-                var model = window.DataLoader.model;
                 DateTime ProgramEnd = DateTime.Now;
                 DateTime ProgramStart = window.ProgramStart;
                 TimeSpan duration = ProgramEnd - ProgramStart;
@@ -2583,56 +2579,6 @@ namespace MHFZ_Overlay
                 {
                     HandleError(transaction, ex);
                 }
-            }
-        }
-
-        public void UpdateYoutubeLink(string youtubeId, int runId, SQLiteConnection conn)
-        {
-            try
-            {
-                // Start a transaction
-                using (SQLiteTransaction transaction = conn.BeginTransaction())
-                {
-                    try
-                    {
-                        // Execute the query
-                        string updateSql = "UPDATE Quests SET YouTubeID = @youtubeId WHERE RunID = @runId";
-                        using (SQLiteCommand cmd = new SQLiteCommand(updateSql, conn))
-                        {
-                            // Add the parameters for the placeholders in the SQL query
-                            cmd.Parameters.AddWithValue("@youtubeId", youtubeId);
-                            cmd.Parameters.AddWithValue("@runId", runId);
-
-                            // Execute the update statement
-                            int rowsAffected = cmd.ExecuteNonQuery();
-
-                            // Check if the update was successful
-                            if (rowsAffected > 0)
-                            {
-                                // The update was successful
-                                MessageBox.Show("YouTubeID updated successfully");
-                            }
-                            else
-                            {
-                                // The update was not successful
-                                MessageBox.Show("Error updating YouTubeID");
-                            }
-                        }
-
-                        // Commit the transaction
-                        transaction.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        // Handle the error
-                        HandleError(transaction, ex);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle any errors that may occur when starting the transaction
-                HandleError(null, ex);
             }
         }
 
@@ -6931,47 +6877,24 @@ namespace MHFZ_Overlay
  * 
  * 
  * 
- You can use LINQ to perform various operations on lists, such as filtering, sorting, and aggregating data. Here's an example of how you can use LINQ to calculate the average attack buff of a particular quest run with a particular weapon type:
+You can use LINQ to perform various operations on lists, such as filtering, sorting, and aggregating data. Here's an example of how you can use LINQ to calculate the average attack buff of a particular quest run with a particular weapon type:
 
-Copy code
-int weaponType = 3;
-int questID = 123;
-
-List<int> attackBuffList = GetAttackBuffList(weaponType, questID);
-
-double averageAttackBuff = attackBuffDictionary.Values.Average();
 To calculate the maximum attack buff of a particular quest run with a particular weapon type, you can use the Max() method:
 
-Copy code
-int maxAttackBuff = attackBuffDictionary.Values.Max();
 To calculate the maximum attack buff of all quest runs of a particular quest with a particular weapon type, you can use LINQ to group the attack buff values by quest and weapon type, and then use the Max() method to find the maximum attack buff for each group:
 
-Copy code
-var attackBuffGroups = attackBuffList
-    .GroupBy(x => new { QuestID = questID, WeaponType = weaponType })
-    .Select(g => new {
-        QuestID = g.Key.QuestID,
-        WeaponType = g.Key.WeaponType,
-        MaxAttackBuff = g.Max()
-    });
 This will return a list of groups, each containing the quest ID, weapon type, and maximum attack buff for a particular quest and weapon type. You can then iterate over this list to find the maximum attack buff for all quest runs. 
  
- Include info from more spreadsheets (speedrun calculation etc)
+Include info from more spreadsheets (speedrun calculation etc)
 
 LINQ (Language Integrated Query) is a set of features in C# that allows you to write queries to filter, transform, and aggregate data in your code. It works with various data sources, including arrays, lists, and dictionaries.
 
 For example, if you want to calculate the average attack buff for a particular quest run with a particular weapon type, you could use LINQ's Average method like this:
 
-Copy code
-double averageAttackBuff = attackBuffDictionary.Values.Average();
 To calculate the maximum attack buff for a particular quest run with a particular weapon type, you could use LINQ's Max method like this:
 
-Copy code
-int maxAttackBuff = attackBuffDictionary.Values.Max();
 To calculate the maximum attack buff of all quest runs of a particular quest with a particular weapon type, you would need to store the attack buff dictionaries for each quest run in a list or collection and then use LINQ's Max method like this:
 
-Copy code
-int maxAttackBuffAllRuns = attackBuffDictionaries.Select(d => d.Values.Max()).Max();
 This would select the maximum attack buff value for each dictionary in the list, and then find the overall maximum value from those.
 
 You can read more about LINQ and its various methods and features in the C# documentation: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/

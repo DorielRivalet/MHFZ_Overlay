@@ -398,7 +398,6 @@ namespace MHFZ_Overlay
 
                 // select a theme, default is Light
                 // OPTIONAL
-                //.AddDarkTheme());
                 .AddLightTheme());
 
 
@@ -499,7 +498,7 @@ namespace MHFZ_Overlay
             System.Diagnostics.Process.Start(sInfo);
         }
 
-        DatabaseManager databaseManager = DatabaseManager.GetInstance();
+        readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
 
         public void CheckGameState()
         {
