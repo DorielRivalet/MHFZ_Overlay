@@ -661,7 +661,16 @@ namespace MHFZ_Overlay
                     isFirstAttack = false;
                     CreateDamageNumberLabel(damage);
                     if (!DataLoader.model.damageDealtDictionary.ContainsKey(DataLoader.model.TimeInt()))
-                        DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), damage);
+                    {
+                        try
+                        {
+                            DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), damage);
+                        }
+                        catch
+                        {
+                            // nothing
+                        }
+                    }
                 }
                 else if (curNum < 0)
                 {
@@ -669,7 +678,17 @@ namespace MHFZ_Overlay
                     curNum += 1000;
                     CreateDamageNumberLabel(curNum);
                     if (!DataLoader.model.damageDealtDictionary.ContainsKey(DataLoader.model.TimeInt()))
-                        DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
+                    {
+                        try
+                        {
+                            DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
+
+                        }
+                        catch
+                        {
+                             // nothing
+                        }
+                    }
                 }
                 else
                 {
@@ -677,7 +696,16 @@ namespace MHFZ_Overlay
                     {
                         CreateDamageNumberLabel(curNum);
                         if (!DataLoader.model.damageDealtDictionary.ContainsKey(DataLoader.model.TimeInt()))
-                            DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
+                        {
+                            try
+                            {
+                                DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
+                            }
+                            catch
+                            {
+                                // nothing
+                            }
+                        }
                     }
                 }
             }
