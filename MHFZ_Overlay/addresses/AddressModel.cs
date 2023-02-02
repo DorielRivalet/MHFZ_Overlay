@@ -9047,6 +9047,14 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 return false;
             }
 
+            if (s.DatabaseFolderPath == "" || s.DatabaseFolderPath == null)
+            {
+                MessageBox.Show("Please provide a path to the database custom folder by clicking the *Select Database Folder* button in Quest Logs, Settings section. See tooltip in Quest Logs for more information. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                s.EnableQuestLogging = false;
+                return false;
+            }
+
             // Get a list of file names in the game folder
             var gameFolderFiles = Directory.EnumerateFiles(s.GameFolderPath);
 

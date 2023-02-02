@@ -2570,6 +2570,25 @@ namespace MHFZ_Overlay
                     break;
             }
         }
+
+        private void DatabaseFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Filter = "SQLite Database (*.sqlite)|*.sqlite|All files (*.*)|*.*";
+            fileDialog.DefaultExt = ".sqlite";
+            fileDialog.AddExtension = true;
+            fileDialog.CheckPathExists = true;
+            fileDialog.OverwritePrompt = true;
+            fileDialog.Title = "Choose Database Location";
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                string databasePath = fileDialog.FileName;
+                // Store the selected database path in a variable or a configuration file for future use.
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                s.DatabaseFolderPath = databasePath;
+            }
+        }
     }
     /* LoadConfig on startup
      * Load Config on window open to have extra copy

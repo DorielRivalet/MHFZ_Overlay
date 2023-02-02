@@ -98,7 +98,7 @@ namespace MHFZ_Overlay
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
         //set version here
-        public const string CurrentProgramVersion = "v0.20.0";
+        public const string CurrentProgramVersion = "v0.21.0";
 
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);
@@ -2751,7 +2751,7 @@ namespace MHFZ_Overlay
                 DataLoader.model.questCleared = true;
                 DataLoader.model.loadedItemsAtQuestStart = false;
                 if (s.EnableQuestLogging)
-                    databaseManager.InsertQuestData(databaseManager.dataSource, DataLoader);
+                    databaseManager.InsertQuestData(DataLoader);
             }
         }
 

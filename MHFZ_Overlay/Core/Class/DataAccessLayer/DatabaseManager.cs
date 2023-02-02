@@ -22,16 +22,45 @@ namespace MHFZ_Overlay
     // Singleton
     internal class DatabaseManager
     {
-        private readonly string _connectionString;
-
-        public readonly string dataSource = "Data Source=" + Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
+        private string _connectionString;
 
         private static DatabaseManager instance;
 
         private DatabaseManager()
         {
-            // Private constructor to prevent external instantiation
-            _connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
+            //
+        }
+
+        private string _customDatabasePath;
+        private string dataSource;
+
+
+        //TODO test
+        public void CheckIfUserSetDatabasePath()
+        {
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            if (string.IsNullOrEmpty(s.DatabaseFolderPath) || !Directory.Exists(Path.GetDirectoryName(s.DatabaseFolderPath)))
+            {
+                _connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
+
+                // Show warning to user that they should set a custom database path to prevent data loss on update
+                MessageBox.Show("Warning: The database is currently stored in the default location and will be deleted on update. Please select a custom database location to prevent data loss.", "MHFZ-Overlay Data Loss Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                // Use default database path
+                _customDatabasePath = _connectionString;
+            }
+            else
+            {
+                _customDatabasePath = s.DatabaseFolderPath;
+            }
+
+            if (!File.Exists(_customDatabasePath))
+            {
+                SQLiteConnection.CreateFile(_customDatabasePath);
+            }
+
+            dataSource = "Data Source=" + _customDatabasePath;
         }
 
         public static DatabaseManager GetInstance()
@@ -81,10 +110,8 @@ namespace MHFZ_Overlay
             if (!isDatabaseSetup)
             {
                 isDatabaseSetup = true;
-                if (!File.Exists(_connectionString))
-                {
-                    SQLiteConnection.CreateFile(_connectionString);
-                }
+
+                CheckIfUserSetDatabasePath();
 
                 try
                 {
@@ -145,11 +172,6 @@ namespace MHFZ_Overlay
             return schemaChanged;
         }
 
-        public void InsertAllExternalPlayerQuestsData()
-        {
-            // TODO: hygogg, etc.
-        }
-
         public string CalculateStringHash(string input)
         {
             // Calculate the hash value for the data in the row
@@ -177,7 +199,7 @@ namespace MHFZ_Overlay
             return hashString;
         }
 
-        public void InsertQuestData(string connectionString, DataLoader dataLoader)
+        public void InsertQuestData(DataLoader dataLoader)
         {
             dataLoader.model.ShowSaveIcon = true;
 
@@ -192,7 +214,7 @@ namespace MHFZ_Overlay
             if (!dataLoader.model.questCleared)
                 return;
 
-            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
                 var model = dataLoader.model;
@@ -2123,10 +2145,7 @@ namespace MHFZ_Overlay
                 TimeSpan duration = ProgramEnd - ProgramStart;
                 int sessionDuration = (int)duration.TotalSeconds;
 
-                // Connect to the database
-                string dbFilePath = _connectionString;
-                string connectionString = "Data Source=" + dbFilePath;
-                using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+                using (SQLiteConnection connection = new SQLiteConnection(dataSource))
                 {
                     // Open the connection
                     connection.Open();
@@ -3919,144 +3938,6 @@ namespace MHFZ_Overlay
                     HandleError(transaction, ex);
                 }
             }
-        }
-
-        //i would first insert into the quest table,
-        //then the tables referencing
-        //playergear, then the playergear table
-        // TODO
-        void InsertQuestIntoDatabase(SQLiteConnection conn, DataLoader dataLoader)
-        {
-            var model = dataLoader.model;
-            // Insert a new quest into the Quests table
-            string sql = @"INSERT INTO Quests (
-            QuestID, 
-            QuestName, 
-            EndTime, 
-            ObjectiveQuantity, 
-            ObjectiveName, 
-            Gear, 
-            Weapon, 
-            Date) 
-            VALUES (
-            @questID, 
-            @questName, 
-            @endTime, 
-            @objectiveType, 
-            @objectiveQuantity, 
-            @starGrade, 
-            @rankName, 
-            @objectiveName, 
-            @date)";
-            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
-
-            cmd.Parameters.AddWithValue("@questName", model.GetQuestNameFromID(model.QuestID()));
-            cmd.Parameters.AddWithValue("@endTime", "");
-            cmd.Parameters.AddWithValue("@objectiveType", "");
-            cmd.Parameters.AddWithValue("@objectiveQuantity", "");
-            cmd.Parameters.AddWithValue("@starGrade", "");
-            cmd.Parameters.AddWithValue("@rankName", "");
-            cmd.Parameters.AddWithValue("@objectiveName", model.GetObjectiveNameFromID(model.Objective1ID()));
-            cmd.Parameters.AddWithValue("@date", DateTime.Now);
-            cmd.ExecuteNonQuery();
-
-            // Check if the player has already been inserted into the Players table
-            sql = "SELECT PlayerID FROM Players WHERE PlayerName = @playerName";
-            cmd = new SQLiteCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@playerName", "Doriel");
-            object result = cmd.ExecuteScalar();
-
-            int playerID;
-
-            // If the player has not been inserted, insert the player into the Players table
-            if (result == null)
-            {
-                sql = "INSERT INTO Players (PlayerName) VALUES (@playerName)";
-                cmd = new SQLiteCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@playerName", "Doriel");
-                cmd.ExecuteNonQuery();
-
-                // Get the PlayerID of the inserted player
-                sql = "SELECT PlayerID FROM Players WHERE PlayerName = @playerName";
-                cmd = new SQLiteCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@playerName", "Doriel");
-                playerID = (int)cmd.ExecuteScalar();
-
-            }
-            else
-            {
-                // Get the PlayerID of the player that was retrieved from the database
-                playerID = (int)result;
-            }
-
-            // Check if the helmet, chestplate, and weapon have already been inserted into the Gear table
-            sql = "SELECT GearID FROM Gear WHERE GearType = @gearType AND Rarity = @rarity AND OtherInfo = @otherInfo";
-            cmd = new SQLiteCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@gearType", "Helmet");
-            cmd.Parameters.AddWithValue("@rarity", 3);
-            cmd.Parameters.AddWithValue("@otherInfo", "Alisys ZP Head");
-            result = cmd.ExecuteScalar();
-
-            // If the gear has not been inserted, insert it into the Gear table
-            if (result == null)
-            {
-                sql = "INSERT INTO Gear (GearType, Rarity, OtherInfo) VALUES (@gearType, @rarity, @otherInfo)";
-                cmd = new SQLiteCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@gearType", "Helmet");
-                cmd.Parameters.AddWithValue("@rarity", 3);
-                cmd.Parameters.AddWithValue("@otherInfo", "Alisys ZP Head");
-                cmd.ExecuteNonQuery();
-
-                // Retrieve the ID of the newly inserted gear
-                //int gearID = (int)cmd.LastInsertedId;
-
-                // Insert data into the PlayerGear table
-                sql = "INSERT INTO PlayerGear (PlayerID, RunID, GearID) VALUES (@playerID, @runID, @gearID)";
-                cmd = new SQLiteCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@playerID", playerID);
-                cmd.Parameters.AddWithValue("@runID", "");
-                cmd.Parameters.AddWithValue("@gearID", "");
-                cmd.ExecuteNonQuery();
-
-                // Close the database connection
-                conn.Close();
-
-                return;
-            }
-
-            // Close the database connection
-            conn.Close();
-        }
-
-        // TODO
-        void RetreiveQuestsFromDatabase()
-        {
-            SQLiteConnection conn = new SQLiteConnection(dataSource);
-
-            conn.Open();
-
-            // Create the Quests table
-            string sql = "CREATE TABLE IF NOT EXISTS Quests (RunID INTEGER PRIMARY KEY AUTOINCREMENT, QuestID INTEGER, QuestName TEXT, EndTime DATETIME, ObjectiveType TEXT, ObjectiveQuantity INTEGER, StarGrade INTEGER, RankName TEXT, ObjectiveName TEXT, Date DATETIME)";
-            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
-            cmd.ExecuteNonQuery();
-
-            // Retrieve all quests from the Quests table
-            sql = "SELECT * FROM Quests";
-            cmd = new SQLiteCommand(sql, conn);
-            SQLiteDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                // Print the quest data to the console
-                Console.WriteLine("Quest: " + reader["QuestName"].ToString());
-                Console.WriteLine("End Time: " + reader["EndTime"].ToString());
-                Console.WriteLine("Monster: " + reader["Monster"].ToString());
-                Console.WriteLine("Gear: " + reader["Gear"].ToString());
-                Console.WriteLine();
-            }
-
-            // Close the database connection
-            conn.Close();
         }
 
         //TODO put somewhere else

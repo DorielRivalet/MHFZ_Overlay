@@ -674,5 +674,8 @@
     <Setting Name="PersonalBestY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">440</Value>
     </Setting>
+    <Setting Name="DatabaseFolderPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
