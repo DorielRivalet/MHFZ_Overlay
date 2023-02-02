@@ -157,6 +157,8 @@ Includes icons!
 
 ![Inventories](./demo/databaseinventories.png)
 
+**Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located at `AppData\Local\MHFZ_Overlay`.
+
 ## Configuration Preview
 
 These images don't show everything, find out what's missing by pressing `Shift+F1`!
@@ -266,6 +268,8 @@ If the HP shows 0/1 then change area for it to load.
 ## How to Enable Speedrun Categories & Zen Mode
 
 - Speedrun Mode Categories: SOLO ONLY. Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
+
+**Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located at `AppData\Local\MHFZ_Overlay`. Don't lose your speedrun records!
 
 ![Discord Rich Presence](./demo/discord8.png)
 
