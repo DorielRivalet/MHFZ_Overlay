@@ -327,9 +327,8 @@
                 </StackPanel>
                 </Grid>
             </DataTemplate>
-            <DataTemplate x:Key="GraphsTemplate">
-                <!-- Grid structure for the "Graphs" option -->
-                <Grid x:Name="GraphsGrid">
+            <DataTemplate x:Key="StatsGraphsTemplate">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -345,7 +344,7 @@
 
                     <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <ComboBox x:Name="graphsComboBox" Width="330" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
+                            <ComboBox Width="330" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
                                 <ComboBoxItem>(General) Most Quest Completions</ComboBoxItem>
                                 <ComboBoxItem>(General) Quest Durations</ComboBoxItem>
                                 <ComboBoxItem>(General) Most Common Objective Types</ComboBoxItem>
@@ -371,7 +370,6 @@
                                 <ComboBoxItem>(Run ID) Hits per Second</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Damage Dealt</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Damage per Second</ComboBoxItem>
-                                <ComboBoxItem>(Run ID) Area Changes</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Carts</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Monster HP</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Hits Taken/Blocked</ComboBoxItem>
@@ -382,13 +380,12 @@
                             </ComboBox>
                             <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Multiplayer runs may not display the correct data"/>
                         </StackPanel>
-                        <lvc:CartesianChart Loaded="GraphsChart_Loaded" Grid.Column="1" Grid.Row="1" x:Name="GraphsChart" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <lvc:CartesianChart Loaded="GraphsChart_Loaded" Grid.Column="1" Grid.Row="1" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </StackPanel>
                 </Grid>
             </DataTemplate>
-            <DataTemplate x:Key="InventoriesTemplate">
-                <!-- Grid structure for the "Inventories" option -->
-                <Grid x:Name="InventoriesGrid">
+            <DataTemplate x:Key="StatsTextTemplate">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -404,14 +401,15 @@
 
                     <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <ComboBox x:Name="inventoriesComboBox" Width="330" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="InventoriesComboBox_SelectionChanged">
+                            <ComboBox Width="330" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="StatsTextComboBox_SelectionChanged">
                                 <ComboBoxItem>Inventory</ComboBoxItem>
                                 <ComboBoxItem>Ammo</ComboBoxItem>
                                 <ComboBoxItem>Partnya Bag</ComboBoxItem>
+                                <ComboBoxItem>Area Changes</ComboBoxItem>
                             </ComboBox>
                             <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Enter a Run ID beforehand. Multiplayer runs may not display the correct data"/>
                         </StackPanel>
-                        <TextBlock Loaded="InventoriesTextBlock_Loaded" Text="" x:Name="InventoriesTextBlock" Margin="5" Width="Auto" Height="Auto"/>
+                        <TextBlock Loaded="StatsTextTextBlock_Loaded" Text="" Margin="5" Width="Auto" Height="Auto"/>
                     </StackPanel>
                 </Grid>
             </DataTemplate>

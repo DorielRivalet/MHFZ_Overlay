@@ -1671,7 +1671,7 @@ namespace MHFZ_Overlay
         private ListView top20RunsListView;
         private TextBlock questLogGearStatsTextBlock;
         private CartesianChart graphChart;
-        private TextBlock inventoriesTextBlock;
+        private TextBlock statsTextTextBlock;
 
         private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
         {
@@ -2400,9 +2400,6 @@ namespace MHFZ_Overlay
                 case "(Run ID) Damage per Second":
                     SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetDamagePerSecondDictionary(runID));
                     return;
-                case "(Run ID) Area Changes":
-                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetAreaChangesDictionary(runID));
-                    return;
                 case "(Run ID) Carts":
                     SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetCartsDictionary(runID));
                     return;
@@ -2436,14 +2433,29 @@ namespace MHFZ_Overlay
             graphChart = (CartesianChart)sender;
         }
 
-        private void InventoriesTextBlock_Loaded(object sender, RoutedEventArgs e)
+        private void StatsTextTextBlock_Loaded(object sender, RoutedEventArgs e)
         {
-            inventoriesTextBlock = (TextBlock)sender;
+            statsTextTextBlock = (TextBlock)sender;
         }
 
         public Dictionary<int, List<Dictionary<int, int>>> GetElapsedTimeForInventories(Dictionary<int, List<Dictionary<int, int>>> dictionary)
         {
             Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new Dictionary<int, List<Dictionary<int, int>>>();
+            if (dictionary == null || !dictionary.Any())
+                return elapsedTimeDict;
+
+            int initialTime = dictionary.First().Key;
+            foreach (var entry in dictionary)
+            {
+                elapsedTimeDict[initialTime - entry.Key] = entry.Value;
+            }
+            return elapsedTimeDict;
+        }
+
+        public Dictionary<int, int> GetElapsedTimeForDictionaryIntInt(Dictionary<int, int> dictionary)
+        {
+            Dictionary<int, int> elapsedTimeDict = new Dictionary<int,int>();
+
             if (dictionary == null || !dictionary.Any())
                 return elapsedTimeDict;
 
@@ -2494,6 +2506,28 @@ namespace MHFZ_Overlay
             return sb.ToString();
         }
 
+        public string DisplayAreaChanges(Dictionary<int, int> areas)
+        {
+            var formatteAreas = "";
+            areas = GetElapsedTimeForDictionaryIntInt(areas);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var entry in areas)
+            {
+                int time = entry.Key;
+                string timeString = TimeSpan.FromSeconds((double)time / 30).ToString(@"mm\:ss\.ff");
+                var area = entry.Value;
+                sb.AppendLine(timeString + " ");
+                
+                Dictionary.MapAreaList.MapAreaID.TryGetValue(area, out string? itemName);
+                sb.Append(itemName);
+                sb.AppendLine();
+                sb.AppendLine();
+            }
+            return sb.ToString();
+        }
+
         private string GetItemName(int itemID)
         {
             // implement code to get item name based on itemID
@@ -2502,34 +2536,37 @@ namespace MHFZ_Overlay
         }
 
 
-        private void InventoriesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void StatsTextComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
 
             var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
-            if (selectedItem == null || inventoriesTextBlock == null)
+            if (selectedItem == null || statsTextTextBlock == null)
                 return;
 
             string selectedOption = selectedItem.Content.ToString();
 
-            if (inventoriesTextBlock == null || selectedOption == null || selectedOption == "")
+            if (statsTextTextBlock == null || selectedOption == null || selectedOption == "")
                 return;
 
-            inventoriesTextBlock.Text = "";
+            statsTextTextBlock.Text = "";
 
             long runID = long.Parse(RunIDTextBox.Text.Trim());
 
             switch (selectedOption)
             {
                 case "Inventory":
-                    inventoriesTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPlayerInventoryDictionary(runID));
+                    statsTextTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPlayerInventoryDictionary(runID));
                     break;
                 case "Ammo":
-                    inventoriesTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetAmmoDictionary(runID));
+                    statsTextTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetAmmoDictionary(runID));
                     break;
                 case "Partnya Bag":
-                    inventoriesTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPartnyaBagDictionary(runID));
+                    statsTextTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPartnyaBagDictionary(runID));
+                    break;
+                case "Area Changes":
+                    statsTextTextBlock.Text = DisplayAreaChanges(DatabaseManager.GetInstance().GetAreaChangesDictionary(runID));
                     break;
             }
         }

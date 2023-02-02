@@ -10303,8 +10303,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             new Option{Name = "Weapon Usage", IsSelected = false},
             new Option{Name = "Most Recent", IsSelected = false},
             new Option{Name = "YouTube", IsSelected = false},
-            new Option{Name = "Graphs", IsSelected = false},
-            new Option{Name = "Inventories", IsSelected = false},
+            new Option{Name = "Stats (Graphs)", IsSelected = false},
+            new Option{Name = "Stats (Text)", IsSelected = false},
         };
 
         public string ReplaceAlphaChannel(string hexColor, string alphaChannel)
