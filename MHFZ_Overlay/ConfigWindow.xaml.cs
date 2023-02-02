@@ -73,8 +73,7 @@ namespace MHFZ_Overlay
             get { return new Uri(randomMonsterImage, UriKind.RelativeOrAbsolute); }
         }
 
-
-        //TODO put this in a readonly dictionary thing
+        //TODO put this in a read-only dictionary thing
         private MonsterLog[] Monsters = new MonsterLog[]
         {
           new MonsterLog(0, "None","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/none.png",0),

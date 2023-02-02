@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -97,7 +98,7 @@ namespace MHFZ_Overlay
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
         //set version here
-        public const string CurrentProgramVersion = "v0.19.0";
+        public const string CurrentProgramVersion = "v0.19.1";
 
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);
@@ -245,7 +246,7 @@ namespace MHFZ_Overlay
 
         //Dispose client        
         /// <summary>
-        /// Cleanups this instance.
+        /// Cleanups the Discord RPC instance.
         /// </summary>
         void Cleanup()
         {
@@ -565,38 +566,65 @@ namespace MHFZ_Overlay
         //
         public void Timer_Tick(object? obj, EventArgs e)
         {
-            HideMonsterInfoWhenNotInQuest();
-            HidePlayerInfoWhenNotInQuest();
-
-            DataLoader.model.ReloadData();
-            Monster1HPBar.ReloadData();
-            Monster2HPBar.ReloadData();
-            Monster3HPBar.ReloadData();
-            Monster4HPBar.ReloadData();
-            MonsterPoisonBar.ReloadData();
-            MonsterSleepBar.ReloadData();
-            MonsterParaBar.ReloadData();
-            MonsterBlastBar.ReloadData();
-            MonsterStunBar.ReloadData();
-
-            CreateDamageNumber();
-
-            UpdateDiscordRPC();
-
-            CheckQuestStateForDatabaseLogging();
-
-            if (DataLoader.model.isInLauncher() == "NULL" && !showedNullError)
+            try
             {
-                showedNullError = true;
+                HideMonsterInfoWhenNotInQuest();
+                HidePlayerInfoWhenNotInQuest();
+
+                DataLoader.model.ReloadData();
+                Monster1HPBar.ReloadData();
+                Monster2HPBar.ReloadData();
+                Monster3HPBar.ReloadData();
+                Monster4HPBar.ReloadData();
+                MonsterPoisonBar.ReloadData();
+                MonsterSleepBar.ReloadData();
+                MonsterParaBar.ReloadData();
+                MonsterBlastBar.ReloadData();
+                MonsterStunBar.ReloadData();
+
+                CreateDamageNumber();
+
+                UpdateDiscordRPC();
+
+                CheckQuestStateForDatabaseLogging();
+
+                if (DataLoader.model.isInLauncher() == "NULL" && !showedNullError)
+                {
+                    showedNullError = true;
+                }
+
+                if (!showedGameFolderWarning)
+                {
+                    DataLoader.model.ValidateGameFolder();
+                    showedGameFolderWarning = true;
+                }
+
+                DataLoader.CheckForExternalProcesses();
+            }
+            catch (Exception ex)
+            {
+                WriteCrashLog(ex);
+            }
+        }
+
+        private void WriteCrashLog(Exception ex)
+        {
+            string dateTime = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            string logFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"MHFZ_Overlay\\MHFZ_Overlay-CrashLog-{dateTime}.txt");
+
+            // Log the exception to a file
+            using (StreamWriter sw = new StreamWriter(logFilePath, true))
+            {
+                sw.WriteLine("Date: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                sw.WriteLine("Message: " + ex.Message);
+                sw.WriteLine("Stack Trace: " + ex.StackTrace);
             }
 
-            if (!showedGameFolderWarning)
-            {
-                DataLoader.model.ValidateGameFolder();
-                showedGameFolderWarning = true;
-            }
-
-            DataLoader.CheckForExternalProcesses();
+            System.Windows.MessageBox.Show("Fatal error, closing overlay. See the crash log in the overlay folder for more information.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            //https://stackoverflow.com/a/9050477/18859245
+            Cleanup();
+            databaseManager.StoreSessionTime(this);
+            Environment.Exit(0);
         }
 
         int curNum = 0;
@@ -632,21 +660,24 @@ namespace MHFZ_Overlay
                 {
                     isFirstAttack = false;
                     CreateDamageNumberLabel(damage);
-                    DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), damage);
+                    if (!DataLoader.model.damageDealtDictionary.ContainsKey(DataLoader.model.TimeInt()))
+                        DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), damage);
                 }
                 else if (curNum < 0)
                 {
                     // TODO
                     curNum += 1000;
                     CreateDamageNumberLabel(curNum);
-                    DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
+                    if (!DataLoader.model.damageDealtDictionary.ContainsKey(DataLoader.model.TimeInt()))
+                        DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
                 }
                 else
                 {
                     if (curNum != damage)
                     {
                         CreateDamageNumberLabel(curNum);
-                        DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
+                        if (!DataLoader.model.damageDealtDictionary.ContainsKey(DataLoader.model.TimeInt()))
+                            DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
                     }
                 }
             }

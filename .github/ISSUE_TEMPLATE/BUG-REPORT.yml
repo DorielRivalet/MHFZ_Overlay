@@ -9,9 +9,9 @@ body:
     id: what-happened
     attributes:
       label: What happened?
-      description: Also tell us, what did you expect to happen?
+      description: Also tell us, what did you expect to happen? Please add the crash log file information if you have one, you can find it in the overlay folder
       placeholder: Tell us what you see!
-      value: "A bug happened!"
+      value: "A bug happened! Here is my crash log"
     validations:
       required: true
   - type: textarea
