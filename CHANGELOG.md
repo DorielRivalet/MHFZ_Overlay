@@ -1,5 +1,33 @@
 
 
+## [0.20.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.19.0...v0.20.0) (2023-02-02)
+
+
+### Features
+
+* add area changes text ([46d3c0d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/46d3c0de53a99a6494920a77c5bd5824418d6c67))
+
+
+### Bug Fixes
+
+* duplicate keys in quest info dictionaries ([27d6672](https://github.com/DorielRivalet/MHFZ_Overlay/commit/27d6672e5b2249726f175692d71bc84d3b3011e8))
+* exception handling ([aed1181](https://github.com/DorielRivalet/MHFZ_Overlay/commit/aed11818b757beec7de81a46157afd2d9dd9a7ea))
+
+
+### For Developers
+
+* bump version ([4689bfe](https://github.com/DorielRivalet/MHFZ_Overlay/commit/4689bfecb95a0567d877a2626c3a556a2d794549))
+* **deps-dev:** bump @commitlint/cli from 17.3.0 to 17.4.2 ([7ab888a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/7ab888a14f3dc8ab0fce21b361924ff1f0d108b0))
+* **deps-dev:** bump @commitlint/config-conventional ([35b3866](https://github.com/DorielRivalet/MHFZ_Overlay/commit/35b3866bab99b18a91a69bfe9091e9ad9d37a21e))
+* **deps-dev:** bump husky from 8.0.2 to 8.0.3 ([d7b48f6](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d7b48f69e78c3caab0b2878ea3f25b36f45033f7))
+* **deps:** bump http-cache-semantics from 4.1.0 to 4.1.1 ([545c5ba](https://github.com/DorielRivalet/MHFZ_Overlay/commit/545c5ba72558a4517d8af305a1485714e84c4ede))
+* **deps:** bump release-it from 15.5.1 to 15.6.0 ([fb11114](https://github.com/DorielRivalet/MHFZ_Overlay/commit/fb111142a02a8d83f11b542c68e1dd0e29ac66ac))
+* **nuget:** update packages ([97a78d0](https://github.com/DorielRivalet/MHFZ_Overlay/commit/97a78d0a9050cef46d8a59ef52df6dfca05843ad))
+* update README.md ([ec66fa9](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ec66fa91bd08ee1c7191bdc9e895b6d017066d93))
+* update README.md ([ce07bba](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ce07bbaf7043167b64291ced78c440e572fcf753))
+* update README.md ([4cd09cf](https://github.com/DorielRivalet/MHFZ_Overlay/commit/4cd09cf358e0b0f5a1afeb264830d6aaa87e5cdb))
+* update README.md ([031b660](https://github.com/DorielRivalet/MHFZ_Overlay/commit/031b660f1c10dbbfb9061dc2a6c9e4f13407cc7a))
+
 ## [0.19.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.18.1...v0.19.0) (2023-02-02)
 
 
