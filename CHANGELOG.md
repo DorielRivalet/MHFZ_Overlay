@@ -1,5 +1,17 @@
 
 
+## [0.21.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.20.0...v0.21.0) (2023-02-02)
+
+
+### Features
+
+* add database folder option ([35da6ab](https://github.com/DorielRivalet/MHFZ_Overlay/commit/35da6ab7121b476706ae709f2ad871af8221db2c))
+
+
+### For Developers
+
+* set to release ([d2000a9](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d2000a9b352328ca74f02aa7fbfb40eb2a27d8a6))
+
 ## [0.20.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.19.0...v0.20.0) (2023-02-02)
 
 
