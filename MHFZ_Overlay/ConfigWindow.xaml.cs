@@ -2580,6 +2580,7 @@ namespace MHFZ_Overlay
             fileDialog.CheckPathExists = true;
             fileDialog.OverwritePrompt = true;
             fileDialog.Title = "Choose Database Location";
+            fileDialog.FileName = "MHFZ_Overlay.sqlite";
 
             if (fileDialog.ShowDialog() == true)
             {
