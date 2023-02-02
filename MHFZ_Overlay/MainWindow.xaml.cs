@@ -2766,7 +2766,16 @@ namespace MHFZ_Overlay
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
                 if (s.EnableKeyLogging && !DataLoader.model.mouseInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _mouseImages[e.Button].Opacity == unpressedKeyOpacity)
-                    DataLoader.model.mouseInputDictionary.Add(DataLoader.model.TimeInt(), e.Button.ToString());
+                {
+                    try
+                    {
+                        DataLoader.model.mouseInputDictionary.Add(DataLoader.model.TimeInt(), e.Button.ToString());
+                    }
+                    catch
+                    {
+                        // nothing
+                    }
+                }
 
                 _mouseImages[e.Button].Opacity = pressedKeyOpacity;
             }
@@ -2804,7 +2813,16 @@ namespace MHFZ_Overlay
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
                 if (s.EnableKeyLogging && !DataLoader.model.keystrokesDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _keyImages[e.KeyCode].Opacity == unpressedKeyOpacity)
-                    DataLoader.model.keystrokesDictionary.Add(DataLoader.model.TimeInt(), e.KeyCode.ToString());
+                {
+                    try
+                    {
+                        DataLoader.model.keystrokesDictionary.Add(DataLoader.model.TimeInt(), e.KeyCode.ToString());
+                    }
+                    catch
+                    {
+                        // nothing
+                    }
+                }
 
                 _keyImages[e.KeyCode].Opacity = pressedKeyOpacity;
             }

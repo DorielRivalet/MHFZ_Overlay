@@ -2935,9 +2935,12 @@ namespace MHFZ_Overlay.addresses
 
             switch (barColor)
             {
-                case "#1e1e2e":
-                case "#181825":
-                case "#11111b":
+                case "#313244":// Surface0
+                case "#45475a":// Surface1
+                case "#585b70":// Surface2
+                case "#1e1e2e":// Base
+                case "#181825":// Mantle
+                case "#11111b":// Crust
                     color = "#f5e0dc";
                     break;
                 default:
@@ -9503,77 +9506,142 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             if (previousAttackBuffInt != WeaponRaw() && !attackBuffDictionary.ContainsKey(TimeInt()))
             {
-                previousAttackBuffInt = WeaponRaw();
-                attackBuffDictionary.Add(TimeInt(), WeaponRaw());
-
-                //TODO the very last value gets put which is 0 when going back to mezeporta
-                lock (attackBuffSync)
+                try
                 {
-                    // Any changes including adding, clearing, etc must be synced.
-                    attackBuffCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), WeaponRaw()));
+                    previousAttackBuffInt = WeaponRaw();
+                    attackBuffDictionary.Add(TimeInt(), WeaponRaw());
+
+                    //TODO the very last value gets put which is 0 when going back to mezeporta
+                    lock (attackBuffSync)
+                    {
+                        // Any changes including adding, clearing, etc must be synced.
+                        attackBuffCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), WeaponRaw()));
+                    }
+                }
+                catch
+                {
+                    // nothing
                 }
             }
 
             if (previousHitCountInt != HitCountInt() && !hitCountDictionary.ContainsKey(TimeInt()))
             {
-                previousHitCountInt = HitCountInt();
-                hitCountDictionary.Add(TimeInt(), HitCountInt());
+                try
+                {
+                    previousHitCountInt = HitCountInt();
+                    hitCountDictionary.Add(TimeInt(), HitCountInt());
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             if (previousDPS != DPS && !damagePerSecondDictionary.ContainsKey(TimeInt()))
             {
-                previousDPS = DPS;
-                damagePerSecondDictionary.Add(TimeInt(), DPS);
-
-                lock (damagePerSecondSync)
+                try
                 {
-                    // Any changes including adding, clearing, etc must be synced.
-                    damagePerSecondCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), DPS));
+                    previousDPS = DPS;
+                    damagePerSecondDictionary.Add(TimeInt(), DPS);
+
+                    lock (damagePerSecondSync)
+                    {
+                        // Any changes including adding, clearing, etc must be synced.
+                        damagePerSecondCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), DPS));
+                    }
                 }
+                catch
+                {
+                    // nothing
+                }
+
             }
 
             if (previousCartsInt != CurrentFaints() && !cartsDictionary.ContainsKey(TimeInt()))
             {
-                previousCartsInt = CurrentFaints();
-                cartsDictionary.Add(TimeInt(), CurrentFaints());
+                try
+                {
+                    previousCartsInt = CurrentFaints();
+                    cartsDictionary.Add(TimeInt(), CurrentFaints());
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             if (previousAreaID != AreaID() && !areaChangesDictionary.ContainsKey(TimeInt()))
             {
-                previousAreaID = AreaID();
-                areaChangesDictionary.Add(TimeInt(), AreaID());
+                try
+                {
+                    previousAreaID = AreaID();
+                    areaChangesDictionary.Add(TimeInt(), AreaID());
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             if (previousMonster1HP != Monster1HPInt() && !monster1HPDictionary.ContainsKey(TimeInt()))
             {
-                previousMonster1HP = Monster1HPInt();
-                Dictionary<int, int> monster1HPDictionaryMonsterInfo = new Dictionary<int, int>();
-                monster1HPDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1HPInt());
-                monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
+                try
+                {
+                    previousMonster1HP = Monster1HPInt();
+                    Dictionary<int, int> monster1HPDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster1HPDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1HPInt());
+                    monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             if (previousMonster2HP != Monster2HPInt() && !monster2HPDictionary.ContainsKey(TimeInt()))
             {
-                previousMonster2HP = Monster2HPInt();
-                Dictionary<int, int> monster2HPDictionaryMonsterInfo = new Dictionary<int, int>();
-                monster2HPDictionaryMonsterInfo.Add(LargeMonster2ID(), Monster2HPInt());
-                monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
+                try
+                {
+                    previousMonster2HP = Monster2HPInt();
+                    Dictionary<int, int> monster2HPDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster2HPDictionaryMonsterInfo.Add(LargeMonster2ID(), Monster2HPInt());
+                    monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             if (previousMonster3HP != Monster3HPInt() && !monster3HPDictionary.ContainsKey(TimeInt()))
             {
-                previousMonster3HP = Monster3HPInt();
-                Dictionary<int, int> monster3HPDictionaryMonsterInfo = new Dictionary<int, int>();
-                monster3HPDictionaryMonsterInfo.Add(LargeMonster3ID(), Monster3HPInt());
-                monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
+                try
+                {
+                    previousMonster3HP = Monster3HPInt();
+                    Dictionary<int, int> monster3HPDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster3HPDictionaryMonsterInfo.Add(LargeMonster3ID(), Monster3HPInt());
+                    monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
+                }
+                catch
+                {
+                    // nothing
+                }
+
             }
 
             if (previousMonster4HP != Monster4HPInt() && !monster4HPDictionary.ContainsKey(TimeInt()))
             {
-                previousMonster4HP = Monster4HPInt();
-                Dictionary<int, int> monster4HPDictionaryMonsterInfo = new Dictionary<int, int>();
-                monster4HPDictionaryMonsterInfo.Add(LargeMonster4ID(), Monster4HPInt());
-                monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
+                try
+                {
+                    previousMonster4HP = Monster4HPInt();
+                    Dictionary<int, int> monster4HPDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster4HPDictionaryMonsterInfo.Add(LargeMonster4ID(), Monster4HPInt());
+                    monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             //inventory
@@ -9590,7 +9658,14 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
             if (currentInventorySum != lastInventorySum)
             {
-                playerInventoryDictionary.Add(TimeInt(), currentInventoryList);
+                try
+                {
+                    playerInventoryDictionary.Add(TimeInt(), currentInventoryList);
+                }
+                catch
+                {
+                    // nothing
+                }
             }
             else if (loadedItemsAtQuestStart && !playerInventoryDictionary.Values.Any())
             {
@@ -9688,7 +9763,14 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     itemIDsQuantityList.Add(itemIDQuantityDictionary);
                 }
 
-                playerInventoryDictionary.Add(TimeInt(), itemIDsQuantityList);
+                try
+                {
+                    playerInventoryDictionary.Add(TimeInt(), itemIDsQuantityList);
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             //ammo
@@ -9705,7 +9787,14 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
             if (currentAmmoSum != lastAmmoSum)
             {
-                playerAmmoPouchDictionary.Add(TimeInt(), currentAmmoList);
+                try
+                {
+                    playerAmmoPouchDictionary.Add(TimeInt(), currentAmmoList);
+                }
+                catch
+                {
+                    // nothing
+                }
             }
             else if (loadedItemsAtQuestStart && !playerAmmoPouchDictionary.Values.Any())
             {
@@ -9762,8 +9851,14 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     itemIDQuantityDictionary.Add(itemID, itemQty);
                     itemIDsQuantityList.Add(itemIDQuantityDictionary);
                 }
-
-                playerAmmoPouchDictionary.Add(TimeInt(), itemIDsQuantityList);
+                try
+                {
+                    playerAmmoPouchDictionary.Add(TimeInt(), itemIDsQuantityList);
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             //partnya bag
@@ -9780,7 +9875,14 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
             if (currentPartnyaBagSum != lastPartnyaBagSum)
             {
-                partnyaBagDictionary.Add(TimeInt(), currentPartnyaBagList);
+                try
+                {
+                    partnyaBagDictionary.Add(TimeInt(), currentPartnyaBagList);
+                }
+                catch
+                {
+                    // nothing
+                }
             }
             else if (loadedItemsAtQuestStart && !partnyaBagDictionary.Values.Any())
             {
@@ -9838,63 +9940,120 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     itemIDsQuantityList.Add(itemIDQuantityDictionary);
                 }
 
-                partnyaBagDictionary.Add(TimeInt(), itemIDsQuantityList);
+                try
+                {
+                    partnyaBagDictionary.Add(TimeInt(), itemIDsQuantityList);
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             if (previousHitsTakenBlocked != AreaHitsTakenBlocked() && AreaHitsTakenBlocked() != 0 && !hitsTakenBlockedDictionary.ContainsKey(TimeInt()))
             {
-                previousHitsTakenBlocked = AreaHitsTakenBlocked();
-                Dictionary<int, int> hitsAreaPairs = new Dictionary<int, int>();
-                hitsAreaPairs.Add(AreaID(), AreaHitsTakenBlocked());
-                hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
+                try
+                {
+                    previousHitsTakenBlocked = AreaHitsTakenBlocked();
+                    Dictionary<int, int> hitsAreaPairs = new Dictionary<int, int>();
+                    hitsAreaPairs.Add(AreaID(), AreaHitsTakenBlocked());
+                    hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             if (previousPlayerHP != HunterHP() && playerHPDictionary.TryGetValue(TimeInt(), out var hp) == false)
             {
-                previousPlayerHP = HunterHP();
-                playerHPDictionary.Add(TimeInt(), HunterHP());
+                try
+                {
+                    previousPlayerHP = HunterHP();
+                    playerHPDictionary.Add(TimeInt(), HunterHP());
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             if (previousPlayerStamina != HunterStamina() && !playerStaminaDictionary.ContainsKey(TimeInt()))
             {
-                previousPlayerStamina = HunterStamina();
-                playerStaminaDictionary.Add(TimeInt(), HunterStamina());
+                try
+                {
+                    previousPlayerStamina = HunterStamina();
+                    playerStaminaDictionary.Add(TimeInt(), HunterStamina());
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             if (previousHitsPerSecond != HitsPerSecond && !hitsPerSecondDictionary.ContainsKey(TimeInt()))
             {
-                previousHitsPerSecond = HitsPerSecond;
-                hitsPerSecondDictionary.Add(TimeInt(), HitsPerSecond);
-
-                lock (hitsPerSecondSync)
+                try
                 {
-                    // Any changes including adding, clearing, etc must be synced.
-                    hitsPerSecondCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), HitsPerSecond));
+                    previousHitsPerSecond = HitsPerSecond;
+                    hitsPerSecondDictionary.Add(TimeInt(), HitsPerSecond);
+
+                    lock (hitsPerSecondSync)
+                    {
+                        // Any changes including adding, clearing, etc must be synced.
+                        hitsPerSecondCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), HitsPerSecond));
+                    }
                 }
+                catch
+                {
+                    // nothing
+                }
+
             }
 
             if (previousTotalHitsTakenBlockedPerSecond != TotalHitsTakenBlockedPerSecond && !hitsTakenBlockedPerSecondDictionary.ContainsKey(TimeInt()))
             {
-                previousTotalHitsTakenBlockedPerSecond = TotalHitsTakenBlockedPerSecond;
-                hitsTakenBlockedPerSecondDictionary.Add(TimeInt(), TotalHitsTakenBlockedPerSecond);
+                try
+                {
+                    previousTotalHitsTakenBlockedPerSecond = TotalHitsTakenBlockedPerSecond;
+                    hitsTakenBlockedPerSecondDictionary.Add(TimeInt(), TotalHitsTakenBlockedPerSecond);
+                }
+                catch
+                {
+                    // nothing
+                }
             }
 
             if (previousActionsPerMinute != APM && !actionsPerMinuteDictionary.ContainsKey(TimeInt()))
             {
-                previousActionsPerMinute = APM;
-                actionsPerMinuteDictionary.Add(TimeInt(), APM);
-
-                lock (actionsPerMinuteSync)
+                try
                 {
-                    // Any changes including adding, clearing, etc must be synced.
-                    actionsPerMinuteCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), APM));
+                    previousActionsPerMinute = APM;
+                    actionsPerMinuteDictionary.Add(TimeInt(), APM);
+
+                    lock (actionsPerMinuteSync)
+                    {
+                        // Any changes including adding, clearing, etc must be synced.
+                        actionsPerMinuteCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), APM));
+                    }
+                }
+                catch
+                {
+                    // nothing
                 }
             }
 
             if (previousOverlayMode != GetOverlayMode() && !overlayModeDictionary.ContainsKey(TimeInt()))
             {
-                previousOverlayMode = GetOverlayMode();
-                overlayModeDictionary.Add(TimeInt(), GetOverlayMode());
+                try
+                {
+                    previousOverlayMode = GetOverlayMode();
+                    overlayModeDictionary.Add(TimeInt(), GetOverlayMode());
+                }
+                catch
+                {
+                    // nothing
+                }
             }
         }
 
