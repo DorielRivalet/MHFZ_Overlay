@@ -556,14 +556,12 @@ namespace MHFZ_Overlay
             }
         }
 
-
         int counter = 0;
         int prevTime = 0;
 
         private bool showedNullError = false;
         private bool showedGameFolderWarning = false;
 
-        //
         public void Timer_Tick(object? obj, EventArgs e)
         {
             try
@@ -606,7 +604,6 @@ namespace MHFZ_Overlay
                 WriteCrashLog(ex);
             }
         }
-
         private void WriteCrashLog(Exception ex)
         {
             string dateTime = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");

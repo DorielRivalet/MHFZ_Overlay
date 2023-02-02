@@ -279,6 +279,17 @@ If the HP shows 0/1 then change area for it to load.
 
 ~~Congrats, now you won't be accused of cheating~~
 
+## How to Record Videos with the Overlay
+
+1. [Download OBS](https://obsproject.com/)
+2. Go to the Sources section, click Add Source, select Window Capture, select Create new, click OK.
+3. Select the Window dropdown, choose mhf.exe.
+4. Make sure Window Match Priority is set to "Match title, otherwise find window of same type"
+5. Click Add Source again, select Window Capture, select Create new, click OK.
+6. Select the Window dropdown, choose MHFZ_Overlay.exe (if the option is not shown, load the overlay first and retry)
+7. Make sure Window Match Priority is set to "Match title, otherwise find window of same executable"
+8. Happy Hunting!
+
 ## How to Manually Update with Update.exe
 
 `update.exe --update https://www.github.com/DorielRivalet/mhfz-overlay/releases/download/ENTER VERSION NUMBER (E.G. v0.6.4)`
