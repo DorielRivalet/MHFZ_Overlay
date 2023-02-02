@@ -8428,10 +8428,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         // TODO
 
-        private ObservableCollection<ObservablePoint> attackBuffCollection = new();
-        private ObservableCollection<ObservablePoint> damagePerSecondCollection = new();
-        private ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new();
-        private ObservableCollection<ObservablePoint> hitsPerSecondCollection = new();
+        public ObservableCollection<ObservablePoint> attackBuffCollection = new();
+        public ObservableCollection<ObservablePoint> damagePerSecondCollection = new();
+        public ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new();
+        public ObservableCollection<ObservablePoint> hitsPerSecondCollection = new();
 
         private ObservableCollection<long> weaponUsageSwordAndShieldEarthStyleCollection = new();
         private ObservableCollection<long> weaponUsageSwordAndShieldHeavenStyleCollection = new();
