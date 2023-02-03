@@ -291,6 +291,19 @@ If the HP shows 0/1 then change area for it to load.
 8. Make sure Window Match Priority is set to "Match title, otherwise find window of same executable"
 9. Happy Hunting!
 
+## How to Enable Quest Logging
+
+1. Go to Mezeporta, load the Overlay.
+2. Press `Shift+F1`, go to Quest Log tab.
+3. Go to Settings tab inside the Quest Log tab, press Select Game Folder button
+4. Navigate to the folder where your mhf.exe (the game) resides, select it and press Select folder.
+5. Press the Select Custom Folder for Quest Runs Database button.
+6. Navigate to any folder (for example a database folder in the game folder), give the file a name (for example MHFZ_Overlay.sqlite), press Save.
+7. Toggle Quest Logging
+8. Press the green Save button at the bottom in order for the overlay settings to be saved.
+9. Restart the Overlay.
+10. Do a run and once you are back at hub, check if the run is there by going into Config -> Quest Log -> Section Most Recent
+
 ## How to Manually Update with Update.exe
 
 `update.exe --update https://www.github.com/DorielRivalet/mhfz-overlay/releases/download/ENTER VERSION NUMBER (E.G. v0.6.4)`
