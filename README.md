@@ -157,7 +157,7 @@ Includes icons!
 
 ![Inventories](./demo/databaseinventories.png)
 
-**Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located at `AppData\Local\MHFZ_Overlay`.
+**Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located at `AppData\Local\MHFZ_Overlay` or the custom folder you have selected previously.
 
 ## Configuration Preview
 
@@ -269,7 +269,7 @@ If the HP shows 0/1 then change area for it to load.
 
 - Speedrun Mode Categories: SOLO ONLY. Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
 
-**Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located at `AppData\Local\MHFZ_Overlay`. Don't lose your speedrun records!
+**Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located at `AppData\Local\MHFZ_Overlay` or the custom folder you have selected previously. Don't lose your speedrun records!
 
 ![Discord Rich Presence](./demo/discord8.png)
 
@@ -287,8 +287,9 @@ If the HP shows 0/1 then change area for it to load.
 4. Make sure Window Match Priority is set to "Match title, otherwise find window of same type"
 5. Click Add Source again, select Window Capture, select Create new, click OK.
 6. Select the Window dropdown, choose MHFZ_Overlay.exe (if the option is not shown, load the overlay first and retry)
-7. Make sure Window Match Priority is set to "Match title, otherwise find window of same executable"
-8. Happy Hunting!
+7. For Capture Method, choose Windows 10
+8. Make sure Window Match Priority is set to "Match title, otherwise find window of same executable"
+9. Happy Hunting!
 
 ## How to Manually Update with Update.exe
 
