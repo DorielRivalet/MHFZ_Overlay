@@ -1,5 +1,25 @@
 
 
+## [0.22.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.21.0...v0.22.0) (2023-02-06)
+
+
+### Features
+
+* add current session timer ([0015a2e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0015a2e313abe2a4e136397da245e304481a3d42))
+* add default file name for database save file dialog ([e03b4b5](https://github.com/DorielRivalet/MHFZ_Overlay/commit/e03b4b51f0cd5a8dfb2a7519c04c9ec607b089bb))
+* add instructions for quest logging ([f6af0c8](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f6af0c88bcbaf2ac1b76e75c49b69a08decdc95d))
+* make automatic database folder ([b9184aa](https://github.com/DorielRivalet/MHFZ_Overlay/commit/b9184aa517b7ff35c9d77b12109ab7108ccd5acb))
+* update database warning ([0af3ed5](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0af3ed5b5caf7ee419cae87d45e5eb58a7287d01))
+
+
+### For Developers
+
+* code cleanup ([e4cd1f7](https://github.com/DorielRivalet/MHFZ_Overlay/commit/e4cd1f75ecc6fa78c60f4c5fcbdcf52ae7a03659))
+* update database instructions ([eae0656](https://github.com/DorielRivalet/MHFZ_Overlay/commit/eae065626dde54c869e3204f5439804f6ccd860d))
+* update README.md ([f3fb738](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f3fb7389ec96dd511f938cc3a35e7de87a5f4f8f))
+* update README.md ([0d6594c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0d6594c44a77374886f31f51eb158db666220775))
+* update README.md ([195e465](https://github.com/DorielRivalet/MHFZ_Overlay/commit/195e46588ed2716d8a77637b52df373677b02da8))
+
 ## [0.21.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.20.0...v0.21.0) (2023-02-02)
 
 
