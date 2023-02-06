@@ -245,64 +245,9 @@ If the HP shows 0/1 then change area for it to load.
 
 [Check more possible future features here](https://github.com/DorielRivalet/mhfz-overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 
-## How to Enable Discord Rich Presence
+## Frequently Asked Questions
 
-- In Discord, My Account -> Activity Privacy -> Check "Display current activity as a status message"
-
-![Discord](./demo/discord1.png)
-
-- [Discord Developer Portal](https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
-
-![Discord](./demo/discord2.png)
-
-- In Developer Portal, General Information -> Copy Application ID
-
-![Discord](./demo/discord3.png)
-
-- In Overlay Settings, Paste into Overlay Settings Discord Rich Presence Application/Client ID (The ID also shows up in OAuth2 section as Client ID)
-
-![Discord](./demo/discord4.png)
-
-![Discord Rich Presence](./demo/discord6.gif)
-
-## How to Enable Speedrun Categories & Zen Mode
-
-- Speedrun Mode Categories: SOLO ONLY. Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
-
-**Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located at `AppData\Local\MHFZ_Overlay` or the custom folder you have selected previously. Don't lose your speedrun records!
-
-![Discord Rich Presence](./demo/discord8.png)
-
-- Zen Mode: Disable **everything** (Monster Icon and Discord Rich Presence optional)
-
-![Discord Rich Presence](./demo/discord11.png)
-
-~~Congrats, now you won't be accused of cheating~~
-
-## How to Record Videos with the Overlay
-
-1. [Download OBS](https://obsproject.com/)
-2. Go to the Sources section, click Add Source, select Window Capture, select Create new, click OK.
-3. Select the Window dropdown, choose mhf.exe.
-4. Make sure Window Match Priority is set to "Match title, otherwise find window of same type"
-5. Click Add Source again, select Window Capture, select Create new, click OK.
-6. Select the Window dropdown, choose MHFZ_Overlay.exe (if the option is not shown, load the overlay first and retry)
-7. For Capture Method, choose Windows 10
-8. Make sure Window Match Priority is set to "Match title, otherwise find window of same executable"
-9. Happy Hunting!
-
-## How to Enable Quest Logging
-
-1. Go to Mezeporta, load the Overlay.
-2. Press `Shift+F1`, go to Quest Log tab.
-3. Go to Settings tab inside the Quest Log tab, press Select Game Folder button
-4. Navigate to the folder where your mhf.exe (the game) resides, select it and press Select folder.
-5. Press the Select Custom Folder for Quest Runs Database button.
-6. Navigate to any folder (for example a database folder in the game folder), give the file a name (for example MHFZ_Overlay.sqlite), press Save.
-7. Toggle Quest Logging
-8. Press the green Save button at the bottom in order for the overlay settings to be saved.
-9. Restart the Overlay.
-10. Do a run and once you are back at hub, check if the run is there by going into Config -> Quest Log -> Section Most Recent
+[FAQ](https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md)
 
 ## How to Manually Update with Update.exe
 
