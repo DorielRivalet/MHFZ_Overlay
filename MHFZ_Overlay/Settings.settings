@@ -677,5 +677,14 @@
     <Setting Name="DatabaseFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="SessionTimeShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SessionTimeX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">-70</Value>
+    </Setting>
+    <Setting Name="SessionTimeY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">180</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

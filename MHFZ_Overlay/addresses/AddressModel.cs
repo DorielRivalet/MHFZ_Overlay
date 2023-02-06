@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Automation;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Application = System.Windows.Application;
 
 namespace MHFZ_Overlay.addresses
@@ -78,6 +79,8 @@ namespace MHFZ_Overlay.addresses
         public bool ShowMonster4HPBar { get; set; } = true;
 
         public bool ShowSharpness { get; set; } = true;
+
+        public bool ShowSessionTimeInfo { get; set; } = true;
 
         public bool ShowMonsterPartHP { get; set; } = true;
 
@@ -10377,8 +10380,20 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return uint.Parse(hexColor, System.Globalization.NumberStyles.HexNumber);
         }
 
-
         public Option SelectedOption { get; set; } = new Option { Name = "Default", IsSelected = true };
+
+        private DateTime ProgramStart = DateTime.Now;
+
+        public TimeSpan CurrentSessionTime 
+        { 
+            get
+            {
+                DateTime ProgramEnd = DateTime.Now;
+                TimeSpan duration = ProgramEnd - ProgramStart;
+                return duration;
+            } 
+        }
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

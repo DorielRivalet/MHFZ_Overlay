@@ -336,6 +336,7 @@ namespace MHFZ_Overlay
         #endregion
 
         public DateTime ProgramStart;
+        public static DateTime ProgramStartStatic;
         public DateTime ProgramEnd;
 
 
@@ -404,6 +405,7 @@ namespace MHFZ_Overlay
 
             // When the program starts
             ProgramStart = DateTime.Now;
+            ProgramStartStatic = DateTime.Now;
 
             // Calculate the total time spent and update the TotalTimeSpent property
             DataLoader.model.TotalTimeSpent = databaseManager.CalculateTotalTimeSpent();
@@ -1035,6 +1037,7 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowPlayerAtkInfo = v && s.PlayerAtkShown;
             DataLoader.model.ShowPlayerHitsTakenBlockedInfo = v && s.TotalHitsTakenBlockedShown;
             DataLoader.model.ShowSharpness = v && s.EnableSharpness;
+            DataLoader.model.ShowSessionTimeInfo = v && s.SessionTimeShown;
 
             DataLoader.model.ShowMap = v && s.EnableMap;
             DataLoader.model.ShowFrameCounter = v && s.FrameCounterShown;
@@ -2390,6 +2393,10 @@ namespace MHFZ_Overlay
                 case "QuestIDGrid":
                     s.QuestIDX = (double)(pos.X - XOffset);
                     s.QuestIDY = (double)(pos.Y - YOffset);
+                    break;
+                case "SessionTimeInfo":
+                    s.SessionTimeX = (double)(pos.X - XOffset);
+                    s.SessionTimeY = (double)(pos.Y - XOffset);
                     break;
 
                 // Monster

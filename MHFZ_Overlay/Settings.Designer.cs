@@ -2722,5 +2722,41 @@ namespace MHFZ_Overlay {
                 this["DatabaseFilePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SessionTimeShown {
+            get {
+                return ((bool)(this["SessionTimeShown"]));
+            }
+            set {
+                this["SessionTimeShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-70")]
+        public double SessionTimeX {
+            get {
+                return ((double)(this["SessionTimeX"]));
+            }
+            set {
+                this["SessionTimeX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("180")]
+        public double SessionTimeY {
+            get {
+                return ((double)(this["SessionTimeY"]));
+            }
+            set {
+                this["SessionTimeY"] = value;
+            }
+        }
     }
 }
