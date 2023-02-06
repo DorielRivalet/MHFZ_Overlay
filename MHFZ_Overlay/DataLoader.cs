@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -50,7 +51,11 @@ namespace MHFZ_Overlay
                 else
                     model = new AddressModelHGE(m);
 
+                // first we check if there are duplicate mhf.exe
                 CheckForExternalProcesses();
+                // if there aren't then this runs and sets the game folder and also the database folder if needed
+                GetMHFFolderLocation();
+                // and thus set the data to database then, after doing it to the settings
                 databaseChanged = databaseManager.SetupLocalDatabase(this);
                 CheckIfLoadedInMezeporta();
             }
@@ -66,6 +71,54 @@ namespace MHFZ_Overlay
         {
             if (model.AreaID() != 200)
                 System.Windows.MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+        }
+
+        private void GetMHFFolderLocation()
+        {
+            // Get the process that is running "mhf.exe"
+            Process[] processes = Process.GetProcessesByName("mhf");
+
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            if (processes.Length > 0)
+            {
+                // Get the location of the first "mhf.exe" process
+                string mhfPath = processes[0].MainModule.FileName;
+                // Get the directory that contains "mhf.exe"
+                string mhfDirectory = Path.GetDirectoryName(mhfPath);
+                // Save the directory to the program's settings
+                // (Assuming you have a "settings" object that can store strings)
+                s.GameFolderPath = mhfDirectory;
+
+                // Check if the "database" folder exists in the "mhf" folder
+                string databasePath = Path.Combine(mhfDirectory, "database");
+                if (!Directory.Exists(databasePath))
+                {
+                    // Create the "database" folder if it doesn't exist
+                    Directory.CreateDirectory(databasePath);
+                }
+
+                // Check if the "MHFZ_Overlay.sqlite" file exists in the "database" folder
+                string sqlitePath = Path.Combine(databasePath, "MHFZ_Overlay.sqlite");
+                //if (!File.Exists(sqlitePath))
+                //{
+                //    databaseFound = false;
+                //}
+                //else
+                //{
+                //    databaseFound = true;
+                //}
+
+                s.DatabaseFilePath= sqlitePath;
+
+                s.Save();
+            }
+            else
+            {
+                // The "mhf.exe" process was not found
+                MessageBox.Show("The 'mhf.exe' process was not found.","Error",MessageBoxButton.OK,MessageBoxImage.Error);
+                Environment.Exit(0);
+            }
         }
 
         private readonly List<string> bannedProcessesName = new List<string>()

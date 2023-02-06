@@ -34,13 +34,12 @@ namespace MHFZ_Overlay
         private string _customDatabasePath;
         private string dataSource;
 
-
         //TODO test
         public void CheckIfUserSetDatabasePath()
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (string.IsNullOrEmpty(s.DatabaseFolderPath) || !Directory.Exists(Path.GetDirectoryName(s.DatabaseFolderPath)))
+            if (string.IsNullOrEmpty(s.DatabaseFilePath) || !Directory.Exists(Path.GetDirectoryName(s.DatabaseFilePath)))
             {
                 _connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
 
@@ -52,7 +51,7 @@ namespace MHFZ_Overlay
             }
             else
             {
-                _customDatabasePath = s.DatabaseFolderPath;
+                _customDatabasePath = s.DatabaseFilePath;
             }
 
             if (!File.Exists(_customDatabasePath))

@@ -1319,20 +1319,6 @@ namespace MHFZ_Overlay
             }
         }
 
-        private void GameFolderButton_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new FolderBrowserDialog();
-            DialogResult result = dialog.ShowDialog();
-
-            if (result == System.Windows.Forms.DialogResult.OK)
-            {
-                string selectedFolder = dialog.SelectedPath;
-                // You can use the selectedFolder variable to do something with the chosen folder, such as calculate its hash.
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-                s.GameFolderPath = selectedFolder;
-            }
-        }
-
         private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
         {
             if (MainWindow == null)
@@ -2535,7 +2521,6 @@ namespace MHFZ_Overlay
             return value;
         }
 
-
         private void StatsTextComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
@@ -2568,26 +2553,6 @@ namespace MHFZ_Overlay
                 case "Area Changes":
                     statsTextTextBlock.Text = DisplayAreaChanges(DatabaseManager.GetInstance().GetAreaChangesDictionary(runID));
                     break;
-            }
-        }
-
-        private void DatabaseFolderButton_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog fileDialog = new SaveFileDialog();
-            fileDialog.Filter = "SQLite Database (*.sqlite)|*.sqlite|All files (*.*)|*.*";
-            fileDialog.DefaultExt = ".sqlite";
-            fileDialog.AddExtension = true;
-            fileDialog.CheckPathExists = true;
-            fileDialog.OverwritePrompt = true;
-            fileDialog.Title = "Choose Database Location";
-            fileDialog.FileName = "MHFZ_Overlay.sqlite";
-
-            if (fileDialog.ShowDialog() == true)
-            {
-                string databasePath = fileDialog.FileName;
-                // Store the selected database path in a variable or a configuration file for future use.
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-                s.DatabaseFolderPath = databasePath;
             }
         }
     }

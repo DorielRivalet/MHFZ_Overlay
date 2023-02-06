@@ -2714,12 +2714,12 @@ namespace MHFZ_Overlay {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string DatabaseFolderPath {
+        public string DatabaseFilePath {
             get {
-                return ((string)(this["DatabaseFolderPath"]));
+                return ((string)(this["DatabaseFilePath"]));
             }
             set {
-                this["DatabaseFolderPath"] = value;
+                this["DatabaseFilePath"] = value;
             }
         }
     }

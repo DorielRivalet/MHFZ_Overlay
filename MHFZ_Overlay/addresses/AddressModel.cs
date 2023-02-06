@@ -9041,15 +9041,15 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             //check if the folder is named dat and contains dat, emd, and sqd.
             if (s.GameFolderPath == "" || s.GameFolderPath == null)
             {
-                MessageBox.Show("Please provide a path to the game folder by clicking the *Select Game Folder* button in Quest Logs, Settings section. See tooltip in Quest Logs for more information. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
 
                 s.EnableQuestLogging = false;
                 return false;
             }
 
-            if (s.DatabaseFolderPath == "" || s.DatabaseFolderPath == null)
+            if (s.DatabaseFilePath == "" || s.DatabaseFilePath == null)
             {
-                MessageBox.Show("Please provide a path to the database custom folder by clicking the *Select Database Folder* button in Quest Logs, Settings section. See tooltip in Quest Logs for more information. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
 
                 s.EnableQuestLogging = false;
                 return false;

@@ -1087,35 +1087,17 @@
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="2" Foreground="#cdd6f4">
-                                       How to Enable Quest Logging
-                                       <LineBreak/>
-                                       1. Press Select Game Folder button and navigate to the folder where your mhf.exe (the game) resides, select it and press Select folder.
-                                       <LineBreak/>
-                                       2. Press the Select Custom Folder for Quest Runs Database button.
-                                       <LineBreak/>
-                                       3. Navigate to any folder (for example a database folder in the game folder), give the file a name (for example MHFZ_Overlay.sqlite), press Save.
-                                       <LineBreak/>
-                                       4. Toggle Quest Logging then press the green Save button at the bottom in order for the overlay settings to be saved.
-                                       <LineBreak/>
-                                       5. Restart the Overlay then do a run and once you are back at hub, check if the run is there by going into Config -> Quest Log -> Section Most Recent
-                                        </TextBlock>
-                                        <Button ToolTip="Select the game folder (which is in the same directory of where your game exe resides). This is needed because the overlay will read the *unique signatures* of the files within the folder and thus show which files you have used in a quest run" Grid.Row="3" Grid.Column="0" Content="(Mandatory) Select Game Folder" Click="GameFolderButton_Click"/>
-                                        <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=GameFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center"  Text="Hover to view selected game folder path"/>
-                                        <Button ToolTip="Select a custom folder for the quest runs database (recommended to anywhere that doesn't need administrator privileges). This is needed because the database in the default location (AppData\Local) would be recreated on overlay update" Grid.Row="4" Grid.Column="0" Content="(Mandatory) Select Custom Folder for Quest Runs Database" Click="DatabaseFolderButton_Click"/>
-                                        <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=DatabaseFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Text="Hover to view selected database folder path"/>
-                                        <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0" Text="(Required for speedrun) Quest Logging" />
-                                        <ToggleButton Grid.Row="5" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}" Checked="questLoggingToggle_Check"/>
-                                        <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of inputs (KBM + Controller) during quests and inserts the information into a local database. WARNING: the runs with this option disabled will not be displayed on leaderboards, in order to prevent cheating." Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="(Required for speedrun) Log Inputs during Quest" />
-                                        <ToggleButton Grid.Row="6" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableKeyLogging}"/>
-                                        <TextBlock Margin="5,5,5,5" ToolTip="Show a watermark that has to be visible at all times during a YouTube video of a quest run in order for the run to be verified" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="(Required for speedrun) Overlay Mode Watermark" />
-                                        <ToggleButton Grid.Row="7" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayModeWatermarkShown}"/>
-                                        <TextBlock Margin="5,5,5,5" ToolTip="Select nationality to display on website for quest records" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Player Nationality"/>
-                                        <ComboBox SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Margin="5,5,5,5" Grid.Column="1" Grid.Row="8"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
+                                        <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=GameFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Grid.ColumnSpan="2" Text="Hover to view game folder path (automatically set by checking the folder location of the current mhf.exe at overlay startup)"/>
+                                        <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=DatabaseFilePath}" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Hover to view database file path"/>
+                                        <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0" Text="(Required for speedrun) Quest Logging" />
+                                        <ToggleButton Grid.Row="2" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}" Checked="questLoggingToggle_Check"/>
+                                        <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of inputs (KBM + Controller) during quests and inserts the information into a local database. WARNING: the runs with this option disabled will not be displayed on leaderboards, in order to prevent cheating." Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="(Required for speedrun) Log Inputs during Quest" />
+                                        <ToggleButton Grid.Row="3" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableKeyLogging}"/>
+                                        <TextBlock Margin="5,5,5,5" ToolTip="Show a watermark that has to be visible at all times during a YouTube video of a quest run in order for the run to be verified" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="(Required for speedrun) Overlay Mode Watermark" />
+                                        <ToggleButton Grid.Row="4" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayModeWatermarkShown}"/>
+                                        <TextBlock Margin="5,5,5,5" ToolTip="Select nationality to display on website for quest records" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Player Nationality"/>
+                                        <ComboBox SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Margin="5,5,5,5" Grid.Column="1" Grid.Row="5"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal">
@@ -1126,21 +1108,21 @@
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
 
-                                        <TextBlock Margin="5,5,5,5" ToolTip="Show the current Quest ID in overlay" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Quest ID" />
-                                        <ToggleButton Grid.Row="9" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=QuestIDShown}"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Quest ID X Coordinate"/>
-                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestIDX}"  PreviewTextInput="ValidateNumber"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Quest ID Y Coordinate"/>
-                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestIDY}"  PreviewTextInput="ValidateNumber"/>
+                                        <TextBlock Margin="5,5,5,5" ToolTip="Show the current Quest ID in overlay" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Quest ID" />
+                                        <ToggleButton Grid.Row="6" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=QuestIDShown}"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Quest ID X Coordinate"/>
+                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestIDX}"  PreviewTextInput="ValidateNumber"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Quest ID Y Coordinate"/>
+                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestIDY}"  PreviewTextInput="ValidateNumber"/>
 
-                                        <TextBlock Margin="5,5,5,5" ToolTip="Show the personal best of the selected quest with the selected weapon type and overlay mode" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Personal Best" />
-                                        <ToggleButton Grid.Row="12" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestShown}"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Personal Best X Coordinate"/>
-                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestX}"  PreviewTextInput="ValidateNumber"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Personal Best Y Coordinate"/>
-                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestY}"  PreviewTextInput="ValidateNumber"/>
+                                        <TextBlock Margin="5,5,5,5" ToolTip="Show the personal best of the selected quest with the selected weapon type and overlay mode" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Personal Best" />
+                                        <ToggleButton Grid.Row="9" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestShown}"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Personal Best X Coordinate"/>
+                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestX}"  PreviewTextInput="ValidateNumber"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Personal Best Y Coordinate"/>
+                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestY}"  PreviewTextInput="ValidateNumber"/>
 
-                                        <Grid Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2">
+                                        <Grid Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2">
                                             <StackPanel Orientation="Horizontal">
                                                 <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/save_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="32" Height="32"/>
                                                 <TextBlock Text="If you see this save icon in the top left corner, do not close the game or the overlay. The database is saving your quest information while it is being shown." Margin="4,0,0,0" VerticalAlignment="Center" />
