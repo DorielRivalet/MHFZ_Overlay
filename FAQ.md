@@ -24,7 +24,7 @@
 
 - Speedrun Mode Categories: SOLO ONLY. Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
 
-**Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located at `AppData\Local\MHFZ_Overlay` or the custom folder you have selected previously. Don't lose your speedrun records!
+**Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located inside the database folder, which is inside your game folder. Don't lose your speedrun records!
 
 ![Discord Rich Presence](./demo/discord8.png)
 

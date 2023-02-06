@@ -157,7 +157,7 @@ Includes icons!
 
 ![Inventories](./demo/databaseinventories.png)
 
-**Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located at `AppData\Local\MHFZ_Overlay` or the custom folder you have selected previously.
+**Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located inside the database folder, which is inside your game folder.
 
 ## Configuration Preview
 
