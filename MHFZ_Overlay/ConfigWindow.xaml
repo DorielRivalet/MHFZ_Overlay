@@ -36,7 +36,7 @@
                         Welcome to the Quest Logs statistics section! Here you can modify the YouTube link of your runs, view weapon usage, see your most recent quest times and much more!
                         <LineBreak/>
                         <LineBreak/>
-                        Please keep in mind that if you update the overlay version, the database file may get overwritten. It is recommended to make a periodic backup of the MHFZ_Overlay.sqlite file, found in the overlay folder or the custom folder you previously selected.
+                        Please keep in mind that if you update the overlay version or re-install the game, the database file may get overwritten. It is recommended to make a periodic backup of the MHFZ_Overlay.sqlite file, found in the database folder which is inside the game folder.
                         <LineBreak/>
                         <LineBreak/>
                         Select an option from the Section drop-down menu in order to view these statistics.
