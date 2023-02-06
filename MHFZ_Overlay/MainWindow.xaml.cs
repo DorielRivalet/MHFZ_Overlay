@@ -685,7 +685,7 @@ namespace MHFZ_Overlay
                         }
                         catch
                         {
-                             // nothing
+                            // nothing
                         }
                     }
                 }

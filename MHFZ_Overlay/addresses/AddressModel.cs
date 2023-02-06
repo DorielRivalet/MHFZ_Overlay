@@ -18,7 +18,6 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Automation;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Application = System.Windows.Application;
 
 namespace MHFZ_Overlay.addresses
@@ -10222,7 +10221,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             }
         }
 
-
         #endregion
 
         #region countries
@@ -10306,7 +10304,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public List<RecentRuns> RecentRuns { get; set; } = new();
         public List<FastestRun> FastestRuns { get; set; } = new();
 
-
         public ObservableCollection<Option> QuestLogsSearchOption { get; set; } = new ObservableCollection<Option>()
         {
             new Option{Name = "Gear", IsSelected = false},
@@ -10384,16 +10381,15 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         private DateTime ProgramStart = DateTime.Now;
 
-        public TimeSpan CurrentSessionTime 
-        { 
+        public TimeSpan CurrentSessionTime
+        {
             get
             {
                 DateTime ProgramEnd = DateTime.Now;
                 TimeSpan duration = ProgramEnd - ProgramStart;
                 return duration;
-            } 
+            }
         }
-
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

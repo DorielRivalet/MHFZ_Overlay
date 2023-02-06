@@ -23,7 +23,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -2440,7 +2439,7 @@ namespace MHFZ_Overlay
 
         public Dictionary<int, int> GetElapsedTimeForDictionaryIntInt(Dictionary<int, int> dictionary)
         {
-            Dictionary<int, int> elapsedTimeDict = new Dictionary<int,int>();
+            Dictionary<int, int> elapsedTimeDict = new Dictionary<int, int>();
 
             if (dictionary == null || !dictionary.Any())
                 return elapsedTimeDict;
@@ -2505,7 +2504,7 @@ namespace MHFZ_Overlay
                 string timeString = TimeSpan.FromSeconds((double)time / 30).ToString(@"mm\:ss\.ff");
                 var area = entry.Value;
                 sb.AppendLine(timeString + " ");
-                
+
                 Dictionary.MapAreaList.MapAreaID.TryGetValue(area, out string? itemName);
                 sb.Append(itemName);
                 sb.AppendLine();

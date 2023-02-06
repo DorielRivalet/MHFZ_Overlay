@@ -100,23 +100,15 @@ namespace MHFZ_Overlay
 
                 // Check if the "MHFZ_Overlay.sqlite" file exists in the "database" folder
                 string sqlitePath = Path.Combine(databasePath, "MHFZ_Overlay.sqlite");
-                //if (!File.Exists(sqlitePath))
-                //{
-                //    databaseFound = false;
-                //}
-                //else
-                //{
-                //    databaseFound = true;
-                //}
 
-                s.DatabaseFilePath= sqlitePath;
+                s.DatabaseFilePath = sqlitePath;
 
                 s.Save();
             }
             else
             {
                 // The "mhf.exe" process was not found
-                MessageBox.Show("The 'mhf.exe' process was not found.","Error",MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(0);
             }
         }
