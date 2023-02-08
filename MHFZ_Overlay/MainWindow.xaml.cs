@@ -432,9 +432,94 @@ namespace MHFZ_Overlay
 
             SetGraphSeries();
 
+            SetSettingsPreset();
+
             DataLoader.model.ShowSaveIcon = false;
 
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
+        }
+
+        private void SetSettingsPreset()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            if (s != null)
+            {
+                switch (s.SettingsPreset)
+                {
+                    default:
+                        logger.Warn("Could not find preset name for settings");
+                        return;
+                    case "None":
+                        return;
+                    case "Speedrun":
+                        s.EnableDamageNumbers = false;
+                        s.EnableSharpness = false;
+                        s.PartThresholdShown = false;
+                        s.HitCountShown = false;
+                        s.PlayerAtkShown = false;
+                        s.MonsterAtkMultShown = false;
+                        s.MonsterDefrateShown = false;
+                        s.MonsterSizeShown = false;
+                        s.MonsterPoisonShown = false;
+                        s.MonsterParaShown = false;
+                        s.MonsterSleepShown = false;
+                        s.MonsterBlastShown = false;
+                        s.MonsterStunShown = false;
+                        s.DamagePerSecondShown = false;
+                        s.TotalHitsTakenBlockedShown = false;
+                        s.PlayerAPMGraphShown = false;
+                        s.PlayerAttackGraphShown = false;
+                        s.PlayerDPSGraphShown = false;
+                        s.PlayerHitsPerSecondGraphShown = false;
+                        s.EnableQuestPaceColor = false;
+                        s.Monster1HealthBarShown = false;
+                        s.Monster2HealthBarShown = false;
+                        s.Monster3HealthBarShown = false;
+                        s.Monster4HealthBarShown = false;
+
+                        s.TimerInfoShown = true;
+                        s.EnableKeyLogging = true;
+                        s.EnableQuestLogging = true;
+                        s.OverlayModeWatermarkShown = true;
+                        break;
+
+                    case "Zen":
+                        s.EnableDamageNumbers = false;
+                        s.EnableSharpness = false;
+                        s.PartThresholdShown = false;
+                        s.HitCountShown = false;
+                        s.PlayerAtkShown = false;
+                        s.MonsterAtkMultShown = false;
+                        s.MonsterDefrateShown = false;
+                        s.MonsterSizeShown = false;
+                        s.MonsterPoisonShown = false;
+                        s.MonsterParaShown = false;
+                        s.MonsterSleepShown = false;
+                        s.MonsterBlastShown = false;
+                        s.MonsterStunShown = false;
+                        s.DamagePerSecondShown = false;
+                        s.TotalHitsTakenBlockedShown = false;
+                        s.PlayerAPMGraphShown = false;
+                        s.PlayerAttackGraphShown = false;
+                        s.PlayerDPSGraphShown = false;
+                        s.PlayerHitsPerSecondGraphShown = false;
+                        s.EnableQuestPaceColor = false;
+                        s.Monster1HealthBarShown = false;
+                        s.Monster2HealthBarShown = false;
+                        s.Monster3HealthBarShown = false;
+                        s.Monster4HealthBarShown = false;
+                        s.TimerInfoShown = false;
+                        s.EnableKeyLogging = false;
+
+                        // TODO: can i even log zen quests?
+                        //s.EnableQuestLogging = false;
+                        s.OverlayModeWatermarkShown = false;
+
+                        s.Monster1IconShown = true;
+                        break;
+                }
+            }
         }
 
         private void SetGraphSeries()

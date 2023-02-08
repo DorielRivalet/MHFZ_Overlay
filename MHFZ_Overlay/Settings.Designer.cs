@@ -2758,5 +2758,17 @@ namespace MHFZ_Overlay {
                 this["SessionTimeY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public string SettingsPreset {
+            get {
+                return ((string)(this["SettingsPreset"]));
+            }
+            set {
+                this["SettingsPreset"] = value;
+            }
+        }
     }
 }

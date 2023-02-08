@@ -686,5 +686,8 @@
     <Setting Name="SessionTimeY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">180</Value>
     </Setting>
+    <Setting Name="SettingsPreset" Type="System.String" Scope="User">
+      <Value Profile="(Default)">None</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

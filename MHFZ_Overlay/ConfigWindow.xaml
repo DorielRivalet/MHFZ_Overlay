@@ -624,6 +624,14 @@
                             <RowDefinition Height="40"/>
 
                         </Grid.RowDefinitions>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select a settings preset configuration" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Configuration Preset"/>
+                        <ComboBox Grid.Column="1" Grid.Row="1" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=SettingsPreset}">
+                            <ComboBoxItem>None</ComboBoxItem>
+                            <ComboBoxItem>Speedrun</ComboBoxItem>
+                            <ComboBoxItem>Zen</ComboBoxItem>
+                        </ComboBox>
+
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Max Resolution Width"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="0" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Max Resolution Height"/>
@@ -731,6 +739,7 @@
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="41" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SessionTimeY}"  PreviewTextInput="ValidateNumber"/>
 
                         <Button Grid.Row="42" Grid.Column="0" Grid.ColumnSpan="2" Content="Backup settings" ToolTip="Export user settings to JSON file and make a backup for settings when updating overlay" Click="ExportUserSettings_Click"/>
+                        <!--<Button Grid.Row="43" Grid.Column="0" Grid.ColumnSpan="2" Content="Import settings" ToolTip="Import user settings from file" Click="ImportUserSettings_Click"/>-->
                     </Grid>
                 </ScrollViewer>
                 <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">

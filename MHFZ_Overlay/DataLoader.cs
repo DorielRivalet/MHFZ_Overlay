@@ -42,6 +42,7 @@ namespace MHFZ_Overlay
             string destination = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
             File.Copy(settingsFile, destination, true);
             logger.Info("Backed up settings. File: {0}, Destination: {1}", settingsFile, destination);
+            MessageBox.Show(string.Format("Backed up settings. File: {0}, Destination: {1}", settingsFile, destination), "MHF-Z Overlay Settings", MessageBoxButton.OK,MessageBoxImage.Information);
         }
 
         /// <summary>
@@ -57,6 +58,7 @@ namespace MHFZ_Overlay
             if (!File.Exists(sourceFile))
             {
                 // Nothing we need to do
+                logger.Info("File not found at {0}", sourceFile);
                 return;
             }
             // Create directory as needed
@@ -64,22 +66,33 @@ namespace MHFZ_Overlay
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(destFile));
             }
-            catch (Exception) { }
+            catch (Exception ex) 
+            {
+                logger.Info(ex, "Did not make directory for {0}", destFile);
+            }
 
             // Copy our backup file in place 
             try
             {
                 File.Copy(sourceFile, destFile, true);
             }
-            catch (Exception) { }
+            catch (Exception ex) 
+            {
+                logger.Info(ex, "Did not copy backup file. Source: {0}, Destination: {1} ", sourceFile, destFile);
+
+            }
 
             // Delete backup file
             try
             {
                 File.Delete(sourceFile);
             }
-            catch (Exception) { }
+            catch (Exception ex) 
+            {
+                logger.Info(ex, "Did not delete backup file. Source: {0}", sourceFile);
+            }
 
+            logger.Info("Restored settings. Source: {0}, Destination: {1}", sourceFile, destFile);
         }
 
         // TODO: would like to make this a singleton but its complicated
@@ -94,7 +107,8 @@ namespace MHFZ_Overlay
             // Targets where to log to: File and Console
             var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
 
-            // Rules for mapping loggers to targets            
+            // Rules for mapping loggers to targets
+            // Trace, Debug, Info, Warn, Error, Fatal
             config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
 
             // Apply config           
@@ -108,6 +122,8 @@ namespace MHFZ_Overlay
 
             // ... other app init code after ...
             RestoreSettings();
+
+            logger.Info($"DataLoader started");
 
             int PID = m.GetProcIdFromName("mhf");
             if (PID > 0)
@@ -136,7 +152,6 @@ namespace MHFZ_Overlay
                 // and thus set the data to database then, after doing it to the settings
                 databaseChanged = databaseManager.SetupLocalDatabase(this);
                 CheckIfLoadedInMezeporta();
-                logger.Info($"Overlay DataLoader started");
             }
             else
             {
