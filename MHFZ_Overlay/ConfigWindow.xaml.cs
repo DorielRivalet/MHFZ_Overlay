@@ -9,6 +9,7 @@ using LiveChartsCore.SkiaSharpView.WPF;
 using MHFZ_Overlay.Core.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Newtonsoft.Json;
+using NLog;
 using Octokit;
 using SkiaSharp;
 using System;
@@ -486,6 +487,19 @@ namespace MHFZ_Overlay
         public ConfigWindow(MainWindow mainWindow)
         {
             InitializeComponent();
+            var config = new NLog.Config.LoggingConfiguration();
+
+            // Targets where to log to: File and Console
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
+
+            // Rules for mapping loggers to targets            
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+
+            // Apply config           
+            NLog.LogManager.Configuration = config;
+
+            logger.Info($"ConfigWindow initialized");
+
             Topmost = true;
             MainWindow = mainWindow;
 
@@ -1259,6 +1273,8 @@ namespace MHFZ_Overlay
 
         private void ExportUserSettings_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow.DataLoader.BackupSettings();
+
             // Show a Save File Dialog to let the user choose the location for the JSON file
             Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
             saveFileDialog.FileName = "user_settings"; // Default file name
@@ -1318,6 +1334,8 @@ namespace MHFZ_Overlay
             }
         }
 
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
         {
             if (MainWindow == null)
@@ -1329,7 +1347,7 @@ namespace MHFZ_Overlay
             {
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 MessageBox.Show("Please update the database structure", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-
+                logger.Warn("Database structure needs update");
                 s.EnableQuestLogging = false;
             }
         }

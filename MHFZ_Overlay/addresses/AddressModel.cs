@@ -943,15 +943,27 @@ namespace MHFZ_Overlay.addresses
 
         readonly Mem m = new();
 
+        //TODO convert to bool and remove isInLauncherBool?
         public string isInLauncher()
         {
             int pidToSearch = m.GetProcIdFromName("mhf");
             //Init a condition indicating that you want to search by process id.
             var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
                 pidToSearch);
+
+            AutomationElement? element = null;
+
             //Find the automation element matching the criteria
-            AutomationElement element = AutomationElement.RootElement.FindFirst(
-                TreeScope.Children, condition);
+            //TODO: does this even fix anything?
+            try
+            {
+                element = AutomationElement.RootElement.FindFirst(
+    TreeScope.Children, condition);
+            }
+            catch(Exception ex)
+            {
+                logger.Warn(ex, "Could not find AutomationElement");
+            }
 
             if (element == null || pidToSearch == 0)
                 return "NULL";
@@ -9060,7 +9072,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             if (s.GameFolderPath == "" || s.GameFolderPath == null)
             {
                 MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-
+                logger.Warn("Game folder path not found");
                 s.EnableQuestLogging = false;
                 return false;
             }
@@ -9068,7 +9080,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             if (s.DatabaseFilePath == "" || s.DatabaseFilePath == null)
             {
                 MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-
+                logger.Warn("Database file path not found");
                 s.EnableQuestLogging = false;
                 return false;
             }
@@ -9092,6 +9104,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 + String.Join(", ", findFiles) + "\n" +
                 "gameFolderFiles: " + String.Join(", ", gameFolderFiles),
                 "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
+                logger.Warn("Missing game files");
                 s.EnableQuestLogging = false;
                 return false;
             }

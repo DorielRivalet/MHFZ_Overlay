@@ -1,13 +1,16 @@
-﻿using Memory;
+﻿using Discord.Rest;
+using Memory;
 using MHFZ_Overlay.addresses;
 using NLog;
 using Squirrel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 
 namespace MHFZ_Overlay
@@ -19,10 +22,73 @@ namespace MHFZ_Overlay
     {
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        // https://github.com/Squirrel/Squirrel.Windows/issues/198#issuecomment-299262613
+        // Indeed you can use the methods below to backup your settings,
+        // typically just after your update has completed,
+        // so just after your call to await mgr.UpdateApp();
+        // You want to restore them at the very beginning of your program,
+        // like just after Squirrel's event handler registration.
+        // Don't try doing a restore from the onAppUpdate it won't work.
+        // By the look of it onAppUpdate is executing from the older app process
+        // as it would not get access to the newer app data folder.
+
+        /// <summary>
+        /// Make a backup of our settings.
+        /// Used to persist settings across updates.
+        /// </summary>
+        public void BackupSettings()
+        {
+            string settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+            string destination = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
+            File.Copy(settingsFile, destination, true);
+            logger.Info("Backed up settings. File: {0}, Destination: {1}", settingsFile, destination);
+        }
+
+        /// <summary>
+        /// Restore our settings backup if any.
+        /// Used to persist settings across updates.
+        /// </summary>
+        private static void RestoreSettings()
+        {
+            //Restore settings after application update            
+            string destFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+            string sourceFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
+            // Check if we have settings that we need to restore
+            if (!File.Exists(sourceFile))
+            {
+                // Nothing we need to do
+                return;
+            }
+            // Create directory as needed
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(destFile));
+            }
+            catch (Exception) { }
+
+            // Copy our backup file in place 
+            try
+            {
+                File.Copy(sourceFile, destFile, true);
+            }
+            catch (Exception) { }
+
+            // Delete backup file
+            try
+            {
+                File.Delete(sourceFile);
+            }
+            catch (Exception) { }
+
+        }
+
         // TODO: would like to make this a singleton but its complicated
         // this loads first before MainWindow constructor is called. meaning this runs twice.
         public DataLoader()
         {
+            Debug.WriteLine("DataLoader constructor called. Call stack:");
+            Debug.WriteLine(new StackTrace().ToString());
+
             var config = new NLog.Config.LoggingConfiguration();
 
             // Targets where to log to: File and Console
@@ -41,6 +107,7 @@ namespace MHFZ_Overlay
                 onEveryRun: OnAppRun);
 
             // ... other app init code after ...
+            RestoreSettings();
 
             int PID = m.GetProcIdFromName("mhf");
             if (PID > 0)
@@ -54,6 +121,7 @@ namespace MHFZ_Overlay
                 {
                     // TODO: does this warrant the program closing?
                     System.Windows.MessageBox.Show($"Warning: could not create code cave \n\n{ex}", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                    logger.Warn(ex, "Could not create code cave");
                 }
 
                 if (!isHighGradeEdition)
@@ -73,7 +141,7 @@ namespace MHFZ_Overlay
             else
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-
+                logger.Fatal("Launch game first");
                 Environment.Exit(0);
             }
         }
@@ -81,7 +149,11 @@ namespace MHFZ_Overlay
         private void CheckIfLoadedInMezeporta()
         {
             if (model.AreaID() != 200)
+            {
+                logger.Warn("Loaded overlay outside Mezeporta");
                 System.Windows.MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+
+            }
         }
 
         private void GetMHFFolderLocation()
@@ -120,6 +192,7 @@ namespace MHFZ_Overlay
             {
                 // The "mhf.exe" process was not found
                 MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Fatal("mhf.exe not found");
                 Environment.Exit(0);
             }
         }
@@ -140,6 +213,8 @@ namespace MHFZ_Overlay
                 {
                     // processName is a substring of one of the banned process strings
                     MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
+                    logger.Fatal("Found banned process");
+
                     // Close the overlay program
                     Environment.Exit(0);
                 }
@@ -156,6 +231,8 @@ namespace MHFZ_Overlay
             {
                 // More than one "MHFZ_Overlay" process is running
                 MessageBox.Show("Close other instances of the overlay before opening a new one", "Error");
+                logger.Fatal("Found duplicate overlay");
+
                 // Close the overlay program
                 Environment.Exit(0);
             }
@@ -163,6 +240,8 @@ namespace MHFZ_Overlay
             {
                 // More than one game process is running
                 MessageBox.Show("Close other instances of the game before opening a new one", "Error");
+                logger.Fatal("Found duplicate game");
+
                 // Close the overlay program
                 Environment.Exit(0);
             }
@@ -236,6 +315,7 @@ namespace MHFZ_Overlay
             if (proc == null)
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                logger.Fatal("Launch game first");
                 Environment.Exit(0);
                 return;
             }

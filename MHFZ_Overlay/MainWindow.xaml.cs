@@ -494,6 +494,7 @@ namespace MHFZ_Overlay
                 if (s.EnableUpdateNotifier)
                 {
                     System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(String.Format("Detected different version ({0}) from latest ({1}). Do you want to download the file?", CurrentProgramVersion, latest.TagName), "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No);
+                    logger.Info("Detected different overlay version");
 
                     if (messageBoxResult.ToString() == "Yes")
                     {
@@ -539,6 +540,8 @@ namespace MHFZ_Overlay
                 if (className == "MHFLAUNCH")
                 {
                     System.Windows.MessageBox.Show("Detected launcher, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    logger.Info("Detected game launcher");
+
                     DataLoader.model.isInLauncherBool = true;
                 }
                 else
@@ -560,6 +563,8 @@ namespace MHFZ_Overlay
                     if (s.EnableAutoClose)
                     {
                         System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                        logger.Info("Detected closed game");
+
                         //https://stackoverflow.com/a/9050477/18859245
                         Cleanup();
                         databaseManager.StoreSessionTime(this);
@@ -568,6 +573,8 @@ namespace MHFZ_Overlay
                     else
                     {
                         System.Windows.MessageBox.Show("Detected closed game, please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                        logger.Info("Detected closed game");
+
                     }
                 };
             }
@@ -637,6 +644,8 @@ namespace MHFZ_Overlay
             }
 
             System.Windows.MessageBox.Show("Fatal error, closing overlay. See the crash log in the overlay folder for more information.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            logger.Fatal("Program crashed");
+
             //https://stackoverflow.com/a/9050477/18859245
             Cleanup();
             databaseManager.StoreSessionTime(this);
@@ -2563,7 +2572,10 @@ namespace MHFZ_Overlay
             if (IsDragConfigure) return;
 
             if (DataLoader.model.isInLauncherBool)
+            {
                 System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                logger.Info("Detected game launcher while using configuration menu");
+            }
 
             if (configWindow == null || !configWindow.IsLoaded)
                 configWindow = new(this);

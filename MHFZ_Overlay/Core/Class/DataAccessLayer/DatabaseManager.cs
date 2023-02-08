@@ -2,6 +2,7 @@
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Newtonsoft.Json;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,10 +25,22 @@ namespace MHFZ_Overlay
         private string _connectionString;
 
         private static DatabaseManager instance;
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private DatabaseManager()
         {
-            //
+            var config = new NLog.Config.LoggingConfiguration();
+
+            // Targets where to log to: File and Console
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
+
+            // Rules for mapping loggers to targets            
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+
+            // Apply config           
+            NLog.LogManager.Configuration = config;
+
+            logger.Info($"DatabaseManager initialized");
         }
 
         private string _customDatabasePath;
@@ -44,7 +57,7 @@ namespace MHFZ_Overlay
 
                 // Show warning to user that they should set a custom database path to prevent data loss on update
                 MessageBox.Show("Warning: The database is currently stored in the default location and will be deleted on update. Please select a custom database location to prevent data loss.", "MHFZ-Overlay Data Loss Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-
+                logger.Warn("The database file is being saved to the overlay default location");
                 // Use default database path
                 _customDatabasePath = _connectionString;
             }
@@ -126,6 +139,7 @@ namespace MHFZ_Overlay
                 catch (SQLiteException ex)
                 {
                     MessageBox.Show(String.Format("Invalid database file. Delete both MHFZ_Overlay.sqlite and reference_schema.json if present, and rerun the program.\n\n{0}", ex), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    logger.Error(ex,"Invalid database file");
                     Environment.Exit(0);
                 }
 
@@ -162,6 +176,7 @@ namespace MHFZ_Overlay
                 if (schemaChanged)
                 {
                     MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    logger.Warn("Invalid database schema");
                 }
             }
 
@@ -1643,6 +1658,7 @@ namespace MHFZ_Overlay
                             transaction.Rollback();
                         // Handle a SQL exception
                         MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState + "\n\n" + ex.HelpLink + "\n\n" + ex.ResultCode + "\n\n" + ex.ErrorCode + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        logger.Error(ex, "An error occurred while accessing the database");
                     }
                     catch (IOException ex)
                     {
@@ -1650,12 +1666,16 @@ namespace MHFZ_Overlay
                             transaction.Rollback();
                         // Handle an I/O exception
                         MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        logger.Error(ex, "An error occurred while accessing a file");
+
                     }
                     catch (ArgumentException ex)
                     {
                         if (transaction != null)
                             transaction.Rollback();
                         MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        logger.Error(ex, "ArgumentException");
+
                     }
                     catch (Exception ex)
                     {
@@ -2081,6 +2101,7 @@ namespace MHFZ_Overlay
 
             // Handle the exception and show an error message to the user
             MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            logger.Error(ex, "An error occurred");
         }
 
         public void MakeDeserealizedQuestInfoDictionariesFromRunID(SQLiteConnection conn, DataLoader dataLoader, int runID)
@@ -2177,16 +2198,22 @@ namespace MHFZ_Overlay
             {
                 // Handle a SQL exception
                 MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Error(ex, "An error occurred while accessing the database");
+
             }
             catch (IOException ex)
             {
                 // Handle an I/O exception
                 MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Error(ex, "An error occurred while accessing a file");
+
             }
             catch (Exception ex)
             {
                 // Handle any other exception
                 MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Error(ex, "An error occurred");
+
             }
         }
 
@@ -2422,6 +2449,8 @@ namespace MHFZ_Overlay
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                 MessageBox.Show(@"ERROR: The database schema got updated in the latest version. Please make sure that both MHFZ_Overlay.sqlite and reference_schema.json don't exist in the current overlay directory, so that the program can make new ones",
                 "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Warn("Invalid database schema");
+
                 s.EnableQuestLogging = false;
             }
 
