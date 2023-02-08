@@ -52,9 +52,8 @@ namespace MHFZ_Overlay
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show($"Error creating overlay: wrong program. \n\n{ex}", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-
-                    Environment.Exit(0);
+                    // TODO: does this warrant the program closing?
+                    System.Windows.MessageBox.Show($"Warning: could not create code cave \n\n{ex}", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
                 }
 
                 if (!isHighGradeEdition)
