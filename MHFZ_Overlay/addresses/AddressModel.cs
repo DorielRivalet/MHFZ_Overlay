@@ -5,6 +5,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
 using MHFZ_Overlay.UI.Class;
+using NLog;
 using RESTCountries.NET.Models;
 using RESTCountries.NET.Services;
 using SkiaSharp;
@@ -33,11 +34,26 @@ namespace MHFZ_Overlay.addresses
         private int SavedMonster3MaxHP = 0;
         private int SavedMonster4MaxHP = 0;
 
-
         private int SavedMonster1ID = 0;
         private int SavedMonster2ID = 0;
 
-        public AddressModel(Mem m) => M = m;
+        public AddressModel(Mem m) {
+
+            var config = new NLog.Config.LoggingConfiguration();
+
+            // Targets where to log to: File and Console
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
+
+            // Rules for mapping loggers to targets            
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+
+            // Apply config           
+            NLog.LogManager.Configuration = config;
+
+            logger.Info($"AddressModel initialized");
+
+            M = m;
+        }
 
         public int SelectedMonster { get; set; } = 0;
 
@@ -9512,6 +9528,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return (double)(TimeDefInt() - TimeInt()) / 30;
         }
 
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public void InsertQuestInfoIntoDictionaries()
         {
             if (previousAttackBuffInt != WeaponRaw() && !attackBuffDictionary.ContainsKey(TimeInt()))
@@ -9528,9 +9546,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                         attackBuffCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), WeaponRaw()));
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into attackBuffDictionary");
                 }
             }
 
@@ -9541,9 +9559,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousHitCountInt = HitCountInt();
                     hitCountDictionary.Add(TimeInt(), HitCountInt());
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into hitCountDictionary");
                 }
             }
 
@@ -9560,9 +9578,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                         damagePerSecondCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), DPS));
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into damagePerSecondDictionary");
                 }
 
             }
@@ -9574,9 +9592,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousCartsInt = CurrentFaints();
                     cartsDictionary.Add(TimeInt(), CurrentFaints());
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into cartsDictionary");
                 }
             }
 
@@ -9587,9 +9605,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousAreaID = AreaID();
                     areaChangesDictionary.Add(TimeInt(), AreaID());
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into areaChangesDictionary");
                 }
             }
 
@@ -9602,9 +9620,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     monster1HPDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1HPInt());
                     monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into monster1HPDictionary");
                 }
             }
 
@@ -9617,9 +9635,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     monster2HPDictionaryMonsterInfo.Add(LargeMonster2ID(), Monster2HPInt());
                     monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into monster2HPDictionary");
                 }
             }
 
@@ -9632,9 +9650,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     monster3HPDictionaryMonsterInfo.Add(LargeMonster3ID(), Monster3HPInt());
                     monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into monster3HPDictionary");
                 }
 
             }
@@ -9648,9 +9666,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     monster4HPDictionaryMonsterInfo.Add(LargeMonster4ID(), Monster4HPInt());
                     monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into monster4HPDictionary");
                 }
             }
 
@@ -9672,9 +9690,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     playerInventoryDictionary.Add(TimeInt(), currentInventoryList);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into playerInventoryDictionary");
                 }
             }
             else if (loadedItemsAtQuestStart && !playerInventoryDictionary.Values.Any())
@@ -9777,9 +9795,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     playerInventoryDictionary.Add(TimeInt(), itemIDsQuantityList);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into playerInventoryDictionary");
                 }
             }
 
@@ -9801,9 +9819,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     playerAmmoPouchDictionary.Add(TimeInt(), currentAmmoList);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into playerAmmoPouchDictionary");
                 }
             }
             else if (loadedItemsAtQuestStart && !playerAmmoPouchDictionary.Values.Any())
@@ -9865,9 +9883,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     playerAmmoPouchDictionary.Add(TimeInt(), itemIDsQuantityList);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into playerAmmoPouchDictionary");
                 }
             }
 
@@ -9889,9 +9907,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     partnyaBagDictionary.Add(TimeInt(), currentPartnyaBagList);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into partnyaBagDictionary");
                 }
             }
             else if (loadedItemsAtQuestStart && !partnyaBagDictionary.Values.Any())
@@ -9954,9 +9972,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     partnyaBagDictionary.Add(TimeInt(), itemIDsQuantityList);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into partnyaBagDictionary");
                 }
             }
 
@@ -9969,9 +9987,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     hitsAreaPairs.Add(AreaID(), AreaHitsTakenBlocked());
                     hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into hitsTakenBlockedDictionary");
                 }
             }
 
@@ -9982,9 +10000,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousPlayerHP = HunterHP();
                     playerHPDictionary.Add(TimeInt(), HunterHP());
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into playerHPDictionary");
                 }
             }
 
@@ -9995,9 +10013,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousPlayerStamina = HunterStamina();
                     playerStaminaDictionary.Add(TimeInt(), HunterStamina());
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into playerStaminaDictionary");
                 }
             }
 
@@ -10014,9 +10032,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                         hitsPerSecondCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), HitsPerSecond));
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into hitsPerSecondDictionary");
                 }
 
             }
@@ -10028,9 +10046,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousTotalHitsTakenBlockedPerSecond = TotalHitsTakenBlockedPerSecond;
                     hitsTakenBlockedPerSecondDictionary.Add(TimeInt(), TotalHitsTakenBlockedPerSecond);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into hitsTakenBlockedPerSecondDictionary");
                 }
             }
 
@@ -10047,9 +10065,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                         actionsPerMinuteCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), APM));
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into actionsPerMinuteDictionary");
                 }
             }
 
@@ -10060,9 +10078,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousOverlayMode = GetOverlayMode();
                     overlayModeDictionary.Add(TimeInt(), GetOverlayMode());
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "Could not insert into overlayModeDictionary");
                 }
             }
         }

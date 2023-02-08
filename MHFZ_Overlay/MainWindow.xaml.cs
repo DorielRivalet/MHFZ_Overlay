@@ -38,6 +38,7 @@ using Image = System.Windows.Controls.Image;
 using Label = System.Windows.Controls.Label;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
+using NLog;
 
 namespace MHFZ_Overlay
 {
@@ -349,6 +350,8 @@ namespace MHFZ_Overlay
 
         private readonly Dictionary<X.Gamepad.GamepadButtons, Image> _controllerImages = new Dictionary<X.Gamepad.GamepadButtons, Image>();
 
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         //Main entry point?        
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -367,6 +370,18 @@ namespace MHFZ_Overlay
             DataLoader = new DataLoader();
             InitializeComponent();
 
+            var config = new NLog.Config.LoggingConfiguration();
+
+            // Targets where to log to: File and Console
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
+
+            // Rules for mapping loggers to targets            
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+
+            // Apply config           
+            NLog.LogManager.Configuration = config;
+
+            logger.Info($"MainWindow initialized");
 
             Left = 0;
             Top = 0;
@@ -603,7 +618,9 @@ namespace MHFZ_Overlay
             }
             catch (Exception ex)
             {
+                logger.Error(ex, $"An error has occurred in the Timer_Tick function");
                 WriteCrashLog(ex);
+                // the flushing is done automatically according to the docs
             }
         }
         private void WriteCrashLog(Exception ex)
@@ -665,9 +682,9 @@ namespace MHFZ_Overlay
                         {
                             DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), damage);
                         }
-                        catch
+                        catch (Exception ex)
                         {
-                            // nothing
+                            logger.Warn(ex, "Could not insert into damageDealtDictionary");
                         }
                     }
                 }
@@ -683,9 +700,9 @@ namespace MHFZ_Overlay
                             DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
 
                         }
-                        catch
+                        catch (Exception ex)
                         {
-                            // nothing
+                            logger.Warn(ex, "Could not insert into damageDealtDictionary");
                         }
                     }
                 }
@@ -701,8 +718,9 @@ namespace MHFZ_Overlay
                                 DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
                             }
                             catch
+                            (Exception ex)
                             {
-                                // nothing
+                                logger.Warn(ex, "Could not insert into damageDealtDictionary");
                             }
                         }
                     }
@@ -2803,9 +2821,9 @@ namespace MHFZ_Overlay
                     {
                         DataLoader.model.mouseInputDictionary.Add(DataLoader.model.TimeInt(), e.Button.ToString());
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // nothing
+                        logger.Warn(ex, "Could not insert into mouseInputDictionary");
                     }
                 }
 
@@ -2850,9 +2868,9 @@ namespace MHFZ_Overlay
                     {
                         DataLoader.model.keystrokesDictionary.Add(DataLoader.model.TimeInt(), e.KeyCode.ToString());
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // nothing
+                        logger.Warn(ex, "Could not insert into keystrokesDictionary");
                     }
                 }
 

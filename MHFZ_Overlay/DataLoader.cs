@@ -1,5 +1,6 @@
 ﻿using Memory;
 using MHFZ_Overlay.addresses;
+using NLog;
 using Squirrel;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,22 @@ namespace MHFZ_Overlay
     /// </summary>
     public class DataLoader
     {
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         // TODO: would like to make this a singleton but its complicated
         // this loads first before MainWindow constructor is called. meaning this runs twice.
         public DataLoader()
         {
-            Debug.WriteLine("DataLoader constructor called. Call stack:");
-            Debug.WriteLine(new StackTrace().ToString());
+            var config = new NLog.Config.LoggingConfiguration();
+
+            // Targets where to log to: File and Console
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
+
+            // Rules for mapping loggers to targets            
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+
+            // Apply config           
+            NLog.LogManager.Configuration = config;
 
             // run Squirrel first, as the app may exit after these run
             SquirrelAwareApp.HandleEvents(
@@ -58,6 +69,7 @@ namespace MHFZ_Overlay
                 // and thus set the data to database then, after doing it to the settings
                 databaseChanged = databaseManager.SetupLocalDatabase(this);
                 CheckIfLoadedInMezeporta();
+                logger.Info($"Overlay DataLoader started");
             }
             else
             {
