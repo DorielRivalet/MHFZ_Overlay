@@ -2762,12 +2762,12 @@ namespace MHFZ_Overlay {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowDiscordRPCRunCategory {
+        public bool ShowDiscordRPCOverlayMode {
             get {
-                return ((bool)(this["ShowDiscordRPCRunCategory"]));
+                return ((bool)(this["ShowDiscordRPCOverlayMode"]));
             }
             set {
-                this["ShowDiscordRPCRunCategory"] = value;
+                this["ShowDiscordRPCOverlayMode"] = value;
             }
         }
         

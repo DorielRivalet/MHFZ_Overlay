@@ -686,7 +686,7 @@
     <Setting Name="SessionTimeY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">180</Value>
     </Setting>
-    <Setting Name="ShowDiscordRPCRunCategory" Type="System.Boolean" Scope="User">
+    <Setting Name="ShowDiscordRPCOverlayMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="QuestAttemptsShown" Type="System.Boolean" Scope="User">

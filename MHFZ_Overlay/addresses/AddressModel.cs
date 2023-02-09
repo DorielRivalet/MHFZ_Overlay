@@ -979,6 +979,15 @@ namespace MHFZ_Overlay.addresses
 
         public bool inQuest = false;
 
+        public string GetOverlayModeForRPC()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.ShowDiscordRPCOverlayMode)
+                return GetOverlayMode();
+            else
+                return "";
+        }
+
         /// <summary>
         /// Gets the overlay mode.
         /// </summary>
@@ -999,7 +1008,36 @@ namespace MHFZ_Overlay.addresses
                 return "(Main Menu) ";
             else if (QuestID() == 0 && AreaID() == 200 && BlademasterWeaponID() == 0 && GunnerWeaponID() == 0)
                 return "(World Select) ";
-            else if (!((QuestID() != 0 && TimeDefInt() > TimeInt() && int.Parse(ATK) > 0) || (IsRoad() || IsDure())) || s.EnableDamageNumbers || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown || s.DamagePerSecondShown || s.TotalHitsTakenBlockedShown || s.PlayerAPMGraphShown || s.PlayerAttackGraphShown || s.PlayerDPSGraphShown || s.PlayerHitsPerSecondGraphShown || s.EnableQuestPaceColor || s.Monster1HealthBarShown || s.Monster2HealthBarShown || s.Monster3HealthBarShown || s.Monster4HealthBarShown || s.EnableMap) //TODO monster 1 overview? and update README
+            else if (
+                !(
+                    (QuestID() != 0 && TimeDefInt() > TimeInt() && int.Parse(ATK) > 0) 
+                    || (IsRoad() || IsDure())
+                ) 
+                || s.EnableDamageNumbers 
+                || s.EnableSharpness 
+                || s.PartThresholdShown 
+                || s.HitCountShown 
+                || s.PlayerAtkShown 
+                || s.MonsterAtkMultShown 
+                || s.MonsterDefrateShown 
+                || s.MonsterSizeShown 
+                || s.MonsterPoisonShown 
+                || s.MonsterParaShown 
+                || s.MonsterSleepShown 
+                || s.MonsterBlastShown 
+                || s.MonsterStunShown 
+                || s.DamagePerSecondShown 
+                || s.TotalHitsTakenBlockedShown 
+                || s.PlayerAPMGraphShown 
+                || s.PlayerAttackGraphShown 
+                || s.PlayerDPSGraphShown 
+                || s.PlayerHitsPerSecondGraphShown 
+                || s.EnableQuestPaceColor 
+                || s.Monster1HealthBarShown 
+                || s.Monster2HealthBarShown 
+                || s.Monster3HealthBarShown 
+                || s.Monster4HealthBarShown 
+                || s.EnableMap) //TODO monster 1 overview? and update README
                 return "";
             else if (s.TimerInfoShown && s.EnableKeyLogging && s.EnableQuestLogging && PartySize() == 1 && s.OverlayModeWatermarkShown) //TODO: update README
             {
