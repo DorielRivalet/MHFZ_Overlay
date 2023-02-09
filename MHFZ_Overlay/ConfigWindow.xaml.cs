@@ -2573,10 +2573,102 @@ namespace MHFZ_Overlay
             }
         }
 
-        //private void ImportUserSettings_Click(object sender, RoutedEventArgs e)
-        //{
+        private void settingsPresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-        //}
+            ComboBox comboBox = (ComboBox)sender;
+
+            var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+
+            if (selectedItem == null)
+                return;
+
+            string selectedOption = selectedItem.Content.ToString();
+
+            if (selectedOption == null || selectedOption == "")
+                return;
+
+            if (s != null)
+            {
+                switch (selectedOption)
+                {
+                    default:
+                        logger.Warn("Could not find preset name for settings");
+                        return;
+                    case "None":
+                        return;
+                    case "Speedrun":
+                        s.EnableDamageNumbers = false;
+                        s.EnableSharpness = false;
+                        s.PartThresholdShown = false;
+                        s.HitCountShown = false;
+                        s.PlayerAtkShown = false;
+                        s.MonsterAtkMultShown = false;
+                        s.MonsterDefrateShown = false;
+                        s.MonsterSizeShown = false;
+                        s.MonsterPoisonShown = false;
+                        s.MonsterParaShown = false;
+                        s.MonsterSleepShown = false;
+                        s.MonsterBlastShown = false;
+                        s.MonsterStunShown = false;
+                        s.DamagePerSecondShown = false;
+                        s.TotalHitsTakenBlockedShown = false;
+                        s.PlayerAPMGraphShown = false;
+                        s.PlayerAttackGraphShown = false;
+                        s.PlayerDPSGraphShown = false;
+                        s.PlayerHitsPerSecondGraphShown = false;
+                        s.EnableQuestPaceColor = false;
+                        s.Monster1HealthBarShown = false;
+                        s.Monster2HealthBarShown = false;
+                        s.Monster3HealthBarShown = false;
+                        s.Monster4HealthBarShown = false;
+                        s.EnableMap = false;
+
+                        s.TimerInfoShown = true;
+                        s.EnableKeyLogging = true;
+                        s.EnableQuestLogging = true;
+                        s.OverlayModeWatermarkShown = true;
+                        break;
+
+                    case "Zen":
+                        s.EnableDamageNumbers = false;
+                        s.EnableSharpness = false;
+                        s.PartThresholdShown = false;
+                        s.HitCountShown = false;
+                        s.PlayerAtkShown = false;
+                        s.MonsterAtkMultShown = false;
+                        s.MonsterDefrateShown = false;
+                        s.MonsterSizeShown = false;
+                        s.MonsterPoisonShown = false;
+                        s.MonsterParaShown = false;
+                        s.MonsterSleepShown = false;
+                        s.MonsterBlastShown = false;
+                        s.MonsterStunShown = false;
+                        s.DamagePerSecondShown = false;
+                        s.TotalHitsTakenBlockedShown = false;
+                        s.PlayerAPMGraphShown = false;
+                        s.PlayerAttackGraphShown = false;
+                        s.PlayerDPSGraphShown = false;
+                        s.PlayerHitsPerSecondGraphShown = false;
+                        s.EnableQuestPaceColor = false;
+                        s.Monster1HealthBarShown = false;
+                        s.Monster2HealthBarShown = false;
+                        s.Monster3HealthBarShown = false;
+                        s.Monster4HealthBarShown = false;
+                        s.TimerInfoShown = false;
+                        s.EnableKeyLogging = false;
+                        s.EnableMap = false;
+
+                        // TODO: can i even log zen quests?
+                        //s.EnableQuestLogging = false;
+                        s.OverlayModeWatermarkShown = false;
+
+                        s.Monster1IconShown = true;
+                        break;
+                }
+            }
+        }
     }
     /* LoadConfig on startup
      * Load Config on window open to have extra copy

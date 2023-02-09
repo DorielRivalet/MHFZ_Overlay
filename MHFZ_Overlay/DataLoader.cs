@@ -136,14 +136,22 @@ namespace MHFZ_Overlay
                 catch (Exception ex)
                 {
                     // TODO: does this warrant the program closing?
-                    System.Windows.MessageBox.Show($"Warning: could not create code cave \n\n{ex}", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                    // ReShade or similar programs might trigger this warning. Does these affect overlay functionality?
+                    // Imulion's version does not have anything in the catch block.
+                    //System.Windows.MessageBox.Show($"Warning: could not create code cave. ReShade or similar programs might trigger this warning. You can ignore this warning. \n\n{ex}", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
                     logger.Warn(ex, "Could not create code cave");
                 }
 
                 if (!isHighGradeEdition)
+                {
+                    logger.Info("Running game in Non-HGE");
                     model = new AddressModelNotHGE(m);
+                }
                 else
+                {
+                    logger.Info("Running game in HGE");
                     model = new AddressModelHGE(m);
+                }
 
                 // first we check if there are duplicate mhf.exe
                 CheckForExternalProcesses();
@@ -228,7 +236,7 @@ namespace MHFZ_Overlay
                 {
                     // processName is a substring of one of the banned process strings
                     MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
-                    logger.Fatal("Found banned process");
+                    logger.Fatal("Found banned process {0}", process.ProcessName);
 
                     // Close the overlay program
                     Environment.Exit(0);

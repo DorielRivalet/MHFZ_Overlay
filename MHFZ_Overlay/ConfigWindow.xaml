@@ -625,120 +625,121 @@
 
                         </Grid.RowDefinitions>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Select a settings preset configuration" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Configuration Preset"/>
-                        <ComboBox Grid.Column="1" Grid.Row="1" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=SettingsPreset}">
+                        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Backup settings" ToolTip="Export user settings to JSON file and make a backup for settings when updating overlay" Click="ExportUserSettings_Click"/>
+
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select a settings preset configuration" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Configuration Preset"/>
+                        <ComboBox x:Name="settingsPresetComboBox" Grid.Column="1" Grid.Row="1" SelectedIndex="0" SelectionChanged="settingsPresetComboBox_SelectionChanged">
                             <ComboBoxItem>None</ComboBoxItem>
                             <ComboBoxItem>Speedrun</ComboBoxItem>
                             <ComboBoxItem>Zen</ComboBoxItem>
                         </ComboBox>
 
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Max Resolution Width"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="0" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Max Resolution Height"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Max Resolution Width"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Max Resolution Height"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="2" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
-                        <xctk:ColorPicker Grid.Column="1" Grid.Row="2" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"></xctk:ColorPicker>
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="3" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
-                        <xctk:ColorPicker Grid.Column="1" Grid.Row="3" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="4" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}"/>
-                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="4" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="5" Text="Always Show Player Info" Style="{StaticResource ConfigTextBox}"/>
-                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowPlayerInfo}"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="6" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
-                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="7" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
-                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="7" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="8" Text="Damage Numbers Color" Style="{StaticResource ConfigTextBox}"/>
-                        <xctk:ColorPicker Grid.Column="1" Grid.Row="8" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=DamageNumbersColor}"></xctk:ColorPicker>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Damage Numbers Area X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Damage Numbers Area Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Damage Numbers Area Width"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Damage Numbers Area Height"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="4" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="4" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"></xctk:ColorPicker>
+                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="5" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="5" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
+                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="6" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}"/>
+                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>
+                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="7" Text="Always Show Player Info" Style="{StaticResource ConfigTextBox}"/>
+                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="7" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowPlayerInfo}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="8" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
+                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="8" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="9" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
+                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="9" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
+                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="10" Text="Damage Numbers Color" Style="{StaticResource ConfigTextBox}"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="10" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=DamageNumbersColor}"></xctk:ColorPicker>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Damage Numbers Area X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Damage Numbers Area Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Damage Numbers Area Width"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Damage Numbers Area Height"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers size effect" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Damage Numbers Size Effect"/>
-                        <ToggleButton Grid.Row="13" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersSize}"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers flash effect" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Damage Numbers Flash Effect"/>
-                        <ToggleButton Grid.Row="14" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersFlash}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers size effect" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Damage Numbers Size Effect"/>
+                        <ToggleButton Grid.Row="15" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersSize}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers flash effect" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Damage Numbers Flash Effect"/>
+                        <ToggleButton Grid.Row="16" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersFlash}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster 1 Icon"/>
-                        <ToggleButton Grid.Row="15" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=Monster1IconShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Monster 1 Icon X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster 1 Icon Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan, Pioneer, Raviente, Cities, Guild Hall, Tavern, Interception or Daily quests to display the correct information. You may have to do a normal quest first in order to load the correct values." Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Caravan/Pioneer/Raviente/Interception/Cities/Tavern/Guild Hall/Daily Quest Override"/>
-                        <ComboBox Grid.Column="1" Grid.Row="18" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}">
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster 1 Icon"/>
+                        <ToggleButton Grid.Row="17" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=Monster1IconShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Monster 1 Icon X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="18" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Monster 1 Icon Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="19" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan, Pioneer, Raviente, Cities, Guild Hall, Tavern, Interception or Daily quests to display the correct information. You may have to do a normal quest first in order to load the correct values." Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Caravan/Pioneer/Raviente/Interception/Cities/Tavern/Guild Hall/Daily Quest Override"/>
+                        <ComboBox Grid.Column="1" Grid.Row="20" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}">
                             <ComboBoxItem>Automatic</ComboBoxItem>
                             <ComboBoxItem>Enabled</ComboBoxItem>
                             <ComboBoxItem>Disabled</ComboBoxItem>
                         </ComboBox>
                         
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Map" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Location Map"/>
-                        <ToggleButton Grid.Row="19" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMap}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Map X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="20" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Map Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="21" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Map Area Width"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="22" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaWidth}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Map Area Height"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="23" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaHeight}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Map" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Location Map"/>
+                        <ToggleButton Grid.Row="21" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMap}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Map X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="22" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Map Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="23" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Map Area Width"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="24" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaWidth}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Map Area Height"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="25" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaHeight}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Enable Update Notifier" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Show Update Notifier at Startup"/>
-                        <ToggleButton Grid.Row="24" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableUpdateNotifier}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Enable Update Notifier" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Show Update Notifier at Startup"/>
+                        <ToggleButton Grid.Row="26" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableUpdateNotifier}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Select ferias version (re-open configuration window)" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Ferias Version"/>
-                        <ComboBox Grid.Column="1" Grid.Row="25" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=FeriasVersionLink}">
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select ferias version (re-open configuration window)" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Ferias Version"/>
+                        <ComboBox Grid.Column="1" Grid.Row="27" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=FeriasVersionLink}">
                             <ComboBoxItem>https://dorielrivalet.github.io/mhfz-ferias-english-project/</ComboBoxItem>
                             <ComboBoxItem>https://xl3lackout.github.io/MHFZ-Ferias-English-Project/</ComboBoxItem>
                         </ComboBox>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Close overlay when closed game" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Close Overlay when Closed Game"/>
-                        <ToggleButton Grid.Row="26" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAutoClose}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Close overlay when closed game" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0"  Text="Close Overlay when Closed Game"/>
+                        <ToggleButton Grid.Row="28" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAutoClose}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show progress bar icons" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Progress Bar Icons"/>
-                        <ToggleButton Grid.Row="27" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ProgressBarIconsShown}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show progress bar icons" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0"  Text="Progress Bar Icons"/>
+                        <ToggleButton Grid.Row="29" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ProgressBarIconsShown}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show overlay stats icons (you may have to reposition the cut-off stat text description)" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0"  Text="Overlay Stats Icons"/>
-                        <ToggleButton Grid.Row="28" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayStatIconShown}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show overlay stats icons (you may have to reposition the cut-off stat text description)" Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0"  Text="Overlay Stats Icons"/>
+                        <ToggleButton Grid.Row="30" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayStatIconShown}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show KBM Layout" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0"  Text="Keyboard and Mouse Layout"/>
-                        <ToggleButton Grid.Row="29" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=KBMLayoutShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0"  Text="Keyboard and Mouse Layout X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="30" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="31" Grid.Column="0"  Text="Keyboard and Mouse Layout Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="31" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show KBM Layout" Style="{StaticResource ConfigTextBox}" Grid.Row="31" Grid.Column="0"  Text="Keyboard and Mouse Layout"/>
+                        <ToggleButton Grid.Row="31" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=KBMLayoutShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0"  Text="Keyboard and Mouse Layout X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="32" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0"  Text="Keyboard and Mouse Layout Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="33" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutY}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Gamepad Layout" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0"  Text="(Not Implemented) Controller/Gamepad Layout"/>
-                        <ToggleButton Grid.Row="32" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ControllerLayoutShown}" Checked="ControllerLayoutButton_Click"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0"  Text="Controller/Gamepad Layout X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="33" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ControllerLayoutX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0"  Text="Controller/Gamepad Layout Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="34" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ControllerLayoutY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Gamepad Layout" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0"  Text="(Not Implemented) Controller/Gamepad Layout"/>
+                        <ToggleButton Grid.Row="34" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ControllerLayoutShown}" Checked="ControllerLayoutButton_Click"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0"  Text="Controller/Gamepad Layout X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="35" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ControllerLayoutX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0"  Text="Controller/Gamepad Layout Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="36" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ControllerLayoutY}"  PreviewTextInput="ValidateNumber"/>
 
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and controller inputs)" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0"  Text="Actions per Minute"/>
-                        <ToggleButton Grid.Row="35" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0"  Text="Actions per Minute X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="36" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="37" Grid.Column="0"  Text="Actions per Minute Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="37" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="38" Grid.Column="0"  Text="Average Actions per Minute Color"/>
-                        <ToggleButton Grid.Row="38" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and controller inputs)" Style="{StaticResource ConfigTextBox}" Grid.Row="37" Grid.Column="0"  Text="Actions per Minute"/>
+                        <ToggleButton Grid.Row="37" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="38" Grid.Column="0"  Text="Actions per Minute X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="38" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="39" Grid.Column="0"  Text="Actions per Minute Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="39" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="40" Grid.Column="0"  Text="Average Actions per Minute Color"/>
+                        <ToggleButton Grid.Row="40" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Current Session Time" Style="{StaticResource ConfigTextBox}" Grid.Row="39" Grid.Column="0"  Text="Current Session Time"/>
-                        <ToggleButton Grid.Row="39" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=SessionTimeShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="40" Grid.Column="0"  Text="Current Session Time X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="40" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SessionTimeX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="41" Grid.Column="0"  Text="Current Session Time Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="41" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SessionTimeY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Current Session Time" Style="{StaticResource ConfigTextBox}" Grid.Row="41" Grid.Column="0"  Text="Current Session Time"/>
+                        <ToggleButton Grid.Row="41" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=SessionTimeShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="42" Grid.Column="0"  Text="Current Session Time X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="42" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SessionTimeX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="43" Grid.Column="0"  Text="Current Session Time Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="43" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SessionTimeY}"  PreviewTextInput="ValidateNumber"/>
 
-                        <Button Grid.Row="42" Grid.Column="0" Grid.ColumnSpan="2" Content="Backup settings" ToolTip="Export user settings to JSON file and make a backup for settings when updating overlay" Click="ExportUserSettings_Click"/>
                         <!--<Button Grid.Row="43" Grid.Column="0" Grid.ColumnSpan="2" Content="Import settings" ToolTip="Import user settings from file" Click="ImportUserSettings_Click"/>-->
                     </Grid>
                 </ScrollViewer>

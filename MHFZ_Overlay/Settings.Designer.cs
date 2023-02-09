@@ -2761,13 +2761,25 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("None")]
-        public string SettingsPreset {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowDiscordRPCRunCategory {
             get {
-                return ((string)(this["SettingsPreset"]));
+                return ((bool)(this["ShowDiscordRPCRunCategory"]));
             }
             set {
-                this["SettingsPreset"] = value;
+                this["ShowDiscordRPCRunCategory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool QuestAttemptsShown {
+            get {
+                return ((bool)(this["QuestAttemptsShown"]));
+            }
+            set {
+                this["QuestAttemptsShown"] = value;
             }
         }
     }
