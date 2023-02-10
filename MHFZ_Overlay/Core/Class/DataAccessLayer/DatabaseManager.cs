@@ -516,7 +516,8 @@ namespace MHFZ_Overlay
                         mhfinfHash, 
                         mhfsqdHash,
                         mhfodllHash,
-                        mhfohddllHash
+                        mhfohddllHash,
+                        mhfexeHash
                         ) VALUES (
                         @GameFolderHash,
                         @CreatedAt,
@@ -528,7 +529,9 @@ namespace MHFZ_Overlay
                         @mhfinfHash,
                         @mhfsqdHash,
                         @mhfodllHash,
-                        @mhfohddllHash)";
+                        @mhfohddllHash,
+                        @mhfexeHash)";
+
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             string gameFolderPath = s.GameFolderPath;
@@ -538,11 +541,14 @@ namespace MHFZ_Overlay
                             string mhfsqdHash = CalculateFileHash(gameFolderPath, @"\dat\mhfsqd.bin");
                             string mhfodllHash = CalculateFileHash(gameFolderPath, @"\mhfo.dll");
                             string mhfohddllHash = CalculateFileHash(gameFolderPath, @"\mhfo-hd.dll");
+                            string mhfexeHash = CalculateFileHash(gameFolderPath, @"\mhf.exe");
+
                             string datFolderData = string.Format(
-                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}",
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}",
                                 createdAt, createdBy, runID,
                                 gameFolderPath, mhfdatHash, mhfemdHash,
-                                mhfinfHash, mhfsqdHash, mhfodllHash, mhfohddllHash);
+                                mhfinfHash, mhfsqdHash, mhfodllHash, 
+                                mhfohddllHash, mhfexeHash);
                             string datFolderHash = CalculateStringHash(datFolderData);
 
                             cmd.Parameters.AddWithValue("@GameFolderHash", datFolderHash);
@@ -556,6 +562,8 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@mhfsqdHash", mhfsqdHash);
                             cmd.Parameters.AddWithValue("@mhfodllHash", mhfodllHash);
                             cmd.Parameters.AddWithValue("@mhfohddllHash", mhfohddllHash);
+                            cmd.Parameters.AddWithValue("@mhfexeHash", mhfexeHash);
+
                             cmd.ExecuteNonQuery();
                         }
 
@@ -2870,6 +2878,7 @@ namespace MHFZ_Overlay
                     mhfsqdHash TEXT NOT NULL,
                     mhfodllHash TEXT NOT NULL,
                     mhfohddllHash TEXT NOT NULL,
+                    mhfexeHash TEXT NOT NULL,
                     FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))

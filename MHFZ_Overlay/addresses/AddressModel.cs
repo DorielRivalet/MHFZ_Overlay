@@ -9074,7 +9074,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 s.GameFolderPath + @"\dat\mhfemd.bin",
                 s.GameFolderPath + @"\dat\mhfsqd.bin",
                 s.GameFolderPath + @"\mhfo.dll",
-                s.GameFolderPath + @"\mhfo-hd.dll"
+                s.GameFolderPath + @"\mhfo-hd.dll",
+                s.GameFolderPath + @"\mhf.exe"
                 };
 
             //check if the folder is named dat and contains dat, emd, and sqd.
