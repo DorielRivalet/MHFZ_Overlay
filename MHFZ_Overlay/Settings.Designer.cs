@@ -2782,5 +2782,29 @@ namespace MHFZ_Overlay {
                 this["QuestAttemptsShown"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double QuestAttemptsX {
+            get {
+                return ((double)(this["QuestAttemptsX"]));
+            }
+            set {
+                this["QuestAttemptsX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        public double QuestAttemptsY {
+            get {
+                return ((double)(this["QuestAttemptsY"]));
+            }
+            set {
+                this["QuestAttemptsY"] = value;
+            }
+        }
     }
 }

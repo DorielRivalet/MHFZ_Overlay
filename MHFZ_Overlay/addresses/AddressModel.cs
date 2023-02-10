@@ -62,75 +62,44 @@ namespace MHFZ_Overlay.addresses
         #region init bool
 
         public bool ShowMonsterInfos { get; set; } = true;
-
         public bool ShowMonsterAtkMult { get; set; } = true;
-
         public bool ShowMonsterDefrate { get; set; } = true;
-
         public bool ShowMonsterSize { get; set; } = true;
         public bool ShowMonsterPoison { get; set; } = true;
         public bool ShowMonsterSleep { get; set; } = true;
         public bool ShowMonsterPara { get; set; } = true;
         public bool ShowMonsterBlast { get; set; } = true;
         public bool ShowMonsterStun { get; set; } = true;
-
-
         public bool ShowPlayerInfos { get; set; } = true;
         public bool ShowPersonalBestInfo { get; set; } = true;
-
         public bool ShowTimerInfo { get; set; } = true;
         public bool ShowHitCountInfo { get; set; } = true;
         public bool ShowPlayerAtkInfo { get; set; } = true;
         public bool ShowPlayerHitsTakenBlockedInfo { get; set; } = true;
-
         public bool ShowQuestID { get; set; } = true;
-
-
+        public bool ShowQuestAttemptsInfo { get; set; } = true;
         public bool ShowMonsterHPBars { get; set; } = true;
-
         public bool ShowMonster1HPBar { get; set; } = true;
         public bool ShowMonster2HPBar { get; set; } = true;
         public bool ShowMonster3HPBar { get; set; } = true;
         public bool ShowMonster4HPBar { get; set; } = true;
-
         public bool ShowSharpness { get; set; } = true;
-
         public bool ShowSessionTimeInfo { get; set; } = true;
-
         public bool ShowMonsterPartHP { get; set; } = true;
-
         public bool ShowKBMLayout { get; set; } = true;
         public bool ShowAPM { get; set; } = true;
-
         public bool ShowControllerLayout { get; set; } = true;
-
         public bool ShowMonster1Icon { get; set; } = true;
-
         public bool ShowFrameCounter { get; set; } = true;
-
         public bool ShowMap { get; set; } = true;
-
         public bool ShowPlayerAttackGraph { get; set; } = true;
-
         public bool ShowPlayerDPSGraph { get; set; } = true;
-
-
         public bool ShowPlayerAPMGraph { get; set; } = true;
-
-
         public bool ShowPlayerHitsPerSecondGraph { get; set; } = true;
-
-
-
-
         public bool ShowDamagePerSecond { get; set; } = true;
-
         public bool ShowProgressBarIcon { get; set; } = true;
-
         public bool ShowProgressBarDescription { get; set; } = true;
-
         public bool ShowOverlayModeWatermark { get; set; } = true;
-
         public bool ShowSaveIcon { get; set; } = true;
 
 
@@ -1010,7 +979,9 @@ namespace MHFZ_Overlay.addresses
                 return "(World Select) ";
             else if (
                 !(
-                    (QuestID() != 0 && TimeDefInt() > TimeInt() && int.Parse(ATK) > 0) 
+                    (QuestID() != 0 
+                    && TimeDefInt() > TimeInt() 
+                    && int.Parse(ATK) > 0) 
                     || (IsRoad() || IsDure())
                 ) 
                 || s.EnableDamageNumbers 

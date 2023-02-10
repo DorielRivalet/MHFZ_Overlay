@@ -3,6 +3,7 @@ using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Newtonsoft.Json;
 using NLog;
+using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -2033,6 +2034,7 @@ namespace MHFZ_Overlay
             }
         }
 
+        // TODO optimization
         private void CreateDatabaseIndexes(SQLiteConnection conn)
         {
             List<string> createIndexSqlStatements = new List<string>
@@ -3557,6 +3559,22 @@ namespace MHFZ_Overlay
 
                     InsertDictionaryDataIntoTable(Dictionary.RoadDureSkills.RoadDureSkillIDs, "AllRoadDureSkills", "RoadDureSkillID", "RoadDureSkillName", conn);
 
+                    sql = @"CREATE TABLE IF NOT EXISTS QuestAttempts(
+                    QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    QuestID INTEGER NOT NULL,
+                    WeaponTypeID INTEGER NOT NULL,
+                    ActualOverlayMode TEXT NOT NULL,
+                    Attempts INTEGER NOT NULL,
+                    FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
+                    )
+                    ";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
                     #region gacha
                     // a mh game but like a MUD. hunt in-game to get many kinds of points for this game. hunt and tame monsters. challenge other CPU players/monsters.
 
@@ -4124,6 +4142,95 @@ namespace MHFZ_Overlay
             }
 
             return personalBest;
+        }
+
+        public void UpsertQuestAttempts(long questID, int weaponTypeID, string category)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // I'm not taking into account party size, should be fine
+                        using (SQLiteCommand command = new SQLiteCommand(conn))
+                        {
+                            command.CommandText =
+                                @"UPDATE 
+                                    QuestAttempts 
+                                SET 
+                                    Attempts = Attempts + 1 
+                                WHERE 
+                                    QuestID = @QuestID 
+                                    AND WeaponTypeID = @WeaponTypeID 
+                                    AND ActualOverlayMode = @ActualOverlayMode;
+
+                                INSERT INTO 
+                                    QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
+                                SELECT 
+                                    @QuestID, @WeaponTypeID, @ActualOverlayMode, 1
+                                WHERE 
+                                    (SELECT Changes() = 0);";
+
+                            command.Parameters.AddWithValue("@QuestID", questID);
+                            command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+                            command.Parameters.AddWithValue("@ActualOverlayMode", category);
+
+                            command.ExecuteNonQuery();
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+        }
+
+        public long GetQuestAttempts(long questID, int weaponTypeID, string category)
+        {
+            long attempts = 0;
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // I'm not taking into account party size, should be fine
+                        using (SQLiteCommand cmd = new SQLiteCommand(
+                            @"SELECT
+                                Attempts
+                            FROM 
+                                QuestAttempts
+                            WHERE 
+                                QuestID = @questID
+                                AND WeaponTypeID = @weaponTypeID
+                                AND ActualOverlayMode = @category", conn))
+                            {
+                            cmd.Parameters.AddWithValue("@questID", questID);
+                            cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                            cmd.Parameters.AddWithValue("@category", category);
+
+                            object result = cmd.ExecuteScalar();
+                            if (result != null)
+                            {
+                                attempts = Convert.ToInt64(result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+
+            return attempts;
         }
 
         public AmmoPouch GetAmmoPouch(long runID)

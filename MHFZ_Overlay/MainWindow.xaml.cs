@@ -644,7 +644,7 @@ namespace MHFZ_Overlay
             }
 
             System.Windows.MessageBox.Show("Fatal error, closing overlay. See the crash log in the overlay folder for more information.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            logger.Fatal("Program crashed");
+            logger.Fatal(ex, "Program crashed");
 
             //https://stackoverflow.com/a/9050477/18859245
             Cleanup();
@@ -1082,6 +1082,7 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowQuestID = v && s.QuestIDShown;
 
             DataLoader.model.ShowPersonalBestInfo = v && s.PersonalBestShown;
+            DataLoader.model.ShowQuestAttemptsInfo = v && s.QuestAttemptsShown;
         }
 
         #endregion
@@ -1946,7 +1947,10 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
+            if (string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition)).Length >= 128)
+                presenceTemplate.Details = string.Format("{0}{1}{2}{3}", GetQuestState(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
+            else
+                presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
 
             if (IsInHubAreaID() && DataLoader.model.QuestID() == 0)
                 DataLoader.model.PreviousHubAreaID = DataLoader.model.AreaID();
@@ -2361,6 +2365,10 @@ namespace MHFZ_Overlay
                     s.PersonalBestX = (double)(pos.X - XOffset);
                     s.PersonalBestY = (double)(pos.Y - YOffset);
                     break;
+                case "QuestAttemptsInfo":
+                    s.QuestAttemptsX = (double)(pos.X - XOffset);
+                    s.QuestAttemptsY = (double)(pos.Y - YOffset);
+                    break;
                 case "HitCountInfo":
                     s.HitCountX = (double)(pos.X - XOffset);
                     s.HitCountY = (double)(pos.Y - YOffset);
@@ -2657,6 +2665,7 @@ namespace MHFZ_Overlay
         #region database
 
         private bool calculatedPersonalBest = false;
+        private bool calculatedQuestAttempts = false;
 
         //TODO
         private void CheckQuestStateForDatabaseLogging()
@@ -2679,6 +2688,13 @@ namespace MHFZ_Overlay
                     calculatedPersonalBest = true;
                     personalBestTextBlock.Text = databaseManager.GetPersonalBest(DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text, DataLoader.model.QuestTimeMode, DataLoader);
                 }
+
+                if (!calculatedQuestAttempts && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0)
+                {
+                    calculatedQuestAttempts = true;
+                    databaseManager.UpsertQuestAttempts(DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text);
+                    questAttemptsTextBlock.Text = databaseManager.GetQuestAttempts(DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text).ToString();
+                }
             }
 
             if ((DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() == 0))
@@ -2689,6 +2705,7 @@ namespace MHFZ_Overlay
                 DataLoader.model.resetQuestInfoVariables();
                 personalBestTextBlock.Text = "--:--.--";
                 calculatedPersonalBest = false;
+                calculatedQuestAttempts = false;
                 return;
             }
             else if (!DataLoader.model.loadedItemsAtQuestStart && DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() != 0)

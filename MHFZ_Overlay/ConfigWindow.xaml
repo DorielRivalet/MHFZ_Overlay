@@ -1107,6 +1107,10 @@
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+
                                         </Grid.RowDefinitions>
                                         <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=GameFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Grid.ColumnSpan="2" Text="Hover to view game folder path (automatically set by checking the folder location of the current mhf.exe at overlay startup)"/>
                                         <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=DatabaseFilePath}" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Hover to view database file path"/>
@@ -1141,8 +1145,15 @@
                                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestX}"  PreviewTextInput="ValidateNumber"/>
                                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Personal Best Y Coordinate"/>
                                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestY}"  PreviewTextInput="ValidateNumber"/>
+                                        
+                                        <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Attempts divided by overlay mode and weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Quest Attempts" />
+                                        <ToggleButton Grid.Row="12" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=QuestAttemptsShown}"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Quest Attempts X Coordinate"/>
+                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestAttemptsX}"  PreviewTextInput="ValidateNumber"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Quest Attempts Y Coordinate"/>
+                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestAttemptsY}"  PreviewTextInput="ValidateNumber"/>
 
-                                        <Grid Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2">
+                                        <Grid Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2">
                                             <StackPanel Orientation="Horizontal">
                                                 <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/save_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="32" Height="32"/>
                                                 <TextBlock Text="If you see this save icon in the top left corner, do not close the game or the overlay. The database is saving your quest information while it is being shown." Margin="4,0,0,0" VerticalAlignment="Center" />

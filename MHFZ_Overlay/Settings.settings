@@ -692,5 +692,11 @@
     <Setting Name="QuestAttemptsShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="QuestAttemptsX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="QuestAttemptsY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">90</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
