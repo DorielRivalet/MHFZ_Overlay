@@ -1748,8 +1748,6 @@ namespace MHFZ_Overlay
                 return false;
         }
 
-        private int previousRoadFloor = 0;
-
         private bool StartedRoadElapsedTime = false;
 
         private bool inDuremudiraArena = false;
@@ -2181,7 +2179,6 @@ namespace MHFZ_Overlay
                     };
                 }
 
-
                 if (DataLoader.model.IsRoad())
                 {
                     switch (GetRoadTimerResetMode())
@@ -2194,12 +2191,12 @@ namespace MHFZ_Overlay
 
                             else if (DataLoader.model.AreaID() == 459)//Hunter's Road Base Camp
                             {
-                                if (DataLoader.model.RoadFloor() + 1 > previousRoadFloor)
+                                if (DataLoader.model.RoadFloor() + 1 > DataLoader.model.previousRoadFloor)
                                 {
                                     // reset values
                                     DataLoader.model.inQuest = false;
                                     currentMonster1MaxHP = 0;
-                                    previousRoadFloor = DataLoader.model.RoadFloor() + 1;
+                                    //DataLoader.model.previousRoadFloor = DataLoader.model.RoadFloor() + 1;
                                     presenceTemplate.Timestamps = GetDiscordTimerMode() switch
                                     {
                                         "Time Left" => Timestamps.FromTimeSpan((double)DataLoader.model.TimeInt() / 30.0),
@@ -2221,12 +2218,12 @@ namespace MHFZ_Overlay
 
                             else if (DataLoader.model.AreaID() == 459)//Hunter's Road Base Camp
                             {
-                                if (DataLoader.model.RoadFloor() + 1 > previousRoadFloor)
+                                if (DataLoader.model.RoadFloor() + 1 > DataLoader.model.previousRoadFloor)
                                 {
                                     // reset values
                                     DataLoader.model.inQuest = false;
                                     currentMonster1MaxHP = 0;
-                                    previousRoadFloor = DataLoader.model.RoadFloor() + 1;
+                                    //DataLoader.model.previousRoadFloor = DataLoader.model.RoadFloor() + 1;
 
                                     if (!(StartedRoadElapsedTime))
                                     {
@@ -2248,12 +2245,12 @@ namespace MHFZ_Overlay
 
                             else if (DataLoader.model.AreaID() == 459)//Hunter's Road Base Camp
                             {
-                                if (DataLoader.model.RoadFloor() + 1 > previousRoadFloor)
+                                if (DataLoader.model.RoadFloor() + 1 > DataLoader.model.previousRoadFloor)
                                 {
                                     // reset values
                                     DataLoader.model.inQuest = false;
                                     currentMonster1MaxHP = 0;
-                                    previousRoadFloor = DataLoader.model.RoadFloor() + 1;
+                                    //DataLoader.model.previousRoadFloor = DataLoader.model.RoadFloor() + 1;
 
                                     if (!(StartedRoadElapsedTime))
                                     {
@@ -2319,7 +2316,7 @@ namespace MHFZ_Overlay
                 //reset values
                 DataLoader.model.inQuest = false;
                 currentMonster1MaxHP = 0;
-                previousRoadFloor = 0;
+                //DataLoader.model.previousRoadFloor = 0;
                 StartedRoadElapsedTime = false;
                 inDuremudiraArena = false;
                 inDuremudiraDoorway = false;

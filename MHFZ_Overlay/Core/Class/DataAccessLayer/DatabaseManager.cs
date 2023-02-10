@@ -543,15 +543,15 @@ namespace MHFZ_Overlay
                             string mhfohddllHash = CalculateFileHash(gameFolderPath, @"\mhfo-hd.dll");
                             string mhfexeHash = CalculateFileHash(gameFolderPath, @"\mhf.exe");
 
-                            string datFolderData = string.Format(
+                            string gameFolderData = string.Format(
                                 "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}",
                                 createdAt, createdBy, runID,
                                 gameFolderPath, mhfdatHash, mhfemdHash,
                                 mhfinfHash, mhfsqdHash, mhfodllHash, 
                                 mhfohddllHash, mhfexeHash);
-                            string datFolderHash = CalculateStringHash(datFolderData);
+                            string gameFolderHash = CalculateStringHash(gameFolderData);
 
-                            cmd.Parameters.AddWithValue("@GameFolderHash", datFolderHash);
+                            cmd.Parameters.AddWithValue("@GameFolderHash", gameFolderHash);
                             cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
                             cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                             cmd.Parameters.AddWithValue("@RunID", runID);

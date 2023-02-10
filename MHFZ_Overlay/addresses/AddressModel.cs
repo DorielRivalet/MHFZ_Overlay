@@ -1,4 +1,5 @@
 ﻿using Dictionary;
+using DiscordRPC;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
@@ -9553,8 +9554,59 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        public int previousRoadFloor = 0;
+        public int currentRoadFloor = 0;
+
         public void InsertQuestInfoIntoDictionaries()
         {
+            int timeInt = TimeInt();
+
+            if (IsRoad() && AreaID() == 459)//Hunter's Road Base Camp
+            {
+                if (RoadFloor() + 1 > previousRoadFloor)
+                {
+                    previousRoadFloor = RoadFloor() + 1;
+                    clearQuestInfoDictionaries();
+                    clearGraphCollections();
+                    resetQuestInfoVariables();
+                }
+            }
+            //else if (IsDure())
+            //{
+            //    switch (AreaID())
+            //    {
+            //        case 398://Duremudira Arena
+
+            //            if (!(inDuremudiraArena))
+            //            {
+            //                inDuremudiraArena = true;
+
+            //                if (DataLoader.model.QuestID() == 23649)//Arrogant Dure Slay
+            //                {
+            //                    presenceTemplate.Timestamps = GetDiscordTimerMode() switch
+            //                    {
+            //                        "Time Left" => Timestamps.FromTimeSpan(600),
+            //                        "Time Elapsed" => Timestamps.Now,
+            //                        _ => Timestamps.FromTimeSpan(600),
+            //                    };
+
+            //                }
+            //                else
+            //                {
+            //                    presenceTemplate.Timestamps = GetDiscordTimerMode() switch
+            //                    {
+            //                        "Time Left" => Timestamps.FromTimeSpan(1200),
+            //                        "Time Elapsed" => Timestamps.Now,
+            //                        _ => Timestamps.FromTimeSpan(1200),
+            //                    };
+            //                }
+            //            }
+            //            break;
+            //    }
+            //}
+
+
+
             if (previousAttackBuffInt != WeaponRaw() && !attackBuffDictionary.ContainsKey(TimeInt()))
             {
                 try
@@ -10212,6 +10264,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             previousHitsPerSecond = 0;
             previousActionsPerMinute = 0;
             previousOverlayMode = "N/A";
+            previousRoadFloor = 0;
         }
 
         public void clearQuestInfoDictionaries()
