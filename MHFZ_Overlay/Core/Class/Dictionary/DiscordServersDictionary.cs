@@ -10,7 +10,6 @@ namespace Dictionary
         public static IReadOnlyDictionary<long, string> DiscordServerID { get; } = new Dictionary<long, string>
         {
             {0, "Local"},
-            {927112632400482365, "Dancing Crab"},
             {932246672392740917,"Monster Hunter Frontier: Renewal" },
             {937230168223789066,"Rain Frontier Server" },
             {759022449743495170,"Monster Hunter [Ancient_Warriors]" },

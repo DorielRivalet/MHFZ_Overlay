@@ -98,7 +98,10 @@ namespace MHFZ_Overlay
 
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
-        //set version here
+
+        /// <summary>
+        /// The current program version
+        /// </summary>
         public const string CurrentProgramVersion = "v0.22.0";
 
         [DllImport("user32.dll")]
@@ -2701,6 +2704,7 @@ namespace MHFZ_Overlay
                 DataLoader.model.clearQuestInfoDictionaries();
                 DataLoader.model.clearGraphCollections();
                 DataLoader.model.resetQuestInfoVariables();
+                DataLoader.model.previousRoadFloor = 0;
                 personalBestTextBlock.Text = "--:--.--";
                 calculatedPersonalBest = false;
                 calculatedQuestAttempts = false;

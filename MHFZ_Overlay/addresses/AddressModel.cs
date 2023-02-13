@@ -9555,13 +9555,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public int previousRoadFloor = 0;
-        public int currentRoadFloor = 0;
 
         public void InsertQuestInfoIntoDictionaries()
         {
             int timeInt = TimeInt();
 
-            if (IsRoad() && AreaID() == 459)//Hunter's Road Base Camp
+            if (IsRoad() && AreaID() == 459) // Hunter's Road Base Camp
             {
                 if (RoadFloor() + 1 > previousRoadFloor)
                 {

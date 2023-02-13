@@ -1,6 +1,8 @@
 ﻿using Dictionary;
+using FluentMigrator.Runner;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using NLog;
 using Octokit;
@@ -8,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -114,6 +117,7 @@ namespace MHFZ_Overlay
         #region database
 
         private bool isDatabaseSetup = false;
+        private static string previousVersion;
 
         public bool SetupLocalDatabase(DataLoader dataLoader)
         {
@@ -121,9 +125,11 @@ namespace MHFZ_Overlay
 
             if (!isDatabaseSetup)
             {
-                isDatabaseSetup = true;
+                isDatabaseSetup = true; 
 
                 CheckIfUserSetDatabasePath();
+                // TODO: test and add semantic versioning regex
+                WritePreviousVersionToFile();
 
                 try
                 {
@@ -139,7 +145,7 @@ namespace MHFZ_Overlay
                 }
                 catch (SQLiteException ex)
                 {
-                    MessageBox.Show(String.Format("Invalid database file. Delete both MHFZ_Overlay.sqlite and reference_schema.json if present, and rerun the program.\n\n{0}", ex), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     logger.Error(ex,"Invalid database file");
                     Environment.Exit(0);
                 }
@@ -151,6 +157,7 @@ namespace MHFZ_Overlay
                     CreateDatabaseTables(conn, dataLoader);
                     CreateDatabaseIndexes(conn);
                     CreateDatabaseTriggers(conn);
+                    UpdateDatabaseSchema(conn);
                 }
 
                 using (var conn = new SQLiteConnection(dataSource))
@@ -6845,8 +6852,6 @@ namespace MHFZ_Overlay
             return fieldCounts;
         }
 
-
-
         public Dictionary<int, int> GetTotalTimeSpentInQuests()
         {
             Dictionary<int, int> questTimeSpent = new Dictionary<int, int>();
@@ -6889,6 +6894,146 @@ namespace MHFZ_Overlay
             return questTimeSpent;
         }
 
+        private void UpdateDatabaseSchema(SQLiteConnection connection)
+        {
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            using (SQLiteTransaction transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    string backupFileName = "";
+
+                    if (MainWindow.CurrentProgramVersion != previousVersion)
+                    {
+                        MessageBoxResult result = MessageBox.Show("A new version of the program has been installed. Do you want to perform the necessary database updates? A backup of your current MHFZ_Overlay.sqlite file will be done if you accept.\n\nUpdating the database structure may take some time.",
+                                                         "Program Update", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            // Make a backup of the current SQLite file before updating the schema
+
+                            // Get the process that is running "mhf.exe"
+                            Process[] processes = Process.GetProcessesByName("mhf");
+
+                            if (processes.Length > 0)
+                            {
+                                // Get the location of the first "mhf.exe" process
+                                string mhfPath = processes[0].MainModule.FileName;
+
+                                // Get the directory that contains "mhf.exe"
+                                string mhfDirectory = Path.GetDirectoryName(mhfPath);
+
+                                string databasePath = Path.Combine(mhfDirectory, "database");
+                                backupFileName = Path.Combine(databasePath, "MHFZ_Overlay_" + previousVersion + ".sqlite");
+                                File.Copy(s.DatabaseFilePath, backupFileName);
+                            }
+                            else
+                            {
+                                // The "mhf.exe" process was not found
+                                MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                logger.Fatal("mhf.exe not found");
+                                Environment.Exit(0);
+                            }
+
+                            // Create a dictionary to store the version updates
+                            var versionUpdates = new Dictionary<string, Action>
+                            {
+                                { "v0.22.0", () => {
+                                    PerformUpdateToVersion_0_23_0(connection);
+                                    PerformUpdateToVersion_0_24_0(connection);
+                                }},
+                                { "v0.23.0", () => {
+                                    PerformUpdateToVersion_0_24_0(connection);
+                                }},
+                            };
+
+                            // Check if an update is needed
+                            if (versionUpdates.ContainsKey(previousVersion))
+                            {
+                                // Perform the update
+                                versionUpdates[previousVersion]();
+                                logger.Info("Database schema updated from {0} to {1}", previousVersion, MainWindow.CurrentProgramVersion);
+                            }
+                            else
+                            {
+                                MessageBox.Show("The current version and the previous version aren't the same, however no update was found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                logger.Fatal("The current version and the previous version aren't the same, however no update was found");
+                                Environment.Exit(0);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Cannot use the overlay with an outdated database schema", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            logger.Fatal("Outdated database schema");
+                            Environment.Exit(0);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        private static void PerformUpdateToVersion_0_23_0(SQLiteConnection connection)
+        {
+            // Perform database updates for version 0.23.0
+            string sql = @"CREATE TABLE IF NOT EXISTS QuestAttempts(
+            QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
+            QuestID INTEGER NOT NULL,
+            WeaponTypeID INTEGER NOT NULL,
+            ActualOverlayMode TEXT NOT NULL,
+            Attempts INTEGER NOT NULL,
+            FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
+            FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+            UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
+            )";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            // Repeat the same pattern for other version updates
+            // By using ALTER TABLE, you can make changes to the structure of a table
+            // without having to recreate the table and manually transfer all the data.
+        }
+
+        private static void PerformUpdateToVersion_0_24_0(SQLiteConnection connection)
+        {
+            // Perform database updates for version 0.24.0
+            // Add your update logic here
+        }
+
+        private void WritePreviousVersionToFile()
+        {
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            if (File.ReadAllText(s.PreviousVersionFilePath) == "")
+                previousVersion = MainWindow.CurrentProgramVersion;
+            else
+                previousVersion = File.ReadAllText(s.PreviousVersionFilePath);
+
+            using (StreamWriter writer = new StreamWriter(s.PreviousVersionFilePath, false))
+            {
+                writer.WriteLine(previousVersion);
+            }
+        }
+
+        private string ReadPreviousVersionFromFile()
+        {
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            string version = "";
+            if (File.Exists(s.PreviousVersionFilePath))
+            {
+                using (StreamReader reader = new StreamReader(s.PreviousVersionFilePath))
+                {
+                    version = reader.ReadLine();
+                }
+            }
+            return version;
+        }
 
         #endregion
     }

@@ -698,5 +698,8 @@
     <Setting Name="QuestAttemptsY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">90</Value>
     </Setting>
+    <Setting Name="PreviousVersionFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

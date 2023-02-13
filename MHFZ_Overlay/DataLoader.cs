@@ -209,6 +209,16 @@ namespace MHFZ_Overlay
 
                 s.DatabaseFilePath = sqlitePath;
 
+                // Check if the version file exists in the database folder
+                string previousVersionPath = Path.Combine(databasePath, "previous-version.txt");
+                if (!File.Exists(previousVersionPath))
+                {
+                    // Create the version file if it doesn't exist
+                    File.Create(previousVersionPath);
+                }
+
+                s.PreviousVersionFilePath = previousVersionPath;
+
                 s.Save();
             }
             else

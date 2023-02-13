@@ -2806,5 +2806,17 @@ namespace MHFZ_Overlay {
                 this["QuestAttemptsY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PreviousVersionFilePath {
+            get {
+                return ((string)(this["PreviousVersionFilePath"]));
+            }
+            set {
+                this["PreviousVersionFilePath"] = value;
+            }
+        }
     }
 }
