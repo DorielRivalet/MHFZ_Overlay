@@ -155,6 +155,7 @@ namespace MHFZ_Overlay
 
                 // first we check if there are duplicate mhf.exe
                 CheckForExternalProcesses();
+                CheckForIllegalModifications();
                 // if there aren't then this runs and sets the game folder and also the database folder if needed
                 GetMHFFolderLocation();
                 // and thus set the data to database then, after doing it to the settings
@@ -230,9 +231,26 @@ namespace MHFZ_Overlay
             }
         }
 
-        private readonly List<string> bannedProcessesName = new List<string>()
+        private readonly List<string> bannedProcesses = new List<string>()
         {
             "displayer","Displayer","cheat","Cheat","overlay","Overlay","Wireshark"
+        };
+
+        private readonly List<string> bannedFiles = new List<string>()
+        {
+            "d3d8","d3d9","d3d10","d3d11","d3d12","ddraw","dinput","dinput8","dsound",
+            "msacm32","msvfw32","version","wininet","winmm","xlive","bink2w64","bink2w64Hooked",
+            "vorbisFile","vorbisHooked","binkw32","binkw32Hooked"
+        };
+
+        private readonly List<string> bannedFileExtensions = new List<string>()
+        {
+            ".asi"
+        };
+
+        private readonly List<string> bannedFolders = new List<string>()
+        {
+            "scripts","plugins","script","plugin"
         };
 
         public void CheckForExternalProcesses()
@@ -242,7 +260,7 @@ namespace MHFZ_Overlay
             int gameCount = 0;
             foreach (var process in processList)
             {
-                if (bannedProcessesName.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
+                if (bannedProcesses.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
                 {
                     // processName is a substring of one of the banned process strings
                     MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
@@ -276,6 +294,66 @@ namespace MHFZ_Overlay
                 logger.Fatal("Found duplicate game");
 
                 // Close the overlay program
+                Environment.Exit(0);
+            }
+        }
+
+        // This checks for illegal folders or files in the game folder
+        // TODO: test
+        public void CheckForIllegalModifications()
+        {
+            // Get the process that is running "mhf.exe"
+            Process[] processes = Process.GetProcessesByName("mhf");
+
+            if (processes.Length > 0)
+            {
+                // Get the location of the first "mhf.exe" process
+                string mhfPath = processes[0].MainModule.FileName;
+                // Get the directory that contains "mhf.exe"
+                string mhfDirectory = Path.GetDirectoryName(mhfPath);
+
+                // Get a list of all files and folders in the game folder
+                string[] files = Directory.GetFiles(mhfDirectory, "*", SearchOption.AllDirectories);
+                string[] folders = Directory.GetDirectories(mhfDirectory, "*", SearchOption.AllDirectories);
+                List<string> illegalFiles = new List<string>();
+
+                // Check for banned files and file extensions
+                foreach (string file in files)
+                {
+                    string fileName = Path.GetFileName(file);
+                    string extension = Path.GetExtension(file);
+
+                    if (bannedFiles.Contains(fileName.ToLower()) || bannedFileExtensions.Contains(extension.ToLower()))
+                    {
+                        illegalFiles.Add(file);
+                    }
+                }
+
+                // Check for banned folders
+                foreach (string folder in folders)
+                {
+                    string folderName = Path.GetFileName(folder);
+
+                    if (bannedFolders.Contains(folderName.ToLower()))
+                    {
+                        illegalFiles.Add(folder);
+                    }
+                }
+
+                if (illegalFiles.Count > 0)
+                {
+                    // If there are any banned files or folders, display an error message and exit the application
+                    string message = string.Format("The following files or folders are not allowed:\n{0}", string.Join("\n", illegalFiles));
+                    MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    logger.Fatal(message);
+                    Environment.Exit(0);
+                }
+            }
+            else
+            {
+                // The "mhf.exe" process was not found
+                MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Fatal("mhf.exe not found");
                 Environment.Exit(0);
             }
         }
