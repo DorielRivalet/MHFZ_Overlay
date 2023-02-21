@@ -10399,9 +10399,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public ObservableCollection<Option> QuestLogsSearchOption { get; set; } = new ObservableCollection<Option>()
         {
+            new Option{Name = "Personal Best", IsSelected = false},
             new Option{Name = "Gear", IsSelected = false},
             new Option{Name = "Top 20", IsSelected = false},
-            new Option{Name = "Weapon Usage", IsSelected = false},
+            new Option{Name = "Weapon Stats", IsSelected = false},
             new Option{Name = "Most Recent", IsSelected = false},
             new Option{Name = "YouTube", IsSelected = false},
             new Option{Name = "Stats (Graphs)", IsSelected = false},

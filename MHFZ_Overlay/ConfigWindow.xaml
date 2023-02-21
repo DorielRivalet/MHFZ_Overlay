@@ -75,6 +75,52 @@
 
                 </Grid>
             </DataTemplate>
+            <DataTemplate x:Key="PersonalBestTemplate">
+                <!-- Grid structure for the "Personal Best" option -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
+
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#fab387" />
+
+                    <StackPanel  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="5">
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox Width="300" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestTypeComboBox_SelectionChanged">
+                                <ComboBoxItem>(Quest ID) Personal Best by Date</ComboBoxItem>
+                                <ComboBoxItem>(Quest ID) Personal Best by Attempts</ComboBoxItem>
+                            </ComboBox>
+                            <ComboBox Margin="5,0,0,0"  Width="150" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestWeaponComboBox_SelectionChanged">
+                                <ComboBoxItem>All Weapons</ComboBoxItem>
+                                <ComboBoxItem>Sword and Shield</ComboBoxItem>
+                                <ComboBoxItem>Dual Swords</ComboBoxItem>
+                                <ComboBoxItem>Great Sword</ComboBoxItem>
+                                <ComboBoxItem>Long Sword</ComboBoxItem>
+                                <ComboBoxItem>Hammer</ComboBoxItem>
+                                <ComboBoxItem>Hunting Horn</ComboBoxItem>
+                                <ComboBoxItem>Lance</ComboBoxItem>
+                                <ComboBoxItem>Gunlance</ComboBoxItem>
+                                <ComboBoxItem>Tonfa</ComboBoxItem>
+                                <ComboBoxItem>Switch Axe F</ComboBoxItem>
+                                <ComboBoxItem>Magnet Spike</ComboBoxItem>
+                                <ComboBoxItem>Light Bowgun</ComboBoxItem>
+                                <ComboBoxItem>Heavy Bowgun</ComboBoxItem>
+                                <ComboBoxItem>Bow</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Personal Best of solo runs of quest ID by category"/>
+                        </StackPanel>
+                        <lvc:CartesianChart Loaded="personalBest_Loaded" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
             <DataTemplate x:Key="Top20Template">
                 <!-- Grid structure for the "Top 20" option -->
                 <Grid>
@@ -172,9 +218,9 @@
                     </StackPanel>
                 </Grid>
             </DataTemplate>
-            <DataTemplate x:Key="WeaponUsageTemplate">
-                <!-- Grid structure for the "Weapon Usage" option -->
-                <Grid x:Name="WeaponUsageGrid">
+            <DataTemplate x:Key="WeaponStatsTemplate">
+                <!-- Grid structure for the "Weapon Stats" option -->
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -188,11 +234,10 @@
 
                     <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#cba6f7" />
 
-
                     <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
-                        <ComboBox x:Name="weaponUsageGraphComboBox" Width="100" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="WeaponUsageGraphComboBox_SelectionChanged">
-                            <ComboBoxItem>All-Time</ComboBoxItem>
-                            <ComboBoxItem>By Quest</ComboBoxItem>
+                        <ComboBox x:Name="weaponUsageGraphComboBox" Width="250" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="WeaponUsageGraphComboBox_SelectionChanged">
+                            <ComboBoxItem>(General) Weapon Usage</ComboBoxItem>
+                            <ComboBoxItem>(Quest ID) Weapon Usage</ComboBoxItem>
                         </ComboBox>
 
                         <lvc:CartesianChart Loaded="weaponUsageChart_Loaded" Grid.Column="1" Grid.Row="1" x:Name="weaponUsageChart" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>

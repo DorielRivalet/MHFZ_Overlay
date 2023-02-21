@@ -4160,6 +4160,119 @@ namespace MHFZ_Overlay
             return personalBest;
         }
 
+        // TODO: test
+        public Dictionary<DateTime, int> GetPersonalBestsByDate(long questID, int weaponTypeID, string category, DataLoader dataLoader)
+        {
+            Dictionary<DateTime, int> personalBests = new();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand(
+                            @"SELECT 
+                                TimeLeft, 
+                                ActualOverlayMode,
+                                pg.WeaponTypeID,
+                                q.CreatedAt
+                            FROM 
+                                Quests q
+                            JOIN
+                                PlayerGear pg ON q.RunID = pg.RunID
+                            WHERE 
+                                QuestID = @questID
+                                AND pg.WeaponTypeID = @weaponTypeID
+                                AND ActualOverlayMode = @category
+                                AND PartySize = 1
+                            ORDER BY 
+                                q.CreatedAt ASC, FinalTimeValue ASC"
+                        , conn))
+                        {
+                            cmd.Parameters.AddWithValue("@questID", questID);
+                            cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                            cmd.Parameters.AddWithValue("@category", category);
+
+                            var reader = cmd.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                long time = 0;
+                                DateTime createdAt = reader.GetDateTime(reader.GetOrdinal("CreatedAt"));
+
+                                personalBests[createdAt] = (int)time;
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+
+            return personalBests;
+        }
+
+        // TODO: test
+        public Dictionary<int, int> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category, DataLoader dataLoader)
+        {
+            Dictionary<int, int> personalBests = new();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand(
+                            @"SELECT 
+                                TimeLeft, 
+                                ActualOverlayMode,
+                                pg.WeaponTypeID
+                            FROM 
+                                Quests q
+                            JOIN
+                                PlayerGear pg ON q.RunID = pg.RunID
+                            JOIN
+                                QuestAttempts qa ON q.QuestID = qa.QuestID
+                            WHERE 
+                                QuestID = @questID
+                                AND pg.WeaponTypeID = @weaponTypeID
+                                AND ActualOverlayMode = @category
+                                AND PartySize = 1
+                            ORDER BY 
+                                qa.Attempts ASC, FinalTimeValue ASC"
+                        , conn))
+                        {
+                            cmd.Parameters.AddWithValue("@questID", questID);
+                            cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                            cmd.Parameters.AddWithValue("@category", category);
+
+                            var reader = cmd.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                long time = 0;
+                                int attempts = reader.GetInt32(reader.GetOrdinal("Attempts"));
+
+                                personalBests[attempts] = (int)time;
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+
+            return personalBests;
+        }
+
         public void UpsertQuestAttempts(long questID, int weaponTypeID, string category)
         {
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
@@ -6904,10 +7017,10 @@ namespace MHFZ_Overlay
                 {
                     string backupFileName = "";
 
-                    if (MainWindow.CurrentProgramVersion != previousVersion)
+                    if (MainWindow.CurrentProgramVersion.Trim() != previousVersion.Trim())
                     {
                         MessageBoxResult result = MessageBox.Show("A new version of the program has been installed. Do you want to perform the necessary database updates? A backup of your current MHFZ_Overlay.sqlite file will be done if you accept.\n\nUpdating the database structure may take some time.",
-                                                         "Program Update", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                                                         string.Format("Program Update ({0} to {1})",previousVersion,MainWindow.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (result == MessageBoxResult.Yes)
                         {
                             // Make a backup of the current SQLite file before updating the schema
@@ -7009,14 +7122,22 @@ namespace MHFZ_Overlay
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (File.ReadAllText(s.PreviousVersionFilePath) == "")
-                previousVersion = MainWindow.CurrentProgramVersion;
-            else
-                previousVersion = File.ReadAllText(s.PreviousVersionFilePath);
-
-            using (StreamWriter writer = new StreamWriter(s.PreviousVersionFilePath, false))
+            // TODO why does this error?
+            try
             {
-                writer.WriteLine(previousVersion);
+                if (File.ReadAllText(s.PreviousVersionFilePath) == "")
+                    previousVersion = MainWindow.CurrentProgramVersion;
+                else
+                    previousVersion = File.ReadAllText(s.PreviousVersionFilePath);
+
+                using (StreamWriter writer = new StreamWriter(s.PreviousVersionFilePath, false))
+                {
+                    writer.WriteLine(previousVersion);
+                }
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Error with version file");
             }
         }
 

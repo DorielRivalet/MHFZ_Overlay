@@ -2669,6 +2669,21 @@ namespace MHFZ_Overlay
                 }
             }
         }
+
+        private void personalBest_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PersonalBestTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void PersonalBestWeaponComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
     /* LoadConfig on startup
      * Load Config on window open to have extra copy

@@ -250,7 +250,7 @@ namespace MHFZ_Overlay
 
         private readonly List<string> bannedFolders = new List<string>()
         {
-            "scripts","plugins","script","plugin"
+            "scripts","plugins","script","plugin","localize-dat"
         };
 
         public void CheckForExternalProcesses()
