@@ -1675,6 +1675,7 @@ namespace MHFZ_Overlay
         private TextBlock questLogGearStatsTextBlock;
         private CartesianChart graphChart;
         private TextBlock statsTextTextBlock;
+        private CartesianChart personalBestChart;
 
         private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
         {
@@ -2672,7 +2673,7 @@ namespace MHFZ_Overlay
 
         private void personalBest_Loaded(object sender, RoutedEventArgs e)
         {
-
+            personalBestChart = (CartesianChart)sender;
         }
 
         private void PersonalBestTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
