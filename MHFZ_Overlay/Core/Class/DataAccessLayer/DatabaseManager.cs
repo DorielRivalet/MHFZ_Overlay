@@ -35,7 +35,7 @@ namespace MHFZ_Overlay
         {
             var config = new NLog.Config.LoggingConfiguration();
 
-            // Targets where to log to: File and Console
+            // Targets where to log to: File
             var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
 
             // Rules for mapping loggers to targets            
@@ -4161,9 +4161,9 @@ namespace MHFZ_Overlay
         }
 
         // TODO: test
-        public Dictionary<DateTime, int> GetPersonalBestsByDate(long questID, int weaponTypeID, string category, DataLoader dataLoader)
+        public Dictionary<DateTime, long> GetPersonalBestsByDate(long questID, int weaponTypeID, string category, DataLoader dataLoader)
         {
-            Dictionary<DateTime, int> personalBests = new();
+            Dictionary<DateTime, long> personalBests = new();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -4177,7 +4177,8 @@ namespace MHFZ_Overlay
                                 TimeLeft, 
                                 ActualOverlayMode,
                                 pg.WeaponTypeID,
-                                q.CreatedAt
+                                q.CreatedAt,
+                                q.RunID
                             FROM 
                                 Quests q
                             JOIN
@@ -4188,7 +4189,7 @@ namespace MHFZ_Overlay
                                 AND ActualOverlayMode = @category
                                 AND PartySize = 1
                             ORDER BY 
-                                q.CreatedAt ASC, FinalTimeValue ASC"
+                                q.CreatedAt ASC"
                         , conn))
                         {
                             cmd.Parameters.AddWithValue("@questID", questID);
@@ -4196,12 +4197,42 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@category", category);
 
                             var reader = cmd.ExecuteReader();
+                            Dictionary<DateTime, long> personalBestTimes = new Dictionary<DateTime, long>();
+
                             while (reader.Read())
                             {
-                                long time = 0;
+                                long runID = reader.GetInt64(reader.GetOrdinal("RunID"));
+                                long time = reader.GetInt64(reader.GetOrdinal("TimeLeft"));
                                 DateTime createdAt = reader.GetDateTime(reader.GetOrdinal("CreatedAt"));
 
-                                personalBests[createdAt] = (int)time;
+                                if (personalBestTimes.ContainsKey(createdAt))
+                                {
+                                    long personalBest = personalBestTimes[createdAt];
+                                    // Check if current time is faster than previous time for this day
+                                    if (time < personalBest)
+                                    {
+                                        personalBestTimes[createdAt] = time;
+                                    }
+                                }
+                                else
+                                {
+                                    personalBestTimes[createdAt] = time;
+                                }
+                            }
+
+                            // Populate personalBests dictionary with personal best times by date
+                            foreach (var kvp in personalBestTimes)
+                            {
+                                DateTime createdAt = kvp.Key;
+                                long personalBest = kvp.Value;
+                                if (!personalBests.ContainsKey(createdAt))
+                                {
+                                    personalBests[createdAt] = personalBest;
+                                }
+                                else if (personalBest < personalBests[createdAt])
+                                {
+                                    personalBests[createdAt] = personalBest;
+                                }
                             }
                         }
                         transaction.Commit();
@@ -4213,13 +4244,30 @@ namespace MHFZ_Overlay
                 }
             }
 
+            // Fill in missing dates with the last known personal best time
+            DateTime startDate = personalBests.Keys.Min();
+            DateTime endDate = personalBests.Keys.Max();
+            DateTime currentDate = startDate;
+
+            while (currentDate <= endDate)
+            {
+                if (!personalBests.ContainsKey(currentDate))
+                {
+                    if (personalBests.TryGetValue(currentDate.AddDays(-1), out long lastPersonalBest))
+                    {
+                        personalBests[currentDate] = lastPersonalBest;
+                    }
+                }
+                currentDate = currentDate.AddDays(1);
+            }
+
             return personalBests;
         }
 
         // TODO: test
-        public Dictionary<int, int> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category, DataLoader dataLoader)
+        public Dictionary<long, long> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category, DataLoader dataLoader)
         {
-            Dictionary<int, int> personalBests = new();
+            Dictionary<long, long> personalBests = new();
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -4232,7 +4280,9 @@ namespace MHFZ_Overlay
                             @"SELECT 
                                 TimeLeft, 
                                 ActualOverlayMode,
-                                pg.WeaponTypeID
+                                pg.WeaponTypeID,
+                                q.RunID,
+                                qa.Attempts
                             FROM 
                                 Quests q
                             JOIN
@@ -4245,7 +4295,7 @@ namespace MHFZ_Overlay
                                 AND ActualOverlayMode = @category
                                 AND PartySize = 1
                             ORDER BY 
-                                qa.Attempts ASC, FinalTimeValue ASC"
+                                qa.Attempts ASC"
                         , conn))
                         {
                             cmd.Parameters.AddWithValue("@questID", questID);
@@ -4253,12 +4303,42 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@category", category);
 
                             var reader = cmd.ExecuteReader();
+                            Dictionary<long, long> personalBestTimes = new Dictionary<long, long>();
+
                             while (reader.Read())
                             {
-                                long time = 0;
-                                int attempts = reader.GetInt32(reader.GetOrdinal("Attempts"));
+                                long runID = reader.GetInt64(reader.GetOrdinal("RunID"));
+                                long time = reader.GetInt64(reader.GetOrdinal("TimeLeft"));
+                                long attempts = reader.GetInt64(reader.GetOrdinal("Attempts"));
 
-                                personalBests[attempts] = (int)time;
+                                if (personalBestTimes.ContainsKey(attempts))
+                                {
+                                    long personalBest = personalBestTimes[attempts];
+                                    // Check if current time is faster than previous time for this day
+                                    if (time < personalBest)
+                                    {
+                                        personalBestTimes[attempts] = time;
+                                    }
+                                }
+                                else
+                                {
+                                    personalBestTimes[attempts] = time;
+                                }
+                            }
+
+                            // Populate personalBests dictionary with personal best times by date
+                            foreach (var kvp in personalBestTimes)
+                            {
+                                long attempts = kvp.Key;
+                                long personalBest = kvp.Value;
+                                if (!personalBests.ContainsKey(attempts))
+                                {
+                                    personalBests[attempts] = personalBest;
+                                }
+                                else if (personalBest < personalBests[attempts])
+                                {
+                                    personalBests[attempts] = personalBest;
+                                }
                             }
                         }
                         transaction.Commit();
@@ -4776,14 +4856,6 @@ namespace MHFZ_Overlay
                 }
             }
             return caravanSkills;
-        }
-
-        public static double GetCurrentQuestElapsedTimeInSecondsForRunID(int start, int current)
-        {
-            if (start <= 0)
-                return 0;
-
-            return (double)(start - current) / 30;
         }
 
         public Dictionary<int, int> GetAttackBuffDictionary(long runID)

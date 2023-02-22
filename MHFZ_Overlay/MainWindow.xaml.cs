@@ -375,7 +375,7 @@ namespace MHFZ_Overlay
 
             var config = new NLog.Config.LoggingConfiguration();
 
-            // Targets where to log to: File and Console
+            // Targets where to log to: File
             var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
 
             // Rules for mapping loggers to targets            

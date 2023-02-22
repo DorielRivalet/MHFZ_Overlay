@@ -489,7 +489,7 @@ namespace MHFZ_Overlay
             InitializeComponent();
             var config = new NLog.Config.LoggingConfiguration();
 
-            // Targets where to log to: File and Console
+            // Targets where to log to: File
             var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
 
             // Rules for mapping loggers to targets            
@@ -1676,6 +1676,8 @@ namespace MHFZ_Overlay
         private CartesianChart graphChart;
         private TextBlock statsTextTextBlock;
         private CartesianChart personalBestChart;
+        private string personalBestSelectedWeapon = "";
+        private string personalBestSelectedType = "";
 
         private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
         {
@@ -2678,12 +2680,40 @@ namespace MHFZ_Overlay
 
         private void PersonalBestTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (personalBestChart == null)
+                return;
 
+            var comboBox = sender as ComboBox;
+            var selectedItem = comboBox.SelectedItem;
+
+            if (selectedItem == null)
+                return;
+
+            string selectedType = selectedItem.ToString();
+            personalBestSelectedType = selectedType.Replace("System.Windows.Controls.ComboBoxItem: ", "");
         }
 
         private void PersonalBestWeaponComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (personalBestChart == null)
+                return;
 
+            var comboBox = sender as ComboBox;
+            var selectedItem = comboBox.SelectedItem;
+
+            if (selectedItem == null)
+                return;
+
+            string selectedWeapon = selectedItem.ToString();
+            personalBestSelectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (personalBestSelectedWeapon == "" || personalBestSelectedType == "")
+                return;
+
+            // TODO: get data from the databasemanager sqlite function into the graph
         }
     }
     /* LoadConfig on startup

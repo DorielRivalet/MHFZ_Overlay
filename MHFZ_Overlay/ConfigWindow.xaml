@@ -94,12 +94,14 @@
 
                     <StackPanel  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <ComboBox Width="300" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestTypeComboBox_SelectionChanged">
+                            <!--TODO: add the refresh button to the other sections-->
+                            <Button Background="Transparent" BorderThickness="0" ToolTip="Refresh" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Refresh.xaml'}"  Click="RefreshButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+
+                            <ComboBox Margin="5,0,0,0" Width="300" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestTypeComboBox_SelectionChanged">
                                 <ComboBoxItem>(Quest ID) Personal Best by Date</ComboBoxItem>
                                 <ComboBoxItem>(Quest ID) Personal Best by Attempts</ComboBoxItem>
                             </ComboBox>
                             <ComboBox Margin="5,0,0,0"  Width="150" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestWeaponComboBox_SelectionChanged">
-                                <ComboBoxItem>All Weapons</ComboBoxItem>
                                 <ComboBoxItem>Sword and Shield</ComboBoxItem>
                                 <ComboBoxItem>Dual Swords</ComboBoxItem>
                                 <ComboBoxItem>Great Sword</ComboBoxItem>
