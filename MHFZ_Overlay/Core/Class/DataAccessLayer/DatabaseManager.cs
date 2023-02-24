@@ -4182,22 +4182,22 @@ namespace MHFZ_Overlay
                     {
                         using (SQLiteCommand cmd = new SQLiteCommand(
                             @"SELECT 
-                                q.FinalTimeValue, 
-                                q.ActualOverlayMode,
-                                pg.WeaponTypeID,
-                                q.CreatedAt,
-                                q.RunID
-                            FROM 
-                                Quests q
-                            JOIN
-                                PlayerGear pg ON q.RunID = pg.RunID
-                            WHERE 
-                                q.QuestID = @questID
-                                AND pg.WeaponTypeID = @weaponTypeID
-                                AND q.ActualOverlayMode = @category
-                                AND q.PartySize = 1
-                            ORDER BY 
-                                q.CreatedAt ASC"
+                        q.FinalTimeValue, 
+                        q.ActualOverlayMode,
+                        pg.WeaponTypeID,
+                        q.CreatedAt,
+                        q.RunID
+                    FROM 
+                        Quests q
+                    JOIN
+                        PlayerGear pg ON q.RunID = pg.RunID
+                    WHERE 
+                        q.QuestID = @questID
+                        AND pg.WeaponTypeID = @weaponTypeID
+                        AND q.ActualOverlayMode = @category
+                        AND q.PartySize = 1
+                    ORDER BY 
+                        q.CreatedAt ASC"
                         , conn))
                         {
                             cmd.Parameters.AddWithValue("@questID", questID);
@@ -4229,18 +4229,19 @@ namespace MHFZ_Overlay
                             }
 
                             // Populate personalBests dictionary with personal best times by date
-                            foreach (var kvp in personalBestTimes)
+                            DateTime currentDate = personalBestTimes.Keys.Min();
+                            long currentBest = personalBestTimes[currentDate];
+                            personalBests[currentDate] = currentBest;
+                            currentDate = currentDate.AddDays(1);
+
+                            while (currentDate <= DateTime.Today)
                             {
-                                DateTime createdAt = kvp.Key;
-                                long personalBest = kvp.Value;
-                                if (!personalBests.ContainsKey(createdAt))
+                                if (personalBestTimes.TryGetValue(currentDate, out long newBest))
                                 {
-                                    personalBests[createdAt] = personalBest;
+                                    currentBest = Math.Min(currentBest, newBest);
                                 }
-                                else if (personalBest < personalBests[createdAt])
-                                {
-                                    personalBests[createdAt] = personalBest;
-                                }
+                                personalBests[currentDate] = currentBest;
+                                currentDate = currentDate.AddDays(1);
                             }
                         }
                         transaction.Commit();
@@ -4250,26 +4251,6 @@ namespace MHFZ_Overlay
                         HandleError(transaction, ex);
                     }
                 }
-            }
-
-            if (!personalBests.Any())
-                return personalBests;
-
-            // Fill in missing dates with the last known personal best time
-            DateTime startDate = personalBests.Keys.Min();
-            DateTime endDate = personalBests.Keys.Max();
-            DateTime currentDate = startDate;
-
-            while (currentDate <= endDate)
-            {
-                if (!personalBests.ContainsKey(currentDate))
-                {
-                    if (personalBests.TryGetValue(currentDate.AddDays(-1), out long lastPersonalBest))
-                    {
-                        personalBests[currentDate] = lastPersonalBest;
-                    }
-                }
-                currentDate = currentDate.AddDays(1);
             }
 
             return personalBests;

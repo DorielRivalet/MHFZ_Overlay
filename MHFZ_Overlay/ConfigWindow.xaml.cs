@@ -2026,6 +2026,8 @@ namespace MHFZ_Overlay
             series.Add(new LineSeries<ObservablePoint>
             {
                 Values = collection,
+                TooltipLabelFormatter = (chartPoint) =>
+                $"Attempt {chartPoint.SecondaryValue}: {MainWindow.DataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
                 LineSmoothness = .5,
                 GeometrySize = 0,
                 Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
@@ -2066,14 +2068,33 @@ namespace MHFZ_Overlay
 
             ObservableCollection<DateTimePoint> collection = new();
 
-            foreach (var entry in data)
+            DateTime? prevDate = null;
+            long? prevTime = null;
+
+            foreach (var entry in data.OrderBy(e => e.Key))
             {
-                collection.Add(new DateTimePoint(entry.Key, entry.Value));
+                var date = entry.Key;
+                var time = entry.Value;
+
+                // Fill in missing dates with the last known personal best time
+                if (prevDate != null && date > prevDate.Value.AddDays(1))
+                {
+                    collection.Add(new DateTimePoint(prevDate.Value.AddDays(1), prevTime.Value));
+                }
+
+                collection.Add(new DateTimePoint(date, time));
+
+                prevDate = date;
+                prevTime = time;
             }
 
-            series.Add(new ColumnSeries<DateTimePoint>
+            series.Add(new LineSeries<DateTimePoint>
             {
                 Values = collection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
                 TooltipLabelFormatter = (chartPoint) =>
                 $"{new DateTime((long)chartPoint.SecondaryValue):MMMM dd}: {MainWindow.DataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
             });
