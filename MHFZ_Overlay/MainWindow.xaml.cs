@@ -384,7 +384,7 @@ namespace MHFZ_Overlay
             // Apply config           
             NLog.LogManager.Configuration = config;
 
-            logger.Info($"MainWindow initialized");
+            logger.Info($"PROGRAM OPERATION: MainWindow initialized");
 
             Left = 0;
             Top = 0;
@@ -497,7 +497,7 @@ namespace MHFZ_Overlay
                 if (s.EnableUpdateNotifier)
                 {
                     System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(String.Format("Detected different version ({0}) from latest ({1}). Do you want to download the file?", CurrentProgramVersion, latest.TagName), "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No);
-                    logger.Info("Detected different overlay version");
+                    logger.Info("PROGRAM OPERATION: Detected different overlay version");
 
                     if (messageBoxResult.ToString() == "Yes")
                     {
@@ -543,7 +543,7 @@ namespace MHFZ_Overlay
                 if (className == "MHFLAUNCH")
                 {
                     System.Windows.MessageBox.Show("Detected launcher, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                    logger.Info("Detected game launcher");
+                    logger.Info("PROGRAM OPERATION: Detected game launcher");
 
                     DataLoader.model.isInLauncherBool = true;
                 }
@@ -566,7 +566,7 @@ namespace MHFZ_Overlay
                     if (s.EnableAutoClose)
                     {
                         System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                        logger.Info("Detected closed game");
+                        logger.Info("PROGRAM OPERATION: Detected closed game");
 
                         //https://stackoverflow.com/a/9050477/18859245
                         Cleanup();
@@ -576,7 +576,7 @@ namespace MHFZ_Overlay
                     else
                     {
                         System.Windows.MessageBox.Show("Detected closed game, please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                        logger.Info("Detected closed game");
+                        logger.Info("PROGRAM OPERATION: Detected closed game");
 
                     }
                 };
@@ -628,7 +628,7 @@ namespace MHFZ_Overlay
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"An error has occurred in the Timer_Tick function");
+                logger.Error(ex, $"PROGRAM OPERATION: An error has occurred in the Timer_Tick function");
                 WriteCrashLog(ex);
                 // the flushing is done automatically according to the docs
             }
@@ -647,7 +647,7 @@ namespace MHFZ_Overlay
             }
 
             System.Windows.MessageBox.Show("Fatal error, closing overlay. See the crash log in the overlay folder for more information.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            logger.Fatal(ex, "Program crashed");
+            logger.Fatal(ex, "PROGRAM OPERATION: Program crashed");
 
             //https://stackoverflow.com/a/9050477/18859245
             Cleanup();
@@ -696,7 +696,7 @@ namespace MHFZ_Overlay
                         }
                         catch (Exception ex)
                         {
-                            logger.Warn(ex, "Could not insert into damageDealtDictionary");
+                            logger.Warn(ex, "PROGRAM OPERATION: Could not insert into damageDealtDictionary");
                         }
                     }
                 }
@@ -714,7 +714,7 @@ namespace MHFZ_Overlay
                         }
                         catch (Exception ex)
                         {
-                            logger.Warn(ex, "Could not insert into damageDealtDictionary");
+                            logger.Warn(ex, "PROGRAM OPERATION: Could not insert into damageDealtDictionary");
                         }
                     }
                 }
@@ -732,7 +732,7 @@ namespace MHFZ_Overlay
                             catch
                             (Exception ex)
                             {
-                                logger.Warn(ex, "Could not insert into damageDealtDictionary");
+                                logger.Warn(ex, "PROGRAM OPERATION: Could not insert into damageDealtDictionary");
                             }
                         }
                     }
@@ -2583,7 +2583,7 @@ namespace MHFZ_Overlay
             if (DataLoader.model.isInLauncherBool)
             {
                 System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                logger.Info("Detected game launcher while using configuration menu");
+                logger.Info("PROGRAM OPERATION: Detected game launcher while using configuration menu");
             }
 
             if (configWindow == null || !configWindow.IsLoaded)
@@ -2668,6 +2668,23 @@ namespace MHFZ_Overlay
         private bool calculatedPersonalBest = false;
         private bool calculatedQuestAttempts = false;
 
+        private static object lockObj = new object();
+
+        private async void UpdateQuestAttempts()
+        {
+            string category = OverlayModeWatermarkTextBlock.Text;
+            int weaponType = DataLoader.model.WeaponType();
+            long questID = DataLoader.model.QuestID();
+
+            int attempts = await Task.Run(() => databaseManager.UpsertQuestAttempts(questID, weaponType, category));
+
+            await Dispatcher.BeginInvoke(new Action(() =>
+            {
+                questAttemptsTextBlock.Text = attempts.ToString();
+            }));
+        }
+
+
         //TODO
         private void CheckQuestStateForDatabaseLogging()
         {
@@ -2693,8 +2710,7 @@ namespace MHFZ_Overlay
                 if (!calculatedQuestAttempts && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0)
                 {
                     calculatedQuestAttempts = true;
-                    databaseManager.UpsertQuestAttempts(DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text);
-                    questAttemptsTextBlock.Text = databaseManager.GetQuestAttempts(DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text).ToString();
+                    UpdateQuestAttempts();
                 }
             }
 
@@ -2854,7 +2870,7 @@ namespace MHFZ_Overlay
                     }
                     catch (Exception ex)
                     {
-                        logger.Warn(ex, "Could not insert into mouseInputDictionary");
+                        logger.Warn(ex, "PROGRAM OPERATION: Could not insert into mouseInputDictionary");
                     }
                 }
 
@@ -2901,7 +2917,7 @@ namespace MHFZ_Overlay
                     }
                     catch (Exception ex)
                     {
-                        logger.Warn(ex, "Could not insert into keystrokesDictionary");
+                        logger.Warn(ex, "PROGRAM OPERATION: Could not insert into keystrokesDictionary");
                     }
                 }
 

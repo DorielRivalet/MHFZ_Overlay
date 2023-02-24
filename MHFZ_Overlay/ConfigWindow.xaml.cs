@@ -498,7 +498,7 @@ namespace MHFZ_Overlay
             // Apply config           
             NLog.LogManager.Configuration = config;
 
-            logger.Info($"ConfigWindow initialized");
+            logger.Info($"PROGRAM OPERATION: ConfigWindow initialized");
 
             Topmost = true;
             MainWindow = mainWindow;
@@ -937,6 +937,7 @@ namespace MHFZ_Overlay
             if (saveFileDialog.ShowDialog() == true)
             {
                 File.WriteAllText(saveFileDialog.FileName, textToSave);
+                logger.Info("FILE OPERATION: saved {0}", saveFileDialog.FileName);
             }
 
         }
@@ -983,6 +984,7 @@ namespace MHFZ_Overlay
                 CreateBitmapFromVisual(GearImageGrid, savefile.FileName);
                 CopyUIElementToClipboard(GearImageGrid);
                 GearImageGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+                logger.Info("FILE OPERATION: saved {0}", savefile.FileName);
             }
         }
 
@@ -1044,6 +1046,7 @@ namespace MHFZ_Overlay
             using (Stream stm = File.Create(fileName))
             {
                 bitmapEncoder.Save(stm);
+                logger.Info("FILE OPERATION: created {0}", fileName);
             }
         }
 
@@ -1072,6 +1075,7 @@ namespace MHFZ_Overlay
                 {
                     csv.WriteRecords(Monsters);
                 }
+                logger.Info("FILE OPERATION: saved {0}", savefile.FileName);
             }
         }
 
@@ -1100,6 +1104,7 @@ namespace MHFZ_Overlay
             {
                 CreateBitmapFromVisual(GuildCardGrid, savefile.FileName);
                 CopyUIElementToClipboard(GuildCardGrid);
+                logger.Info("FILE OPERATION: saved {0}", savefile.FileName);
             }
         }
 
@@ -1331,6 +1336,8 @@ namespace MHFZ_Overlay
 
                 // Save the JSON string to the selected file
                 File.WriteAllText(saveFileDialog.FileName, json);
+                logger.Info("FILE OPERATION: saved {0}", saveFileDialog.FileName);
+
             }
         }
 
@@ -1347,7 +1354,7 @@ namespace MHFZ_Overlay
             {
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 MessageBox.Show("Please update the database structure", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-                logger.Warn("Database structure needs update");
+                logger.Warn("DATABASE OPERATION: Database structure needs update");
                 s.EnableQuestLogging = false;
             }
         }
@@ -1780,6 +1787,7 @@ namespace MHFZ_Overlay
             if (saveFileDialog.ShowDialog() == true)
             {
                 File.WriteAllText(saveFileDialog.FileName, textToSave);
+                logger.Info("FILE OPERATION: saved {0}", saveFileDialog.FileName);
             }
         }
 
@@ -1790,11 +1798,15 @@ namespace MHFZ_Overlay
             questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
         }
 
-        public ISeries[] Series { get; set; }
-        public Axis[] XAxes { get; set; }
-        public Axis[] YAxes { get; set; }
+        private ISeries[] Series { get; set; }
+        private Axis[] XAxes { get; set; }
+        private Axis[] YAxes { get; set; }
 
-        public void SetColumnSeriesForDictionaryIntInt(Dictionary<int, int> data)
+        private ISeries[] PersonalBestSeries { get; set; }
+        private Axis[] PersonalBestXAxes { get; set; }
+        private Axis[] PersonalBestYAxes { get; set; }
+
+        private void SetColumnSeriesForDictionaryIntInt(Dictionary<int, int> data)
         {
             Series = new ISeries[data.Count];
             int i = 0;
@@ -1821,7 +1833,7 @@ namespace MHFZ_Overlay
             };
         }
 
-        public void SetColumnSeriesForDictionaryStringInt(Dictionary<string, int> data)
+        private void SetColumnSeriesForDictionaryStringInt(Dictionary<string, int> data)
         {
             Series = new ISeries[data.Count];
             int i = 0;
@@ -1848,7 +1860,7 @@ namespace MHFZ_Overlay
             };
         }
 
-        public void SetColumnSeriesForDictionaryDateInt(Dictionary<DateTime, int> data)
+        private void SetColumnSeriesForDictionaryDateInt(Dictionary<DateTime, int> data)
         {
             Series = new ISeries[data.Count];
             int i = 0;
@@ -1875,7 +1887,7 @@ namespace MHFZ_Overlay
             };
         }
 
-        public Dictionary<int, int> GetElapsedTime(Dictionary<int, int> timeAttackDict)
+        private Dictionary<int, int> GetElapsedTime(Dictionary<int, int> timeAttackDict)
         {
             Dictionary<int, int> elapsedTimeDict = new Dictionary<int, int>();
             if (timeAttackDict == null || !timeAttackDict.Any())
@@ -1889,7 +1901,7 @@ namespace MHFZ_Overlay
             return elapsedTimeDict;
         }
 
-        public Dictionary<int, double> GetElapsedTimeForDictionaryIntDouble(Dictionary<int, double> timeAttackDict)
+        private Dictionary<int, double> GetElapsedTimeForDictionaryIntDouble(Dictionary<int, double> timeAttackDict)
         {
             Dictionary<int, double> elapsedTimeDict = new Dictionary<int, double>();
             if (timeAttackDict == null || !timeAttackDict.Any())
@@ -1903,7 +1915,7 @@ namespace MHFZ_Overlay
             return elapsedTimeDict;
         }
 
-        public void SetLineSeriesForDictionaryIntInt(Dictionary<int, int> data)
+        private void SetLineSeriesForDictionaryIntInt(Dictionary<int, int> data)
         {
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> collection = new();
@@ -1952,7 +1964,7 @@ namespace MHFZ_Overlay
             graphChart.YAxes = YAxes;
         }
 
-        public void SetLineSeriesForDictionaryIntDouble(Dictionary<int, double> data)
+        private void SetLineSeriesForDictionaryIntDouble(Dictionary<int, double> data)
         {
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> collection = new();
@@ -2001,7 +2013,113 @@ namespace MHFZ_Overlay
             graphChart.YAxes = YAxes;
         }
 
-        public void SetHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> data)
+        private void SetLineSeriesForPersonalBestByAttempts(Dictionary<long,long> data)
+        {
+            List<ISeries> series = new();
+            ObservableCollection<ObservablePoint> collection = new();
+
+            foreach (var entry in data)
+            {
+                collection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = collection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            PersonalBestXAxes = new Axis[]
+            {
+                new Axis
+                {
+                    TextSize=12,
+                    //Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            PersonalBestYAxes = new Axis[]
+            {
+                new Axis
+                {
+                    NameTextSize= 12,
+                    TextSize=12,
+                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            personalBestChart.Series = series;
+            personalBestChart.XAxes = PersonalBestXAxes;
+            personalBestChart.YAxes = PersonalBestYAxes;
+        }
+
+        private void SetLineSeriesForPersonalBestByDate(Dictionary<DateTime, long> data)
+        {
+            List<ISeries> series = new();
+
+            ObservableCollection<DateTimePoint> collection = new();
+
+            foreach (var entry in data)
+            {
+                collection.Add(new DateTimePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new ColumnSeries<DateTimePoint>
+            {
+                Values = collection,
+                TooltipLabelFormatter = (chartPoint) =>
+                $"{new DateTime((long)chartPoint.SecondaryValue):MMMM dd}: {MainWindow.DataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
+            });
+
+            PersonalBestXAxes = new Axis[]
+            {
+                new Axis
+                {
+                    Labeler = value => new DateTime((long) value).ToString("MMMM dd"),
+                    LabelsRotation = 80,
+                    
+
+                    // when using a date time type, let the library know your unit 
+                    UnitWidth = TimeSpan.FromDays(1).Ticks, 
+
+                    // if the difference between our points is in hours then we would do:
+                    // UnitWidth = TimeSpan.FromHours(1).Ticks,
+
+                    // since all the months and years have a different number of days
+                    // we can use the average, it would not cause any visible error in the user interface
+                    // Months: TimeSpan.FromDays(30.4375).Ticks
+                    // Years: TimeSpan.FromDays(365.25).Ticks
+
+                    // The MinStep property forces the separator to be greater than 1 day.
+                    MinStep = TimeSpan.FromDays(1).Ticks
+                }
+            };
+
+            PersonalBestYAxes = new Axis[]
+            {
+                new Axis
+                {
+                    NameTextSize= 12,
+                    TextSize=12,
+                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            personalBestChart.Series = series;
+            personalBestChart.XAxes = PersonalBestXAxes;
+            personalBestChart.YAxes = PersonalBestYAxes;
+        }
+
+        private void SetHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> data)
         {
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> collection = new();
@@ -2117,7 +2235,7 @@ namespace MHFZ_Overlay
             graphChart.YAxes = YAxes;
         }
 
-        public void CreateQuestDurationStackedChart(Dictionary<int, int> questDurations)
+        private void CreateQuestDurationStackedChart(Dictionary<int, int> questDurations)
         {
             var series = new List<StackedColumnSeries<int>>();
 
@@ -2150,7 +2268,7 @@ namespace MHFZ_Overlay
             };
         }
 
-        public Dictionary<string, int> GetMostCommonInputs(long runID)
+        private Dictionary<string, int> GetMostCommonInputs(long runID)
         {
             var keystrokesDictionary = DatabaseManager.GetInstance().GetKeystrokesDictionary(runID);
             var mouseInputDictionary = DatabaseManager.GetInstance().GetMouseInputDictionary(runID);
@@ -2163,7 +2281,7 @@ namespace MHFZ_Overlay
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
-        public Dictionary<int, int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> hitsTakenBlocked)
+        private Dictionary<int, int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> hitsTakenBlocked)
         {
             Dictionary<int, int> dictionary = new Dictionary<int, int>();
 
@@ -2179,7 +2297,7 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public Dictionary<int, int> CalculateMonsterHP(Dictionary<int, Dictionary<int, int>> monsterHP)
+        private Dictionary<int, int> CalculateMonsterHP(Dictionary<int, Dictionary<int, int>> monsterHP)
         {
             Dictionary<int, int> dictionary = new Dictionary<int, int>();
 
@@ -2196,7 +2314,7 @@ namespace MHFZ_Overlay
             return dictionary;
         }
 
-        public void SetMonsterHP(Dictionary<int, int> monster1, Dictionary<int, int> monster2, Dictionary<int, int> monster3, Dictionary<int, int> monster4)
+        private void SetMonsterHP(Dictionary<int, int> monster1, Dictionary<int, int> monster2, Dictionary<int, int> monster3, Dictionary<int, int> monster4)
         {
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> monster1Collection = new();
@@ -2444,7 +2562,7 @@ namespace MHFZ_Overlay
             statsTextTextBlock = (TextBlock)sender;
         }
 
-        public Dictionary<int, List<Dictionary<int, int>>> GetElapsedTimeForInventories(Dictionary<int, List<Dictionary<int, int>>> dictionary)
+        private Dictionary<int, List<Dictionary<int, int>>> GetElapsedTimeForInventories(Dictionary<int, List<Dictionary<int, int>>> dictionary)
         {
             Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new Dictionary<int, List<Dictionary<int, int>>>();
             if (dictionary == null || !dictionary.Any())
@@ -2458,7 +2576,7 @@ namespace MHFZ_Overlay
             return elapsedTimeDict;
         }
 
-        public Dictionary<int, int> GetElapsedTimeForDictionaryIntInt(Dictionary<int, int> dictionary)
+        private Dictionary<int, int> GetElapsedTimeForDictionaryIntInt(Dictionary<int, int> dictionary)
         {
             Dictionary<int, int> elapsedTimeDict = new Dictionary<int, int>();
 
@@ -2473,7 +2591,7 @@ namespace MHFZ_Overlay
             return elapsedTimeDict;
         }
 
-        public string FormatInventory(Dictionary<int, List<Dictionary<int, int>>> inventory)
+        private string FormatInventory(Dictionary<int, List<Dictionary<int, int>>> inventory)
         {
             var formattedInventory = "";
             inventory = GetElapsedTimeForInventories(inventory);
@@ -2512,7 +2630,7 @@ namespace MHFZ_Overlay
             return sb.ToString();
         }
 
-        public string DisplayAreaChanges(Dictionary<int, int> areas)
+        private string DisplayAreaChanges(Dictionary<int, int> areas)
         {
             var formatteAreas = "";
             areas = GetElapsedTimeForDictionaryIntInt(areas);
@@ -2597,7 +2715,7 @@ namespace MHFZ_Overlay
                 switch (selectedOption)
                 {
                     default:
-                        logger.Warn("Could not find preset name for settings");
+                        logger.Warn("PROGRAM OPERATION: Could not find preset name for settings");
                         return;
                     case "None":
                         return;
@@ -2710,10 +2828,46 @@ namespace MHFZ_Overlay
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            if (personalBestSelectedWeapon == "" || personalBestSelectedType == "")
+            if (personalBestChart == null || personalBestSelectedWeapon == "" || personalBestSelectedType == "")
                 return;
 
-            // TODO: get data from the databasemanager sqlite function into the graph
+            PersonalBestSeries = null;
+            PersonalBestXAxes = new Axis[]
+            {
+                new Axis
+                {
+
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+            PersonalBestYAxes = new Axis[]
+            {
+                new Axis
+                {
+
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            long questID = long.Parse(QuestIDTextBox.Text.Trim());
+            int weaponTypeID = Dictionary.WeaponTypes.WeaponTypeID.FirstOrDefault(x => x.Value == personalBestSelectedWeapon).Key;
+
+            switch (personalBestSelectedType)
+            {
+                case "(Quest ID) Personal Best by Date":
+                    SetLineSeriesForPersonalBestByDate(DatabaseManager.GetInstance().GetPersonalBestsByDate(questID, weaponTypeID, OverlayModeComboBox.Text));
+                    break;
+                case "(Quest ID) Personal Best by Attempts":
+                    SetLineSeriesForPersonalBestByAttempts(DatabaseManager.GetInstance().GetPersonalBestsByAttempts(questID, weaponTypeID, OverlayModeComboBox.Text));
+                    break;
+                default:
+                    personalBestChart.Series = PersonalBestSeries;
+                    personalBestChart.XAxes = PersonalBestXAxes;
+                    personalBestChart.YAxes = PersonalBestYAxes;
+                    break;
+            }
         }
     }
     /* LoadConfig on startup

@@ -15,9 +15,12 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using Formatting = Newtonsoft.Json.Formatting;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
@@ -44,7 +47,7 @@ namespace MHFZ_Overlay
             // Apply config           
             NLog.LogManager.Configuration = config;
 
-            logger.Info($"DatabaseManager initialized");
+            logger.Info($"PROGRAM OPERATION: DatabaseManager initialized");
         }
 
         private string _customDatabasePath;
@@ -61,7 +64,7 @@ namespace MHFZ_Overlay
 
                 // Show warning to user that they should set a custom database path to prevent data loss on update
                 MessageBox.Show("Warning: The database is currently stored in the default location and will be deleted on update. Please select a custom database location to prevent data loss.", "MHFZ-Overlay Data Loss Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                logger.Warn("The database file is being saved to the overlay default location");
+                logger.Warn("DATABASE OPERATION: The database file is being saved to the overlay default location");
                 // Use default database path
                 _customDatabasePath = _connectionString;
             }
@@ -72,6 +75,7 @@ namespace MHFZ_Overlay
 
             if (!File.Exists(_customDatabasePath))
             {
+                logger.Info("DATABASE OPERATION: {0} not found, creating file", _customDatabasePath);
                 SQLiteConnection.CreateFile(_customDatabasePath);
             }
 
@@ -146,7 +150,7 @@ namespace MHFZ_Overlay
                 catch (SQLiteException ex)
                 {
                     MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    logger.Error(ex,"Invalid database file");
+                    logger.Error(ex,"DATABASE OPERATION: Invalid database file");
                     Environment.Exit(0);
                 }
 
@@ -167,6 +171,7 @@ namespace MHFZ_Overlay
                     // Check if the reference schema file exists
                     if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json")))
                     {
+                        logger.Info("FILE OPERATION: {0} not found, creating file", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
                         CreateReferenceSchemaJSONFromLocalDatabaseFile(conn);
                     }
                     else
@@ -177,6 +182,7 @@ namespace MHFZ_Overlay
 
                         // Create a dictionary to store the current schema
                         var currentSchema = CreateReferenceSchemaJSONFromLocalDatabaseFile(conn, false);
+                        logger.Info("FILE OPERATION: {0} found, comparing file", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
                         CompareDatabaseSchemas(referenceSchema, currentSchema);
                     }
                 }
@@ -184,7 +190,7 @@ namespace MHFZ_Overlay
                 if (schemaChanged)
                 {
                     MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    logger.Warn("Invalid database schema");
+                    logger.Warn("DATABASE OPERATION: Invalid database schema");
                 }
             }
 
@@ -1674,7 +1680,7 @@ namespace MHFZ_Overlay
                             transaction.Rollback();
                         // Handle a SQL exception
                         MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState + "\n\n" + ex.HelpLink + "\n\n" + ex.ResultCode + "\n\n" + ex.ErrorCode + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        logger.Error(ex, "An error occurred while accessing the database");
+                        logger.Error(ex, "DATABASE OPERATION: An error occurred while accessing the database");
                     }
                     catch (IOException ex)
                     {
@@ -1682,7 +1688,7 @@ namespace MHFZ_Overlay
                             transaction.Rollback();
                         // Handle an I/O exception
                         MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        logger.Error(ex, "An error occurred while accessing a file");
+                        logger.Error(ex, "FILE OPERATION: An error occurred while accessing a file");
 
                     }
                     catch (ArgumentException ex)
@@ -1690,7 +1696,7 @@ namespace MHFZ_Overlay
                         if (transaction != null)
                             transaction.Rollback();
                         MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        logger.Error(ex, "ArgumentException");
+                        logger.Error(ex, "PROGRAM OPERATION: ArgumentException");
 
                     }
                     catch (Exception ex)
@@ -2118,7 +2124,7 @@ namespace MHFZ_Overlay
 
             // Handle the exception and show an error message to the user
             MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            logger.Error(ex, "An error occurred");
+            logger.Error(ex, "DATABASE OPERATION: An error occurred");
         }
 
         public void MakeDeserealizedQuestInfoDictionariesFromRunID(SQLiteConnection conn, DataLoader dataLoader, int runID)
@@ -2215,21 +2221,21 @@ namespace MHFZ_Overlay
             {
                 // Handle a SQL exception
                 MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Error(ex, "An error occurred while accessing the database");
+                logger.Error(ex, "DATABASE OPERATION: An error occurred while accessing the database");
 
             }
             catch (IOException ex)
             {
                 // Handle an I/O exception
                 MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Error(ex, "An error occurred while accessing a file");
+                logger.Error(ex, "FILE OPERATION: An error occurred while accessing a file");
 
             }
             catch (Exception ex)
             {
                 // Handle any other exception
                 MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Error(ex, "An error occurred");
+                logger.Error(ex, "PROGRAM OPERATION: An error occurred");
 
             }
         }
@@ -2385,6 +2391,8 @@ namespace MHFZ_Overlay
 
                 // Write the JSON string to the reference schema file
                 File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"), json);
+                logger.Info("FILE OPERATION: writing into {0}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
+
             }
 
             return schema;
@@ -2466,7 +2474,7 @@ namespace MHFZ_Overlay
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                 MessageBox.Show(@"ERROR: The database schema got updated in the latest version. Please make sure that both MHFZ_Overlay.sqlite and reference_schema.json don't exist in the current overlay directory, so that the program can make new ones",
                 "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Warn("Invalid database schema");
+                logger.Warn("DATABASE OPERATION: Invalid database schema");
 
                 s.EnableQuestLogging = false;
             }
@@ -4161,7 +4169,7 @@ namespace MHFZ_Overlay
         }
 
         // TODO: test
-        public Dictionary<DateTime, long> GetPersonalBestsByDate(long questID, int weaponTypeID, string category, DataLoader dataLoader)
+        public Dictionary<DateTime, long> GetPersonalBestsByDate(long questID, int weaponTypeID, string category)
         {
             Dictionary<DateTime, long> personalBests = new();
 
@@ -4174,8 +4182,8 @@ namespace MHFZ_Overlay
                     {
                         using (SQLiteCommand cmd = new SQLiteCommand(
                             @"SELECT 
-                                TimeLeft, 
-                                ActualOverlayMode,
+                                q.FinalTimeValue, 
+                                q.ActualOverlayMode,
                                 pg.WeaponTypeID,
                                 q.CreatedAt,
                                 q.RunID
@@ -4184,10 +4192,10 @@ namespace MHFZ_Overlay
                             JOIN
                                 PlayerGear pg ON q.RunID = pg.RunID
                             WHERE 
-                                QuestID = @questID
+                                q.QuestID = @questID
                                 AND pg.WeaponTypeID = @weaponTypeID
-                                AND ActualOverlayMode = @category
-                                AND PartySize = 1
+                                AND q.ActualOverlayMode = @category
+                                AND q.PartySize = 1
                             ORDER BY 
                                 q.CreatedAt ASC"
                         , conn))
@@ -4202,8 +4210,8 @@ namespace MHFZ_Overlay
                             while (reader.Read())
                             {
                                 long runID = reader.GetInt64(reader.GetOrdinal("RunID"));
-                                long time = reader.GetInt64(reader.GetOrdinal("TimeLeft"));
-                                DateTime createdAt = reader.GetDateTime(reader.GetOrdinal("CreatedAt"));
+                                long time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                                DateTime createdAt = reader.GetDateTime(reader.GetOrdinal("CreatedAt")).Date;
 
                                 if (personalBestTimes.ContainsKey(createdAt))
                                 {
@@ -4244,6 +4252,9 @@ namespace MHFZ_Overlay
                 }
             }
 
+            if (!personalBests.Any())
+                return personalBests;
+
             // Fill in missing dates with the last known personal best time
             DateTime startDate = personalBests.Keys.Min();
             DateTime endDate = personalBests.Keys.Max();
@@ -4265,7 +4276,7 @@ namespace MHFZ_Overlay
         }
 
         // TODO: test
-        public Dictionary<long, long> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category, DataLoader dataLoader)
+        public Dictionary<long, long> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category)
         {
             Dictionary<long, long> personalBests = new();
 
@@ -4278,8 +4289,8 @@ namespace MHFZ_Overlay
                     {
                         using (SQLiteCommand cmd = new SQLiteCommand(
                             @"SELECT 
-                                TimeLeft, 
-                                ActualOverlayMode,
+                                q.FinalTimeValue, 
+                                q.ActualOverlayMode,
                                 pg.WeaponTypeID,
                                 q.RunID,
                                 qa.Attempts
@@ -4290,10 +4301,10 @@ namespace MHFZ_Overlay
                             JOIN
                                 QuestAttempts qa ON q.QuestID = qa.QuestID
                             WHERE 
-                                QuestID = @questID
+                                q.QuestID = @questID
                                 AND pg.WeaponTypeID = @weaponTypeID
-                                AND ActualOverlayMode = @category
-                                AND PartySize = 1
+                                AND q.ActualOverlayMode = @category
+                                AND q.PartySize = 1
                             ORDER BY 
                                 qa.Attempts ASC"
                         , conn))
@@ -4308,7 +4319,7 @@ namespace MHFZ_Overlay
                             while (reader.Read())
                             {
                                 long runID = reader.GetInt64(reader.GetOrdinal("RunID"));
-                                long time = reader.GetInt64(reader.GetOrdinal("TimeLeft"));
+                                long time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
                                 long attempts = reader.GetInt64(reader.GetOrdinal("Attempts"));
 
                                 if (personalBestTimes.ContainsKey(attempts))
@@ -4353,50 +4364,68 @@ namespace MHFZ_Overlay
             return personalBests;
         }
 
-        public void UpsertQuestAttempts(long questID, int weaponTypeID, string category)
+        private static object lockObj = new object();
+
+        public int UpsertQuestAttempts(long questID, int weaponTypeID, string category)
         {
+            int attempts = 0;
+
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
                 using (SQLiteTransaction transaction = conn.BeginTransaction())
                 {
-                    try
+                    int numRetries = 0;
+                    bool success = false;
+                    while (!success && numRetries < 3)
                     {
-                        // I'm not taking into account party size, should be fine
-                        using (SQLiteCommand command = new SQLiteCommand(conn))
+                        try
                         {
-                            command.CommandText =
-                                @"UPDATE 
-                                    QuestAttempts 
-                                SET 
-                                    Attempts = Attempts + 1 
-                                WHERE 
-                                    QuestID = @QuestID 
-                                    AND WeaponTypeID = @WeaponTypeID 
-                                    AND ActualOverlayMode = @ActualOverlayMode;
+                            using (SQLiteCommand command = new SQLiteCommand(conn))
+                            {
+                                command.CommandText =
+                                    @"INSERT INTO 
+                            QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
+                        VALUES 
+                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1)
+                        ON CONFLICT 
+                            (QuestID, WeaponTypeID, ActualOverlayMode) 
+                        DO UPDATE
+                        SET 
+                            Attempts = Attempts + 1
+                        RETURNING 
+                            Attempts;";
 
-                                INSERT INTO 
-                                    QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
-                                SELECT 
-                                    @QuestID, @WeaponTypeID, @ActualOverlayMode, 1
-                                WHERE 
-                                    (SELECT Changes() = 0);";
+                                command.Parameters.AddWithValue("@QuestID", questID);
+                                command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+                                command.Parameters.AddWithValue("@ActualOverlayMode", category);
 
-                            command.Parameters.AddWithValue("@QuestID", questID);
-                            command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
-                            command.Parameters.AddWithValue("@ActualOverlayMode", category);
-
-                            command.ExecuteNonQuery();
+                                attempts = Convert.ToInt32(command.ExecuteScalar());
+                            }
+                            transaction.Commit();
+                            success = true;
                         }
-                        transaction.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        HandleError(transaction, ex);
+                        catch (SQLiteException ex)
+                        {
+                            if (ex.ResultCode == SQLiteErrorCode.Locked || ex.ResultCode == SQLiteErrorCode.Busy)
+                            {
+                                // Database is locked, retry after a short delay
+                                numRetries++;
+                                Thread.Sleep(1000);
+                            }
+                            else
+                            {
+                                // Some other error occurred, abort the transaction
+                                HandleError(transaction, ex);
+                                break;
+                            }
+                        }
                     }
                 }
             }
+            return attempts;
         }
+
 
         public long GetQuestAttempts(long questID, int weaponTypeID, string category)
         {
@@ -4412,17 +4441,17 @@ namespace MHFZ_Overlay
                         // I'm not taking into account party size, should be fine
                         using (SQLiteCommand cmd = new SQLiteCommand(
                             @"SELECT
-                                Attempts
-                            FROM 
-                                QuestAttempts
-                            WHERE 
-                                QuestID = @questID
-                                AND WeaponTypeID = @weaponTypeID
-                                AND ActualOverlayMode = @category", conn))
-                            {
-                            cmd.Parameters.AddWithValue("@questID", questID);
-                            cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
-                            cmd.Parameters.AddWithValue("@category", category);
+                            Attempts
+                        FROM 
+                            QuestAttempts
+                        WHERE 
+                            QuestID = @questID
+                            AND WeaponTypeID = @weaponTypeID
+                            AND ActualOverlayMode = @category", conn))
+                        {
+                            cmd.Parameters.Add("@questID", DbType.Int64).Value = questID;
+                            cmd.Parameters.Add("@weaponTypeID", DbType.Int32).Value = weaponTypeID;
+                            cmd.Parameters.Add("@category", DbType.String).Value = category;
 
                             object result = cmd.ExecuteScalar();
                             if (result != null)
@@ -7111,12 +7140,14 @@ namespace MHFZ_Overlay
                                 string databasePath = Path.Combine(mhfDirectory, "database");
                                 backupFileName = Path.Combine(databasePath, "MHFZ_Overlay_" + previousVersion + ".sqlite");
                                 File.Copy(s.DatabaseFilePath, backupFileName);
+                                logger.Info("FILE OPERATION: copying {0} into {1}", s.DatabaseFilePath, backupFileName);
+
                             }
                             else
                             {
                                 // The "mhf.exe" process was not found
                                 MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                logger.Fatal("mhf.exe not found");
+                                logger.Fatal("PROGRAM OPERATION: mhf.exe not found");
                                 Environment.Exit(0);
                             }
 
@@ -7137,19 +7168,19 @@ namespace MHFZ_Overlay
                             {
                                 // Perform the update
                                 versionUpdates[previousVersion]();
-                                logger.Info("Database schema updated from {0} to {1}", previousVersion, MainWindow.CurrentProgramVersion);
+                                logger.Info("DATABASE OPERATION: Database schema updated from {0} to {1}", previousVersion, MainWindow.CurrentProgramVersion);
                             }
                             else
                             {
                                 MessageBox.Show("The current version and the previous version aren't the same, however no update was found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                logger.Fatal("The current version and the previous version aren't the same, however no update was found");
+                                logger.Fatal("PROGRAM OPERATION: The current version and the previous version aren't the same, however no update was found");
                                 Environment.Exit(0);
                             }
                         }
                         else
                         {
                             MessageBox.Show("Cannot use the overlay with an outdated database schema", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            logger.Fatal("Outdated database schema");
+                            logger.Fatal("DATABASE OPERATION: Outdated database schema");
                             Environment.Exit(0);
                         }
                     }
@@ -7209,7 +7240,7 @@ namespace MHFZ_Overlay
             }
             catch(Exception ex)
             {
-                logger.Error(ex, "Error with version file");
+                logger.Error(ex, "FILE OPERATION: Error with version file");
             }
         }
 

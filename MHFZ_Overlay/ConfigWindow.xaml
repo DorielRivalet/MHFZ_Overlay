@@ -95,7 +95,7 @@
                     <StackPanel  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
                             <!--TODO: add the refresh button to the other sections-->
-                            <Button Background="Transparent" BorderThickness="0" ToolTip="Refresh" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Refresh.xaml'}"  Click="RefreshButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                            <Button Background="Transparent" BorderThickness="0" ToolTip="Refresh" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Refresh.xaml'}"  Click="RefreshButton_Click" Width="32" Style="{StaticResource ConfigBottomButtons}" Height="32"/>
 
                             <ComboBox Margin="5,0,0,0" Width="300" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestTypeComboBox_SelectionChanged">
                                 <ComboBoxItem>(Quest ID) Personal Best by Date</ComboBoxItem>

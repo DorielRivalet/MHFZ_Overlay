@@ -2,6 +2,7 @@
 using Memory;
 using MHFZ_Overlay.addresses;
 using NLog;
+using Octokit;
 using Squirrel;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace MHFZ_Overlay
             string settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
             string destination = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
             File.Copy(settingsFile, destination, true);
-            logger.Info("Backed up settings. File: {0}, Destination: {1}", settingsFile, destination);
+            logger.Info("FILE OPERATION: Backed up settings. File: {0}, Destination: {1}", settingsFile, destination);
             MessageBox.Show(string.Format("Backed up settings. File: {0}, Destination: {1}", settingsFile, destination), "MHF-Z Overlay Settings", MessageBoxButton.OK,MessageBoxImage.Information);
         }
 
@@ -58,27 +59,31 @@ namespace MHFZ_Overlay
             if (!File.Exists(sourceFile))
             {
                 // Nothing we need to do
-                logger.Info("File not found at {0}", sourceFile);
+                logger.Info("FILE OPERATION: File not found at {0}", sourceFile);
                 return;
             }
             // Create directory as needed
             try
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(destFile));
+                logger.Info("FILE OPERATION: creating directory {0}", Path.GetDirectoryName(destFile));
+
             }
             catch (Exception ex) 
             {
-                logger.Info(ex, "Did not make directory for {0}", destFile);
+                logger.Info(ex, "FILE OPERATION: Did not make directory for {0}", destFile);
             }
 
             // Copy our backup file in place 
             try
             {
                 File.Copy(sourceFile, destFile, true);
+                logger.Info("FILE OPERATION: copying {0} into {1}", sourceFile, destFile);
+
             }
             catch (Exception ex) 
             {
-                logger.Info(ex, "Did not copy backup file. Source: {0}, Destination: {1} ", sourceFile, destFile);
+                logger.Info(ex, "FILE OPERATION: Did not copy backup file. Source: {0}, Destination: {1} ", sourceFile, destFile);
 
             }
 
@@ -86,13 +91,15 @@ namespace MHFZ_Overlay
             try
             {
                 File.Delete(sourceFile);
+                logger.Info("FILE OPERATION: deleting {0}", sourceFile);
+
             }
             catch (Exception ex) 
             {
-                logger.Info(ex, "Did not delete backup file. Source: {0}", sourceFile);
+                logger.Info(ex, "FILE OPERATION: Did not delete backup file. Source: {0}", sourceFile);
             }
 
-            logger.Info("Restored settings. Source: {0}, Destination: {1}", sourceFile, destFile);
+            logger.Info("FILE OPERATION: Restored settings. Source: {0}, Destination: {1}", sourceFile, destFile);
         }
 
         // TODO: would like to make this a singleton but its complicated
@@ -123,7 +130,7 @@ namespace MHFZ_Overlay
             // ... other app init code after ...
             RestoreSettings();
 
-            logger.Info($"DataLoader started");
+            logger.Info($"PROGRAM OPERATION: DataLoader started");
 
             int PID = m.GetProcIdFromName("mhf");
             if (PID > 0)
@@ -139,17 +146,17 @@ namespace MHFZ_Overlay
                     // ReShade or similar programs might trigger this warning. Does these affect overlay functionality?
                     // Imulion's version does not have anything in the catch block.
                     //System.Windows.MessageBox.Show($"Warning: could not create code cave. ReShade or similar programs might trigger this warning. You can ignore this warning. \n\n{ex}", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                    logger.Warn(ex, "Could not create code cave");
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not create code cave");
                 }
 
                 if (!isHighGradeEdition)
                 {
-                    logger.Info("Running game in Non-HGE");
+                    logger.Info("PROGRAM OPERATION: Running game in Non-HGE");
                     model = new AddressModelNotHGE(m);
                 }
                 else
                 {
-                    logger.Info("Running game in HGE");
+                    logger.Info("PROGRAM OPERATION: Running game in HGE");
                     model = new AddressModelHGE(m);
                 }
 
@@ -165,7 +172,7 @@ namespace MHFZ_Overlay
             else
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                logger.Fatal("Launch game first");
+                logger.Fatal("PROGRAM OPERATION: Launch game first");
                 Environment.Exit(0);
             }
         }
@@ -174,7 +181,7 @@ namespace MHFZ_Overlay
         {
             if (model.AreaID() != 200)
             {
-                logger.Warn("Loaded overlay outside Mezeporta");
+                logger.Warn("PROGRAM OPERATION: Loaded overlay outside Mezeporta");
                 System.Windows.MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
 
             }
@@ -216,6 +223,7 @@ namespace MHFZ_Overlay
                 {
                     // Create the version file if it doesn't exist
                     File.Create(previousVersionPath);
+                    logger.Info("FILE OPERATION: creating version file at {0}", previousVersionPath);
                 }
 
                 s.PreviousVersionFilePath = previousVersionPath;
@@ -226,7 +234,7 @@ namespace MHFZ_Overlay
             {
                 // The "mhf.exe" process was not found
                 MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Fatal("mhf.exe not found");
+                logger.Fatal("PROGRAM OPERATION: mhf.exe not found");
                 Environment.Exit(0);
             }
         }
@@ -264,7 +272,7 @@ namespace MHFZ_Overlay
                 {
                     // processName is a substring of one of the banned process strings
                     MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
-                    logger.Fatal("Found banned process {0}", process.ProcessName);
+                    logger.Fatal("PROGRAM OPERATION: Found banned process {0}", process.ProcessName);
 
                     // Close the overlay program
                     Environment.Exit(0);
@@ -282,7 +290,7 @@ namespace MHFZ_Overlay
             {
                 // More than one "MHFZ_Overlay" process is running
                 MessageBox.Show("Close other instances of the overlay before opening a new one", "Error");
-                logger.Fatal("Found duplicate overlay");
+                logger.Fatal("PROGRAM OPERATION: Found duplicate overlay");
 
                 // Close the overlay program
                 Environment.Exit(0);
@@ -291,7 +299,7 @@ namespace MHFZ_Overlay
             {
                 // More than one game process is running
                 MessageBox.Show("Close other instances of the game before opening a new one", "Error");
-                logger.Fatal("Found duplicate game");
+                logger.Fatal("PROGRAM OPERATION: Found duplicate game");
 
                 // Close the overlay program
                 Environment.Exit(0);
@@ -345,7 +353,7 @@ namespace MHFZ_Overlay
                     // If there are any banned files or folders, display an error message and exit the application
                     string message = string.Format("The following files or folders are not allowed:\n{0}", string.Join("\n", illegalFiles));
                     MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    logger.Fatal(message);
+                    logger.Fatal("FILE OPERATION: {0}",message);
                     Environment.Exit(0);
                 }
             }
@@ -353,7 +361,7 @@ namespace MHFZ_Overlay
             {
                 // The "mhf.exe" process was not found
                 MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Fatal("mhf.exe not found");
+                logger.Fatal("PROGRAM OPERATION: mhf.exe not found");
                 Environment.Exit(0);
             }
         }
@@ -426,7 +434,7 @@ namespace MHFZ_Overlay
             if (proc == null)
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                logger.Fatal("Launch game first");
+                logger.Fatal("PROGRAM OPERATION: Launch game first");
                 Environment.Exit(0);
                 return;
             }
