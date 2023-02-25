@@ -4385,6 +4385,9 @@ namespace MHFZ_Overlay
                                 }
                             }
 
+                            if (!personalBestTimes.Any())
+                                return personalBests;
+
                             // Populate personalBests dictionary with personal best times by date
                             DateTime currentDate = personalBestTimes.Keys.Min();
                             long currentBest = personalBestTimes[currentDate];
