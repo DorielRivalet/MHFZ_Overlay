@@ -2096,16 +2096,17 @@ namespace MHFZ_Overlay
                 Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
                 TooltipLabelFormatter = (chartPoint) =>
-                $"{new DateTime((long)chartPoint.SecondaryValue):MMMM dd}: {MainWindow.DataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
+                $"{new DateTime((long)chartPoint.SecondaryValue):yy-MM-dd}: {MainWindow.DataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
             });
 
             PersonalBestXAxes = new Axis[]
             {
                 new Axis
                 {
-                    Labeler = value => new DateTime((long) value).ToString("MMMM dd"),
+                    Labeler = value => new DateTime((long) value).ToString("yy-MM-dd"),
                     LabelsRotation = 80,
-                    
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
 
                     // when using a date time type, let the library know your unit 
                     UnitWidth = TimeSpan.FromDays(1).Ticks, 

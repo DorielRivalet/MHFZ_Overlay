@@ -129,7 +129,7 @@ namespace MHFZ_Overlay
 
             if (!isDatabaseSetup)
             {
-                isDatabaseSetup = true; 
+                isDatabaseSetup = true;
 
                 CheckIfUserSetDatabasePath();
                 // TODO: test and add semantic versioning regex
@@ -150,7 +150,7 @@ namespace MHFZ_Overlay
                 catch (SQLiteException ex)
                 {
                     MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    logger.Error(ex,"DATABASE OPERATION: Invalid database file");
+                    logger.Error(ex, "DATABASE OPERATION: Invalid database file");
                     Environment.Exit(0);
                 }
 
@@ -226,20 +226,62 @@ namespace MHFZ_Overlay
             return hashString;
         }
 
-        public void InsertQuestData(DataLoader dataLoader)
+        public void InsertPersonalBest(DataLoader dataLoader, long currentPersonalBest, long attempts, int runID)
         {
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                var model = dataLoader.model;
+                string sql;
+
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        sql = @"INSERT INTO PersonalBests(
+                        RunID,
+                        Attempts
+                        ) VALUES (
+                        @RunID,
+                        @Attempts)";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            int finalTimeValue = model.TimeDefInt() - model.TimeInt();
+                            if (finalTimeValue < currentPersonalBest || currentPersonalBest == 0)
+                            {
+                                cmd.Parameters.AddWithValue("@RunID", runID);
+                                cmd.Parameters.AddWithValue("@Attempts", attempts);
+                                // Execute the stored procedure
+                                cmd.ExecuteNonQuery();
+                            }
+                            // Commit the transaction
+                            transaction.Commit();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+        }
+
+        public int InsertQuestData(DataLoader dataLoader, int attempts)
+        {
+            int runID = 0;
+            string actualOverlayMode = "";
             dataLoader.model.ShowSaveIcon = true;
 
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
             if (!dataLoader.model.ValidateGameFolder())
-                return;
+                return runID;
 
             if (!s.EnableQuestLogging)
-                return;
+                return runID;
 
             if (!dataLoader.model.questCleared)
-                return;
+                return runID;
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -255,8 +297,6 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
-                        int runID;
-
                         using (var cmd = new SQLiteCommand(conn))
                         {
                             cmd.CommandText = @"SELECT MAX(RunID) FROM Quests;";
@@ -434,7 +474,6 @@ namespace MHFZ_Overlay
                             Dictionary<int, string> gamepadInputDictionary = dataLoader.model.gamepadInputDictionary;
                             Dictionary<int, double> actionsPerMinuteDictionary = dataLoader.model.actionsPerMinuteDictionary;
                             Dictionary<int, string> overlayModeDictionary = dataLoader.model.overlayModeDictionary;
-                            string actualOverlayMode;
                             //check if its grabbing a TimeDefInt from a previous quest
                             //TODO is this enough?
                             if ((overlayModeDictionary.Count == 2 && overlayModeDictionary.Last().Value == "") ||
@@ -516,6 +555,59 @@ namespace MHFZ_Overlay
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
                             runID = Convert.ToInt32(cmd.ExecuteScalar());
+                        }
+
+                        long personalBest = 0;
+
+                        using (SQLiteCommand cmd = new SQLiteCommand(
+                        @"SELECT 
+                            TimeLeft, 
+                            FinalTimeValue,
+                            FinalTimeDisplay,
+                            ActualOverlayMode,
+                            pg.WeaponTypeID
+                        FROM 
+                            Quests q
+                        JOIN
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        WHERE 
+                            QuestID = @questID
+                            AND pg.WeaponTypeID = @weaponTypeID
+                            AND ActualOverlayMode = @category
+                            AND PartySize = 1
+                        ORDER BY 
+                            FinalTimeValue ASC
+                        LIMIT 1", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@questID", dataLoader.model.QuestID());
+                            cmd.Parameters.AddWithValue("@weaponTypeID", dataLoader.model.WeaponType());
+                            cmd.Parameters.AddWithValue("@category", actualOverlayMode);
+
+                            var reader = cmd.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                long time = 0;
+                                time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                                personalBest = time;
+                            }
+                        }
+
+                        sql = @"INSERT INTO PersonalBests(
+                        RunID,
+                        Attempts
+                        ) VALUES (
+                        @RunID,
+                        @Attempts)";
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            int finalTimeValue = model.TimeDefInt() - model.TimeInt();
+                            if (finalTimeValue < personalBest || personalBest == 0)
+                            {
+                                cmd.Parameters.AddWithValue("@RunID", runID);
+                                cmd.Parameters.AddWithValue("@Attempts", attempts);
+                                // Execute the stored procedure
+                                cmd.ExecuteNonQuery();
+                            }
                         }
 
                         sql = @"INSERT INTO GameFolder (
@@ -1670,7 +1762,6 @@ namespace MHFZ_Overlay
                             // Execute the stored procedure
                             cmd.ExecuteNonQuery();
                         }
-
                         // Commit the transaction
                         transaction.Commit();
                     }
@@ -1707,6 +1798,7 @@ namespace MHFZ_Overlay
             }
 
             dataLoader.model.ShowSaveIcon = false;
+            return runID;
         }
 
         private void CreateDatabaseTriggers(SQLiteConnection conn)
@@ -3599,6 +3691,16 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
+                    sql = @"CREATE TABLE IF NOT EXISTS PersonalBests(
+                    PersonalBestsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL,
+                    Attempts INTEGER NOT NULL,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID))";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
                     #region gacha
                     // a mh game but like a MUD. hunt in-game to get many kinds of points for this game. hunt and tame monsters. challenge other CPU players/monsters.
 
@@ -4102,6 +4204,61 @@ namespace MHFZ_Overlay
             return success;
         }
 
+        public long GetPersonalBestElapsedTimeValue(long questID, int weaponTypeID, string category)
+        {
+            long personalBest = 0;
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand(
+                            @"SELECT 
+                                TimeLeft, 
+                                FinalTimeValue,
+                                FinalTimeDisplay,
+                                ActualOverlayMode,
+                                pg.WeaponTypeID
+                            FROM 
+                                Quests q
+                            JOIN
+                                PlayerGear pg ON q.RunID = pg.RunID
+                            WHERE 
+                                QuestID = @questID
+                                AND pg.WeaponTypeID = @weaponTypeID
+                                AND ActualOverlayMode = @category
+                                AND PartySize = 1
+                            ORDER BY 
+                                FinalTimeValue ASC
+                            LIMIT 1", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@questID", questID);
+                            cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                            cmd.Parameters.AddWithValue("@category", category);
+
+                            var reader = cmd.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                long time = 0;
+                                time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                                personalBest = time;
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+
+            return personalBest;
+        }
+
         public string GetPersonalBest(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader)
         {
             string personalBest = "--:--.--";
@@ -4257,6 +4414,7 @@ namespace MHFZ_Overlay
         }
 
         // TODO: test
+        // Get personal best times by attempts
         public Dictionary<long, long> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category)
         {
             Dictionary<long, long> personalBests = new();
@@ -4270,24 +4428,23 @@ namespace MHFZ_Overlay
                     {
                         using (SQLiteCommand cmd = new SQLiteCommand(
                             @"SELECT 
-                                q.FinalTimeValue, 
-                                q.ActualOverlayMode,
-                                pg.WeaponTypeID,
-                                q.RunID,
-                                qa.Attempts
-                            FROM 
-                                Quests q
-                            JOIN
-                                PlayerGear pg ON q.RunID = pg.RunID
-                            JOIN
-                                QuestAttempts qa ON q.QuestID = qa.QuestID
-                            WHERE 
-                                q.QuestID = @questID
-                                AND pg.WeaponTypeID = @weaponTypeID
-                                AND q.ActualOverlayMode = @category
-                                AND q.PartySize = 1
-                            ORDER BY 
-                                qa.Attempts ASC"
+                        q.FinalTimeValue, 
+                        q.ActualOverlayMode,
+                        pg.WeaponTypeID,
+                        qa.Attempts
+                    FROM 
+                        Quests q
+                    JOIN
+                        PlayerGear pg ON q.RunID = pg.RunID
+                    JOIN
+                        QuestAttempts qa ON q.QuestID = qa.QuestID
+                    WHERE 
+                        q.QuestID = @questID
+                        AND pg.WeaponTypeID = @weaponTypeID
+                        AND q.ActualOverlayMode = @category
+                        AND q.PartySize = 1
+                    ORDER BY 
+                        qa.Attempts ASC"
                         , conn))
                         {
                             cmd.Parameters.AddWithValue("@questID", questID);
@@ -4295,41 +4452,36 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@category", category);
 
                             var reader = cmd.ExecuteReader();
-                            Dictionary<long, long> personalBestTimes = new Dictionary<long, long>();
 
+                            // Store personal best times by attempts
                             while (reader.Read())
                             {
-                                long runID = reader.GetInt64(reader.GetOrdinal("RunID"));
                                 long time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
                                 long attempts = reader.GetInt64(reader.GetOrdinal("Attempts"));
 
-                                if (personalBestTimes.ContainsKey(attempts))
+                                if (personalBests.ContainsKey(attempts))
                                 {
-                                    long personalBest = personalBestTimes[attempts];
-                                    // Check if current time is faster than previous time for this day
+                                    long personalBest = personalBests[attempts];
                                     if (time < personalBest)
                                     {
-                                        personalBestTimes[attempts] = time;
+                                        personalBests[attempts] = time;
+                                        // Update personal best for all future attempts
+                                        for (long i = attempts + 1; i <= personalBests.Keys.Max(); i++)
+                                        {
+                                            if (personalBests[i] > time)
+                                            {
+                                                personalBests[i] = time;
+                                            }
+                                            else
+                                            {
+                                                break;
+                                            }
+                                        }
                                     }
                                 }
                                 else
                                 {
-                                    personalBestTimes[attempts] = time;
-                                }
-                            }
-
-                            // Populate personalBests dictionary with personal best times by date
-                            foreach (var kvp in personalBestTimes)
-                            {
-                                long attempts = kvp.Key;
-                                long personalBest = kvp.Value;
-                                if (!personalBests.ContainsKey(attempts))
-                                {
-                                    personalBests[attempts] = personalBest;
-                                }
-                                else if (personalBest < personalBests[attempts])
-                                {
-                                    personalBests[attempts] = personalBest;
+                                    personalBests.Add(attempts, time);
                                 }
                             }
                         }
@@ -7186,6 +7338,16 @@ namespace MHFZ_Overlay
             FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
             UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
             )";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS PersonalBests(
+                    PersonalBestsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL,
+                    Attempts INTEGER NOT NULL,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID))";
             using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
             {
                 cmd.ExecuteNonQuery();

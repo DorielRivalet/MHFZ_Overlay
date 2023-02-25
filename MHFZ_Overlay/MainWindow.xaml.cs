@@ -39,6 +39,7 @@ using Label = System.Windows.Controls.Label;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
 using NLog;
+using System.Linq;
 
 namespace MHFZ_Overlay
 {
@@ -2823,7 +2824,7 @@ namespace MHFZ_Overlay
                 DataLoader.model.questCleared = true;
                 DataLoader.model.loadedItemsAtQuestStart = false;
                 if (s.EnableQuestLogging)
-                    databaseManager.InsertQuestData(DataLoader);
+                    databaseManager.InsertQuestData(DataLoader, int.Parse(questAttemptsTextBlock.Text));
             }
         }
 
