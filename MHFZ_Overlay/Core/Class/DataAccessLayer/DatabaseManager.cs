@@ -1818,6 +1818,7 @@ namespace MHFZ_Overlay
                     // ammopouch
                     // roaddureskills
                     // playergear 
+                    // overlay
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
                         cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_audit_deletion
@@ -2032,6 +2033,26 @@ namespace MHFZ_Overlay
                     {
                         cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_player_gear_deletion
                         AFTER DELETE ON PlayerGear
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_overlay_updates
+                        AFTER UPDATE ON Overlay
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_overlay_deletion
+                        AFTER DELETE ON Overlay
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
                         END;";
@@ -2266,6 +2287,60 @@ namespace MHFZ_Overlay
                     }
                 }
             }
+        }
+
+        public string StoreOverlayHash()
+        {
+            string overlayHash = "";
+
+            // Find the path of the first found process with the name "MHFZ_Overlay.exe"
+            string exeName = "MHFZ_Overlay.exe";
+            Process[] processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(exeName));
+            string exePath = "";
+            if (processes.Length > 0)
+            {
+                exePath = processes[0].MainModule.FileName;
+            }
+            else
+            {
+                exePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
+            }
+
+            // Calculate the SHA256 hash of the executable
+            using (var sha256 = SHA256.Create())
+            {
+                using (var stream = File.OpenRead(exePath))
+                {
+                    byte[] hash = sha256.ComputeHash(stream);
+                    string hashString = BitConverter.ToString(hash).Replace("-", "");
+                    overlayHash = hashString;
+
+                    // Store the hash in the "Overlay" table of the SQLite database
+                    using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+                    {
+                        conn.Open();
+                        using (SQLiteTransaction transaction = conn.BeginTransaction())
+                        {
+                            try
+                            {
+                                string sql = "INSERT INTO Overlay (Hash) VALUES (@hash)";
+                                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                                {
+                                    cmd.Parameters.AddWithValue("@hash", hashString);
+                                    cmd.ExecuteNonQuery();
+                                }
+                                // Commit the transaction
+                                transaction.Commit();
+                            }
+                            catch (Exception ex)
+                            {
+                                HandleError(transaction, ex);
+                            }
+                        }
+                    }
+                }
+            }
+            return overlayHash;
         }
 
         #region session time
@@ -3696,6 +3771,14 @@ namespace MHFZ_Overlay
                     RunID INTEGER NOT NULL,
                     Attempts INTEGER NOT NULL,
                     FOREIGN KEY(RunID) REFERENCES Quests(RunID))";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS Overlay(
+                    OverlayID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Hash TEXT NOT NULL)";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.ExecuteNonQuery();

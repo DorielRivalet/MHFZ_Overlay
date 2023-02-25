@@ -167,6 +167,8 @@ namespace MHFZ_Overlay
                 GetMHFFolderLocation();
                 // and thus set the data to database then, after doing it to the settings
                 databaseChanged = databaseManager.SetupLocalDatabase(this);
+                string overlayHash = databaseManager.StoreOverlayHash();
+                logger.Info("DATABASE OPERATION: Stored overlay hash {0}", overlayHash);
                 CheckIfLoadedInMezeporta();
             }
             else
