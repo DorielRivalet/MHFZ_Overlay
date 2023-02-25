@@ -4428,24 +4428,22 @@ namespace MHFZ_Overlay
                     {
                         using (SQLiteCommand cmd = new SQLiteCommand(
                             @"SELECT 
-                        q.FinalTimeValue, 
-                        q.ActualOverlayMode,
-                        pg.WeaponTypeID,
-                        qa.Attempts
-                    FROM 
-                        Quests q
-                    JOIN
-                        PlayerGear pg ON q.RunID = pg.RunID
-                    JOIN
-                        QuestAttempts qa ON q.QuestID = qa.QuestID
-                    WHERE 
-                        q.QuestID = @questID
-                        AND pg.WeaponTypeID = @weaponTypeID
-                        AND q.ActualOverlayMode = @category
-                        AND q.PartySize = 1
-                    ORDER BY 
-                        qa.Attempts ASC"
-                        , conn))
+                                pb.Attempts,
+                                q.FinalTimeValue
+                            FROM 
+                                PersonalBests pb
+                            JOIN
+                                Quests q ON pb.RunID = q.RunID
+                            JOIN
+                                PlayerGear pg ON q.RunID = pg.RunID
+                            WHERE 
+                                q.QuestID = @questID
+                                AND pg.WeaponTypeID = @weaponTypeID
+                                AND q.ActualOverlayMode = @category
+                                AND q.PartySize = 1
+                            ORDER BY 
+                                pb.Attempts ASC"
+                                , conn))
                         {
                             cmd.Parameters.AddWithValue("@questID", questID);
                             cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
@@ -4456,8 +4454,8 @@ namespace MHFZ_Overlay
                             // Store personal best times by attempts
                             while (reader.Read())
                             {
-                                long time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
                                 long attempts = reader.GetInt64(reader.GetOrdinal("Attempts"));
+                                long time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
 
                                 if (personalBests.ContainsKey(attempts))
                                 {
