@@ -9552,6 +9552,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     resetQuestInfoVariables();
                 }
             }
+
+            // This is apparently not needed
             //else if (IsDure())
             //{
             //    switch (AreaID())
