@@ -1819,6 +1819,9 @@ namespace MHFZ_Overlay
                     // roaddureskills
                     // playergear 
                     // overlay
+                    // bingo
+                    // mezfesminigames
+                    // mezfes
                     using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
                         cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_audit_deletion
@@ -2053,6 +2056,66 @@ namespace MHFZ_Overlay
                     {
                         cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_overlay_deletion
                         AFTER DELETE ON Overlay
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_bingo_updates
+                        AFTER UPDATE ON Bingo
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_bingo_deletion
+                        AFTER DELETE ON Bingo
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_mezfesminigames_updates
+                        AFTER UPDATE ON MezFesMinigames
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_mezfesminigames_deletion
+                        AFTER DELETE ON MezFesMinigames
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_mezfes_updates
+                        AFTER UPDATE ON MezFes
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_mezfes_deletion
+                        AFTER DELETE ON MezFes
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
                         END;";
@@ -3784,6 +3847,42 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
+                    sql = @"CREATE TABLE IF NOT EXISTS Bingo(
+                    BingoID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
+                    Difficulty TEXT NOT NULL,
+                    MonsterList TEXT NOT NULL,
+                    ElapsedTime DATETIME NOT NULL,
+                    Score INTEGER NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS MezFesMinigames(
+                    MezFesMinigameID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    MezFesMinigameName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS MezFes(
+                    MezFesID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
+                    MezFesMinigameID INTEGER NOT NULL,
+                    Score INTEGER NOT NULL,
+                    FOREIGN KEY(MezFesMinigameID) REFERENCES MezFesMinigames(MezFesMinigameID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
                     #region gacha
                     // a mh game but like a MUD. hunt in-game to get many kinds of points for this game. hunt and tame monsters. challenge other CPU players/monsters.
 
@@ -4176,6 +4275,50 @@ namespace MHFZ_Overlay
                     SleepRes INTEGER NOT NULL,
                     Blast INTEGER,
                     BlastRes INTEGER NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaCard(
+                    GachaCardID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    GachaCardTypeID INTEGER NOT NULL,
+                    GachaCardRarityID INTEGER NOT NULL,
+                    GachaCardName INTEGER NOT NULL,
+                    GachaCardFrontImage TEXT NOT NULL,
+                    GachCardBackImage TEXT NOT NULL,
+                    UNIQUE(GachaCardTypeID, GachaCardRarityID, GachaCardName),
+                    FOREIGN KEY(GachaCardTypeID) REFERENCES GachaCardType(GachaCardTypeID),
+                    FOREIGN KEY(GachaCardRarityID) REFERENCES GachaCardRarity(GachaCardRarityID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaCardType(
+                    GachaCardTypeID INTEGER PRIMARY KEY,
+                    GachaCardTypeName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaCardRarity(
+                    GachaCardRarityID INTEGER PRIMARY KEY,
+                    GachaCardRarityName TEXT NOT NULL
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS GachaCardInventory(
+                    GachaCardInventoryID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    GachaCardID INTEGER NOT NULL,
+                    FOREIGN KEY(GachaCardID) REFERENCES GachaCard(GachaCardID)
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
@@ -7409,6 +7552,7 @@ namespace MHFZ_Overlay
             }
         }
 
+        // TODO i dont know if i like this
         private static void PerformUpdateToVersion_0_23_0(SQLiteConnection connection)
         {
             // Perform database updates for version 0.23.0
@@ -7432,6 +7576,174 @@ namespace MHFZ_Overlay
                     RunID INTEGER NOT NULL,
                     Attempts INTEGER NOT NULL,
                     FOREIGN KEY(RunID) REFERENCES Quests(RunID))";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS Overlay(
+                    OverlayID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Hash TEXT NOT NULL)";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            using (SQLiteCommand cmd = new SQLiteCommand(connection))
+            {
+                cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_overlay_updates
+                        AFTER UPDATE ON Overlay
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                cmd.ExecuteNonQuery();
+            }
+
+            using (SQLiteCommand cmd = new SQLiteCommand(connection))
+            {
+                cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_overlay_deletion
+                        AFTER DELETE ON Overlay
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS Bingo(
+                    BingoID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
+                    Difficulty TEXT NOT NULL,
+                    MonsterList TEXT NOT NULL,
+                    ElapsedTime DATETIME NOT NULL,
+                    Score INTEGER NOT NULL
+                    )";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS MezFesMinigames(
+                    MezFesMinigameID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    MezFesMinigameName INTEGER NOT NULL
+                    )";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS MezFes(
+                    MezFesID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    CreatedAt DATETIME NOT NULL,
+                    CreatedBy TEXT NOT NULL,
+                    MinigameID INTEGER NOT NULL,
+                    Score TEXT NOT NULL,
+                    FOREIGN KEY(MinigameID) REFERENCES MezFesMinigames(MezFesMinigameID)
+                    )";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            using (SQLiteCommand cmd = new SQLiteCommand(connection))
+            {
+                cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_bingo_updates
+                        AFTER UPDATE ON Bingo
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                cmd.ExecuteNonQuery();
+            }
+
+            using (SQLiteCommand cmd = new SQLiteCommand(connection))
+            {
+                cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_bingo_deletion
+                        AFTER DELETE ON Bingo
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                cmd.ExecuteNonQuery();
+            }
+
+            using (SQLiteCommand cmd = new SQLiteCommand(connection))
+            {
+                cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_mezfesminigames_updates
+                        AFTER UPDATE ON MezFesMinigames
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                cmd.ExecuteNonQuery();
+            }
+
+            using (SQLiteCommand cmd = new SQLiteCommand(connection))
+            {
+                cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_mezfesminigames_deletion
+                        AFTER DELETE ON MezFesMinigames
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                cmd.ExecuteNonQuery();
+            }
+
+            using (SQLiteCommand cmd = new SQLiteCommand(connection))
+            {
+                cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_mezfes_updates
+                        AFTER UPDATE ON MezFes
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                cmd.ExecuteNonQuery();
+            }
+
+            using (SQLiteCommand cmd = new SQLiteCommand(connection))
+            {
+                cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_mezfes_deletion
+                        AFTER DELETE ON MezFes
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS GachaCard(
+                    GachaCardID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    GachaCardTypeID INTEGER NOT NULL,
+                    GachaCardRarityID INTEGER NOT NULL,
+                    GachaCardName INTEGER NOT NULL,
+                    GachaCardFrontImage TEXT NOT NULL,
+                    GachCardBackImage TEXT NOT NULL,
+                    UNIQUE(GachaCardTypeID, GachaCardRarityID, GachaCardName),
+                    FOREIGN KEY(GachaCardTypeID) REFERENCES GachaCardType(GachaCardTypeID),
+                    FOREIGN KEY(GachaCardRarityID) REFERENCES GachaCardRarity(GachaCardRarityID)
+                    )";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS GachaCardType(
+                    GachaCardTypeID INTEGER PRIMARY KEY,
+                    GachaCardTypeName TEXT NOT NULL
+                    )";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS GachaCardRarity(
+                    GachaCardRarityID INTEGER PRIMARY KEY,
+                    GachaCardRarityName TEXT NOT NULL
+                    )";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS GachaCardInventory(
+                    GachaCardInventoryID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    GachaCardID INTEGER NOT NULL,
+                    FOREIGN KEY(GachaCardID) REFERENCES GachaCard(GachaCardID)
+                    )";
             using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
             {
                 cmd.ExecuteNonQuery();

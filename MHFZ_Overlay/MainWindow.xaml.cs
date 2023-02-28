@@ -626,6 +626,8 @@ namespace MHFZ_Overlay
                 }
 
                 DataLoader.CheckForExternalProcesses();
+
+                CheckIfLocationChanged();
             }
             catch (Exception ex)
             {
@@ -634,6 +636,79 @@ namespace MHFZ_Overlay
                 // the flushing is done automatically according to the docs
             }
         }
+
+        private void CheckIfLocationChanged()
+        {
+            if (DataLoader.model.previousGlobalAreaID != DataLoader.model.AreaID())
+            {
+                DataLoader.model.previousGlobalAreaID = DataLoader.model.AreaID();
+                ShowLocationName();
+            }
+        }
+
+        private void ShowLocationName()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            if (s == null || !s.LocationTextShown)
+                return;
+
+            Dictionary.MapAreaList.MapAreaID.TryGetValue(DataLoader.model.previousGlobalAreaID, out string? previousGlobalAreaID);
+            locationTextBlock.Text = previousGlobalAreaID;
+            AnimateLocationTextBlock();
+        }
+
+        private void AnimateLocationTextBlock()
+        {
+            // Define the animation durations and colors
+            var fadeInDuration = TimeSpan.FromSeconds(1);
+            var fadeOutDuration = TimeSpan.FromSeconds(1);
+
+            Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+            Brush blueBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
+
+            DoubleAnimation fadeIn = new DoubleAnimation(0, 1, fadeInDuration);
+            DoubleAnimation fadeOut = new DoubleAnimation(1, 0, fadeOutDuration);
+            BrushAnimation colorInAnimation = new BrushAnimation
+            {
+                From = blackBrush,
+                To = blueBrush,
+                Duration = fadeInDuration,
+            };
+            BrushAnimation colorOutAnimation = new BrushAnimation
+            {
+                From = blueBrush,
+                To = blackBrush,
+                Duration = fadeOutDuration,
+            };
+
+            Storyboard fadeInStoryboard = new Storyboard();
+            Storyboard.SetTarget(fadeIn, locationTextBlock);
+            Storyboard.SetTargetProperty(fadeIn, new PropertyPath(TextBlock.OpacityProperty));
+            Storyboard.SetTarget(colorInAnimation, locationTextBlock);
+            Storyboard.SetTargetProperty(colorInAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
+            fadeInStoryboard.Children.Add(fadeIn);
+            fadeInStoryboard.Children.Add(colorInAnimation);
+
+            Storyboard fadeOutStoryboard = new Storyboard();
+            Storyboard.SetTarget(fadeOut, locationTextBlock);
+            Storyboard.SetTargetProperty(fadeOut, new PropertyPath(TextBlock.OpacityProperty));
+            Storyboard.SetTarget(colorOutAnimation, locationTextBlock);
+            Storyboard.SetTargetProperty(colorOutAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
+            fadeOutStoryboard.Children.Add(fadeOut);
+            fadeOutStoryboard.Children.Add(colorOutAnimation);
+
+            fadeInStoryboard.Completed += (sender, e) =>
+            {
+                // Wait for 2 seconds before starting fade-out animation
+                fadeOutStoryboard.BeginTime = TimeSpan.FromSeconds(2);
+                fadeOutStoryboard.Begin();
+            };
+
+            // Start the fade-in storyboard
+            fadeInStoryboard.Begin();
+        }
+
         private void WriteCrashLog(Exception ex)
         {
             string dateTime = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
@@ -1955,6 +2030,7 @@ namespace MHFZ_Overlay
             else
                 presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
 
+            // TODO should this be outside UpdateDiscordRPC?
             if (IsInHubAreaID() && DataLoader.model.QuestID() == 0)
                 DataLoader.model.PreviousHubAreaID = DataLoader.model.AreaID();
 
@@ -2435,7 +2511,10 @@ namespace MHFZ_Overlay
                     s.SessionTimeX = (double)(pos.X - XOffset);
                     s.SessionTimeY = (double)(pos.Y - XOffset);
                     break;
-
+                case "LocationTextInfo":
+                    s.LocationTextX = (double)(pos.X - XOffset);
+                    s.LocationTextY = (double)(pos.Y - YOffset);
+                    break;
                 // Monster
                 case "Monster1HpBar":
                     s.Monster1HealthBarX = (double)(pos.X - XOffset);

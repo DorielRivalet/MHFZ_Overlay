@@ -79,6 +79,7 @@ namespace MHFZ_Overlay.addresses
         public bool ShowPlayerHitsTakenBlockedInfo { get; set; } = true;
         public bool ShowQuestID { get; set; } = true;
         public bool ShowQuestAttemptsInfo { get; set; } = true;
+        public bool ShowLocationTextInfo { get; set; } = true;
         public bool ShowMonsterHPBars { get; set; } = true;
         public bool ShowMonster1HPBar { get; set; } = true;
         public bool ShowMonster2HPBar { get; set; } = true;
@@ -9282,41 +9283,25 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public Dictionary<int, string> overlayModeDictionary = new Dictionary<int, string>();
 
         public int previousTimeInt = 0;
-
         public int previousAttackBuffInt = 0;
-
         public int previousHitCountInt = 0;
-
         public double previousDPS = 0;
-
         public int previousAreaID = 0;
-
+        public int previousGlobalAreaID = 0;
         public int previousCartsInt = 0;
-
         public int previousMonster1HP = 0;
-
         public int previousMonster2HP = 0;
-
         public int previousMonster3HP = 0;
-
         public int previousMonster4HP = 0;
-
         public int previousTotalInventoryItems = 0;
-
         public int previousTotalAmmo = 0;
-
         public int previousTotalPartnyaItems = 0;
-
         public int previousHitsTakenBlocked = 0;
-
         public double previousTotalHitsTakenBlockedPerSecond = 0;
-
         public int previousPlayerHP = 0;
         public int previousPlayerStamina = 0;
-
         public double previousHitsPerSecond = 0;
         public double previousActionsPerMinute = 0;
-
         public string previousOverlayMode = "N/A";
 
         public List<Dictionary<int, int>> InsertInventoryDictionaryIntoList(string inventoryType)
