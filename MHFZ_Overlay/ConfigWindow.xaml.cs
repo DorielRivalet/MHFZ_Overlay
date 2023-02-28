@@ -829,9 +829,13 @@ namespace MHFZ_Overlay
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void DefaultButton_Click(object sender, RoutedEventArgs e)
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            DisposeAllWebViews();
-            s.Reset();
+            var result = MessageBox.Show("Resetting settings, are you sure?", "MHFZ Overlay - Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if (result == MessageBoxResult.Yes) 
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                DisposeAllWebViews();
+                s.Reset();
+            }
         }
 
         /// <summary>

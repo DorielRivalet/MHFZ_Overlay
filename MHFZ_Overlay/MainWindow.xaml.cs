@@ -628,6 +628,7 @@ namespace MHFZ_Overlay
                 DataLoader.CheckForExternalProcesses();
 
                 CheckIfLocationChanged();
+                CheckIfQuestChanged();
             }
             catch (Exception ex)
             {
@@ -636,10 +637,84 @@ namespace MHFZ_Overlay
                 // the flushing is done automatically according to the docs
             }
         }
+        private void CheckIfQuestChanged()
+        {
+            if (DataLoader.model.previousQuestID != DataLoader.model.QuestID() && DataLoader.model.QuestID() != 0)
+            {
+                DataLoader.model.previousQuestID = DataLoader.model.QuestID();
+                ShowQuestName();
+            }
+        }
+
+        private void ShowQuestName()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            if (s == null || !s.QuestNameShown)
+                return;
+
+            Dictionary.Quests.QuestIDs.TryGetValue(DataLoader.model.previousQuestID, out string? previousQuestID);
+            questNameTextBlock.Text = previousQuestID;
+            Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+            Brush peachBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x87));
+            AnimateOutlinedTextBlock(questNameTextBlock, blackBrush, peachBrush);
+        }
+
+        /// <summary>
+        /// Animates the outlined text block.
+        /// </summary>
+        /// <param name="outlinedTextBlock">The outlined text block.</param>
+        private void AnimateOutlinedTextBlock(OutlinedTextBlock outlinedTextBlock, Brush startBrush, Brush endBrush)
+        {
+            // Define the animation durations and colors
+            var fadeInDuration = TimeSpan.FromSeconds(1);
+            var fadeOutDuration = TimeSpan.FromSeconds(1);
+
+            DoubleAnimation fadeIn = new DoubleAnimation(0, 1, fadeInDuration);
+            DoubleAnimation fadeOut = new DoubleAnimation(1, 0, fadeOutDuration);
+            BrushAnimation colorInAnimation = new BrushAnimation
+            {
+                From = startBrush,
+                To = endBrush,
+                Duration = fadeInDuration,
+            };
+            BrushAnimation colorOutAnimation = new BrushAnimation
+            {
+                From = endBrush,
+                To = startBrush,
+                Duration = fadeOutDuration,
+            };
+
+            Storyboard fadeInStoryboard = new Storyboard();
+            Storyboard.SetTarget(fadeIn, outlinedTextBlock);
+            Storyboard.SetTargetProperty(fadeIn, new PropertyPath(TextBlock.OpacityProperty));
+            Storyboard.SetTarget(colorInAnimation, outlinedTextBlock);
+            Storyboard.SetTargetProperty(colorInAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
+            fadeInStoryboard.Children.Add(fadeIn);
+            fadeInStoryboard.Children.Add(colorInAnimation);
+
+            Storyboard fadeOutStoryboard = new Storyboard();
+            Storyboard.SetTarget(fadeOut, outlinedTextBlock);
+            Storyboard.SetTargetProperty(fadeOut, new PropertyPath(TextBlock.OpacityProperty));
+            Storyboard.SetTarget(colorOutAnimation, outlinedTextBlock);
+            Storyboard.SetTargetProperty(colorOutAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
+            fadeOutStoryboard.Children.Add(fadeOut);
+            fadeOutStoryboard.Children.Add(colorOutAnimation);
+
+            fadeInStoryboard.Completed += (sender, e) =>
+            {
+                // Wait for 2 seconds before starting fade-out animation
+                fadeOutStoryboard.BeginTime = TimeSpan.FromSeconds(2);
+                fadeOutStoryboard.Begin();
+            };
+
+            // Start the fade-in storyboard
+            fadeInStoryboard.Begin();
+        }
 
         private void CheckIfLocationChanged()
         {
-            if (DataLoader.model.previousGlobalAreaID != DataLoader.model.AreaID())
+            if (DataLoader.model.previousGlobalAreaID != DataLoader.model.AreaID() && DataLoader.model.AreaID() != 0)
             {
                 DataLoader.model.previousGlobalAreaID = DataLoader.model.AreaID();
                 ShowLocationName();
@@ -655,58 +730,9 @@ namespace MHFZ_Overlay
 
             Dictionary.MapAreaList.MapAreaID.TryGetValue(DataLoader.model.previousGlobalAreaID, out string? previousGlobalAreaID);
             locationTextBlock.Text = previousGlobalAreaID;
-            AnimateLocationTextBlock();
-        }
-
-        private void AnimateLocationTextBlock()
-        {
-            // Define the animation durations and colors
-            var fadeInDuration = TimeSpan.FromSeconds(1);
-            var fadeOutDuration = TimeSpan.FromSeconds(1);
-
             Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
             Brush blueBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
-
-            DoubleAnimation fadeIn = new DoubleAnimation(0, 1, fadeInDuration);
-            DoubleAnimation fadeOut = new DoubleAnimation(1, 0, fadeOutDuration);
-            BrushAnimation colorInAnimation = new BrushAnimation
-            {
-                From = blackBrush,
-                To = blueBrush,
-                Duration = fadeInDuration,
-            };
-            BrushAnimation colorOutAnimation = new BrushAnimation
-            {
-                From = blueBrush,
-                To = blackBrush,
-                Duration = fadeOutDuration,
-            };
-
-            Storyboard fadeInStoryboard = new Storyboard();
-            Storyboard.SetTarget(fadeIn, locationTextBlock);
-            Storyboard.SetTargetProperty(fadeIn, new PropertyPath(TextBlock.OpacityProperty));
-            Storyboard.SetTarget(colorInAnimation, locationTextBlock);
-            Storyboard.SetTargetProperty(colorInAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
-            fadeInStoryboard.Children.Add(fadeIn);
-            fadeInStoryboard.Children.Add(colorInAnimation);
-
-            Storyboard fadeOutStoryboard = new Storyboard();
-            Storyboard.SetTarget(fadeOut, locationTextBlock);
-            Storyboard.SetTargetProperty(fadeOut, new PropertyPath(TextBlock.OpacityProperty));
-            Storyboard.SetTarget(colorOutAnimation, locationTextBlock);
-            Storyboard.SetTargetProperty(colorOutAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
-            fadeOutStoryboard.Children.Add(fadeOut);
-            fadeOutStoryboard.Children.Add(colorOutAnimation);
-
-            fadeInStoryboard.Completed += (sender, e) =>
-            {
-                // Wait for 2 seconds before starting fade-out animation
-                fadeOutStoryboard.BeginTime = TimeSpan.FromSeconds(2);
-                fadeOutStoryboard.Begin();
-            };
-
-            // Start the fade-in storyboard
-            fadeInStoryboard.Begin();
+            AnimateOutlinedTextBlock(locationTextBlock, blackBrush, blueBrush);
         }
 
         private void WriteCrashLog(Exception ex)
@@ -2515,6 +2541,11 @@ namespace MHFZ_Overlay
                     s.LocationTextX = (double)(pos.X - XOffset);
                     s.LocationTextY = (double)(pos.Y - YOffset);
                     break;
+                case "QuestNameInfo":
+                    s.QuestNameX = (double)(pos.X - XOffset);
+                    s.QuestNameY = (double)(pos.Y - YOffset);
+                    break;
+
                 // Monster
                 case "Monster1HpBar":
                     s.Monster1HealthBarX = (double)(pos.X - XOffset);

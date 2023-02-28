@@ -80,6 +80,7 @@ namespace MHFZ_Overlay.addresses
         public bool ShowQuestID { get; set; } = true;
         public bool ShowQuestAttemptsInfo { get; set; } = true;
         public bool ShowLocationTextInfo { get; set; } = true;
+        public bool ShowQuestNameInfo { get; set; } = true;
         public bool ShowMonsterHPBars { get; set; } = true;
         public bool ShowMonster1HPBar { get; set; } = true;
         public bool ShowMonster2HPBar { get; set; } = true;
@@ -9288,6 +9289,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public double previousDPS = 0;
         public int previousAreaID = 0;
         public int previousGlobalAreaID = 0;
+        public int previousQuestID = 0;
         public int previousCartsInt = 0;
         public int previousMonster1HP = 0;
         public int previousMonster2HP = 0;
