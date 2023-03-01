@@ -40,6 +40,8 @@ using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
 using NLog;
 using System.Linq;
+using Microsoft.Extensions.DependencyModel;
+using System.Text;
 
 namespace MHFZ_Overlay
 {
@@ -436,6 +438,29 @@ namespace MHFZ_Overlay
 
             SetGraphSeries();
 
+            // Get the dependency context for the current application
+            var context = DependencyContext.Default;
+
+            // Build a string with information about all the dependencies
+            var sb = new StringBuilder();
+            var runtimeTarget = RuntimeInformation.FrameworkDescription;
+            sb.AppendLine($"Target framework: {runtimeTarget}");
+            foreach (var lib in context.RuntimeLibraries)
+            {
+                sb.AppendLine($"Library: {lib.Name} {lib.Version}");
+                sb.AppendLine($"  Type: {lib.Type}");
+                sb.AppendLine($"  Hash: {lib.Hash}");
+                sb.AppendLine($"  Dependencies:");
+                foreach (var dep in lib.Dependencies)
+                {
+                    sb.AppendLine($"    {dep.Name} {dep.Version}");
+                }
+            }
+
+            string dependenciesInfo = sb.ToString();
+
+            logger.Info("PROGRAM OPERATION: Loading dependency data\n{0}", dependenciesInfo);
+
             DataLoader.model.ShowSaveIcon = false;
 
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
@@ -643,6 +668,9 @@ namespace MHFZ_Overlay
             {
                 DataLoader.model.previousQuestID = DataLoader.model.QuestID();
                 ShowQuestName();
+            } else if (DataLoader.model.QuestID() == 0 && DataLoader.model.previousQuestID != 0)
+            {
+                DataLoader.model.previousQuestID = DataLoader.model.QuestID();
             }
         }
 

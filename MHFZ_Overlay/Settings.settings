@@ -708,7 +708,7 @@
       <Value Profile="(Default)">160</Value>
     </Setting>
     <Setting Name="LocationTextY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">640</Value>
+      <Value Profile="(Default)">600</Value>
     </Setting>
     <Setting Name="QuestNameShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -717,7 +717,7 @@
       <Value Profile="(Default)">160</Value>
     </Setting>
     <Setting Name="QuestNameY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">600</Value>
+      <Value Profile="(Default)">520</Value>
     </Setting>
   </Settings>
 </SettingsFile>

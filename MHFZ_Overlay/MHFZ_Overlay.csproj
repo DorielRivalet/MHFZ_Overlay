@@ -24,6 +24,7 @@
     <None Remove="UI\Background\6.png" />
     <None Remove="UI\Background\7.png" />
     <None Remove="UI\Background\8.png" />
+    <None Remove="UI\Fonts\Monster hunter type 2.ttf" />
     <None Remove="UI\Fonts\OpenSans-Bold.ttf" />
     <None Remove="UI\Fonts\OpenSans-BoldItalic.ttf" />
     <None Remove="UI\Fonts\OpenSans-ExtraBold.ttf" />
@@ -273,6 +274,7 @@
   <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dorielrivalet_mhfz_overlay\CSharp\SonarLint.xml" Link="SonarLint.xml" />
     <Content Include="mhfzoverlayicon256.ico" />
+    <Resource Include="UI\Fonts\Monster hunter type 2.ttf" />
     <Resource Include="UI\Fonts\OpenSans-Bold.ttf" />
     <Resource Include="UI\Fonts\OpenSans-BoldItalic.ttf" />
     <Resource Include="UI\Fonts\OpenSans-ExtraBold.ttf" />
@@ -306,6 +308,7 @@
     <PackageReference Include="MaterialDesignThemes" Version="4.7.1" />
     <PackageReference Include="Memory.dll.x86" Version="1.2.24" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="7.0.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1518.46" />
     <PackageReference Include="MouseKeyHook" Version="5.6.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />

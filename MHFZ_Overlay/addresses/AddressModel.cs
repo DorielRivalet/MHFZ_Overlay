@@ -9553,43 +9553,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
             }
 
-            // This is apparently not needed
-            //else if (IsDure())
-            //{
-            //    switch (AreaID())
-            //    {
-            //        case 398://Duremudira Arena
-
-            //            if (!(inDuremudiraArena))
-            //            {
-            //                inDuremudiraArena = true;
-
-            //                if (DataLoader.model.QuestID() == 23649)//Arrogant Dure Slay
-            //                {
-            //                    presenceTemplate.Timestamps = GetDiscordTimerMode() switch
-            //                    {
-            //                        "Time Left" => Timestamps.FromTimeSpan(600),
-            //                        "Time Elapsed" => Timestamps.Now,
-            //                        _ => Timestamps.FromTimeSpan(600),
-            //                    };
-
-            //                }
-            //                else
-            //                {
-            //                    presenceTemplate.Timestamps = GetDiscordTimerMode() switch
-            //                    {
-            //                        "Time Left" => Timestamps.FromTimeSpan(1200),
-            //                        "Time Elapsed" => Timestamps.Now,
-            //                        _ => Timestamps.FromTimeSpan(1200),
-            //                    };
-            //                }
-            //            }
-            //            break;
-            //    }
-            //}
-
-
-
             if (previousAttackBuffInt != WeaponRaw() && !attackBuffDictionary.ContainsKey(TimeInt()))
             {
                 try
