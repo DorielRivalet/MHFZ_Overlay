@@ -24,6 +24,7 @@
     <None Remove="UI\Background\6.png" />
     <None Remove="UI\Background\7.png" />
     <None Remove="UI\Background\8.png" />
+    <None Remove="UI\Background\9.png" />
     <None Remove="UI\Fonts\Monster hunter type 2.ttf" />
     <None Remove="UI\Fonts\OpenSans-Bold.ttf" />
     <None Remove="UI\Fonts\OpenSans-BoldItalic.ttf" />
@@ -274,6 +275,9 @@
   <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dorielrivalet_mhfz_overlay\CSharp\SonarLint.xml" Link="SonarLint.xml" />
     <Content Include="mhfzoverlayicon256.ico" />
+    <Resource Include="UI\Background\9.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="UI\Fonts\Monster hunter type 2.ttf" />
     <Resource Include="UI\Fonts\OpenSans-Bold.ttf" />
     <Resource Include="UI\Fonts\OpenSans-BoldItalic.ttf" />

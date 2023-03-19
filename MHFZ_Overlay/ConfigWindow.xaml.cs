@@ -511,16 +511,19 @@ namespace MHFZ_Overlay
             string background6 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/6.png";
             string background7 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/7.png";
             string background8 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/8.png";
+            string background9 = @"pack://application:,,,/MHFZ_Overlay;component/UI/Background/9.png";
+
 
             //https://stackoverflow.com/questions/30839173/change-background-image-in-wpf-using-c-sharp
             GeneralContent.Background = new ImageBrush(new BitmapImage(new Uri(background1)));
-            PlayerContent.Background = new ImageBrush(new BitmapImage(new Uri(background2)));
+            HunterNotesContent.Background = new ImageBrush(new BitmapImage(new Uri(background2)));
             MonsterHPContent.Background = new ImageBrush(new BitmapImage(new Uri(background3)));
             MonsterStatusContent.Background = new ImageBrush(new BitmapImage(new Uri(background4)));
             DiscordRPCContent.Background = new ImageBrush(new BitmapImage(new Uri(background5)));
             CreditsContent.Background = new ImageBrush(new BitmapImage(new Uri(background6)));
             MonsterInfoContent.Background = new ImageBrush(new BitmapImage(new Uri(background7)));
             QuestLogContent.Background = new ImageBrush(new BitmapImage(new Uri(background8)));
+            PlayerContent.Background = new ImageBrush(new BitmapImage(new Uri(background9)));
 
             //TODO: test this
             DataContext = MainWindow.DataLoader.model;
