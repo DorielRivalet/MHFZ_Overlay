@@ -315,7 +315,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="EnableMap" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="MapAreaWidth" Type="System.Double" Scope="User">
       <Value Profile="(Default)">300</Value>
