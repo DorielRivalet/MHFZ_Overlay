@@ -556,7 +556,7 @@ namespace MHFZ_Overlay
                 MonsterNameList.Add(monsterInfos[i].Name);
             }
 
-            MonsterNameListBox.ItemsSource = MonsterNameList;
+            MonsterNameComboBox.ItemsSource = MonsterNameList;
 
             _ = GetRepoStats();
 
@@ -1138,10 +1138,10 @@ namespace MHFZ_Overlay
             //TODO can be handled more elegantly
             //see this
             //string selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
-            string selectedName = MonsterNameListBox.SelectedItem.ToString() + "";
+            string selectedName = MonsterNameComboBox.SelectedItem.ToString() + "";
             selectedName = selectedName.Replace("System.Windows.Controls.ComboBoxItem: ", "");
 
-            string selectedMatchup = WeaponMatchupListBox.SelectedItem.ToString() + " " + MonsterNameListBox.SelectedItem.ToString();
+            string selectedMatchup = WeaponMatchupComboBox.SelectedItem.ToString() + " " + MonsterNameComboBox.SelectedItem.ToString();
             selectedMatchup = selectedMatchup.Replace("System.Windows.Controls.ComboBoxItem: ", "");
 
             if (!MonsterFeriasOptionDictionary.TryGetValue(selectedName, out string? val1) || !MonsterWikiOptionDictionary.TryGetValue(selectedName, out string? val2))
@@ -1158,12 +1158,12 @@ namespace MHFZ_Overlay
                     //https://stackoverflow.com/questions/1265812/howto-define-the-auto-width-of-the-wpf-gridview-column-in-code
                     DockPanelMonsterInfo.Width = Double.NaN;//Auto
                     DockPanelMonsterInfo.Height = Double.NaN;//Auto
-                    webViewMonsterInfo.CoreWebView2.Navigate(MonsterFeriasOptionDictionary[MonsterNameListBox.SelectedItem.ToString() + ""]);
+                    webViewMonsterInfo.CoreWebView2.Navigate(MonsterFeriasOptionDictionary[MonsterNameComboBox.SelectedItem.ToString() + ""]);
                     return;
                 case 1://wiki
                     DockPanelMonsterInfo.Width = Double.NaN;//Auto
                     DockPanelMonsterInfo.Height = Double.NaN;//Auto
-                    webViewMonsterInfo.CoreWebView2.Navigate(MonsterWikiOptionDictionary[MonsterNameListBox.SelectedItem.ToString() + ""]);
+                    webViewMonsterInfo.CoreWebView2.Navigate(MonsterWikiOptionDictionary[MonsterNameComboBox.SelectedItem.ToString() + ""]);
                     return;
                 case 2://youtube
                     if (MonsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out string? videoval) && MonsterVideoLinkOptionDictionary[selectedMatchup] != "")
@@ -1189,7 +1189,7 @@ namespace MHFZ_Overlay
             }
         }
 
-        private void MonsterNameListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MonsterNameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ChangeMonsterInfo();
         }
@@ -1199,7 +1199,7 @@ namespace MHFZ_Overlay
             ChangeMonsterInfo();
         }
 
-        private void WeaponMatchupListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void WeaponMatchupComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ChangeMonsterInfo();
         }

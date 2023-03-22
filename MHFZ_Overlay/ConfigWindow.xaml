@@ -162,7 +162,7 @@
                             </ComboBox>
                             <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Top 20 fastest solo runs of quest ID by category"/>
                         </StackPanel>
-                        <ListView x:Name="Top20RunsListView" Loaded="Top20Runs_ListViewLoaded">
+                        <ListView x:Name="Top20RunsListView" Loaded="Top20Runs_ListViewLoaded" VirtualizingStackPanel.IsVirtualizing="True">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Objective" Width="128">
@@ -281,7 +281,7 @@
                     <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#a6e3a1" />
 
                     <!--listview here-->
-                    <ListView x:Name="RecentRunsListView" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Loaded="MostRecentRuns_ListViewLoaded">
+                    <ListView x:Name="RecentRunsListView" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Loaded="MostRecentRuns_ListViewLoaded" VirtualizingStackPanel.IsVirtualizing="True">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Objective" Width="128">
@@ -583,7 +583,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Hidden" >
+                    <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Hidden" >
                         <TabPanel x:Name="HeaderPanel"
                           Panel.ZIndex ="1" 
                           KeyboardNavigation.TabIndex="1"
@@ -616,7 +616,7 @@
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" Grid.Row="0">
                     <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="0" x:Name="General" Margin="20,20,20,20" >
 
                         <Grid.ColumnDefinitions>
@@ -808,7 +808,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <ScrollViewer HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Hidden" >
+                                <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden" >
                                     <TabPanel x:Name="HeaderPanel"
                           Panel.ZIndex ="1" 
                           KeyboardNavigation.TabIndex="1"
@@ -834,7 +834,7 @@
                                 <TextBlock Text="Overview" Margin="4,0,0,0" VerticalAlignment="Center" />
                             </StackPanel>
                         </TabItem.Header>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
                             <Grid Margin="5,5,5,5" Height="Auto" Width="Auto">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -1065,7 +1065,7 @@
                                 <RowDefinition Height="100"/>
                             </Grid.RowDefinitions>
                             <DockPanel>
-                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                     <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Margin="0" Height="Auto" Width="Auto">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
@@ -1099,32 +1099,40 @@
                                         <TextBlock Margin="5,5,5,5" ToolTip="Show a watermark that has to be visible at all times during a YouTube video of a quest run in order for the run to be verified" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="(Required for speedrun) Overlay Mode Watermark" />
                                         <ToggleButton Grid.Row="4" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayModeWatermarkShown}"/>
                                         <TextBlock Margin="5,5,5,5" ToolTip="Select nationality to display on website for quest records" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Player Nationality"/>
-                                        <ComboBox SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Margin="5,5,5,5" Grid.Column="1" Grid.Row="5"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
+                                        <ComboBox VirtualizingStackPanel.IsVirtualizing="True" SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Margin="5,5,5,5" Grid.Column="1" Grid.Row="5"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
+                                                    <VirtualizingStackPanel Orientation="Horizontal">
                                                         <Image Source="{Binding Flag.Png}" Width="20" Height="20" Margin="0,0,5,0"/>
                                                         <TextBlock Text="{Binding Name.Common}"/>
-                                                    </StackPanel>
+                                                    </VirtualizingStackPanel>
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-
-                                        <TextBlock Margin="5,5,5,5" ToolTip="Show the current Quest ID in overlay" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Quest ID" />
+                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="6" Grid.Column="0" ToolTip="Show the current Quest ID in overlay">
+                                            <Image Source="UI/Icons/png/quest_host.png" Margin="0,0,5,0"/>
+                                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest ID" />
+                                        </StackPanel>
                                         <ToggleButton Grid.Row="6" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=QuestIDShown}"/>
                                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Quest ID X Coordinate"/>
                                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestIDX}"  PreviewTextInput="ValidateNumber"/>
                                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Quest ID Y Coordinate"/>
                                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestIDY}"  PreviewTextInput="ValidateNumber"/>
 
-                                        <TextBlock Margin="5,5,5,5" ToolTip="Show the personal best of the selected quest with the selected weapon type and overlay mode" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Personal Best" />
+                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="9" Grid.Column="0" ToolTip="Show the personal best of the selected quest with the selected weapon type and overlay mode">
+                                            <Image Source="UI/Icons/png/quest_clock.png" Margin="0,0,5,0"/>
+                                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best"/>
+                                        </StackPanel>
                                         <ToggleButton Grid.Row="9" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestShown}"/>
                                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Personal Best X Coordinate"/>
                                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestX}"  PreviewTextInput="ValidateNumber"/>
                                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Personal Best Y Coordinate"/>
                                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestY}"  PreviewTextInput="ValidateNumber"/>
-                                        
-                                        <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Attempts divided by overlay mode and weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Quest Attempts" />
+
+                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="12" Grid.Column="0" ToolTip="Show Quest Attempts divided by overlay mode and weapon type">
+                                            <Image Source="UI/Icons/png/ticket.png" Margin="0,0,5,0"/>
+                                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest Attempts" />
+                                        </StackPanel>
                                         <ToggleButton Grid.Row="12" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=QuestAttemptsShown}"/>
                                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Quest Attempts X Coordinate"/>
                                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestAttemptsX}"  PreviewTextInput="ValidateNumber"/>
@@ -1172,7 +1180,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <!--https://stackoverflow.com/questions/17946487/how-to-scroll-a-grid-->
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="0" CanContentScroll="True" IsDeferredScrollingEnabled="True">
                     <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="1" Margin="20,20,20,20" Grid.ColumnSpan="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
@@ -1258,7 +1266,7 @@
                         </Grid.RowDefinitions>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Show Timer">
-                            <Image Source="UI/Icons/png/clock.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/clock.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest Timer"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="0" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=TimerInfoShown}"/>
@@ -1283,7 +1291,7 @@
                         <ToggleButton Grid.Row="5" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestPaceColor}"/>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="6" Grid.Column="0" ToolTip="Show Hit Count (doesn't count Ice Age hits)">
-                            <Image Source="UI/Icons/png/blue_soul.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/blue_soul.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Hit Count (doesn't count Ice Age hits)"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="6" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=HitCountShown}"/>
@@ -1306,7 +1314,7 @@
         		///<para>Final True  = ((Weapon True + Attack A) * HH Buff + Attack B) * Multipliers + Additional</para>
         		///</summary>-->
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="11" Grid.Column="0" ToolTip="Show Player True Raw">
-                            <Image Source="UI/Icons/png/attack_up.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/attack_up.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Attack Value">
                             <ToolTipService.ToolTip>
                                             <StackPanel Background="#FF313244">
@@ -1335,7 +1343,7 @@
                         <ToggleButton Grid.Row="14" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestAtkColor}"/>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="15" Grid.Column="0" ToolTip="Show DPS (resets per quest and doesn't calculate hit values over 1000)">
-                            <Image Source="UI/Icons/png/burst.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/burst.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}"  Text="DPS Value"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="15" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=DamagePerSecondShown}"/>
@@ -1362,7 +1370,7 @@
                         <ToggleButton Grid.Row="22" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="23" Grid.Column="0" ToolTip="Show Total Hits Taken/Blocked">
-                            <Image Source="UI/Icons/png/defense_up.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/defense_up.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Hits Taken/Blocked"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="23" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=TotalHitsTakenBlockedShown}"/>
@@ -1380,7 +1388,7 @@
                         <ToggleButton Grid.Row="27" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableTotalHitsTakenBlockedColor}"/>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="28" Grid.Column="0" ToolTip="Show Player Attack Graph">
-                            <Image Source="UI/Icons/png/attack_up_red.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/attack_up_red.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Player Attack Graph"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="28" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAttackGraphShown}"/>
@@ -1395,7 +1403,7 @@
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="32" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphBackground}"/>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="33" Grid.Column="0" ToolTip="Show Player DPS Graph">
-                            <Image Source="UI/Icons/png/burst_red.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/burst_red.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Player DPS Graph"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="33" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerDPSGraphShown}"/>
@@ -1409,7 +1417,7 @@
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="37" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphBackground}"/>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="38" Grid.Column="0" ToolTip="Show Player Hits per Second Graph">
-                            <Image Source="UI/Icons/png/red_soul.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/red_soul.png" Margin="0,0,5,0"/>
                             <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Text="Player Hits Per Second Graph"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="38" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerHitsPerSecondGraphShown}"/>
@@ -1423,7 +1431,7 @@
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="42" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphBackground}"/>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="43" Grid.Column="0" ToolTip="Show Player Actions per Minute Graph">
-                            <Image Source="UI/Icons/png/flame_hc.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/flame_hc.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Player Actions per Minute Graph"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="43" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAPMGraphShown}"/>
@@ -1482,7 +1490,7 @@
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="67" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ControllerLayoutY}"  PreviewTextInput="ValidateNumber"/>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="68" Grid.Column="0" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and controller inputs)">
-                            <Image Source="UI/Icons/png/flame_ul.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/flame_ul.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Actions per Minute"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="68" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
@@ -1519,7 +1527,7 @@
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" Grid.Row="0">
                     <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="1" x:Name="PlayerInfo" Margin="20,5,20,20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
@@ -1614,7 +1622,7 @@
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition />
                                             </Grid.RowDefinitions>
-                                            <ScrollViewer HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Hidden" >
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Hidden" >
                                                 <TabPanel x:Name="HeaderPanel"
                           Panel.ZIndex ="1" 
                           KeyboardNavigation.TabIndex="1"
@@ -1746,7 +1754,7 @@
                                             <TextBlock Text="Image" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
-                                    <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                    <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                         <Grid Margin="5,5,5,5">
                                             <Grid x:Name="GearImageGrid">
                                                 <Grid.ColumnDefinitions>
@@ -1837,7 +1845,7 @@
                                     </TabItem.Header>
                                     <Grid x:Name="GearTextGrid">
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
                                                 <TextBlock ToolTip="If the values are incorrect, double check your settings, check your guild card and change gear either from sets or manually" Text="{Binding GetGearStats,Mode=OneTime}" Name="GearStats" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
@@ -1862,7 +1870,7 @@
                                                 <ComboBox Grid.Row="0" Name="SortDir" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="150,5,5,5"/>
                                                 <ComboBox Grid.Row="0" SelectionChanged="FilterBox_SelectionChanged" Name="FilterBox" SelectedIndex="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="300,5,5,5" >
                                                 </ComboBox>
-                                                <ListView x:Name="MyList" Grid.Row="1" HorizontalAlignment="Stretch">
+                                                <ListView x:Name="MyList" Grid.Row="1" HorizontalAlignment="Stretch" VirtualizingStackPanel.IsVirtualizing="True">
                                                     <!--<ListView.Resources>
                                                         <DataTemplate x:Key="Templ">
                                                             <TextBlock Text="{Binding}" Foreground="#cdd6f4" Background="Transparent" Width="32"/>
@@ -1913,7 +1921,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="GuildInfoGrid" Margin="5,5,5,5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="2*"/>
@@ -1944,7 +1952,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="CaravanInfoGrid" Margin="5,5,5,5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="2*"/>
@@ -1976,7 +1984,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <TextBlock ToolTip="" Text="{Binding GetGameRoadDureInfo}" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
@@ -1991,7 +1999,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="ArmorSkillsGrid" Margin="5,5,5,5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="2*"/>
@@ -2035,7 +2043,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <TextBlock ToolTip="" Text="{Binding GetGameZenithSkills}" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
@@ -2050,7 +2058,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="MotionValuesGrid" Margin="5,5,5,5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="2*"/>
@@ -2107,7 +2115,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="WeaponInfoGrid" Margin="5,5,5,5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="2*"/>
@@ -2159,7 +2167,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <TextBlock ToolTip="" Text="{Binding GetGameSigilsInfo}" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
@@ -2174,7 +2182,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <TextBlock ToolTip="" Text="{Binding GetGameDivaInfo}" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
@@ -2189,7 +2197,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <TextBlock ToolTip="" Text="{Binding GetGameStyleRankInfo}" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
@@ -2204,7 +2212,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="CompanionsGrid" Margin="5,5,5,5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="2*"/>
@@ -2237,7 +2245,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <TextBlock ToolTip="" Text="{Binding GetGameItemInfo}" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
@@ -2252,7 +2260,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <TextBlock ToolTip="" Text="{Binding GetGameMonsterSizeInfo}" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
@@ -2267,7 +2275,7 @@
                                     </TabItem.Header>
                                     <Grid>
                                         <DockPanel Margin="5,5,5,5">
-                                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                                 <TextBlock ToolTip="" Text="{Binding GetGameRewardInfo}" TextWrapping="Wrap"/>
                                             </ScrollViewer>
                                         </DockPanel>
@@ -2492,7 +2500,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <!--https://stackoverflow.com/questions/17946487/how-to-scroll-a-grid-->
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" Grid.Row="0">
                     <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="1" x:Name="MonsterBars" Margin="20,20,20,20" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
@@ -2629,7 +2637,7 @@
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" Grid.Row="0">
                     <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="MonsterStatus" Margin="20,20,20,20" Grid.ColumnSpan="9">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
@@ -2675,7 +2683,7 @@
                             <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Show Monster Attack Multiplier">
-                            <Image Source="UI/Icons/png/dure_attack.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/dure_attack.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Attack Multiplier"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="0" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterAtkMultShown}"/>
@@ -2687,7 +2695,7 @@
                         <ToggleButton Grid.Row="3" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestMonsterAttackMultiplierColor}"/>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="4" Grid.Column="0" ToolTip="Show Monster Defense Rate (lower = tankier)">
-                            <Image Source="UI/Icons/png/dure_defense.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/dure_defense.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Defense Rate"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="4" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterDefrateShown}"/>
@@ -2699,7 +2707,7 @@
                         <ToggleButton Grid.Row="7" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableLowestMonsterDefrateColor}"/>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="8" Grid.Column="0" ToolTip="Show Monster Size">
-                            <Image Source="UI/Icons/png/study.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/study.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Size"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="8" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSizeShown}"/>
@@ -2709,7 +2717,7 @@
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeY}"  PreviewTextInput="ValidateNumber"/>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="11" Grid.Column="0" ToolTip="Show Monster Poison Threshold">
-                            <Image Source="UI/Icons/png/poison.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/poison.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Poison Threshold"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="11" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterPoisonShown}"/>
@@ -2722,7 +2730,7 @@
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonBarColor}"></xctk:ColorPicker>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="15" Grid.Column="0" ToolTip="Show Monster Sleep Threshold">
-                            <Image Source="UI/Icons/png/sleep.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/sleep.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Sleep Threshold"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="15" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSleepShown}"/>
@@ -2735,7 +2743,7 @@
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarColor}"></xctk:ColorPicker>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="19" Grid.Column="0" ToolTip="Show Monster Paralysis Threshold">
-                            <Image Source="UI/Icons/png/paralysis.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/paralysis.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Paralysis Threshold"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="19" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterParaShown}"/>
@@ -2748,7 +2756,7 @@
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}"></xctk:ColorPicker>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="23" Grid.Column="0" ToolTip="Show Monster Blast Threshold">
-                            <Image Source="UI/Icons/png/blast.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/blast.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Blast Threshold"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="23" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBlastShown}"/>
@@ -2761,7 +2769,7 @@
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarColor}"></xctk:ColorPicker>
 
                         <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="27" Grid.Column="0" ToolTip="Show Monster Stun Threshold">
-                            <Image Source="UI/Icons/png/stun.png" Width="24" Height="24" Margin="0,0,5,0"/>
+                            <Image Source="UI/Icons/png/stun.png" Margin="0,0,5,0"/>
                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Stun Threshold"/>
                         </StackPanel>
                         <ToggleButton Grid.Row="27" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStunShown}"/>
@@ -2812,7 +2820,7 @@
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" Grid.Row="0">
                     <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="DiscordRichPresence" Margin="20">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"/>
@@ -2917,7 +2925,6 @@
                 </StackPanel>
             </TabItem.Header>
             <Grid x:Name="MonsterInfoContent" Width="Auto" Height="Auto">
-                <ScrollViewer>
                     <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="MonsterInfoGrid" Margin="5,5,5,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
@@ -2936,8 +2943,8 @@
                             <ComboBoxItem>Wiki</ComboBoxItem>
                             <ComboBoxItem>YouTube</ComboBoxItem>
                         </ComboBox>
-                        <ComboBox SelectedIndex="0" SelectionChanged="MonsterNameListBox_SelectionChanged" Name="MonsterNameListBox" Margin="5,5,5,5" Grid.Column="2" Grid.Row="0"/>
-                        <ComboBox Name="WeaponMatchupListBox" SelectedIndex="0" SelectionChanged="WeaponMatchupListBox_SelectionChanged" Margin="5,5,5,5" Grid.Column="3" Grid.Row="0">
+                        <ComboBox SelectedIndex="0" SelectionChanged="MonsterNameComboBox_SelectionChanged" Name="MonsterNameComboBox" Margin="5,5,5,5" Grid.Column="2" Grid.Row="0"/>
+                        <ComboBox Name="WeaponMatchupComboBox" SelectedIndex="0" SelectionChanged="WeaponMatchupComboBox_SelectionChanged" Margin="5,5,5,5" Grid.Column="3" Grid.Row="0">
                             <ComboBoxItem>Sword and Shield</ComboBoxItem>
                             <ComboBoxItem>Dual Swords</ComboBoxItem>
                             <ComboBoxItem>Great Sword</ComboBoxItem>
@@ -2959,7 +2966,6 @@
   							    />
                         </DockPanel>
                     </Grid>
-                </ScrollViewer>
             </Grid>
         </TabItem>
         <TabItem ToolTip="Game Information" Background="#11111b" Foreground="#cdd6f4">
@@ -2971,20 +2977,18 @@
             </TabItem.Header>
             <Grid>
                 <DockPanel Margin="5,5,5,5">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="GameInfoGrid" Margin="5,5,5,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-                            <DockPanel>
-                                <wv2:WebView2 Name="webViewFerias"
+                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="GameInfoGrid" Margin="5,5,5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <DockPanel>
+                            <wv2:WebView2 Name="webViewFerias"
                   					Source="{Binding GetCurrentFeriasVersion, Mode=OneTime}" DefaultBackgroundColor="#f5e0dc"/>
-                            </DockPanel>
-                        </Grid>
-                    </ScrollViewer>
+                        </DockPanel>
+                    </Grid>
                 </DockPanel>
             </Grid>
         </TabItem>
@@ -2997,7 +3001,6 @@
             </TabItem.Header>
             <Grid>
                 <DockPanel Margin="5,5,5,5">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="DamageCalculatorGrid" Margin="5,5,5,5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
@@ -3010,7 +3013,6 @@
                   					Source="https://dorielrivalet.github.io/mhfz-damage-calculator" DefaultBackgroundColor="#f5e0dc"/>
                             </DockPanel>
                         </Grid>
-                    </ScrollViewer>
                 </DockPanel>
             </Grid>
         </TabItem>
@@ -3030,7 +3032,7 @@
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" Grid.Row="0">
                     <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="Credits" Margin="20,20,20,20" Grid.ColumnSpan="9">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
@@ -3079,8 +3081,8 @@
 
                         <Button ToolTip="Stargazers" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/star.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
                         <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1">
-                            <ScrollViewer>
-                                <TextBlock ToolTip="View Changelog" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="#89b4fa" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/stargazers" RequestNavigate="lnkImg_RequestNavigate">View Stargazers</Hyperlink></TextBlock>
+                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True">
+                                <TextBlock ToolTip="View Stargazers" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="#89b4fa" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/stargazers" RequestNavigate="lnkImg_RequestNavigate">View Stargazers</Hyperlink></TextBlock>
                             </ScrollViewer>
                         </Grid>
                         <MediaElement Grid.Row="3" Grid.Column="2"  MediaEnded="Stars_MediaEnded" x:Name="myAnime" UnloadedBehavior="Manual" Source="https://media.tenor.com/uMRSXoUOwpYAAAAC/anime-girl.gif" LoadedBehavior="Play"/>

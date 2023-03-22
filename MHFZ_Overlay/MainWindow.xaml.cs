@@ -461,6 +461,11 @@ namespace MHFZ_Overlay
 
             logger.Info("PROGRAM OPERATION: Loading dependency data\n{0}", dependenciesInfo);
 
+            // The rendering tier corresponds to the high-order word of the Tier property.
+            int renderingTier = (RenderCapability.Tier >> 16);
+
+            logger.Info("PROGRAM OPERATION: Found rendering tier {0}", renderingTier);
+
             DataLoader.model.ShowSaveIcon = false;
 
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
