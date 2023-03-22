@@ -2292,6 +2292,11 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Handles the error.
+        /// </summary>
+        /// <param name="transaction">The transaction.</param>
+        /// <param name="ex">The ex.</param>
         private void HandleError(SQLiteTransaction? transaction, Exception ex)
         {
             // Roll back the transaction
@@ -2352,6 +2357,10 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Stores the overlay hash.
+        /// </summary>
+        /// <returns></returns>
         public string StoreOverlayHash()
         {
             string overlayHash = "";
@@ -2408,6 +2417,10 @@ namespace MHFZ_Overlay
 
         #region session time
 
+        /// <summary>
+        /// Stores the session time.
+        /// </summary>
+        /// <param name="window">The window.</param>
         public void StoreSessionTime(MainWindow window)
         {
             try
@@ -2630,6 +2643,12 @@ namespace MHFZ_Overlay
 
         public bool schemaChanged = false;
 
+        /// <summary>
+        /// Compares the dictionaries.
+        /// </summary>
+        /// <param name="dict1">The dict1.</param>
+        /// <param name="dict2">The dict2.</param>
+        /// <returns></returns>
         public bool CompareDictionaries(Dictionary<string, Dictionary<string, object>> dict1, Dictionary<string, Dictionary<string, object>> dict2)
         {
             // Check if the number of tables is different
@@ -2689,7 +2708,13 @@ namespace MHFZ_Overlay
             return true;
         }
 
-        //TODO: Test
+        //TODO: Test        
+        /// <summary>
+        /// Compares the database schemas.
+        /// </summary>
+        /// <param name="referenceSchema">The reference schema.</param>
+        /// <param name="currentSchema">The current schema.</param>
+        /// <returns></returns>
         private bool CompareDatabaseSchemas(Dictionary<string, Dictionary<string, object>> referenceSchema, Dictionary<string, Dictionary<string, object>> currentSchema)
         {
 
@@ -2712,6 +2737,11 @@ namespace MHFZ_Overlay
             return schemaChanged;
         }
 
+        /// <summary>
+        /// Inserts the player dictionary data into table.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <param name="dataLoader">The data loader.</param>
         private void InsertPlayerDictionaryDataIntoTable(SQLiteConnection conn, DataLoader dataLoader)
         {
             // Start a transaction
@@ -2813,6 +2843,24 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Inserts the dictionary data into table. https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/bulk-insert
+        /// </summary>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="idColumn">The identifier column.</param>
+        /// <param name="valueColumn">The value column.</param>
+        /// <param name="conn">The connection.</param>
+        /// <exception cref="ArgumentException">
+        /// Invalid table name: {tableName}
+        /// or
+        /// Invalid dictionary: {dictionary}
+        /// or
+        /// Invalid table name, id column, or value column
+        /// or
+        /// Invalid connection
+        /// </exception>
+        /// <exception cref="InvalidOperationException">Connection is not open</exception>
         private void InsertDictionaryDataIntoTable(IReadOnlyDictionary<int, string> dictionary, string tableName, string idColumn, string valueColumn, SQLiteConnection conn)
         {
             // Start a transaction
