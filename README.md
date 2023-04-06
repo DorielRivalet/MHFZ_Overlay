@@ -126,7 +126,7 @@ Includes icons!
 
 ![Damage Numbers](./demo/hits.gif)
 
-- [x] [Discord Rich Presence](#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area, [speedrun mode, zen mode](#how-to-enable-speedrun--zen-modes), and more!)
+- [x] [Discord Rich Presence](./FAQ.md/#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area, [speedrun mode, zen mode](./FAQ.md/#how-to-enable-speedrun-categories--zen-mode), and more!)
 
 ![Discord Rich Presence](./demo/discord5.png)
 ![Discord Rich Presence](./demo/discord10.png)
@@ -266,6 +266,16 @@ If the HP shows 0/1 then change area for it to load.
 ## License
 
 [MIT](https://github.com/DorielRivalet/mhfz-overlay/blob/main/LICENSE.md)
+
+## Documentation
+
+This repository includes two main documentation files:
+
+- **`FAQ.md`**: This file is meant for end-users and provides information about how to use and troubleshoot the software. If you're new to the software, we recommend starting here.
+
+- **`docs/README.md`**: This file is meant for developers and technical users who are contributing to the project or working on the codebase. It contains information about the software's intricacies, as well as instructions for deploying the project.
+
+We recommend consulting the appropriate documentation file based on your needs. If you have any questions or issues, feel free to [contact us](https://github.com/DorielRivalet/mhfz-overlay/issues/new/choose) for support.
 
 ## Code Analysis
 
