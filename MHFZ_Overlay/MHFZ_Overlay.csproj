@@ -154,6 +154,7 @@
     <None Remove="UI\Icons\png\point_up.png" />
     <None Remove="UI\Icons\png\quest_1.png" />
     <None Remove="UI\Icons\png\quest_clock.png" />
+    <None Remove="UI\Icons\png\quest_clock_red.png" />
     <None Remove="UI\Icons\png\right_click.png" />
     <None Remove="UI\Icons\png\sand_clock2_red.png" />
     <None Remove="UI\Icons\png\small_bow.png" />
@@ -213,6 +214,7 @@
     <Page Remove="UI\Icons\Feather_Icon_White.xaml" />
     <Page Remove="UI\Icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\Fin_Icon_White.xaml" />
+    <Page Remove="UI\Icons\flag-checkered-solid.xaml" />
     <Page Remove="UI\Icons\Flask_Icon_White.xaml" />
     <Page Remove="UI\Icons\Flipper_Icon_White.xaml" />
     <Page Remove="UI\Icons\Flower_Icon_White.xaml" />
@@ -293,6 +295,7 @@
     <Resource Include="UI\Fonts\OpenSans-SemiBoldItalic.ttf" />
     <Resource Include="UI\Icons\bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\database_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Resource Include="UI\Icons\flag-checkered-solid.xaml" />
     <Resource Include="UI\Icons\gif\scroll_rainbow.gif" />
     <Resource Include="UI\Icons\leaderboard_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\manage_history_FILL0_wght400_GRAD0_opsz48.xaml" />
@@ -548,6 +551,7 @@
     <Resource Include="UI\Icons\png\point_up.png" />
     <Resource Include="UI\Icons\png\quest_1.png" />
     <Resource Include="UI\Icons\png\quest_clock.png" />
+    <Resource Include="UI\Icons\png\quest_clock_red.png" />
     <Resource Include="UI\Icons\png\quest_host.png" />
     <Resource Include="UI\Icons\png\red_soul.png" />
     <Resource Include="UI\Icons\png\right_click.png" />

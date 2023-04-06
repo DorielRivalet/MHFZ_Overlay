@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -79,6 +80,7 @@ namespace MHFZ_Overlay.addresses
         public bool ShowPlayerHitsTakenBlockedInfo { get; set; } = true;
         public bool ShowQuestID { get; set; } = true;
         public bool ShowQuestAttemptsInfo { get; set; } = true;
+        public bool ShowPersonalBestTimePercentInfo { get; set; } = true;
         public bool ShowLocationTextInfo { get; set; } = true;
         public bool ShowQuestNameInfo { get; set; } = true;
         public bool ShowMonsterHPBars { get; set; } = true;
@@ -1011,7 +1013,8 @@ namespace MHFZ_Overlay.addresses
                 || s.Monster2HealthBarShown 
                 || s.Monster3HealthBarShown 
                 || s.Monster4HealthBarShown 
-                || s.EnableMap) //TODO monster 1 overview? and update README
+                || s.EnableMap
+                || s.PersonalBestTimePercentShown) //TODO monster 1 overview? and update README
                 return "";
             else if (s.TimerInfoShown && s.EnableKeyLogging && s.EnableQuestLogging && PartySize() == 1 && s.OverlayModeWatermarkShown) //TODO: update README
             {
@@ -1451,7 +1454,7 @@ namespace MHFZ_Overlay.addresses
         }
 
         ///<summary>
-        ///MM:SS.cs
+        /// Quest time in the format of mm:ss.ff
         ///</summary>
         public string Time
         {
@@ -1572,6 +1575,15 @@ namespace MHFZ_Overlay.addresses
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableQuestPaceColor)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool ShowPersonalBestPaceColor()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnablePersonalBestPaceColor)
                 return true;
             else
                 return false;
@@ -1750,9 +1762,40 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        // TODO isOnBestPace
+
+        public string PersonalBestLoaded = "--:--.--";
+
+        // TODO
+        public string PersonalBestTimePercent
+        {
+            get
+            {
+                if (PersonalBestLoaded != "--:--.--" && ShowPersonalBestPaceColor())
+                {
+                    const int framesPerSecond = 30;
+                    var personalBestInFrames = framesPerSecond * (TimeSpan.ParseExact(PersonalBestLoaded, "mm':'ss'.'ff", CultureInfo.InvariantCulture).TotalSeconds);
+                    var remainingPersonalBestTimePercent = CalculatePersonalBestInFramesPercent(personalBestInFrames);
+                    Debug.WriteLine("personalBestInFrames {0}, remainingPersonalBestTimePercent {1}", personalBestInFrames, remainingPersonalBestTimePercent);
+                    return string.Format("{0:0}%", remainingPersonalBestTimePercent);
+                }
+                else
+                {
+                    return "0%";
+                }
+            }
+        }
+
+        public double CalculatePersonalBestInFramesPercent(double personalBestInFrames)
+        {
+            if (personalBestInFrames <= 0)
+                return 0;
+            else
+                return (double)((double)TimeInt() / (TimeDefInt() - personalBestInFrames)) * 100.0;
+        }
+
         private double HighestAttackMult { get; set; } = 0;
         private decimal LowestMonsterDefrate { get; set; } = 1000;
-
 
         public string isHighestMonsterAttackMultiplier
         {

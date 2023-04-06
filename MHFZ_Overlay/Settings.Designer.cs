@@ -2890,5 +2890,53 @@ namespace MHFZ_Overlay {
                 this["QuestNameY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnablePersonalBestPaceColor {
+            get {
+                return ((bool)(this["EnablePersonalBestPaceColor"]));
+            }
+            set {
+                this["EnablePersonalBestPaceColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PersonalBestTimePercentShown {
+            get {
+                return ((bool)(this["PersonalBestTimePercentShown"]));
+            }
+            set {
+                this["PersonalBestTimePercentShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double PersonalBestTimePercentX {
+            get {
+                return ((double)(this["PersonalBestTimePercentX"]));
+            }
+            set {
+                this["PersonalBestTimePercentX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("130")]
+        public double PersonalBestTimePercentY {
+            get {
+                return ((double)(this["PersonalBestTimePercentY"]));
+            }
+            set {
+                this["PersonalBestTimePercentY"] = value;
+            }
+        }
     }
 }

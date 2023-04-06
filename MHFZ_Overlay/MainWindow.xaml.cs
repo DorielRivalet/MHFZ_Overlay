@@ -1221,6 +1221,7 @@ namespace MHFZ_Overlay
 
             DataLoader.model.ShowPersonalBestInfo = v && s.PersonalBestShown;
             DataLoader.model.ShowQuestAttemptsInfo = v && s.QuestAttemptsShown;
+            DataLoader.model.ShowPersonalBestTimePercentInfo = v && s.PersonalBestTimePercentShown;
         }
 
         #endregion
@@ -2537,7 +2538,6 @@ namespace MHFZ_Overlay
                     s.PlayerHitsPerSecondGraphY = (double)(pos.Y - YOffset);
                     break;
 
-
                 case "DamagePerSecondInfo":
                     s.PlayerDPSX = (double)(pos.X - XOffset);
                     s.PlayerDPSY = (double)(pos.Y - XOffset);
@@ -2577,6 +2577,10 @@ namespace MHFZ_Overlay
                 case "QuestNameInfo":
                     s.QuestNameX = (double)(pos.X - XOffset);
                     s.QuestNameY = (double)(pos.Y - YOffset);
+                    break;
+                case "PersonalBestTimePercentInfo":
+                    s.PersonalBestTimePercentX = (double)(pos.X - XOffset);
+                    s.PersonalBestTimePercentY = (double)(pos.Y - YOffset);
                     break;
 
                 // Monster
@@ -2756,7 +2760,47 @@ namespace MHFZ_Overlay
             if (configWindow != null)
                 configWindow.Visibility = Visibility.Hidden;
             ToggleClickThrough();
+            ToggleOverlayBorders();
+        }
 
+        // TODO: use a dictionary for looping instead
+        private void ToggleOverlayBorders()
+        {
+            var thickness = new System.Windows.Thickness(0);
+
+            if (IsDragConfigure)
+                thickness = new System.Windows.Thickness(2);
+
+            ActionsPerMinuteInfoBorder.BorderThickness = thickness;
+            DamagePerSecondInfoBorder.BorderThickness = thickness;
+            HitCountInfoBorder.BorderThickness = thickness;
+            LocationTextInfoBorder.BorderThickness = thickness;
+            MonsterAtkMultInfoBorder.BorderThickness = thickness;
+            MonsterBlastInfoBorder.BorderThickness = thickness;
+            MonsterDefrateInfoBorder.BorderThickness = thickness;
+            MonsterParaInfoBorder.BorderThickness = thickness;
+            MonsterPoisonInfoBorder.BorderThickness = thickness;
+            MonsterSizeInfoBorder.BorderThickness = thickness;
+            MonsterSleepInfoBorder.BorderThickness = thickness;
+            MonsterStunInfoBorder.BorderThickness = thickness;
+            PersonalBestInfoBorder.BorderThickness = thickness;
+            PersonalBestTimePercentInfoBorder.BorderThickness = thickness;
+            PlayerAtkInfoBorder.BorderThickness = thickness;
+            PlayerHitsTakenBlockedInfoBorder.BorderThickness = thickness;
+            QuestAttemptsInfoBorder.BorderThickness = thickness;
+            QuestNameInfoBorder.BorderThickness = thickness;
+            SessionTimeInfoBorder.BorderThickness = thickness;
+            SharpnessInfoBorder.BorderThickness = thickness;
+            TimerInfoBorder.BorderThickness = thickness;
+            ControllerLayoutGridBorder.BorderThickness = thickness;
+            KBMLayoutGridBorder.BorderThickness = thickness;
+            QuestIDGridBorder.BorderThickness = thickness;
+            OverlayModeWatermarkBorder.BorderThickness = thickness;
+            Monster1HpBarBorder.BorderThickness = thickness;
+            Monster2HpBarBorder.BorderThickness = thickness;
+            Monster3HpBarBorder.BorderThickness = thickness;
+            Monster4HpBarBorder.BorderThickness = thickness;
+            MonsterPartThresholdBorder.BorderThickness = thickness;
         }
 
         private bool ClickThrough = true;
@@ -2795,6 +2839,7 @@ namespace MHFZ_Overlay
             if (configWindow != null)
                 configWindow.Visibility = Visibility.Visible;
             ToggleClickThrough();
+            ToggleOverlayBorders();
         }
 
         private void ExitDragAndDrop_Click(object sender, RoutedEventArgs e)
@@ -2849,6 +2894,7 @@ namespace MHFZ_Overlay
                 {
                     calculatedPersonalBest = true;
                     personalBestTextBlock.Text = databaseManager.GetPersonalBest(DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text, DataLoader.model.QuestTimeMode, DataLoader);
+                    DataLoader.model.PersonalBestLoaded = personalBestTextBlock.Text;
                 }
 
                 if (!calculatedQuestAttempts && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0)
@@ -3018,7 +3064,10 @@ namespace MHFZ_Overlay
                     }
                 }
 
-                _mouseImages[e.Button].Opacity = pressedKeyOpacity;
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _mouseImages[e.Button].Opacity = pressedKeyOpacity;
+                }));
             }
             // uncommenting the following line will suppress the middle mouse button click
             // if (e.Buttons == MouseButtons.Middle) { e.Handled = true; }
@@ -3028,7 +3077,10 @@ namespace MHFZ_Overlay
         {
             if (_mouseImages.ContainsKey(e.Button))
             {
-                _mouseImages[e.Button].Opacity = unpressedKeyOpacity;
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _mouseImages[e.Button].Opacity = unpressedKeyOpacity;
+                }));
             }
         }
 
@@ -3065,7 +3117,10 @@ namespace MHFZ_Overlay
                     }
                 }
 
-                _keyImages[e.KeyCode].Opacity = pressedKeyOpacity;
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _keyImages[e.KeyCode].Opacity = pressedKeyOpacity;
+                }));
             }
         }
 
@@ -3073,7 +3128,10 @@ namespace MHFZ_Overlay
         {
             if (_keyImages.ContainsKey(e.KeyCode))
             {
-                _keyImages[e.KeyCode].Opacity = unpressedKeyOpacity;
+                Dispatcher.BeginInvoke(new Action(() => 
+                {
+                    _keyImages[e.KeyCode].Opacity = unpressedKeyOpacity; 
+                }));
             }
         }
 

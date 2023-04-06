@@ -719,5 +719,17 @@
     <Setting Name="QuestNameY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">520</Value>
     </Setting>
+    <Setting Name="EnablePersonalBestPaceColor" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PersonalBestTimePercentShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PersonalBestTimePercentX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="PersonalBestTimePercentY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">130</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

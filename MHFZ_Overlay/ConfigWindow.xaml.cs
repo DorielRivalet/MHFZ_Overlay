@@ -2774,11 +2774,13 @@ namespace MHFZ_Overlay
                         s.Monster3HealthBarShown = false;
                         s.Monster4HealthBarShown = false;
                         s.EnableMap = false;
+                        s.PersonalBestTimePercentShown = false;
 
                         s.TimerInfoShown = true;
                         s.EnableKeyLogging = true;
                         s.EnableQuestLogging = true;
                         s.OverlayModeWatermarkShown = true;
+
                         break;
 
                     case "Zen":
