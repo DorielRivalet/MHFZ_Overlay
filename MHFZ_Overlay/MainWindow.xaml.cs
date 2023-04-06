@@ -2801,6 +2801,11 @@ namespace MHFZ_Overlay
             Monster3HpBarBorder.BorderThickness = thickness;
             Monster4HpBarBorder.BorderThickness = thickness;
             MonsterPartThresholdBorder.BorderThickness = thickness;
+            DamageNumbersBorder.BorderThickness = thickness;
+            PlayerAPMGraphGridBorder.BorderThickness = thickness;
+            PlayerAttackGraphGridBorder.BorderThickness = thickness;
+            PlayerDPSGraphGridBorder.BorderThickness = thickness;
+            PlayerHitsPerSecondGraphGridBorder.BorderThickness = thickness;
         }
 
         private bool ClickThrough = true;

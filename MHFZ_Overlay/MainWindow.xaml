@@ -81,7 +81,7 @@
 
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
             <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="PB" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="personalBestTextBlock" Text="--:--.--" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isOnBestPace}" x:Name="personalBestTextBlock" Text="--:--.--" Margin="4,0,0,0"/>
         </Grid>
         <Grid x:Name="TimerInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=TimerX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=TimerY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowTimerInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
@@ -515,6 +515,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+            <Border x:Name="PlayerAttackGraphGridBorder" BorderBrush="#ff0000" BorderThickness="0" Grid.Column="0" Grid.Row="0"/>
+
             <lvc:CartesianChart Background="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphBackground}" Series="{Binding attackBuffSeries}" SyncContext="{Binding attackBuffSync}" XAxes="{Binding XAxes}" YAxes="{Binding attackBuffYAxes}"/>
         </Grid>
         <Grid x:Name="PlayerDPSGraphGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphY}" Width="300" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -525,6 +527,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+            <Border x:Name="PlayerDPSGraphGridBorder" BorderBrush="#ff0000" BorderThickness="0" Grid.Column="0" Grid.Row="0"/>
+
             <lvc:CartesianChart Background="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphBackground}" Series="{Binding damagePerSecondSeries}" SyncContext="{Binding damagePerSecondSync}" XAxes="{Binding XAxes}" YAxes="{Binding damagePerSecondYAxes}"/>
         </Grid>
         <Grid x:Name="PlayerAPMGraphGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphY}" Width="300" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -535,6 +539,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+            <Border x:Name="PlayerAPMGraphGridBorder" BorderBrush="#ff0000" BorderThickness="0" Grid.Column="0" Grid.Row="0"/>
             <lvc:CartesianChart Background="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphBackground}" Series="{Binding actionsPerMinuteSeries}" SyncContext="{Binding actionsPerMinuteSync}" XAxes="{Binding XAxes}" YAxes="{Binding actionsPerMinuteYAxes}"/>
         </Grid>
         <Grid x:Name="PlayerHitsPerSecondGraphGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphY}" Width="300" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -545,6 +550,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+            <Border x:Name="PlayerHitsPerSecondGraphGridBorder" BorderBrush="#ff0000" BorderThickness="0" Grid.Column="0" Grid.Row="0"/>
+
             <lvc:CartesianChart Background="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphBackground}" Series="{Binding hitsPerSecondSeries}" SyncContext="{Binding hitsPerSecondSync}" XAxes="{Binding XAxes}" YAxes="{Binding hitsPerSecondYAxes}"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MapImage" Canvas.Left="{Binding Source={StaticResource Settings},Path=MapX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MapY}" Width="{Binding Source={StaticResource Settings},Path=MapAreaWidth}" Height="{Binding Source={StaticResource Settings},Path=MapAreaHeight}" MouseLeftButtonDown="ElementMouseLeftButtonDown"

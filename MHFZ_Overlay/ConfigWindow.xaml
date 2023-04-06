@@ -1064,7 +1064,7 @@
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="100"/>
                             </Grid.RowDefinitions>
-                            <DockPanel>
+                            
                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                     <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Margin="0" Height="Auto" Width="Auto">
                                         <Grid.ColumnDefinitions>
@@ -1141,7 +1141,10 @@
                                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Personal Best Y Coordinate"/>
                                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestY}"  PreviewTextInput="ValidateNumber"/>
 
-                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="13" Grid.Column="0" ToolTip="Show Personal Best Time Percent">
+                                        <TextBlock Margin="5,5,5,5" Grid.Row="13" Grid.Column="0" Style="{StaticResource ConfigTextBox}" Text="Personal Best Pace Color" ToolTip="Mark PB time as red if the current pace is greater than the personal best pace" />
+                                        <ToggleButton Grid.Row="13" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnablePersonalBestPaceColor}"/>
+                                        
+                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="14" Grid.Column="0" ToolTip="Show Personal Best Time Percent">
                                             <Image  Margin="0,0,5,0">
                                                 <Image.Source>
                                                     <DrawingImage>
@@ -1160,14 +1163,11 @@
                                             </Image>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best Time Percent" />
                                         </StackPanel>
-                                        <ToggleButton Grid.Row="13" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestTimePercentShown}"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Personal Best Time Percent X Coordinate"/>
-                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentX}"  PreviewTextInput="ValidateNumber"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Personal Best Time Percent Y Coordinate"/>
-                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="15" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentY}"  PreviewTextInput="ValidateNumber"/>
-
-                                        <TextBlock Grid.Row="16" Grid.Column="0" Style="{StaticResource ConfigTextBox}" Text="Best Possible HP Percent Pace Color" ToolTip="Mark BPHP as red if the current pace is greater than the personal best pace" />
-                                        <ToggleButton Grid.Row="16" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnablePersonalBestPaceColor}"/>
+                                        <ToggleButton Grid.Row="14" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestTimePercentShown}"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Personal Best Time Percent X Coordinate"/>
+                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="15" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentX}"  PreviewTextInput="ValidateNumber"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Personal Best Time Percent Y Coordinate"/>
+                                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentY}"  PreviewTextInput="ValidateNumber"/>
 
                                         <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="17" Grid.Column="0" ToolTip="Show Quest Attempts divided by overlay mode and weapon type">
                                             <Image Source="UI/Icons/png/ticket.png" Margin="0,0,5,0"/>
@@ -1182,7 +1182,6 @@
                                         <!--TODO: speedrun mode in overlay takes into account these settings + other things-->
                                     </Grid>
                                 </ScrollViewer>
-                            </DockPanel>
                             <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
@@ -1544,6 +1543,16 @@
                         
                     </Grid>
                 </ScrollViewer>
+                <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Background="Transparent" Grid.Column="0" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/DragDropControl.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click"/>
+                    <Button Background="Transparent" Grid.Column="1" ToolTip="Restore values to default configuration" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Refresh.xaml'}"  Click="DefaultButton_Click" Width="80" Style="{StaticResource ConfigBottomButtons}" Height="80"/>
+                    <Button Background="Transparent" Grid.Column="2" ToolTip="Save settings" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Done.xaml'}"   Style="{StaticResource ConfigBottomButtons}" Click="SaveButton_Click" Height="80" Width="80"/>
+                </Grid>
             </Grid>
         </TabItem>
         <TabItem ToolTip="Access a wealth of useful information about hunting" Background="#11111b" Foreground="#cdd6f4">

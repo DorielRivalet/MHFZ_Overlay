@@ -2775,6 +2775,7 @@ namespace MHFZ_Overlay
                         s.Monster4HealthBarShown = false;
                         s.EnableMap = false;
                         s.PersonalBestTimePercentShown = false;
+                        s.EnablePersonalBestPaceColor = false;
 
                         s.TimerInfoShown = true;
                         s.EnableKeyLogging = true;

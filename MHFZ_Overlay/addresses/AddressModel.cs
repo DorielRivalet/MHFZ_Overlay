@@ -1014,7 +1014,8 @@ namespace MHFZ_Overlay.addresses
                 || s.Monster3HealthBarShown 
                 || s.Monster4HealthBarShown 
                 || s.EnableMap
-                || s.PersonalBestTimePercentShown) //TODO monster 1 overview? and update README
+                || s.PersonalBestTimePercentShown
+                || s.EnablePersonalBestPaceColor) //TODO monster 1 overview? and update README
                 return "";
             else if (s.TimerInfoShown && s.EnableKeyLogging && s.EnableQuestLogging && PartySize() == 1 && s.OverlayModeWatermarkShown) //TODO: update README
             {
@@ -1762,11 +1763,40 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        // TODO isOnBestPace
+        public string isOnBestPace
+        {
+            get
+            {
+                if (TimeDefInt() == 0 || int.Parse(Monster1MaxHP) <= 1)
+                {
+                    PersonalBestIcon = "UI/Icons/png/quest_clock.png";
+                    return "#f5e0dc";
+                }
+
+                if (TimeDefInt() < TimeInt())
+                {
+                    PersonalBestIcon = "UI/Icons/png/quest_clock.png";
+                    return "#f5e0dc";
+                }
+
+                var timePercent = int.Parse(PersonalBestTimePercent.Replace("%",""));
+                var monster1HPPercent = (float)Monster1HPInt() / int.Parse(Monster1MaxHP) * 100.0;
+
+                if (timePercent >= monster1HPPercent && ShowPersonalBestPaceColor())
+                {
+                    PersonalBestIcon = "UI/Icons/png/quest_clock_red.png";
+                    return "#f38ba8";
+                }
+                else
+                {
+                    PersonalBestIcon = "UI/Icons/png/quest_clock.png";
+                    return "#f5e0dc";
+                }
+            }
+        }
 
         public string PersonalBestLoaded = "--:--.--";
 
-        // TODO
         public string PersonalBestTimePercent
         {
             get
@@ -1774,10 +1804,15 @@ namespace MHFZ_Overlay.addresses
                 if (PersonalBestLoaded != "--:--.--" && ShowPersonalBestPaceColor())
                 {
                     const int framesPerSecond = 30;
-                    var personalBestInFrames = framesPerSecond * (TimeSpan.ParseExact(PersonalBestLoaded, "mm':'ss'.'ff", CultureInfo.InvariantCulture).TotalSeconds);
-                    var remainingPersonalBestTimePercent = CalculatePersonalBestInFramesPercent(personalBestInFrames);
-                    Debug.WriteLine("personalBestInFrames {0}, remainingPersonalBestTimePercent {1}", personalBestInFrames, remainingPersonalBestTimePercent);
-                    return string.Format("{0:0}%", remainingPersonalBestTimePercent);
+                    int personalBestInFrames = (int)(framesPerSecond * (TimeSpan.ParseExact(PersonalBestLoaded, "mm':'ss'.'ff", CultureInfo.InvariantCulture).TotalSeconds));
+                    var personalBestTimeFramesElapsed = 0;
+                    if (GetTimerMode() == "Time Left")
+                        personalBestTimeFramesElapsed = TimeDefInt() - personalBestInFrames;
+                    else
+                        personalBestTimeFramesElapsed = personalBestInFrames;
+                    var elapsedPersonalBestTimePercent = CalculatePersonalBestInFramesPercent(personalBestTimeFramesElapsed);                    
+
+                    return string.Format("{0:0}%", elapsedPersonalBestTimePercent);
                 }
                 else
                 {
@@ -1786,12 +1821,12 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
-        public double CalculatePersonalBestInFramesPercent(double personalBestInFrames)
+        public double CalculatePersonalBestInFramesPercent(double personalBestInFramesElapsed)
         {
-            if (personalBestInFrames <= 0)
+            if (personalBestInFramesElapsed <= 0)
                 return 0;
             else
-                return (double)((double)TimeInt() / (TimeDefInt() - personalBestInFrames)) * 100.0;
+                return 100 - ((double)(TimeDefInt() - TimeInt()) / personalBestInFramesElapsed) * 100.0;
         }
 
         private double HighestAttackMult { get; set; } = 0;
