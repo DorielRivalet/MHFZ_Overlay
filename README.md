@@ -34,7 +34,7 @@ We hope you find this overlay useful and enjoyable, and we welcome any feedback 
 
 [The design and icons used in this project are part of the *Material Design Icons* and related components](https://fonts.google.com/icons)
 
-The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced. This project also uses Font Awesome's fonts.
+The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151)
 
 ## Requirements
 
