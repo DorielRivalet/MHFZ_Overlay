@@ -42,8 +42,8 @@ namespace MHFZ_Overlay
             string settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
             string destination = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
             File.Copy(settingsFile, destination, true);
-            logger.Info("FILE OPERATION: Backed up settings. File: {0}, Destination: {1}", settingsFile, destination);
-            MessageBox.Show(string.Format("Backed up settings. File: {0}, Destination: {1}", settingsFile, destination), "MHF-Z Overlay Settings", MessageBoxButton.OK,MessageBoxImage.Information);
+            logger.Info("FILE OPERATION: Backed up settings. Original file: {0}, Destination: {1}", settingsFile, destination);
+            MessageBox.Show(string.Format("Backed up settings. Original file: {0}, Destination: {1}", settingsFile, destination), "MHF-Z Overlay Settings", MessageBoxButton.OK,MessageBoxImage.Information);
         }
 
         /// <summary>

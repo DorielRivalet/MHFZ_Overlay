@@ -93,7 +93,13 @@ The fix would have to come from Window's side, not the overlay.
 
 ## I cannot run the setup executable, what should I do?
 
-Make sure to run as Administrator
+Make sure to run as Administrator.
+
+## How to import/export settings from the overlay?
+
+Open the overlay settings, go to General tab, press the Backup settings button, and then save to a file. Next time you open the overlay, the settings are automatically restored from this backup and the backup is deleted. So if you wish to have persistent settings during updates, press the backup button just before updating to a newer version.
+
+The JSON file is meant to be used for debugging or troubleshooting purposes.
 
 ## My question isn't answered here, how can I contact the developers?
 
