@@ -2508,7 +2508,8 @@ namespace MHFZ_Overlay
             "WeaponClass",
             "WeaponIcon",
             "WeaponStyles",
-            "AllDivaSkills"};
+            "AllDivaSkills",
+            "MezFesMinigames"};
 
         private Dictionary<string, Dictionary<string, object>> CreateReferenceSchemaJSONFromLocalDatabaseFile(SQLiteConnection conn, bool writeFile = true)
         {
@@ -3917,6 +3918,8 @@ namespace MHFZ_Overlay
                     {
                         cmd.ExecuteNonQuery();
                     }
+
+                    InsertDictionaryDataIntoTable(Dictionary.MezFesMinigame.ID, "MezFesMinigames", "MezFesMinigameID", "MezFesMinigameName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS MezFes(
                     MezFesID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -7600,7 +7603,7 @@ namespace MHFZ_Overlay
             }
         }
 
-        // TODO i dont know if i like this
+        // TODO this is repeating code
         private static void PerformUpdateToVersion_0_23_0(SQLiteConnection connection)
         {
             // Perform database updates for version 0.23.0
