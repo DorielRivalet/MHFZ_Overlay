@@ -46,6 +46,18 @@
 8. Make sure Window Match Priority is set to "Match title, otherwise find window of same executable"
 9. Happy Hunting!
 
+## My game slows down when recording with the Overlay, what should I do?
+
+If you're experiencing a slowdown in your game while recording with OBS and using the overlay, there are a few potential reasons and solutions to consider:
+
+- System resources: Recording gameplay with OBS and running an overlay can be resource-intensive, especially if your computer has limited CPU or GPU resources. Try closing any unnecessary programs, lowering in-game graphics settings, or upgrading your hardware to meet the requirements for recording and overlay usage.
+
+- Overlay settings: The settings of the overlay can also impact performance. Make sure your overlay settings are optimized for performance, such as using lower resolution and disabling any unnecessary features.
+
+- OBS settings: Review your OBS settings to ensure they are optimized for recording. Adjusting bitrate, resolution, and frame rate settings in OBS can help improve performance while recording with an overlay.
+
+- Test on different hardware: Test your overlay program and OBS on different hardware configurations to determine if the issue persists across different systems, which can help identify if it's a hardware-specific issue.
+
 ## How to Enable Quest Logging?
 
 1. Go to Mezeporta, load the Overlay.
