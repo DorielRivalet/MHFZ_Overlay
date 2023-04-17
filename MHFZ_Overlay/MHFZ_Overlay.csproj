@@ -13,6 +13,8 @@
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
 	<EnableWindowsTargeting>true</EnableWindowsTargeting>
 	<CodeAnalysisRuleSet>..\.sonarlint\dorielrivalet_mhfz_overlaycsharp.ruleset</CodeAnalysisRuleSet>
+    <!-- Project is not a test project -->
+    <SonarQubeTestProject>false</SonarQubeTestProject>
   </PropertyGroup>
 
   <ItemGroup>

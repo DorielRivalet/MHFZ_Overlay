@@ -12,7 +12,7 @@ The following steps outline the process for releasing and deploying the software
 4. Bump version: Update the version in the CurrentProgramVersion variable, following SemVer's specifications.
 5. Commit changes: Run `git add .` to stage the changes, then run `git commit -m "Your commit message here"` to commit the changes, following commitlint's specifications.
 6. Update CHANGELOG.md: Run `npm run release` to automatically update the CHANGELOG.md file with the changes made.
-7. Merge release branch into main: Run `git checkout main` to switch to the main branch, then run `git merge release` to merge the release branch into the main branch.
+7. Merge release branch into main: Run `git checkout main` to switch to the main branch and do `git pull origin main` to pull the latest remote changes, then run `git merge release` to merge the release branch into the main branch.
 8. Verify GitHub Actions: Verify that the GitHub Actions workflow has been triggered and completed successfully. If something is wrong, go back to step 1 and fix any issues without modifying the git history.
 9. Publish in Visual Studio: Open the solution in Visual Studio then switch from Build configuration to Release configuration. Publish the software's project using Visual Studio.
 10. Update packVersion with clowd.squirrel: Open the command prompt in the `C:\Users\Name\.nuget\packages\clowd.squirrel\x.x.xx\tools` folder, then run the following command, replacing the appropriate paths and version number (replace the packVersion flag with the actual version number):
