@@ -1,7 +1,7 @@
 {
   "name": "mhfz_overlay",
   "version": "0.22.0",
-  "description": "[![Preview](https://res.cloudinary.com/marcomontalbano/image/upload/v1664306592/video_to_markdown/images/youtube--_6hHiRHTt_U-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/_6hHiRHTt_U \"Preview\")",
+  "description": "[![Monster Hunter Frontier Z Overlay v0.21.0 Preview](./demo/youtubepreview1.jpg)](https://www.youtube.com/watch?v=A9ffbRICqZY \"Monster Hunter Frontier Z Overlay v0.21.0 Preview\")",
   "main": "MHFZ_Overlay.sln",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

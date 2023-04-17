@@ -1,14 +1,16 @@
-# Deployment process
+# Table of Contents
 
-1. `git checkout`
-2. `git pull`
-3. Make changes
-4. Bump version in *CurrentProgramVersion* variable
-5. Commits to branch *release*
-6. `npm run release`
-7. Checkout to branch *main*
-8. Merge *release* into *main*
-9. Switch from *Build* to *Release*, Publish in Visual Studio
-10. `Squirrel.exe pack --packId "MHFZ_Overlay" --packDirectory "PATH\MHFZ_Overlay\MHFZ_Overlay\bin\Release\net6.0-windows\publish" --framework net6.0-x86 --packTitle="Monster Hunter Frontier Z Overlay" --packAuthors="DorielRivalet" --splashImage="PATH\MHFZ_Overlay\splash.png" --icon="PATH\MHFZ_Overlay\img\icon\mhfzoverlayicon256.ico" --appIcon="PATH\MHFZ_Overlay\img\icon\mhfzoverlayicon256.ico" --packVersion "0.13.0"`
-11. Add to GitHub Releases
-12. Verify Github Actions
+- [CI/CD](./cicd.md): gives a high-level overview of the development workflow, with a list of tasks and the tools used.
+- [database](./database.md): describes the database schema and shows the Entity-Relationship model.
+- [deployment](./deployment.md): gives instructions on how to deploy and releasify the application.
+- [classes](./classes.md): displays the class structure of the software.
+- [libraries](./libraries.md): lists the libraries used in this project.
+- [palette](./palette.md): gives a list of RGB and hexadecimal color values with their corresponding labels that were used in the source code.
+
+## Type Hierarchy
+
+![Type Hierarchy](./res/img/Type%20Hierarchy.png)
+
+## Package Structure
+
+![Package Structure](./res/img/Package%20Structure.png)

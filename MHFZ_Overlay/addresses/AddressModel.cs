@@ -1,10 +1,12 @@
 ﻿using Dictionary;
+using DiscordRPC;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
 using MHFZ_Overlay.UI.Class;
+using NLog;
 using RESTCountries.NET.Models;
 using RESTCountries.NET.Services;
 using SkiaSharp;
@@ -12,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -33,11 +36,26 @@ namespace MHFZ_Overlay.addresses
         private int SavedMonster3MaxHP = 0;
         private int SavedMonster4MaxHP = 0;
 
-
         private int SavedMonster1ID = 0;
         private int SavedMonster2ID = 0;
 
-        public AddressModel(Mem m) => M = m;
+        public AddressModel(Mem m) {
+
+            var config = new NLog.Config.LoggingConfiguration();
+
+            // Targets where to log to: File
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
+
+            // Rules for mapping loggers to targets            
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+
+            // Apply config           
+            NLog.LogManager.Configuration = config;
+
+            logger.Info($"PROGRAM OPERATION: AddressModel initialized");
+
+            M = m;
+        }
 
         public int SelectedMonster { get; set; } = 0;
 
@@ -46,75 +64,47 @@ namespace MHFZ_Overlay.addresses
         #region init bool
 
         public bool ShowMonsterInfos { get; set; } = true;
-
         public bool ShowMonsterAtkMult { get; set; } = true;
-
         public bool ShowMonsterDefrate { get; set; } = true;
-
         public bool ShowMonsterSize { get; set; } = true;
         public bool ShowMonsterPoison { get; set; } = true;
         public bool ShowMonsterSleep { get; set; } = true;
         public bool ShowMonsterPara { get; set; } = true;
         public bool ShowMonsterBlast { get; set; } = true;
         public bool ShowMonsterStun { get; set; } = true;
-
-
         public bool ShowPlayerInfos { get; set; } = true;
         public bool ShowPersonalBestInfo { get; set; } = true;
-
         public bool ShowTimerInfo { get; set; } = true;
         public bool ShowHitCountInfo { get; set; } = true;
         public bool ShowPlayerAtkInfo { get; set; } = true;
         public bool ShowPlayerHitsTakenBlockedInfo { get; set; } = true;
-
         public bool ShowQuestID { get; set; } = true;
-
-
+        public bool ShowQuestAttemptsInfo { get; set; } = true;
+        public bool ShowPersonalBestTimePercentInfo { get; set; } = true;
+        public bool ShowLocationTextInfo { get; set; } = true;
+        public bool ShowQuestNameInfo { get; set; } = true;
         public bool ShowMonsterHPBars { get; set; } = true;
-
         public bool ShowMonster1HPBar { get; set; } = true;
         public bool ShowMonster2HPBar { get; set; } = true;
         public bool ShowMonster3HPBar { get; set; } = true;
         public bool ShowMonster4HPBar { get; set; } = true;
-
         public bool ShowSharpness { get; set; } = true;
-
         public bool ShowSessionTimeInfo { get; set; } = true;
-
         public bool ShowMonsterPartHP { get; set; } = true;
-
         public bool ShowKBMLayout { get; set; } = true;
         public bool ShowAPM { get; set; } = true;
-
         public bool ShowControllerLayout { get; set; } = true;
-
         public bool ShowMonster1Icon { get; set; } = true;
-
         public bool ShowFrameCounter { get; set; } = true;
-
         public bool ShowMap { get; set; } = true;
-
         public bool ShowPlayerAttackGraph { get; set; } = true;
-
         public bool ShowPlayerDPSGraph { get; set; } = true;
-
-
         public bool ShowPlayerAPMGraph { get; set; } = true;
-
-
         public bool ShowPlayerHitsPerSecondGraph { get; set; } = true;
-
-
-
-
         public bool ShowDamagePerSecond { get; set; } = true;
-
         public bool ShowProgressBarIcon { get; set; } = true;
-
         public bool ShowProgressBarDescription { get; set; } = true;
-
         public bool ShowOverlayModeWatermark { get; set; } = true;
-
         public bool ShowSaveIcon { get; set; } = true;
 
 
@@ -927,15 +917,27 @@ namespace MHFZ_Overlay.addresses
 
         readonly Mem m = new();
 
+        //TODO convert to bool and remove isInLauncherBool?
         public string isInLauncher()
         {
             int pidToSearch = m.GetProcIdFromName("mhf");
             //Init a condition indicating that you want to search by process id.
             var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
                 pidToSearch);
+
+            AutomationElement? element = null;
+
             //Find the automation element matching the criteria
-            AutomationElement element = AutomationElement.RootElement.FindFirst(
-                TreeScope.Children, condition);
+            //TODO: does this even fix anything?
+            try
+            {
+                element = AutomationElement.RootElement.FindFirst(
+    TreeScope.Children, condition);
+            }
+            catch(Exception ex)
+            {
+                logger.Warn(ex, "PROGRAM OPERATION: Could not find AutomationElement");
+            }
 
             if (element == null || pidToSearch == 0)
                 return "NULL";
@@ -950,6 +952,15 @@ namespace MHFZ_Overlay.addresses
         }
 
         public bool inQuest = false;
+
+        public string GetOverlayModeForRPC()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.ShowDiscordRPCOverlayMode)
+                return GetOverlayMode();
+            else
+                return "";
+        }
 
         /// <summary>
         /// Gets the overlay mode.
@@ -971,7 +982,40 @@ namespace MHFZ_Overlay.addresses
                 return "(Main Menu) ";
             else if (QuestID() == 0 && AreaID() == 200 && BlademasterWeaponID() == 0 && GunnerWeaponID() == 0)
                 return "(World Select) ";
-            else if (!((QuestID() != 0 && TimeDefInt() > TimeInt() && int.Parse(ATK) > 0) || (IsRoad() || IsDure())) || s.EnableDamageNumbers || s.EnableSharpness || s.PartThresholdShown || s.HitCountShown || s.PlayerAtkShown || s.MonsterAtkMultShown || s.MonsterDefrateShown || s.MonsterSizeShown || s.MonsterPoisonShown || s.MonsterParaShown || s.MonsterSleepShown || s.MonsterBlastShown || s.MonsterStunShown || s.DamagePerSecondShown || s.TotalHitsTakenBlockedShown || s.PlayerAPMGraphShown || s.PlayerAttackGraphShown || s.PlayerDPSGraphShown || s.PlayerHitsPerSecondGraphShown || s.EnableQuestPaceColor || s.Monster1HealthBarShown || s.Monster2HealthBarShown || s.Monster3HealthBarShown || s.Monster4HealthBarShown) //TODO monster 1 overview? and update README
+            else if (
+                !(
+                    (QuestID() != 0 
+                    && TimeDefInt() > TimeInt() 
+                    && int.Parse(ATK) > 0) 
+                    || (IsRoad() || IsDure())
+                ) 
+                || s.EnableDamageNumbers 
+                || s.EnableSharpness 
+                || s.PartThresholdShown 
+                || s.HitCountShown 
+                || s.PlayerAtkShown 
+                || s.MonsterAtkMultShown 
+                || s.MonsterDefrateShown 
+                || s.MonsterSizeShown 
+                || s.MonsterPoisonShown 
+                || s.MonsterParaShown 
+                || s.MonsterSleepShown 
+                || s.MonsterBlastShown 
+                || s.MonsterStunShown 
+                || s.DamagePerSecondShown 
+                || s.TotalHitsTakenBlockedShown 
+                || s.PlayerAPMGraphShown 
+                || s.PlayerAttackGraphShown 
+                || s.PlayerDPSGraphShown 
+                || s.PlayerHitsPerSecondGraphShown 
+                || s.EnableQuestPaceColor 
+                || s.Monster1HealthBarShown 
+                || s.Monster2HealthBarShown 
+                || s.Monster3HealthBarShown 
+                || s.Monster4HealthBarShown 
+                || s.EnableMap
+                || s.PersonalBestTimePercentShown
+                || s.EnablePersonalBestPaceColor) //TODO monster 1 overview? and update README
                 return "";
             else if (s.TimerInfoShown && s.EnableKeyLogging && s.EnableQuestLogging && PartySize() == 1 && s.OverlayModeWatermarkShown) //TODO: update README
             {
@@ -1411,7 +1455,7 @@ namespace MHFZ_Overlay.addresses
         }
 
         ///<summary>
-        ///MM:SS.cs
+        /// Quest time in the format of mm:ss.ff
         ///</summary>
         public string Time
         {
@@ -1532,6 +1576,15 @@ namespace MHFZ_Overlay.addresses
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableQuestPaceColor)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool ShowPersonalBestPaceColor()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnablePersonalBestPaceColor)
                 return true;
             else
                 return false;
@@ -1710,9 +1763,74 @@ namespace MHFZ_Overlay.addresses
             }
         }
 
+        public string isOnBestPace
+        {
+            get
+            {
+                if (TimeDefInt() == 0 || int.Parse(Monster1MaxHP) <= 1)
+                {
+                    PersonalBestIcon = "UI/Icons/png/quest_clock.png";
+                    return "#f5e0dc";
+                }
+
+                if (TimeDefInt() < TimeInt())
+                {
+                    PersonalBestIcon = "UI/Icons/png/quest_clock.png";
+                    return "#f5e0dc";
+                }
+
+                var timePercent = int.Parse(PersonalBestTimePercent.Replace("%",""));
+                var monster1HPPercent = (float)Monster1HPInt() / int.Parse(Monster1MaxHP) * 100.0;
+
+                if (timePercent >= monster1HPPercent && ShowPersonalBestPaceColor())
+                {
+                    PersonalBestIcon = "UI/Icons/png/quest_clock_red.png";
+                    return "#f38ba8";
+                }
+                else
+                {
+                    PersonalBestIcon = "UI/Icons/png/quest_clock.png";
+                    return "#f5e0dc";
+                }
+            }
+        }
+
+        public string PersonalBestLoaded = "--:--.--";
+
+        public string PersonalBestTimePercent
+        {
+            get
+            {
+                if (PersonalBestLoaded != "--:--.--" && ShowPersonalBestPaceColor())
+                {
+                    const int framesPerSecond = 30;
+                    int personalBestInFrames = (int)(framesPerSecond * (TimeSpan.ParseExact(PersonalBestLoaded, "mm':'ss'.'ff", CultureInfo.InvariantCulture).TotalSeconds));
+                    var personalBestTimeFramesElapsed = 0;
+                    if (GetTimerMode() == "Time Left")
+                        personalBestTimeFramesElapsed = TimeDefInt() - personalBestInFrames;
+                    else
+                        personalBestTimeFramesElapsed = personalBestInFrames;
+                    var elapsedPersonalBestTimePercent = CalculatePersonalBestInFramesPercent(personalBestTimeFramesElapsed);                    
+
+                    return string.Format("{0:0}%", elapsedPersonalBestTimePercent);
+                }
+                else
+                {
+                    return "0%";
+                }
+            }
+        }
+
+        public double CalculatePersonalBestInFramesPercent(double personalBestInFramesElapsed)
+        {
+            if (personalBestInFramesElapsed <= 0)
+                return 0;
+            else
+                return 100 - ((double)(TimeDefInt() - TimeInt()) / personalBestInFramesElapsed) * 100.0;
+        }
+
         private double HighestAttackMult { get; set; } = 0;
         private decimal LowestMonsterDefrate { get; set; } = 1000;
-
 
         public string isHighestMonsterAttackMultiplier
         {
@@ -8432,7 +8550,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         #region graphs
 
         // TODO
-
         public ObservableCollection<ObservablePoint> attackBuffCollection = new();
         public ObservableCollection<ObservablePoint> damagePerSecondCollection = new();
         public ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new();
@@ -8510,9 +8627,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public ObservableCollection<long> weaponUsageStormStyle = new();
         public ObservableCollection<long> weaponUsageExtremeStyle = new();
 
-
-
-
         public object attackBuffSync { get; } = new();
         public object damagePerSecondSync { get; } = new();
         public object actionsPerMinuteSync { get; } = new();
@@ -8523,9 +8637,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public List<ISeries> damagePerSecondSeries { get; set; } = new();
         public List<ISeries> actionsPerMinuteSeries { get; set; } = new();
         public List<ISeries> hitsPerSecondSeries { get; set; } = new();
-
+        
         public List<ISeries> weaponUsageSeries { get; set; } = new();
-
 
         public string GetTimeElapsed(double frames)
         {
@@ -8752,6 +8865,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             else
                 return false;
         }
+
+        public int previousMezFesArea = -1;
+        public int previousMezFesScore = 0;
 
         /// <summary>
         /// Determines whether this instance is dure quest.
@@ -9037,14 +9153,15 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 s.GameFolderPath + @"\dat\mhfemd.bin",
                 s.GameFolderPath + @"\dat\mhfsqd.bin",
                 s.GameFolderPath + @"\mhfo.dll",
-                s.GameFolderPath + @"\mhfo-hd.dll"
+                s.GameFolderPath + @"\mhfo-hd.dll",
+                s.GameFolderPath + @"\mhf.exe"
                 };
 
             //check if the folder is named dat and contains dat, emd, and sqd.
             if (s.GameFolderPath == "" || s.GameFolderPath == null)
             {
                 MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-
+                logger.Warn("PROGRAM OPERATION: Game folder path not found");
                 s.EnableQuestLogging = false;
                 return false;
             }
@@ -9052,7 +9169,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             if (s.DatabaseFilePath == "" || s.DatabaseFilePath == null)
             {
                 MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-
+                logger.Warn("PROGRAM OPERATION: Database file path not found");
                 s.EnableQuestLogging = false;
                 return false;
             }
@@ -9076,6 +9193,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 + String.Join(", ", findFiles) + "\n" +
                 "gameFolderFiles: " + String.Join(", ", gameFolderFiles),
                 "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
+                logger.Warn("PROGRAM OPERATION: Missing game files");
                 s.EnableQuestLogging = false;
                 return false;
             }
@@ -9247,41 +9365,26 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public Dictionary<int, string> overlayModeDictionary = new Dictionary<int, string>();
 
         public int previousTimeInt = 0;
-
         public int previousAttackBuffInt = 0;
-
         public int previousHitCountInt = 0;
-
         public double previousDPS = 0;
-
         public int previousAreaID = 0;
-
+        public int previousGlobalAreaID = 0;
+        public int previousQuestID = 0;
         public int previousCartsInt = 0;
-
         public int previousMonster1HP = 0;
-
         public int previousMonster2HP = 0;
-
         public int previousMonster3HP = 0;
-
         public int previousMonster4HP = 0;
-
         public int previousTotalInventoryItems = 0;
-
         public int previousTotalAmmo = 0;
-
         public int previousTotalPartnyaItems = 0;
-
         public int previousHitsTakenBlocked = 0;
-
         public double previousTotalHitsTakenBlockedPerSecond = 0;
-
         public int previousPlayerHP = 0;
         public int previousPlayerStamina = 0;
-
         public double previousHitsPerSecond = 0;
         public double previousActionsPerMinute = 0;
-
         public string previousOverlayMode = "N/A";
 
         public List<Dictionary<int, int>> InsertInventoryDictionaryIntoList(string inventoryType)
@@ -9512,8 +9615,25 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return (double)(TimeDefInt() - TimeInt()) / 30;
         }
 
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        public int previousRoadFloor = 0;
+
         public void InsertQuestInfoIntoDictionaries()
         {
+            int timeInt = TimeInt();
+
+            if (IsRoad() && AreaID() == 459) // Hunter's Road Base Camp
+            {
+                if (RoadFloor() + 1 > previousRoadFloor)
+                {
+                    previousRoadFloor = RoadFloor() + 1;
+                    clearQuestInfoDictionaries();
+                    clearGraphCollections();
+                    resetQuestInfoVariables();
+                }
+            }
+
             if (previousAttackBuffInt != WeaponRaw() && !attackBuffDictionary.ContainsKey(TimeInt()))
             {
                 try
@@ -9528,9 +9648,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                         attackBuffCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), WeaponRaw()));
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into attackBuffDictionary");
                 }
             }
 
@@ -9541,9 +9661,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousHitCountInt = HitCountInt();
                     hitCountDictionary.Add(TimeInt(), HitCountInt());
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into hitCountDictionary");
                 }
             }
 
@@ -9560,9 +9680,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                         damagePerSecondCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), DPS));
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into damagePerSecondDictionary");
                 }
 
             }
@@ -9574,9 +9694,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousCartsInt = CurrentFaints();
                     cartsDictionary.Add(TimeInt(), CurrentFaints());
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into cartsDictionary");
                 }
             }
 
@@ -9587,9 +9707,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousAreaID = AreaID();
                     areaChangesDictionary.Add(TimeInt(), AreaID());
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into areaChangesDictionary");
                 }
             }
 
@@ -9602,9 +9722,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     monster1HPDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1HPInt());
                     monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1HPDictionary");
                 }
             }
 
@@ -9617,9 +9737,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     monster2HPDictionaryMonsterInfo.Add(LargeMonster2ID(), Monster2HPInt());
                     monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster2HPDictionary");
                 }
             }
 
@@ -9632,9 +9752,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     monster3HPDictionaryMonsterInfo.Add(LargeMonster3ID(), Monster3HPInt());
                     monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster3HPDictionary");
                 }
 
             }
@@ -9648,9 +9768,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     monster4HPDictionaryMonsterInfo.Add(LargeMonster4ID(), Monster4HPInt());
                     monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster4HPDictionary");
                 }
             }
 
@@ -9672,9 +9792,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     playerInventoryDictionary.Add(TimeInt(), currentInventoryList);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerInventoryDictionary");
                 }
             }
             else if (loadedItemsAtQuestStart && !playerInventoryDictionary.Values.Any())
@@ -9777,9 +9897,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     playerInventoryDictionary.Add(TimeInt(), itemIDsQuantityList);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerInventoryDictionary");
                 }
             }
 
@@ -9801,9 +9921,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     playerAmmoPouchDictionary.Add(TimeInt(), currentAmmoList);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerAmmoPouchDictionary");
                 }
             }
             else if (loadedItemsAtQuestStart && !playerAmmoPouchDictionary.Values.Any())
@@ -9865,9 +9985,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     playerAmmoPouchDictionary.Add(TimeInt(), itemIDsQuantityList);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerAmmoPouchDictionary");
                 }
             }
 
@@ -9889,9 +10009,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     partnyaBagDictionary.Add(TimeInt(), currentPartnyaBagList);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into partnyaBagDictionary");
                 }
             }
             else if (loadedItemsAtQuestStart && !partnyaBagDictionary.Values.Any())
@@ -9954,9 +10074,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     partnyaBagDictionary.Add(TimeInt(), itemIDsQuantityList);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into partnyaBagDictionary");
                 }
             }
 
@@ -9969,9 +10089,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     hitsAreaPairs.Add(AreaID(), AreaHitsTakenBlocked());
                     hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into hitsTakenBlockedDictionary");
                 }
             }
 
@@ -9982,9 +10102,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousPlayerHP = HunterHP();
                     playerHPDictionary.Add(TimeInt(), HunterHP());
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerHPDictionary");
                 }
             }
 
@@ -9995,9 +10115,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousPlayerStamina = HunterStamina();
                     playerStaminaDictionary.Add(TimeInt(), HunterStamina());
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerStaminaDictionary");
                 }
             }
 
@@ -10014,9 +10134,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                         hitsPerSecondCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), HitsPerSecond));
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into hitsPerSecondDictionary");
                 }
 
             }
@@ -10028,9 +10148,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousTotalHitsTakenBlockedPerSecond = TotalHitsTakenBlockedPerSecond;
                     hitsTakenBlockedPerSecondDictionary.Add(TimeInt(), TotalHitsTakenBlockedPerSecond);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into hitsTakenBlockedPerSecondDictionary");
                 }
             }
 
@@ -10047,9 +10167,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                         actionsPerMinuteCollection.Add(new ObservablePoint(GetCurrentQuestElapsedTimeInSeconds(), APM));
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into actionsPerMinuteDictionary");
                 }
             }
 
@@ -10060,9 +10180,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     previousOverlayMode = GetOverlayMode();
                     overlayModeDictionary.Add(TimeInt(), GetOverlayMode());
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // nothing
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into overlayModeDictionary");
                 }
             }
         }
@@ -10171,6 +10291,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             previousHitsPerSecond = 0;
             previousActionsPerMinute = 0;
             previousOverlayMode = "N/A";
+            previousRoadFloor = 0;
         }
 
         public void clearQuestInfoDictionaries()
@@ -10306,9 +10427,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public ObservableCollection<Option> QuestLogsSearchOption { get; set; } = new ObservableCollection<Option>()
         {
+            new Option{Name = "Personal Best", IsSelected = false},
             new Option{Name = "Gear", IsSelected = false},
             new Option{Name = "Top 20", IsSelected = false},
-            new Option{Name = "Weapon Usage", IsSelected = false},
+            new Option{Name = "Weapon Stats", IsSelected = false},
             new Option{Name = "Most Recent", IsSelected = false},
             new Option{Name = "YouTube", IsSelected = false},
             new Option{Name = "Stats (Graphs)", IsSelected = false},

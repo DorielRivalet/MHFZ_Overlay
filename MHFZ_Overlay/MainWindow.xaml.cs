@@ -38,6 +38,10 @@ using Image = System.Windows.Controls.Image;
 using Label = System.Windows.Controls.Label;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
+using NLog;
+using System.Linq;
+using Microsoft.Extensions.DependencyModel;
+using System.Text;
 
 namespace MHFZ_Overlay
 {
@@ -97,7 +101,10 @@ namespace MHFZ_Overlay
 
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
-        //set version here
+
+        /// <summary>
+        /// The current program version
+        /// </summary>
         public const string CurrentProgramVersion = "v0.22.0";
 
         [DllImport("user32.dll")]
@@ -349,6 +356,8 @@ namespace MHFZ_Overlay
 
         private readonly Dictionary<X.Gamepad.GamepadButtons, Image> _controllerImages = new Dictionary<X.Gamepad.GamepadButtons, Image>();
 
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         //Main entry point?        
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -367,6 +376,18 @@ namespace MHFZ_Overlay
             DataLoader = new DataLoader();
             InitializeComponent();
 
+            var config = new NLog.Config.LoggingConfiguration();
+
+            // Targets where to log to: File
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
+
+            // Rules for mapping loggers to targets            
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+
+            // Apply config           
+            NLog.LogManager.Configuration = config;
+
+            logger.Info($"PROGRAM OPERATION: MainWindow initialized");
 
             Left = 0;
             Top = 0;
@@ -417,11 +438,39 @@ namespace MHFZ_Overlay
 
             SetGraphSeries();
 
+            // Get the dependency context for the current application
+            var context = DependencyContext.Default;
+
+            // Build a string with information about all the dependencies
+            var sb = new StringBuilder();
+            var runtimeTarget = RuntimeInformation.FrameworkDescription;
+            sb.AppendLine($"Target framework: {runtimeTarget}");
+            foreach (var lib in context.RuntimeLibraries)
+            {
+                sb.AppendLine($"Library: {lib.Name} {lib.Version}");
+                sb.AppendLine($"  Type: {lib.Type}");
+                sb.AppendLine($"  Hash: {lib.Hash}");
+                sb.AppendLine($"  Dependencies:");
+                foreach (var dep in lib.Dependencies)
+                {
+                    sb.AppendLine($"    {dep.Name} {dep.Version}");
+                }
+            }
+
+            string dependenciesInfo = sb.ToString();
+
+            logger.Info("PROGRAM OPERATION: Loading dependency data\n{0}", dependenciesInfo);
+
+            // The rendering tier corresponds to the high-order word of the Tier property.
+            int renderingTier = (RenderCapability.Tier >> 16);
+
+            logger.Info("PROGRAM OPERATION: Found rendering tier {0}", renderingTier);
+
             DataLoader.model.ShowSaveIcon = false;
 
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
         }
-
+        
         private void SetGraphSeries()
         {
             //TODO graphs
@@ -479,6 +528,7 @@ namespace MHFZ_Overlay
                 if (s.EnableUpdateNotifier)
                 {
                     System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(String.Format("Detected different version ({0}) from latest ({1}). Do you want to download the file?", CurrentProgramVersion, latest.TagName), "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No);
+                    logger.Info("PROGRAM OPERATION: Detected different overlay version");
 
                     if (messageBoxResult.ToString() == "Yes")
                     {
@@ -524,6 +574,8 @@ namespace MHFZ_Overlay
                 if (className == "MHFLAUNCH")
                 {
                     System.Windows.MessageBox.Show("Detected launcher, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    logger.Info("PROGRAM OPERATION: Detected game launcher");
+
                     DataLoader.model.isInLauncherBool = true;
                 }
                 else
@@ -545,6 +597,8 @@ namespace MHFZ_Overlay
                     if (s.EnableAutoClose)
                     {
                         System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                        logger.Info("PROGRAM OPERATION: Detected closed game");
+
                         //https://stackoverflow.com/a/9050477/18859245
                         Cleanup();
                         databaseManager.StoreSessionTime(this);
@@ -553,6 +607,8 @@ namespace MHFZ_Overlay
                     else
                     {
                         System.Windows.MessageBox.Show("Detected closed game, please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                        logger.Info("PROGRAM OPERATION: Detected closed game");
+
                     }
                 };
             }
@@ -588,6 +644,10 @@ namespace MHFZ_Overlay
 
                 CheckQuestStateForDatabaseLogging();
 
+                // TODO should this be here or somewhere else?
+                // this is also for database logging
+                CheckMezFesScore();
+
                 if (DataLoader.model.isInLauncher() == "NULL" && !showedNullError)
                 {
                     showedNullError = true;
@@ -600,12 +660,118 @@ namespace MHFZ_Overlay
                 }
 
                 DataLoader.CheckForExternalProcesses();
+
+                CheckIfLocationChanged();
+                CheckIfQuestChanged();
             }
             catch (Exception ex)
             {
+                logger.Error(ex, $"PROGRAM OPERATION: An error has occurred in the Timer_Tick function");
                 WriteCrashLog(ex);
+                // the flushing is done automatically according to the docs
             }
         }
+        private void CheckIfQuestChanged()
+        {
+            if (DataLoader.model.previousQuestID != DataLoader.model.QuestID() && DataLoader.model.QuestID() != 0)
+            {
+                DataLoader.model.previousQuestID = DataLoader.model.QuestID();
+                ShowQuestName();
+            } else if (DataLoader.model.QuestID() == 0 && DataLoader.model.previousQuestID != 0)
+            {
+                DataLoader.model.previousQuestID = DataLoader.model.QuestID();
+            }
+        }
+
+        private void ShowQuestName()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            if (s == null || !s.QuestNameShown)
+                return;
+
+            Dictionary.Quests.QuestIDs.TryGetValue(DataLoader.model.previousQuestID, out string? previousQuestID);
+            questNameTextBlock.Text = previousQuestID;
+            Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+            Brush peachBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x87));
+            AnimateOutlinedTextBlock(questNameTextBlock, blackBrush, peachBrush);
+        }
+
+        /// <summary>
+        /// Animates the outlined text block.
+        /// </summary>
+        /// <param name="outlinedTextBlock">The outlined text block.</param>
+        private void AnimateOutlinedTextBlock(OutlinedTextBlock outlinedTextBlock, Brush startBrush, Brush endBrush)
+        {
+            // Define the animation durations and colors
+            var fadeInDuration = TimeSpan.FromSeconds(1);
+            var fadeOutDuration = TimeSpan.FromSeconds(1);
+
+            DoubleAnimation fadeIn = new DoubleAnimation(0, 1, fadeInDuration);
+            DoubleAnimation fadeOut = new DoubleAnimation(1, 0, fadeOutDuration);
+            BrushAnimation colorInAnimation = new BrushAnimation
+            {
+                From = startBrush,
+                To = endBrush,
+                Duration = fadeInDuration,
+            };
+            BrushAnimation colorOutAnimation = new BrushAnimation
+            {
+                From = endBrush,
+                To = startBrush,
+                Duration = fadeOutDuration,
+            };
+
+            Storyboard fadeInStoryboard = new Storyboard();
+            Storyboard.SetTarget(fadeIn, outlinedTextBlock);
+            Storyboard.SetTargetProperty(fadeIn, new PropertyPath(TextBlock.OpacityProperty));
+            Storyboard.SetTarget(colorInAnimation, outlinedTextBlock);
+            Storyboard.SetTargetProperty(colorInAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
+            fadeInStoryboard.Children.Add(fadeIn);
+            fadeInStoryboard.Children.Add(colorInAnimation);
+
+            Storyboard fadeOutStoryboard = new Storyboard();
+            Storyboard.SetTarget(fadeOut, outlinedTextBlock);
+            Storyboard.SetTargetProperty(fadeOut, new PropertyPath(TextBlock.OpacityProperty));
+            Storyboard.SetTarget(colorOutAnimation, outlinedTextBlock);
+            Storyboard.SetTargetProperty(colorOutAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
+            fadeOutStoryboard.Children.Add(fadeOut);
+            fadeOutStoryboard.Children.Add(colorOutAnimation);
+
+            fadeInStoryboard.Completed += (sender, e) =>
+            {
+                // Wait for 2 seconds before starting fade-out animation
+                fadeOutStoryboard.BeginTime = TimeSpan.FromSeconds(2);
+                fadeOutStoryboard.Begin();
+            };
+
+            // Start the fade-in storyboard
+            fadeInStoryboard.Begin();
+        }
+
+        private void CheckIfLocationChanged()
+        {
+            if (DataLoader.model.previousGlobalAreaID != DataLoader.model.AreaID() && DataLoader.model.AreaID() != 0)
+            {
+                DataLoader.model.previousGlobalAreaID = DataLoader.model.AreaID();
+                ShowLocationName();
+            }
+        }
+
+        private void ShowLocationName()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            if (s == null || !s.LocationTextShown)
+                return;
+
+            Dictionary.MapAreaList.MapAreaID.TryGetValue(DataLoader.model.previousGlobalAreaID, out string? previousGlobalAreaID);
+            locationTextBlock.Text = previousGlobalAreaID;
+            Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+            Brush blueBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
+            AnimateOutlinedTextBlock(locationTextBlock, blackBrush, blueBrush);
+        }
+
         private void WriteCrashLog(Exception ex)
         {
             string dateTime = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
@@ -620,6 +786,8 @@ namespace MHFZ_Overlay
             }
 
             System.Windows.MessageBox.Show("Fatal error, closing overlay. See the crash log in the overlay folder for more information.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            logger.Fatal(ex, "PROGRAM OPERATION: Program crashed");
+
             //https://stackoverflow.com/a/9050477/18859245
             Cleanup();
             databaseManager.StoreSessionTime(this);
@@ -665,9 +833,9 @@ namespace MHFZ_Overlay
                         {
                             DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), damage);
                         }
-                        catch
+                        catch (Exception ex)
                         {
-                            // nothing
+                            logger.Warn(ex, "PROGRAM OPERATION: Could not insert into damageDealtDictionary");
                         }
                     }
                 }
@@ -683,9 +851,9 @@ namespace MHFZ_Overlay
                             DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
 
                         }
-                        catch
+                        catch (Exception ex)
                         {
-                            // nothing
+                            logger.Warn(ex, "PROGRAM OPERATION: Could not insert into damageDealtDictionary");
                         }
                     }
                 }
@@ -701,8 +869,9 @@ namespace MHFZ_Overlay
                                 DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
                             }
                             catch
+                            (Exception ex)
                             {
-                                // nothing
+                                logger.Warn(ex, "PROGRAM OPERATION: Could not insert into damageDealtDictionary");
                             }
                         }
                     }
@@ -1055,6 +1224,8 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowQuestID = v && s.QuestIDShown;
 
             DataLoader.model.ShowPersonalBestInfo = v && s.PersonalBestShown;
+            DataLoader.model.ShowQuestAttemptsInfo = v && s.QuestAttemptsShown;
+            DataLoader.model.ShowPersonalBestTimePercentInfo = v && s.PersonalBestTimePercentShown;
         }
 
         #endregion
@@ -1720,8 +1891,6 @@ namespace MHFZ_Overlay
                 return false;
         }
 
-        private int previousRoadFloor = 0;
-
         private bool StartedRoadElapsedTime = false;
 
         private bool inDuremudiraArena = false;
@@ -1919,8 +2088,13 @@ namespace MHFZ_Overlay
                 return;
             }
 
-            presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), DataLoader.model.GetOverlayMode(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
+            // TODO also need to handle the other fields lengths
+            if (string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition)).Length >= 63)
+                presenceTemplate.Details = string.Format("{0}{1}{2}", GetQuestState(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()));
+            else
+                presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
 
+            // TODO should this be outside UpdateDiscordRPC?
             if (IsInHubAreaID() && DataLoader.model.QuestID() == 0)
                 DataLoader.model.PreviousHubAreaID = DataLoader.model.AreaID();
 
@@ -2149,7 +2323,6 @@ namespace MHFZ_Overlay
                     };
                 }
 
-
                 if (DataLoader.model.IsRoad())
                 {
                     switch (GetRoadTimerResetMode())
@@ -2162,12 +2335,12 @@ namespace MHFZ_Overlay
 
                             else if (DataLoader.model.AreaID() == 459)//Hunter's Road Base Camp
                             {
-                                if (DataLoader.model.RoadFloor() + 1 > previousRoadFloor)
+                                if (DataLoader.model.RoadFloor() + 1 > DataLoader.model.previousRoadFloor)
                                 {
                                     // reset values
                                     DataLoader.model.inQuest = false;
                                     currentMonster1MaxHP = 0;
-                                    previousRoadFloor = DataLoader.model.RoadFloor() + 1;
+                                    //DataLoader.model.previousRoadFloor = DataLoader.model.RoadFloor() + 1;
                                     presenceTemplate.Timestamps = GetDiscordTimerMode() switch
                                     {
                                         "Time Left" => Timestamps.FromTimeSpan((double)DataLoader.model.TimeInt() / 30.0),
@@ -2189,12 +2362,12 @@ namespace MHFZ_Overlay
 
                             else if (DataLoader.model.AreaID() == 459)//Hunter's Road Base Camp
                             {
-                                if (DataLoader.model.RoadFloor() + 1 > previousRoadFloor)
+                                if (DataLoader.model.RoadFloor() + 1 > DataLoader.model.previousRoadFloor)
                                 {
                                     // reset values
                                     DataLoader.model.inQuest = false;
                                     currentMonster1MaxHP = 0;
-                                    previousRoadFloor = DataLoader.model.RoadFloor() + 1;
+                                    //DataLoader.model.previousRoadFloor = DataLoader.model.RoadFloor() + 1;
 
                                     if (!(StartedRoadElapsedTime))
                                     {
@@ -2216,12 +2389,12 @@ namespace MHFZ_Overlay
 
                             else if (DataLoader.model.AreaID() == 459)//Hunter's Road Base Camp
                             {
-                                if (DataLoader.model.RoadFloor() + 1 > previousRoadFloor)
+                                if (DataLoader.model.RoadFloor() + 1 > DataLoader.model.previousRoadFloor)
                                 {
                                     // reset values
                                     DataLoader.model.inQuest = false;
                                     currentMonster1MaxHP = 0;
-                                    previousRoadFloor = DataLoader.model.RoadFloor() + 1;
+                                    //DataLoader.model.previousRoadFloor = DataLoader.model.RoadFloor() + 1;
 
                                     if (!(StartedRoadElapsedTime))
                                     {
@@ -2287,7 +2460,7 @@ namespace MHFZ_Overlay
                 //reset values
                 DataLoader.model.inQuest = false;
                 currentMonster1MaxHP = 0;
-                previousRoadFloor = 0;
+                //DataLoader.model.previousRoadFloor = 0;
                 StartedRoadElapsedTime = false;
                 inDuremudiraArena = false;
                 inDuremudiraDoorway = false;
@@ -2334,6 +2507,10 @@ namespace MHFZ_Overlay
                     s.PersonalBestX = (double)(pos.X - XOffset);
                     s.PersonalBestY = (double)(pos.Y - YOffset);
                     break;
+                case "QuestAttemptsInfo":
+                    s.QuestAttemptsX = (double)(pos.X - XOffset);
+                    s.QuestAttemptsY = (double)(pos.Y - YOffset);
+                    break;
                 case "HitCountInfo":
                     s.HitCountX = (double)(pos.X - XOffset);
                     s.HitCountY = (double)(pos.Y - YOffset);
@@ -2364,7 +2541,6 @@ namespace MHFZ_Overlay
                     s.PlayerHitsPerSecondGraphX = (double)(pos.X - XOffset);
                     s.PlayerHitsPerSecondGraphY = (double)(pos.Y - YOffset);
                     break;
-
 
                 case "DamagePerSecondInfo":
                     s.PlayerDPSX = (double)(pos.X - XOffset);
@@ -2397,6 +2573,18 @@ namespace MHFZ_Overlay
                 case "SessionTimeInfo":
                     s.SessionTimeX = (double)(pos.X - XOffset);
                     s.SessionTimeY = (double)(pos.Y - XOffset);
+                    break;
+                case "LocationTextInfo":
+                    s.LocationTextX = (double)(pos.X - XOffset);
+                    s.LocationTextY = (double)(pos.Y - YOffset);
+                    break;
+                case "QuestNameInfo":
+                    s.QuestNameX = (double)(pos.X - XOffset);
+                    s.QuestNameY = (double)(pos.Y - YOffset);
+                    break;
+                case "PersonalBestTimePercentInfo":
+                    s.PersonalBestTimePercentX = (double)(pos.X - XOffset);
+                    s.PersonalBestTimePercentY = (double)(pos.Y - YOffset);
                     break;
 
                 // Monster
@@ -2545,7 +2733,10 @@ namespace MHFZ_Overlay
             if (IsDragConfigure) return;
 
             if (DataLoader.model.isInLauncherBool)
+            {
                 System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                logger.Info("PROGRAM OPERATION: Detected game launcher while using configuration menu");
+            }
 
             if (configWindow == null || !configWindow.IsLoaded)
                 configWindow = new(this);
@@ -2573,7 +2764,52 @@ namespace MHFZ_Overlay
             if (configWindow != null)
                 configWindow.Visibility = Visibility.Hidden;
             ToggleClickThrough();
+            ToggleOverlayBorders();
+        }
 
+        // TODO: use a dictionary for looping instead
+        private void ToggleOverlayBorders()
+        {
+            var thickness = new System.Windows.Thickness(0);
+
+            if (IsDragConfigure)
+                thickness = new System.Windows.Thickness(2);
+
+            ActionsPerMinuteInfoBorder.BorderThickness = thickness;
+            DamagePerSecondInfoBorder.BorderThickness = thickness;
+            HitCountInfoBorder.BorderThickness = thickness;
+            LocationTextInfoBorder.BorderThickness = thickness;
+            MonsterAtkMultInfoBorder.BorderThickness = thickness;
+            MonsterBlastInfoBorder.BorderThickness = thickness;
+            MonsterDefrateInfoBorder.BorderThickness = thickness;
+            MonsterParaInfoBorder.BorderThickness = thickness;
+            MonsterPoisonInfoBorder.BorderThickness = thickness;
+            MonsterSizeInfoBorder.BorderThickness = thickness;
+            MonsterSleepInfoBorder.BorderThickness = thickness;
+            MonsterStunInfoBorder.BorderThickness = thickness;
+            PersonalBestInfoBorder.BorderThickness = thickness;
+            PersonalBestTimePercentInfoBorder.BorderThickness = thickness;
+            PlayerAtkInfoBorder.BorderThickness = thickness;
+            PlayerHitsTakenBlockedInfoBorder.BorderThickness = thickness;
+            QuestAttemptsInfoBorder.BorderThickness = thickness;
+            QuestNameInfoBorder.BorderThickness = thickness;
+            SessionTimeInfoBorder.BorderThickness = thickness;
+            SharpnessInfoBorder.BorderThickness = thickness;
+            TimerInfoBorder.BorderThickness = thickness;
+            ControllerLayoutGridBorder.BorderThickness = thickness;
+            KBMLayoutGridBorder.BorderThickness = thickness;
+            QuestIDGridBorder.BorderThickness = thickness;
+            OverlayModeWatermarkBorder.BorderThickness = thickness;
+            Monster1HpBarBorder.BorderThickness = thickness;
+            Monster2HpBarBorder.BorderThickness = thickness;
+            Monster3HpBarBorder.BorderThickness = thickness;
+            Monster4HpBarBorder.BorderThickness = thickness;
+            MonsterPartThresholdBorder.BorderThickness = thickness;
+            DamageNumbersBorder.BorderThickness = thickness;
+            PlayerAPMGraphGridBorder.BorderThickness = thickness;
+            PlayerAttackGraphGridBorder.BorderThickness = thickness;
+            PlayerDPSGraphGridBorder.BorderThickness = thickness;
+            PlayerHitsPerSecondGraphGridBorder.BorderThickness = thickness;
         }
 
         private bool ClickThrough = true;
@@ -2612,6 +2848,7 @@ namespace MHFZ_Overlay
             if (configWindow != null)
                 configWindow.Visibility = Visibility.Visible;
             ToggleClickThrough();
+            ToggleOverlayBorders();
         }
 
         private void ExitDragAndDrop_Click(object sender, RoutedEventArgs e)
@@ -2627,6 +2864,76 @@ namespace MHFZ_Overlay
         #region database
 
         private bool calculatedPersonalBest = false;
+        private bool calculatedQuestAttempts = false;
+
+        private static object lockObj = new object();
+
+        private async void UpdateQuestAttempts()
+        {
+            string category = OverlayModeWatermarkTextBlock.Text;
+            int weaponType = DataLoader.model.WeaponType();
+            long questID = DataLoader.model.QuestID();
+
+            int attempts = await Task.Run(() => databaseManager.UpsertQuestAttempts(questID, weaponType, category));
+
+            await Dispatcher.BeginInvoke(new Action(() =>
+            {
+                questAttemptsTextBlock.Text = attempts.ToString();
+            }));
+        }
+
+        private void CheckMezFesScore()
+        {
+            if (DataLoader.model.QuestID() != 0)
+                return;
+
+            // Check if player is in the minigame lobby
+            if (DataLoader.model.AreaID() == 462)
+            {
+                // Save current area ID as previous area ID
+                DataLoader.model.previousMezFesArea = DataLoader.model.AreaID();
+            }
+            // Check if player is in a minigame area
+            else if (MezFesMinigame.ID.ContainsKey(DataLoader.model.AreaID()))
+            {
+                // Check if previous area ID was the lobby
+                if (DataLoader.model.previousMezFesArea == 462)
+                {
+                    // Read player score from corresponding memory address based on current area ID
+                    switch (DataLoader.model.AreaID())
+                    {
+                        case 464: // Uruki Pachinko
+                            DataLoader.model.previousMezFesScore = DataLoader.model.UrukiPachinkoScore();
+                            break;
+                        case 467: // Nyanrendo
+                            DataLoader.model.previousMezFesScore = DataLoader.model.NyanrendoScore();
+                            break;
+                        case 469: // Dokkan Battle Cats
+                            DataLoader.model.previousMezFesScore = DataLoader.model.DokkanBattleCatsScore();
+                            break;
+                        case 466: // Guuku Scoop
+                            DataLoader.model.previousMezFesScore = DataLoader.model.GuukuScoopScore();
+                            break;
+                        case 468: // Panic Honey
+                            DataLoader.model.previousMezFesScore = DataLoader.model.PanicHoneyScore();
+                            break;
+                        default:
+                            DataLoader.model.previousMezFesScore = 0; // If no corresponding memory address found, set score to 0
+                            break;
+                    }
+                }
+            }
+            // Check if previous area ID was a minigame area and current area ID is the lobby
+            else if (DataLoader.model.previousMezFesArea != -1 && DataLoader.model.AreaID() == 462)
+            {
+                // Update player score in SQLite database with previousPlayerScore and previousAreaId
+                // TODO: Implement updating of player score in SQLite database with previousPlayerScore and previousAreaId
+                // databaseManager.InsertMezFesMinigameScore(DataLoader.model.previousMezFesArea, DataLoader.model.previousMezFesScore);
+                // Reset previous area ID to -1 and previous player score to 0
+                DataLoader.model.previousMezFesArea = -1;
+                DataLoader.model.previousMezFesScore = 0;
+            }
+        }
 
         //TODO
         private void CheckQuestStateForDatabaseLogging()
@@ -2648,6 +2955,13 @@ namespace MHFZ_Overlay
                 {
                     calculatedPersonalBest = true;
                     personalBestTextBlock.Text = databaseManager.GetPersonalBest(DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text, DataLoader.model.QuestTimeMode, DataLoader);
+                    DataLoader.model.PersonalBestLoaded = personalBestTextBlock.Text;
+                }
+
+                if (!calculatedQuestAttempts && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0)
+                {
+                    calculatedQuestAttempts = true;
+                    UpdateQuestAttempts();
                 }
             }
 
@@ -2657,8 +2971,10 @@ namespace MHFZ_Overlay
                 DataLoader.model.clearQuestInfoDictionaries();
                 DataLoader.model.clearGraphCollections();
                 DataLoader.model.resetQuestInfoVariables();
+                DataLoader.model.previousRoadFloor = 0;
                 personalBestTextBlock.Text = "--:--.--";
                 calculatedPersonalBest = false;
+                calculatedQuestAttempts = false;
                 return;
             }
             else if (!DataLoader.model.loadedItemsAtQuestStart && DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() != 0)
@@ -2758,7 +3074,7 @@ namespace MHFZ_Overlay
                 DataLoader.model.questCleared = true;
                 DataLoader.model.loadedItemsAtQuestStart = false;
                 if (s.EnableQuestLogging)
-                    databaseManager.InsertQuestData(DataLoader);
+                    databaseManager.InsertQuestData(DataLoader, int.Parse(questAttemptsTextBlock.Text));
             }
         }
 
@@ -2803,13 +3119,16 @@ namespace MHFZ_Overlay
                     {
                         DataLoader.model.mouseInputDictionary.Add(DataLoader.model.TimeInt(), e.Button.ToString());
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // nothing
+                        logger.Warn(ex, "PROGRAM OPERATION: Could not insert into mouseInputDictionary");
                     }
                 }
 
-                _mouseImages[e.Button].Opacity = pressedKeyOpacity;
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _mouseImages[e.Button].Opacity = pressedKeyOpacity;
+                }));
             }
             // uncommenting the following line will suppress the middle mouse button click
             // if (e.Buttons == MouseButtons.Middle) { e.Handled = true; }
@@ -2819,7 +3138,10 @@ namespace MHFZ_Overlay
         {
             if (_mouseImages.ContainsKey(e.Button))
             {
-                _mouseImages[e.Button].Opacity = unpressedKeyOpacity;
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _mouseImages[e.Button].Opacity = unpressedKeyOpacity;
+                }));
             }
         }
 
@@ -2850,13 +3172,16 @@ namespace MHFZ_Overlay
                     {
                         DataLoader.model.keystrokesDictionary.Add(DataLoader.model.TimeInt(), e.KeyCode.ToString());
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // nothing
+                        logger.Warn(ex, "PROGRAM OPERATION: Could not insert into keystrokesDictionary");
                     }
                 }
 
-                _keyImages[e.KeyCode].Opacity = pressedKeyOpacity;
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _keyImages[e.KeyCode].Opacity = pressedKeyOpacity;
+                }));
             }
         }
 
@@ -2864,7 +3189,10 @@ namespace MHFZ_Overlay
         {
             if (_keyImages.ContainsKey(e.KeyCode))
             {
-                _keyImages[e.KeyCode].Opacity = unpressedKeyOpacity;
+                Dispatcher.BeginInvoke(new Action(() => 
+                {
+                    _keyImages[e.KeyCode].Opacity = unpressedKeyOpacity; 
+                }));
             }
         }
 

@@ -46,6 +46,18 @@
 8. Make sure Window Match Priority is set to "Match title, otherwise find window of same executable"
 9. Happy Hunting!
 
+## My game slows down when recording with the Overlay, what should I do?
+
+If you're experiencing a slowdown in your game while recording with OBS and using the overlay, there are a few potential reasons and solutions to consider:
+
+- System resources: Recording gameplay with OBS and running an overlay can be resource-intensive, especially if your computer has limited CPU or GPU resources. Try closing any unnecessary programs, lowering in-game graphics settings, or upgrading your hardware to meet the requirements for recording and overlay usage.
+
+- Overlay settings: The settings of the overlay can also impact performance. Make sure your overlay settings are optimized for performance, such as using lower resolution and disabling any unnecessary features.
+
+- OBS settings: Review your OBS settings to ensure they are optimized for recording. Adjusting bitrate, resolution, and frame rate settings in OBS can help improve performance while recording with an overlay.
+
+- Test on different hardware: Test your overlay program and OBS on different hardware configurations to determine if the issue persists across different systems, which can help identify if it's a hardware-specific issue.
+
 ## How to Enable Quest Logging?
 
 1. Go to Mezeporta, load the Overlay.
@@ -55,7 +67,7 @@
 5. If you already had a database before, you can rename it to `MHFZ_Overlay.sqlite` and place it in that database folder. It should keep your past quest information.
 6. Be careful if you re-install the game, make a backup of the database folder first.
 
-## What do the version numbers mean?
+## What does the version numbers mean?
 
 We use [semantic versioning](https://semver.org/) to number our releases. In semantic versioning, versions are represented as "major.minor.patch" numbers, such as "1.2.3". Here's what each number signifies:
 
@@ -93,7 +105,13 @@ The fix would have to come from Window's side, not the overlay.
 
 ## I cannot run the setup executable, what should I do?
 
-Make sure to run as Administrator
+Make sure to run as Administrator.
+
+## How to import/export settings from the overlay?
+
+Open the overlay settings, go to General tab, press the Backup settings button, and then save to a file. Next time you open the overlay, the settings are automatically restored from this backup and the backup is deleted. So if you wish to have persistent settings during updates, press the backup button just before updating to a newer version.
+
+The JSON file is meant to be used for debugging or troubleshooting purposes.
 
 ## My question isn't answered here, how can I contact the developers?
 

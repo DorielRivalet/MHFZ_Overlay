@@ -12,7 +12,7 @@ namespace MHFZ_Overlay {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.5.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -1273,7 +1273,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool EnableMap {
             get {
                 return ((bool)(this["EnableMap"]));
@@ -2756,6 +2756,186 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["SessionTimeY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowDiscordRPCOverlayMode {
+            get {
+                return ((bool)(this["ShowDiscordRPCOverlayMode"]));
+            }
+            set {
+                this["ShowDiscordRPCOverlayMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool QuestAttemptsShown {
+            get {
+                return ((bool)(this["QuestAttemptsShown"]));
+            }
+            set {
+                this["QuestAttemptsShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double QuestAttemptsX {
+            get {
+                return ((double)(this["QuestAttemptsX"]));
+            }
+            set {
+                this["QuestAttemptsX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        public double QuestAttemptsY {
+            get {
+                return ((double)(this["QuestAttemptsY"]));
+            }
+            set {
+                this["QuestAttemptsY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PreviousVersionFilePath {
+            get {
+                return ((string)(this["PreviousVersionFilePath"]));
+            }
+            set {
+                this["PreviousVersionFilePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool LocationTextShown {
+            get {
+                return ((bool)(this["LocationTextShown"]));
+            }
+            set {
+                this["LocationTextShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("160")]
+        public double LocationTextX {
+            get {
+                return ((double)(this["LocationTextX"]));
+            }
+            set {
+                this["LocationTextX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
+        public double LocationTextY {
+            get {
+                return ((double)(this["LocationTextY"]));
+            }
+            set {
+                this["LocationTextY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool QuestNameShown {
+            get {
+                return ((bool)(this["QuestNameShown"]));
+            }
+            set {
+                this["QuestNameShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("160")]
+        public double QuestNameX {
+            get {
+                return ((double)(this["QuestNameX"]));
+            }
+            set {
+                this["QuestNameX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("520")]
+        public double QuestNameY {
+            get {
+                return ((double)(this["QuestNameY"]));
+            }
+            set {
+                this["QuestNameY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnablePersonalBestPaceColor {
+            get {
+                return ((bool)(this["EnablePersonalBestPaceColor"]));
+            }
+            set {
+                this["EnablePersonalBestPaceColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PersonalBestTimePercentShown {
+            get {
+                return ((bool)(this["PersonalBestTimePercentShown"]));
+            }
+            set {
+                this["PersonalBestTimePercentShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double PersonalBestTimePercentX {
+            get {
+                return ((double)(this["PersonalBestTimePercentX"]));
+            }
+            set {
+                this["PersonalBestTimePercentX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("130")]
+        public double PersonalBestTimePercentY {
+            get {
+                return ((double)(this["PersonalBestTimePercentY"]));
+            }
+            set {
+                this["PersonalBestTimePercentY"] = value;
             }
         }
     }

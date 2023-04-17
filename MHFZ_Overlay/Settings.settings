@@ -315,7 +315,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="EnableMap" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="MapAreaWidth" Type="System.Double" Scope="User">
       <Value Profile="(Default)">300</Value>
@@ -685,6 +685,51 @@
     </Setting>
     <Setting Name="SessionTimeY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">180</Value>
+    </Setting>
+    <Setting Name="ShowDiscordRPCOverlayMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="QuestAttemptsShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="QuestAttemptsX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="QuestAttemptsY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">90</Value>
+    </Setting>
+    <Setting Name="PreviousVersionFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LocationTextShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LocationTextX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">160</Value>
+    </Setting>
+    <Setting Name="LocationTextY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">600</Value>
+    </Setting>
+    <Setting Name="QuestNameShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="QuestNameX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">160</Value>
+    </Setting>
+    <Setting Name="QuestNameY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">520</Value>
+    </Setting>
+    <Setting Name="EnablePersonalBestPaceColor" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PersonalBestTimePercentShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PersonalBestTimePercentX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="PersonalBestTimePercentY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">130</Value>
     </Setting>
   </Settings>
 </SettingsFile>

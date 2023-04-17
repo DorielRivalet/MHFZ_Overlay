@@ -1,12 +1,17 @@
-﻿using Memory;
+﻿using Discord.Rest;
+using Memory;
 using MHFZ_Overlay.addresses;
+using NLog;
+using Octokit;
 using Squirrel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 
 namespace MHFZ_Overlay
@@ -16,12 +21,105 @@ namespace MHFZ_Overlay
     /// </summary>
     public class DataLoader
     {
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        // https://github.com/Squirrel/Squirrel.Windows/issues/198#issuecomment-299262613
+        // Indeed you can use the methods below to backup your settings,
+        // typically just after your update has completed,
+        // so just after your call to await mgr.UpdateApp();
+        // You want to restore them at the very beginning of your program,
+        // like just after Squirrel's event handler registration.
+        // Don't try doing a restore from the onAppUpdate it won't work.
+        // By the look of it onAppUpdate is executing from the older app process
+        // as it would not get access to the newer app data folder.
+
+        /// <summary>
+        /// Make a backup of our settings.
+        /// Used to persist settings across updates.
+        /// </summary>
+        public void BackupSettings()
+        {
+            string settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+            string destination = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
+            File.Copy(settingsFile, destination, true);
+            logger.Info("FILE OPERATION: Backed up settings. Original file: {0}, Destination: {1}", settingsFile, destination);
+            MessageBox.Show(string.Format("Backed up settings. Original file: {0}, Destination: {1}", settingsFile, destination), "MHF-Z Overlay Settings", MessageBoxButton.OK,MessageBoxImage.Information);
+        }
+
+        /// <summary>
+        /// Restore our settings backup if any.
+        /// Used to persist settings across updates.
+        /// </summary>
+        private static void RestoreSettings()
+        {
+            //Restore settings after application update            
+            string destFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+            string sourceFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
+            // Check if we have settings that we need to restore
+            if (!File.Exists(sourceFile))
+            {
+                // Nothing we need to do
+                logger.Info("FILE OPERATION: File not found at {0}", sourceFile);
+                return;
+            }
+            // Create directory as needed
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(destFile));
+                logger.Info("FILE OPERATION: creating directory {0}", Path.GetDirectoryName(destFile));
+
+            }
+            catch (Exception ex) 
+            {
+                logger.Info(ex, "FILE OPERATION: Did not make directory for {0}", destFile);
+            }
+
+            // Copy our backup file in place 
+            try
+            {
+                File.Copy(sourceFile, destFile, true);
+                logger.Info("FILE OPERATION: copying {0} into {1}", sourceFile, destFile);
+
+            }
+            catch (Exception ex) 
+            {
+                logger.Info(ex, "FILE OPERATION: Did not copy backup file. Source: {0}, Destination: {1} ", sourceFile, destFile);
+
+            }
+
+            // Delete backup file
+            try
+            {
+                File.Delete(sourceFile);
+                logger.Info("FILE OPERATION: deleting {0}", sourceFile);
+
+            }
+            catch (Exception ex) 
+            {
+                logger.Info(ex, "FILE OPERATION: Did not delete backup file. Source: {0}", sourceFile);
+            }
+
+            logger.Info("FILE OPERATION: Restored settings. Source: {0}, Destination: {1}", sourceFile, destFile);
+        }
+
         // TODO: would like to make this a singleton but its complicated
         // this loads first before MainWindow constructor is called. meaning this runs twice.
         public DataLoader()
         {
             Debug.WriteLine("DataLoader constructor called. Call stack:");
             Debug.WriteLine(new StackTrace().ToString());
+
+            var config = new NLog.Config.LoggingConfiguration();
+
+            // Targets where to log to: File
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
+
+            // Rules for mapping loggers to targets
+            // Trace, Debug, Info, Warn, Error, Fatal
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+
+            // Apply config           
+            NLog.LogManager.Configuration = config;
 
             // run Squirrel first, as the app may exit after these run
             SquirrelAwareApp.HandleEvents(
@@ -30,6 +128,9 @@ namespace MHFZ_Overlay
                 onEveryRun: OnAppRun);
 
             // ... other app init code after ...
+            RestoreSettings();
+
+            logger.Info($"PROGRAM OPERATION: DataLoader started");
 
             int PID = m.GetProcIdFromName("mhf");
             if (PID > 0)
@@ -41,28 +142,39 @@ namespace MHFZ_Overlay
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show($"Error creating overlay: wrong program. \n\n{ex}", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-
-                    Environment.Exit(0);
+                    // TODO: does this warrant the program closing?
+                    // ReShade or similar programs might trigger this warning. Does these affect overlay functionality?
+                    // Imulion's version does not have anything in the catch block.
+                    //System.Windows.MessageBox.Show($"Warning: could not create code cave. ReShade or similar programs might trigger this warning. You can ignore this warning. \n\n{ex}", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not create code cave");
                 }
 
                 if (!isHighGradeEdition)
+                {
+                    logger.Info("PROGRAM OPERATION: Running game in Non-HGE");
                     model = new AddressModelNotHGE(m);
+                }
                 else
+                {
+                    logger.Info("PROGRAM OPERATION: Running game in HGE");
                     model = new AddressModelHGE(m);
+                }
 
                 // first we check if there are duplicate mhf.exe
                 CheckForExternalProcesses();
+                CheckForIllegalModifications();
                 // if there aren't then this runs and sets the game folder and also the database folder if needed
                 GetMHFFolderLocation();
                 // and thus set the data to database then, after doing it to the settings
                 databaseChanged = databaseManager.SetupLocalDatabase(this);
+                string overlayHash = databaseManager.StoreOverlayHash();
+                logger.Info("DATABASE OPERATION: Stored overlay hash {0}", overlayHash);
                 CheckIfLoadedInMezeporta();
             }
             else
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-
+                logger.Fatal("PROGRAM OPERATION: Launch game first");
                 Environment.Exit(0);
             }
         }
@@ -70,7 +182,11 @@ namespace MHFZ_Overlay
         private void CheckIfLoadedInMezeporta()
         {
             if (model.AreaID() != 200)
+            {
+                logger.Warn("PROGRAM OPERATION: Loaded overlay outside Mezeporta");
                 System.Windows.MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+
+            }
         }
 
         private void GetMHFFolderLocation()
@@ -103,19 +219,48 @@ namespace MHFZ_Overlay
 
                 s.DatabaseFilePath = sqlitePath;
 
+                // Check if the version file exists in the database folder
+                string previousVersionPath = Path.Combine(databasePath, "previous-version.txt");
+                if (!File.Exists(previousVersionPath))
+                {
+                    // Create the version file if it doesn't exist
+                    File.Create(previousVersionPath);
+                    logger.Info("FILE OPERATION: creating version file at {0}", previousVersionPath);
+                }
+
+                s.PreviousVersionFilePath = previousVersionPath;
+
                 s.Save();
             }
             else
             {
                 // The "mhf.exe" process was not found
                 MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Fatal("PROGRAM OPERATION: mhf.exe not found");
                 Environment.Exit(0);
             }
         }
 
-        private readonly List<string> bannedProcessesName = new List<string>()
+        private readonly List<string> bannedProcesses = new List<string>()
         {
-            "displayer","Displayer","cheat","Cheat","overlay","Overlay","Wireshark"
+            "displayer","Displayer","cheat","Cheat","overlay","Overlay","Wireshark", "FreeCam"
+        };
+
+        private readonly List<string> bannedFiles = new List<string>()
+        {
+            "d3d8","d3d9","d3d10","d3d11","d3d12","ddraw","dinput","dinput8","dsound",
+            "msacm32","msvfw32","version","wininet","winmm","xlive","bink2w64","bink2w64Hooked",
+            "vorbisFile","vorbisHooked","binkw32","binkw32Hooked"
+        };
+
+        private readonly List<string> bannedFileExtensions = new List<string>()
+        {
+            ".asi"
+        };
+
+        private readonly List<string> bannedFolders = new List<string>()
+        {
+            "scripts","plugins","script","plugin","localize-dat"
         };
 
         public void CheckForExternalProcesses()
@@ -125,10 +270,12 @@ namespace MHFZ_Overlay
             int gameCount = 0;
             foreach (var process in processList)
             {
-                if (bannedProcessesName.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
+                if (bannedProcesses.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
                 {
                     // processName is a substring of one of the banned process strings
                     MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
+                    logger.Fatal("PROGRAM OPERATION: Found banned process {0}", process.ProcessName);
+
                     // Close the overlay program
                     Environment.Exit(0);
                 }
@@ -145,6 +292,8 @@ namespace MHFZ_Overlay
             {
                 // More than one "MHFZ_Overlay" process is running
                 MessageBox.Show("Close other instances of the overlay before opening a new one", "Error");
+                logger.Fatal("PROGRAM OPERATION: Found duplicate overlay");
+
                 // Close the overlay program
                 Environment.Exit(0);
             }
@@ -152,7 +301,69 @@ namespace MHFZ_Overlay
             {
                 // More than one game process is running
                 MessageBox.Show("Close other instances of the game before opening a new one", "Error");
+                logger.Fatal("PROGRAM OPERATION: Found duplicate game");
+
                 // Close the overlay program
+                Environment.Exit(0);
+            }
+        }
+
+        // This checks for illegal folders or files in the game folder
+        // TODO: test
+        public void CheckForIllegalModifications()
+        {
+            // Get the process that is running "mhf.exe"
+            Process[] processes = Process.GetProcessesByName("mhf");
+
+            if (processes.Length > 0)
+            {
+                // Get the location of the first "mhf.exe" process
+                string mhfPath = processes[0].MainModule.FileName;
+                // Get the directory that contains "mhf.exe"
+                string mhfDirectory = Path.GetDirectoryName(mhfPath);
+
+                // Get a list of all files and folders in the game folder
+                string[] files = Directory.GetFiles(mhfDirectory, "*", SearchOption.AllDirectories);
+                string[] folders = Directory.GetDirectories(mhfDirectory, "*", SearchOption.AllDirectories);
+                List<string> illegalFiles = new List<string>();
+
+                // Check for banned files and file extensions
+                foreach (string file in files)
+                {
+                    string fileName = Path.GetFileName(file);
+                    string extension = Path.GetExtension(file);
+
+                    if (bannedFiles.Contains(fileName.ToLower()) || bannedFileExtensions.Contains(extension.ToLower()))
+                    {
+                        illegalFiles.Add(file);
+                    }
+                }
+
+                // Check for banned folders
+                foreach (string folder in folders)
+                {
+                    string folderName = Path.GetFileName(folder);
+
+                    if (bannedFolders.Contains(folderName.ToLower()))
+                    {
+                        illegalFiles.Add(folder);
+                    }
+                }
+
+                if (illegalFiles.Count > 0)
+                {
+                    // If there are any banned files or folders, display an error message and exit the application
+                    string message = string.Format("The following files or folders are not allowed:\n{0}", string.Join("\n", illegalFiles));
+                    MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    logger.Fatal("FILE OPERATION: {0}",message);
+                    Environment.Exit(0);
+                }
+            }
+            else
+            {
+                // The "mhf.exe" process was not found
+                MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Fatal("PROGRAM OPERATION: mhf.exe not found");
                 Environment.Exit(0);
             }
         }
@@ -225,6 +436,7 @@ namespace MHFZ_Overlay
             if (proc == null)
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                logger.Fatal("PROGRAM OPERATION: Launch game first");
                 Environment.Exit(0);
                 return;
             }

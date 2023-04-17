@@ -1,5 +1,10 @@
 # Addresses
 
+For more addresses, check the respective files.
+
+- [HGE](./AddressModelHGE.cs)
+- [Non-HGE](./AddressModelNotHGE.cs)
+
 ## HGE
 
 - Area ID "mhfo-hd.dll"+DC6BF48
@@ -81,94 +86,6 @@
 - Caravan Score mhfo-hd.dll+ED8F764
 - Caravan Monster 1 ID mhfo-hd.dll+2AFA834
 - Caravan Monster 2 ID mhfo-hd.dll+1C41D12
-- MeleeWeaponID() => 1;
-- RangedWeaponID() => 1;
-- WeaponDeco1ID() => 1;
-- WeaponDeco2ID() => 1;
-- WeaponDeco3ID() => 1;
-- ArmorHeadID() => 1;
-- ArmorHeadDeco1ID() => 1;
-- ArmorHeadDeco2ID() => 1;
-- ArmorHeadDeco3ID() => 1;
-- ArmorChestID() => 1;
-- ArmorChestDeco1ID() => 1;
-- ArmorChestDeco2ID() => 1;
-- ArmorChestDeco3ID() => 1;
-- ArmorArmsID() => 1;
-- ArmorArmsDeco1ID() => 1;
-- ArmorArmsDeco2ID() => 1;
-- ArmorArmsDeco3ID() => 1;
-- ArmorWaistID() => 1;
-- ArmorWaistDeco1ID() => 1;
-- ArmorWaistDeco2ID() => 1;
-- ArmorWaistDeco3ID() => 1;
-- ArmorLegsID() => 1;
-- ArmorLegsDeco1ID() => 1;
-- ArmorLegsDeco2ID() => 1;
-- ArmorLegsDeco3ID() => 1;
-- Cuff1ID() => 1;
-- Cuff2ID() => 1;
-- TotalDefense() => 1;
-- PouchItem1ID() => 1;
-- PouchItem1Qty() => 1;
-- PouchItem2ID() => 1;
-- PouchItem2Qty() => 1;
-- PouchItem3ID() => 1;
-- PouchItem3Qty() => 1;
-- PouchItem4ID() => 1;
-- PouchItem4Qty() => 1;
-- PouchItem5ID() => 1;
-- PouchItem5Qty() => 1;
-- PouchItem6ID() => 1;
-- PouchItem6Qty() => 1;
-- PouchItem7ID() => 1;
-- PouchItem7Qty() => 1;
-- PouchItem8ID() => 1;
-- PouchItem8Qty() => 1;
-- PouchItem9ID() => 1;
-- PouchItem9Qty() => 1;
-- PouchItem10ID() => 1;
-- PouchItem10Qty() => 1;
-- PouchItem11ID() => 1;
-- PouchItem11Qty() => 1;
-- PouchItem12ID() => 1;
-- PouchItem12Qty() => 1;
-- PouchItem13ID() => 1;
-- PouchItem13Qty() => 1;
-- PouchItem14ID() => 1;
-- PouchItem14Qty() => 1;
-- PouchItem15ID() => 1;
-- PouchItem15Qty() => 1;
-- PouchItem16ID() => 1;
-- PouchItem16Qty() => 1;
-- PouchItem17ID() => 1;
-- PouchItem17Qty() => 1;
-- PouchItem18ID() => 1;
-- PouchItem18Qty() => 1;
-- PouchItem19ID() => 1;
-- PouchItem19Qty() => 1;
-- PouchItem20ID() => 1;
-- PouchItem20Qty() => 1;
-- AmmoPouchItem1ID() => 1;
-- AmmoPouchItem1Qty() => 1;
-- AmmoPouchItem2ID() => 1;
-- AmmoPouchItem2Qty() => 1;
-- AmmoPouchItem3ID() => 1;
-- AmmoPouchItem3Qty() => 1;
-- AmmoPouchItem4ID() => 1;
-- AmmoPouchItem4Qty() => 1;
-- AmmoPouchItem5ID() => 1;
-- AmmoPouchItem5Qty() => 1;
-- AmmoPouchItem6ID() => 1;
-- AmmoPouchItem6Qty() => 1;
-- AmmoPouchItem7ID() => 1;
-- AmmoPouchItem7Qty() => 1;
-- AmmoPouchItem8ID() => 1;
-- AmmoPouchItem8Qty() => 1;
-- AmmoPouchItem9ID() => 1;
-- AmmoPouchItem9Qty() => 1;
-- AmmoPouchItem10ID() => 1;
-- AmmoPouchItem10Qty() => 1;
 
 ## Not HGE
 
@@ -216,7 +133,7 @@
 - Poogie Points mhfo.dll+6100350
 - Poogie Item Use mhfo.dll+61540F8
 - Poogie Costume mhfo.dll+1A88392
-- Caraven Gem Level, zero-indexed mhfo.dll+610037D
+- Caravan Gem Level, zero-indexed mhfo.dll+610037D
 - Multiplayer Road Max Stages mhfo.dll+5C47688
 - Multiplayer Road Total Stages mhfo.dll+5C47668
 - Solo Road Total Stages mhfo.dll+5C4766C
@@ -254,29 +171,11 @@
 - Caravan Monster 2 ID mhfo.dll+28C2C8C
 - MeleeWeaponID mhfo.dll+4FCA1A2
 - RangedWeaponID mhfo.dll+4FCA1A2
-- WeaponDeco1ID() => 1;
-- WeaponDeco2ID() => 1;
-- WeaponDeco3ID() => 1;
 - ArmorHeadID mhfo.dll+4FCA162
-- ArmorHeadDeco1ID() => 1;
-- ArmorHeadDeco2ID() => 1;
-- ArmorHeadDeco3ID() => 1;
 - ArmorChestID mhfo.dll+4FCA172
-- ArmorChestDeco1ID() => 1;
-- ArmorChestDeco2ID() => 1;
-- ArmorChestDeco3ID() => 1;
 - ArmorArmsID mhfo.dll+4FCA182
-- ArmorArmsDeco1ID() => 1;
-- ArmorArmsDeco2ID() => 1;
-- ArmorArmsDeco3ID() => 1;
 - ArmorWaistID mhfo.dll+4FCA192
-- ArmorWaistDeco1ID() => 1;
-- ArmorWaistDeco2ID() => 1;
-- ArmorWaistDeco3ID() => 1;
 - ArmorLegsID mhfo.dll+4FCA142
-- ArmorLegsDeco1ID() => 1;
-- ArmorLegsDeco2ID() => 1;
-- ArmorLegsDeco3ID() => 1;
 - Cuff1ID mhfo.dll+50348C2
 - Cuff2ID mhfo.dll+50348C4
 - TotalDefense mhfo.dll+5034338
@@ -340,8 +239,6 @@
 - AmmoPouchItem9Qty mhfo.dll+503468A
 - AmmoPouchItem10ID mhfo.dll+5034690
 - AmmoPouchItem10Qty mhfo.dll+5034692
-
-For more addresses, check the respective files.
 
 ## IDs
 
