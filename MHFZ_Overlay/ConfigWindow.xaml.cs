@@ -2893,7 +2893,6 @@ namespace MHFZ_Overlay
                     SetLineSeriesForPersonalBestByDate(DatabaseManager.GetInstance().GetPersonalBestsByDate(questID, weaponTypeID, OverlayModeComboBox.Text));
                     break;
                 case "(Quest ID) Personal Best by Attempts":
-                    // seems to work fine
                     SetLineSeriesForPersonalBestByAttempts(DatabaseManager.GetInstance().GetPersonalBestsByAttempts(questID, weaponTypeID, OverlayModeComboBox.Text));
                     break;
                 default:

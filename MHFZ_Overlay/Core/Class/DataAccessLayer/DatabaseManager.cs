@@ -4602,7 +4602,6 @@ namespace MHFZ_Overlay
             return personalBest;
         }
 
-        // TODO: test
         public Dictionary<DateTime, long> GetPersonalBestsByDate(long questID, int weaponTypeID, string category)
         {
             Dictionary<DateTime, long> personalBests = new();
@@ -4693,7 +4692,6 @@ namespace MHFZ_Overlay
             return personalBests;
         }
 
-        // TODO: test
         // Get personal best times by attempts
         public Dictionary<long, long> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category)
         {

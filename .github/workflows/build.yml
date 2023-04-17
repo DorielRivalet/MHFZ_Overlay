@@ -1,8 +1,11 @@
+# https://docs.sonarcloud.io/enriching/test-coverage/dotnet-test-coverage/
 name: SonarCloud
 on:
   push:
     branches:
       - main
+      - release
+      # TODO: for gh-pages, we would copypaste this down below at the end but using the instructions for JavaScript, putting only gh-pages in the on push branches section.
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
@@ -36,12 +39,17 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: Install dotnet-coverage # for code coverage
+        shell: powershell
+        run: |
+        dotnet tool install --global dotnet-coverage
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"DorielRivalet_MHFZ_Overlay" /o:"dorielrivalet" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"DorielRivalet_MHFZ_Overlay" /o:"dorielrivalet" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+          dotnet build --no-incremental
+          dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
