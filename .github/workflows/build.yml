@@ -6,6 +6,7 @@ on:
       - main
       - release
       # TODO: for gh-pages, we would copypaste this down below at the end but using the instructions for JavaScript, putting only gh-pages in the on push branches section.
+      # only release and gh-pages branches are meant to be long-lived branches.
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
