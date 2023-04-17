@@ -8866,6 +8866,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 return false;
         }
 
+        public int previousMezFesArea = -1;
+        public int previousMezFesScore = 0;
+
         /// <summary>
         /// Determines whether this instance is dure quest.
         /// </summary>

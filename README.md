@@ -34,7 +34,7 @@ We hope you find this overlay useful and enjoyable, and we welcome any feedback 
 
 [The design and icons used in this project are part of the *Material Design Icons* and related components](https://fonts.google.com/icons)
 
-The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151)
+The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
 
 ## Requirements
 
@@ -141,7 +141,7 @@ Includes icons!
 
 ![Watermarks](./demo/speedrun.png)
 
-- [x] Quest Runs Database (check weapon usage, set YouTube URLs, view past statistics, see your personal best times, etc!)
+- [x] Quest Runs Database (check weapon usage, set YouTube URLs, view past statistics, etc!)
 
 ![Weapon Usage](./demo/databaseweaponusage.png)
 
@@ -156,6 +156,12 @@ Includes icons!
 ![YouTube](./demo/databaseyoutube.png)
 
 ![Inventories](./demo/databaseinventories.png)
+
+- [x] Also includes personal best times by date and by attempts! The total frames elapsed are shown in the graph.
+
+![Personal Best by Date](./demo/personalbest1.png)
+
+![Personal Best by Attempts](./demo/personalbest2.png)
 
 **Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located inside the database folder, which is inside your game folder.
 

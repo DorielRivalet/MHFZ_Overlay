@@ -644,6 +644,10 @@ namespace MHFZ_Overlay
 
                 CheckQuestStateForDatabaseLogging();
 
+                // TODO should this be here or somewhere else?
+                // this is also for database logging
+                CheckMezFesScore();
+
                 if (DataLoader.model.isInLauncher() == "NULL" && !showedNullError)
                 {
                     showedNullError = true;
@@ -2878,6 +2882,58 @@ namespace MHFZ_Overlay
             }));
         }
 
+        private void CheckMezFesScore()
+        {
+            if (DataLoader.model.QuestID() != 0)
+                return;
+
+            // Check if player is in the minigame lobby
+            if (DataLoader.model.AreaID() == 462)
+            {
+                // Save current area ID as previous area ID
+                DataLoader.model.previousMezFesArea = DataLoader.model.AreaID();
+            }
+            // Check if player is in a minigame area
+            else if (MezFesMinigame.ID.ContainsKey(DataLoader.model.AreaID()))
+            {
+                // Check if previous area ID was the lobby
+                if (DataLoader.model.previousMezFesArea == 462)
+                {
+                    // Read player score from corresponding memory address based on current area ID
+                    switch (DataLoader.model.AreaID())
+                    {
+                        case 464: // Uruki Pachinko
+                            DataLoader.model.previousMezFesScore = DataLoader.model.UrukiPachinkoScore();
+                            break;
+                        case 467: // Nyanrendo
+                            DataLoader.model.previousMezFesScore = DataLoader.model.NyanrendoScore();
+                            break;
+                        case 469: // Dokkan Battle Cats
+                            DataLoader.model.previousMezFesScore = DataLoader.model.DokkanBattleCatsScore();
+                            break;
+                        case 466: // Guuku Scoop
+                            DataLoader.model.previousMezFesScore = DataLoader.model.GuukuScoopScore();
+                            break;
+                        case 468: // Panic Honey
+                            DataLoader.model.previousMezFesScore = DataLoader.model.PanicHoneyScore();
+                            break;
+                        default:
+                            DataLoader.model.previousMezFesScore = 0; // If no corresponding memory address found, set score to 0
+                            break;
+                    }
+                }
+            }
+            // Check if previous area ID was a minigame area and current area ID is the lobby
+            else if (DataLoader.model.previousMezFesArea != -1 && DataLoader.model.AreaID() == 462)
+            {
+                // Update player score in SQLite database with previousPlayerScore and previousAreaId
+                // TODO: Implement updating of player score in SQLite database with previousPlayerScore and previousAreaId
+                // databaseManager.InsertMezFesMinigameScore(DataLoader.model.previousMezFesArea, DataLoader.model.previousMezFesScore);
+                // Reset previous area ID to -1 and previous player score to 0
+                DataLoader.model.previousMezFesArea = -1;
+                DataLoader.model.previousMezFesScore = 0;
+            }
+        }
 
         //TODO
         private void CheckQuestStateForDatabaseLogging()

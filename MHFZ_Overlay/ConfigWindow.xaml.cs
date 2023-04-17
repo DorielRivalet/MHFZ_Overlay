@@ -2036,7 +2036,7 @@ namespace MHFZ_Overlay
                 Values = collection,
                 TooltipLabelFormatter = (chartPoint) =>
                 $"Attempt {chartPoint.SecondaryValue}: {MainWindow.DataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
-                LineSmoothness = .5,
+                LineSmoothness = 0,
                 GeometrySize = 0,
                 Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
@@ -2099,7 +2099,7 @@ namespace MHFZ_Overlay
             series.Add(new LineSeries<DateTimePoint>
             {
                 Values = collection,
-                LineSmoothness = .5,
+                LineSmoothness = 0,
                 GeometrySize = 0,
                 Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
@@ -2893,6 +2893,7 @@ namespace MHFZ_Overlay
                     SetLineSeriesForPersonalBestByDate(DatabaseManager.GetInstance().GetPersonalBestsByDate(questID, weaponTypeID, OverlayModeComboBox.Text));
                     break;
                 case "(Quest ID) Personal Best by Attempts":
+                    // seems to work fine
                     SetLineSeriesForPersonalBestByAttempts(DatabaseManager.GetInstance().GetPersonalBestsByAttempts(questID, weaponTypeID, OverlayModeComboBox.Text));
                     break;
                 default:

@@ -243,7 +243,7 @@ namespace MHFZ_Overlay
 
         private readonly List<string> bannedProcesses = new List<string>()
         {
-            "displayer","Displayer","cheat","Cheat","overlay","Overlay","Wireshark"
+            "displayer","Displayer","cheat","Cheat","overlay","Overlay","Wireshark", "FreeCam"
         };
 
         private readonly List<string> bannedFiles = new List<string>()
