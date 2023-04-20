@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Automation;
+using System.Windows.Controls;
 using Application = System.Windows.Application;
 
 namespace MHFZ_Overlay.addresses
@@ -6126,34 +6127,7 @@ Party Size: {32}",
                 metadata,
                 gearName,
                 weaponName,
-                realweaponName,
-                head,
-                chest,
-                arms,
-                waist,
-                legs,
-                cuffs,
-                date,
-                hash,
-                zenithSkillsList,
-                automaticSkillsList,
-                gouBoost,
-                armorSkills,
-                caravanSkillsList,
-                divaSkill,
-                guildFood,
-                styleRankSkillsList,
-                inventory,
-                ammo,
-                poogieItem,
-                roadDureSkillsList,
-                //partnyaBagItems
-                questName,
-                questObjectiveType,
-                questObjectiveQuantity,
-                questObjectiveName,
-                questCategory,
-                partySize
+                realweaponName
                 );
             }
         }
@@ -6174,7 +6148,159 @@ Party Size: {32}",
 
         public string GenerateCompendium()
         {
-            return "compendium";
+            //Quest quest = DatabaseManager.GetInstance().GetQuest((long)runID);
+            int mostCommonWeaponClass = 0;
+            int leastUsedArmorSkill = 0;
+            int mostCommonDivaSkill = 0;
+            int mostCommonGuildFood = 0;
+            int questID = 1;
+
+            var createdBy = GetFullCurrentProgramVersion();
+            var createdAt = DateTime.UtcNow;
+            if (createdBy == null)
+                return "Program Version Not Found.\n\nReload the section.";
+            var weaponClass = GetWeaponClass((int?)mostCommonWeaponClass);            
+            var divaSkill = GetDivaSkillNameFromID((int)mostCommonDivaSkill);
+            var guildFood = GetArmorSkill((int)mostCommonGuildFood);
+            var questName = Dictionary.Quests.QuestIDs[(int)questID];
+
+            return string.Format(
+@"{0} (UTC)
+{1}
+
+Quest
+Most Completed Quest: {2} (Attempted {3}) [Quest ID {4}]
+Most Attempted Quest: {5} (Completed {6}) [Quest ID {7}]
+Total Quests Completed/Attempted: {8}/{9}
+Quest Completion Time Elapsed, Average/Median: {10}/{11}
+Total Time Elapsed during Quest: {12}
+Most Completed Quest with Carts: {13} [Quest ID {14}]
+Total Carts in Quest (Average/Median): {15} ({16}/{17})
+Quest Party Size Average/Median/Mode: {18}/{19}/{20}
+Percent of Solo Quests: {21}
+Percent of Guild Food in Quests: {22}
+Percent of Diva Skill in Quests: {23}
+Percent of Skill Fruit in Quests: {24}
+Most Common Diva Skill in Quests: {25}
+Most Common Guild Food in Quests: {26}
+
+Gear
+Most Used Weapon Type: {27}
+Total Unique Armor Pieces/Weapons/Decorations used: {28}/{29}/{30}
+Most Common Decoration: {31} [ID {32}]
+Least Used Armor Skill: {33}
+
+Performance
+Highest True Raw (Average/Median): {34} ({35}/{36}) [Run ID {37}]
+Highest Single Hit Damage (Average/Median): {38} ({39}/{40}) [Run ID {41}]
+Highest Hit Count (Average/Median): {42} ({43}/{44}) [Run ID {45}]
+Highest Hits Taken/Blocked (Average/Median): {46} ({47}/{48}) [Run ID {49}]
+Highest DPS (Average/Median): {50} ({51}/{52}) [Run ID {53}]
+Highest Hits per Second (Average/Median): {54} ({55}/{56}) [Run ID {57}]
+Highest Hits Taken/Blocked per Second (Average/Median): {58} ({59}/{60}) [Run ID {61}]
+Highest Actions per Minute (Average/Median): {62} ({63}/{64}) [Run ID {65}]
+
+Mezeporta Festival (MezFes)
+Minigames Played: {66}
+Uruki Pachinko Times Played: {67}
+Uruki Pachinko High-score (Average/Median): {68} ({69}/{70})
+Guuku Scoop Times Played: {71}
+Guuku Scoop High-score (Average/Median): {72} ({73}/{74})
+Nyanrendo Times Played: {75}
+Nyanrendo High-score (Average/Median): {76} ({77}/{78})
+Panic Honey Times Played: {79}
+Panic Honey High-score (Average/Median): {80} ({81}/{82})
+Dokkan Battle Cats Times Played: {83}
+Dokkan Battle Cats High-score (Average/Median): {84} ({85}/{86})
+",
+            createdAt,
+            createdBy,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "test"
+            );
         }
 
         #region get game info
