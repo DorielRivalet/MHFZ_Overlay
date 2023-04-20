@@ -7565,6 +7565,15 @@ namespace MHFZ_Overlay
             }
         }
 
+        #region compendium
+
+        public void GetQuestCompendium()
+        {
+
+        }
+
+        #endregion
+
         private void UpdateDatabaseSchema(SQLiteConnection connection)
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
