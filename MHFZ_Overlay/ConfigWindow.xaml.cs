@@ -2008,9 +2008,9 @@ namespace MHFZ_Overlay
             {
                 new Axis
                 {
-                    NameTextSize= 12,
-                    TextSize=12,
-                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NameTextSize = 12,
+                    TextSize = 12,
+                    NamePadding = new LiveChartsCore.Drawing.Padding(0),
                     NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                     LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                 }
@@ -2057,10 +2057,11 @@ namespace MHFZ_Overlay
             {
                 new Axis
                 {
+                    MinLimit = 0,
                     NameTextSize = 12,
                     MinStep = 1,
                     TextSize = 12,
-                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePadding = new LiveChartsCore.Drawing.Padding(0),
                     NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                     LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                 }
@@ -2136,10 +2137,11 @@ namespace MHFZ_Overlay
             {
                 new Axis
                 {
+                    MinLimit = 0,
                     MinStep = 1,
-                    NameTextSize= 12,
-                    TextSize=12,
-                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NameTextSize = 12,
+                    TextSize = 12,
+                    NamePadding = new LiveChartsCore.Drawing.Padding(0),
                     NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                     LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                 }
