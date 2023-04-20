@@ -6172,6 +6172,11 @@ Party Size: {32}",
             }
         }
 
+        public string GenerateCompendium()
+        {
+            return "compendium";
+        }
+
         #region get game info
 
         /// <summary>
@@ -10428,6 +10433,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public ObservableCollection<Option> QuestLogsSearchOption { get; set; } = new ObservableCollection<Option>()
         {
+            new Option{Name = "Compendium", IsSelected = false},
             new Option{Name = "Personal Best", IsSelected = false},
             new Option{Name = "Gear", IsSelected = false},
             new Option{Name = "Top 20", IsSelected = false},

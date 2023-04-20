@@ -1688,6 +1688,7 @@ namespace MHFZ_Overlay
         private ListView mostRecentRunsListView;
         private ListView top20RunsListView;
         private TextBlock questLogGearStatsTextBlock;
+        private TextBlock compendiumTextBlock;
         private CartesianChart graphChart;
         private TextBlock statsTextTextBlock;
         private CartesianChart personalBestChart;
@@ -1804,6 +1805,40 @@ namespace MHFZ_Overlay
             questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
             CopyUIElementToClipboard(questLogGearStatsTextBlock);
             questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+        }
+
+        private void Compendium_Loaded(object sender, RoutedEventArgs e)
+        {
+            var textBlock = sender as TextBlock;
+            textBlock.Text = MainWindow.DataLoader.model.GenerateCompendium();
+            compendiumTextBlock = textBlock;
+        }
+
+        private void CompendiumBtnSaveFile_Click(object sender, RoutedEventArgs e)
+        {
+            string textToSave = compendiumTextBlock.Text;
+            textToSave = string.Format("```text\n{0}\n```", textToSave);
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
+            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
+            string dateTime = DateTime.Now.ToString();
+            dateTime = dateTime.Replace("/", "-");
+            dateTime = dateTime.Replace(" ", "_");
+            dateTime = dateTime.Replace(":", "-");
+            saveFileDialog.FileName = "Compendium-" + dateTime;
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(saveFileDialog.FileName, textToSave);
+                logger.Info("FILE OPERATION: saved {0}", saveFileDialog.FileName);
+            }
+        }
+
+        private void CompendiumBtnCopyFile_Click(object sender, RoutedEventArgs e)
+        {
+            compendiumTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+            CopyUIElementToClipboard(compendiumTextBlock);
+            compendiumTextBlock.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
         }
 
         private ISeries[] Series { get; set; }

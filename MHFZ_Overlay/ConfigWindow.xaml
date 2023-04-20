@@ -43,6 +43,37 @@
                     </TextBlock>
                 </Grid>
             </DataTemplate>
+            <DataTemplate x:Key="CompendiumTemplate">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
+
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#bac2de" />
+
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <DockPanel Margin="5,5,5,5">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/file_download_FILL0_wght400_GRAD0_opsz48.xaml'}" Style="{StaticResource ConfigBottomButtons}" Height="50" Width="50" ToolTip="Save summary of stats to text file" Click="CompendiumBtnSaveFile_Click"/>
+                                    <Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy compendium to clipboard as image" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/content_copy_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="50" Style="{StaticResource ConfigBottomButtons}" Height="50" Click="CompendiumBtnCopyFile_Click"/>
+                                    <TextBlock Text="Summary of your statistics" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </StackPanel>
+
+                                <TextBlock Margin="0,10,0,0" ToolTip="Overview" TextWrapping="Wrap" Loaded="Compendium_Loaded"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Grid>
+
+                </Grid>
+            </DataTemplate>
             <DataTemplate x:Key="GearTemplate">
                 <!-- Grid structure for the "Gear" option -->
                 <Grid x:Name="QuestLogGearGrid">

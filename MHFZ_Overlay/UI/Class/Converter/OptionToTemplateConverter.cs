@@ -35,6 +35,8 @@ namespace MHFZ_Overlay
             // quest id
             else if (option.Name == "Personal Best")
                 return (DataTemplate)((FrameworkElement)container).FindResource("PersonalBestTemplate");
+            else if (option.Name == "Compendium")
+                return (DataTemplate)((FrameworkElement)container).FindResource("CompendiumTemplate");
             else
                 return (DataTemplate)((FrameworkElement)container).FindResource("DefaultTemplate");
         }
