@@ -15,6 +15,7 @@
 	<CodeAnalysisRuleSet>..\.sonarlint\dorielrivalet_mhfz_overlaycsharp.ruleset</CodeAnalysisRuleSet>
     <!-- Project is not a test project -->
     <SonarQubeTestProject>false</SonarQubeTestProject>
+	<DebugType>pdbonly</DebugType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
