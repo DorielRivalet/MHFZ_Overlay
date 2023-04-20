@@ -159,9 +159,7 @@ Includes icons!
 
 - [x] Also includes personal best times by date and by attempts! The total frames elapsed are shown in the graph.
 
-![Personal Best by Date](./demo/personalbest1.png)
-
-![Personal Best by Attempts](./demo/personalbest2.png)
+![Personal Best by Attempts](./demo/personalbest1.png)
 
 **Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located inside the database folder, which is inside your game folder.
 

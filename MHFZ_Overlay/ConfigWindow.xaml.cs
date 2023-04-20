@@ -2031,12 +2031,11 @@ namespace MHFZ_Overlay
                 collection.Add(new ObservablePoint(entry.Key, entry.Value));
             }
 
-            series.Add(new LineSeries<ObservablePoint>
+            series.Add(new StepLineSeries<ObservablePoint>
             {
                 Values = collection,
                 TooltipLabelFormatter = (chartPoint) =>
                 $"Attempt {chartPoint.SecondaryValue}: {MainWindow.DataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
-                LineSmoothness = 0,
                 GeometrySize = 0,
                 Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
@@ -2046,7 +2045,8 @@ namespace MHFZ_Overlay
             {
                 new Axis
                 {
-                    TextSize=12,
+                    MinStep = 1,
+                    TextSize = 12,
                     //Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
                     NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                     LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
@@ -2057,8 +2057,9 @@ namespace MHFZ_Overlay
             {
                 new Axis
                 {
-                    NameTextSize= 12,
-                    TextSize=12,
+                    NameTextSize = 12,
+                    MinStep = 1,
+                    TextSize = 12,
                     NamePadding= new LiveChartsCore.Drawing.Padding(0),
                     NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                     LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
@@ -2096,10 +2097,9 @@ namespace MHFZ_Overlay
                 prevTime = time;
             }
 
-            series.Add(new LineSeries<DateTimePoint>
+            series.Add(new StepLineSeries<DateTimePoint>
             {
                 Values = collection,
-                LineSmoothness = 0,
                 GeometrySize = 0,
                 Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
@@ -2136,6 +2136,7 @@ namespace MHFZ_Overlay
             {
                 new Axis
                 {
+                    MinStep = 1,
                     NameTextSize= 12,
                     TextSize=12,
                     NamePadding= new LiveChartsCore.Drawing.Padding(0),
