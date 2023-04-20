@@ -2279,7 +2279,7 @@ namespace MHFZ_Overlay
                         break;
 
                     case 464://Uruki Pachinko
-                        presenceTemplate.State = string.Format("Score: {0} | Chain: {1} | Fish: {2} | Mushroom: {3} | Seed: {4} | Meat: {5}", DataLoader.model.UrukiPachinkoScore(), DataLoader.model.UrukiPachinkoChain(), DataLoader.model.UrukiPachinkoFish(), DataLoader.model.UrukiPachinkoMushroom(), DataLoader.model.UrukiPachinkoSeed(), DataLoader.model.UrukiPachinkoMeat());
+                        presenceTemplate.State = string.Format("Score: {0} | Chain: {1} | Fish: {2} | Mushroom: {3} | Seed: {4} | Meat: {5}", DataLoader.model.UrukiPachinkoScore() + DataLoader.model.UrukiPachinkoBonusScore(), DataLoader.model.UrukiPachinkoChain(), DataLoader.model.UrukiPachinkoFish(), DataLoader.model.UrukiPachinkoMushroom(), DataLoader.model.UrukiPachinkoSeed(), DataLoader.model.UrukiPachinkoMeat());
                         break;
 
                     case 466://Guuku Scoop
@@ -2882,60 +2882,78 @@ namespace MHFZ_Overlay
             }));
         }
 
+        /// <summary>
+        /// Gets the mezeporta festival minigame score depending on area id
+        /// </summary>
+        /// <param name="areaID"></param>
+        /// <returns></returns>
+        private int GetMezFesMinigameScore(int areaID)
+        {
+            // Read player score from corresponding memory address based on current area ID
+            int score = 0;
+            switch (areaID)
+            {
+                case 464: // Uruki Pachinko
+                    score = DataLoader.model.UrukiPachinkoScore() + DataLoader.model.UrukiPachinkoBonusScore();
+                    break;
+                case 467: // Nyanrendo
+                    score = DataLoader.model.NyanrendoScore();
+                    break;
+                case 469: // Dokkan Battle Cats
+                    score = DataLoader.model.DokkanBattleCatsScore();
+                    break;
+                case 466: // Guuku Scoop
+                    score = DataLoader.model.GuukuScoopScore();
+                    break;
+                case 468: // Panic Honey
+                    score = DataLoader.model.PanicHoneyScore();
+                    break;
+            }
+            return score;
+        }
+
+        /// <summary>
+        /// Checks the mezeporta festival score. At minigame end, the score is the max obtained, with the area id as the minigame id, then shortly goes to 0 score with the same area id, then switches area id to the lobby id shortly afterwards. 
+        /// </summary>
         private void CheckMezFesScore()
         {
-            if (DataLoader.model.QuestID() != 0)
+            if (DataLoader.model.QuestID() != 0 || !(DataLoader.model.AreaID() == 462 || MezFesMinigame.ID.ContainsKey(DataLoader.model.AreaID())))
                 return;
 
-            // Check if player is in the minigame lobby
-            if (DataLoader.model.AreaID() == 462)
-            {
-                // Save current area ID as previous area ID
-                DataLoader.model.previousMezFesArea = DataLoader.model.AreaID();
-            }
+            int areaID = DataLoader.model.AreaID();
+
             // Check if player is in a minigame area
-            else if (MezFesMinigame.ID.ContainsKey(DataLoader.model.AreaID()))
+            if (MezFesMinigame.ID.ContainsKey(areaID))
             {
-                // Check if previous area ID was the lobby
-                if (DataLoader.model.previousMezFesArea == 462)
+                // Check if the player has entered a new minigame area
+                if (areaID != DataLoader.model.previousMezFesArea)
                 {
-                    // Read player score from corresponding memory address based on current area ID
-                    switch (DataLoader.model.AreaID())
-                    {
-                        case 464: // Uruki Pachinko
-                            DataLoader.model.previousMezFesScore = DataLoader.model.UrukiPachinkoScore();
-                            break;
-                        case 467: // Nyanrendo
-                            DataLoader.model.previousMezFesScore = DataLoader.model.NyanrendoScore();
-                            break;
-                        case 469: // Dokkan Battle Cats
-                            DataLoader.model.previousMezFesScore = DataLoader.model.DokkanBattleCatsScore();
-                            break;
-                        case 466: // Guuku Scoop
-                            DataLoader.model.previousMezFesScore = DataLoader.model.GuukuScoopScore();
-                            break;
-                        case 468: // Panic Honey
-                            DataLoader.model.previousMezFesScore = DataLoader.model.PanicHoneyScore();
-                            break;
-                        default:
-                            DataLoader.model.previousMezFesScore = 0; // If no corresponding memory address found, set score to 0
-                            break;
-                    }
+                    DataLoader.model.previousMezFesArea = areaID;
+                    DataLoader.model.previousMezFesScore = 0;
+                }
+
+                // Read player score from corresponding memory address based on current area ID
+                int score = GetMezFesMinigameScore(areaID);
+
+                // Update current score with new score if it's greater
+                if (score > DataLoader.model.previousMezFesScore)
+                {
+                    DataLoader.model.previousMezFesScore = score;
                 }
             }
-            // Check if previous area ID was a minigame area and current area ID is the lobby
-            else if (DataLoader.model.previousMezFesArea != -1 && DataLoader.model.AreaID() == 462)
+            // Check if the player has exited a minigame area and the score is 0
+            else if (DataLoader.model.previousMezFesArea != -1 && areaID == 462)
             {
-                // Update player score in SQLite database with previousPlayerScore and previousAreaId
-                // TODO: Implement updating of player score in SQLite database with previousPlayerScore and previousAreaId
-                // databaseManager.InsertMezFesMinigameScore(DataLoader.model.previousMezFesArea, DataLoader.model.previousMezFesScore);
-                // Reset previous area ID to -1 and previous player score to 0
+                // Save current score and minigame area ID to database
+                databaseManager.InsertMezFesMinigameScore(DataLoader, DataLoader.model.previousMezFesArea, DataLoader.model.previousMezFesScore);
+
+                // Reset previousMezFesArea and previousMezFesScore
                 DataLoader.model.previousMezFesArea = -1;
                 DataLoader.model.previousMezFesScore = 0;
             }
         }
 
-        //TODO
+        //TODO: optimization
         private void CheckQuestStateForDatabaseLogging()
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");

@@ -197,6 +197,7 @@ namespace MHFZ_Overlay.addresses
         public override int UrukiPachinkoMeat() => M.ReadByte("mhfo-hd.dll+EE26914");
         public override int UrukiPachinkoChain() => M.ReadByte("mhfo-hd.dll+EE26900");
         public override int UrukiPachinkoScore() => M.Read2Byte("mhfo-hd.dll+EE2690C");
+        public override int UrukiPachinkoBonusScore() => M.Read2Byte("mhfo-hd.dl+EE26910");
         public override int NyanrendoScore() => M.Read2Byte("mhfo-hd.dll+EE26900");
         public override int DokkanBattleCatsScore() => M.Read2Byte("mhfo-hd.dll+EE268F8");
         public override int DokkanBattleCatsScale() => M.ReadByte("mhfo-hd.dll+EE26A8C");
@@ -208,6 +209,7 @@ namespace MHFZ_Overlay.addresses
         public override int GuukuScoopGolden() => M.ReadByte("mhfo-hd.dll+EE2693C");
         public override int GuukuScoopScore() => M.Read2Byte("mhfo-hd.dll+EE26924");
         public override int PanicHoneyScore() => M.ReadByte("mhfo-hd.dll+EE26908");
+        // TODO: Volpkun Together addresses
         public override int Sharpness() => M.Read2Byte("mhfo-hd.dll+DC6C276");
         public override int CaravanPoints() => M.ReadInt("mhfo-hd.dll+ED3C034");
         public override int MezeportaFestivalPoints() => M.ReadInt("mhfo-hd.dll+EDBA1EC");

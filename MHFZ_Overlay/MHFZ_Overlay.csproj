@@ -17,6 +17,10 @@
     <SonarQubeTestProject>false</SonarQubeTestProject>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="UI\Background\1.png" />
     <None Remove="UI\Background\2.png" />
