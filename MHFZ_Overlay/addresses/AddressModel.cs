@@ -135,6 +135,7 @@ namespace MHFZ_Overlay.addresses
         abstract public int UrukiPachinkoMeat();
         abstract public int UrukiPachinkoChain();
         abstract public int UrukiPachinkoScore();
+        abstract public int UrukiPachinkoBonusScore();
         abstract public int NyanrendoScore();
         abstract public int DokkanBattleCatsScore();
         abstract public int DokkanBattleCatsScale();

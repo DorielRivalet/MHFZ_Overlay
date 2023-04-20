@@ -119,10 +119,6 @@ namespace MHFZ_Overlay.addresses
         public override int DamageDealt() => M.Read2Byte("mhfo.dll+5CA3430");
         public override int RoadSelectedMonster() => M.ReadByte("mhfo.dll+001B48F4,4");
 
-
-
-
-
         //new addresses
         public override int AreaID() => M.Read2Byte("mhfo.dll+5034388");
         public override int RavienteAreaID() => M.Read2Byte("mhfo.dll+6124B6E");
@@ -137,6 +133,7 @@ namespace MHFZ_Overlay.addresses
         public override int UrukiPachinkoMeat() => M.ReadByte("mhfo.dll+61EC174");
         public override int UrukiPachinkoChain() => M.ReadByte("mhfo.dll+61EC160");
         public override int UrukiPachinkoScore() => M.Read2Byte("mhfo.dll+61EC16C");
+        public override int UrukiPachinkoBonusScore() => M.Read2Byte("mhfo.dll+61EC170");
         public override int NyanrendoScore() => M.Read2Byte("mhfo.dll+61EC160");
         public override int DokkanBattleCatsScore() => M.Read2Byte("mhfo.dll+61EC158");
         public override int DokkanBattleCatsScale() => M.ReadByte("mhfo.dll+61EC2EC");

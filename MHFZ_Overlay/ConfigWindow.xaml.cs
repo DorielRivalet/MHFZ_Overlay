@@ -2814,8 +2814,6 @@ namespace MHFZ_Overlay
                         s.EnableKeyLogging = false;
                         s.EnableMap = false;
 
-                        // TODO: can i even log zen quests?
-                        //s.EnableQuestLogging = false;
                         s.OverlayModeWatermarkShown = false;
 
                         s.Monster1IconShown = true;

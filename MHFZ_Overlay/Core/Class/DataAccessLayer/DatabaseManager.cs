@@ -652,7 +652,7 @@ namespace MHFZ_Overlay
                                 "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}",
                                 createdAt, createdBy, runID,
                                 gameFolderPath, mhfdatHash, mhfemdHash,
-                                mhfinfHash, mhfsqdHash, mhfodllHash, 
+                                mhfinfHash, mhfsqdHash, mhfodllHash,
                                 mhfohddllHash, mhfexeHash);
                             string gameFolderHash = CalculateStringHash(gameFolderData);
 
@@ -7517,6 +7517,54 @@ namespace MHFZ_Overlay
             return questTimeSpent;
         }
 
+        public void InsertMezFesMinigameScore(DataLoader dataLoader, int previousMezFesArea, int previousMezFesScore)
+        {
+            if (!MezFesMinigame.ID.ContainsKey(previousMezFesArea) || previousMezFesScore <= 0)
+            {
+                logger.Error("DATABASE OPERATION: wrong mezfes area or empty score, area id: {0}, score: {1}", previousMezFesArea, previousMezFesScore);
+                return;
+            }
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string sql = @"INSERT INTO MezFes (
+                            CreatedAt,
+                            CreatedBy,
+                            MezFesMinigameID,
+                            Score
+                            ) VALUES (
+                            @CreatedAt,
+                            @CreatedBy,
+                            @MezFesMinigameID,
+                            @Score)";
+
+                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                        {
+                            DateTime createdAt = DateTime.Now;
+                            string createdBy = dataLoader.model.GetFullCurrentProgramVersion();
+
+                            cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
+                            cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
+                            cmd.Parameters.AddWithValue("@MezFesMinigameID", previousMezFesArea);
+                            cmd.Parameters.AddWithValue("@Score", previousMezFesScore);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+        }
+
         private void UpdateDatabaseSchema(SQLiteConnection connection)
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
@@ -7846,6 +7894,7 @@ namespace MHFZ_Overlay
             }
             return version;
         }
+
 
         #endregion
     }
