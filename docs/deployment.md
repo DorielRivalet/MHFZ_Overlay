@@ -6,7 +6,7 @@ The following steps outline the process for releasing and deploying the software
 
 ### Releasifying and Deployment Steps
 
-1. Switch to the release branch: Run `git checkout release` to switch to the release branch.
+1. Run `git fetch` to check for the latest remote changes. Then switch to the release branch: Run `git checkout release` to switch to the release branch.
 2. Pull the latest changes: Run `git pull origin release` to pull the latest changes from the remote release branch.
 3. Make changes: Make the necessary changes to the software, and thoroughly test them in-game. Ideally, add unit tests to cover the changes and fix any new bugs with new commits.
 4. Bump version: Update the version in the CurrentProgramVersion variable, following SemVer's specifications.
