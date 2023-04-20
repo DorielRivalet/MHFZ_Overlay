@@ -2078,6 +2078,8 @@ namespace MHFZ_Overlay
         //extreme support 5 55606
         //extreme carve 55607
 
+        const int MAX_DISCORD_RPC_STRING_LENGTH = 127; // or any other maximum length specified by Discord
+
         /// <summary>
         /// Updates the discord RPC.
         /// </summary>
@@ -2087,9 +2089,9 @@ namespace MHFZ_Overlay
             {
                 return;
             }
-
+                
             // TODO also need to handle the other fields lengths
-            if (string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition)).Length >= 63)
+            if (string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition)).Length >= 95)
                 presenceTemplate.Details = string.Format("{0}{1}{2}", GetQuestState(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()));
             else
                 presenceTemplate.Details = string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition));
@@ -2098,25 +2100,32 @@ namespace MHFZ_Overlay
             if (IsInHubAreaID() && DataLoader.model.QuestID() == 0)
                 DataLoader.model.PreviousHubAreaID = DataLoader.model.AreaID();
 
+            string stateString = "";
+            string largeImageTextString = "";
+            string smallImageTextString = "";
+
             //Info
             if ((DataLoader.model.QuestID() != 0 && DataLoader.model.TimeDefInt() != DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0) || ((DataLoader.model.QuestID() == 21731 || DataLoader.model.QuestID() == 21746 || DataLoader.model.QuestID() == 21749 || DataLoader.model.QuestID() == 21750 || DataLoader.model.QuestID() == 23648 || DataLoader.model.QuestID() == 23649 || DataLoader.model.QuestID() == 21748 || DataLoader.model.QuestID() == 21747 || DataLoader.model.QuestID() == 21734) && int.Parse(DataLoader.model.ATK) > 0))
             {
-
                 switch (DataLoader.model.QuestID())
                 {
                     case 23527:// Hunter's Road Multiplayer
-                        presenceTemplate.State = String.Format("Multiplayer Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)", DataLoader.model.RoadFloor() + 1, DataLoader.model.RoadMaxStagesMultiplayer(), DataLoader.model.RoadTotalStagesMultiplayer(), DataLoader.model.RoadPoints(), DataLoader.model.RoadFatalisSlain(), DataLoader.model.RoadFatalisEncounters());
+                        stateString = String.Format("Multiplayer Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)", DataLoader.model.RoadFloor() + 1, DataLoader.model.RoadMaxStagesMultiplayer(), DataLoader.model.RoadTotalStagesMultiplayer(), DataLoader.model.RoadPoints(), DataLoader.model.RoadFatalisSlain(), DataLoader.model.RoadFatalisEncounters());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
                     case 23628://solo road
-                        presenceTemplate.State = String.Format("Solo Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)", DataLoader.model.RoadFloor() + 1, DataLoader.model.RoadMaxStagesSolo(), DataLoader.model.RoadTotalStagesSolo(), DataLoader.model.RoadPoints(), DataLoader.model.RoadFatalisSlain(), DataLoader.model.RoadFatalisEncounters());
+                        stateString = String.Format("Solo Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)", DataLoader.model.RoadFloor() + 1, DataLoader.model.RoadMaxStagesSolo(), DataLoader.model.RoadTotalStagesSolo(), DataLoader.model.RoadPoints(), DataLoader.model.RoadFatalisSlain(), DataLoader.model.RoadFatalisEncounters());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
                     case 21731://1st district dure
                     case 21749://sky corridor version
-                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.FirstDistrictDuremudiraSlays(), DataLoader.model.FirstDistrictDuremudiraEncounters());
+                        stateString = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.FirstDistrictDuremudiraSlays(), DataLoader.model.FirstDistrictDuremudiraEncounters());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
                     case 21746://2nd district dure
                     case 21750://sky corridor version
-                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
+                        stateString = String.Format("{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.SecondDistrictDuremudiraSlays(), DataLoader.model.SecondDistrictDuremudiraEncounters());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
                     case 62105://raviente quests
                     case 62108:
@@ -2143,56 +2152,71 @@ namespace MHFZ_Overlay
                     case 55605:
                     case 55606:
                     case 55607:
-                        presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCountInt());
+                        stateString = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCountInt());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
+
                         break;
                     default:
                         if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002 || DataLoader.model.ObjectiveType() == 0x10) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCountInt());
+                        {
+                            stateString = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), GetObjective1CurrentQuantity(), DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetObjective1Name(DataLoader.model.Objective1ID()), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCountInt());
+                            presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
+                        }
                         else
-                            presenceTemplate.State = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCountInt());
+                        {
+                            stateString = String.Format("{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", DataLoader.model.GetQuestNameFromID(DataLoader.model.QuestID()), DataLoader.model.GetObjectiveNameFromID(DataLoader.model.ObjectiveType()), "", DataLoader.model.GetObjective1Quantity(), DataLoader.model.GetRankNameFromID(DataLoader.model.RankBand()), DataLoader.model.GetStarGrade(), DataLoader.model.GetRealMonsterName(DataLoader.model.CurrentMonster1Icon), DataLoader.model.ATK, DataLoader.model.HighestAtk, DataLoader.model.HitCountInt());
+                            presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
+                        }
                         break;
                 }
 
                 //Gathering/etc
                 if ((DataLoader.model.ObjectiveType() == 0x0 || DataLoader.model.ObjectiveType() == 0x02 || DataLoader.model.ObjectiveType() == 0x1002) && (DataLoader.model.QuestID() != 23527 && DataLoader.model.QuestID() != 23628 && DataLoader.model.QuestID() != 21731 && DataLoader.model.QuestID() != 21749 && DataLoader.model.QuestID() != 21746 && DataLoader.model.QuestID() != 21750))
                 {
+                    largeImageTextString = string.Format("{0}{1}", GetQuestInformation(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()));
                     presenceTemplate.Assets.LargeImageKey = GetAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()));
+                    presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                 }
                 //Tenrou Sky Corridor areas
                 else if (DataLoader.model.AreaID() == 391 || DataLoader.model.AreaID() == 392 || DataLoader.model.AreaID() == 394 || DataLoader.model.AreaID() == 415 || DataLoader.model.AreaID() == 416)
                 {
+                    largeImageTextString = string.Format("{0}{1}", GetQuestInformation(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()));
                     presenceTemplate.Assets.LargeImageKey = GetAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()));
+                    presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                 }
                 //Duremudira Doors
                 else if (DataLoader.model.AreaID() == 399 || DataLoader.model.AreaID() == 414)
                 {
                     presenceTemplate.Assets.LargeImageKey = GetAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}", GetQuestInformation(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()));
+                    largeImageTextString = string.Format("{0}{1}", GetQuestInformation(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()));
+                    presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                 }
                 //Duremudira Arena
                 else if (DataLoader.model.AreaID() == 398)
                 {
                     presenceTemplate.Assets.LargeImageKey = DataLoader.model.getMonsterIcon(DataLoader.model.LargeMonster1ID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
+                    largeImageTextString = string.Format("{0}{1}/{2}{3}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent());
+                    presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                 }
                 //Hunter's Road Base Camp
                 else if (DataLoader.model.AreaID() == 459)
                 {
                     presenceTemplate.Assets.LargeImageKey = GetAreaIconFromID(DataLoader.model.AreaID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1} | Faints: {2}/{3}", GetQuestInformation(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), DataLoader.model.CurrentFaints(), GetMaxFaints());
+                    largeImageTextString = string.Format("{0}{1} | Faints: {2}/{3}", GetQuestInformation(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), DataLoader.model.CurrentFaints(), GetMaxFaints());
+                    presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                 }
                 //Raviente
                 else if (DataLoader.model.AreaID() == 309 || (DataLoader.model.AreaID() >= 311 && DataLoader.model.AreaID() <= 321) || (DataLoader.model.AreaID() >= 417 && DataLoader.model.AreaID() <= 422) || DataLoader.model.AreaID() == 437 || (DataLoader.model.AreaID() >= 440 && DataLoader.model.AreaID() <= 444))
                 {
                     presenceTemplate.Assets.LargeImageKey = DataLoader.model.getMonsterIcon(DataLoader.model.LargeMonster1ID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5} | Points: {6} | {7}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), GetMaxFaints(), DataLoader.model.GreatSlayingPoints(), GetRavienteEvent(DataLoader.model.RavienteTriggeredEvent()));
+                    largeImageTextString = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5} | Points: {6} | {7}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), GetMaxFaints(), DataLoader.model.GreatSlayingPoints(), GetRavienteEvent(DataLoader.model.RavienteTriggeredEvent()));
+                    presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                 }
                 else
                 {
                     presenceTemplate.Assets.LargeImageKey = DataLoader.model.getMonsterIcon(DataLoader.model.LargeMonster1ID());
-                    presenceTemplate.Assets.LargeImageText = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), GetMaxFaints());
+                    largeImageTextString = string.Format("{0}{1}/{2}{3} | Faints: {4}/{5}", GetQuestInformation(), GetMonster1EHP(), GetMonster1MaxEHP(), GetMonster1EHPPercent(), DataLoader.model.CurrentFaints(), GetMaxFaints());
+                    presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                 }
             }
             else if (DataLoader.model.QuestID() == 0)
@@ -2221,90 +2245,92 @@ namespace MHFZ_Overlay
                     case 340://SR Rooms
                     case 341:
                     case 397://Mezeporta Dupe(non-HD)
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Diva Skill: {3} ({4} Left) | Poogie Item: {5}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetDivaSkillNameFromID(DataLoader.model.DivaSkill()), DataLoader.model.DivaSkillUsesLeft(), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        stateString = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Diva Skill: {3} ({4} Left) | Poogie Item: {5}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetDivaSkillNameFromID(DataLoader.model.DivaSkill()), DataLoader.model.DivaSkillUsesLeft(), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 173:// My House (original)
                     case 175://My House (MAX)
-                        presenceTemplate.State = string.Format("GR: {0} | Partner Lv: {1} | Armor Color: {2} | GCP: {3}", DataLoader.model.GRankNumber(), DataLoader.model.PartnerLevel(), getArmorColor(), DataLoader.model.GCP());
+                        stateString = string.Format("GR: {0} | Partner Lv: {1} | Armor Color: {2} | GCP: {3}", DataLoader.model.GRankNumber(), DataLoader.model.PartnerLevel(), getArmorColor(), DataLoader.model.GCP());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 202://Guild Halls
                     case 203:
                     case 204:
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        stateString = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 205://Pugi Farm
-                        presenceTemplate.State = string.Format("GR: {0} | Poogie Points: {1} | Poogie Clothes: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.PoogiePoints(), GetPoogieClothes(DataLoader.model.PoogieCostume()), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        stateString = string.Format("GR: {0} | Poogie Points: {1} | Poogie Clothes: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.PoogiePoints(), GetPoogieClothes(DataLoader.model.PoogieCostume()), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 256://Caravan Areas
                     case 260:
                     case 261:
                     case 262:
                     case 263:
-                        presenceTemplate.State = string.Format("CP: {0} | Gg: {1} | g: {2} | Gem Lv: {3} | Great Slaying Points: {4}", DataLoader.model.CaravanPoints(), DataLoader.model.RaviGg(), DataLoader.model.Ravig(), DataLoader.model.CaravenGemLevel() + 1, DataLoader.model.GreatSlayingPointsSaved());
+                        stateString = string.Format("CP: {0} | Gg: {1} | g: {2} | Gem Lv: {3} | Great Slaying Points: {4}", DataLoader.model.CaravanPoints(), DataLoader.model.RaviGg(), DataLoader.model.Ravig(), DataLoader.model.CaravenGemLevel() + 1, DataLoader.model.GreatSlayingPointsSaved());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 257://Blacksmith
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | GZenny: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), DataLoader.model.GZenny());
+                        stateString = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | GZenny: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), DataLoader.model.GZenny());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 264://Gallery
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Score: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), DataLoader.model.GalleryEvaluationScore());
+                        stateString = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Score: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), DataLoader.model.GalleryEvaluationScore());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 265://Guuku Farm
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        stateString = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 283://Halk Area TODO partnya lv
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | PNRP: {2} | Halk Fullness: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), DataLoader.model.PartnyaRankPoints(), DataLoader.model.HalkFullness());
+                        stateString = string.Format("GR: {0} | GCP: {1} | PNRP: {2} | Halk Fullness: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), DataLoader.model.PartnyaRankPoints(), DataLoader.model.HalkFullness());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 286://PvP Room
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        stateString = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 379://Diva Hall
                     case 445:
-                        presenceTemplate.State = string.Format("GR: {0} | Diva Skill: {1} ({2} Left) | Diva Bond: {3} | Items Given: {4}", DataLoader.model.GRankNumber(), GetDivaSkillNameFromID(DataLoader.model.DivaSkill()), DataLoader.model.DivaSkillUsesLeft(), DataLoader.model.DivaBond(), DataLoader.model.DivaItemsGiven());
+                        stateString = string.Format("GR: {0} | Diva Skill: {1} ({2} Left) | Diva Bond: {3} | Items Given: {4}", DataLoader.model.GRankNumber(), GetDivaSkillNameFromID(DataLoader.model.DivaSkill()), DataLoader.model.DivaSkillUsesLeft(), DataLoader.model.DivaBond(), DataLoader.model.DivaItemsGiven());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 462://MezFez Entrance
                     case 463: //Volpkun Together
                     case 465://MezFez Minigame
-                        presenceTemplate.State = string.Format("GR: {0} | MezFes Points: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.MezeportaFestivalPoints(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        stateString = string.Format("GR: {0} | MezFes Points: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.MezeportaFestivalPoints(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 464://Uruki Pachinko
-                        presenceTemplate.State = string.Format("Score: {0} | Chain: {1} | Fish: {2} | Mushroom: {3} | Seed: {4} | Meat: {5}", DataLoader.model.UrukiPachinkoScore() + DataLoader.model.UrukiPachinkoBonusScore(), DataLoader.model.UrukiPachinkoChain(), DataLoader.model.UrukiPachinkoFish(), DataLoader.model.UrukiPachinkoMushroom(), DataLoader.model.UrukiPachinkoSeed(), DataLoader.model.UrukiPachinkoMeat());
+                        stateString = string.Format("Score: {0} | Chain: {1} | Fish: {2} | Mushroom: {3} | Seed: {4} | Meat: {5}", DataLoader.model.UrukiPachinkoScore() + DataLoader.model.UrukiPachinkoBonusScore(), DataLoader.model.UrukiPachinkoChain(), DataLoader.model.UrukiPachinkoFish(), DataLoader.model.UrukiPachinkoMushroom(), DataLoader.model.UrukiPachinkoSeed(), DataLoader.model.UrukiPachinkoMeat());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 466://Guuku Scoop
-                        presenceTemplate.State = string.Format("Score: {0} | Small Guuku: {1} | Medium Guuku: {2} | Large Guuku: {3} | Golden Guuku: {4}", DataLoader.model.GuukuScoopScore(), DataLoader.model.GuukuScoopSmall(), DataLoader.model.GuukuScoopMedium(), DataLoader.model.GuukuScoopLarge(), DataLoader.model.GuukuScoopGolden());
+                        stateString = string.Format("Score: {0} | Small Guuku: {1} | Medium Guuku: {2} | Large Guuku: {3} | Golden Guuku: {4}", DataLoader.model.GuukuScoopScore(), DataLoader.model.GuukuScoopSmall(), DataLoader.model.GuukuScoopMedium(), DataLoader.model.GuukuScoopLarge(), DataLoader.model.GuukuScoopGolden());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 467://Nyanrendo
-                        presenceTemplate.State = string.Format("Score: {0}", DataLoader.model.NyanrendoScore());
+                        stateString = string.Format("Score: {0}", DataLoader.model.NyanrendoScore());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 468://Panic Honey
-                        presenceTemplate.State = string.Format("Honey: {0}", DataLoader.model.PanicHoneyScore());
+                        stateString = string.Format("Honey: {0}", DataLoader.model.PanicHoneyScore());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     case 469://Dokkan Battle Cats
-                        presenceTemplate.State = string.Format("Score: {0} | Scale: {1} | Shell: {2} | Camp: {3}", DataLoader.model.DokkanBattleCatsScore(), DataLoader.model.DokkanBattleCatsScale(), DataLoader.model.DokkanBattleCatsShell(), DataLoader.model.DokkanBattleCatsCamp());
+                        stateString = string.Format("Score: {0} | Scale: {1} | Shell: {2} | Camp: {3}", DataLoader.model.DokkanBattleCatsScore(), DataLoader.model.DokkanBattleCatsScale(), DataLoader.model.DokkanBattleCatsShell(), DataLoader.model.DokkanBattleCatsCamp());
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
-
                     default: //same as Mezeporta
-                        presenceTemplate.State = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        stateString = string.Format("GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", DataLoader.model.GRankNumber(), DataLoader.model.GCP(), getArmorSkill(DataLoader.model.GuildFoodSkill()), GetItemName(DataLoader.model.PoogieItemUseID()));
+                        presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                         break;
                 }
 
                 presenceTemplate.Assets.LargeImageKey = GetAreaIconFromID(DataLoader.model.AreaID());
-                presenceTemplate.Assets.LargeImageText = DataLoader.model.GetAreaName(DataLoader.model.AreaID());
+                largeImageTextString = DataLoader.model.GetAreaName(DataLoader.model.AreaID());
+                presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
             }
 
             //Timer
@@ -2473,7 +2499,8 @@ namespace MHFZ_Overlay
 
             if (GetHunterName != "" && GetGuildName != "" && GetServerName != "")
             {
-                presenceTemplate.Assets.SmallImageText = String.Format("{0} | {1} | {2} | GSR: {3} | {4} Style | Caravan Skills: {5}", GetHunterName, GetGuildName, GetServerName, DataLoader.model.GSR(), GetWeaponStyleFromID(DataLoader.model.WeaponStyle()), GetCaravanSkills());
+                smallImageTextString = String.Format("{0} | {1} | {2} | GSR: {3} | {4} Style | Caravan Skills: {5}", GetHunterName, GetGuildName, GetServerName, DataLoader.model.GSR(), GetWeaponStyleFromID(DataLoader.model.WeaponStyle()), GetCaravanSkills());
+                presenceTemplate.Assets.SmallImageText = smallImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? smallImageTextString : smallImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
             }
 
             Client.SetPresence(presenceTemplate);
