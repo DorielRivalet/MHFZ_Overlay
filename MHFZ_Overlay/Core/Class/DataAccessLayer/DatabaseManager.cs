@@ -7567,9 +7567,24 @@ namespace MHFZ_Overlay
 
         #region compendium
 
-        public void GetQuestCompendium()
+        public QuestCompendium GetQuestCompendium()
         {
+            return new QuestCompendium();
+        }
 
+        public GearCompendium GetGearCompendium()
+        {
+            return new GearCompendium();
+        }
+
+        public PerformanceCompendium GetPerformanceCompendium()
+        {
+            return new PerformanceCompendium();
+        }
+
+        public MezFesCompendium GetMezFesCompendium()
+        {
+            return new MezFesCompendium();
         }
 
         #endregion

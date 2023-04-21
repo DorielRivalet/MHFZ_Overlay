@@ -1,4 +1,5 @@
 ﻿using Discord;
+using LiveChartsCore.Kernel;
 using MHFZ_Overlay.UI.Class;
 using System;
 
@@ -39,5 +40,16 @@ namespace MHFZ_Overlay.UI.Class
         public double ActionsPerMinuteAverage { get; set; }
         public double ActionsPerMinuteMedian { get; set; }
         public int HighestActionsPerMinuteRunID { get; set; }
+        public int TotalHitsCount { get; set; }
+        public int TotalHitsTakenBlocked { get;set; }
+        public int TotalActions { get; set; }
+        public double HealthAverage { get; set; }
+        public double HealthMedian { get; set; }
+        public double HealthMode { get; set; }
+        public double StaminaAverage { get; set; }
+        public double StaminaMedian { get; set; }
+        public double StaminaMode { get; set; }
+        public int TotalLargeMonstersHunted { get; set; }
+        public int TotalSmallMonstersHunted { get; set; }
     }
 }

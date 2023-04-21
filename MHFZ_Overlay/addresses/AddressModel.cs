@@ -6199,22 +6199,40 @@ Highest DPS (Average/Median): {50} ({51}/{52}) [Run ID {53}]
 Highest Hits per Second (Average/Median): {54} ({55}/{56}) [Run ID {57}]
 Highest Hits Taken/Blocked per Second (Average/Median): {58} ({59}/{60}) [Run ID {61}]
 Highest Actions per Minute (Average/Median): {62} ({63}/{64}) [Run ID {65}]
+Total Hits Count: {66}
+Total Hits Taken/Blocked: {67}
+Total Actions: {68}
+Health Average/Median/Mode: {69}/{70}/{71}
+Stamina Average/Median/Mode: {72}/{73}/{74}
+Total Large Monsters Hunted: {75}
+Total Small Monsters Hunted: {76}
 
 Mezeporta Festival (MezFes)
-Minigames Played: {66}
-Uruki Pachinko Times Played: {67}
-Uruki Pachinko High-score (Average/Median): {68} ({69}/{70})
-Guuku Scoop Times Played: {71}
-Guuku Scoop High-score (Average/Median): {72} ({73}/{74})
-Nyanrendo Times Played: {75}
-Nyanrendo High-score (Average/Median): {76} ({77}/{78})
-Panic Honey Times Played: {79}
-Panic Honey High-score (Average/Median): {80} ({81}/{82})
-Dokkan Battle Cats Times Played: {83}
-Dokkan Battle Cats High-score (Average/Median): {84} ({85}/{86})
+Minigames Played: {77}
+Uruki Pachinko Times Played: {78}
+Uruki Pachinko High-score (Average/Median): {79} ({80}/{81})
+Guuku Scoop Times Played: {82}
+Guuku Scoop High-score (Average/Median): {83} ({84}/{85})
+Nyanrendo Times Played: {86}
+Nyanrendo High-score (Average/Median): {87} ({88}/{89})
+Panic Honey Times Played: {90}
+Panic Honey High-score (Average/Median): {91} ({92}/{93})
+Dokkan Battle Cats Times Played: {94}
+Dokkan Battle Cats High-score (Average/Median): {95} ({96}/{97})
 ",
             createdAt,
             createdBy,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "",
             "",
             "",
