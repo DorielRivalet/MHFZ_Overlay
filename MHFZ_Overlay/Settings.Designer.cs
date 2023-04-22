@@ -2938,5 +2938,101 @@ namespace MHFZ_Overlay {
                 this["PersonalBestTimePercentY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MS Gothic")]
+        public string PrimaryFontFamily {
+            get {
+                return ((string)(this["PrimaryFontFamily"]));
+            }
+            set {
+                this["PrimaryFontFamily"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("21")]
+        public string PrimaryFontSize {
+            get {
+                return ((string)(this["PrimaryFontSize"]));
+            }
+            set {
+                this["PrimaryFontSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bold")]
+        public string PrimaryFontWeight {
+            get {
+                return ((string)(this["PrimaryFontWeight"]));
+            }
+            set {
+                this["PrimaryFontWeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ideal")]
+        public string PrimaryTextFormattingMode {
+            get {
+                return ((string)(this["PrimaryTextFormattingMode"]));
+            }
+            set {
+                this["PrimaryTextFormattingMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Source Code Pro")]
+        public string SecondaryFontFamily {
+            get {
+                return ((string)(this["SecondaryFontFamily"]));
+            }
+            set {
+                this["SecondaryFontFamily"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
+        public string SecondaryFontSize {
+            get {
+                return ((string)(this["SecondaryFontSize"]));
+            }
+            set {
+                this["SecondaryFontSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bold")]
+        public string SecondaryFontWeight {
+            get {
+                return ((string)(this["SecondaryFontWeight"]));
+            }
+            set {
+                this["SecondaryFontWeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ideal")]
+        public string SecondaryTextFormattingMode {
+            get {
+                return ((string)(this["SecondaryTextFormattingMode"]));
+            }
+            set {
+                this["SecondaryTextFormattingMode"] = value;
+            }
+        }
     }
 }

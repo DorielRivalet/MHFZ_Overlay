@@ -731,5 +731,29 @@
     <Setting Name="PersonalBestTimePercentY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">130</Value>
     </Setting>
+    <Setting Name="PrimaryFontFamily" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MS Gothic</Value>
+    </Setting>
+    <Setting Name="PrimaryFontSize" Type="System.String" Scope="User">
+      <Value Profile="(Default)">21</Value>
+    </Setting>
+    <Setting Name="PrimaryFontWeight" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bold</Value>
+    </Setting>
+    <Setting Name="PrimaryTextFormattingMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ideal</Value>
+    </Setting>
+    <Setting Name="SecondaryFontFamily" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Source Code Pro</Value>
+    </Setting>
+    <Setting Name="SecondaryFontSize" Type="System.String" Scope="User">
+      <Value Profile="(Default)">16</Value>
+    </Setting>
+    <Setting Name="SecondaryFontWeight" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bold</Value>
+    </Setting>
+    <Setting Name="SecondaryTextFormattingMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ideal</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
