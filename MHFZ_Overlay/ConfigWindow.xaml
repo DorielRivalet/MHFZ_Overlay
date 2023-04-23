@@ -1518,15 +1518,15 @@
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Highest DPS Color (resets per quest, counts the highest 10)" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Highest DPS Color"/>
                         <ToggleButton Grid.Row="18" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestDPSColor}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Total Current Sharpness Values" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Total Sharpness"/>
+                        <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="19" Grid.Column="0" ToolTip="Show Total Current Sharpness Values">
+                            <Image Source="UI/Icons/png/whetstone.png" Margin="0,0,5,0"/>
+                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Total Sharpness"/>
+                        </StackPanel>
                         <ToggleButton Grid.Row="19" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
-
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Total Sharpness Info X Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="20" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
-
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Total Sharpness Info Y Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="21" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
-
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Current Sharpness as Percentage"/>
                         <ToggleButton Grid.Row="22" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
 
@@ -1605,7 +1605,10 @@
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="47" Grid.Column="0" Text="Player Actions per Minute Graph Background Color"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="47" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphBackground}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="48" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
+                        <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="48" Grid.Column="0" ToolTip="Show weapon damage numbers when hitting a monster">
+                            <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/123_FILL0_wght400_GRAD0_opsz48.xaml'}"/>
+                            <TextBlock Foreground="#cdd6f4" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
+                        </StackPanel>
                         <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="48" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
                         <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="49" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
                         <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="49" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
@@ -1653,7 +1656,10 @@
                         <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers flash effect" Style="{StaticResource ConfigTextBox}" Grid.Row="58" Grid.Column="0"  Text="Damage Numbers Flash Effect"/>
                         <ToggleButton Grid.Row="58" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersFlash}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Map" Style="{StaticResource ConfigTextBox}" Grid.Row="59" Grid.Column="0"  Text="Location Map"/>
+                        <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="59" Grid.Column="0" ToolTip="Show Map">
+                            <Image Source="UI/Icons/png/world.png" Margin="0,0,5,0"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}"  Text="Location Map"/>
+                        </StackPanel>
                         <ToggleButton Grid.Row="59" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMap}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="60" Grid.Column="0"  Text="Map X Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="60" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapX}"  PreviewTextInput="ValidateNumber"/>
@@ -1664,14 +1670,20 @@
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="63" Grid.Column="0"  Text="Map Area Height"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="63" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaHeight}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show KBM Layout" Style="{StaticResource ConfigTextBox}" Grid.Row="64" Grid.Column="0"  Text="Keyboard and Mouse Layout"/>
+                        <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="64" Grid.Column="0" ToolTip="Show KBM Layout">
+                            <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/keyboard_FILL0_wght400_GRAD0_opsz48.xaml'}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Text="Keyboard and Mouse Layout"/>
+                        </StackPanel>
                         <ToggleButton Grid.Row="64" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=KBMLayoutShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="65" Grid.Column="0"  Text="Keyboard and Mouse Layout X Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="65" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutX}"  PreviewTextInput="ValidateNumber"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="66" Grid.Column="0"  Text="Keyboard and Mouse Layout Y Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="66" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutY}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Gamepad Layout" Style="{StaticResource ConfigTextBox}" Grid.Row="67" Grid.Column="0"  Text="(Not Implemented) Controller/Gamepad Layout"/>
+                        <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="67" Grid.Column="0" ToolTip="Show Gamepad Layout">
+                            <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/sports_esports_FILL0_wght400_GRAD0_opsz48.xaml'}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Text="(Not Implemented) Controller/Gamepad Layout"/>
+                        </StackPanel>
                         <ToggleButton Grid.Row="67" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ControllerLayoutShown}" Checked="ControllerLayoutButton_Click"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="68" Grid.Column="0"  Text="Controller/Gamepad Layout X Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="68" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ControllerLayoutX}"  PreviewTextInput="ValidateNumber"/>
@@ -1690,7 +1702,10 @@
                         <TextBlock Margin="5,5,5,5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="73" Grid.Column="0"  Text="Average Actions per Minute Color"/>
                         <ToggleButton Grid.Row="73" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Current Session Time" Style="{StaticResource ConfigTextBox}" Grid.Row="74" Grid.Column="0"  Text="Current Session Time"/>
+                        <StackPanel Margin="5,5,5,5" ToolTip="Show Current Session Time" Grid.Row="74" Grid.Column="0" Orientation="Horizontal">
+                            <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/timer_FILL0_wght400_GRAD0_opsz48.xaml'}"/>
+                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Current Session Time"/>
+                        </StackPanel>
                         <ToggleButton Grid.Row="74" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=SessionTimeShown}"/>
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="75" Grid.Column="0"  Text="Current Session Time X Coordinate"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="75" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SessionTimeX}"  PreviewTextInput="ValidateNumber"/>

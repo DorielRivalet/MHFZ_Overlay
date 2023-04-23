@@ -178,6 +178,7 @@
     <None Remove="UI\Icons\png\small_saf.png" />
     <None Remove="UI\Icons\png\small_sns.png" />
     <None Remove="UI\Icons\png\small_tonfa.png" />
+    <None Remove="UI\Icons\png\whetstone.png" />
     <None Remove="UI\Icons\png\world.png" />
     <None Remove="UI\Icons\poison.png" />
     <None Remove="UI\Icons\quest_host.png" />
@@ -193,6 +194,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="UI\Icons\123_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\Antenna_Icon_White.xaml" />
     <Page Remove="UI\Icons\Armor_Sphere_Icon_White.xaml" />
     <Page Remove="UI\Icons\badge.xaml" />
@@ -240,6 +242,7 @@
     <Page Remove="UI\Icons\issues.xaml" />
     <Page Remove="UI\Icons\Jelly_Icon_White.xaml" />
     <Page Remove="UI\Icons\Jewel_Icon_White.xaml" />
+    <Page Remove="UI\Icons\keyboard_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\leaderboard_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\Leg_Carve_Icon_White.xaml" />
     <Page Remove="UI\Icons\manage_history_FILL0_wght400_GRAD0_opsz48.xaml" />
@@ -264,6 +267,7 @@
     <Page Remove="UI\Icons\Settings.xaml" />
     <Page Remove="UI\Icons\Shell_Icon_White.xaml" />
     <Page Remove="UI\Icons\Spiderweb_Icon_White.xaml" />
+    <Page Remove="UI\Icons\sports_esports_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\stacked_bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\Star.xaml" />
     <Page Remove="UI\Icons\Steak_Icon_White.xaml" />
@@ -300,10 +304,12 @@
     <Resource Include="UI\Fonts\OpenSans-Regular.ttf" />
     <Resource Include="UI\Fonts\OpenSans-SemiBold.ttf" />
     <Resource Include="UI\Fonts\OpenSans-SemiBoldItalic.ttf" />
+    <Resource Include="UI\Icons\123_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\database_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\flag-checkered-solid.xaml" />
     <Resource Include="UI\Icons\gif\scroll_rainbow.gif" />
+    <Resource Include="UI\Icons\keyboard_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\leaderboard_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\manage_history_FILL0_wght400_GRAD0_opsz48.xaml" />
   </ItemGroup>
@@ -583,6 +589,7 @@
     <Resource Include="UI\Icons\png\small_tonfa.png" />
     <Resource Include="UI\Icons\png\study.png" />
     <Resource Include="UI\Icons\png\stun.png" />
+    <Resource Include="UI\Icons\png\whetstone.png" />
     <Resource Include="UI\Icons\png\world.png" />
     <Resource Include="UI\Icons\query_stats_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\Sac_Icon_White.xaml" />
@@ -592,6 +599,7 @@
     <Resource Include="UI\Icons\search_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\Shell_Icon_White.xaml" />
     <Resource Include="UI\Icons\Spiderweb_Icon_White.xaml" />
+    <Resource Include="UI\Icons\sports_esports_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\stacked_bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\Steak_Icon_White.xaml" />
     <Resource Include="UI\Icons\Sturdy_Shell_Icon_White.xaml" />
