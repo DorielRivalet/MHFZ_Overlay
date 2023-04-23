@@ -6172,11 +6172,11 @@ Quest
 Most Completed Quest: {2} (Attempted {3}) [Quest ID {4}]
 Most Attempted Quest: {5} (Completed {6}) [Quest ID {7}]
 Total Quests Completed/Attempted: {8}/{9}
-Quest Completion Time Elapsed, Average/Median: {10}/{11}
+Quest Completion Time Elapsed (Average/Median): {10}/{11}
 Total Time Elapsed during Quest: {12}
 Most Completed Quest with Carts: {13} [Quest ID {14}]
 Total Carts in Quest (Average/Median): {15} ({16}/{17})
-Quest Party Size Average/Median/Mode: {18}/{19}/{20}
+Quest Party Size (Average/Median/Mode): {18}/{19}/{20}
 Percent of Solo Quests: {21}
 Percent of Guild Food in Quests: {22}
 Percent of Diva Skill in Quests: {23}
@@ -6190,7 +6190,7 @@ Total Unique Armor Pieces/Weapons/Decorations used: {28}/{29}/{30}
 Most Common Decoration: {31} [ID {32}]
 Least Used Armor Skill: {33}
 
-Performance
+Hunter Performance
 Highest True Raw (Average/Median): {34} ({35}/{36}) [Run ID {37}]
 Highest Single Hit Damage (Average/Median): {38} ({39}/{40}) [Run ID {41}]
 Highest Hit Count (Average/Median): {42} ({43}/{44}) [Run ID {45}]
@@ -6202,8 +6202,8 @@ Highest Actions per Minute (Average/Median): {62} ({63}/{64}) [Run ID {65}]
 Total Hits Count: {66}
 Total Hits Taken/Blocked: {67}
 Total Actions: {68}
-Health Average/Median/Mode: {69}/{70}/{71}
-Stamina Average/Median/Mode: {72}/{73}/{74}
+Health (Average/Median/Mode): {69}/{70}/{71}
+Stamina (Average/Median/Mode): {72}/{73}/{74}
 Total Large Monsters Hunted: {75}
 Total Small Monsters Hunted: {76}
 
@@ -6219,9 +6219,36 @@ Panic Honey Times Played: {90}
 Panic Honey High-score (Average/Median): {91} ({92}/{93})
 Dokkan Battle Cats Times Played: {94}
 Dokkan Battle Cats High-score (Average/Median): {95} ({96}/{97})
+
+Miscellaneous
+Total Overlay Sessions: {98}
+Session Duration (Highest/Lowest/Average/Median): {99}/{100}/{101}/{102}
+Highest Monster Attack Multiplier: {103} [Run ID {104}]
+Lowest Monster Attack Multiplier: {105} [Run ID {106}]
+Highest Monster Defense Rate: {107} [Run ID {108}]
+Lowest Monster Defense Rate: {109} [Run ID {110}]
+Highest Monster Size Multiplier: {111} [Run ID {112}]
+Lowest Monster Size Multiplier: {113} [Run ID {114}]
 ",
             createdAt,
             createdBy,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "",
             "",
             "",

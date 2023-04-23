@@ -1003,9 +1003,10 @@ namespace MHFZ_Overlay
         {
             double width = element.ActualWidth;
             double height = element.ActualHeight;
+
             if (width <= 0 || height <= 0)
             {
-                System.Windows.MessageBox.Show("Please load the gear stats by visiting the text tab in the configuration window", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Please load the stats by first visiting the text tab in the configuration window", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return;
             }
 
@@ -1510,58 +1511,6 @@ namespace MHFZ_Overlay
             MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
             MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
             MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
 
             if (comboBox.SelectedIndex == 0)
             {
@@ -1619,58 +1568,6 @@ namespace MHFZ_Overlay
 
             if (!weaponUsageChart.Series.Any())
             {
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
                 MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
                 MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
                 MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
