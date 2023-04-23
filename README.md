@@ -224,7 +224,6 @@ If the HP shows 0/1 then change area for it to load.
 - Selecting monsters for body parts and monster status
 - Fix max HP for Road
 - Allow lock-on to be used to select monsters
-- Overlay font options
 - Add shortcut for saving
 - Monster stats import/export
 - Automatically set default positions according to screen resolution
@@ -236,7 +235,6 @@ If the HP shows 0/1 then change area for it to load.
 - PvP addresses
 - Handle multiple objectives information
 - Zenith information in Road
-- Settings import/export
 - Raviente Support Part Info
 - Detect UL/HC
 - Guild Pugi address

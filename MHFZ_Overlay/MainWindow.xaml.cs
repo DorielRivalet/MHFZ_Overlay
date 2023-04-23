@@ -2589,10 +2589,10 @@ namespace MHFZ_Overlay
                     s.MapX = (double)(pos.X - XOffset);
                     s.MapY = (double)(pos.Y - YOffset);
                     break;
-                case "OverlayModeWatermark":
-                    s.OverlayModeWatermarkX = (double)(pos.X - XOffset);
-                    s.OverlayModeWatermarkY = (double)(pos.Y - YOffset);
-                    break;
+                //case "OverlayModeWatermark":
+                //    s.OverlayModeWatermarkX = (double)(pos.X - XOffset);
+                //    s.OverlayModeWatermarkY = (double)(pos.Y - YOffset);
+                //    break;
                 case "QuestIDGrid":
                     s.QuestIDX = (double)(pos.X - XOffset);
                     s.QuestIDY = (double)(pos.Y - YOffset);
