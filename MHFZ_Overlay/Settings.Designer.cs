@@ -3010,5 +3010,29 @@ namespace MHFZ_Overlay {
                 this["SecondaryFontWeight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MS Gothic")]
+        public string DamageNumbersFontFamily {
+            get {
+                return ((string)(this["DamageNumbersFontFamily"]));
+            }
+            set {
+                this["DamageNumbersFontFamily"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bold")]
+        public string DamageNumbersFontWeight {
+            get {
+                return ((string)(this["DamageNumbersFontWeight"]));
+            }
+            set {
+                this["DamageNumbersFontWeight"] = value;
+            }
+        }
     }
 }

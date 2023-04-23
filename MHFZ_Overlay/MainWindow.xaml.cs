@@ -470,7 +470,10 @@ namespace MHFZ_Overlay
 
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
         }
-        
+
+        /// <summary>
+        /// Sets the graph series for player stats.
+        /// </summary>
         private void SetGraphSeries()
         {
             //TODO graphs
@@ -517,6 +520,9 @@ namespace MHFZ_Overlay
 
         GitHubClient ghClient = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
 
+        /// <summary>
+        /// Loads the github api integration.
+        /// </summary>
         private async Task LoadOctoKit()
         {
             var releases = await ghClient.Repository.Release.GetAll("DorielRivalet", "MHFZ_Overlay");
@@ -553,6 +559,9 @@ namespace MHFZ_Overlay
 
         readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
 
+        /// <summary>
+        /// Checks the state of the game.
+        /// </summary>
         public void CheckGameState()
         {
             int PID = m.GetProcIdFromName("mhf");
@@ -620,6 +629,7 @@ namespace MHFZ_Overlay
         private bool showedNullError = false;
         private bool showedGameFolderWarning = false;
 
+        // TODO: optimization
         public void Timer_Tick(object? obj, EventArgs e)
         {
             try
@@ -911,7 +921,8 @@ namespace MHFZ_Overlay
 
             // Set the properties of the OutlinedTextBlock instance.
             damageOutlinedTextBlock.Text = damage.ToString();
-            damageOutlinedTextBlock.FontFamily = new System.Windows.Media.FontFamily("MS Gothic Bold");
+            damageOutlinedTextBlock.FontFamily = new System.Windows.Media.FontFamily(s.DamageNumbersFontFamily);
+            damageOutlinedTextBlock.FontWeight = (FontWeight)new FontWeightConverter().ConvertFromString(s.DamageNumbersFontWeight);
             damageOutlinedTextBlock.FontSize = 21;
             damageOutlinedTextBlock.StrokeThickness = 4;
             damageOutlinedTextBlock.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
@@ -3130,6 +3141,9 @@ namespace MHFZ_Overlay
         //TODO fix alt tab issues?
         private IKeyboardMouseEvents m_GlobalHook;
 
+        /// <summary>
+        /// Subscribes this instance for player input.
+        /// </summary>
         public void Subscribe()
         {
             // Note: for the application hook, use the Hook.AppEvents() instead
@@ -3241,6 +3255,9 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Maps the player input to images.
+        /// </summary>
         private void MapPlayerInputImages()
         {
             // Add the key-image pairs to the dictionary

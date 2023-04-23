@@ -378,8 +378,7 @@ namespace MHFZ_Overlay
               FlowDirection,
               new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
               FontSize,
-              Brushes.Black,
-              null);
+              Brushes.Black);
 
             UpdateFormattedText();
         }
