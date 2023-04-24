@@ -2990,10 +2990,6 @@ namespace MHFZ_Overlay
                     DamagePerSecondDictionary TEXT NOT NULL,
                     AreaChangesDictionary TEXT NOT NULL,
                     CartsDictionary TEXT NOT NULL,
-                    Monster1HPDictionary TEXT NOT NULL,
-                    Monster2HPDictionary TEXT NOT NULL,
-                    Monster3HPDictionary TEXT NOT NULL,
-                    Monster4HPDictionary TEXT NOT NULL,
                     HitsTakenBlockedDictionary TEXT NOT NULL,
                     HitsTakenBlockedPerSecondDictionary TEXT NOT NULL,
                     PlayerHPDictionary TEXT NOT NULL,
@@ -3005,6 +3001,18 @@ namespace MHFZ_Overlay
                     OverlayModeDictionary TEXT NOT NULL,
                     ActualOverlayMode TEXT NOT NULL,
                     PartySize INTEGER NOT NULL,
+                    Monster1HPDictionary TEXT NOT NULL,
+                    Monster2HPDictionary TEXT NOT NULL,
+                    Monster3HPDictionary TEXT NOT NULL,
+                    Monster4HPDictionary TEXT NOT NULL,
+                    Monster1AttackMultiplierDictionary TEXT NOT NULL,
+                    Monster1DefenseRateDictionary TEXT NOT NULL,
+                    Monster1SizeMultiplierDictionary TEXT NOT NULL,
+                    Monster1PoisonThresholdDictionary TEXT NOT NULL,
+                    Monster1SleepThresholdDictionary TEXT NOT NULL,
+                    Monster1ParalysisThresholdDictionary TEXT NOT NULL,
+                    Monster1BlastThresholdDictionary TEXT NOT NULL,
+                    Monster1StunThresholdDictionary TEXT NOT NULL,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
                     -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
@@ -7587,6 +7595,11 @@ namespace MHFZ_Overlay
             return new MezFesCompendium();
         }
 
+        public MiscellaneousCompendium GetMiscellaneousCompendium()
+        {
+            return new MiscellaneousCompendium();
+        }
+
         #endregion
 
         private void UpdateDatabaseSchema(SQLiteConnection connection)
@@ -7865,6 +7878,25 @@ namespace MHFZ_Overlay
                     GachaCardID INTEGER NOT NULL,
                     FOREIGN KEY(GachaCardID) REFERENCES GachaCard(GachaCardID)
                     )";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"ALTER TABLE Quests
+                    MODIFY COLUMN Monster1HPDictionary TEXT NOT NULL AFTER PartySize,
+                    MODIFY COLUMN Monster2HPDictionary TEXT NOT NULL AFTER Monster1HPDictionary,
+                    MODIFY COLUMN Monster3HPDictionary TEXT NOT NULL AFTER Monster2HPDictionary,
+                    MODIFY COLUMN Monster4HPDictionary TEXT NOT NULL AFTER Monster3HPDictionary,
+                    MODIFY COLUMN Monster1AttackMultiplierDictionary TEXT NOT NULL AFTER Monster4HPDictionary,
+                    MODIFY COLUMN Monster1DefenseRateDictionary TEXT NOT NULL AFTER Monster1AttackMultiplierDictionary,
+                    MODIFY COLUMN Monster1SizeMultiplierDictionary TEXT NOT NULL AFTER Monster1DefenseRateDictionary,
+                    MODIFY COLUMN Monster1PoisonThresholdDictionary TEXT NOT NULL AFTER Monster1SizeMultiplierDictionary,
+                    MODIFY COLUMN Monster1SleepThresholdDictionary TEXT NOT NULL AFTER Monster1PoisonThresholdDictionary,
+                    MODIFY COLUMN Monster1ParalysisThresholdDictionary TEXT NOT NULL AFTER Monster1SleepThresholdDictionary,
+                    MODIFY COLUMN Monster1BlastThresholdDictionary TEXT NOT NULL AFTER Monster1ParalysisThresholdDictionary,
+                    MODIFY COLUMN Monster1StunThresholdDictionary TEXT NOT NULL AFTER Monster1BlastThresholdDictionary;
+                    ";
             using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
             {
                 cmd.ExecuteNonQuery();

@@ -6127,7 +6127,34 @@ Party Size: {32}",
                 metadata,
                 gearName,
                 weaponName,
-                realweaponName
+                realweaponName,
+                head,
+                chest,
+                arms,
+                waist,
+                legs,
+                cuffs,
+                date,
+                hash,
+                zenithSkillsList,
+                automaticSkillsList,
+                gouBoost,
+                armorSkills,
+                caravanSkillsList,
+                divaSkill,
+                guildFood,
+                styleRankSkillsList,
+                inventory,
+                ammo,
+                poogieItem,
+                roadDureSkillsList,
+                //partnyaBagItems
+                questName,
+                questObjectiveType,
+                questObjectiveQuantity,
+                questObjectiveName,
+                questCategory,
+                partySize
                 );
             }
         }
@@ -6146,23 +6173,56 @@ Party Size: {32}",
             }
         }
 
+        /// <summary>
+        /// Generates the compendium.
+        /// </summary>
+        /// <returns></returns>
         public string GenerateCompendium()
         {
-            //Quest quest = DatabaseManager.GetInstance().GetQuest((long)runID);
-            int mostCommonWeaponClass = 0;
-            int leastUsedArmorSkill = 0;
-            int mostCommonDivaSkill = 0;
-            int mostCommonGuildFood = 0;
-            int questID = 1;
-
             var createdBy = GetFullCurrentProgramVersion();
             var createdAt = DateTime.UtcNow;
             if (createdBy == null)
                 return "Program Version Not Found.\n\nReload the section.";
-            var weaponClass = GetWeaponClass((int?)mostCommonWeaponClass);            
-            var divaSkill = GetDivaSkillNameFromID((int)mostCommonDivaSkill);
-            var guildFood = GetArmorSkill((int)mostCommonGuildFood);
-            var questName = Dictionary.Quests.QuestIDs[(int)questID];
+
+            QuestCompendium questCompendium = DatabaseManager.GetInstance().GetQuestCompendium();
+            GearCompendium gearCompendium = DatabaseManager.GetInstance().GetGearCompendium();
+            PerformanceCompendium performanceCompendium = DatabaseManager.GetInstance().GetPerformanceCompendium();
+            MezFesCompendium mezeportaFestivalCompendium = DatabaseManager.GetInstance().GetMezFesCompendium();
+            MiscellaneousCompendium miscellaneousCompendium = DatabaseManager.GetInstance().GetMiscellaneousCompendium();
+
+            var mostCompletedQuest = questCompendium.MostCompletedQuestRuns;
+            var mostCompletedQuestAttempts = questCompendium.MostCompletedQuestRunsAttempted;
+            var mostCompletedQuestID = questCompendium.MostCompletedQuestRunsQuestID;
+
+            var mostAttemptedQuest = questCompendium.MostAttemptedQuestRuns;
+            var mostAttemptedQuestCompletions = questCompendium.MostAttemptedQuestRunsCompleted;
+            var mostAttemptedQuestID = questCompendium.MostAttemptedQuestRunsQuestID;
+
+            var totalQuestsCompleted = questCompendium.TotalQuestsCompleted;
+            var totalQuestsAttempted = questCompendium.TotalQuestsAttempted;
+
+            var questCompletionTimeElapsedAverage = questCompendium.QuestCompletionTimeElapsedAverage;
+            var questCompletionTimeElapsedMedian = questCompendium.QuestCompletionTimeElapsedMedian;
+
+            var totalTimeElapsedDuringQuest = questCompendium.TotalTimeElapsedQuests;
+
+            var mostCompletedQuestWithCarts = questCompendium.MostCompletedQuestWithCarts;
+            var mostCompletedQuestWithCartsQuestID = questCompendium.MostCompletedQuestWithCartsQuestID;
+
+            var totalCartsInQuest = questCompendium.TotalCartsInQuest;
+            var totalCartsInQuestAverage = questCompendium.TotalCartsInQuestAverage;
+            var totalCartsInQuestMedian = questCompendium.TotalCartsInQuestMedian;
+
+            var questPartySizeAverage = questCompendium.QuestPartySizeAverage;
+            var questPartySizeMedian = questCompendium.QuestPartySizeMedian;
+            var questPartySizeMode = questCompendium.QuestPartySizeMode;
+
+            var percentOfSoloQuests = questCompendium.PercentOfSoloQuests;
+            var percentOfGuildFood = questCompendium.PercentOfGuildFood;
+            var percentOfDivaSkill = questCompendium.PercentOfDivaSkill;
+            var percentOfSkillFruit = questCompendium.PercentOfSkillFruit;
+            var mostCommonDivaSkill = questCompendium.MostCommonDivaSkill;
+            var mostCommonGuildFood = questCompendium.MostCommonGuildFood;
 
             return string.Format(
 @"{0} (UTC)
