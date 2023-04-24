@@ -701,6 +701,7 @@
                             <ComboBoxItem>None</ComboBoxItem>
                             <ComboBoxItem>Speedrun</ComboBoxItem>
                             <ComboBoxItem>Zen</ComboBoxItem>
+                            <ComboBoxItem>HP Only</ComboBoxItem>
                         </ComboBox>
 
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Max Resolution Width"/>

@@ -3027,6 +3027,41 @@ namespace MHFZ_Overlay
 
                         s.Monster1IconShown = true;
                         break;
+
+                    case "HP Only":
+                        s.EnableDamageNumbers = false;
+                        s.EnableSharpness = false;
+                        s.PartThresholdShown = false;
+                        s.HitCountShown = false;
+                        s.PlayerAtkShown = false;
+                        s.MonsterAtkMultShown = false;
+                        s.MonsterDefrateShown = false;
+                        s.MonsterSizeShown = false;
+                        s.MonsterPoisonShown = false;
+                        s.MonsterParaShown = false;
+                        s.MonsterSleepShown = false;
+                        s.MonsterBlastShown = false;
+                        s.MonsterStunShown = false;
+                        s.DamagePerSecondShown = false;
+                        s.TotalHitsTakenBlockedShown = false;
+                        s.PlayerAPMGraphShown = false;
+                        s.PlayerAttackGraphShown = false;
+                        s.PlayerDPSGraphShown = false;
+                        s.PlayerHitsPerSecondGraphShown = false;
+                        s.TimerInfoShown = false;
+                        s.EnableMap = false;
+                        s.ActionsPerMinuteShown = false;
+                        s.PersonalBestShown = false;
+
+                        s.OverlayModeWatermarkShown = false;
+
+                        s.Monster1IconShown = false;
+
+                        s.Monster1HealthBarShown = true;
+                        s.Monster2HealthBarShown = true;
+                        s.Monster3HealthBarShown = true;
+                        s.Monster4HealthBarShown = true;
+                        break;
                 }
             }
         }
