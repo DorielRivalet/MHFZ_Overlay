@@ -307,6 +307,21 @@ namespace MHFZ_Overlay
                                 runID = 1;// TODO test
                         }
 
+                        /*
+                         PartySize,
+                    Monster1HPDictionary,
+                    Monster2HPDictionary,
+                    Monster3HPDictionary,
+                    Monster4HPDictionary,
+                    Monster1AttackMultiplierDictionary,
+                    Monster1DefenseRateDictionary,
+                    Monster1SizeMultiplierDictionary,
+                    Monster1PoisonThresholdDictionary,
+                    Monster1SleepThresholdDictionary,
+                    Monster1ParalysisThresholdDictionary,
+                    Monster1BlastThresholdDictionary,
+                    Monster1StunThresholdDictionary,*/
+
                         // Insert data into the Quests table
                         sql = @"INSERT INTO Quests (
                         QuestHash,
@@ -331,10 +346,6 @@ namespace MHFZ_Overlay
                         DamagePerSecondDictionary,
                         AreaChangesDictionary,
                         CartsDictionary,
-                        Monster1HPDictionary,
-                        Monster2HPDictionary,
-                        Monster3HPDictionary,
-                        Monster4HPDictionary,
                         HitsTakenBlockedDictionary,
                         HitsTakenBlockedPerSecondDictionary,
                         PlayerHPDictionary,
@@ -345,7 +356,19 @@ namespace MHFZ_Overlay
                         ActionsPerMinuteDictionary,
                         OverlayModeDictionary,
                         ActualOverlayMode,
-                        PartySize
+                        PartySize,
+                        Monster1HPDictionary,
+                        Monster2HPDictionary,
+                        Monster3HPDictionary,
+                        Monster4HPDictionary,
+                        Monster1AttackMultiplierDictionary,
+                        Monster1DefenseRateDictionary,
+                        Monster1SizeMultiplierDictionary,
+                        Monster1PoisonThresholdDictionary,
+                        Monster1SleepThresholdDictionary,
+                        Monster1ParalysisThresholdDictionary,
+                        Monster1BlastThresholdDictionary,
+                        Monster1StunThresholdDictionary
                         ) VALUES (
                         @QuestHash,
                         @CreatedAt,
@@ -369,10 +392,6 @@ namespace MHFZ_Overlay
                         @DamagePerSecondDictionary,
                         @AreaChangesDictionary,
                         @CartsDictionary,
-                        @Monster1HPDictionary,
-                        @Monster2HPDictionary,
-                        @Monster3HPDictionary,
-                        @Monster4HPDictionary,
                         @HitsTakenBlockedDictionary,
                         @HitsTakenBlockedPerSecondDictionary,
                         @PlayerHPDictionary,
@@ -383,7 +402,19 @@ namespace MHFZ_Overlay
                         @ActionsPerMinuteDictionary,
                         @OverlayModeDictionary,
                         @ActualOverlayMode,
-                        @PartySize
+                        @PartySize,
+                        @Monster1HPDictionary,
+                        @Monster2HPDictionary,
+                        @Monster3HPDictionary,
+                        @Monster4HPDictionary,
+                        @Monster1AttackMultiplierDictionary,
+                        @Monster1DefenseRateDictionary,
+                        @Monster1SizeMultiplierDictionary,
+                        @Monster1PoisonThresholdDictionary,
+                        @Monster1SleepThresholdDictionary,
+                        @Monster1ParalysisThresholdDictionary,
+                        @Monster1BlastThresholdDictionary,
+                        @Monster1StunThresholdDictionary
                         )";
 
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -461,10 +492,6 @@ namespace MHFZ_Overlay
                             Dictionary<int, int> areaChangesDictionary = dataLoader.model.areaChangesDictionary;
                             Dictionary<int, int> cartsDictionary = dataLoader.model.cartsDictionary;
                             // time <monsterid, monsterhp>
-                            Dictionary<int, Dictionary<int, int>> monster1HPDictionary = dataLoader.model.monster1HPDictionary;
-                            Dictionary<int, Dictionary<int, int>> monster2HPDictionary = dataLoader.model.monster2HPDictionary;
-                            Dictionary<int, Dictionary<int, int>> monster3HPDictionary = dataLoader.model.monster3HPDictionary;
-                            Dictionary<int, Dictionary<int, int>> monster4HPDictionary = dataLoader.model.monster4HPDictionary;
                             Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = dataLoader.model.hitsTakenBlockedDictionary;
                             Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = dataLoader.model.hitsTakenBlockedPerSecondDictionary;
                             Dictionary<int, int> playerHPDictionary = dataLoader.model.playerHPDictionary;
@@ -495,16 +522,31 @@ namespace MHFZ_Overlay
 
                             int partySize = dataLoader.model.PartySize();
 
+                            Dictionary<int, Dictionary<int, int>> monster1HPDictionary = dataLoader.model.monster1HPDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster2HPDictionary = dataLoader.model.monster2HPDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster3HPDictionary = dataLoader.model.monster3HPDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster4HPDictionary = dataLoader.model.monster4HPDictionary;
+
+                            Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionary = dataLoader.model.monster1AttackMultiplierDictionary;
+                            Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionary = dataLoader.model.monster1DefenseRateDictionary;
+                            Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionary = dataLoader.model.monster1SizeMultiplierDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionary = dataLoader.model.monster1PoisonThresholdDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionary = dataLoader.model.monster1SleepThresholdDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = dataLoader.model.monster1ParalysisThresholdDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = dataLoader.model.monster1BlastThresholdDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = dataLoader.model.monster1StunThresholdDictionary;
+
                             string questData = string.Format(
-                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}",
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}",
                                 runID, createdAt, createdBy, questID, timeLeft,
                                 finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
                                 starGrade, rankName, objectiveName, date, attackBuffDictionary,
                                 hitCountDictionary, hitsPerSecondDictionary, damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary,
-                                cartsDictionary, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary, monster4HPDictionary,
-                                hitsTakenBlockedDictionary, hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary, keystrokesDictionary,
-                                mouseInputDictionary, gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary, actualOverlayMode,
-                                partySize
+                                cartsDictionary, hitsTakenBlockedDictionary, hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary, 
+                                keystrokesDictionary, mouseInputDictionary, gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary, 
+                                actualOverlayMode, partySize, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary, 
+                                monster4HPDictionary, monster1AttackMultiplierDictionary, monster1DefenseRateDictionary, monster1SizeMultiplierDictionary, monster1PoisonThresholdDictionary,
+                                monster1SleepThresholdDictionary, monster1ParalysisThresholdDictionary, monster1BlastThresholdDictionary, monster1StunThresholdDictionary
                                 );
 
                             // Calculate the hash value for the data in the row
@@ -532,10 +574,6 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@DamagePerSecondDictionary", JsonConvert.SerializeObject(damagePerSecondDictionary));
                             cmd.Parameters.AddWithValue("@AreaChangesDictionary", JsonConvert.SerializeObject(areaChangesDictionary));
                             cmd.Parameters.AddWithValue("@CartsDictionary", JsonConvert.SerializeObject(cartsDictionary));
-                            cmd.Parameters.AddWithValue("@Monster1HPDictionary", JsonConvert.SerializeObject(monster1HPDictionary));
-                            cmd.Parameters.AddWithValue("@Monster2HPDictionary", JsonConvert.SerializeObject(monster2HPDictionary));
-                            cmd.Parameters.AddWithValue("@Monster3HPDictionary", JsonConvert.SerializeObject(monster3HPDictionary));
-                            cmd.Parameters.AddWithValue("@Monster4HPDictionary", JsonConvert.SerializeObject(monster4HPDictionary));
                             cmd.Parameters.AddWithValue("@HitsTakenBlockedDictionary", JsonConvert.SerializeObject(hitsTakenBlockedDictionary));
                             cmd.Parameters.AddWithValue("@HitsTakenBlockedPerSecondDictionary", JsonConvert.SerializeObject(hitsTakenBlockedPerSecondDictionary));
                             cmd.Parameters.AddWithValue("@PlayerHPDictionary", JsonConvert.SerializeObject(playerHPDictionary));
@@ -547,6 +585,18 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@OverlayModeDictionary", JsonConvert.SerializeObject(overlayModeDictionary));
                             cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
                             cmd.Parameters.AddWithValue("@PartySize", partySize);
+                            cmd.Parameters.AddWithValue("@Monster1HPDictionary", JsonConvert.SerializeObject(monster1HPDictionary));
+                            cmd.Parameters.AddWithValue("@Monster2HPDictionary", JsonConvert.SerializeObject(monster2HPDictionary));
+                            cmd.Parameters.AddWithValue("@Monster3HPDictionary", JsonConvert.SerializeObject(monster3HPDictionary));
+                            cmd.Parameters.AddWithValue("@Monster4HPDictionary", JsonConvert.SerializeObject(monster4HPDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1AttackMultiplierDictionary", JsonConvert.SerializeObject(monster1AttackMultiplierDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1DefenseRateDictionary", JsonConvert.SerializeObject(monster1DefenseRateDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1SizeMultiplierDictionary", JsonConvert.SerializeObject(monster1SizeMultiplierDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1PoisonThresholdDictionary", JsonConvert.SerializeObject(monster1PoisonThresholdDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1SleepThresholdDictionary", JsonConvert.SerializeObject(monster1SleepThresholdDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1ParalysisThresholdDictionary", JsonConvert.SerializeObject(monster1ParalysisThresholdDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1BlastThresholdDictionary", JsonConvert.SerializeObject(monster1BlastThresholdDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1StunThresholdDictionary", JsonConvert.SerializeObject(monster1StunThresholdDictionary));
 
                             cmd.ExecuteNonQuery();
                         }

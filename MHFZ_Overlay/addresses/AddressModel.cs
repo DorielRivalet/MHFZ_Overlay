@@ -2059,6 +2059,57 @@ namespace MHFZ_Overlay.addresses
         }
 
         /// <summary>
+        /// Gets the size.
+        /// </summary>
+        /// <value>
+        /// The size.
+        /// </value>
+        public double Monster1SizeMultForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => double.Parse(Monster1Size().Replace("%","")),
+                1 => double.Parse(Monster2Size().Replace("%", "")),
+                _ => double.Parse(Monster1Size().Replace("%", "")),
+            };
+        }
+
+        /// <summary>
+        /// Gets the atk mult.
+        /// </summary>
+        /// <value>
+        /// The atk mult.
+        /// </value>
+        public double Monster1AttackMultForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => double.Parse(Monster1AtkMult()),
+                1 => double.Parse(Monster2AtkMult()),
+                _ => double.Parse(Monster1AtkMult()),
+            };
+        }
+
+        /// <summary>
+        /// Gets the defrate multiplier.
+        /// </summary>
+        /// <value>
+        /// The defrate multiplier.
+        /// </value>
+        public double Monster1DefMultForDictionary()
+        {
+            switch (SelectedMonster)
+            {
+                case 0:
+                    return double.Parse(Monster1DefMult().ToString());
+                case 1:
+                    return double.Parse(Monster2DefMult().ToString());
+                default:
+                    return double.Parse(Monster1DefMult().ToString());
+            }
+        }
+
+        /// <summary>
         /// Displays the monster ehp.
         /// </summary>
         /// <param name="defrate">The defrate.</param>
@@ -2097,9 +2148,6 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// Gets the current poison.
         /// </summary>
-        /// <value>
-        /// The poison current.
-        /// </value>
         public int PoisonCurrent
         {
             get
@@ -2139,9 +2187,6 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// Gets the current sleep.
         /// </summary>
-        /// <value>
-        /// The sleep current.
-        /// </value>
         public int SleepCurrent
         {
             get
@@ -2181,9 +2226,6 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// Gets the current paralysis.
         /// </summary>
-        /// <value>
-        /// The para current.
-        /// </value>
         public int ParaCurrent
         {
             get
@@ -2223,9 +2265,6 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// Gets the current blast.
         /// </summary>
-        /// <value>
-        /// The blast current.
-        /// </value>
         public int BlastCurrent
         {
             get
@@ -2265,9 +2304,6 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// Gets the current stun.
         /// </summary>
-        /// <value>
-        /// The stun current.
-        /// </value>
         public int StunCurrent
         {
             get
@@ -2302,6 +2338,71 @@ namespace MHFZ_Overlay.addresses
                     _ => Monster1StunNeed(),
                 };
             }
+        }
+
+        /// <summary>
+        /// Gets the current poison.
+        /// </summary>
+        public int Monster1PoisonForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => Monster1Poison(),
+                1 => Monster2Poison(),
+                _ => Monster1Poison(),
+            };
+        }
+
+        /// <summary>
+        /// Gets the current sleep.
+        /// </summary>
+        public int Monster1SleepForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => Monster1Sleep(),
+                1 => Monster2Sleep(),
+                _ => Monster1Sleep(),
+            };
+        }
+
+        /// <summary>
+        /// Gets the current paralysis.
+        /// </summary>
+        public int Monster1ParalysisForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => Monster1Para(),
+                1 => Monster2Para(),
+                _ => Monster1Para(),
+            };
+        }
+
+        /// <summary>
+        /// Gets the current blast.
+        /// </summary>
+        public int Monster1BlastForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => Monster1Blast(),
+                1 => Monster2Blast(),
+                _ => Monster1Blast(),
+            };
+        }
+
+        /// <summary>
+        /// Gets the current stun.
+        /// </summary>
+        public int Monster1StunForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => Monster1Stun(),
+                1 => Monster2Stun(),
+                _ => Monster1Stun(),
+            };
         }
 
         #endregion
@@ -6521,7 +6622,7 @@ Lowest Monster Size Multiplier: {113} [Run ID {114}]
             monster1SizeMultiplierHighest,
             monster1SizeMultiplierHighestRunID,
             monster1SizeMultiplierLowest,
-            "test"
+            monster1SizeMultiplierLowestRunID
             );
         }
 
@@ -9718,6 +9819,23 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public Dictionary<int, string> overlayModeDictionary = new Dictionary<int, string>();
 
+        public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionary = new Dictionary<int, Dictionary<int, double>>();
+        public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionary = new Dictionary<int, Dictionary<int, double>>();
+        public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionary = new Dictionary<int, Dictionary<int, double>>();
+        public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionaryDeserealized;
+
         public int previousTimeInt = 0;
         public int previousAttackBuffInt = 0;
         public int previousHitCountInt = 0;
@@ -9740,6 +9858,15 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public double previousHitsPerSecond = 0;
         public double previousActionsPerMinute = 0;
         public string previousOverlayMode = "N/A";
+
+        public double previousMonster1AttackMultiplier = 0;
+        public double previousMonster1DefenseRate = 0;
+        public double previousMonster1SizeMultiplier = 0;
+        public int previousMonster1PoisonThreshold = 0;
+        public int previousMonster1SleepThreshold = 0;
+        public int previousMonster1ParalysisThreshold = 0;
+        public int previousMonster1BlastThreshold = 0;
+        public int previousMonster1StunThreshold = 0;
 
         public List<Dictionary<int, int>> InsertInventoryDictionaryIntoList(string inventoryType)
         {
@@ -10539,6 +10666,126 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     logger.Warn(ex, "PROGRAM OPERATION: Could not insert into overlayModeDictionary");
                 }
             }
+
+            if (previousMonster1AttackMultiplier != Monster1AttackMultForDictionary() && !monster1AttackMultiplierDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1AttackMultiplier = Monster1AttackMultForDictionary();
+                    Dictionary<int, double> monster1AttackMultiplierDictionaryMonsterInfo = new Dictionary<int, double>();
+                    monster1AttackMultiplierDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1AttackMultForDictionary());
+                    monster1AttackMultiplierDictionary.Add(TimeInt(), monster1AttackMultiplierDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1AttackMultiplierDictionary");
+                }
+            }
+
+            if (previousMonster1DefenseRate != Monster1DefMultForDictionary() && !monster1DefenseRateDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1DefenseRate = Monster1DefMultForDictionary();
+                    Dictionary<int, double> monster1DefenseRateDictionaryMonsterInfo = new Dictionary<int, double>();
+                    monster1DefenseRateDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1DefMultForDictionary());
+                    monster1DefenseRateDictionary.Add(TimeInt(), monster1DefenseRateDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1DefenseRateDictionary");
+                }
+            }
+
+            if (previousMonster1SizeMultiplier != Monster1SizeMultForDictionary() && !monster1SizeMultiplierDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1SizeMultiplier = Monster1SizeMultForDictionary();
+                    Dictionary<int, double> monster1SizeMultiplierDictionaryMonsterInfo = new Dictionary<int, double>();
+                    monster1SizeMultiplierDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1SizeMultForDictionary());
+                    monster1SizeMultiplierDictionary.Add(TimeInt(), monster1SizeMultiplierDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1SizeMultiplierDictionary");
+                }
+            }
+
+            if (previousMonster1PoisonThreshold != Monster1PoisonForDictionary() && !monster1PoisonThresholdDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1PoisonThreshold = Monster1PoisonForDictionary();
+                    Dictionary<int, int> monster1PoisonThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster1PoisonThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1PoisonForDictionary());
+                    monster1PoisonThresholdDictionary.Add(TimeInt(), monster1PoisonThresholdDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1PoisonThresholdDictionary");
+                }
+            }
+
+            if (previousMonster1SleepThreshold != Monster1SleepForDictionary() && !monster1SleepThresholdDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1SleepThreshold = Monster1SleepForDictionary();
+                    Dictionary<int, int> monster1SleepThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster1SleepThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1SleepForDictionary());
+                    monster1SleepThresholdDictionary.Add(TimeInt(), monster1SleepThresholdDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1SleepThresholdDictionary");
+                }
+            }
+
+            if (previousMonster1ParalysisThreshold != Monster1ParalysisForDictionary() && !monster1ParalysisThresholdDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1ParalysisThreshold = Monster1ParalysisForDictionary();
+                    Dictionary<int, int> monster1ParalysisThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster1ParalysisThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1ParalysisForDictionary());
+                    monster1ParalysisThresholdDictionary.Add(TimeInt(), monster1ParalysisThresholdDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1ParalysisThresholdDictionary");
+                }
+            }
+
+            if (previousMonster1BlastThreshold != Monster1BlastForDictionary() && !monster1BlastThresholdDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1BlastThreshold = Monster1BlastForDictionary();
+                    Dictionary<int, int> monster1BlastThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster1BlastThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1BlastForDictionary());
+                    monster1BlastThresholdDictionary.Add(TimeInt(), monster1BlastThresholdDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1BlastThresholdDictionary");
+                }
+            }
+
+            if (previousMonster1StunThreshold != Monster1StunForDictionary() && !monster1StunThresholdDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1StunThreshold = Monster1StunForDictionary();
+                    Dictionary<int, int> monster1StunThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster1StunThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1StunForDictionary());
+                    monster1StunThresholdDictionary.Add(TimeInt(), monster1StunThresholdDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1StunThresholdDictionary");
+                }
+            }
         }
 
         public void resetQuestInfoVariables()
@@ -10646,6 +10893,16 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             previousActionsPerMinute = 0;
             previousOverlayMode = "N/A";
             previousRoadFloor = 0;
+
+            previousMonster1AttackMultiplier = 0;
+            previousMonster1DefenseRate = 0;
+            previousMonster1SizeMultiplier = 0;
+            previousMonster1PoisonThreshold = 0;
+            previousMonster1SleepThreshold = 0;
+            previousMonster1ParalysisThreshold = 0;
+            previousMonster1BlastThreshold = 0;
+            previousMonster1StunThreshold = 0;
+
         }
 
         public void clearQuestInfoDictionaries()
@@ -10673,6 +10930,16 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             gamepadInputDictionary.Clear();
             actionsPerMinuteDictionary.Clear();
             overlayModeDictionary.Clear();
+
+            monster1AttackMultiplierDictionary.Clear();
+            monster1DefenseRateDictionary.Clear();
+            monster1SizeMultiplierDictionary.Clear();
+            monster1PoisonThresholdDictionary.Clear();
+            monster1SleepThresholdDictionary.Clear();
+            monster1ParalysisThresholdDictionary.Clear();
+            monster1BlastThresholdDictionary.Clear();
+            monster1StunThresholdDictionary.Clear();
+
         }
 
         public void clearGraphCollections()
