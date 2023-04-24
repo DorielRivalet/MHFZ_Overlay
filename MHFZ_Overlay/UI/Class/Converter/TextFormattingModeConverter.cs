@@ -1,9 +1,10 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
-using System;
 
-namespace MHFZ_Overlay {
+namespace MHFZ_Overlay
+{
     public class TextFormattingModeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

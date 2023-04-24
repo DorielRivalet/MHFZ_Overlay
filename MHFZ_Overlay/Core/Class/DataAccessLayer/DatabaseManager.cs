@@ -1,11 +1,8 @@
 ﻿using Dictionary;
-using FluentMigrator.Runner;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using NLog;
-using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,11 +13,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using Formatting = Newtonsoft.Json.Formatting;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
@@ -527,9 +522,9 @@ namespace MHFZ_Overlay
                                 finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
                                 starGrade, rankName, objectiveName, date, attackBuffDictionary,
                                 hitCountDictionary, hitsPerSecondDictionary, damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary,
-                                cartsDictionary, hitsTakenBlockedDictionary, hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary, 
-                                keystrokesDictionary, mouseInputDictionary, gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary, 
-                                actualOverlayMode, partySize, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary, 
+                                cartsDictionary, hitsTakenBlockedDictionary, hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary,
+                                keystrokesDictionary, mouseInputDictionary, gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary,
+                                actualOverlayMode, partySize, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary,
                                 monster4HPDictionary, monster1AttackMultiplierDictionary, monster1DefenseRateDictionary, monster1SizeMultiplierDictionary, monster1PoisonThresholdDictionary,
                                 monster1SleepThresholdDictionary, monster1ParalysisThresholdDictionary, monster1BlastThresholdDictionary, monster1StunThresholdDictionary
                                 );
@@ -7881,7 +7876,7 @@ namespace MHFZ_Overlay
                     if (MainWindow.CurrentProgramVersion.Trim() != previousVersion.Trim())
                     {
                         MessageBoxResult result = MessageBox.Show("A new version of the program has been installed. Do you want to perform the necessary database updates? A backup of your current MHFZ_Overlay.sqlite file will be done if you accept.\n\nUpdating the database structure may take some time.",
-                                                         string.Format("Program Update ({0} to {1})",previousVersion,MainWindow.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                                                         string.Format("Program Update ({0} to {1})", previousVersion, MainWindow.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (result == MessageBoxResult.Yes)
                         {
                             // Make a backup of the current SQLite file before updating the schema
@@ -8196,7 +8191,7 @@ namespace MHFZ_Overlay
                     writer.WriteLine(previousVersion);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "FILE OPERATION: Error with version file");
             }

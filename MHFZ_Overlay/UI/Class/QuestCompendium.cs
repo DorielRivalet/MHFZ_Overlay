@@ -1,8 +1,4 @@
-﻿using Discord;
-using MHFZ_Overlay.UI.Class;
-using System;
-
-namespace MHFZ_Overlay.UI.Class
+﻿namespace MHFZ_Overlay.UI.Class
 {
     //TODO: ORM
     public class QuestCompendium

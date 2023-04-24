@@ -7,6 +7,8 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
 using MHFZ_Overlay.UI.Class;
+using Microsoft.Extensions.DependencyModel;
+using NLog;
 using Octokit;
 using SkiaSharp;
 using System;
@@ -15,6 +17,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
@@ -38,10 +41,6 @@ using Image = System.Windows.Controls.Image;
 using Label = System.Windows.Controls.Label;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
-using NLog;
-using System.Linq;
-using Microsoft.Extensions.DependencyModel;
-using System.Text;
 
 namespace MHFZ_Overlay
 {
@@ -687,7 +686,8 @@ namespace MHFZ_Overlay
             {
                 DataLoader.model.previousQuestID = DataLoader.model.QuestID();
                 ShowQuestName();
-            } else if (DataLoader.model.QuestID() == 0 && DataLoader.model.previousQuestID != 0)
+            }
+            else if (DataLoader.model.QuestID() == 0 && DataLoader.model.previousQuestID != 0)
             {
                 DataLoader.model.previousQuestID = DataLoader.model.QuestID();
             }
@@ -2100,7 +2100,7 @@ namespace MHFZ_Overlay
             {
                 return;
             }
-                
+
             // TODO also need to handle the other fields lengths
             if (string.Format("{0}{1}{2}{3}{4}{5}", GetPartySize(), GetQuestState(), GetCaravanScore(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()), GetGameMode(DataLoader.isHighGradeEdition)).Length >= 95)
                 presenceTemplate.Details = string.Format("{0}{1}{2}", GetQuestState(), DataLoader.model.GetOverlayModeForRPC(), DataLoader.model.GetAreaName(DataLoader.model.AreaID()));
@@ -3248,9 +3248,9 @@ namespace MHFZ_Overlay
         {
             if (_keyImages.ContainsKey(e.KeyCode))
             {
-                Dispatcher.BeginInvoke(new Action(() => 
+                Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    _keyImages[e.KeyCode].Opacity = unpressedKeyOpacity; 
+                    _keyImages[e.KeyCode].Opacity = unpressedKeyOpacity;
                 }));
             }
         }

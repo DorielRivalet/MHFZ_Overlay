@@ -833,7 +833,7 @@ namespace MHFZ_Overlay
         private void DefaultButton_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show("Resetting settings, are you sure?", "MHFZ Overlay - Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-            if (result == MessageBoxResult.Yes) 
+            if (result == MessageBoxResult.Yes)
             {
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 DisposeAllWebViews();
@@ -1953,7 +1953,7 @@ namespace MHFZ_Overlay
             graphChart.YAxes = YAxes;
         }
 
-        private void SetLineSeriesForPersonalBestByAttempts(Dictionary<long,long> data)
+        private void SetLineSeriesForPersonalBestByAttempts(Dictionary<long, long> data)
         {
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> collection = new();

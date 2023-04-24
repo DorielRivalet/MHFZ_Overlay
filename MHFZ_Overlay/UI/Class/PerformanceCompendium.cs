@@ -1,9 +1,4 @@
-﻿using Discord;
-using LiveChartsCore.Kernel;
-using MHFZ_Overlay.UI.Class;
-using System;
-
-namespace MHFZ_Overlay.UI.Class
+﻿namespace MHFZ_Overlay.UI.Class
 {
     //TODO: ORM
     public class PerformanceCompendium
@@ -41,7 +36,7 @@ namespace MHFZ_Overlay.UI.Class
         public double ActionsPerMinuteMedian { get; set; }
         public int HighestActionsPerMinuteRunID { get; set; }
         public int TotalHitsCount { get; set; }
-        public int TotalHitsTakenBlocked { get;set; }
+        public int TotalHitsTakenBlocked { get; set; }
         public int TotalActions { get; set; }
         public double HealthAverage { get; set; }
         public double HealthMedian { get; set; }

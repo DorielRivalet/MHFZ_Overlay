@@ -1,5 +1,3 @@
-using Xunit;
-
 namespace MHFZ_OverlayTest
 {
     public class UnitTest1

@@ -1,5 +1,4 @@
 ﻿using Dictionary;
-using DiscordRPC;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
@@ -14,14 +13,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Automation;
-using System.Windows.Controls;
 using Application = System.Windows.Application;
 
 namespace MHFZ_Overlay.addresses
@@ -40,7 +37,8 @@ namespace MHFZ_Overlay.addresses
         private int SavedMonster1ID = 0;
         private int SavedMonster2ID = 0;
 
-        public AddressModel(Mem m) {
+        public AddressModel(Mem m)
+        {
 
             var config = new NLog.Config.LoggingConfiguration();
 
@@ -936,7 +934,7 @@ namespace MHFZ_Overlay.addresses
                 element = AutomationElement.RootElement.FindFirst(
     TreeScope.Children, condition);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Warn(ex, "PROGRAM OPERATION: Could not find AutomationElement");
             }
@@ -986,35 +984,35 @@ namespace MHFZ_Overlay.addresses
                 return "(World Select) ";
             else if (
                 !(
-                    (QuestID() != 0 
-                    && TimeDefInt() > TimeInt() 
-                    && int.Parse(ATK) > 0) 
+                    (QuestID() != 0
+                    && TimeDefInt() > TimeInt()
+                    && int.Parse(ATK) > 0)
                     || (IsRoad() || IsDure())
-                ) 
-                || s.EnableDamageNumbers 
-                || s.EnableSharpness 
-                || s.PartThresholdShown 
-                || s.HitCountShown 
-                || s.PlayerAtkShown 
-                || s.MonsterAtkMultShown 
-                || s.MonsterDefrateShown 
-                || s.MonsterSizeShown 
-                || s.MonsterPoisonShown 
-                || s.MonsterParaShown 
-                || s.MonsterSleepShown 
-                || s.MonsterBlastShown 
-                || s.MonsterStunShown 
-                || s.DamagePerSecondShown 
-                || s.TotalHitsTakenBlockedShown 
-                || s.PlayerAPMGraphShown 
-                || s.PlayerAttackGraphShown 
-                || s.PlayerDPSGraphShown 
-                || s.PlayerHitsPerSecondGraphShown 
-                || s.EnableQuestPaceColor 
-                || s.Monster1HealthBarShown 
-                || s.Monster2HealthBarShown 
-                || s.Monster3HealthBarShown 
-                || s.Monster4HealthBarShown 
+                )
+                || s.EnableDamageNumbers
+                || s.EnableSharpness
+                || s.PartThresholdShown
+                || s.HitCountShown
+                || s.PlayerAtkShown
+                || s.MonsterAtkMultShown
+                || s.MonsterDefrateShown
+                || s.MonsterSizeShown
+                || s.MonsterPoisonShown
+                || s.MonsterParaShown
+                || s.MonsterSleepShown
+                || s.MonsterBlastShown
+                || s.MonsterStunShown
+                || s.DamagePerSecondShown
+                || s.TotalHitsTakenBlockedShown
+                || s.PlayerAPMGraphShown
+                || s.PlayerAttackGraphShown
+                || s.PlayerDPSGraphShown
+                || s.PlayerHitsPerSecondGraphShown
+                || s.EnableQuestPaceColor
+                || s.Monster1HealthBarShown
+                || s.Monster2HealthBarShown
+                || s.Monster3HealthBarShown
+                || s.Monster4HealthBarShown
                 || s.EnableMap
                 || s.PersonalBestTimePercentShown
                 || s.EnablePersonalBestPaceColor) //TODO monster 1 overview? and update README
@@ -1781,7 +1779,7 @@ namespace MHFZ_Overlay.addresses
                     return "#f5e0dc";
                 }
 
-                var timePercent = int.Parse(PersonalBestTimePercent.Replace("%",""));
+                var timePercent = int.Parse(PersonalBestTimePercent.Replace("%", ""));
                 var monster1HPPercent = (float)Monster1HPInt() / int.Parse(Monster1MaxHP) * 100.0;
 
                 if (timePercent >= monster1HPPercent && ShowPersonalBestPaceColor())
@@ -1812,7 +1810,7 @@ namespace MHFZ_Overlay.addresses
                         personalBestTimeFramesElapsed = TimeDefInt() - personalBestInFrames;
                     else
                         personalBestTimeFramesElapsed = personalBestInFrames;
-                    var elapsedPersonalBestTimePercent = CalculatePersonalBestInFramesPercent(personalBestTimeFramesElapsed);                    
+                    var elapsedPersonalBestTimePercent = CalculatePersonalBestInFramesPercent(personalBestTimeFramesElapsed);
 
                     return string.Format("{0:0}%", elapsedPersonalBestTimePercent);
                 }
@@ -2066,7 +2064,7 @@ namespace MHFZ_Overlay.addresses
         {
             return SelectedMonster switch
             {
-                0 => double.Parse(Monster1Size().Replace("%","")),
+                0 => double.Parse(Monster1Size().Replace("%", "")),
                 1 => double.Parse(Monster2Size().Replace("%", "")),
                 _ => double.Parse(Monster1Size().Replace("%", "")),
             };
@@ -9090,7 +9088,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public List<ISeries> damagePerSecondSeries { get; set; } = new();
         public List<ISeries> actionsPerMinuteSeries { get; set; } = new();
         public List<ISeries> hitsPerSecondSeries { get; set; } = new();
-        
+
         public List<ISeries> weaponUsageSeries { get; set; } = new();
 
         public string GetTimeElapsed(double frames)

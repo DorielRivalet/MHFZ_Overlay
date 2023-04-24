@@ -1,12 +1,6 @@
-﻿using Discord;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 /*
 [Flags]: Indicates that an enum is intended to be used as a bit field, 

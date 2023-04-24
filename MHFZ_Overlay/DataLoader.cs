@@ -1,8 +1,6 @@
-﻿using Discord.Rest;
-using Memory;
+﻿using Memory;
 using MHFZ_Overlay.addresses;
 using NLog;
-using Octokit;
 using Squirrel;
 using System;
 using System.Collections.Generic;
@@ -43,7 +41,7 @@ namespace MHFZ_Overlay
             string destination = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
             File.Copy(settingsFile, destination, true);
             logger.Info("FILE OPERATION: Backed up settings. Original file: {0}, Destination: {1}", settingsFile, destination);
-            MessageBox.Show(string.Format("Backed up settings. Original file: {0}, Destination: {1}", settingsFile, destination), "MHF-Z Overlay Settings", MessageBoxButton.OK,MessageBoxImage.Information);
+            MessageBox.Show(string.Format("Backed up settings. Original file: {0}, Destination: {1}", settingsFile, destination), "MHF-Z Overlay Settings", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         /// <summary>
@@ -69,7 +67,7 @@ namespace MHFZ_Overlay
                 logger.Info("FILE OPERATION: creating directory {0}", Path.GetDirectoryName(destFile));
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 logger.Info(ex, "FILE OPERATION: Did not make directory for {0}", destFile);
             }
@@ -81,7 +79,7 @@ namespace MHFZ_Overlay
                 logger.Info("FILE OPERATION: copying {0} into {1}", sourceFile, destFile);
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 logger.Info(ex, "FILE OPERATION: Did not copy backup file. Source: {0}, Destination: {1} ", sourceFile, destFile);
 
@@ -94,7 +92,7 @@ namespace MHFZ_Overlay
                 logger.Info("FILE OPERATION: deleting {0}", sourceFile);
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 logger.Info(ex, "FILE OPERATION: Did not delete backup file. Source: {0}", sourceFile);
             }
@@ -355,7 +353,7 @@ namespace MHFZ_Overlay
                     // If there are any banned files or folders, display an error message and exit the application
                     string message = string.Format("The following files or folders are not allowed:\n{0}", string.Join("\n", illegalFiles));
                     MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    logger.Fatal("FILE OPERATION: {0}",message);
+                    logger.Fatal("FILE OPERATION: {0}", message);
                     Environment.Exit(0);
                 }
             }
