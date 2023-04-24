@@ -426,7 +426,7 @@
 
                     <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <ComboBox Width="330" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
+                            <ComboBox Width="350" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
                                 <ComboBoxItem>(General) Most Quest Completions</ComboBoxItem>
                                 <ComboBoxItem>(General) Quest Durations</ComboBoxItem>
                                 <ComboBoxItem>(General) Most Common Objective Types</ComboBoxItem>
@@ -453,12 +453,15 @@
                                 <ComboBoxItem>(Run ID) Damage Dealt</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Damage per Second</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Carts</ComboBoxItem>
-                                <ComboBoxItem>(Run ID) Monster HP</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Hits Taken/Blocked</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Hits Taken/Blocked per Second</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Player Health and Stamina</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Most Common Player Input</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Actions per Minute</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Monster HP</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Monster Attack Multiplier</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Monster Defense Rate</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Monster Status Ailments Thresholds</ComboBoxItem>
                             </ComboBox>
                             <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Multiplayer runs may not display the correct data"/>
                         </StackPanel>

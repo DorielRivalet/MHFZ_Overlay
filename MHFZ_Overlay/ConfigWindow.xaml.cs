@@ -2159,6 +2159,8 @@ namespace MHFZ_Overlay
                 Values = healthCollection,
                 LineSmoothness = .5,
                 GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) =>
+                $"Health: {((long)chartPoint.PrimaryValue)}",
                 Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ffa6e3a1"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ffa6e3a1", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ffa6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
             });
@@ -2168,8 +2170,225 @@ namespace MHFZ_Overlay
                 Values = staminaCollection,
                 LineSmoothness = .5,
                 GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) =>
+                $"Stamina: {((long)chartPoint.PrimaryValue)}",
                 Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff9e2af"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff9e2af", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    TextSize=12,
+                    Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    NameTextSize= 12,
+                    TextSize=12,
+                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            graphChart.Series = series;
+            graphChart.XAxes = XAxes;
+            graphChart.YAxes = YAxes;
+        }
+
+        public void SetMonsterAttackMultiplier(Dictionary<int, double> attack)
+        {
+            List<ISeries> series = new();
+            ObservableCollection<ObservablePoint> attackCollection = new();
+
+            Dictionary<int, double> newAttack = GetElapsedTimeForDictionaryIntDouble(attack);
+
+            foreach (var entry in newAttack)
+            {
+                attackCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new StepLineSeries<ObservablePoint>
+            {
+                Values = attackCollection,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#f38ba8"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#f38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#f38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    TextSize=12,
+                    Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    NameTextSize= 12,
+                    TextSize=12,
+                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            graphChart.Series = series;
+            graphChart.XAxes = XAxes;
+            graphChart.YAxes = YAxes;
+        }
+
+        public void SetMonsterDefenseRate(Dictionary<int, double> defense)
+        {
+            List<ISeries> series = new();
+            ObservableCollection<ObservablePoint> defenseCollection = new();
+
+            Dictionary<int, double> newDefense = GetElapsedTimeForDictionaryIntDouble(defense);
+
+            foreach (var entry in newDefense)
+            {
+                defenseCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new StepLineSeries<ObservablePoint>
+            {
+                Values = defenseCollection,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#74c7ec"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#74c7ec", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#74c7ec", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    TextSize=12,
+                    Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    NameTextSize= 12,
+                    TextSize=12,
+                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            graphChart.Series = series;
+            graphChart.XAxes = XAxes;
+            graphChart.YAxes = YAxes;
+        }
+
+        private void SetMonsterStatusAilmentsThresholds(Dictionary<int, int> poison, Dictionary<int, int> sleep, Dictionary<int, int> para, Dictionary<int, int> blast, Dictionary<int, int> stun)
+        {
+            List<ISeries> series = new();
+            ObservableCollection<ObservablePoint> poisonCollection = new();
+            ObservableCollection<ObservablePoint> sleepCollection = new();
+            ObservableCollection<ObservablePoint> paraCollection = new();
+            ObservableCollection<ObservablePoint> blastCollection = new();
+            ObservableCollection<ObservablePoint> stunCollection = new();
+
+            Dictionary<int, int> newPoison = GetElapsedTime(poison);
+            Dictionary<int, int> newSleep = GetElapsedTime(sleep);
+            Dictionary<int, int> newPara = GetElapsedTime(para);
+            Dictionary<int, int> newBlast = GetElapsedTime(blast);
+            Dictionary<int, int> newStun = GetElapsedTime(stun);
+
+            foreach (var entry in newPoison)
+            {
+                poisonCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            foreach (var entry in newSleep)
+            {
+                sleepCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            foreach (var entry in newPara)
+            {
+                paraCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            foreach (var entry in newBlast)
+            {
+                blastCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            foreach (var entry in newStun)
+            {
+                stunCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = poisonCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) =>
+                $"Poison: {((long)chartPoint.PrimaryValue)}",
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#cba6f7"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#cba6f7", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#cba6f7", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = sleepCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) => $"Sleep: {((long)chartPoint.PrimaryValue)}",
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#74c7ec"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#74c7ec", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#74c7ec", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = paraCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) => $"Paralysis: {((long)chartPoint.PrimaryValue)}",
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#f9e2af"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#f9e2af", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#f9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = blastCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) => $"Blast: {((long)chartPoint.PrimaryValue)}",
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6e3a1"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6e3a1", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = stunCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) => $"Stun: {((long)chartPoint.PrimaryValue)}",
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#7f849c"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#7f849c", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#7f849c", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
             });
 
             XAxes = new Axis[]
@@ -2273,6 +2492,40 @@ namespace MHFZ_Overlay
                 // get the value of the inner dictionary
                 int hp = entry.Value.Values.First();
                 dictionary.Add(time, hp);
+                i++;
+            }
+
+            return dictionary;
+        }
+
+        private Dictionary<int, double> CalculateMonsterMultiplier(Dictionary<int, Dictionary<int, double>> monsterDictionary)
+        {
+            Dictionary<int, double> dictionary = new Dictionary<int, double>();
+
+            int i = 1;
+            foreach (var entry in monsterDictionary)
+            {
+                int time = int.Parse(entry.Key.ToString());
+                // get the value of the inner dictionary
+                double mult = entry.Value.Values.First();
+                dictionary.Add(time, mult);
+                i++;
+            }
+
+            return dictionary;
+        }
+
+        private Dictionary<int, int> CalculateMonsterStatusAilmentThresholds(Dictionary<int, Dictionary<int, int>> monsterDictionary)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            int i = 1;
+            foreach (var entry in monsterDictionary)
+            {
+                int time = int.Parse(entry.Key.ToString());
+                // get the value of the inner dictionary
+                int threshold = entry.Value.Values.First();
+                dictionary.Add(time, threshold);
                 i++;
             }
 
@@ -2492,9 +2745,6 @@ namespace MHFZ_Overlay
                 case "(Run ID) Carts":
                     SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetCartsDictionary(runID));
                     return;
-                case "(Run ID) Monster HP":
-                    SetMonsterHP(CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster1HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster2HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster3HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster4HPDictionary(runID)));
-                    return;
                 case "(Run ID) Hits Taken/Blocked":
                     SetHitsTakenBlocked(DatabaseManager.GetInstance().GetHitsTakenBlockedDictionary(runID));
                     return;
@@ -2509,6 +2759,30 @@ namespace MHFZ_Overlay
                     break;
                 case "(Run ID) Actions per Minute":
                     SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetActionsPerMinuteDictionary(runID));
+                    return;
+                case "(Run ID) Monster HP":
+                    SetMonsterHP(CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster1HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster2HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster3HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster4HPDictionary(runID)));
+                    return;
+                case "(Run ID) Monster Attack Multiplier":
+                    SetMonsterAttackMultiplier(CalculateMonsterMultiplier(DatabaseManager.GetInstance().GetMonster1AttackMultiplierDictionary(runID)));
+                    return;
+                case "(Run ID) Monster Defense Rate":
+                    SetMonsterDefenseRate(CalculateMonsterMultiplier(DatabaseManager.GetInstance().GetMonster1DefenseRateDictionary(runID)));
+                    return;
+                case "(Run ID) Monster Status Ailments Thresholds":
+                    SetMonsterStatusAilmentsThresholds(
+                        CalculateMonsterStatusAilmentThresholds(
+                            DatabaseManager.GetInstance().GetMonster1PoisonThresholdDictionary(runID)),
+                        CalculateMonsterStatusAilmentThresholds(
+                            DatabaseManager.GetInstance().GetMonster1SleepThresholdDictionary(runID)),
+                        CalculateMonsterStatusAilmentThresholds(
+                            DatabaseManager.GetInstance().GetMonster1ParalysisThresholdDictionary(runID)),
+                        CalculateMonsterStatusAilmentThresholds(
+                            DatabaseManager.GetInstance().GetMonster1BlastThresholdDictionary(runID)),
+                        CalculateMonsterStatusAilmentThresholds(
+                            DatabaseManager.GetInstance().GetMonster1StunThresholdDictionary(runID)
+                            )
+                        );
                     return;
             }
 

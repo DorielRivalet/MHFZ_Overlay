@@ -307,21 +307,6 @@ namespace MHFZ_Overlay
                                 runID = 1;// TODO test
                         }
 
-                        /*
-                         PartySize,
-                    Monster1HPDictionary,
-                    Monster2HPDictionary,
-                    Monster3HPDictionary,
-                    Monster4HPDictionary,
-                    Monster1AttackMultiplierDictionary,
-                    Monster1DefenseRateDictionary,
-                    Monster1SizeMultiplierDictionary,
-                    Monster1PoisonThresholdDictionary,
-                    Monster1SleepThresholdDictionary,
-                    Monster1ParalysisThresholdDictionary,
-                    Monster1BlastThresholdDictionary,
-                    Monster1StunThresholdDictionary,*/
-
                         // Insert data into the Quests table
                         sql = @"INSERT INTO Quests (
                         QuestHash,
@@ -5696,6 +5681,237 @@ namespace MHFZ_Overlay
                     try
                     {
                         using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster4HPDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, double>> GetMonster1AttackMultiplierDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, double>> dictionary = new Dictionary<int, Dictionary<int, double>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1AttackMultiplierDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, double>> GetMonster1DefenseRateDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, double>> dictionary = new Dictionary<int, Dictionary<int, double>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1DefenseRateDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, int>> GetMonster1PoisonThresholdDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1PoisonThresholdDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, int>> GetMonster1SleepThresholdDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1SleepThresholdDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, int>> GetMonster1ParalysisThresholdDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1ParalysisThresholdDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, int>> GetMonster1BlastThresholdDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1BlastThresholdDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, int>> GetMonster1StunThresholdDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1StunThresholdDictionary FROM Quests WHERE RunID = @runID", conn))
                         {
                             cmd.Parameters.AddWithValue("@runID", runID);
 

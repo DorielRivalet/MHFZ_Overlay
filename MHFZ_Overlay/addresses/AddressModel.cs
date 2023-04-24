@@ -1883,8 +1883,6 @@ namespace MHFZ_Overlay.addresses
 
         public string PersonalBestIcon { get; set; } = "UI/Icons/png/quest_clock.png";
 
-
-
         ///<summary>
         ///<para>Player true raw</para>
         ///<br>Attack addition is added as either Attack A or Attack B and is before or after Hunting Horn buffs respectively.</br>
