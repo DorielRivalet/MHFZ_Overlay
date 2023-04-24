@@ -6224,6 +6224,123 @@ Party Size: {32}",
             var mostCommonDivaSkill = questCompendium.MostCommonDivaSkill;
             var mostCommonGuildFood = questCompendium.MostCommonGuildFood;
 
+            var mostUsedWeaponType = gearCompendium.MostUsedWeaponType;
+            var totalUniqueArmorPieces = gearCompendium.TotalUniqueArmorPiecesUsed;
+            var totalUniqueWeapons = gearCompendium.TotalUniqueWeaponsUsed;
+            var totalUniqueDecorations = gearCompendium.TotalUniqueDecorationsUsed;
+
+            var mostCommonDecoration = gearCompendium.MostCommonDecoration;
+            var mostCommonDecorationID = gearCompendium.MostCommonDecorationID;
+            var leastUsedArmorSkill = gearCompendium.LeastUsedArmorSkill;
+
+            var highestTrueRaw = performanceCompendium.HighestTrueRaw;
+            var trueRawAverage = performanceCompendium.TrueRawAverage;
+            var trueRawMedian = performanceCompendium.TrueRawMedian;
+            var highestTrueRawRunID = performanceCompendium.HighestTrueRawRunID;
+
+            var highestSingleHitDamage = performanceCompendium.HighestSingleHitDamage;
+            var singleHitDamageAverage = performanceCompendium.SingleHitDamageAverage;
+            var singleHitDamageMedian = performanceCompendium.SingleHitDamageMedian;
+            var highestSingleHitDamageRunID = performanceCompendium.HighestSingleHitDamageRunID;
+
+            var highestHitCount = performanceCompendium.HighestHitCount;
+            var hitCountAverage = performanceCompendium.HitCountAverage;
+            var hitCountMedian = performanceCompendium.HitCountMedian;
+            var highestHitCountRunID = performanceCompendium.HighestHitCountRunID;
+
+            var highestHitsTakenBlocked = performanceCompendium.HighestHitsTakenBlocked;
+            var hitsTakenBlockedAverage = performanceCompendium.HitsTakenBlockedAverage;
+            var hitsTakenBlockedMedian = performanceCompendium.HitsTakenBlockedMedian;
+            var highestHitsTakenBlockedRunID = performanceCompendium.HighestHitsTakenBlockedRunID;
+
+            var highestDPS = performanceCompendium.HighestDPS;
+            var DPSAverage = performanceCompendium.DPSAverage;
+            var DPSMedian = performanceCompendium.DPSMedian;
+            var highestDPSRunID = performanceCompendium.HighestDPSRunID;
+
+            var highestHitsPerSecond = performanceCompendium.HighestHitsPerSecond;
+            var hitsPerSecondAverage = performanceCompendium.HitsPerSecondAverage;
+            var hitsPerSecondMedian = performanceCompendium.HitsPerSecondMedian;
+            var highestHitsPerSecondRunID = performanceCompendium.HighestHitsPerSecondRunID;
+
+            var highestHitsTakenBlockedPerSecond = performanceCompendium.HighestHitsTakenBlockedPerSecond;
+            var hitsTakenBlockedPerSecondAverage = performanceCompendium.HitsTakenBlockedPerSecondAverage;
+            var hitsTakenBlockedPerSecondMedian = performanceCompendium.HitsTakenBlockedPerSecondMedian;
+            var highestHitsTakenBlockedPerSecondRunID = performanceCompendium.HighestHitsTakenBlockedPerSecondRunID;
+
+            var highestActionsPerMinute = performanceCompendium.HighestActionsPerMinute;
+            var actionsPerMinuteAverage = performanceCompendium.ActionsPerMinuteAverage;
+            var actionsPerMinuteMedian = performanceCompendium.ActionsPerMinuteMedian;
+            var highestActionsPerMinuteRunID = performanceCompendium.HighestActionsPerMinuteRunID;
+
+            var totalHitsCount = performanceCompendium.TotalHitsCount;
+            var totalHitsTakenBlocked = performanceCompendium.TotalHitsTakenBlocked;
+            var totalActions = performanceCompendium.TotalActions;
+
+            var healthAverage = performanceCompendium.HealthAverage;
+            var healthMedian = performanceCompendium.HealthMedian;
+            var healthMode = performanceCompendium.HealthMode;
+
+            var staminaAverage = performanceCompendium.StaminaAverage;
+            var staminaMedian = performanceCompendium.StaminaMedian;
+            var staminaMode = performanceCompendium.StaminaMode;
+
+            var totalLargeMonstersHunted = performanceCompendium.TotalLargeMonstersHunted;
+            var totalSmallMonstersHunted = performanceCompendium.TotalSmallMonstersHunted;
+
+            var minigamesPlayed = mezeportaFestivalCompendium.MinigamesPlayed;
+
+            var urukiPachinkoTimesPlayed = mezeportaFestivalCompendium.UrukiPachinkoTimesPlayed;
+            var urukiPachinkoHighscore = mezeportaFestivalCompendium.UrukiPachinkoHighscore;
+            var urukiPachinkoScoreAverage = mezeportaFestivalCompendium.UrukiPachinkoAverageScore;
+            var urukiPachinkoScoreMedian = mezeportaFestivalCompendium.UrukiPachinkoMedianScore;
+
+            var guukuScoopTimesPlayed = mezeportaFestivalCompendium.GuukuScoopTimesPlayed;
+            var guukuScoopHighscore = mezeportaFestivalCompendium.GuukuScoopHighscore;
+            var guukuScoopScoreAverage = mezeportaFestivalCompendium.GuukuScoopAverageScore;
+            var guukuScoopScoreMedian = mezeportaFestivalCompendium.GuukuScoopMedianScore;
+
+            var nyanrendoTimesPlayed = mezeportaFestivalCompendium.NyanrendoTimesPlayed;
+            var nyanrendoHighscore = mezeportaFestivalCompendium.NyanrendoHighscore;
+            var nyanrendoScoreAverage = mezeportaFestivalCompendium.NyanrendoAverageScore;
+            var nyanrendoScoreMedian = mezeportaFestivalCompendium.NyanrendoMedianScore;
+
+            var panicHoneyTimesPlayed = mezeportaFestivalCompendium.PanicHoneyTimesPlayed;
+            var panicHoneyHighscore = mezeportaFestivalCompendium.PanicHoneyHighscore;
+            var panicHoneyScoreAverage = mezeportaFestivalCompendium.PanicHoneyAverageScore;
+            var panicHoneyScoreMedian = mezeportaFestivalCompendium.PanicHoneyMedianScore;
+
+            var dokkanBattleCatsTimesPlayed = mezeportaFestivalCompendium.DokkanBattleCatsTimesPlayed;
+            var dokkanBattleCatsHighscore = mezeportaFestivalCompendium.DokkanBattleCatsHighscore;
+            var dokkanBattleCatsScoreAverage = mezeportaFestivalCompendium.DokkanBattleCatsAverageScore;
+            var dokkanBattleCatsScoreMedian = mezeportaFestivalCompendium.DokkanBattleCatsMedianScore;
+
+            var totalOverlaySessions = miscellaneousCompendium.TotalOverlaySessions;
+            var sessionDurationHighest = miscellaneousCompendium.HighestSessionDuration;
+            var sessionDurationLowest = miscellaneousCompendium.LowestSessionDuration;
+            var sessionDurationAverage = miscellaneousCompendium.AverageSessionDuration;
+            var sessionDurationMedian = miscellaneousCompendium.MedianSessionDuration;
+
+            var monster1AttackMultiplierHighest = miscellaneousCompendium.HighestMonsterAttackMultiplier;
+            var monster1AttackMultiplierHighestRunID = miscellaneousCompendium.HighestMonsterAttackMultiplierRunID;
+
+            var monster1AttackMultiplierLowest = miscellaneousCompendium.LowestMonsterAttackMultiplier;
+            var monster1AttackMultiplierLowestRunID = miscellaneousCompendium.LowestMonsterAttackMultiplierRunID;
+
+            var monster1DefenseRateHighest = miscellaneousCompendium.HighestMonsterDefenseRate;
+            var monster1DefenseRateHighestRunID = miscellaneousCompendium.HighestMonsterDefenseRateRunID;
+
+            var monster1DefenseRateLowest = miscellaneousCompendium.LowestMonsterDefenseRate;
+            var monster1DefenseRateLowestRunID = miscellaneousCompendium.LowestMonsterDefenseRateRunID;
+
+            var monster1SizeMultiplierHighest = miscellaneousCompendium.HighestMonsterSizeMultiplier;
+            var monster1SizeMultiplierHighestRunID = miscellaneousCompendium.HighestMonsterSizeMultiplierRunID;
+
+            var monster1SizeMultiplierLowest = miscellaneousCompendium.LowestMonsterSizeMultiplier;
+            var monster1SizeMultiplierLowestRunID = miscellaneousCompendium.LowestMonsterSizeMultiplierRunID;
+
+
+
             return string.Format(
 @"{0} (UTC)
 {1}
@@ -6292,118 +6409,118 @@ Lowest Monster Size Multiplier: {113} [Run ID {114}]
 ",
             createdAt,
             createdBy,
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
+            mostCompletedQuest,
+            mostCompletedQuestAttempts,
+            mostCompletedQuestID,
+            mostAttemptedQuest,
+            mostAttemptedQuestCompletions,
+            mostAttemptedQuestID,
+            totalQuestsCompleted,
+            totalQuestsAttempted,
+            questCompletionTimeElapsedAverage,
+            questCompletionTimeElapsedMedian,
+            totalTimeElapsedDuringQuest,
+            mostCompletedQuestWithCarts,
+            mostCompletedQuestWithCartsQuestID,
+            totalCartsInQuest,
+            totalCartsInQuestAverage,
+            totalCartsInQuestMedian,
+            questPartySizeAverage,
+            questPartySizeMedian,
+            questPartySizeMode,
+            percentOfSoloQuests,
+            percentOfGuildFood,
+            percentOfDivaSkill,
+            percentOfSkillFruit,
+            mostCommonDivaSkill,
+            mostCommonGuildFood,
+            mostUsedWeaponType,
+            totalUniqueArmorPieces,
+            totalUniqueWeapons,
+            totalUniqueDecorations,
+            mostCommonDecoration,
+            mostCommonDecorationID,
+            leastUsedArmorSkill,
+            highestTrueRaw,
+            trueRawAverage,
+            trueRawMedian,
+            highestTrueRawRunID,
+            highestSingleHitDamage,
+            singleHitDamageAverage,
+            singleHitDamageMedian,
+            highestSingleHitDamageRunID,
+            highestHitCount,
+            hitCountAverage,
+            hitCountMedian,
+            highestHitCountRunID,
+            highestHitsTakenBlocked,
+            hitsTakenBlockedAverage,
+            hitsTakenBlockedMedian,
+            highestHitsTakenBlockedRunID,
+            highestDPS,
+            DPSAverage,
+            DPSMedian,
+            highestDPSRunID,
+            highestHitsPerSecond,
+            hitsPerSecondAverage,
+            hitsPerSecondMedian,
+            highestHitsPerSecondRunID,
+            highestHitsTakenBlockedPerSecond,
+            hitsTakenBlockedPerSecondAverage,
+            hitsTakenBlockedPerSecondMedian,
+            highestHitsTakenBlockedPerSecondRunID,
+            highestActionsPerMinute,
+            actionsPerMinuteAverage,
+            actionsPerMinuteMedian,
+            highestActionsPerMinuteRunID,
+            totalHitsCount,
+            totalHitsTakenBlocked,
+            totalActions,
+            healthAverage,
+            healthMedian,
+            healthMode,
+            staminaAverage,
+            staminaMedian,
+            staminaMode,
+            totalLargeMonstersHunted,
+            totalSmallMonstersHunted,
+            minigamesPlayed,
+            urukiPachinkoTimesPlayed,
+            urukiPachinkoHighscore,
+            urukiPachinkoScoreAverage,
+            urukiPachinkoScoreMedian,
+            guukuScoopTimesPlayed,
+            guukuScoopHighscore,
+            guukuScoopScoreAverage,
+            guukuScoopScoreMedian,
+            nyanrendoTimesPlayed,
+            nyanrendoHighscore,
+            nyanrendoScoreAverage,
+            nyanrendoScoreMedian,
+            panicHoneyTimesPlayed,
+            panicHoneyHighscore,
+            panicHoneyScoreAverage,
+            panicHoneyScoreMedian,
+            dokkanBattleCatsTimesPlayed,
+            dokkanBattleCatsHighscore,
+            dokkanBattleCatsScoreAverage,
+            dokkanBattleCatsScoreMedian,
+            totalOverlaySessions,
+            sessionDurationHighest,
+            sessionDurationLowest,
+            sessionDurationAverage,
+            sessionDurationMedian,
+            monster1AttackMultiplierHighest,
+            monster1AttackMultiplierHighestRunID,
+            monster1AttackMultiplierLowest,
+            monster1AttackMultiplierLowestRunID,
+            monster1DefenseRateHighest,
+            monster1DefenseRateHighestRunID,
+            monster1DefenseRateLowest,
+            monster1DefenseRateLowestRunID,
+            monster1SizeMultiplierHighest,
+            monster1SizeMultiplierHighestRunID,
+            monster1SizeMultiplierLowest,
             "test"
             );
         }
