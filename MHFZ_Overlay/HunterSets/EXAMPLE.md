@@ -6,7 +6,7 @@ Para DragTower Road Multiplayer
 **Head:** **Alisys ZP Head** (3733) | **Lance True· Black** (3562) | **Lance True· Black** (3562) | **Lance True· Black** (3562)
 **Chest:** **Gems ZP Suit** (341C) | **Extreme Ravi GN GX1** (3AE3) | **Extreme Ravi BM GX5** (3AE2) | **Extreme Ravi BM GX5** (3AE2)
 **Arms:** Utatsumugu ノ袖ZX (3052) | **Extreme Ravi BM GX5** (3AE2) | **Extreme Ravi GN GX4** (3AE6) | Cariva BM GX3 (3A47)
-**Waist:** Kashoku ノ Obi ZX (31A6) | Rafan GN GX4 (3DF1) | Rafan GN GX4 (3DF1) | Rafan GN GX4 (3DF1)
+**Waist:** Kashoku ノ Obi ZX (31A6) | Rapin GN GX4 (3DF1) | Rapin GN GX4 (3DF1) | Rapin GN GX4 (3DF1)
 **Legs:** **Alisys ZP Feet** (32E3) | Riebure BM GX3 (38DE) | Zindol BM GX3 (3B8D) | Zindol BM GX3 (3B8D)
 **Cuffs:** Guard Up PZ2 (3D8C) | Lance・Reflect (3F65)
 
@@ -62,7 +62,7 @@ Lance: Angel's Cry (41ED) | Extreme Style | Para Sigil (2B09) | Skill Slots Up S
 Head: Alisys ZP Head (3733) | Lance True· Black (3562) | Lance True· Black (3562) | Lance True· Black (3562)
 Chest: Gems ZP Suit (341C) | Extreme Ravi GN GX1 (3AE3) | Extreme Ravi BM GX5 (3AE2) | Extreme Ravi BM GX5 (3AE2)
 Arms: Utatsumugu ノ袖ZX (3052) | Extreme Ravi BM GX5 (3AE2) | Extreme Ravi GN GX4 (3AE6) | Cariva BM GX3 (3A47)
-Waist: Kashoku ノ Obi ZX (31A6) | Rafan GN GX4 (3DF1) | Rafan GN GX4 (3DF1) | Rafan GN GX4 (3DF1)
+Waist: Kashoku ノ Obi ZX (31A6) | Rapin GN GX4 (3DF1) | Rapin GN GX4 (3DF1) | Rapin GN GX4 (3DF1)
 Legs: Alisys ZP Feet (32E3) | Riebure BM GX3 (38DE) | Zindol BM GX3 (3B8D) | Zindol BM GX3 (3B8D)
 Cuffs: Guard Up PZ2 (3D8C) | Lance・Reflect (3F65)
 
