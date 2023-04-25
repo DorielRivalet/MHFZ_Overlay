@@ -2778,8 +2778,16 @@ namespace MHFZ_Overlay
 
             if (configWindow == null || !configWindow.IsLoaded)
                 configWindow = new(this);
-            configWindow.Show();//memory error?
-            DataLoader.model.Configuring = true;
+            try
+            {
+                configWindow.Show();// TODO: memory error?
+                DataLoader.model.Configuring = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("PROGRAM OPERATION: could not show configuration window", ex);
+            }
+
         }
 
         private void CloseButton_Key()

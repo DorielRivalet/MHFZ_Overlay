@@ -622,6 +622,7 @@ namespace MHFZ_Overlay
                             }
                         }
 
+                        // TODO: do i need to check for party size?
                         sql = @"INSERT INTO PersonalBests(
                         RunID,
                         Attempts
