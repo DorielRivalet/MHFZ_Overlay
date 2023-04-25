@@ -7836,9 +7836,78 @@ namespace MHFZ_Overlay
 
         #region compendium
 
+        // TODO
         public QuestCompendium GetQuestCompendium()
         {
-            return new QuestCompendium();
+            QuestCompendium questCompendium = new QuestCompendium();
+            //using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            //{
+            //    conn.Open();
+            //    using (SQLiteTransaction transaction = conn.BeginTransaction())
+            //    {
+            //        try
+            //        {
+            //            using (SQLiteCommand cmd = new SQLiteCommand("SELECT QuestHash, CreatedAt, CreatedBy, RunID, QuestID, TimeLeft, FinalTimeValue, FinalTimeDisplay, ObjectiveImage, ObjectiveTypeID, ObjectiveQuantity, StarGrade, RankName, ObjectiveName, Date, YouTubeID, AttackBuffDictionary, HitCountDictionary, HitsPerSecondDictionary, DamageDealtDictionary, DamagePerSecondDictionary, AreaChangesDictionary, CartsDictionary, Monster1HPDictionary, Monster2HPDictionary, Monster3HPDictionary, Monster4HPDictionary, HitsTakenBlockedDictionary, HitsTakenBlockedPerSecondDictionary, PlayerHPDictionary, PlayerStaminaDictionary, KeyStrokesDictionary, MouseInputDictionary, GamepadInputDictionary, ActionsPerMinuteDictionary, OverlayModeDictionary, ActualOverlayMode, PartySize FROM Quests WHERE RunID = @runID", conn))
+            //            {
+            //                cmd.Parameters.AddWithValue("@runID", runID);
+
+            //                using (SQLiteDataReader reader = cmd.ExecuteReader())
+            //                {
+            //                    if (reader.Read())
+            //                    {
+            //                        quest.QuestHash = reader["QuestHash"].ToString();
+            //                        quest.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+            //                        quest.CreatedBy = reader["CreatedBy"].ToString();
+            //                        quest.RunID = runID;
+            //                        quest.QuestID = long.Parse(reader["QuestID"].ToString());
+            //                        quest.TimeLeft = long.Parse(reader["TimeLeft"].ToString());
+            //                        quest.FinalTimeValue = long.Parse(reader["FinalTimeValue"].ToString());
+            //                        quest.FinalTimeDisplay = reader["FinalTimeDisplay"].ToString();
+            //                        quest.ObjectiveImage = reader["ObjectiveImage"].ToString();
+            //                        quest.ObjectiveTypeID = long.Parse(reader["ObjectiveTypeID"].ToString());
+            //                        quest.ObjectiveQuantity = long.Parse(reader["ObjectiveQuantity"].ToString());
+            //                        quest.StarGrade = long.Parse(reader["StarGrade"].ToString());
+            //                        quest.RankName = reader["RankName"].ToString();
+            //                        quest.ObjectiveName = reader["ObjectiveName"].ToString();
+            //                        quest.Date = DateTime.Parse(reader["Date"].ToString());
+            //                        quest.YouTubeID = reader["YouTubeID"].ToString();
+            //                        quest.AttackBuffDictionary = reader["AttackBuffDictionary"].ToString();
+            //                        quest.HitCountDictionary = reader["HitCountDictionary"].ToString();
+            //                        quest.HitsPerSecondDictionary = reader["HitsPerSecondDictionary"].ToString();
+            //                        quest.DamageDealtDictionary = reader["DamageDealtDictionary"].ToString();
+            //                        quest.DamagePerSecondDictionary = reader["DamagePerSecondDictionary"].ToString();
+            //                        quest.AreaChangesDictionary = reader["AreaChangesDictionary"].ToString();
+            //                        quest.CartsDictionary = reader["CartsDictionary"].ToString();
+
+            //                        quest.Monster1HPDictionary = reader["Monster1HPDictionary"].ToString();
+            //                        quest.Monster2HPDictionary = reader["Monster2HPDictionary"].ToString();
+            //                        quest.Monster3HPDictionary = reader["Monster3HPDictionary"].ToString();
+            //                        quest.Monster4HPDictionary = reader["Monster4HPDictionary"].ToString();
+
+            //                        quest.HitsTakenBlockedDictionary = reader["HitsTakenBlockedDictionary"].ToString();
+            //                        quest.HitsTakenBlockedPerSecondDictionary = reader["HitsTakenBlockedPerSecondDictionary"].ToString();
+            //                        quest.PlayerHPDictionary = reader["PlayerHPDictionary"].ToString();
+            //                        quest.PlayerStaminaDictionary = reader["PlayerStaminaDictionary"].ToString();
+            //                        quest.KeyStrokesDictionary = reader["KeyStrokesDictionary"].ToString();
+            //                        quest.MouseInputDictionary = reader["MouseInputDictionary"].ToString();
+            //                        quest.GamepadInputDictionary = reader["GamepadInputDictionary"].ToString();
+
+            //                        quest.ActionsPerMinuteDictionary = reader["ActionsPerMinuteDictionary"].ToString();
+            //                        quest.OverlayModeDictionary = reader["OverlayModeDictionary"].ToString();
+            //                        quest.ActualOverlayMode = reader["ActualOverlayMode"].ToString();
+            //                        quest.PartySize = long.Parse(reader["PartySize"].ToString());
+            //                    }
+            //                }
+            //            }
+            //            transaction.Commit();
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            HandleError(transaction, ex);
+            //        }
+            //    }
+            //}
+            return questCompendium;
         }
 
         public GearCompendium GetGearCompendium()
