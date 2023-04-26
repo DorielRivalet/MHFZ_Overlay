@@ -4707,7 +4707,6 @@ namespace MHFZ_Overlay.addresses
 
                 if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
                     SkillName6 = "";
-
                 else
                     SkillName6 += "";
 

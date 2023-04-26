@@ -169,4 +169,24 @@ namespace MHFZ_Overlay.Core.Enum
         NULL2 = 16384,
         NULL3 = 32768
     }
+
+    /// <summary>
+    /// Quest states
+    /// </summary>
+    [Flags]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum QuestState : uint
+    {
+        [DefaultValue(None)]
+        None = 0,
+        Achieved_Main_Objective = 1,
+        UNK1 = 2,
+        UNK2 = 4,
+        UNK3 = 8,
+        UNK4 = 16,
+        UNK5 = 32,
+        UNK6 = 64,
+        UNK7 = 128,
+        Quest_Clear = Achieved_Main_Objective | UNK7
+    }
 }

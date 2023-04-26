@@ -300,7 +300,8 @@ namespace MHFZ_Overlay.addresses
         public override int StarGrades() => M.ReadByte("mhfo-hd.dll+E774CAE");
 
         public override int CurrentFaints() => M.ReadByte("mhfo-hd.dll+DC6C35B");
-        public override int MaxFaints() => M.ReadByte("mhfo-hd.dll+C4C8FE8");
+        //public override int MaxFaints() => M.ReadByte("mhfo-hd.dll+C4C8FE8");
+        public override int MaxFaints() => M.ReadByte("mhfo-hd.dll+2B20C0C");
         public override int AlternativeMaxFaints() => M.ReadByte("mhfo-hd.dll+2AFA814");
 
         public override int CaravanSkill1() => M.ReadByte("mhfo-hd.dll+DC6C448");
