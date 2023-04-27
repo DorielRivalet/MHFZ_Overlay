@@ -92,8 +92,8 @@ namespace Dictionary
             {"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/farunokku.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/farunokku.png"},
             {"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pokaradon.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/pokaradon.png"},
             {"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pokara.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/pokara.png"},
-            {"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/goruganosu.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/goruganosu.png"},
-            {"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/aruganosu.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/aruganosu.png"},
+            {"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_goruganosu.gif","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/goruganosu.png"},
+            {"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_aruganosu.gif","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/aruganosu.png"},
             {"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zerureusu.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/zerureusu.png"},
             {"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gougarf.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/gougarf.png"},
             {"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/uruki.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/uruki.png"},
@@ -150,7 +150,7 @@ namespace Dictionary
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blangonga.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/blangonga.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/twinhead_rajang.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/hc_rajang.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rajang.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/rajang.png"},
-            { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_teostra.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/supremacy_teostra.png"},
+            { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_teostra.gif","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/supremacy_teostra.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/teostra.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/teostra.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/road_white_fatalis.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/road_white_fatalis.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_fatalis.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/white_fatalis.png"},
@@ -165,7 +165,7 @@ namespace Dictionary
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/thirsty_pariapuria.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/thirsty_pariapuria.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pariapuria.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/pariapuria.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_doragyurosu.gif","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/zenith_doragyurosu.png"},
-            { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_doragyurosu.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/supremacy_doragyurosu.png"},
+            { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_doragyurosu.gif","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/supremacy_doragyurosu.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/doragyurosu.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/doragyurosu.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_rukodiora.gif","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/zenith_rukodiora.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rukodiora.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/rukodiora.png"},
@@ -173,7 +173,7 @@ namespace Dictionary
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/unknown.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/unknown.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_taikun_zamuza.gif","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/zenith_taikun_zamuza.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/taikun_zamuza.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/taikun_zamuza.png"},
-            { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_odibatorasu.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/supremacy_odibatorasu.png"},
+            { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_odibatorasu.gif","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/supremacy_odibatorasu.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/odibatorasu.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/odibatorasu.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shiten_disufiroa.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/shiten_disufiroa.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/disufiroa.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/disufiroa.png"},
@@ -206,7 +206,10 @@ namespace Dictionary
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/golden_deviljho.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/golden_deviljho.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/starving_deviljho.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/starving_deviljho.png"},
             { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burning_freezing_elzelion.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/burning_freezing_elzelion.png"},
-            { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/elzelion.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/elzelion.png"}
+            { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/elzelion.png","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/elzelion.png"},
+
+            { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_pariapuria.gif","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/thirsty_pariapuria.png"},
+            { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_unknown.gif","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/unknown.png"}
 
         };
     }

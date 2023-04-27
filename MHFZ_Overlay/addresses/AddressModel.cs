@@ -8814,7 +8814,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
                 case 65:
                     if (RankBand() == 32)
-                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_teostra.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_teostra.gif";
                     else
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/teostra.png";
 
@@ -8849,8 +8849,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akura_vashimu.png";
 
                 case 89:
-                    if (RankBand() == 32 || RankBand() == 54)
+                    if (RankBand() == 54)
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/thirsty_pariapuria.png";
+                    else if (RankBand() == 32)
+                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_pariapuria.gif";
                     else
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pariapuria.png";
 
@@ -8858,7 +8860,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     if (RankBand() >= 64 && RankBand() <= 67)
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_doragyurosu.gif";
                     else if (RankBand() == 32)
-                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_doragyurosu.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_doragyurosu.gif";
                     else
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/doragyurosu.png";
 
@@ -8870,6 +8872,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 case 100:
                     if (RankBand() == 70 || RankBand() == 54)
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shiten_unknown.png";
+                    else if (RankBand() == 32)                        
+                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_unknown.gif";
                     else
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/unknown.png";
 
@@ -8880,7 +8884,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/taikun_zamuza.png";
                 case 106:
                     if (RankBand() == 32)
-                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_odibatorasu.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_odibatorasu.gif";
                     else
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/odibatorasu.png";
                 case 107:
