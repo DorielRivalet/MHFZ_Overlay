@@ -3049,7 +3049,7 @@ namespace MHFZ_Overlay
                     Monster1ParalysisThresholdDictionary TEXT NOT NULL,
                     Monster1BlastThresholdDictionary TEXT NOT NULL,
                     Monster1StunThresholdDictionary TEXT NOT NULL,
-                    IsHighGradeEdition INTEGER NOT NULL,
+                    IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)),
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
                     -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
@@ -8233,7 +8233,7 @@ namespace MHFZ_Overlay
                     MODIFY COLUMN Monster1ParalysisThresholdDictionary TEXT NOT NULL AFTER Monster1SleepThresholdDictionary,
                     MODIFY COLUMN Monster1BlastThresholdDictionary TEXT NOT NULL AFTER Monster1ParalysisThresholdDictionary,
                     MODIFY COLUMN Monster1StunThresholdDictionary TEXT NOT NULL AFTER Monster1BlastThresholdDictionary;
-                    MODIFY COLUMN IsHighGradeEdition INTEGER NOT NULL AFTER Monster1StunThresholdDictionary;                    
+                    MODIFY COLUMN IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) AFTER Monster1StunThresholdDictionary;
                     ";
             using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
             {
