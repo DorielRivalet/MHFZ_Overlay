@@ -1,6 +1,7 @@
 ﻿using Dictionary;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using NLog;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -6550,7 +6552,7 @@ namespace MHFZ_Overlay
                                                 QuestID = (long)reader["QuestID"],
                                                 YoutubeID = (string)reader["YoutubeID"],
                                                 FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
-                                                Date = (DateTime)reader["Date"]
+                                                Date = DateTime.Parse((string)reader["Date"])
                                             });
                                         }
                                     }
@@ -6616,7 +6618,7 @@ namespace MHFZ_Overlay
                                             QuestID = (long)reader["QuestID"],
                                             YoutubeID = (string)reader["YoutubeID"],
                                             FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
-                                            Date = (DateTime)reader["Date"],
+                                            Date = DateTime.Parse((string)reader["Date"]),
                                             ActualOverlayMode = (string)reader["ActualOverlayMode"],
                                             PartySize = (long)reader["PartySize"]
                                         };

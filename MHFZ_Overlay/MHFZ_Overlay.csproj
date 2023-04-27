@@ -315,8 +315,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <PackageReference Include="Clowd.Squirrel" Version="2.9.48" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="CompiledBindings.WPF" Version="1.0.15" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="Discord.Net" Version="3.10.0" />
@@ -341,6 +341,7 @@
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
+    <PackageReference Include="XamlAnimatedGif" Version="2.1.1" />
     <PackageReference Include="XInput.Wrapper" Version="0.3.1" />
     <PackageReference Include="xunit" Version="2.4.2" />
   </ItemGroup>
