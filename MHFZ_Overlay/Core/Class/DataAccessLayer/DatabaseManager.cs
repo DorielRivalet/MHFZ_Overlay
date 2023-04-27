@@ -348,7 +348,8 @@ namespace MHFZ_Overlay
                         Monster1SleepThresholdDictionary,
                         Monster1ParalysisThresholdDictionary,
                         Monster1BlastThresholdDictionary,
-                        Monster1StunThresholdDictionary
+                        Monster1StunThresholdDictionary,
+                        IsHighGradeEdition
                         ) VALUES (
                         @QuestHash,
                         @CreatedAt,
@@ -394,7 +395,8 @@ namespace MHFZ_Overlay
                         @Monster1SleepThresholdDictionary,
                         @Monster1ParalysisThresholdDictionary,
                         @Monster1BlastThresholdDictionary,
-                        @Monster1StunThresholdDictionary
+                        @Monster1StunThresholdDictionary,
+                        @IsHighGradeEdition
                         )";
 
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -516,8 +518,10 @@ namespace MHFZ_Overlay
                             Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = dataLoader.model.monster1BlastThresholdDictionary;
                             Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = dataLoader.model.monster1StunThresholdDictionary;
 
+                            int isHighGradeEdition = dataLoader.isHighGradeEdition ? 1 : 0;
+
                             string questData = string.Format(
-                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}",
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}",
                                 runID, createdAt, createdBy, questID, timeLeft,
                                 finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
                                 starGrade, rankName, objectiveName, date, attackBuffDictionary,
@@ -526,7 +530,7 @@ namespace MHFZ_Overlay
                                 keystrokesDictionary, mouseInputDictionary, gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary,
                                 actualOverlayMode, partySize, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary,
                                 monster4HPDictionary, monster1AttackMultiplierDictionary, monster1DefenseRateDictionary, monster1SizeMultiplierDictionary, monster1PoisonThresholdDictionary,
-                                monster1SleepThresholdDictionary, monster1ParalysisThresholdDictionary, monster1BlastThresholdDictionary, monster1StunThresholdDictionary
+                                monster1SleepThresholdDictionary, monster1ParalysisThresholdDictionary, monster1BlastThresholdDictionary, monster1StunThresholdDictionary, isHighGradeEdition
                                 );
 
                             // Calculate the hash value for the data in the row
@@ -577,6 +581,7 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@Monster1ParalysisThresholdDictionary", JsonConvert.SerializeObject(monster1ParalysisThresholdDictionary));
                             cmd.Parameters.AddWithValue("@Monster1BlastThresholdDictionary", JsonConvert.SerializeObject(monster1BlastThresholdDictionary));
                             cmd.Parameters.AddWithValue("@Monster1StunThresholdDictionary", JsonConvert.SerializeObject(monster1StunThresholdDictionary));
+                            cmd.Parameters.AddWithValue("@IsHighGradeEdition", isHighGradeEdition);
 
                             cmd.ExecuteNonQuery();
                         }
@@ -2974,8 +2979,8 @@ namespace MHFZ_Overlay
                     // Create table to store program usage time
                     string sql = @"CREATE TABLE IF NOT EXISTS Session (
                     SessionID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    StartTime DATETIME NOT NULL,
-                    EndTime DATETIME NOT NULL,
+                    StartTime TEXT NOT NULL,
+                    EndTime TEXT NOT NULL,
                     SessionDuration INTEGER NOT NULL)";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
@@ -2984,7 +2989,7 @@ namespace MHFZ_Overlay
 
                     sql = @"CREATE TABLE IF NOT EXISTS Audit(
                     AuditID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     ChangeType TEXT NOT NULL,
                     HashValue TEXT NOT NULL
@@ -2998,7 +3003,7 @@ namespace MHFZ_Overlay
                     sql = @"CREATE TABLE IF NOT EXISTS Quests 
                     (
                     QuestHash TEXT NOT NULL,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
                     QuestID INTEGER NOT NULL CHECK (QuestID >= 0), 
@@ -3011,7 +3016,7 @@ namespace MHFZ_Overlay
                     StarGrade INTEGER NOT NULL, 
                     RankName TEXT NOT NULL, 
                     ObjectiveName TEXT NOT NULL, 
-                    Date DATETIME NOT NULL,
+                    Date TEXT NOT NULL,
                     YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
                     -- DpsData TEXT NOT NULL,
                     AttackBuffDictionary TEXT NOT NULL,
@@ -3044,6 +3049,7 @@ namespace MHFZ_Overlay
                     Monster1ParalysisThresholdDictionary TEXT NOT NULL,
                     Monster1BlastThresholdDictionary TEXT NOT NULL,
                     Monster1StunThresholdDictionary TEXT NOT NULL,
+                    IsHighGradeEdition INTEGER NOT NULL,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
                     -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
@@ -3200,7 +3206,7 @@ namespace MHFZ_Overlay
                     sql = @"
                     CREATE TABLE IF NOT EXISTS GameFolder (
                     GameFolderHash TEXT NOT NULL,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     GameFolderID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3291,7 +3297,7 @@ namespace MHFZ_Overlay
                     // Create the PlayerGear table
                     sql = @"CREATE TABLE IF NOT EXISTS PlayerGear (
                     PlayerGearHash TEXT NOT NULL,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     PlayerGearID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL, 
@@ -3503,7 +3509,7 @@ namespace MHFZ_Overlay
                     InsertDictionaryDataIntoTable(Dictionary.ArmorLegs.ArmorLegIDs, "AllLegsPieces", "LegsPieceID", "LegsPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS ZenithSkills(
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     ZenithSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3538,7 +3544,7 @@ namespace MHFZ_Overlay
                     InsertDictionaryDataIntoTable(Dictionary.ZenithSkillList.ZenithSkillID, "AllZenithSkills", "ZenithSkillID", "ZenithSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AutomaticSkills(
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     AutomaticSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3571,7 +3577,7 @@ namespace MHFZ_Overlay
                     InsertDictionaryDataIntoTable(Dictionary.ArmorSkillList.ArmorSkillID, "AllArmorSkills", "ArmorSkillID", "ArmorSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS ActiveSkills(
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     ActiveSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3621,7 +3627,7 @@ namespace MHFZ_Overlay
                     }
 
                     sql = @"CREATE TABLE IF NOT EXISTS CaravanSkills(
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     CaravanSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3649,7 +3655,7 @@ namespace MHFZ_Overlay
                     InsertDictionaryDataIntoTable(Dictionary.CaravanSkillList.CaravanSkillID, "AllCaravanSkills", "CaravanSkillID", "CaravanSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS StyleRankSkills(
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     StyleRankSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3676,7 +3682,7 @@ namespace MHFZ_Overlay
 
                     // Create the PlayerInventory table
                     sql = @"CREATE TABLE IF NOT EXISTS PlayerInventory (
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     PlayerInventoryID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3748,7 +3754,7 @@ namespace MHFZ_Overlay
                     }
 
                     sql = @"CREATE TABLE IF NOT EXISTS AmmoPouch (
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     AmmoPouchID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3790,7 +3796,7 @@ namespace MHFZ_Overlay
                     }
 
                     sql = @"CREATE TABLE IF NOT EXISTS PartnyaBag (
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     PartnyaBagID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3832,7 +3838,7 @@ namespace MHFZ_Overlay
                     }
 
                     sql = @"CREATE TABLE IF NOT EXISTS RoadDureSkills (
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     RoadDureSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3937,11 +3943,11 @@ namespace MHFZ_Overlay
 
                     sql = @"CREATE TABLE IF NOT EXISTS Bingo(
                     BingoID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     Difficulty TEXT NOT NULL,
                     MonsterList TEXT NOT NULL,
-                    ElapsedTime DATETIME NOT NULL,
+                    ElapsedTime TEXT NOT NULL,
                     Score INTEGER NOT NULL
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -3962,7 +3968,7 @@ namespace MHFZ_Overlay
 
                     sql = @"CREATE TABLE IF NOT EXISTS MezFes(
                     MezFesID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     MezFesMinigameID INTEGER NOT NULL,
                     Score INTEGER NOT NULL,
@@ -8017,7 +8023,7 @@ namespace MHFZ_Overlay
             }
         }
 
-        // TODO this is repeating code
+        // TODO this is repeating code. also not sure if the data types handling is correct
         private static void PerformUpdateToVersion_0_23_0(SQLiteConnection connection)
         {
             // Perform database updates for version 0.23.0
@@ -8076,11 +8082,11 @@ namespace MHFZ_Overlay
 
             sql = @"CREATE TABLE IF NOT EXISTS Bingo(
                     BingoID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     Difficulty TEXT NOT NULL,
                     MonsterList TEXT NOT NULL,
-                    ElapsedTime DATETIME NOT NULL,
+                    ElapsedTime TEXT NOT NULL,
                     Score INTEGER NOT NULL
                     )";
             using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
@@ -8099,7 +8105,7 @@ namespace MHFZ_Overlay
 
             sql = @"CREATE TABLE IF NOT EXISTS MezFes(
                     MezFesID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     MinigameID INTEGER NOT NULL,
                     Score TEXT NOT NULL,
@@ -8227,6 +8233,7 @@ namespace MHFZ_Overlay
                     MODIFY COLUMN Monster1ParalysisThresholdDictionary TEXT NOT NULL AFTER Monster1SleepThresholdDictionary,
                     MODIFY COLUMN Monster1BlastThresholdDictionary TEXT NOT NULL AFTER Monster1ParalysisThresholdDictionary,
                     MODIFY COLUMN Monster1StunThresholdDictionary TEXT NOT NULL AFTER Monster1BlastThresholdDictionary;
+                    MODIFY COLUMN IsHighGradeEdition INTEGER NOT NULL AFTER Monster1StunThresholdDictionary;                    
                     ";
             using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
             {
