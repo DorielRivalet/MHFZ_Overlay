@@ -6325,7 +6325,6 @@ Party Size: {32}",
             var totalUniqueWeapons = gearCompendium.TotalUniqueWeaponsUsed;
             var totalUniqueDecorations = gearCompendium.TotalUniqueDecorationsUsed;
 
-            var mostCommonDecoration = gearCompendium.MostCommonDecoration;
             var mostCommonDecorationID = gearCompendium.MostCommonDecorationID;
             var leastUsedArmorSkill = gearCompendium.LeastUsedArmorSkill;
 
@@ -6438,9 +6437,8 @@ Party Size: {32}",
             Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue((int)mostCommonGuildFood, out string? mostCommonGuildFoodName);
             Dictionary.DivaSkillList.DivaSkillID.TryGetValue((int)mostCommonDivaSkill, out string? mostCommonDivaSkillName);
             Dictionary.WeaponTypes.WeaponTypeID.TryGetValue((int)mostUsedWeaponType, out string? mostUsedWeaponTypeName);
-
-            // TODO
-
+            Dictionary.Items.ItemIDs.TryGetValue((int)mostCommonDecorationID, out string? mostCommonDecorationName);
+            Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue((int)leastUsedArmorSkill, out string? leastUsedArmorSkillName);
 
             return string.Format(
 @"{0} (UTC)
@@ -6539,9 +6537,9 @@ Lowest Monster Size Multiplier: {113} [Run ID {114}]
             totalUniqueArmorPieces,
             totalUniqueWeapons,
             totalUniqueDecorations,
-            mostCommonDecoration,
-            mostCommonDecorationID,
-            leastUsedArmorSkill,
+            mostCommonDecorationName,
+            mostCommonDecorationID.ToString("X"),
+            leastUsedArmorSkillName,
             highestTrueRaw,
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", trueRawAverage),
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", trueRawMedian),
