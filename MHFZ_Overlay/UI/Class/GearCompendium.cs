@@ -3,12 +3,12 @@
     //TODO: ORM
     public class GearCompendium
     {
-        public int MostUsedWeaponType { get; set; }
-        public int TotalUniqueArmorPiecesUsed { get; set; }
-        public int TotalUniqueWeaponsUsed { get; set; }
-        public int TotalUniqueDecorationsUsed { get; set; }
-        public int MostCommonDecoration { get; set; }
-        public int MostCommonDecorationID { get; set; }
-        public int LeastUsedArmorSkill { get; set; }
+        public long MostUsedWeaponType { get; set; }
+        public long TotalUniqueArmorPiecesUsed { get; set; }
+        public long TotalUniqueWeaponsUsed { get; set; }
+        public long TotalUniqueDecorationsUsed { get; set; }
+        public long MostCommonDecoration { get; set; }
+        public long MostCommonDecorationID { get; set; }
+        public long LeastUsedArmorSkill { get; set; }
     }
 }

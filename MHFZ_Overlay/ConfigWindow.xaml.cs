@@ -1707,7 +1707,7 @@ namespace MHFZ_Overlay
         private void Compendium_Loaded(object sender, RoutedEventArgs e)
         {
             var textBlock = sender as TextBlock;
-            textBlock.Text = MainWindow.DataLoader.model.GenerateCompendium();
+            textBlock.Text = MainWindow.DataLoader.model.GenerateCompendium(MainWindow.DataLoader);
             compendiumTextBlock = textBlock;
         }
 

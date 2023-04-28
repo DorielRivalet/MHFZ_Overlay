@@ -3,32 +3,32 @@
     //TODO: ORM
     public class QuestCompendium
     {
-        public int MostCompletedQuestRuns { get; set; }
-        public int MostCompletedQuestRunsAttempted { get; set; }
-        public int MostCompletedQuestRunsQuestID { get; set; }
-        public int MostAttemptedQuestRuns { get; set; }
-        public int MostAttemptedQuestRunsCompleted { get; set; }
-        public int MostAttemptedQuestRunsQuestID { get; set; }
-        public int TotalQuestsCompleted { get; set; }
-        public int TotalQuestsAttempted { get; set; }
+        public long MostCompletedQuestRuns { get; set; }
+        public long MostCompletedQuestRunsAttempted { get; set; }
+        public long MostCompletedQuestRunsQuestID { get; set; }
+        public long MostAttemptedQuestRuns { get; set; }
+        public long MostAttemptedQuestRunsCompleted { get; set; }
+        public long MostAttemptedQuestRunsQuestID { get; set; }
+        public long TotalQuestsCompleted { get; set; }
+        public long TotalQuestsAttempted { get; set; }
         public double QuestCompletionTimeElapsedAverage { get; set; }
         public double QuestCompletionTimeElapsedMedian { get; set; }
-        public int TotalTimeElapsedQuests { get; set; }
+        public long TotalTimeElapsedQuests { get; set; }
         public double TotalCartsInQuestsAverage { get; set; }
         public double TotalCartsInQuestsMedian { get; set; }
-        public int MostCompletedQuestWithCarts { get; set; }
-        public int MostCompletedQuestWithCartsQuestID { get; set; }
-        public int TotalCartsInQuest { get; set; }
+        public long MostCompletedQuestWithCarts { get; set; }
+        public long MostCompletedQuestWithCartsQuestID { get; set; }
+        public long TotalCartsInQuest { get; set; }
         public double TotalCartsInQuestAverage { get; set; }
         public double TotalCartsInQuestMedian { get; set; }
         public double QuestPartySizeAverage { get; set; }
         public double QuestPartySizeMedian { get; set; }
-        public double QuestPartySizeMode { get; set; }
+        public long QuestPartySizeMode { get; set; }
         public double PercentOfSoloQuests { get; set; }
-        public int PercentOfGuildFood { get; set; }
-        public int PercentOfDivaSkill { get; set; }
-        public int PercentOfSkillFruit { get; set; }
-        public int MostCommonDivaSkill { get; set; }
-        public int MostCommonGuildFood { get; set; }
+        public double PercentOfGuildFood { get; set; }
+        public double PercentOfDivaSkill { get; set; }
+        public double PercentOfSkillFruit { get; set; }
+        public long MostCommonDivaSkill { get; set; }
+        public long MostCommonGuildFood { get; set; }
     }
 }

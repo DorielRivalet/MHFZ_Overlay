@@ -7849,74 +7849,604 @@ namespace MHFZ_Overlay
         public QuestCompendium GetQuestCompendium()
         {
             QuestCompendium questCompendium = new QuestCompendium();
-            //using (SQLiteConnection conn = new SQLiteConnection(dataSource))
-            //{
-            //    conn.Open();
-            //    using (SQLiteTransaction transaction = conn.BeginTransaction())
-            //    {
-            //        try
-            //        {
-            //            using (SQLiteCommand cmd = new SQLiteCommand("SELECT QuestHash, CreatedAt, CreatedBy, RunID, QuestID, TimeLeft, FinalTimeValue, FinalTimeDisplay, ObjectiveImage, ObjectiveTypeID, ObjectiveQuantity, StarGrade, RankName, ObjectiveName, Date, YouTubeID, AttackBuffDictionary, HitCountDictionary, HitsPerSecondDictionary, DamageDealtDictionary, DamagePerSecondDictionary, AreaChangesDictionary, CartsDictionary, Monster1HPDictionary, Monster2HPDictionary, Monster3HPDictionary, Monster4HPDictionary, HitsTakenBlockedDictionary, HitsTakenBlockedPerSecondDictionary, PlayerHPDictionary, PlayerStaminaDictionary, KeyStrokesDictionary, MouseInputDictionary, GamepadInputDictionary, ActionsPerMinuteDictionary, OverlayModeDictionary, ActualOverlayMode, PartySize FROM Quests WHERE RunID = @runID", conn))
-            //            {
-            //                cmd.Parameters.AddWithValue("@runID", runID);
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        var query = @"
+                        SELECT QuestID, COUNT(*) as TimesCompleted
+                        FROM QuestAttempts
+                        GROUP BY QuestID
+                        ORDER BY TimesCompleted DESC
+                        LIMIT 1";
 
-            //                using (SQLiteDataReader reader = cmd.ExecuteReader())
-            //                {
-            //                    if (reader.Read())
-            //                    {
-            //                        quest.QuestHash = reader["QuestHash"].ToString();
-            //                        quest.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
-            //                        quest.CreatedBy = reader["CreatedBy"].ToString();
-            //                        quest.RunID = runID;
-            //                        quest.QuestID = long.Parse(reader["QuestID"].ToString());
-            //                        quest.TimeLeft = long.Parse(reader["TimeLeft"].ToString());
-            //                        quest.FinalTimeValue = long.Parse(reader["FinalTimeValue"].ToString());
-            //                        quest.FinalTimeDisplay = reader["FinalTimeDisplay"].ToString();
-            //                        quest.ObjectiveImage = reader["ObjectiveImage"].ToString();
-            //                        quest.ObjectiveTypeID = long.Parse(reader["ObjectiveTypeID"].ToString());
-            //                        quest.ObjectiveQuantity = long.Parse(reader["ObjectiveQuantity"].ToString());
-            //                        quest.StarGrade = long.Parse(reader["StarGrade"].ToString());
-            //                        quest.RankName = reader["RankName"].ToString();
-            //                        quest.ObjectiveName = reader["ObjectiveName"].ToString();
-            //                        quest.Date = DateTime.Parse(reader["Date"].ToString());
-            //                        quest.YouTubeID = reader["YouTubeID"].ToString();
-            //                        quest.AttackBuffDictionary = reader["AttackBuffDictionary"].ToString();
-            //                        quest.HitCountDictionary = reader["HitCountDictionary"].ToString();
-            //                        quest.HitsPerSecondDictionary = reader["HitsPerSecondDictionary"].ToString();
-            //                        quest.DamageDealtDictionary = reader["DamageDealtDictionary"].ToString();
-            //                        quest.DamagePerSecondDictionary = reader["DamagePerSecondDictionary"].ToString();
-            //                        quest.AreaChangesDictionary = reader["AreaChangesDictionary"].ToString();
-            //                        quest.CartsDictionary = reader["CartsDictionary"].ToString();
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    // The most completed quest ID
+                                    long questId = (long)reader["QuestID"];
 
-            //                        quest.Monster1HPDictionary = reader["Monster1HPDictionary"].ToString();
-            //                        quest.Monster2HPDictionary = reader["Monster2HPDictionary"].ToString();
-            //                        quest.Monster3HPDictionary = reader["Monster3HPDictionary"].ToString();
-            //                        quest.Monster4HPDictionary = reader["Monster4HPDictionary"].ToString();
+                                    // The number of times the quest was completed
+                                    long timesCompleted = (long)reader["TimesCompleted"];
 
-            //                        quest.HitsTakenBlockedDictionary = reader["HitsTakenBlockedDictionary"].ToString();
-            //                        quest.HitsTakenBlockedPerSecondDictionary = reader["HitsTakenBlockedPerSecondDictionary"].ToString();
-            //                        quest.PlayerHPDictionary = reader["PlayerHPDictionary"].ToString();
-            //                        quest.PlayerStaminaDictionary = reader["PlayerStaminaDictionary"].ToString();
-            //                        quest.KeyStrokesDictionary = reader["KeyStrokesDictionary"].ToString();
-            //                        quest.MouseInputDictionary = reader["MouseInputDictionary"].ToString();
-            //                        quest.GamepadInputDictionary = reader["GamepadInputDictionary"].ToString();
+                                    questCompendium.MostCompletedQuestRunsQuestID = questId;
+                                    questCompendium.MostCompletedQuestRuns = timesCompleted;
+                                }
+                            }
+                        }
 
-            //                        quest.ActionsPerMinuteDictionary = reader["ActionsPerMinuteDictionary"].ToString();
-            //                        quest.OverlayModeDictionary = reader["OverlayModeDictionary"].ToString();
-            //                        quest.ActualOverlayMode = reader["ActualOverlayMode"].ToString();
-            //                        quest.PartySize = long.Parse(reader["PartySize"].ToString());
-            //                    }
-            //                }
-            //            }
-            //            transaction.Commit();
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            HandleError(transaction, ex);
-            //        }
-            //    }
-            //}
+                        query = @"
+                        SELECT SUM(Attempts) as TotalAttempts
+                        FROM QuestAttempts
+                        WHERE QuestID = (SELECT QuestID
+                                         FROM QuestAttempts
+                                         GROUP BY QuestID
+                                         ORDER BY COUNT(*) DESC
+                                         LIMIT 1)";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    long attempts = (long)reader["TotalAttempts"];
+                                    questCompendium.MostCompletedQuestRunsAttempted = attempts;
+
+                                }
+                            }
+                        }
+
+                        query = @"
+                        SELECT QuestID, COUNT(*) AS Attempts
+                        FROM QuestAttempts
+                        GROUP BY QuestID
+                        ORDER BY Attempts DESC
+                        LIMIT 1";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    long questID = (long)reader["QuestID"];
+                                    long attempts = (long)reader["Attempts"];
+
+                                    questCompendium.MostAttemptedQuestRuns = attempts;
+                                    questCompendium.MostAttemptedQuestRunsQuestID = questID;
+
+                                }
+                            }
+                        }
+
+                        query = @"
+                        SELECT COUNT(*) AS TimesCompleted
+                        FROM Quests
+                        WHERE QuestID = @QuestID;";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@QuestID", questCompendium.MostAttemptedQuestRunsQuestID);
+
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    // The number of times the most attempted quest was completed
+                                    long timesCompleted = (long)reader["TimesCompleted"];
+
+                                    questCompendium.MostAttemptedQuestRunsCompleted = timesCompleted;
+
+                                }
+                            }
+                        }
+
+                        query = @"SELECT COUNT(*) AS TotalCompletedQuests
+                                FROM Quests
+                        ";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    // The number of times the most attempted quest was completed
+                                    long totalCompletedQuests = (long)reader["TotalCompletedQuests"];
+
+                                    questCompendium.TotalQuestsCompleted = totalCompletedQuests;
+
+                                }
+                            }
+                        }
+
+                        query = @"SELECT SUM(Attempts) AS TotalAttemptedQuests
+                        FROM QuestAttempts
+                        ";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    long totalAttemptedQuests = (long)reader["TotalAttemptedQuests"];
+
+                                    questCompendium.TotalQuestsAttempted = totalAttemptedQuests;
+
+                                }
+                            }
+                        }
+
+                        query = @"SELECT AVG(FinalTimeValue) as AverageQuestCompletionTime
+                        FROM Quests
+                        WHERE FinalTimeValue IS NOT NULL
+                        ";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    double value = (double)reader["AverageQuestCompletionTime"];
+
+                                    questCompendium.QuestCompletionTimeElapsedAverage = value;
+
+                                }
+                            }
+                        }
+
+                        query = @"SELECT AVG(FinalTimeValue) as MedianQuestCompletionTime
+                        FROM (
+                            SELECT FinalTimeValue, 
+                                   ROW_NUMBER() OVER (ORDER BY FinalTimeValue) AS RowNum,
+                                   COUNT(*) OVER() AS TotalCount
+                            FROM Quests
+                            WHERE FinalTimeValue IS NOT NULL
+                        ) 
+                        WHERE RowNum IN ((TotalCount + 1) / 2, (TotalCount + 2) / 2)
+                        ";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    double value = (double)reader["MedianQuestCompletionTime"];
+
+                                    questCompendium.QuestCompletionTimeElapsedMedian = value;
+
+                                }
+                            }
+                        }
+
+                        query = @"SELECT SUM(FinalTimeValue) AS TotalTimeElapsed
+                        FROM Quests
+                        ";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    long value = (long)reader["TotalTimeElapsed"];
+
+                                    questCompendium.TotalTimeElapsedQuests = value;
+
+                                }
+                            }
+                        }
+
+                        // Initialize a list to hold the final cart values
+                        List<int> finalCartValues = new List<int>();
+
+                        // Query to get the last cart value from each quest entry
+                        query = @"SELECT CartsDictionary FROM Quests WHERE CartsDictionary IS NOT NULL";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    string cartsDictionaryJson = reader.GetString(0);
+                                    if (!string.IsNullOrEmpty(cartsDictionaryJson) && cartsDictionaryJson != "{}")
+                                    {
+                                        // Deserialize the carts dictionary JSON string
+                                        Dictionary<int, int> cartsDictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartsDictionaryJson);
+
+                                        // Get the last cart value from the dictionary
+                                        int finalCartValue = cartsDictionary.Values.LastOrDefault();
+
+                                        // Add the final cart value to the list
+                                        finalCartValues.Add(finalCartValue);
+                                    }
+                                }
+                            }
+                        }
+
+                        // Calculate the average and median final cart values
+                        if (finalCartValues.Count > 0)
+                        {
+                            questCompendium.TotalCartsInQuestAverage = finalCartValues.Average();
+                            questCompendium.TotalCartsInQuestMedian = CalculateMedian(finalCartValues);
+                        }
+                        else
+                        {
+                            // No quest entries with non-empty carts dictionaries found
+                            questCompendium.TotalCartsInQuestAverage = 0;
+                            questCompendium.TotalCartsInQuestMedian = 0;
+                        }
+
+                        questCompendium.TotalCartsInQuest = finalCartValues.Sum();
+
+                        // Initialize dictionary to hold the total carts for each quest ID
+                        Dictionary<int, int> questTotalCarts = new Dictionary<int, int>();
+
+                        // Query to get carts dictionary for all quests with non-empty carts dictionary
+                        query = @"SELECT QuestId, CartsDictionary FROM Quests WHERE CartsDictionary IS NOT NULL AND CartsDictionary != '{}'";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int questId = Convert.ToInt32(reader["QuestId"]);
+                                    string cartsDictionaryJson = reader.GetString(1);
+
+                                    // Deserialize carts dictionary JSON string
+                                    Dictionary<int, int> cartsDictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartsDictionaryJson);
+
+                                    // Add total carts for this quest to the questTotalCarts dictionary
+                                    int totalCarts = cartsDictionary.Values.Sum();
+                                    questTotalCarts[questId] = totalCarts;
+                                }
+                            }
+                        }
+
+                        // Get quest ID with the most total carts
+                        if (questTotalCarts.Count > 0)
+                        {
+                            int mostCompletedQuestId = questTotalCarts.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+                            int totalCartsInMostCompletedQuest = questTotalCarts[mostCompletedQuestId];
+
+                            questCompendium.MostCompletedQuestWithCartsQuestID = mostCompletedQuestId;
+                            questCompendium.MostCompletedQuestWithCarts = totalCartsInMostCompletedQuest;
+                        }
+                        else
+                        {
+                            // No quest entries with non-empty carts dictionaries found
+                            questCompendium.MostCompletedQuestWithCartsQuestID = 0;
+                            questCompendium.MostCompletedQuestWithCarts = 0;
+                        }
+
+                        // Initialize variables to hold the total number of quests and the number of solo quests
+                        long totalQuests = 0;
+                        long soloQuests = 0;
+
+                        // Query to get the total number of quests and the number of solo quests
+                        query = @"
+                        SELECT COUNT(*) AS TotalQuests,
+                               COUNT(CASE WHEN PartySize = 1 THEN 1 ELSE NULL END) AS SoloQuests
+                        FROM Quests
+                    ";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    totalQuests = (long)reader["TotalQuests"];
+                                    soloQuests = (long)reader["SoloQuests"];
+                                }
+                            }
+                        }
+
+                        // Calculate the percentage of solo quests
+                        double soloQuestsPercentage = soloQuests * 100.0 / totalQuests;
+
+                        questCompendium.PercentOfSoloQuests = soloQuestsPercentage;
+
+
+                        query = @"SELECT AVG(PartySize) AS AvgPartySize
+                        FROM Quests
+                        ";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    double value = (double)reader["AvgPartySize"];
+
+                                    questCompendium.QuestPartySizeAverage = value;
+
+                                }
+                            }
+                        }
+
+                        query = @"SELECT AVG(PartySize) as MedianPartySize
+                        FROM (
+                            SELECT PartySize, 
+                                   ROW_NUMBER() OVER (ORDER BY PartySize) AS RowNum,
+                                   COUNT(*) OVER() AS TotalCount
+                            FROM Quests
+                            WHERE PartySize IS NOT NULL
+                        ) 
+                        WHERE RowNum IN ((TotalCount + 1) / 2, (TotalCount + 2) / 2)
+                        ";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    double value = Convert.ToDouble(reader["MedianPartySize"]);
+
+                                    questCompendium.QuestPartySizeMedian = value;
+                                }
+                            }
+                        }
+
+
+                        query = @"SELECT PartySize AS ModePartySize
+                        FROM (
+                            SELECT PartySize,
+                                    COUNT(*) AS Frequency
+                            FROM Quests
+                            GROUP BY PartySize
+                            ORDER BY Frequency DESC
+                            LIMIT 1
+                        ) subquery";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    long value = (long)reader["ModePartySize"];
+
+                                    questCompendium.QuestPartySizeMode = value;
+
+                                }
+                            }
+                        }
+
+                        // Initialize variables to hold the total number of player gear entries and the number of player gear entries with non-zero GuildFoodID values
+                        long totalPlayerGearEntries = 0;
+                        long guildFoodPlayerGearEntries = 0;
+
+                        // Query to get the total number of player gear entries and the number of player gear entries with non-zero GuildFoodID values
+                        query = @"
+                        SELECT
+                            COUNT(*) AS TotalPlayerGearEntries,
+                            COUNT(CASE WHEN GuildFoodID != 0 THEN 1 ELSE NULL END) AS GuildFoodPlayerGearEntries
+                        FROM
+                            PlayerGear";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    totalPlayerGearEntries = (long)reader["TotalPlayerGearEntries"];
+                                    guildFoodPlayerGearEntries = (long)reader["GuildFoodPlayerGearEntries"];
+                                }
+                            }
+                        }
+
+                        // Calculate the percentage of guild food usage
+                        double guildFoodUsagePercentage = guildFoodPlayerGearEntries * 100.0 / totalPlayerGearEntries;
+
+                        // Set the percent of guild food usage in the PlayerCompendium object
+                        questCompendium.PercentOfGuildFood = guildFoodUsagePercentage;
+
+
+                        // Initialize a dictionary to count the occurrences of each food ID
+                        Dictionary<long, long> foodCount = new Dictionary<long, long>();
+
+                        // Query to get the food ID for each player gear entry and count its occurrences
+                        query = @"SELECT GuildFoodID FROM PlayerGear";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    long foodID = (long)reader["GuildFoodID"];
+
+                                    // Check if the food ID has already been added to the dictionary, and increment its count
+                                    if (foodCount.ContainsKey(foodID))
+                                    {
+                                        foodCount[foodID]++;
+                                    }
+                                    else
+                                    {
+                                        foodCount.Add(foodID, 1);
+                                    }
+                                }
+                            }
+                        }
+
+                        long mostCommonFoodID = foodCount.OrderByDescending(x => x.Value).First().Key;
+
+                        questCompendium.MostCommonGuildFood = mostCommonFoodID;
+
+                        Dictionary<long, long> divaSkillCount = new Dictionary<long, long>();
+
+                        query = @"SELECT DivaSkillID FROM PlayerGear";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    long divaSkillID = (long)reader["DivaSkillID"];
+
+                                    if (divaSkillCount.ContainsKey(divaSkillID))
+                                    {
+                                        divaSkillCount[divaSkillID]++;
+                                    }
+                                    else
+                                    {
+                                        divaSkillCount.Add(divaSkillID, 1);
+                                    }
+                                }
+                            }
+                        }
+
+                        long mostCommonDivaSkillID = divaSkillCount.OrderByDescending(x => x.Value).First().Key;
+
+                        questCompendium.MostCommonDivaSkill = mostCommonDivaSkillID;
+
+                        long divaSkillPlayerGearEntries = 0;
+
+                        // Query to get the total number of player gear entries and the number of player gear entries with non-zero GuildFoodID values
+                        query = @"
+                        SELECT
+                            COUNT(*) AS TotalPlayerGearEntries,
+                            COUNT(CASE WHEN DivaSkillID != 0 THEN 1 ELSE NULL END) AS DivaSkillPlayerGearEntries
+                        FROM
+                            PlayerGear";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    divaSkillPlayerGearEntries = (long)reader["DivaSkillPlayerGearEntries"];
+                                }
+                            }
+                        }
+
+                        // Calculate the percentage of guild food usage
+                        double divaSkillUsagePercentage = divaSkillPlayerGearEntries * 100.0 / totalPlayerGearEntries;
+
+                        // Set the percent of guild food usage in the PlayerCompendium object
+                        questCompendium.PercentOfDivaSkill = divaSkillUsagePercentage;
+
+                        // Query to get the item IDs for each player gear row
+                        query = @"
+                        SELECT 
+                            PlayerInventoryID, 
+                            Item1ID, 
+                            Item2ID, 
+                            Item3ID, 
+                            Item4ID, 
+                            Item5ID,
+                            Item6ID,
+                            Item7ID,
+                            Item8ID,
+                            Item9ID,
+                            Item10ID,
+                            Item11ID,
+                            Item12ID,
+                            Item13ID,
+                            Item14ID,
+                            Item15ID,
+                            Item16ID,
+                            Item17ID,
+                            Item18ID,
+                            Item19ID,
+                            Item20ID
+                        FROM PlayerInventory";
+
+                        // Create a list to hold the PlayerInventoryItemIds objects
+                        List<PlayerInventoryItemIds> playerInventoryItemIdsList = new List<PlayerInventoryItemIds>();
+
+                        // Loop through the query results and create a PlayerInventoryItemIds object for each row
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    long playerInventoryID = (long)reader["PlayerInventoryID"];
+                                    List<long> itemIds = new List<long>();
+
+                                    for (int i = 1; i <= 20; i++)
+                                    {
+                                        long itemId = (long)reader[$"Item{i}ID"];
+                                        itemIds.Add(itemId);
+                                    }
+
+                                    var playerInventoryItemIds = new PlayerInventoryItemIds
+                                    {
+                                        PlayerInventoryID = playerInventoryID,
+                                        ItemIds = itemIds
+                                    };
+
+                                    playerInventoryItemIdsList.Add(playerInventoryItemIds);
+                                }
+                            }
+                        }
+
+                        // Loop through the PlayerInventoryItemIds objects and check if any of them have a skill fruit item ID
+                        int skillFruitUsageCount = 0;
+                        foreach (var playerInventoryItemIds in playerInventoryItemIdsList)
+                        {
+                            foreach (var itemId in playerInventoryItemIds.ItemIds)
+                            {
+                                if (Dictionary.SkillFruits.ItemID.ContainsKey(itemId))
+                                {
+                                    skillFruitUsageCount++;
+                                    break;
+                                }
+                            }
+                        }
+
+                        // Calculate the percentage of skill fruit usage
+                        double skillFruitUsagePercentage = skillFruitUsageCount * 100.0 / totalQuests;
+
+                        questCompendium.PercentOfSkillFruit = skillFruitUsagePercentage;
+
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
             return questCompendium;
+        }
+
+        // Helper function to calculate the median of a list of integers
+        private static double CalculateMedian(List<int> values)
+        {
+            int count = values.Count;
+            if (count % 2 == 0)
+            {
+                // Even number of values, average the middle two
+                int middleIndex = count / 2;
+                return (values[middleIndex - 1] + values[middleIndex]) / 2.0;
+            }
+            else
+            {
+                // Odd number of values, return the middle value
+                int middleIndex = (count - 1) / 2;
+                return values[middleIndex];
+            }
         }
 
         public GearCompendium GetGearCompendium()

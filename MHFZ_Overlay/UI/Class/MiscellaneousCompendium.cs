@@ -3,7 +3,7 @@
     //TODO: ORM
     public class MiscellaneousCompendium
     {
-        public int TotalOverlaySessions { get; set; }
+        public long TotalOverlaySessions { get; set; }
         public double HighestSessionDuration { get; set; }
         public double LowestSessionDuration { get; set; }
         public double AverageSessionDuration { get; set; }
