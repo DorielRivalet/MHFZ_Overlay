@@ -268,8 +268,15 @@ namespace MHFZ_Overlay
             int gameCount = 0;
             foreach (var process in processList)
             {
+                if (process.ProcessName == "GameOverlayUI")
+                {
+                    MessageBox.Show($"Having Steam Overlay open while MHF-Z Overlay is running may decrease performance. ({process.ProcessName} found)", "Warning");
+                    logger.Warn("PROGRAM OPERATION: Found Steam overlay: {0}", process.ProcessName);
+                    continue;
+                }
                 if (bannedProcesses.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
                 {
+
                     // processName is a substring of one of the banned process strings
                     MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
                     logger.Fatal("PROGRAM OPERATION: Found banned process {0}", process.ProcessName);
