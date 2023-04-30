@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Formatting = Newtonsoft.Json.Formatting;
@@ -2619,7 +2620,9 @@ namespace MHFZ_Overlay
                                     // Set the table name
                                     using (var cmd2 = conn.CreateCommand())
                                     {
-                                        cmd2.CommandText = $"SELECT tbl_name FROM sqlite_master WHERE name='{objectName}'";
+                                        cmd2.CommandText = "SELECT tbl_name FROM sqlite_master WHERE name=@name";
+                                        cmd2.Parameters.AddWithValue("@name", objectName);
+
                                         var tableName = cmd2.ExecuteScalar().ToString();
 
                                         // Initialize the schema entry for the table if it doesn't exist
@@ -2640,7 +2643,9 @@ namespace MHFZ_Overlay
                                     // Set the table name
                                     using (var cmd3 = conn.CreateCommand())
                                     {
-                                        cmd3.CommandText = $"SELECT tbl_name FROM sqlite_master WHERE name='{objectName}'";
+                                        cmd3.CommandText = "SELECT tbl_name FROM sqlite_master WHERE name=@name";
+                                        cmd3.Parameters.AddWithValue("@name", objectName);
+
                                         var tableName = cmd3.ExecuteScalar().ToString();
 
                                         // Initialize the schema entry for the table if it doesn't exist
@@ -6714,7 +6719,7 @@ namespace MHFZ_Overlay
                                         lock (dataLoader.model.weaponUsageSync)
                                         {
                                             // Use the weaponTypeID, styleID, and runCount values to populate your
-                                            // livechart graph
+                                            // LiveChart graph
                                             // use a switch statement or a lookup table to convert the
                                             // weaponTypeID and styleID to their corresponding string names
 
@@ -8611,9 +8616,10 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         private static long GetMaxValueWithWhere(string field, string table, SQLiteConnection conn, string whereField, long whereValue)
         {
-            string query = $"SELECT MAX({field}) FROM {table} WHERE {whereField} = {whereValue}";
+            string query = $"SELECT MAX({field}) FROM {table} WHERE {whereField} = @whereValue";
             using (var command = new SQLiteCommand(query, conn))
             {
+                command.Parameters.AddWithValue("@whereValue", whereValue);
                 return (long)command.ExecuteScalar();
             }
         }
@@ -8629,9 +8635,10 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         private static long GetMinValueWithWhere(string field, string table, SQLiteConnection conn, string whereField, long whereValue)
         {
-            string query = $"SELECT MIN({field}) FROM {table} WHERE {whereField} = {whereValue}";
+            string query = $"SELECT MIN({field}) FROM {table} WHERE {whereField} = @whereValue";
             using (var command = new SQLiteCommand(query, conn))
             {
+                command.Parameters.AddWithValue("@whereValue", whereValue);
                 return (long)command.ExecuteScalar();
             }
         }
@@ -8647,9 +8654,10 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         private static double GetAverageValueWithWhere(string field, string table, SQLiteConnection conn, string whereField, long whereValue)
         {
-            string query = $"SELECT AVG({field}) FROM {table} WHERE {whereField} = {whereValue}";
+            string query = $"SELECT AVG({field}) FROM {table} WHERE {whereField} = @whereValue";
             using (var command = new SQLiteCommand(query, conn))
             {
+                command.Parameters.AddWithValue("@whereValue", whereValue);
                 return (double)command.ExecuteScalar();
             }
         }
@@ -8666,9 +8674,10 @@ namespace MHFZ_Overlay
         private static double GetMedianValueWithWhere(string field, string table, SQLiteConnection conn, string whereField, long whereValue)
         {
             // TODO: not sure if correct
-            string query = $"SELECT AVG({field}) FROM (SELECT {field}, ROW_NUMBER() OVER (ORDER BY {field}) AS RowNum, COUNT(*) OVER() AS TotalRows FROM {table} WHERE {whereField} = {whereValue}) temp WHERE RowNum BETWEEN (TotalRows/2) + 1 AND (TotalRows/2) + 2;";
+            string query = $"SELECT AVG({field}) FROM (SELECT {field}, ROW_NUMBER() OVER (ORDER BY {field}) AS RowNum, COUNT(*) OVER() AS TotalRows FROM {table} WHERE {whereField} = @whereValue) temp WHERE RowNum BETWEEN (TotalRows/2) + 1 AND (TotalRows/2) + 2;";
             using (var command = new SQLiteCommand(query, conn))
             {
+                command.Parameters.AddWithValue("@whereValue", whereValue);
                 return (double)command.ExecuteScalar();
             }
         }
@@ -8970,7 +8979,6 @@ namespace MHFZ_Overlay
             // Calculate the percentage of solo quests
             return soloQuests * 100.0 / totalQuests;
         }
-
 
         #endregion
 
