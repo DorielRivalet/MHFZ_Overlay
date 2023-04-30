@@ -20,6 +20,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Formatting = Newtonsoft.Json.Formatting;
 
@@ -7849,7 +7850,11 @@ namespace MHFZ_Overlay
         // TODO: i still need to reorganize all regions. ideally i put in separate classes/files.
         #region database functions
 
-        // Helper function to calculate the median of a list of integers
+        /// <summary>
+        /// Helper function to calculate the median of a list of integers
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
         private static double CalculateMedianOfList(List<int> values)
         {
             int count = values.Count;
@@ -7867,7 +7872,14 @@ namespace MHFZ_Overlay
             }
         }
 
-        private double GetAverageOfField(string tableName, string fieldName, SQLiteConnection conn)
+        /// <summary>
+        /// Gets the average of field.
+        /// </summary>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private double GetAverageOfDictionaryField(string tableName, string fieldName, SQLiteConnection conn)
         {
             var query = $"SELECT {fieldName} FROM {tableName}";
 
@@ -7900,7 +7912,14 @@ namespace MHFZ_Overlay
             return averageValue;
         }
 
-        private double GetMedianOfField(string tableName, string fieldName, SQLiteConnection conn)
+        /// <summary>
+        /// Gets the median of field.
+        /// </summary>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private double GetMedianOfDictionaryField(string tableName, string fieldName, SQLiteConnection conn)
         {
             var query = $"SELECT {fieldName} FROM {tableName}";
             var valueList = new List<double>();
@@ -7928,7 +7947,14 @@ namespace MHFZ_Overlay
             return medianValue;
         }
 
-        private double GetModeOfField(string tableName, string fieldName, SQLiteConnection conn)
+        /// <summary>
+        /// Gets the mode of field.
+        /// </summary>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private double GetModeOfDictionaryField(string tableName, string fieldName, SQLiteConnection conn)
         {
             var query = $"SELECT {fieldName} FROM {tableName}";
             var valueDictionary = new Dictionary<double, int>();
@@ -7972,7 +7998,14 @@ namespace MHFZ_Overlay
             return modeValue;
         }
 
-        private (double, long) GetRowWithHighestValue(string tableName, string fieldName, SQLiteConnection conn)
+        /// <summary>
+        /// Gets the row with highest value.
+        /// </summary>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private (double, long) GetRowWithHighestDictionaryValue(string tableName, string fieldName, SQLiteConnection conn)
         {
             var query = $"SELECT {fieldName}, RunID FROM {tableName}";
 
@@ -8008,6 +8041,11 @@ namespace MHFZ_Overlay
             return (highestValue, highestValueRunID);
         }
 
+        /// <summary>
+        /// Gets the quest with highest hits taken blocked.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
         private (double, long) GetQuestWithHighestHitsTakenBlocked(SQLiteConnection conn)
         {
             var query = "SELECT RunID, HitsTakenBlockedDictionary FROM Quests";
@@ -8042,6 +8080,11 @@ namespace MHFZ_Overlay
             return ((double)highestHitsTakenBlockedCount, highestHitsTakenBlockedRunID);
         }
 
+        /// <summary>
+        /// Gets the average hits taken blocked count.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
         private double GetAverageHitsTakenBlockedCount(SQLiteConnection conn)
         {
             var totalQuestRunsQuery = "SELECT COUNT(*) as TotalQuestRuns FROM Quests";
@@ -8078,6 +8121,11 @@ namespace MHFZ_Overlay
             return averageHitsTakenBlockedCount;
         }
 
+        /// <summary>
+        /// Gets the median hits taken blocked count.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
         private double GetMedianHitsTakenBlockedCount(SQLiteConnection conn)
         {
             var hitsTakenBlockedCountQuery = "SELECT HitsTakenBlockedDictionary FROM Quests";
@@ -8122,6 +8170,13 @@ namespace MHFZ_Overlay
             return medianHitsTakenBlockedCount;
         }
 
+        /// <summary>
+        /// Gets the total count of value in dictionary field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
         private long GetTotalCountOfValueInDictionaryField(string field, string table, SQLiteConnection conn)
         {
             var query = $"SELECT {field} FROM {table}";
@@ -8163,6 +8218,13 @@ namespace MHFZ_Overlay
             return totalCount;
         }
 
+        /// <summary>
+        /// Gets the table row count.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
         private long GetTableRowCount(string fieldName, string tableName, SQLiteConnection conn)
         {
             string sql = $"SELECT COUNT({fieldName}) FROM {tableName}";
@@ -8172,6 +8234,14 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Gets the count of int value.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
         private static long GetCountOfIntValue(string fieldName, string tableName, int value, SQLiteConnection conn)
         {
             long count = 0;
@@ -8184,6 +8254,14 @@ namespace MHFZ_Overlay
             return count;
         }
 
+        /// <summary>
+        /// Gets the count of string value.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
         private static long GetCountOfStringValue(string fieldName, string tableName, string value, SQLiteConnection conn)
         {
             long count = 0;
@@ -8261,19 +8339,24 @@ namespace MHFZ_Overlay
             {
                 using (SQLiteDataReader reader = cmd.ExecuteReader())
                 {
-                    int count = reader.FieldCount;
-                    long[] values = new long[count];
-                    int index = 0;
+                    if (!reader.HasRows)
+                    {
+                        return 0.0;
+                    }
+                    List<long> values = new List<long>();
                     while (reader.Read())
                     {
-                        values[index++] = reader.GetInt64(0);
+                        values.Add(reader.GetInt64(0));
                     }
-                    Array.Sort(values);
-                    double medianValue = (count % 2 == 0) ? ((double)values[count / 2] + (double)values[(count / 2) - 1]) / 2 : (double)values[count / 2];
+                    long[] valuesArray = values.ToArray();
+                    Array.Sort(valuesArray);
+                    int count = valuesArray.Length;
+                    double medianValue = (count % 2 == 0) ? ((double)valuesArray[count / 2] + (double)valuesArray[(count / 2) - 1]) / 2 : (double)valuesArray[count / 2];
                     return medianValue;
                 }
             }
         }
+
 
         /// <summary>
         /// Gets the maximum value with WHERE clause.
@@ -8348,6 +8431,13 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Gets the record with highest value in field.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
         private (double, long) GetRecordWithHighestValueInField(SQLiteConnection conn, string tableName, string fieldName)
         {
             var query = $"SELECT RunID, {fieldName} FROM {tableName}";
@@ -8382,6 +8472,13 @@ namespace MHFZ_Overlay
             return (highestValue, highestValueRunID);
         }
 
+        /// <summary>
+        /// Gets the record with lowest value in field.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
         private (double, long) GetRecordWithLowestValueInField(SQLiteConnection conn, string tableName, string fieldName)
         {
             var query = $"SELECT RunID, {fieldName} FROM {tableName}";
@@ -9252,33 +9349,33 @@ namespace MHFZ_Overlay
                     {
                         var query = @"";
 
-                        (performanceCompendium.HighestTrueRaw, performanceCompendium.HighestTrueRawRunID) = GetRowWithHighestValue("Quests", "AttackBuffDictionary", conn);
-                        performanceCompendium.TrueRawAverage = GetAverageOfField("Quests", "AttackBuffDictionary", conn);
-                        performanceCompendium.TrueRawMedian = GetMedianOfField("Quests", "AttackBuffDictionary", conn);
+                        (performanceCompendium.HighestTrueRaw, performanceCompendium.HighestTrueRawRunID) = GetRowWithHighestDictionaryValue("Quests", "AttackBuffDictionary", conn);
+                        performanceCompendium.TrueRawAverage = GetAverageOfDictionaryField("Quests", "AttackBuffDictionary", conn);
+                        performanceCompendium.TrueRawMedian = GetMedianOfDictionaryField("Quests", "AttackBuffDictionary", conn);
 
-                        (performanceCompendium.HighestActionsPerMinute, performanceCompendium.HighestActionsPerMinuteRunID) = GetRowWithHighestValue("Quests", "ActionsPerMinuteDictionary", conn);
-                        performanceCompendium.ActionsPerMinuteAverage = GetAverageOfField("Quests", "ActionsPerMinuteDictionary", conn);
-                        performanceCompendium.ActionsPerMinuteMedian = GetMedianOfField("Quests", "ActionsPerMinuteDictionary", conn);
+                        (performanceCompendium.HighestActionsPerMinute, performanceCompendium.HighestActionsPerMinuteRunID) = GetRowWithHighestDictionaryValue("Quests", "ActionsPerMinuteDictionary", conn);
+                        performanceCompendium.ActionsPerMinuteAverage = GetAverageOfDictionaryField("Quests", "ActionsPerMinuteDictionary", conn);
+                        performanceCompendium.ActionsPerMinuteMedian = GetMedianOfDictionaryField("Quests", "ActionsPerMinuteDictionary", conn);
 
-                        (performanceCompendium.HighestDPS, performanceCompendium.HighestDPSRunID) = GetRowWithHighestValue("Quests", "DamagePerSecondDictionary", conn);
-                        performanceCompendium.DPSAverage = GetAverageOfField("Quests", "DamagePerSecondDictionary", conn);
-                        performanceCompendium.DPSMedian = GetMedianOfField("Quests", "DamagePerSecondDictionary", conn);
+                        (performanceCompendium.HighestDPS, performanceCompendium.HighestDPSRunID) = GetRowWithHighestDictionaryValue("Quests", "DamagePerSecondDictionary", conn);
+                        performanceCompendium.DPSAverage = GetAverageOfDictionaryField("Quests", "DamagePerSecondDictionary", conn);
+                        performanceCompendium.DPSMedian = GetMedianOfDictionaryField("Quests", "DamagePerSecondDictionary", conn);
 
-                        (performanceCompendium.HighestHitCount, performanceCompendium.HighestHitCountRunID) = GetRowWithHighestValue("Quests", "HitCountDictionary", conn);
-                        performanceCompendium.HitCountAverage = GetAverageOfField("Quests", "HitCountDictionary", conn);
-                        performanceCompendium.HitCountMedian = GetMedianOfField("Quests", "HitCountDictionary", conn);
+                        (performanceCompendium.HighestHitCount, performanceCompendium.HighestHitCountRunID) = GetRowWithHighestDictionaryValue("Quests", "HitCountDictionary", conn);
+                        performanceCompendium.HitCountAverage = GetAverageOfDictionaryField("Quests", "HitCountDictionary", conn);
+                        performanceCompendium.HitCountMedian = GetMedianOfDictionaryField("Quests", "HitCountDictionary", conn);
 
-                        (performanceCompendium.HighestHitsPerSecond, performanceCompendium.HighestHitsPerSecondRunID) = GetRowWithHighestValue("Quests", "HitsPerSecondDictionary", conn);
-                        performanceCompendium.HitsPerSecondAverage = GetAverageOfField("Quests", "HitsPerSecondDictionary", conn);
-                        performanceCompendium.HitsPerSecondMedian = GetMedianOfField("Quests", "HitsPerSecondDictionary", conn);
+                        (performanceCompendium.HighestHitsPerSecond, performanceCompendium.HighestHitsPerSecondRunID) = GetRowWithHighestDictionaryValue("Quests", "HitsPerSecondDictionary", conn);
+                        performanceCompendium.HitsPerSecondAverage = GetAverageOfDictionaryField("Quests", "HitsPerSecondDictionary", conn);
+                        performanceCompendium.HitsPerSecondMedian = GetMedianOfDictionaryField("Quests", "HitsPerSecondDictionary", conn);
 
-                        (performanceCompendium.HighestHitsTakenBlockedPerSecond, performanceCompendium.HighestHitsTakenBlockedPerSecondRunID) = GetRowWithHighestValue("Quests", "HitsTakenBlockedPerSecondDictionary", conn);
-                        performanceCompendium.HitsTakenBlockedPerSecondAverage = GetAverageOfField("Quests", "HitsTakenBlockedPerSecondDictionary", conn);
-                        performanceCompendium.HitsTakenBlockedPerSecondMedian = GetMedianOfField("Quests", "HitsTakenBlockedPerSecondDictionary", conn); ;
+                        (performanceCompendium.HighestHitsTakenBlockedPerSecond, performanceCompendium.HighestHitsTakenBlockedPerSecondRunID) = GetRowWithHighestDictionaryValue("Quests", "HitsTakenBlockedPerSecondDictionary", conn);
+                        performanceCompendium.HitsTakenBlockedPerSecondAverage = GetAverageOfDictionaryField("Quests", "HitsTakenBlockedPerSecondDictionary", conn);
+                        performanceCompendium.HitsTakenBlockedPerSecondMedian = GetMedianOfDictionaryField("Quests", "HitsTakenBlockedPerSecondDictionary", conn); ;
 
-                        (performanceCompendium.HighestSingleHitDamage, performanceCompendium.HighestSingleHitDamageRunID) = GetRowWithHighestValue("Quests", "DamageDealtDictionary", conn);
-                        performanceCompendium.SingleHitDamageAverage = GetAverageOfField("Quests", "DamageDealtDictionary", conn);
-                        performanceCompendium.SingleHitDamageMedian = GetMedianOfField("Quests", "DamageDealtDictionary", conn);
+                        (performanceCompendium.HighestSingleHitDamage, performanceCompendium.HighestSingleHitDamageRunID) = GetRowWithHighestDictionaryValue("Quests", "DamageDealtDictionary", conn);
+                        performanceCompendium.SingleHitDamageAverage = GetAverageOfDictionaryField("Quests", "DamageDealtDictionary", conn);
+                        performanceCompendium.SingleHitDamageMedian = GetMedianOfDictionaryField("Quests", "DamageDealtDictionary", conn);
 
                         (performanceCompendium.HighestHitsTakenBlocked, performanceCompendium.HighestHitsTakenBlockedRunID) = GetQuestWithHighestHitsTakenBlocked(conn);
                         performanceCompendium.HitsTakenBlockedAverage = GetAverageHitsTakenBlockedCount(conn);
@@ -9288,13 +9385,13 @@ namespace MHFZ_Overlay
                         performanceCompendium.TotalHitsCount = GetTotalCountOfValueInDictionaryField("HitCountDictionary", "Quests", conn);
                         performanceCompendium.TotalHitsTakenBlocked = GetTotalCountOfValueInDictionaryField("HitsTakenBlockedDictionary", "Quests", conn);
 
-                        performanceCompendium.HealthAverage = GetAverageOfField("Quests", "PlayerHPDictionary", conn);
-                        performanceCompendium.HealthMedian = GetMedianOfField("Quests", "PlayerHPDictionary", conn);
-                        performanceCompendium.HealthMode = GetModeOfField("Quests", "PlayerHPDictionary", conn);
+                        performanceCompendium.HealthAverage = GetAverageOfDictionaryField("Quests", "PlayerHPDictionary", conn);
+                        performanceCompendium.HealthMedian = GetMedianOfDictionaryField("Quests", "PlayerHPDictionary", conn);
+                        performanceCompendium.HealthMode = GetModeOfDictionaryField("Quests", "PlayerHPDictionary", conn);
 
-                        performanceCompendium.StaminaAverage = GetAverageOfField("Quests", "PlayerStaminaDictionary", conn);
-                        performanceCompendium.StaminaMedian = GetMedianOfField("Quests", "PlayerStaminaDictionary", conn);
-                        performanceCompendium.StaminaMode = GetModeOfField("Quests", "PlayerStaminaDictionary", conn);
+                        performanceCompendium.StaminaAverage = GetAverageOfDictionaryField("Quests", "PlayerStaminaDictionary", conn);
+                        performanceCompendium.StaminaMedian = GetMedianOfDictionaryField("Quests", "PlayerStaminaDictionary", conn);
+                        performanceCompendium.StaminaMode = GetModeOfDictionaryField("Quests", "PlayerStaminaDictionary", conn);
 
                         transaction.Commit();
                     }
@@ -9362,10 +9459,6 @@ namespace MHFZ_Overlay
                 conn.Open();
                 using (SQLiteTransaction transaction = conn.BeginTransaction())
                 {
-                    /*
-                    public long TotalLargeMonstersHunted { get; set; }
-                    public long TotalSmallMonstersHunted { get; set; }
-                     */
                     try
                     {
                         (monsterCompendium.HighestMonsterAttackMultiplier, monsterCompendium.HighestMonsterAttackMultiplierRunID) = GetRecordWithHighestValueInField(conn, "Quests", "Monster1AttackMultiplierDictionary");
@@ -9391,39 +9484,27 @@ namespace MHFZ_Overlay
         public MiscellaneousCompendium GetMiscellaneousCompendium()
         {
             MiscellaneousCompendium miscellaneousCompendium = new MiscellaneousCompendium();
-            //using (SQLiteConnection conn = new SQLiteConnection(dataSource))
-            //{
-            //    conn.Open();
-            //    using (SQLiteTransaction transaction = conn.BeginTransaction())
-            //    {
-            //        /*
-                    
-            //         */
-            //        try
-            //        {
-            //            var query = @"";
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        miscellaneousCompendium.TotalOverlaySessions = GetTableRowCount("SessionID", "Session", conn);
+                        miscellaneousCompendium.HighestSessionDuration = GetMaxValue("SessionDuration", "Session", conn);
+                        miscellaneousCompendium.LowestSessionDuration = GetMinValue("SessionDuration", "Session", conn);
+                        miscellaneousCompendium.AverageSessionDuration = GetAvgValue("SessionDuration", "Session", conn);
+                        miscellaneousCompendium.MedianSessionDuration = GetMedianValue("SessionDuration", "Session", conn);
 
-            //            using (var cmd = new SQLiteCommand(query, conn))
-            //            {
-            //                using (var reader = cmd.ExecuteReader())
-            //                {
-            //                    while (reader.Read())
-            //                    {
-
-            //                    }
-            //                }
-            //            }
-
-            //            //performanceCompendium.MostUsedWeaponType = mostCommonWeaponTypeID;
-
-            //            transaction.Commit();
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            HandleError(transaction, ex);
-            //        }
-            //    }
-            //}
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
             return miscellaneousCompendium;
         }
 
@@ -9783,33 +9864,30 @@ namespace MHFZ_Overlay
         #endregion
     }
 }
-/* TODO
- * add checker for triggers and indexes changes
- * 
- * USE BLOB for attack buff list and hit count list.
- * data structure: list<int (timeint), int (hit count / attack buff)>
- * 
- * 
- * 
-You can use LINQ to perform various operations on lists, such as filtering, sorting, and aggregating data. Here's an example of how you can use LINQ to calculate the average attack buff of a particular quest run with a particular weapon type:
-
-To calculate the maximum attack buff of a particular quest run with a particular weapon type, you can use the Max() method:
-
-To calculate the maximum attack buff of all quest runs of a particular quest with a particular weapon type, you can use LINQ to group the attack buff values by quest and weapon type, and then use the Max() method to find the maximum attack buff for each group:
-
-This will return a list of groups, each containing the quest ID, weapon type, and maximum attack buff for a particular quest and weapon type. You can then iterate over this list to find the maximum attack buff for all quest runs. 
- 
-Include info from more spreadsheets (speedrun calculation etc)
-
-LINQ (Language Integrated Query) is a set of features in C# that allows you to write queries to filter, transform, and aggregate data in your code. It works with various data sources, including arrays, lists, and dictionaries.
-
-For example, if you want to calculate the average attack buff for a particular quest run with a particular weapon type, you could use LINQ's Average method like this:
-
-To calculate the maximum attack buff for a particular quest run with a particular weapon type, you could use LINQ's Max method like this:
-
-To calculate the maximum attack buff of all quest runs of a particular quest with a particular weapon type, you would need to store the attack buff dictionaries for each quest run in a list or collection and then use LINQ's Max method like this:
-
-This would select the maximum attack buff value for each dictionary in the list, and then find the overall maximum value from those.
-
-You can read more about LINQ and its various methods and features in the C# documentation: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/
- */
+/// <TODO>
+/// * add checker for triggers and indexes changes
+/// * USE BLOB for attack buff list and hit count list.
+/// * data structure: list < int(timeint), int(hit count / attack buff) >
+/// You can use LINQ to perform various operations on lists, such as filtering, sorting, and aggregating data. Here's an example of how you can use LINQ to calculate the average attack buff of a particular quest run with a particular weapon type:
+///
+/// To calculate the maximum attack buff of a particular quest run with a particular weapon type, you can use the Max() method:
+///
+/// To calculate the maximum attack buff of all quest runs of a particular quest with a particular weapon type, you can use LINQ to group the attack buff values by quest and weapon type, and then use the Max() method to find the maximum attack buff for each group:
+///
+/// This will return a list of groups, each containing the quest ID, weapon type, and maximum attack buff for a particular quest and weapon type. You can then iterate over this list to find the maximum attack buff for all quest runs. 
+///
+/// Include info from more spreadsheets (speedrun calculation etc)
+///
+/// LINQ(Language Integrated Query) is a set of features in C# that allows you to write queries to filter, transform, and aggregate data in your code. It works with various data sources, including arrays, lists, and dictionaries.
+///
+/// For example, if you want to calculate the average attack buff for a particular quest run with a particular weapon type, you could use LINQ's Average method like this:
+///
+/// To calculate the maximum attack buff for a particular quest run with a particular weapon type, you could use LINQ's Max method like this:
+///
+/// To calculate the maximum attack buff of all quest runs of a particular quest with a particular weapon type, you would need to store the attack buff dictionaries for each quest run in a list or collection and then use LINQ's Max method like this:
+///
+/// This would select the maximum attack buff value for each dictionary in the list, and then find the overall maximum value from those.
+///
+/// You can read more about LINQ and its various methods and features in the C# documentation: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/
+/// 
+/// </TODO>
