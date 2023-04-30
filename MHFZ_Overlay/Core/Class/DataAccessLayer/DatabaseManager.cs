@@ -8755,6 +8755,11 @@ namespace MHFZ_Overlay
             return (lowestValue, lowestValueRunID);
         }
 
+        /// <summary>
+        /// Gets the most completed quest run.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
         private (long, long) GetMostCompletedQuestRun(SQLiteConnection conn)
         {
             long timesCompleted = 0;
@@ -8762,7 +8767,7 @@ namespace MHFZ_Overlay
 
             var query = @"
                         SELECT QuestID, COUNT(*) as TimesCompleted
-                        FROM QuestAttempts
+                        FROM Quests
                         GROUP BY QuestID
                         ORDER BY TimesCompleted DESC
                         LIMIT 1";
@@ -8786,20 +8791,22 @@ namespace MHFZ_Overlay
             return (timesCompleted, questId);
         }
 
-        private long GetMostCompletedQuestRunsAttempted(SQLiteConnection conn)
+        /// <summary>
+        /// Gets the most completed quest runs attempted.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private long GetMostCompletedQuestRunsAttempted(SQLiteConnection conn, long MostCompletedQuestRunsQuestID)
         {
             long attempts = 0;
             var query = @"
-                        SELECT SUM(Attempts) as TotalAttempts
-                        FROM QuestAttempts
-                        WHERE QuestID = (SELECT QuestID
-                                         FROM QuestAttempts
-                                         GROUP BY QuestID
-                                         ORDER BY COUNT(*) DESC
-                                         LIMIT 1)";
+                SELECT SUM(Attempts) AS TotalAttempts
+                FROM QuestAttempts
+                WHERE QuestID = @questId";
 
             using (var cmd = new SQLiteCommand(query, conn))
             {
+                cmd.Parameters.AddWithValue("@questId", MostCompletedQuestRunsQuestID);
                 using (var reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
@@ -8812,16 +8819,26 @@ namespace MHFZ_Overlay
             return attempts;
         }
 
+        /// <summary>
+        /// Gets the most attempted quest run.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
         private (long, long) GetMostAttemptedQuestRun(SQLiteConnection conn)
         {
             long questID = 0;
             long attempts = 0;
             var query = @"
-                        SELECT QuestID, COUNT(*) AS Attempts
-                        FROM QuestAttempts
-                        GROUP BY QuestID
-                        ORDER BY Attempts DESC
-                        LIMIT 1";
+            SELECT q.QuestID, SUM(q.Attempts) AS Attempts
+            FROM QuestAttempts q
+            JOIN (
+                SELECT QuestID, COUNT(*) AS TotalAttempts
+                FROM QuestAttempts
+                GROUP BY QuestID
+                ORDER BY TotalAttempts DESC
+                LIMIT 1
+            ) m ON q.QuestID = m.QuestID
+            GROUP BY q.QuestID";
 
             using (var cmd = new SQLiteCommand(query, conn))
             {
@@ -8837,6 +8854,12 @@ namespace MHFZ_Overlay
             return (attempts, questID);
         }
 
+        /// <summary>
+        /// Gets the most attempted quest runs completed.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <param name="MostAttemptedQuestRunsQuestID">The most attempted quest runs quest identifier.</param>
+        /// <returns></returns>
         private long GetMostAttemptedQuestRunsCompleted(SQLiteConnection conn, long MostAttemptedQuestRunsQuestID)
         {
             long timesCompleted = 0;
@@ -8844,7 +8867,7 @@ namespace MHFZ_Overlay
             var query = @"
                         SELECT COUNT(*) AS TimesCompleted
                         FROM Quests
-                        WHERE QuestID = @QuestID;";
+                        WHERE QuestID = @QuestID";
 
             using (var cmd = new SQLiteCommand(query, conn))
             {
@@ -8914,6 +8937,11 @@ namespace MHFZ_Overlay
             return percentage;
         }
 
+        /// <summary>
+        /// Gets the solo quests percentage.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
         private double GetSoloQuestsPercentage(SQLiteConnection conn)
         {
             // Initialize variables to hold the total number of quests and the number of solo quests
@@ -8958,8 +8986,9 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
+                        // TODO i guess this works?
                         (questCompendium.MostCompletedQuestRuns, questCompendium.MostCompletedQuestRunsQuestID) = GetMostCompletedQuestRun(conn);
-                        questCompendium.MostCompletedQuestRunsAttempted = GetMostCompletedQuestRunsAttempted(conn);
+                        questCompendium.MostCompletedQuestRunsAttempted = GetMostCompletedQuestRunsAttempted(conn, questCompendium.MostCompletedQuestRunsQuestID);
                         (questCompendium.MostAttemptedQuestRuns, questCompendium.MostAttemptedQuestRunsQuestID) = GetMostAttemptedQuestRun(conn);
                         questCompendium.MostAttemptedQuestRunsCompleted = GetMostAttemptedQuestRunsCompleted(conn, questCompendium.MostAttemptedQuestRunsQuestID);
                         questCompendium.TotalQuestsCompleted = GetTableRowCount("RunID", "Quests", conn);
