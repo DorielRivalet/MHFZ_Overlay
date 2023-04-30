@@ -6285,6 +6285,8 @@ Party Size: {32}",
             PerformanceCompendium performanceCompendium = DatabaseManager.GetInstance().GetPerformanceCompendium();
             MezFesCompendium mezeportaFestivalCompendium = DatabaseManager.GetInstance().GetMezFesCompendium();
             MiscellaneousCompendium miscellaneousCompendium = DatabaseManager.GetInstance().GetMiscellaneousCompendium();
+            MonsterCompendium monsterCompendium = DatabaseManager.GetInstance().GetMonsterCompendium();
+
 
             var mostCompletedQuest = questCompendium.MostCompletedQuestRuns;
             var mostCompletedQuestAttempts = questCompendium.MostCompletedQuestRunsAttempted;
@@ -6380,9 +6382,6 @@ Party Size: {32}",
             var staminaMedian = performanceCompendium.StaminaMedian;
             var staminaMode = performanceCompendium.StaminaMode;
 
-            var totalLargeMonstersHunted = performanceCompendium.TotalLargeMonstersHunted;
-            var totalSmallMonstersHunted = performanceCompendium.TotalSmallMonstersHunted;
-
             var minigamesPlayed = mezeportaFestivalCompendium.MinigamesPlayed;
 
             var urukiPachinkoTimesPlayed = mezeportaFestivalCompendium.UrukiPachinkoTimesPlayed;
@@ -6410,29 +6409,32 @@ Party Size: {32}",
             var dokkanBattleCatsScoreAverage = mezeportaFestivalCompendium.DokkanBattleCatsAverageScore;
             var dokkanBattleCatsScoreMedian = mezeportaFestivalCompendium.DokkanBattleCatsMedianScore;
 
+            var monster1AttackMultiplierHighest = monsterCompendium.HighestMonsterAttackMultiplier;
+            var monster1AttackMultiplierHighestRunID = monsterCompendium.HighestMonsterAttackMultiplierRunID;
+
+            var monster1AttackMultiplierLowest = monsterCompendium.LowestMonsterAttackMultiplier;
+            var monster1AttackMultiplierLowestRunID = monsterCompendium.LowestMonsterAttackMultiplierRunID;
+
+            var monster1DefenseRateHighest = monsterCompendium.HighestMonsterDefenseRate;
+            var monster1DefenseRateHighestRunID = monsterCompendium.HighestMonsterDefenseRateRunID;
+
+            var monster1DefenseRateLowest = monsterCompendium.LowestMonsterDefenseRate;
+            var monster1DefenseRateLowestRunID = monsterCompendium.LowestMonsterDefenseRateRunID;
+
+            var monster1SizeMultiplierHighest = monsterCompendium.HighestMonsterSizeMultiplier;
+            var monster1SizeMultiplierHighestRunID = monsterCompendium.HighestMonsterSizeMultiplierRunID;
+
+            var monster1SizeMultiplierLowest = monsterCompendium.LowestMonsterSizeMultiplier;
+            var monster1SizeMultiplierLowestRunID = monsterCompendium.LowestMonsterSizeMultiplierRunID;
+
+            var totalLargeMonstersHunted = monsterCompendium.TotalLargeMonstersHunted;
+            var totalSmallMonstersHunted = monsterCompendium.TotalSmallMonstersHunted;
+
             var totalOverlaySessions = miscellaneousCompendium.TotalOverlaySessions;
             var sessionDurationHighest = miscellaneousCompendium.HighestSessionDuration;
             var sessionDurationLowest = miscellaneousCompendium.LowestSessionDuration;
             var sessionDurationAverage = miscellaneousCompendium.AverageSessionDuration;
             var sessionDurationMedian = miscellaneousCompendium.MedianSessionDuration;
-
-            var monster1AttackMultiplierHighest = miscellaneousCompendium.HighestMonsterAttackMultiplier;
-            var monster1AttackMultiplierHighestRunID = miscellaneousCompendium.HighestMonsterAttackMultiplierRunID;
-
-            var monster1AttackMultiplierLowest = miscellaneousCompendium.LowestMonsterAttackMultiplier;
-            var monster1AttackMultiplierLowestRunID = miscellaneousCompendium.LowestMonsterAttackMultiplierRunID;
-
-            var monster1DefenseRateHighest = miscellaneousCompendium.HighestMonsterDefenseRate;
-            var monster1DefenseRateHighestRunID = miscellaneousCompendium.HighestMonsterDefenseRateRunID;
-
-            var monster1DefenseRateLowest = miscellaneousCompendium.LowestMonsterDefenseRate;
-            var monster1DefenseRateLowestRunID = miscellaneousCompendium.LowestMonsterDefenseRateRunID;
-
-            var monster1SizeMultiplierHighest = miscellaneousCompendium.HighestMonsterSizeMultiplier;
-            var monster1SizeMultiplierHighestRunID = miscellaneousCompendium.HighestMonsterSizeMultiplierRunID;
-
-            var monster1SizeMultiplierLowest = miscellaneousCompendium.LowestMonsterSizeMultiplier;
-            var monster1SizeMultiplierLowestRunID = miscellaneousCompendium.LowestMonsterSizeMultiplierRunID;
 
             Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue((int)mostCommonGuildFood, out string? mostCommonGuildFoodName);
             Dictionary.DivaSkillList.DivaSkillID.TryGetValue((int)mostCommonDivaSkill, out string? mostCommonDivaSkillName);
@@ -6480,31 +6482,33 @@ Total Hits Taken/Blocked: {67}
 Total Actions: {68}
 Health (Average/Median/Mode): {69}/{70}/{71}
 Stamina (Average/Median/Mode): {72}/{73}/{74}
-Total Large Monsters Hunted: {75}
-Total Small Monsters Hunted: {76}
 
 Mezeporta Festival (MezFes)
-Minigames Played: {77}
-Uruki Pachinko Times Played: {78}
-Uruki Pachinko High-score (Average/Median): {79} ({80}/{81})
-Guuku Scoop Times Played: {82}
-Guuku Scoop High-score (Average/Median): {83} ({84}/{85})
-Nyanrendo Times Played: {86}
-Nyanrendo High-score (Average/Median): {87} ({88}/{89})
-Panic Honey Times Played: {90}
-Panic Honey High-score (Average/Median): {91} ({92}/{93})
-Dokkan Battle Cats Times Played: {94}
-Dokkan Battle Cats High-score (Average/Median): {95} ({96}/{97})
+Minigames Played: {75}
+Uruki Pachinko Times Played: {76}
+Uruki Pachinko High-score (Average/Median): {77} ({78}/{79})
+Guuku Scoop Times Played: {80}
+Guuku Scoop High-score (Average/Median): {81} ({82}/{83})
+Nyanrendo Times Played: {84}
+Nyanrendo High-score (Average/Median): {85} ({86}/{87})
+Panic Honey Times Played: {88}
+Panic Honey High-score (Average/Median): {89} ({90}/{91})
+Dokkan Battle Cats Times Played: {92}
+Dokkan Battle Cats High-score (Average/Median): {93} ({94}/{95})
+
+Monster
+Highest Monster Attack Multiplier: {96} [Run ID {97}]
+Lowest Monster Attack Multiplier: {98} [Run ID {99}]
+Highest Monster Defense Rate: {100} [Run ID {101}]
+Lowest Monster Defense Rate: {102} [Run ID {103}]
+Highest Monster Size Multiplier: {104} [Run ID {105}]
+Lowest Monster Size Multiplier: {106} [Run ID {107}]
+Total Large Monsters Hunted: {108}
+Total Small Monsters Hunted: {109}
 
 Miscellaneous
-Total Overlay Sessions: {98}
-Session Duration (Highest/Lowest/Average/Median): {99}/{100}/{101}/{102}
-Highest Monster Attack Multiplier: {103} [Run ID {104}]
-Lowest Monster Attack Multiplier: {105} [Run ID {106}]
-Highest Monster Defense Rate: {107} [Run ID {108}]
-Lowest Monster Defense Rate: {109} [Run ID {110}]
-Highest Monster Size Multiplier: {111} [Run ID {112}]
-Lowest Monster Size Multiplier: {113} [Run ID {114}]
+Total Overlay Sessions: {110}
+Session Duration (Highest/Lowest/Average/Median): {111}/{112}/{113}/{114}
 ",
             createdAt,
             createdBy,
@@ -6556,19 +6560,19 @@ Lowest Monster Size Multiplier: {113} [Run ID {114}]
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedAverage),
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedMedian),
             highestHitsTakenBlockedRunID,
-            highestDPS,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestDPS),
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", DPSAverage),
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", DPSMedian),
             highestDPSRunID,
-            highestHitsPerSecond,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestHitsPerSecond),
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsPerSecondAverage),
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsPerSecondMedian),
             highestHitsPerSecondRunID,
-            highestHitsTakenBlockedPerSecond,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestHitsTakenBlockedPerSecond),
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedPerSecondAverage),
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedPerSecondMedian),
             highestHitsTakenBlockedPerSecondRunID,
-            highestActionsPerMinute,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestActionsPerMinute),
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", actionsPerMinuteAverage),
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", actionsPerMinuteMedian),
             highestActionsPerMinuteRunID,
@@ -6581,8 +6585,6 @@ Lowest Monster Size Multiplier: {113} [Run ID {114}]
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", staminaAverage),
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", staminaMedian),
             staminaMode,
-            totalLargeMonstersHunted,
-            totalSmallMonstersHunted,
             minigamesPlayed,
             urukiPachinkoTimesPlayed,
             urukiPachinkoHighscore,
@@ -6604,11 +6606,6 @@ Lowest Monster Size Multiplier: {113} [Run ID {114}]
             dokkanBattleCatsHighscore,
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dokkanBattleCatsScoreAverage),
             string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dokkanBattleCatsScoreMedian),
-            totalOverlaySessions,
-            sessionDurationHighest,
-            sessionDurationLowest,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", sessionDurationAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", sessionDurationMedian),
             monster1AttackMultiplierHighest,
             monster1AttackMultiplierHighestRunID,
             monster1AttackMultiplierLowest,
@@ -6620,7 +6617,14 @@ Lowest Monster Size Multiplier: {113} [Run ID {114}]
             monster1SizeMultiplierHighest,
             monster1SizeMultiplierHighestRunID,
             monster1SizeMultiplierLowest,
-            monster1SizeMultiplierLowestRunID
+            monster1SizeMultiplierLowestRunID,
+            totalLargeMonstersHunted,
+            totalSmallMonstersHunted,
+            totalOverlaySessions,
+            sessionDurationHighest,
+            sessionDurationLowest,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", sessionDurationAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", sessionDurationMedian)
             );
         }
 

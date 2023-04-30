@@ -3,6 +3,7 @@ using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 using System;
 using System.Collections;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -8080,7 +8082,7 @@ namespace MHFZ_Overlay
                         if (finalCartValues.Count > 0)
                         {
                             questCompendium.TotalCartsInQuestAverage = finalCartValues.Average();
-                            questCompendium.TotalCartsInQuestMedian = CalculateMedian(finalCartValues);
+                            questCompendium.TotalCartsInQuestMedian = CalculateMedianOfList(finalCartValues);
                         }
                         else
                         {
@@ -8433,7 +8435,7 @@ namespace MHFZ_Overlay
         }
 
         // Helper function to calculate the median of a list of integers
-        private static double CalculateMedian(List<int> values)
+        private static double CalculateMedianOfList(List<int> values)
         {
             int count = values.Count;
             if (count % 2 == 0)
@@ -8448,6 +8450,303 @@ namespace MHFZ_Overlay
                 int middleIndex = (count - 1) / 2;
                 return values[middleIndex];
             }
+        }
+
+        private double GetAverageOfField(string tableName, string fieldName, SQLiteConnection conn)
+        {
+            var query = $"SELECT {fieldName} FROM {tableName}";
+
+            double sumOfValues = 0;
+            int numberOfEntries = 0;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string valueDictionaryString = (string)reader[fieldName];
+
+                        if (string.IsNullOrEmpty(valueDictionaryString) || valueDictionaryString == "{}")
+                            continue;
+
+                        var valueDictionary = JObject.Parse(valueDictionaryString)
+                            .ToObject<Dictionary<double, double>>();
+
+                        double averageOfValueValues = valueDictionary.Values.Average();
+                        sumOfValues += averageOfValueValues;
+                        numberOfEntries++;
+                    }
+                }
+            }
+
+            double averageValue = sumOfValues / numberOfEntries;
+
+            return averageValue;
+        }
+
+        private double GetMedianOfField(string tableName, string fieldName, SQLiteConnection conn)
+        {
+            var query = $"SELECT {fieldName} FROM {tableName}";
+            var valueList = new List<double>();
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string valueDictionaryString = (string)reader[fieldName];
+                        if (string.IsNullOrEmpty(valueDictionaryString) || valueDictionaryString == "{}")
+                            continue;
+                        var valueDictionary = JObject.Parse(valueDictionaryString).ToObject<Dictionary<double, double>>();
+                        valueList.AddRange(valueDictionary.Values);
+                    }
+                }
+            }
+
+            valueList.Sort();
+            double medianValue = valueList.Count % 2 == 0
+                ? (valueList[valueList.Count / 2] + valueList[valueList.Count / 2 - 1]) / 2.0
+                : valueList[valueList.Count / 2];
+
+            return medianValue;
+        }
+
+        private double GetModeOfField(string tableName, string fieldName, SQLiteConnection conn)
+        {
+            var query = $"SELECT {fieldName} FROM {tableName}";
+            var valueDictionary = new Dictionary<double, int>();
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string valueDictionaryString = (string)reader[fieldName];
+
+                        if (string.IsNullOrEmpty(valueDictionaryString) || valueDictionaryString == "{}")
+                            continue;
+
+                        var dict = JObject.Parse(valueDictionaryString).ToObject<Dictionary<double, double>>();
+
+                        foreach (var value in dict.Values)
+                        {
+                            if (valueDictionary.ContainsKey(value))
+                                valueDictionary[value]++;
+                            else
+                                valueDictionary.Add(value, 1);
+                        }
+                    }
+                }
+            }
+
+            double modeValue = 0;
+            int maxCount = 0;
+
+            foreach (var kvp in valueDictionary)
+            {
+                if (kvp.Value > maxCount)
+                {
+                    modeValue = kvp.Key;
+                    maxCount = kvp.Value;
+                }
+            }
+
+            return modeValue;
+        }
+
+
+        private (double, long) GetRowWithHighestValue(string tableName, string fieldName, SQLiteConnection conn)
+        {
+            var query = $"SELECT {fieldName}, RunID FROM {tableName}";
+
+            double highestValue = 0;
+            long highestValueRunID = 0;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long runID = (long)reader["RunID"];
+                        string valueDictionaryString = (string)reader[fieldName];
+
+                        if (string.IsNullOrEmpty(valueDictionaryString) || valueDictionaryString == "{}")
+                            continue;
+
+                        var valueDictionary = JObject.Parse(valueDictionaryString)
+                            .ToObject<Dictionary<double, double>>();
+
+                        double maxValueInField = valueDictionary.Values.Max();
+
+                        if (maxValueInField > highestValue)
+                        {
+                            highestValue = maxValueInField;
+                            highestValueRunID = runID;
+                        }
+                    }
+                }
+            }
+
+            return (highestValue, highestValueRunID);
+        }
+
+        private (double, long) GetQuestWithHighestHitsTakenBlocked(SQLiteConnection conn)
+        {
+            var query = "SELECT RunID, HitsTakenBlockedDictionary FROM Quests";
+            long highestHitsTakenBlockedRunID = 0;
+            int highestHitsTakenBlockedCount = 0;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long runID = (long)reader["RunID"];
+                        string hitsTakenBlockedDictionaryString = (string)reader["HitsTakenBlockedDictionary"];
+
+                        if (string.IsNullOrEmpty(hitsTakenBlockedDictionaryString) || hitsTakenBlockedDictionaryString == "{}")
+                            continue;
+
+                        var hitsTakenBlocked = JObject.Parse(hitsTakenBlockedDictionaryString)
+    .ToObject<Dictionary<double, Dictionary<double, double>>>();
+
+                        int hitsTakenBlockedCount = hitsTakenBlocked.Count;
+                        if (hitsTakenBlockedCount > highestHitsTakenBlockedCount)
+                        {
+                            highestHitsTakenBlockedCount = hitsTakenBlockedCount;
+                            highestHitsTakenBlockedRunID = runID;
+                        }
+                    }
+                }
+            }
+
+            return ((double)highestHitsTakenBlockedCount, highestHitsTakenBlockedRunID);
+        }
+
+        private double GetAverageHitsTakenBlockedCount(SQLiteConnection conn)
+        {
+            var totalQuestRunsQuery = "SELECT COUNT(*) as TotalQuestRuns FROM Quests";
+            var hitsTakenBlockedCountQuery = "SELECT HitsTakenBlockedDictionary FROM Quests";
+            double sumOfHitsTakenBlockedCount = 0;
+            int totalQuestRuns = 0;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(totalQuestRunsQuery, conn))
+            {
+                totalQuestRuns = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+
+            using (SQLiteCommand cmd = new SQLiteCommand(hitsTakenBlockedCountQuery, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string hitsTakenBlockedDictionaryString = (string)reader["HitsTakenBlockedDictionary"];
+
+                        if (string.IsNullOrEmpty(hitsTakenBlockedDictionaryString) || hitsTakenBlockedDictionaryString == "{}")
+                            continue;
+
+                        var hitsTakenBlocked = JObject.Parse(hitsTakenBlockedDictionaryString)
+                            .ToObject<Dictionary<double, Dictionary<double, double>>>();
+
+                        int hitsTakenBlockedCount = hitsTakenBlocked.Count;
+                        sumOfHitsTakenBlockedCount += hitsTakenBlockedCount;
+                    }
+                }
+            }
+
+            double averageHitsTakenBlockedCount = sumOfHitsTakenBlockedCount / totalQuestRuns;
+            return averageHitsTakenBlockedCount;
+        }
+
+        private double GetMedianHitsTakenBlockedCount(SQLiteConnection conn)
+        {
+            var hitsTakenBlockedCountQuery = "SELECT HitsTakenBlockedDictionary FROM Quests";
+            var hitsTakenBlockedCountList = new List<int>();
+
+            using (SQLiteCommand cmd = new SQLiteCommand(hitsTakenBlockedCountQuery, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string hitsTakenBlockedDictionaryString = (string)reader["HitsTakenBlockedDictionary"];
+
+                        if (string.IsNullOrEmpty(hitsTakenBlockedDictionaryString) || hitsTakenBlockedDictionaryString == "{}")
+                            continue;
+
+                        var hitsTakenBlocked = JObject.Parse(hitsTakenBlockedDictionaryString)
+                            .ToObject<Dictionary<double, Dictionary<double, double>>>();
+
+                        int hitsTakenBlockedCount = hitsTakenBlocked.Count;
+                        hitsTakenBlockedCountList.Add(hitsTakenBlockedCount);
+                    }
+                }
+            }
+
+            hitsTakenBlockedCountList.Sort();
+
+            double medianHitsTakenBlockedCount;
+            int count = hitsTakenBlockedCountList.Count;
+
+            if (count % 2 == 0)
+            {
+                int middle = count / 2;
+                medianHitsTakenBlockedCount = (hitsTakenBlockedCountList[middle - 1] + hitsTakenBlockedCountList[middle]) / 2.0;
+            }
+            else
+            {
+                int middle = count / 2;
+                medianHitsTakenBlockedCount = hitsTakenBlockedCountList[middle];
+            }
+
+            return medianHitsTakenBlockedCount;
+        }
+
+        private long GetTotalCountOfValueInField(string field, string table, SQLiteConnection conn)
+        {
+            var query = $"SELECT {field} FROM {table}";
+            long totalCount = 0;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string valueDictionaryString = (string)reader[field];
+
+                        if (string.IsNullOrEmpty(valueDictionaryString) || valueDictionaryString == "{}")
+                            continue;
+
+                        if (field == "HitsTakenBlockedDictionary" && table == "Quests")
+                        {
+                            var dictionary = JObject.Parse(valueDictionaryString)
+                            .ToObject<Dictionary<double, Dictionary<double, double>>>();
+                            totalCount += dictionary.Count;
+                        }
+                        else if (table == "Quests" && (field == "KeystrokesDictionary" || field == "MouseInputDictionary" || field == "GamepadInputDictionary"))
+                        {
+                            var dictionary = JObject.Parse(valueDictionaryString)
+                            .ToObject<Dictionary<double, string>>();
+                            totalCount += dictionary.Count;
+                        }
+                        else
+                        {
+                            var dictionary = JObject.Parse(valueDictionaryString)
+                            .ToObject<Dictionary<double, double>>();
+                            totalCount += dictionary.Count;
+                        }
+                    }
+                }
+            }
+
+            return totalCount;
         }
 
         public GearCompendium GetGearCompendium()
@@ -8682,17 +8981,186 @@ namespace MHFZ_Overlay
 
         public PerformanceCompendium GetPerformanceCompendium()
         {
-            return new PerformanceCompendium();
+            PerformanceCompendium performanceCompendium = new PerformanceCompendium();
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        var query = @"";
+
+                        (performanceCompendium.HighestTrueRaw, performanceCompendium.HighestTrueRawRunID) = GetRowWithHighestValue("Quests", "AttackBuffDictionary", conn);
+                        performanceCompendium.TrueRawAverage = GetAverageOfField("Quests", "AttackBuffDictionary", conn);
+                        performanceCompendium.TrueRawMedian = GetMedianOfField("Quests", "AttackBuffDictionary", conn);
+
+                        (performanceCompendium.HighestActionsPerMinute, performanceCompendium.HighestActionsPerMinuteRunID) = GetRowWithHighestValue("Quests", "ActionsPerMinuteDictionary", conn);
+                        performanceCompendium.ActionsPerMinuteAverage = GetAverageOfField("Quests", "ActionsPerMinuteDictionary", conn);
+                        performanceCompendium.ActionsPerMinuteMedian = GetMedianOfField("Quests", "ActionsPerMinuteDictionary", conn);
+
+                        (performanceCompendium.HighestDPS, performanceCompendium.HighestDPSRunID) = GetRowWithHighestValue("Quests", "DamagePerSecondDictionary", conn);
+                        performanceCompendium.DPSAverage = GetAverageOfField("Quests", "DamagePerSecondDictionary", conn);
+                        performanceCompendium.DPSMedian = GetMedianOfField("Quests", "DamagePerSecondDictionary", conn);
+
+                        (performanceCompendium.HighestHitCount, performanceCompendium.HighestHitCountRunID) = GetRowWithHighestValue("Quests", "HitCountDictionary", conn);
+                        performanceCompendium.HitCountAverage = GetAverageOfField("Quests", "HitCountDictionary", conn);
+                        performanceCompendium.HitCountMedian = GetMedianOfField("Quests", "HitCountDictionary", conn);
+
+                        (performanceCompendium.HighestHitsPerSecond, performanceCompendium.HighestHitsPerSecondRunID) = GetRowWithHighestValue("Quests", "HitsPerSecondDictionary", conn);
+                        performanceCompendium.HitsPerSecondAverage = GetAverageOfField("Quests", "HitsPerSecondDictionary", conn);
+                        performanceCompendium.HitsPerSecondMedian = GetMedianOfField("Quests", "HitsPerSecondDictionary", conn);
+
+                        (performanceCompendium.HighestHitsTakenBlockedPerSecond, performanceCompendium.HighestHitsTakenBlockedPerSecondRunID) = GetRowWithHighestValue("Quests", "HitsTakenBlockedPerSecondDictionary", conn);
+                        performanceCompendium.HitsTakenBlockedPerSecondAverage = GetAverageOfField("Quests", "HitsTakenBlockedPerSecondDictionary", conn);
+                        performanceCompendium.HitsTakenBlockedPerSecondMedian = GetMedianOfField("Quests", "HitsTakenBlockedPerSecondDictionary", conn); ;
+
+                        (performanceCompendium.HighestSingleHitDamage, performanceCompendium.HighestSingleHitDamageRunID) = GetRowWithHighestValue("Quests", "DamageDealtDictionary", conn);
+                        performanceCompendium.SingleHitDamageAverage = GetAverageOfField("Quests", "DamageDealtDictionary", conn);
+                        performanceCompendium.SingleHitDamageMedian = GetMedianOfField("Quests", "DamageDealtDictionary", conn);
+
+                        (performanceCompendium.HighestHitsTakenBlocked, performanceCompendium.HighestHitsTakenBlockedRunID) = GetQuestWithHighestHitsTakenBlocked(conn);
+                        performanceCompendium.HitsTakenBlockedAverage = GetAverageHitsTakenBlockedCount(conn);
+                        performanceCompendium.HitsTakenBlockedMedian = GetMedianHitsTakenBlockedCount(conn);
+
+                        performanceCompendium.TotalActions = GetTotalCountOfValueInField("KeystrokesDictionary", "Quests", conn) + GetTotalCountOfValueInField("MouseInputDictionary", "Quests", conn) + GetTotalCountOfValueInField("GamepadInputDictionary", "Quests", conn);
+                        performanceCompendium.TotalHitsCount = GetTotalCountOfValueInField("HitCountDictionary", "Quests", conn);
+                        performanceCompendium.TotalHitsTakenBlocked = GetTotalCountOfValueInField("HitsTakenBlockedDictionary", "Quests", conn);
+
+                        performanceCompendium.HealthAverage = GetAverageOfField("Quests", "PlayerHPDictionary", conn);
+                        performanceCompendium.HealthMedian = GetMedianOfField("Quests", "PlayerHPDictionary", conn);
+                        performanceCompendium.HealthMode = GetModeOfField("Quests", "PlayerHPDictionary", conn);
+
+                        performanceCompendium.StaminaAverage = GetAverageOfField("Quests", "PlayerStaminaDictionary", conn);
+                        performanceCompendium.StaminaMedian = GetMedianOfField("Quests", "PlayerStaminaDictionary", conn);
+                        performanceCompendium.StaminaMode = GetModeOfField("Quests", "PlayerStaminaDictionary", conn);
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return performanceCompendium;
         }
 
         public MezFesCompendium GetMezFesCompendium()
         {
-            return new MezFesCompendium();
+            MezFesCompendium mezFesCompendium = new MezFesCompendium();
+            //using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            //{
+            //    conn.Open();
+            //    using (SQLiteTransaction transaction = conn.BeginTransaction())
+            //    {
+            //        /*
+
+            //         */
+            //        try
+            //        {
+            //            var query = @"";
+
+            //            using (var cmd = new SQLiteCommand(query, conn))
+            //            {
+            //                using (var reader = cmd.ExecuteReader())
+            //                {
+            //                    while (reader.Read())
+            //                    {
+
+            //                    }
+            //                }
+            //            }
+
+            //            //performanceCompendium.MostUsedWeaponType = mostCommonWeaponTypeID;
+
+            //            transaction.Commit();
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            HandleError(transaction, ex);
+            //        }
+            //    }
+            //}
+            return mezFesCompendium;
+        }
+
+        public MonsterCompendium GetMonsterCompendium()
+        {
+            MonsterCompendium monsterCompendium = new MonsterCompendium();
+            //using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            //{
+            //    conn.Open();
+            //    using (SQLiteTransaction transaction = conn.BeginTransaction())
+            //    {
+            //        /*
+
+            //         */
+            //        try
+            //        {
+            //            var query = @"";
+
+            //            using (var cmd = new SQLiteCommand(query, conn))
+            //            {
+            //                using (var reader = cmd.ExecuteReader())
+            //                {
+            //                    while (reader.Read())
+            //                    {
+
+            //                    }
+            //                }
+            //            }
+
+            //            //performanceCompendium.MostUsedWeaponType = mostCommonWeaponTypeID;
+
+            //            transaction.Commit();
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            HandleError(transaction, ex);
+            //        }
+            //    }
+            //}
+            return monsterCompendium;
         }
 
         public MiscellaneousCompendium GetMiscellaneousCompendium()
         {
-            return new MiscellaneousCompendium();
+            MiscellaneousCompendium miscellaneousCompendium = new MiscellaneousCompendium();
+            //using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            //{
+            //    conn.Open();
+            //    using (SQLiteTransaction transaction = conn.BeginTransaction())
+            //    {
+            //        /*
+                    
+            //         */
+            //        try
+            //        {
+            //            var query = @"";
+
+            //            using (var cmd = new SQLiteCommand(query, conn))
+            //            {
+            //                using (var reader = cmd.ExecuteReader())
+            //                {
+            //                    while (reader.Read())
+            //                    {
+
+            //                    }
+            //                }
+            //            }
+
+            //            //performanceCompendium.MostUsedWeaponType = mostCommonWeaponTypeID;
+
+            //            transaction.Commit();
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            HandleError(transaction, ex);
+            //        }
+            //    }
+            //}
+            return miscellaneousCompendium;
         }
 
         #endregion

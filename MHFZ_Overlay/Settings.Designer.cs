@@ -3034,5 +3034,41 @@ namespace MHFZ_Overlay {
                 this["DamageNumbersFontWeight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HotkeyOpenConfiguration {
+            get {
+                return ((string)(this["HotkeyOpenConfiguration"]));
+            }
+            set {
+                this["HotkeyOpenConfiguration"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HotkeyResetApplication {
+            get {
+                return ((string)(this["HotkeyResetApplication"]));
+            }
+            set {
+                this["HotkeyResetApplication"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HotkeyCloseApplication {
+            get {
+                return ((string)(this["HotkeyCloseApplication"]));
+            }
+            set {
+                this["HotkeyCloseApplication"] = value;
+            }
+        }
     }
 }

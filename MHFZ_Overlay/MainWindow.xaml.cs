@@ -72,6 +72,8 @@ namespace MHFZ_Overlay
     {
         public DataLoader DataLoader { get; set; }
 
+        private NotifyIcon _notifyIcon;
+
         #region click through
 
         private int originalStyle = 0;
