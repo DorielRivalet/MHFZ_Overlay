@@ -71,7 +71,10 @@
                                     <TextBlock Text="Summary of your statistics" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </StackPanel>
 
-                                <TextBlock Margin="0,10,0,0" ToolTip="Overview" TextWrapping="Wrap" Loaded="Compendium_Loaded"/>
+                                <StackPanel Orientation="Vertical" Margin="0,10,0,0" Loaded="CompendiumInformationStackPanel_Loaded">
+                                    <TextBlock TextWrapping="Wrap" Loaded="Compendium_Loaded"/>
+                                    <lvc:PolarChart ToolTip="Percentage is calculated by dividing the median with the highest registered value" Loaded="HunterPerformancePolarChart_Loaded" Width="500" Height="500" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                </StackPanel>
                             </StackPanel>
                         </DockPanel>
                     </Grid>

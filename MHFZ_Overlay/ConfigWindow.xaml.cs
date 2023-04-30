@@ -7,6 +7,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.WPF;
 using MHFZ_Overlay.Core.Class;
+using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Newtonsoft.Json;
 using NLog;
@@ -24,6 +25,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -1589,6 +1591,8 @@ namespace MHFZ_Overlay
         private CartesianChart graphChart;
         private TextBlock statsTextTextBlock;
         private CartesianChart personalBestChart;
+        private PolarChart hunterPerformanceChart;
+        private StackPanel compendiumInformationStackPanel;
         private string personalBestSelectedWeapon = "";
         private string personalBestSelectedType = "";
 
@@ -1733,9 +1737,9 @@ namespace MHFZ_Overlay
 
         private void CompendiumBtnCopyFile_Click(object sender, RoutedEventArgs e)
         {
-            compendiumTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-            CopyUIElementToClipboard(compendiumTextBlock);
-            compendiumTextBlock.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+            compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+            CopyUIElementToClipboard(compendiumInformationStackPanel);
+            compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
         }
 
         private ISeries[] Series { get; set; }
@@ -2629,6 +2633,104 @@ namespace MHFZ_Overlay
             graphChart.YAxes = YAxes;
         }
 
+        private string GetHunterPerformanceValueType(double value)
+        {
+            switch (value)
+            {
+                case 0:
+                    return "True Raw";
+                case 1:
+                    return "DPH";
+                case 2:
+                    return "DPS";
+                case 3:
+                    return "Hits/s";
+                case 4:
+                    return "Blocked Hits/s";
+                case 5:
+                    return "APM";
+                default:
+                    return "None";
+            }
+        }
+
+        private void SetPolarLineSeriesForHunterPerformance(PerformanceCompendium performanceCompendium)
+        {
+            List<ISeries> series = new();
+            ObservableCollection<double> performanceCollection = new();
+
+            performanceCollection.Add(performanceCompendium.TrueRawMedian / performanceCompendium.HighestTrueRaw);
+            performanceCollection.Add(performanceCompendium.SingleHitDamageMedian / performanceCompendium.HighestSingleHitDamage);
+            performanceCollection.Add(performanceCompendium.DPSMedian / performanceCompendium.HighestDPS);
+            performanceCollection.Add(performanceCompendium.HitsPerSecondMedian / performanceCompendium.HighestHitsPerSecond);
+            performanceCollection.Add(performanceCompendium.HitsTakenBlockedPerSecondMedian / performanceCompendium.HighestHitsTakenBlockedPerSecond);
+            performanceCollection.Add(performanceCompendium.ActionsPerMinuteMedian / performanceCompendium.HighestActionsPerMinute);
+
+            series.Add(new PolarLineSeries<double>
+            {
+                Values = performanceCollection,
+                LineSmoothness = 0,
+                GeometrySize = 0,
+                IsClosed = true,
+                GeometryFill = null,
+                GeometryStroke = null,
+                TooltipLabelFormatter = value => string.Format("{0}: {1:0.##}%", GetHunterPerformanceValueType(value.SecondaryValue), value.PrimaryValue * 100),
+                //DataLabelsFormatter = value => TimeSpan.FromSeconds(value.PrimaryValue / 30.0).ToString(@"hh\:mm\:ss"),
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            //XAxes = new Axis[]
+            //{
+            //    new Axis
+            //    {
+            //        TextSize=12,
+            //        Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+            //        NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+            //        LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+            //    }
+            //};
+
+            //YAxes = new Axis[]
+            //{
+            //    new Axis
+            //    {
+            //        NameTextSize= 12,
+            //        TextSize=12,
+            //        NamePadding= new LiveChartsCore.Drawing.Padding(0),
+            //        NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+            //        LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+            //    }
+            //};
+
+            PolarAxis[] RadiusAxes = new PolarAxis[]
+            {
+                new PolarAxis
+                {
+                    // formats the value as a number with 2 decimals.
+                    Labeler = value => string.Format("{0:0}%", value * 100),
+                    LabelsBackground = new LiveChartsCore.Drawing.LvcColor(0x1e,0x1e,0x2e,0xa8),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#cdd6f4a8")))
+                }
+            };
+
+            PolarAxis[] AngleAxes = new PolarAxis[]
+            {
+                new PolarAxis
+                {
+                    Labels = new[] { "TRaw", "DPH", "DPS", "Hits/s", "Blocks/s", "APM" },
+                    LabelsBackground = new LiveChartsCore.Drawing.LvcColor(0x1e,0x1e,0x2e,0xa8),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#cdd6f4a8"))),
+                    MinStep = 1,
+                    ForceStepToMin = true
+                }
+            };
+
+            hunterPerformanceChart.AngleAxes = AngleAxes;
+            hunterPerformanceChart.RadiusAxes = RadiusAxes;
+            hunterPerformanceChart.Series = series;
+        }
+
         private void GraphsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
@@ -3143,6 +3245,19 @@ namespace MHFZ_Overlay
                     personalBestChart.YAxes = PersonalBestYAxes;
                     break;
             }
+        }
+
+        private void HunterPerformancePolarChart_Loaded(object sender, RoutedEventArgs e)
+        {
+            var chart = sender as PolarChart;
+            hunterPerformanceChart = chart;
+            SetPolarLineSeriesForHunterPerformance(DatabaseManager.GetInstance().GetPerformanceCompendium());
+        }
+
+        private void CompendiumInformationStackPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            var stackPanel = sender as StackPanel;
+            compendiumInformationStackPanel = stackPanel;
         }
     }
     /* LoadConfig on startup
