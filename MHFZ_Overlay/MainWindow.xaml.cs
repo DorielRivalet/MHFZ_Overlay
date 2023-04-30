@@ -45,34 +45,50 @@ using Point = System.Windows.Point;
 namespace MHFZ_Overlay
 {
     /// <summary>
-    /// Create a Value Converter to disable the Up & Down Arrow buttons of the scrollbar
-    /// when the Thumb reaches the minimum & maximum position on the scroll track.
-    /// </summary>
-
-    public class ScrollLimitConverter : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if (values.Length == 2 && values[0] is double && values[1] is double)
-            {
-                return (double)values[0] == (double)values[1];
-            }
-            return false;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-    /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
         public DataLoader DataLoader { get; set; }
 
+        #region system tray
+
         private NotifyIcon _notifyIcon;
+
+        private void CreateSystemTrayIcon()
+        {
+            _notifyIcon = new NotifyIcon();
+            var iconPath = "UI\\Icons\\ico\\mhfzoverlayicon256.ico";
+            var iconStream = Application.GetResourceStream(new Uri(iconPath, UriKind.Relative)).Stream;
+            var icon = new System.Drawing.Icon(iconStream);
+            _notifyIcon.Icon = icon;
+            _notifyIcon.Text = "MHF-Z Overlay";
+            _notifyIcon.Visible = true;
+
+            var contextMenu = new ContextMenuStrip();
+            contextMenu.Items.Add("Open Configuration", null, Option1_Click);
+            contextMenu.Items.Add("Restart Application", null, Option2_Click);
+            contextMenu.Items.Add("Close Application", null, Option3_Click);
+
+            _notifyIcon.ContextMenuStrip = contextMenu;
+        }
+
+        private void Option1_Click(object sender, EventArgs e)
+        {
+            OpenConfigButton_Key();
+        }
+
+        private void Option2_Click(object sender, EventArgs e)
+        {
+            ReloadButton_Key();
+        }
+
+        private void Option3_Click(object sender, EventArgs e)
+        {
+            CloseButton_Key();
+        }
+
+        #endregion
 
         #region click through
 
@@ -468,6 +484,8 @@ namespace MHFZ_Overlay
             logger.Info("PROGRAM OPERATION: Found rendering tier {0}", renderingTier);
 
             DataLoader.model.ShowSaveIcon = false;
+
+            CreateSystemTrayIcon();
 
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
         }
@@ -2764,6 +2782,7 @@ namespace MHFZ_Overlay
         {
             Cleanup();
             databaseManager.StoreSessionTime(this);
+            _notifyIcon.Dispose();
             System.Windows.Forms.Application.Restart();
             System.Windows.Application.Current.Shutdown();
         }
@@ -2796,6 +2815,7 @@ namespace MHFZ_Overlay
         {
             Cleanup();
             databaseManager.StoreSessionTime(this);
+            _notifyIcon.Dispose();
             Environment.Exit(0);
         }
 

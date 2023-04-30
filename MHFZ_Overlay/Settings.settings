@@ -755,14 +755,5 @@
     <Setting Name="DamageNumbersFontWeight" Type="System.String" Scope="User">
       <Value Profile="(Default)">Bold</Value>
     </Setting>
-    <Setting Name="HotkeyOpenConfiguration" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="HotkeyResetApplication" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="HotkeyCloseApplication" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
   </Settings>
 </SettingsFile>

@@ -66,6 +66,10 @@ We strongly recommend that you verify the authenticity and integrity of the soft
 - `Shift+F5` Restart Overlay
 - `Shift+F6` Exit
 
+As an alternative to hotkeys, you can check your system tray options by right-clicking the icon.
+
+![System Tray options](./demo/systemtray.png)
+
 **It's recommended to start the overlay when you are done loading into Mezeporta.**
 
 If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/DorielRivalet/mhfz-overlay/issues).

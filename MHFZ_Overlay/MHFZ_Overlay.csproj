@@ -86,6 +86,7 @@
     <None Remove="UI\Icons\gif\scroll_rainbow.gif" />
     <None Remove="UI\Icons\guild_food.png" />
     <None Remove="UI\Icons\helm.png" />
+    <None Remove="UI\Icons\ico\mhfzoverlayicon256.ico" />
     <None Remove="UI\Icons\knife.png" />
     <None Remove="UI\Icons\loading.png" />
     <None Remove="UI\Icons\monster.png" />
@@ -288,6 +289,9 @@
   <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dorielrivalet_mhfz_overlay\CSharp\SonarLint.xml" Link="SonarLint.xml" />
     <Content Include="mhfzoverlayicon256.ico" />
+    <Resource Include="UI\Icons\ico\mhfzoverlayicon256.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="UI\Background\9.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

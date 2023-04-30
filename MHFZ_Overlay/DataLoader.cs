@@ -425,7 +425,18 @@ namespace MHFZ_Overlay
         {
             tools.SetProcessAppUserModelId();
             // show a welcome message when the app is first installed
-            if (firstRun) MessageBox.Show("【MHF-Z】Overlay is now running! Thanks for installing【MHF-Z】Overlay.\n\nHotkeys: Shift+F1 (Configuration) | Shift+F5 (Restart) | Shift+F6 (Close)\n\nPress Alt+Enter if your game resolution changed.\n\nThe overlay might take some time to start due to databases.\n\nHappy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (firstRun) MessageBox.Show(
+@"【MHF-Z】Overlay is now running! Thanks for installing【MHF-Z】Overlay.
+
+Hotkeys: Shift+F1 (Configuration) | Shift+F5 (Restart) | Shift+F6 (Close)
+
+As an alternative to hotkeys, you can check your system tray options by right-clicking the icon.
+
+Press Alt+Enter if your game resolution changed.
+
+The overlay might take some time to start due to databases.
+
+Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
