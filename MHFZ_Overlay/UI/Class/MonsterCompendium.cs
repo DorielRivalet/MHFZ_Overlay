@@ -15,7 +15,5 @@
         public double HighestMonsterSizeMultiplierRunID { get; set; }
         public double LowestMonsterSizeMultiplier { get; set; }
         public double LowestMonsterSizeMultiplierRunID { get; set; }
-        public long TotalLargeMonstersHunted { get; set; }
-        public long TotalSmallMonstersHunted { get; set; }
     }
 }

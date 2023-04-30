@@ -6269,6 +6269,185 @@ Party Size: {32}",
             }
         }
 
+        private int CalculateTotalLargeMonstersHunted()
+        {
+            return RoadFatalisSlain() +
+                FirstDistrictDuremudiraSlays() +
+                SecondDistrictDuremudiraSlays() +
+                RathianHunted() +
+                FatalisHunted() +
+                YianKutKuHunted() +
+                LaoShanLungHunted() +
+                CephadromeHunted() +
+                RathalosHunted() +
+                DiablosHunted() +
+                KhezuHunted() +
+                GraviosHunted() +
+                GypcerosHunted() +
+                PlesiothHunted() +
+                BasariosHunted() +
+                MonoblosHunted() +
+                VelocidromeHunted() +
+                GendromeHunted() +
+                IodromeHunted() +
+                KirinHunted() +
+                CrimsonFatalisHunted() +
+                PinkRathianHunted() +
+                BlueYianKutKuHunted() +
+                PurpleGypcerosHunted() +
+                YianGarugaHunted() +
+                SilverRathalosHunted() +
+                GoldRathianHunted() +
+                BlackDiablosHunted() +
+                WhiteMonoblosHunted() +
+                RedKhezuHunted() +
+                GreenPlesiothHunted() +
+                BlackGraviosHunted() +
+                DaimyoHermitaurHunted() +
+                AzureRathalosHunted() +
+                AshenLaoShanLungHunted() +
+                BlangongaHunted() +
+                CongalalaHunted() +
+                RajangHunted() +
+
+                KushalaDaoraHunted() +
+                ShenGaorenHunted() +
+
+                YamaTsukamiHunted() +
+                ChameleosHunted() +
+                RustedKushalaDaoraHunted() +
+
+
+                LunastraHunted() +
+                TeostraHunted() +
+                ShogunCeanataurHunted() +
+                BulldromeHunted() +
+                WhiteFatalisHunted() +
+
+                HypnocHunted() +
+                VolganosHunted() +
+                TigrexHunted() +
+                AkantorHunted() +
+                BrightHypnocHunted() +
+                RedVolganosHunted() +
+                EspinasHunted() +
+                OrangeEspinasHunted() +
+                SilverHypnocHunted() +
+                AkuraVashimuHunted() +
+                AkuraJebiaHunted() +
+
+                BerukyurosuHunted() +
+                PariapuriaHunted() +
+                WhiteEspinasHunted() +
+                KamuOrugaronHunted() +
+                NonoOrugaronHunted() +
+                DyuragauaHunted() +
+                DoragyurosuHunted() +
+                GurenzeburuHunted() +
+                RukodioraHunted() +
+                UnknownHunted() +
+                GogomoaHunted() +
+                TaikunZamuzaHunted() +
+                AbioruguHunted() +
+                KuarusepusuHunted() +
+                OdibatorasuHunted() +
+                DisufiroaHunted() +
+                RebidioraHunted() +
+                AnorupatisuHunted() +
+                HyujikikiHunted() +
+                MidogaronHunted() +
+                GiaoruguHunted() +
+                MiRuHunted() +
+                FarunokkuHunted() +
+                PokaradonHunted() +
+                ShantienHunted() +
+                GoruganosuHunted() +
+                AruganosuHunted() +
+                BaruragaruHunted() +
+                ZerureusuHunted() +
+                GougarfHunted() +
+                ForokururuHunted() +
+                MeraginasuHunted() +
+                DiorexHunted() +
+                GarubaDaoraHunted() +
+                InagamiHunted() +
+                VarusaburosuHunted() +
+                PoborubarumuHunted() +
+
+                GureadomosuHunted() +
+                HarudomeruguHunted() +
+                ToridclessHunted() +
+                GasurabazuraHunted() +
+                YamaKuraiHunted() +
+                ZinogreHunted() +
+                DeviljhoHunted() +
+                BrachydiosHunted() +
+                ToaTesukatoraHunted() +
+                BariothHunted() +
+                UragaanHunted() +
+                StygianZinogreHunted() +
+                GuanzorumuHunted() +
+                StarvingDeviljhoHunted() +
+                VoljangHunted() +
+                NargacugaHunted() +
+                KeoaruboruHunted() +
+                ZenaserisuHunted() +
+                GoreMagalaHunted() +
+                BlinkingNargacugaHunted() +
+                ShagaruMagalaHunted() +
+                AmatsuHunted() +
+                ElzelionHunted() +
+                ArrogantDuremudiraHunted() +
+                SeregiosHunted() +
+                BogabadorumuHunted() +
+                BlitzkriegBogabadorumuHunted() +
+                SparklingZerureusuHunted() +
+                KingShakalakaHunted();
+        }
+
+        private int CalculateTotalSmallMonstersHunted()
+        {
+            return KelbiHunted() +
+            MosswineHunted() +
+            BullfangoHunted() +
+
+            FelyneHunted() +
+            AptonothHunted() +
+            GenpreyHunted() +
+            VelocipreyHunted() +
+            VespoidHunted() +
+            MelynxHunted() +
+            HornetaurHunted() +
+            ApcerosHunted() +
+            RocksHunted() +
+            IopreyHunted() +
+            CephalosHunted() +
+
+            GiapreyHunted() +
+
+            GreatThunderbugHunted() +
+
+            ShakalakaHunted() +
+            BlangoHunted() +
+            CongaHunted() +
+            RemobraHunted() +
+            HermitaurHunted() +
+            AntekaHunted() +
+            PopoHunted() +
+
+            CeanataurHunted() +
+
+            CactusHunted() +
+            GorgeObjectsHunted() +
+            BurukkuHunted() +
+            ErupeHunted() +
+            PokaraHunted() +
+            UrukiHunted() +
+
+            KusubamiHunted() +
+            PSO2RappyHunted();
+        }
+
         /// <summary>
         /// Generates the compendium.
         /// </summary>
@@ -6427,8 +6606,8 @@ Party Size: {32}",
             var monster1SizeMultiplierLowest = monsterCompendium.LowestMonsterSizeMultiplier;
             var monster1SizeMultiplierLowestRunID = monsterCompendium.LowestMonsterSizeMultiplierRunID;
 
-            var totalLargeMonstersHunted = monsterCompendium.TotalLargeMonstersHunted;
-            var totalSmallMonstersHunted = monsterCompendium.TotalSmallMonstersHunted;
+            var totalLargeMonstersHunted = CalculateTotalLargeMonstersHunted();
+            var totalSmallMonstersHunted = CalculateTotalSmallMonstersHunted();
 
             var totalOverlaySessions = miscellaneousCompendium.TotalOverlaySessions;
             var sessionDurationHighest = miscellaneousCompendium.HighestSessionDuration;

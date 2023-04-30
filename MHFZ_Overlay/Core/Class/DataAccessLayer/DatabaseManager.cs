@@ -7972,7 +7972,6 @@ namespace MHFZ_Overlay
             return modeValue;
         }
 
-
         private (double, long) GetRowWithHighestValue(string tableName, string fieldName, SQLiteConnection conn)
         {
             var query = $"SELECT {fieldName}, RunID FROM {tableName}";
@@ -8348,6 +8347,76 @@ namespace MHFZ_Overlay
                 return (double)command.ExecuteScalar();
             }
         }
+
+        private (double, long) GetRecordWithHighestValueInField(SQLiteConnection conn, string tableName, string fieldName)
+        {
+            var query = $"SELECT RunID, {fieldName} FROM {tableName}";
+            long highestValueRunID = 0;
+            double highestValue = 0;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long runID = (long)reader["RunID"];
+                        string fieldValueString = (string)reader[fieldName];
+
+                        if (string.IsNullOrEmpty(fieldValueString) || fieldValueString == "{}")
+                            continue;
+
+                        var fieldValue = JObject.Parse(fieldValueString)
+                                                .ToObject<Dictionary<double, Dictionary<double, double>>>();
+
+                        double fieldValueMax = fieldValue.Max(kv1 => kv1.Value.Max(kv2 => kv2.Value));
+                        if (fieldValueMax > highestValue)
+                        {
+                            highestValue = fieldValueMax;
+                            highestValueRunID = runID;
+                        }
+                    }
+                }
+            }
+
+            return (highestValue, highestValueRunID);
+        }
+
+        private (double, long) GetRecordWithLowestValueInField(SQLiteConnection conn, string tableName, string fieldName)
+        {
+            var query = $"SELECT RunID, {fieldName} FROM {tableName}";
+            long lowestValueRunID = 0;
+            double lowestValue = double.MaxValue;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long runID = (long)reader["RunID"];
+                        string fieldValueString = (string)reader[fieldName];
+
+                        if (string.IsNullOrEmpty(fieldValueString) || fieldValueString == "{}")
+                            continue;
+
+                        var fieldValue = JObject.Parse(fieldValueString)
+                                                .ToObject<Dictionary<double, Dictionary<double, double>>>();
+
+                        double value = fieldValue.Min(kv1 => kv1.Value.Min(kv2 => kv2.Value));
+                        if (value < lowestValue)
+                        {
+                            lowestValue = value;
+                            lowestValueRunID = runID;
+                        }
+                    }
+                }
+            }
+
+            return (lowestValue, lowestValueRunID);
+        }
+
+
 
 
         #endregion
@@ -9288,39 +9357,34 @@ namespace MHFZ_Overlay
         public MonsterCompendium GetMonsterCompendium()
         {
             MonsterCompendium monsterCompendium = new MonsterCompendium();
-            //using (SQLiteConnection conn = new SQLiteConnection(dataSource))
-            //{
-            //    conn.Open();
-            //    using (SQLiteTransaction transaction = conn.BeginTransaction())
-            //    {
-            //        /*
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    /*
+                    public long TotalLargeMonstersHunted { get; set; }
+                    public long TotalSmallMonstersHunted { get; set; }
+                     */
+                    try
+                    {
+                        (monsterCompendium.HighestMonsterAttackMultiplier, monsterCompendium.HighestMonsterAttackMultiplierRunID) = GetRecordWithHighestValueInField(conn, "Quests", "Monster1AttackMultiplierDictionary");
+                        (monsterCompendium.LowestMonsterAttackMultiplier, monsterCompendium.LowestMonsterAttackMultiplierRunID) = GetRecordWithLowestValueInField(conn, "Quests", "Monster1AttackMultiplierDictionary");
 
-            //         */
-            //        try
-            //        {
-            //            var query = @"";
+                        (monsterCompendium.HighestMonsterDefenseRate, monsterCompendium.HighestMonsterDefenseRateRunID) = GetRecordWithHighestValueInField(conn, "Quests", "Monster1DefenseRateDictionary");
+                        (monsterCompendium.LowestMonsterDefenseRate, monsterCompendium.LowestMonsterDefenseRateRunID) = GetRecordWithLowestValueInField(conn, "Quests", "Monster1DefenseRateDictionary");
 
-            //            using (var cmd = new SQLiteCommand(query, conn))
-            //            {
-            //                using (var reader = cmd.ExecuteReader())
-            //                {
-            //                    while (reader.Read())
-            //                    {
+                        (monsterCompendium.HighestMonsterSizeMultiplier, monsterCompendium.HighestMonsterSizeMultiplierRunID) = GetRecordWithHighestValueInField(conn, "Quests", "Monster1SizeMultiplierDictionary");
+                        (monsterCompendium.LowestMonsterSizeMultiplier, monsterCompendium.LowestMonsterSizeMultiplierRunID) = GetRecordWithLowestValueInField(conn, "Quests", "Monster1SizeMultiplierDictionary");
 
-            //                    }
-            //                }
-            //            }
-
-            //            //performanceCompendium.MostUsedWeaponType = mostCommonWeaponTypeID;
-
-            //            transaction.Commit();
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            HandleError(transaction, ex);
-            //        }
-            //    }
-            //}
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
             return monsterCompendium;
         }
 
