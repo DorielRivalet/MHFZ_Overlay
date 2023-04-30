@@ -2784,6 +2784,8 @@ namespace MHFZ_Overlay
         {
             Cleanup();
             databaseManager.StoreSessionTime(this);
+            _notifyIcon.Visible = false;
+            _notifyIcon.Icon = null;
             _notifyIcon.Dispose();
             System.Windows.Forms.Application.Restart();
             System.Windows.Application.Current.Shutdown();
@@ -2817,6 +2819,8 @@ namespace MHFZ_Overlay
         {
             Cleanup();
             databaseManager.StoreSessionTime(this);
+            _notifyIcon.Visible = false;
+            _notifyIcon.Icon = null;
             _notifyIcon.Dispose();
             Environment.Exit(0);
         }
