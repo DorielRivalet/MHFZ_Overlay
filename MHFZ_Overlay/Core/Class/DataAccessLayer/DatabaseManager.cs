@@ -8357,6 +8357,247 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Get the mode value of a given field in a given table
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="table"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
+        private static long GetModeValue(string field, string table, SQLiteConnection conn)
+        {
+            string query = $"SELECT {field}, COUNT(*) as count FROM {table} GROUP BY {field} ORDER BY count DESC LIMIT 1";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return reader.GetInt64(0);
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Gets the total unique armor pieces.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private long GetTotalUniqueArmorPieces(SQLiteConnection conn)
+        {
+            long totalUniqueArmorPieces = 0;
+
+            var query = @"
+                            SELECT 
+                                COUNT(DISTINCT HeadID) + 
+                                COUNT(DISTINCT ChestID) + 
+                                COUNT(DISTINCT ArmsID) + 
+                                COUNT(DISTINCT WaistID) + 
+                                COUNT(DISTINCT LegsID) AS TotalUniqueArmorPieces
+                            FROM PlayerGear
+                        ";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        totalUniqueArmorPieces += (long)reader["TotalUniqueArmorPieces"];
+                    }
+                }
+            }
+
+            return totalUniqueArmorPieces;
+        }
+
+        /// <summary>
+        /// Gets the total unique weapon i ds.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private long GetTotalUniqueWeaponIDs(SQLiteConnection conn)
+        {
+            long totalUniqueWeaponIDs = 0;
+
+            var query = @"
+                            SELECT 
+                                COUNT(DISTINCT BlademasterWeaponID) + 
+                                COUNT(DISTINCT GunnerWeaponID) AS TotalUniqueWeaponIDs
+                            FROM PlayerGear
+                        ";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        totalUniqueWeaponIDs += (long)reader["TotalUniqueWeaponIDs"];
+                    }
+                }
+            }
+
+            return totalUniqueWeaponIDs;
+        }
+
+        /// <summary>
+        /// Gets the total unique decorations. Does not count weapon slots, as those are meant to use sigils
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private long GetTotalUniqueDecorations(SQLiteConnection conn)
+        {
+            long totalUniqueDecorations = 0;
+
+            var query = @"
+                        SELECT 
+                            COUNT(DISTINCT HeadSlot1ID) +
+                            COUNT(DISTINCT HeadSlot2ID) +
+                            COUNT(DISTINCT HeadSlot3ID) +
+                            COUNT(DISTINCT ChestSlot1ID) +
+                            COUNT(DISTINCT ChestSlot2ID) +
+                            COUNT(DISTINCT ChestSlot3ID) +
+                            COUNT(DISTINCT ArmsSlot1ID) +
+                            COUNT(DISTINCT ArmsSlot2ID) +
+                            COUNT(DISTINCT ArmsSlot3ID) +
+                            COUNT(DISTINCT WaistSlot1ID) +
+                            COUNT(DISTINCT WaistSlot2ID) +
+                            COUNT(DISTINCT WaistSlot3ID) +
+                            COUNT(DISTINCT LegsSlot1ID) +
+                            COUNT(DISTINCT LegsSlot2ID) +
+                            COUNT(DISTINCT LegsSlot3ID) AS TotalUniqueDecorations
+                        FROM PlayerGear
+                        ";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        totalUniqueDecorations += (long)reader["TotalUniqueDecorations"];
+                    }
+                }
+            }
+
+            return totalUniqueDecorations;
+        }
+
+        /// <summary>
+        /// Gets the most common decoration identifier.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private long GetMostCommonDecorationID(SQLiteConnection conn)
+        {
+            Dictionary<long, long> decorationCounts = new Dictionary<long, long>();
+
+            var query = @"
+                        SELECT HeadSlot1ID, HeadSlot2ID, HeadSlot3ID, 
+                               ChestSlot1ID, ChestSlot2ID, ChestSlot3ID, 
+                               ArmsSlot1ID, ArmsSlot2ID, ArmsSlot3ID, 
+                               WaistSlot1ID, WaistSlot2ID, WaistSlot3ID, 
+                               LegsSlot1ID, LegsSlot2ID, LegsSlot3ID 
+                        FROM PlayerGear
+                        ";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long?[] decorationIDs = {
+                                        reader.IsDBNull(0) ? null : (long?)reader.GetInt64(0),
+                                        reader.IsDBNull(1) ? null : (long?)reader.GetInt64(1),
+                                        reader.IsDBNull(2) ? null : (long?)reader.GetInt64(2),
+                                        reader.IsDBNull(3) ? null : (long?)reader.GetInt64(3),
+                                        reader.IsDBNull(4) ? null : (long?)reader.GetInt64(4),
+                                        reader.IsDBNull(5) ? null : (long?)reader.GetInt64(5),
+                                        reader.IsDBNull(6) ? null : (long?)reader.GetInt64(6),
+                                        reader.IsDBNull(7) ? null : (long?)reader.GetInt64(7),
+                                        reader.IsDBNull(8) ? null : (long?)reader.GetInt64(8),
+                                        reader.IsDBNull(9) ? null : (long?)reader.GetInt64(9),
+                                        reader.IsDBNull(10) ? null : (long?)reader.GetInt64(10),
+                                        reader.IsDBNull(11) ? null : (long?)reader.GetInt64(11),
+                                        reader.IsDBNull(12) ? null : (long?)reader.GetInt64(12),
+                                        reader.IsDBNull(13) ? null : (long?)reader.GetInt64(13),
+                                    };
+
+                        foreach (long? decorationID in decorationIDs)
+                        {
+                            if (decorationID.HasValue && decorationID.Value != 0)
+                            {
+                                if (decorationCounts.ContainsKey(decorationID.Value))
+                                {
+                                    decorationCounts[decorationID.Value]++;
+                                }
+                                else
+                                {
+                                    decorationCounts[decorationID.Value] = 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            long? mostCommonDecorationID = decorationCounts.OrderByDescending(x => x.Value).Select(x => (long?)x.Key).FirstOrDefault();
+
+            return (long)mostCommonDecorationID;        
+        }
+
+        private long GetLeastUsedArmorSkillID(SQLiteConnection conn)
+        {
+            long leastUsedArmorSkillID = 0;
+
+            var query = @"
+                        SELECT ActiveSkill1ID, ActiveSkill2ID, ActiveSkill3ID, ActiveSkill4ID, ActiveSkill5ID,
+                               ActiveSkill6ID, ActiveSkill7ID, ActiveSkill8ID, ActiveSkill9ID, ActiveSkill10ID,
+                               ActiveSkill11ID, ActiveSkill12ID, ActiveSkill13ID, ActiveSkill14ID, ActiveSkill15ID,
+                               ActiveSkill16ID, ActiveSkill17ID, ActiveSkill18ID, ActiveSkill19ID
+                        FROM ActiveSkills
+                        ";
+
+            Dictionary<long, long> skillCounts = new Dictionary<long, long>();
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            long skillID = reader.GetInt64(i);
+
+                            if (skillID != 0)
+                            {
+                                if (skillCounts.ContainsKey(skillID))
+                                {
+                                    skillCounts[skillID]++;
+                                }
+                                else
+                                {
+                                    skillCounts[skillID] = 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            leastUsedArmorSkillID = skillCounts.OrderBy(x => x.Value).Select(x => x.Key).FirstOrDefault();
+
+            return (long)leastUsedArmorSkillID;
+        }
 
         /// <summary>
         /// Gets the maximum value with WHERE clause.
@@ -9106,7 +9347,6 @@ namespace MHFZ_Overlay
             return questCompendium;
         }
 
-        // TODO: put in functions
         public GearCompendium GetGearCompendium()
         {
             GearCompendium gearCompendium = new GearCompendium();
@@ -9117,213 +9357,17 @@ namespace MHFZ_Overlay
                 {
                     try
                     {
-                        Dictionary<long, long> weaponTypeCount = new Dictionary<long, long>();
+                        gearCompendium.MostUsedWeaponType = GetModeValue("WeaponTypeID", "PlayerGear", conn);
 
-                        var query = @"SELECT WeaponTypeID FROM PlayerGear";
+                        gearCompendium.TotalUniqueArmorPiecesUsed = GetTotalUniqueArmorPieces(conn);
 
-                        using (var cmd = new SQLiteCommand(query, conn))
-                        {
-                            using (var reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    long id = (long)reader["WeaponTypeID"];
+                        gearCompendium.TotalUniqueWeaponsUsed = GetTotalUniqueWeaponIDs(conn);
 
-                                    if (weaponTypeCount.ContainsKey(id))
-                                    {
-                                        weaponTypeCount[id]++;
-                                    }
-                                    else
-                                    {
-                                        weaponTypeCount.Add(id, 1);
-                                    }
-                                }
-                            }
-                        }
+                        gearCompendium.TotalUniqueDecorationsUsed = GetTotalUniqueDecorations(conn);
 
-                        long mostCommonWeaponTypeID = weaponTypeCount.OrderByDescending(x => x.Value).First().Key;
+                        gearCompendium.MostCommonDecorationID = GetMostCommonDecorationID(conn);
 
-                        gearCompendium.MostUsedWeaponType = mostCommonWeaponTypeID;
-
-                        long totalUniqueArmorPieces = 0;
-
-                        query = @"
-                            SELECT 
-                                COUNT(DISTINCT HeadID) + 
-                                COUNT(DISTINCT ChestID) + 
-                                COUNT(DISTINCT ArmsID) + 
-                                COUNT(DISTINCT WaistID) + 
-                                COUNT(DISTINCT LegsID) AS TotalUniqueArmorPieces
-                            FROM PlayerGear
-                        ";
-
-                        using (var cmd = new SQLiteCommand(query, conn))
-                        {
-                            using (var reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    totalUniqueArmorPieces += (long)reader["TotalUniqueArmorPieces"];
-                                }
-                            }
-                        }
-
-                        gearCompendium.TotalUniqueArmorPiecesUsed = totalUniqueArmorPieces;
-
-                        long totalUniqueWeaponIDs = 0;
-
-                        query = @"
-                            SELECT 
-                                COUNT(DISTINCT BlademasterWeaponID) + 
-                                COUNT(DISTINCT GunnerWeaponID) AS TotalUniqueWeaponIDs
-                            FROM PlayerGear
-                        ";
-
-                        using (var cmd = new SQLiteCommand(query, conn))
-                        {
-                            using (var reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    totalUniqueWeaponIDs += (long)reader["TotalUniqueWeaponIDs"];
-                                }
-                            }
-                        }
-
-                        gearCompendium.TotalUniqueWeaponsUsed = totalUniqueWeaponIDs;
-
-                        long totalUniqueDecorations = 0;
-
-                        query = @"
-                        SELECT 
-                            COUNT(DISTINCT HeadSlot1ID) +
-                            COUNT(DISTINCT HeadSlot2ID) +
-                            COUNT(DISTINCT HeadSlot3ID) +
-                            COUNT(DISTINCT ChestSlot1ID) +
-                            COUNT(DISTINCT ChestSlot2ID) +
-                            COUNT(DISTINCT ChestSlot3ID) +
-                            COUNT(DISTINCT ArmsSlot1ID) +
-                            COUNT(DISTINCT ArmsSlot2ID) +
-                            COUNT(DISTINCT ArmsSlot3ID) +
-                            COUNT(DISTINCT WaistSlot1ID) +
-                            COUNT(DISTINCT WaistSlot2ID) +
-                            COUNT(DISTINCT WaistSlot3ID) +
-                            COUNT(DISTINCT LegsSlot1ID) +
-                            COUNT(DISTINCT LegsSlot2ID) +
-                            COUNT(DISTINCT LegsSlot3ID) AS TotalUniqueDecorations
-                        FROM PlayerGear
-                        ";
-
-                        using (var cmd = new SQLiteCommand(query, conn))
-                        {
-                            using (var reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    totalUniqueDecorations += (long)reader["TotalUniqueDecorations"];
-                                }
-                            }
-                        }
-
-                        gearCompendium.TotalUniqueDecorationsUsed = totalUniqueDecorations;
-
-                        Dictionary<long, long> decorationCounts = new Dictionary<long, long>();
-
-                        query = @"
-                        SELECT HeadSlot1ID, HeadSlot2ID, HeadSlot3ID, 
-                               ChestSlot1ID, ChestSlot2ID, ChestSlot3ID, 
-                               ArmsSlot1ID, ArmsSlot2ID, ArmsSlot3ID, 
-                               WaistSlot1ID, WaistSlot2ID, WaistSlot3ID, 
-                               LegsSlot1ID, LegsSlot2ID, LegsSlot3ID 
-                        FROM PlayerGear
-                        ";
-
-                        using (var cmd = new SQLiteCommand(query, conn))
-                        {
-                            using (var reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    long?[] decorationIDs = {
-                                        reader.IsDBNull(0) ? null : (long?)reader.GetInt64(0),
-                                        reader.IsDBNull(1) ? null : (long?)reader.GetInt64(1),
-                                        reader.IsDBNull(2) ? null : (long?)reader.GetInt64(2),
-                                        reader.IsDBNull(3) ? null : (long?)reader.GetInt64(3),
-                                        reader.IsDBNull(4) ? null : (long?)reader.GetInt64(4),
-                                        reader.IsDBNull(5) ? null : (long?)reader.GetInt64(5),
-                                        reader.IsDBNull(6) ? null : (long?)reader.GetInt64(6),
-                                        reader.IsDBNull(7) ? null : (long?)reader.GetInt64(7),
-                                        reader.IsDBNull(8) ? null : (long?)reader.GetInt64(8),
-                                        reader.IsDBNull(9) ? null : (long?)reader.GetInt64(9),
-                                        reader.IsDBNull(10) ? null : (long?)reader.GetInt64(10),
-                                        reader.IsDBNull(11) ? null : (long?)reader.GetInt64(11),
-                                        reader.IsDBNull(12) ? null : (long?)reader.GetInt64(12),
-                                        reader.IsDBNull(13) ? null : (long?)reader.GetInt64(13),
-                                    };
-
-                                    foreach (long? decorationID in decorationIDs)
-                                    {
-                                        if (decorationID.HasValue && decorationID.Value != 0)
-                                        {
-                                            if (decorationCounts.ContainsKey(decorationID.Value))
-                                            {
-                                                decorationCounts[decorationID.Value]++;
-                                            }
-                                            else
-                                            {
-                                                decorationCounts[decorationID.Value] = 1;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        long? mostCommonDecorationID = decorationCounts.OrderByDescending(x => x.Value).Select(x => (long?)x.Key).FirstOrDefault();
-
-                        gearCompendium.MostCommonDecorationID = (long)mostCommonDecorationID;
-
-                        long leastUsedArmorSkillID = 0;
-
-                        query = @"
-                        SELECT ActiveSkill1ID, ActiveSkill2ID, ActiveSkill3ID, ActiveSkill4ID, ActiveSkill5ID,
-                               ActiveSkill6ID, ActiveSkill7ID, ActiveSkill8ID, ActiveSkill9ID, ActiveSkill10ID,
-                               ActiveSkill11ID, ActiveSkill12ID, ActiveSkill13ID, ActiveSkill14ID, ActiveSkill15ID,
-                               ActiveSkill16ID, ActiveSkill17ID, ActiveSkill18ID, ActiveSkill19ID
-                        FROM ActiveSkills
-                        ";
-
-                        Dictionary<long, long> skillCounts = new Dictionary<long, long>();
-
-                        using (var cmd = new SQLiteCommand(query, conn))
-                        {
-                            using (var reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    for (int i = 0; i < reader.FieldCount; i++)
-                                    {
-                                        long skillID = reader.GetInt64(i);
-
-                                        if (skillID != 0)
-                                        {
-                                            if (skillCounts.ContainsKey(skillID))
-                                            {
-                                                skillCounts[skillID]++;
-                                            }
-                                            else
-                                            {
-                                                skillCounts[skillID] = 1;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        leastUsedArmorSkillID = skillCounts.OrderBy(x => x.Value).Select(x => x.Key).FirstOrDefault();
-
-                        gearCompendium.LeastUsedArmorSkill = (long)leastUsedArmorSkillID;
+                        gearCompendium.LeastUsedArmorSkill = GetLeastUsedArmorSkillID(conn);
 
                         transaction.Commit();
                     }
