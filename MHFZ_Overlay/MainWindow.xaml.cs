@@ -49,6 +49,9 @@ namespace MHFZ_Overlay
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// DataLoader
+        /// </summary>
         public DataLoader DataLoader { get; set; }
 
         #region system tray
@@ -359,12 +362,11 @@ namespace MHFZ_Overlay
 
         #endregion
 
+        #region main
+
         public DateTime ProgramStart;
         public static DateTime ProgramStartStatic;
         public DateTime ProgramEnd;
-
-
-        #region main
 
         // Declare a dictionary to map keys to images
         private readonly Dictionary<Keys, Image> _keyImages = new Dictionary<Keys, Image>();
@@ -2981,7 +2983,10 @@ namespace MHFZ_Overlay
         }
 
         /// <summary>
-        /// Checks the mezeporta festival score. At minigame end, the score is the max obtained, with the area id as the minigame id, then shortly goes to 0 score with the same area id, then switches area id to the lobby id shortly afterwards. 
+        /// Checks the mezeporta festival score. 
+        /// At minigame end, the score is the max obtained, with the area id as the minigame id, 
+        /// then shortly goes to 0 score with the same area id, 
+        /// then switches area id to the lobby id shortly afterwards. 
         /// </summary>
         private void CheckMezFesScore()
         {
@@ -3003,8 +3008,8 @@ namespace MHFZ_Overlay
                 // Read player score from corresponding memory address based on current area ID
                 int score = GetMezFesMinigameScore(areaID);
 
-                // Update current score with new score if it's greater
-                if (score > DataLoader.model.previousMezFesScore)
+                // Update current score with new score if it's greater and doesn't surpass the UI limit
+                if (score > DataLoader.model.previousMezFesScore && score <= 999999)
                 {
                     DataLoader.model.previousMezFesScore = score;
                 }
@@ -3358,6 +3363,4 @@ namespace MHFZ_Overlay
 /// ## figure out a way to make templates
 /// [O] body parts
 /// [] status panel
-/// [X] Tooltips for Configuration
-/// [X]Configuration for Damage numbers
 /// </TODO>
