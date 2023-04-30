@@ -8197,6 +8197,159 @@ namespace MHFZ_Overlay
             return count;
         }
 
+        /// <summary>
+        /// Get the maximum value of a given field in a given table
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="table"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
+        private static long GetMaxValue(string field, string table, SQLiteConnection conn)
+        {
+            string query = $"SELECT MAX({field}) FROM {table}";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                long maxValue = (long)cmd.ExecuteScalar();
+                return maxValue;
+            }
+        }
+
+        /// <summary>
+        /// Get the minimum value of a given field in a given table
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="table"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
+        private static long GetMinValue(string field, string table, SQLiteConnection conn)
+        {
+            string query = $"SELECT MIN({field}) FROM {table}";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                long minValue = (long)cmd.ExecuteScalar();
+                return minValue;
+            }
+        }
+
+        /// <summary>
+        /// Get the average value of a given field in a given table
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="table"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
+        private static double GetAvgValue(string field, string table, SQLiteConnection conn)
+        {
+            string query = $"SELECT AVG({field}) FROM {table}";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                double avgValue = (double)cmd.ExecuteScalar();
+                return avgValue;
+            }
+        }
+
+        /// <summary>
+        /// Get the median value of a given field in a given table
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="table"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
+        private static double GetMedianValue(string field, string table, SQLiteConnection conn)
+        {
+            string query = $"SELECT {field} FROM {table} ORDER BY {field}";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    int count = reader.FieldCount;
+                    long[] values = new long[count];
+                    int index = 0;
+                    while (reader.Read())
+                    {
+                        values[index++] = reader.GetInt64(0);
+                    }
+                    Array.Sort(values);
+                    double medianValue = (count % 2 == 0) ? ((double)values[count / 2] + (double)values[(count / 2) - 1]) / 2 : (double)values[count / 2];
+                    return medianValue;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the maximum value with WHERE clause.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <param name="whereField">The where field.</param>
+        /// <param name="whereValue">The where value.</param>
+        /// <returns></returns>
+        private static long GetMaxValueWithWhere(string field, string table, SQLiteConnection conn, string whereField, long whereValue)
+        {
+            string query = $"SELECT MAX({field}) FROM {table} WHERE {whereField} = {whereValue}";
+            using (var command = new SQLiteCommand(query, conn))
+            {
+                return (long)command.ExecuteScalar();
+            }
+        }
+
+        /// <summary>
+        /// Gets the minimum value with WHERE clause.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <param name="whereField">The where field.</param>
+        /// <param name="whereValue">The where value.</param>
+        /// <returns></returns>
+        private static long GetMinValueWithWhere(string field, string table, SQLiteConnection conn, string whereField, long whereValue)
+        {
+            string query = $"SELECT MIN({field}) FROM {table} WHERE {whereField} = {whereValue}";
+            using (var command = new SQLiteCommand(query, conn))
+            {
+                return (long)command.ExecuteScalar();
+            }
+        }
+
+        /// <summary>
+        /// Gets the average value with WHERE clause.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <param name="whereField">The where field.</param>
+        /// <param name="whereValue">The where value.</param>
+        /// <returns></returns>
+        private static double GetAverageValueWithWhere(string field, string table, SQLiteConnection conn, string whereField, long whereValue)
+        {
+            string query = $"SELECT AVG({field}) FROM {table} WHERE {whereField} = {whereValue}";
+            using (var command = new SQLiteCommand(query, conn))
+            {
+                return (double)command.ExecuteScalar();
+            }
+        }
+
+        /// <summary>
+        /// Gets the median value with WHERE clause.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <param name="whereField">The where field.</param>
+        /// <param name="whereValue">The where value.</param>
+        /// <returns></returns>
+        private static double GetMedianValueWithWhere(string field, string table, SQLiteConnection conn, string whereField, long whereValue)
+        {
+            // TODO: not sure if correct
+            string query = $"SELECT AVG({field}) FROM (SELECT {field}, ROW_NUMBER() OVER (ORDER BY {field}) AS RowNum, COUNT(*) OVER() AS TotalRows FROM {table} WHERE {whereField} = {whereValue}) temp WHERE RowNum BETWEEN (TotalRows/2) + 1 AND (TotalRows/2) + 2;";
+            using (var command = new SQLiteCommand(query, conn))
+            {
+                return (double)command.ExecuteScalar();
+            }
+        }
+
+
         #endregion
 
         #region compendium
@@ -9093,33 +9246,33 @@ namespace MHFZ_Overlay
                 conn.Open();
                 using (SQLiteTransaction transaction = conn.BeginTransaction())
                 {
-                    /*
-                    public long UrukiPachinkoTimesPlayed { get; set; }
-                    public long UrukiPachinkoHighscore { get; set; }
-                    public double UrukiPachinkoAverageScore { get; set; }
-                    public double UrukiPachinkoMedianScore { get; set; }
-                    public long GuukuScoopTimesPlayed { get; set; }
-                    public long GuukuScoopHighscore { get; set; }
-                    public double GuukuScoopAverageScore { get; set; }
-                    public double GuukuScoopMedianScore { get; set; }
-                    public long NyanrendoTimesPlayed { get; set; }
-                    public long NyanrendoHighscore { get; set; }
-                    public double NyanrendoAverageScore { get; set; }
-                    public double NyanrendoMedianScore { get; set; }
-                    public long PanicHoneyTimesPlayed { get; set; }
-                    public long PanicHoneyHighscore { get; set; }
-                    public double PanicHoneyAverageScore { get; set; }
-                    public double PanicHoneyMedianScore { get; set; }
-                    public long DokkanBattleCatsTimesPlayed { get; set; }
-                    public long DokkanBattleCatsHighscore { get; set; }
-                    public double DokkanBattleCatsAverageScore { get; set; }
-                    public double DokkanBattleCatsMedianScore { get; set; }
-                     */
                     try
                     {
-
                         mezFesCompendium.MinigamesPlayed = GetTableRowCount("MezFesID", "MezFes", conn);
                         mezFesCompendium.UrukiPachinkoTimesPlayed = GetCountOfIntValue("MezFesMinigameID", "MezFes", 464, conn);
+                        mezFesCompendium.UrukiPachinkoHighscore = GetMaxValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 464);
+                        mezFesCompendium.UrukiPachinkoAverageScore = GetAverageValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 464);
+                        mezFesCompendium.UrukiPachinkoMedianScore = GetMedianValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 464);
+
+                        mezFesCompendium.GuukuScoopTimesPlayed = GetCountOfIntValue("MezFesMinigameID", "MezFes", 466, conn);
+                        mezFesCompendium.GuukuScoopHighscore = GetMaxValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 466);
+                        mezFesCompendium.GuukuScoopAverageScore = GetAverageValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 466);
+                        mezFesCompendium.GuukuScoopMedianScore = GetMedianValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 466);
+
+                        mezFesCompendium.NyanrendoTimesPlayed = GetCountOfIntValue("MezFesMinigameID", "MezFes", 467, conn);
+                        mezFesCompendium.NyanrendoHighscore = GetMaxValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 467);
+                        mezFesCompendium.NyanrendoAverageScore = GetAverageValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 467);
+                        mezFesCompendium.NyanrendoMedianScore = GetMedianValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 467);
+
+                        mezFesCompendium.PanicHoneyTimesPlayed = GetCountOfIntValue("MezFesMinigameID", "MezFes", 468, conn);
+                        mezFesCompendium.PanicHoneyHighscore = GetMaxValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 468);
+                        mezFesCompendium.PanicHoneyAverageScore = GetAverageValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 468);
+                        mezFesCompendium.PanicHoneyMedianScore = GetMedianValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 468);
+
+                        mezFesCompendium.DokkanBattleCatsTimesPlayed = GetCountOfIntValue("MezFesMinigameID", "MezFes", 469, conn);
+                        mezFesCompendium.DokkanBattleCatsHighscore = GetMaxValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 469);
+                        mezFesCompendium.DokkanBattleCatsAverageScore = GetAverageValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 469);
+                        mezFesCompendium.DokkanBattleCatsMedianScore = GetMedianValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 469);
 
                         transaction.Commit();
                     }
