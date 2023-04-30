@@ -6687,7 +6687,7 @@ Total Small Monsters Hunted: {109}
 
 Miscellaneous
 Total Overlay Sessions: {110}
-Session Duration (Highest/Lowest/Average/Median): {111}/{112}/{113}/{114}
+Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
 ",
             createdAt,
             createdBy,
@@ -6800,10 +6800,10 @@ Session Duration (Highest/Lowest/Average/Median): {111}/{112}/{113}/{114}
             totalLargeMonstersHunted,
             totalSmallMonstersHunted,
             totalOverlaySessions,
-            sessionDurationHighest,
-            sessionDurationLowest,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", sessionDurationAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", sessionDurationMedian)
+            TimeSpan.FromSeconds(sessionDurationHighest).ToString("hh\\:mm\\:ss\\.ff"),
+            TimeSpan.FromSeconds(sessionDurationLowest).ToString("hh\\:mm\\:ss\\.ff"),
+            TimeSpan.FromSeconds(sessionDurationAverage).ToString("hh\\:mm\\:ss\\.ff"),
+            TimeSpan.FromSeconds(sessionDurationMedian).ToString("hh\\:mm\\:ss\\.ff")
             );
         }
 
