@@ -1,3 +1,6 @@
+# ignore claudiaIDE
+.claudiaideconfig
+
 # ignore .env files
 .env
 .env.local

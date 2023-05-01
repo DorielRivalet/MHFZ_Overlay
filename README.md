@@ -45,7 +45,7 @@ The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospac
 
 1. [Get **ALL** of the requirements](#requirements)
 2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/Releases.7z)
-3. Make sure Windows or your antivirus did not delete the files (because it reads the games memory, Windows might detect it as a trojan, so you might have to get it out of quarantine)
+3. Make sure *Windows* or your antivirus did not delete the files (because it reads the game's memory, *Windows* might detect it as a trojan, so you might have to get it out of quarantine)
 4. Unzip it anywhere. Run `mhfz-overlaySetup.exe` **as Administrator**
 5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
 6. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
@@ -151,9 +151,11 @@ Includes icons!
 
 ![Watermarks](./demo/speedrun.png)
 
-- [x] Quest Runs Database (check weapon usage, set YouTube URLs, view past statistics, etc!)
+- [x] Quest Runs Database (check weapon usage, set YouTube URLs, view past statistics, etc.!)
 
 ![Weapon Usage](./demo/databaseweaponusage.png)
+
+![Compendium of Personal Statistics](./demo/compendium.png)
 
 ![Top 20](./demo/databasetop20.png)
 
