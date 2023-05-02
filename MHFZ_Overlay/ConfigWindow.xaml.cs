@@ -480,6 +480,8 @@ namespace MHFZ_Overlay
             SortList();
         }
 
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         private IReadOnlyList<MonsterInfo> monsterInfos = Dictionary.MonsterInfoList.MonsterInfoIDs;
 
         /// <summary>
@@ -489,16 +491,6 @@ namespace MHFZ_Overlay
         public ConfigWindow(MainWindow mainWindow)
         {
             InitializeComponent();
-            var config = new NLog.Config.LoggingConfiguration();
-
-            // Targets where to log to: File
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
-
-            // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
-
-            // Apply config           
-            NLog.LogManager.Configuration = config;
 
             logger.Info($"PROGRAM OPERATION: ConfigWindow initialized");
 
@@ -1351,8 +1343,6 @@ namespace MHFZ_Overlay
 
             }
         }
-
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
         {

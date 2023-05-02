@@ -395,17 +395,6 @@ namespace MHFZ_Overlay
             DataLoader = new DataLoader();
             InitializeComponent();
 
-            var config = new NLog.Config.LoggingConfiguration();
-
-            // Targets where to log to: File
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
-
-            // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
-
-            // Apply config           
-            NLog.LogManager.Configuration = config;
-
             logger.Info($"PROGRAM OPERATION: MainWindow initialized");
 
             Left = 0;
@@ -478,7 +467,7 @@ namespace MHFZ_Overlay
 
             string dependenciesInfo = sb.ToString();
 
-            logger.Info("PROGRAM OPERATION: Loading dependency data\n{0}", dependenciesInfo);
+            logger.Trace("PROGRAM OPERATION: Loading dependency data\n{0}", dependenciesInfo);
 
             // The rendering tier corresponds to the high-order word of the Tier property.
             int renderingTier = (RenderCapability.Tier >> 16);
@@ -488,6 +477,8 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowSaveIcon = false;
 
             CreateSystemTrayIcon();
+
+            logger.Info("PROGRAM OPERATION: Loaded MHF-Z Overlay {0}", CurrentProgramVersion);
 
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
         }

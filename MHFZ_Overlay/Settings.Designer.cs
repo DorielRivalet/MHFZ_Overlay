@@ -3034,5 +3034,17 @@ namespace MHFZ_Overlay {
                 this["DamageNumbersFontWeight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableOutsideMezeportaLoadingWarning {
+            get {
+                return ((bool)(this["EnableOutsideMezeportaLoadingWarning"]));
+            }
+            set {
+                this["EnableOutsideMezeportaLoadingWarning"] = value;
+            }
+        }
     }
 }

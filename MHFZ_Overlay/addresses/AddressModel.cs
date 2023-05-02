@@ -39,18 +39,6 @@ namespace MHFZ_Overlay.addresses
 
         public AddressModel(Mem m)
         {
-
-            var config = new NLog.Config.LoggingConfiguration();
-
-            // Targets where to log to: File
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
-
-            // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
-
-            // Apply config           
-            NLog.LogManager.Configuration = config;
-
             logger.Info($"PROGRAM OPERATION: AddressModel initialized");
 
             M = m;

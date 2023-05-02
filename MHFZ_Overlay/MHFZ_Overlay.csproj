@@ -23,6 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="NLog.config" />
     <None Remove="UI\Background\1.png" />
     <None Remove="UI\Background\2.png" />
     <None Remove="UI\Background\3.png" />
@@ -289,6 +290,9 @@
   <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dorielrivalet_mhfz_overlay\CSharp\SonarLint.xml" Link="SonarLint.xml" />
     <Content Include="mhfzoverlayicon256.ico" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="UI\Icons\ico\mhfzoverlayicon256.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

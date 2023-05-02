@@ -5,6 +5,7 @@ using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
+using NLog.Targets;
 using SharpCompress.Common;
 using System;
 using System.Collections;
@@ -35,21 +36,11 @@ namespace MHFZ_Overlay
         private string _connectionString;
 
         private static DatabaseManager instance;
+
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private DatabaseManager()
         {
-            var config = new NLog.Config.LoggingConfiguration();
-
-            // Targets where to log to: File
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
-
-            // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
-
-            // Apply config           
-            NLog.LogManager.Configuration = config;
-
             logger.Info($"PROGRAM OPERATION: DatabaseManager initialized");
         }
 
@@ -2456,6 +2447,8 @@ namespace MHFZ_Overlay
                     }
                 }
             }
+
+            logger.Info("DATABASE OPERATION: Stored overlay hash {0}", overlayHash);
             return overlayHash;
         }
 
