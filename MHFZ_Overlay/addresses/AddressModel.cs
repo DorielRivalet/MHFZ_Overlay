@@ -25,6 +25,8 @@ namespace MHFZ_Overlay.addresses
 {
     public abstract class AddressModel : INotifyPropertyChanged
     {
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         #region properties
 
         public readonly Mem M;
@@ -96,8 +98,6 @@ namespace MHFZ_Overlay.addresses
 
 
         #endregion
-
-
 
         #region abstract vars
         abstract public bool IsNotRoad();
@@ -10268,8 +10268,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
             return (double)(TimeDefInt() - TimeInt()) / 30;
         }
-
-        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public int previousRoadFloor = 0;
 

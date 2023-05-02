@@ -54,6 +54,8 @@ namespace MHFZ_Overlay
         /// </summary>
         public DataLoader DataLoader { get; set; }
 
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         #region system tray
 
         private NotifyIcon _notifyIcon;
@@ -374,8 +376,6 @@ namespace MHFZ_Overlay
         private readonly Dictionary<MouseButtons, Image> _mouseImages = new Dictionary<MouseButtons, Image>();
 
         private readonly Dictionary<X.Gamepad.GamepadButtons, Image> _controllerImages = new Dictionary<X.Gamepad.GamepadButtons, Image>();
-
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         //Main entry point?        
         /// <summary>

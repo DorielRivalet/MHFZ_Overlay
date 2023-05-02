@@ -85,7 +85,7 @@ If you have any questions about versioning or how to upgrade your software, plea
 
 ## Where do I find my logs or crash files?
 
-In the folder where `MHFZ_Overlay.exe` is, there should be a log file named `logs.log` and optionally a `MHFZ_Overlay-CrashLog-Date.txt` file with the date of a crash that has occurred. These files are useful for debugging the program. You should only send the relevant text in the logs when reporting an issue, not the whole file.
+In the folder where `MHFZ_Overlay.exe` is, there should be a `log` folder with a log file named `logs.log`. This file is useful for debugging the program. You should only send the relevant text in the logs when reporting an issue, not the whole file, so only send the last lines where appropiate. Look out for words such as WARN, ERROR, or FATAL.
 
 ## Does this software support other operating systems?
 

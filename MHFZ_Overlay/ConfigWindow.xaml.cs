@@ -55,6 +55,8 @@ namespace MHFZ_Overlay
         /// </value>
         private MainWindow MainWindow { get; }
 
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         private static string randomMonsterImage = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png";
 
         public static Uri MonsterInfoLink
@@ -479,8 +481,6 @@ namespace MHFZ_Overlay
         {
             SortList();
         }
-
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private IReadOnlyList<MonsterInfo> monsterInfos = Dictionary.MonsterInfoList.MonsterInfoIDs;
 
