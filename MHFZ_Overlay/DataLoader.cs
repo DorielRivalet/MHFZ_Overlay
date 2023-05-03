@@ -169,8 +169,10 @@ namespace MHFZ_Overlay
             if (model.AreaID() != 200)
             {
                 logger.Warn("PROGRAM OPERATION: Loaded overlay outside Mezeporta");
-                System.Windows.MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
 
+                Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+                if (s.EnableOutsideMezeportaLoadingWarning)
+                    System.Windows.MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
             }
         }
 

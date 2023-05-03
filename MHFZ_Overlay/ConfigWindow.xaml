@@ -695,6 +695,7 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
                         <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Backup settings" ToolTip="Export user settings to JSON file and make a backup for settings when updating overlay" Click="ExportUserSettings_Click"/>
@@ -712,10 +713,24 @@
                         <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Max Resolution Height"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Select the Primary Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Primary Font Family"/>
-                        <ComboBox Grid.Column="1" Grid.Row="4" x:Name="PrimaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=PrimaryFontFamily}" />
-                        <TextBlock x:Name="PrimaryFontSizeTextBlock" Text="Primary Font Size" Margin="5,5,5,5" ToolTip="Select the Primary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"/>
-                        <DockPanel Grid.Row="5" Grid.Column="1">
+                        <TextBlock Text="Refresh Rate (Restart required)" Margin="5,5,5,5" ToolTip="Select the Refresh Rate. Lower values might improve performance at the cost of statistics accuracy (including in database). Recommended to leave at 30 for speedruns." Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"/>
+                        <DockPanel Grid.Row="4" Grid.Column="1">
+                            <TextBox IsUndoEnabled="False" Background="#585b70" Style="{StaticResource ConfigTextField}" PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="40">
+                                <TextBox.Text>
+                                    <Binding Path="RefreshRate" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <localui:RangeValidationRule Minimum="1" Maximum="30" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <Slider IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="Both" Minimum="1" Maximum="30" Value="{Binding Path=RefreshRate, Source={StaticResource Settings}}"  />
+                        </DockPanel>
+                        
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select the Primary Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Primary Font Family"/>
+                        <ComboBox Grid.Column="1" Grid.Row="5" x:Name="PrimaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=PrimaryFontFamily}" />
+                        <TextBlock x:Name="PrimaryFontSizeTextBlock" Text="Primary Font Size" Margin="5,5,5,5" ToolTip="Select the Primary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"/>
+                        <DockPanel Grid.Row="6" Grid.Column="1">
                             <TextBox IsUndoEnabled="False" Background="#585b70" Style="{StaticResource ConfigTextField}" PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="40">
                                 <TextBox.Text>
                                     <Binding Path="PrimaryFontSize" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
@@ -727,8 +742,8 @@
                             </TextBox>
                             <Slider x:Name="PrimaryFontSizeSlider" IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="Both" Minimum="8" Maximum="36" Value="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}"  />
                         </DockPanel>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Select the Primary Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Primary Font Weight"/>
-                        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="PrimaryFontWeightComboBox"
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select the Primary Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Primary Font Weight"/>
+                        <ComboBox Grid.Row="7" Grid.Column="1" x:Name="PrimaryFontWeightComboBox"
                             SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=PrimaryFontWeight}">
                             <ComboBoxItem Content="Normal" FontWeight="Normal" />
                             <ComboBoxItem Content="Thin" FontWeight="Thin" />
@@ -754,10 +769,10 @@
                             </ComboBox.Resources>
                         </ComboBox>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Select the Secondary Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Secondary Font Family"/>
-                        <ComboBox Grid.Column="1" Grid.Row="7" x:Name="SecondaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontFamily}" />
-                        <TextBlock x:Name="SecondaryFontSizeTextBlock" Text="Secondary Font Size" Margin="5,5,5,5" ToolTip="Select the Secondary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"/>
-                        <DockPanel Grid.Row="8" Grid.Column="1">
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select the Secondary Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Secondary Font Family"/>
+                        <ComboBox Grid.Column="1" Grid.Row="8" x:Name="SecondaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontFamily}" />
+                        <TextBlock x:Name="SecondaryFontSizeTextBlock" Text="Secondary Font Size" Margin="5,5,5,5" ToolTip="Select the Secondary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"/>
+                        <DockPanel Grid.Row="9" Grid.Column="1">
                             <TextBox IsUndoEnabled="False" Background="#585b70" Style="{StaticResource ConfigTextField}" PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="40">
                                 <TextBox.Text>
                                     <Binding Path="SecondaryFontSize" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
@@ -769,8 +784,8 @@
                             </TextBox>
                             <Slider x:Name="SecondaryFontSizeSlider" IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="Both" Minimum="8" Maximum="36" Value="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}"  />
                         </DockPanel>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Select the Secondary Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Secondary Font Weight"/>
-                        <ComboBox Grid.Row="9" Grid.Column="1" x:Name="SecondaryFontWeightComboBox"
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select the Secondary Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Secondary Font Weight"/>
+                        <ComboBox Grid.Row="10" Grid.Column="1" x:Name="SecondaryFontWeightComboBox"
                             SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontWeight}">
                             <ComboBoxItem Content="Normal" FontWeight="Normal" />
                             <ComboBoxItem Content="Thin" FontWeight="Thin" />
@@ -796,61 +811,63 @@
                             </ComboBox.Resources>
                         </ComboBox>
 
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="10" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
-                        <xctk:ColorPicker Grid.Column="1" Grid.Row="10" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"></xctk:ColorPicker>
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="11" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
-                        <xctk:ColorPicker Grid.Column="1" Grid.Row="11" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
+                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="11" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="11" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"></xctk:ColorPicker>
+                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="12" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="12" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
                         
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="12" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}"/>
-                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="12" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="13" Text="Always Show Player Info" Style="{StaticResource ConfigTextBox}"/>
-                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="13" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowPlayerInfo}"/>
+                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="13" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}"/>
+                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="13" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>
+                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="14" Text="Always Show Player Info" Style="{StaticResource ConfigTextBox}"/>
+                        <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="14" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowPlayerInfo}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Monster 1 Icon"/>
-                        <ToggleButton Grid.Row="14" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=Monster1IconShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster 1 Icon X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="15" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Monster 1 Icon Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan, Pioneer, Raviente, Cities, Guild Hall, Tavern, Interception or Daily quests to display the correct information. You may have to do a normal quest first in order to load the correct values." Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Caravan/Pioneer/Raviente/Interception/Cities/Tavern/Guild Hall/Daily Quest Override"/>
-                        <ComboBox Grid.Column="1" Grid.Row="17" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}">
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster 1 Icon"/>
+                        <ToggleButton Grid.Row="15" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=Monster1IconShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Monster 1 Icon X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster 1 Icon Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan, Pioneer, Raviente, Cities, Guild Hall, Tavern, Interception or Daily quests to display the correct information. You may have to do a normal quest first in order to load the correct values." Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Caravan/Pioneer/Raviente/Interception/Cities/Tavern/Guild Hall/Daily Quest Override"/>
+                        <ComboBox Grid.Column="1" Grid.Row="18" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}">
                             <ComboBoxItem>Automatic</ComboBoxItem>
                             <ComboBoxItem>Enabled</ComboBoxItem>
                             <ComboBoxItem>Disabled</ComboBoxItem>
                         </ComboBox>
                         
-                        <TextBlock Margin="5,5,5,5" ToolTip="Enable Update Notifier" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Show Update Notifier at Startup"/>
-                        <ToggleButton Grid.Row="18" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableUpdateNotifier}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Enable Update Notifier" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Show Update Notifier at Startup"/>
+                        <ToggleButton Grid.Row="19" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableUpdateNotifier}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Select ferias version (re-open configuration window)" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Ferias Version"/>
-                        <ComboBox Grid.Column="1" Grid.Row="19" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=FeriasVersionLink}">
+                        <TextBlock Margin="5,5,5,5" ToolTip="Select ferias version (re-open configuration window)" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Ferias Version"/>
+                        <ComboBox Grid.Column="1" Grid.Row="20" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=FeriasVersionLink}">
                             <ComboBoxItem>https://dorielrivalet.github.io/mhfz-ferias-english-project/</ComboBoxItem>
                             <ComboBoxItem>https://xl3lackout.github.io/MHFZ-Ferias-English-Project/</ComboBoxItem>
                         </ComboBox>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Close overlay when closed game" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Close Overlay when Closed Game"/>
-                        <ToggleButton Grid.Row="20" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAutoClose}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Close overlay when closed game" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Close Overlay when Closed Game"/>
+                        <ToggleButton Grid.Row="21" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAutoClose}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show progress bar icons" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Progress Bar Icons"/>
-                        <ToggleButton Grid.Row="21" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ProgressBarIconsShown}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show progress bar icons" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Progress Bar Icons"/>
+                        <ToggleButton Grid.Row="22" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ProgressBarIconsShown}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show overlay stats icons (you may have to reposition the cut-off stat text description)" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Overlay Stats Icons"/>
-                        <ToggleButton Grid.Row="22" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayStatIconShown}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show overlay stats icons (you may have to reposition the cut-off stat text description)" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Overlay Stats Icons"/>
+                        <ToggleButton Grid.Row="23" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayStatIconShown}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Location Name when switching location" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Location Name"/>
-                        <ToggleButton Grid.Row="23" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=LocationTextShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Location Name X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="24" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=LocationTextX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Location Name Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="25" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=LocationTextY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Location Name when switching location" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Location Name"/>
+                        <ToggleButton Grid.Row="24" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=LocationTextShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Location Name X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="25" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=LocationTextX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Location Name Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="26" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=LocationTextY}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Name when entering quests" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Quest Name"/>
-                        <ToggleButton Grid.Row="26" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=QuestNameShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Quest Name X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="27" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestNameX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0"  Text="Quest Name Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="28" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestNameY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Name when entering quests" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Quest Name"/>
+                        <ToggleButton Grid.Row="27" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=QuestNameShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0"  Text="Quest Name X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="28" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestNameX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0"  Text="Quest Name Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="29" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestNameY}"  PreviewTextInput="ValidateNumber"/>
 
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show a warning message box when starting the overlay outside Mezeporta" Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0"  Text="Outside Mezeporta Startup Warning"/>
+                        <ToggleButton Grid.Row="30" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableOutsideMezeportaLoadingWarning}"/>
                         <!--<Button Grid.Row="43" Grid.Column="0" Grid.ColumnSpan="2" Content="Import settings" ToolTip="Import user settings from file" Click="ImportUserSettings_Click"/>-->
                     </Grid>
                 </ScrollViewer>

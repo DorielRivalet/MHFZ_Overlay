@@ -401,7 +401,8 @@ namespace MHFZ_Overlay
             Top = 0;
             Topmost = true;
             DispatcherTimer timer = new();
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 30);
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / s.RefreshRate);
             //memory leak?
             timer.Tick += Timer_Tick;
             timer.Start();
@@ -635,9 +636,6 @@ namespace MHFZ_Overlay
             }
         }
 
-        int counter = 0;
-        int prevTime = 0;
-
         private bool showedNullError = false;
         private bool showedGameFolderWarning = false;
 
@@ -688,7 +686,6 @@ namespace MHFZ_Overlay
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"PROGRAM OPERATION: An error has occurred in the Timer_Tick function");
                 WriteCrashLog(ex);
                 // the flushing is done automatically according to the docs
             }
@@ -1178,19 +1175,12 @@ namespace MHFZ_Overlay
         /// </summary>
         private void HideMonsterInfoWhenNotInQuest()
         {
-            int time = DataLoader.model.TimeInt();
-            if (prevTime == time)
-                counter++;
-            else
-                counter = 0;
-            prevTime = time;
             Settings s = (Settings)Application.Current.FindResource("Settings");
-            bool v = s.AlwaysShowMonsterInfo || DataLoader.model.Configuring || counter < 60;
-            //DL.m.?.Visibility = v && s.?.IsChecked
-            SetMonsterVisibility(v, s);
+            bool v = s.AlwaysShowMonsterInfo || DataLoader.model.Configuring || DataLoader.model.QuestID() != 0;
+            SetMonsterStatsVisibility(v, s);
         }
 
-        private void SetMonsterVisibility(bool v, Settings s)
+        private void SetMonsterStatsVisibility(bool v, Settings s)
         {
             DataLoader.model.ShowMonsterAtkMult = v && s.MonsterAtkMultShown;
             DataLoader.model.ShowMonsterDefrate = v && s.MonsterDefrateShown;
@@ -1215,15 +1205,13 @@ namespace MHFZ_Overlay
         /// </summary>
         private void HidePlayerInfoWhenNotInQuest()
         {
-            int time = DataLoader.model.TimeInt();
-            if (prevTime == time)
-                counter++;
-            else
-                counter = 0;
-            prevTime = time;
             Settings s = (Settings)Application.Current.FindResource("Settings");
-            //what is the counter for?
-            bool v = s.AlwaysShowPlayerInfo || DataLoader.model.Configuring || counter < 60;
+            bool v = s.AlwaysShowPlayerInfo || DataLoader.model.Configuring || DataLoader.model.QuestID() != 0;
+            SetPlayerStatsVisibility(v, s);
+        }
+
+        private void SetPlayerStatsVisibility(bool v, Settings s)
+        {
             //DL.m.?.Visibility = v && s.?.IsChecked
             DataLoader.model.ShowTimerInfo = v && s.TimerInfoShown;
             DataLoader.model.ShowHitCountInfo = v && s.HitCountShown;
