@@ -41,7 +41,7 @@ namespace MHFZ_Overlay
 
         private DatabaseManager()
         {
-            logger.Info($"PROGRAM OPERATION: DatabaseManager initialized");
+            logger.Info($"DatabaseManager initialized");
         }
 
         private string _customDatabasePath;
@@ -1827,7 +1827,7 @@ namespace MHFZ_Overlay
                         if (transaction != null)
                             transaction.Rollback();
                         MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        logger.Error(ex, "PROGRAM OPERATION: ArgumentException");
+                        logger.Error(ex, "ArgumentException");
 
                     }
                     catch (Exception ex)
@@ -2520,7 +2520,7 @@ namespace MHFZ_Overlay
             {
                 // Handle any other exception
                 MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Error(ex, "PROGRAM OPERATION: An error occurred");
+                logger.Error(ex, "An error occurred");
 
             }
         }
@@ -9444,7 +9444,7 @@ namespace MHFZ_Overlay
                             {
                                 // The "mhf.exe" process was not found
                                 MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                logger.Fatal("PROGRAM OPERATION: mhf.exe not found");
+                                logger.Fatal("mhf.exe not found");
                                 Environment.Exit(0);
                             }
 
@@ -9470,7 +9470,7 @@ namespace MHFZ_Overlay
                             else
                             {
                                 MessageBox.Show("The current version and the previous version aren't the same, however no update was found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                logger.Fatal("PROGRAM OPERATION: The current version and the previous version aren't the same, however no update was found");
+                                logger.Fatal("The current version and the previous version aren't the same, however no update was found");
                                 Environment.Exit(0);
                             }
                         }

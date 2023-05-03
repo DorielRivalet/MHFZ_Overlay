@@ -395,7 +395,7 @@ namespace MHFZ_Overlay
             DataLoader = new DataLoader();
             InitializeComponent();
 
-            logger.Info($"PROGRAM OPERATION: MainWindow initialized");
+            logger.Info($"MainWindow initialized");
 
             Left = 0;
             Top = 0;
@@ -468,18 +468,18 @@ namespace MHFZ_Overlay
 
             string dependenciesInfo = sb.ToString();
 
-            logger.Trace("PROGRAM OPERATION: Loading dependency data\n{0}", dependenciesInfo);
+            logger.Trace("Loading dependency data\n{0}", dependenciesInfo);
 
             // The rendering tier corresponds to the high-order word of the Tier property.
             int renderingTier = (RenderCapability.Tier >> 16);
 
-            logger.Info("PROGRAM OPERATION: Found rendering tier {0}", renderingTier);
+            logger.Info("Found rendering tier {0}", renderingTier);
 
             DataLoader.model.ShowSaveIcon = false;
 
             CreateSystemTrayIcon();
 
-            logger.Info("PROGRAM OPERATION: Loaded MHF-Z Overlay {0}", CurrentProgramVersion);
+            logger.Info("Loaded MHF-Z Overlay {0}", CurrentProgramVersion);
 
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
         }
@@ -547,7 +547,7 @@ namespace MHFZ_Overlay
                 if (s.EnableUpdateNotifier)
                 {
                     System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(String.Format("Detected different version ({0}) from latest ({1}). Do you want to download the file?", CurrentProgramVersion, latest.TagName), "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No);
-                    logger.Info("PROGRAM OPERATION: Detected different overlay version");
+                    logger.Info("Detected different overlay version");
 
                     if (messageBoxResult.ToString() == "Yes")
                     {
@@ -596,7 +596,7 @@ namespace MHFZ_Overlay
                 if (className == "MHFLAUNCH")
                 {
                     System.Windows.MessageBox.Show("Detected launcher, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                    logger.Info("PROGRAM OPERATION: Detected game launcher");
+                    logger.Info("Detected game launcher");
 
                     DataLoader.model.isInLauncherBool = true;
                 }
@@ -619,7 +619,7 @@ namespace MHFZ_Overlay
                     if (s.EnableAutoClose)
                     {
                         System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                        logger.Info("PROGRAM OPERATION: Detected closed game");
+                        logger.Info("Detected closed game");
 
                         //https://stackoverflow.com/a/9050477/18859245
                         Cleanup();
@@ -629,7 +629,7 @@ namespace MHFZ_Overlay
                     else
                     {
                         System.Windows.MessageBox.Show("Detected closed game, please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                        logger.Info("PROGRAM OPERATION: Detected closed game");
+                        logger.Info("Detected closed game");
 
                     }
                 };
@@ -806,7 +806,7 @@ namespace MHFZ_Overlay
             }
 
             System.Windows.MessageBox.Show("Fatal error, closing overlay. See the crash log in the overlay folder for more information.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            logger.Fatal(ex, "PROGRAM OPERATION: Program crashed");
+            logger.Fatal(ex, "Program crashed");
 
             //https://stackoverflow.com/a/9050477/18859245
             Cleanup();
@@ -855,7 +855,7 @@ namespace MHFZ_Overlay
                         }
                         catch (Exception ex)
                         {
-                            logger.Warn(ex, "PROGRAM OPERATION: Could not insert into damageDealtDictionary");
+                            logger.Warn(ex, "Could not insert into damageDealtDictionary");
                         }
                     }
                 }
@@ -873,7 +873,7 @@ namespace MHFZ_Overlay
                         }
                         catch (Exception ex)
                         {
-                            logger.Warn(ex, "PROGRAM OPERATION: Could not insert into damageDealtDictionary");
+                            logger.Warn(ex, "Could not insert into damageDealtDictionary");
                         }
                     }
                 }
@@ -891,7 +891,7 @@ namespace MHFZ_Overlay
                             catch
                             (Exception ex)
                             {
-                                logger.Warn(ex, "PROGRAM OPERATION: Could not insert into damageDealtDictionary");
+                                logger.Warn(ex, "Could not insert into damageDealtDictionary");
                             }
                         }
                     }
@@ -2777,7 +2777,7 @@ namespace MHFZ_Overlay
             if (DataLoader.model.isInLauncherBool)
             {
                 System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                logger.Info("PROGRAM OPERATION: Detected game launcher while using configuration menu");
+                logger.Info("Detected game launcher while using configuration menu");
             }
 
             if (configWindow == null || !configWindow.IsLoaded)
@@ -2789,7 +2789,7 @@ namespace MHFZ_Overlay
             }
             catch (Exception ex)
             {
-                logger.Error("PROGRAM OPERATION: could not show configuration window", ex);
+                logger.Error("could not show configuration window", ex);
             }
 
         }
@@ -3198,7 +3198,7 @@ namespace MHFZ_Overlay
                     }
                     catch (Exception ex)
                     {
-                        logger.Warn(ex, "PROGRAM OPERATION: Could not insert into mouseInputDictionary");
+                        logger.Warn(ex, "Could not insert into mouseInputDictionary");
                     }
                 }
 
@@ -3251,7 +3251,7 @@ namespace MHFZ_Overlay
                     }
                     catch (Exception ex)
                     {
-                        logger.Warn(ex, "PROGRAM OPERATION: Could not insert into keystrokesDictionary");
+                        logger.Warn(ex, "Could not insert into keystrokesDictionary");
                     }
                 }
 

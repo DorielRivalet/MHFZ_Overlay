@@ -492,7 +492,7 @@ namespace MHFZ_Overlay
         {
             InitializeComponent();
 
-            logger.Info($"PROGRAM OPERATION: ConfigWindow initialized");
+            logger.Info($"ConfigWindow initialized");
 
             Topmost = true;
             MainWindow = mainWindow;
@@ -3046,7 +3046,7 @@ namespace MHFZ_Overlay
                 switch (selectedOption)
                 {
                     default:
-                        logger.Warn("PROGRAM OPERATION: Could not find preset name for settings");
+                        logger.Warn("Could not find preset name for settings");
                         return;
                     case "None":
                         return;

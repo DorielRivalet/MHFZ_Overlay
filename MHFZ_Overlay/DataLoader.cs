@@ -116,7 +116,7 @@ namespace MHFZ_Overlay
             // ... other app init code after ...
             RestoreSettings();
 
-            logger.Info($"PROGRAM OPERATION: DataLoader started");
+            logger.Info($"DataLoader started");
 
             int PID = m.GetProcIdFromName("mhf");
             if (PID > 0)
@@ -132,17 +132,17 @@ namespace MHFZ_Overlay
                     // ReShade or similar programs might trigger this warning. Does these affect overlay functionality?
                     // Imulion's version does not have anything in the catch block.
                     //System.Windows.MessageBox.Show($"Warning: could not create code cave. ReShade or similar programs might trigger this warning. You can ignore this warning. \n\n{ex}", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not create code cave");
+                    logger.Warn(ex, "Could not create code cave");
                 }
 
                 if (!isHighGradeEdition)
                 {
-                    logger.Info("PROGRAM OPERATION: Running game in Non-HGE");
+                    logger.Info("Running game in Non-HGE");
                     model = new AddressModelNotHGE(m);
                 }
                 else
                 {
-                    logger.Info("PROGRAM OPERATION: Running game in HGE");
+                    logger.Info("Running game in HGE");
                     model = new AddressModelHGE(m);
                 }
 
@@ -159,7 +159,7 @@ namespace MHFZ_Overlay
             else
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                logger.Fatal("PROGRAM OPERATION: Launch game first");
+                logger.Fatal("Launch game first");
                 Environment.Exit(0);
             }
         }
@@ -168,7 +168,7 @@ namespace MHFZ_Overlay
         {
             if (model.AreaID() != 200)
             {
-                logger.Warn("PROGRAM OPERATION: Loaded overlay outside Mezeporta");
+                logger.Warn("Loaded overlay outside Mezeporta");
 
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                 if (s.EnableOutsideMezeportaLoadingWarning)
@@ -223,7 +223,7 @@ namespace MHFZ_Overlay
             {
                 // The "mhf.exe" process was not found
                 MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Fatal("PROGRAM OPERATION: mhf.exe not found");
+                logger.Fatal("mhf.exe not found");
                 Environment.Exit(0);
             }
         }
@@ -260,7 +260,7 @@ namespace MHFZ_Overlay
                 if (process.ProcessName == "GameOverlayUI")
                 {
                     MessageBox.Show($"Having Steam Overlay open while MHF-Z Overlay is running may decrease performance. ({process.ProcessName} found)", "Warning");
-                    logger.Warn("PROGRAM OPERATION: Found Steam overlay: {0}", process.ProcessName);
+                    logger.Warn("Found Steam overlay: {0}", process.ProcessName);
                     continue;
                 }
                 if (bannedProcesses.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
@@ -268,7 +268,7 @@ namespace MHFZ_Overlay
 
                     // processName is a substring of one of the banned process strings
                     MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
-                    logger.Fatal("PROGRAM OPERATION: Found banned process {0}", process.ProcessName);
+                    logger.Fatal("Found banned process {0}", process.ProcessName);
 
                     // Close the overlay program
                     Environment.Exit(0);
@@ -286,7 +286,7 @@ namespace MHFZ_Overlay
             {
                 // More than one "MHFZ_Overlay" process is running
                 MessageBox.Show("Close other instances of the overlay before opening a new one", "Error");
-                logger.Fatal("PROGRAM OPERATION: Found duplicate overlay");
+                logger.Fatal("Found duplicate overlay");
 
                 // Close the overlay program
                 Environment.Exit(0);
@@ -295,7 +295,7 @@ namespace MHFZ_Overlay
             {
                 // More than one game process is running
                 MessageBox.Show("Close other instances of the game before opening a new one", "Error");
-                logger.Fatal("PROGRAM OPERATION: Found duplicate game");
+                logger.Fatal("Found duplicate game");
 
                 // Close the overlay program
                 Environment.Exit(0);
@@ -357,7 +357,7 @@ namespace MHFZ_Overlay
             {
                 // The "mhf.exe" process was not found
                 MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Fatal("PROGRAM OPERATION: mhf.exe not found");
+                logger.Fatal("mhf.exe not found");
                 Environment.Exit(0);
             }
         }
@@ -441,7 +441,7 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
             if (proc == null)
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                logger.Fatal("PROGRAM OPERATION: Launch game first");
+                logger.Fatal("Launch game first");
                 Environment.Exit(0);
                 return;
             }

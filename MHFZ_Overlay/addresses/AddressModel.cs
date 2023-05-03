@@ -41,7 +41,7 @@ namespace MHFZ_Overlay.addresses
 
         public AddressModel(Mem m)
         {
-            logger.Info($"PROGRAM OPERATION: AddressModel initialized");
+            logger.Info($"AddressModel initialized");
 
             M = m;
         }
@@ -924,7 +924,7 @@ namespace MHFZ_Overlay.addresses
             }
             catch (Exception ex)
             {
-                logger.Warn(ex, "PROGRAM OPERATION: Could not find AutomationElement");
+                logger.Warn(ex, "Could not find AutomationElement");
             }
 
             if (element == null || pidToSearch == 0)
@@ -9789,7 +9789,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             if (s.GameFolderPath == "" || s.GameFolderPath == null)
             {
                 MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-                logger.Warn("PROGRAM OPERATION: Game folder path not found");
+                logger.Warn("Game folder path not found");
                 s.EnableQuestLogging = false;
                 return false;
             }
@@ -9797,7 +9797,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             if (s.DatabaseFilePath == "" || s.DatabaseFilePath == null)
             {
                 MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-                logger.Warn("PROGRAM OPERATION: Database file path not found");
+                logger.Warn("Database file path not found");
                 s.EnableQuestLogging = false;
                 return false;
             }
@@ -9821,7 +9821,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 + String.Join(", ", findFiles) + "\n" +
                 "gameFolderFiles: " + String.Join(", ", gameFolderFiles),
                 "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-                logger.Warn("PROGRAM OPERATION: Missing game files");
+                logger.Warn("Missing game files");
                 s.EnableQuestLogging = false;
                 return false;
             }
@@ -10302,7 +10302,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into attackBuffDictionary");
+                    logger.Warn(ex, "Could not insert into attackBuffDictionary");
                 }
             }
 
@@ -10315,7 +10315,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into hitCountDictionary");
+                    logger.Warn(ex, "Could not insert into hitCountDictionary");
                 }
             }
 
@@ -10334,7 +10334,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into damagePerSecondDictionary");
+                    logger.Warn(ex, "Could not insert into damagePerSecondDictionary");
                 }
 
             }
@@ -10348,7 +10348,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into cartsDictionary");
+                    logger.Warn(ex, "Could not insert into cartsDictionary");
                 }
             }
 
@@ -10361,7 +10361,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into areaChangesDictionary");
+                    logger.Warn(ex, "Could not insert into areaChangesDictionary");
                 }
             }
 
@@ -10376,7 +10376,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1HPDictionary");
+                    logger.Warn(ex, "Could not insert into monster1HPDictionary");
                 }
             }
 
@@ -10391,7 +10391,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster2HPDictionary");
+                    logger.Warn(ex, "Could not insert into monster2HPDictionary");
                 }
             }
 
@@ -10406,7 +10406,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster3HPDictionary");
+                    logger.Warn(ex, "Could not insert into monster3HPDictionary");
                 }
 
             }
@@ -10422,7 +10422,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster4HPDictionary");
+                    logger.Warn(ex, "Could not insert into monster4HPDictionary");
                 }
             }
 
@@ -10446,7 +10446,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerInventoryDictionary");
+                    logger.Warn(ex, "Could not insert into playerInventoryDictionary");
                 }
             }
             else if (loadedItemsAtQuestStart && !playerInventoryDictionary.Values.Any())
@@ -10551,7 +10551,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerInventoryDictionary");
+                    logger.Warn(ex, "Could not insert into playerInventoryDictionary");
                 }
             }
 
@@ -10575,7 +10575,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerAmmoPouchDictionary");
+                    logger.Warn(ex, "Could not insert into playerAmmoPouchDictionary");
                 }
             }
             else if (loadedItemsAtQuestStart && !playerAmmoPouchDictionary.Values.Any())
@@ -10639,7 +10639,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerAmmoPouchDictionary");
+                    logger.Warn(ex, "Could not insert into playerAmmoPouchDictionary");
                 }
             }
 
@@ -10663,7 +10663,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into partnyaBagDictionary");
+                    logger.Warn(ex, "Could not insert into partnyaBagDictionary");
                 }
             }
             else if (loadedItemsAtQuestStart && !partnyaBagDictionary.Values.Any())
@@ -10728,7 +10728,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into partnyaBagDictionary");
+                    logger.Warn(ex, "Could not insert into partnyaBagDictionary");
                 }
             }
 
@@ -10743,7 +10743,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into hitsTakenBlockedDictionary");
+                    logger.Warn(ex, "Could not insert into hitsTakenBlockedDictionary");
                 }
             }
 
@@ -10756,7 +10756,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerHPDictionary");
+                    logger.Warn(ex, "Could not insert into playerHPDictionary");
                 }
             }
 
@@ -10769,7 +10769,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerStaminaDictionary");
+                    logger.Warn(ex, "Could not insert into playerStaminaDictionary");
                 }
             }
 
@@ -10788,7 +10788,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into hitsPerSecondDictionary");
+                    logger.Warn(ex, "Could not insert into hitsPerSecondDictionary");
                 }
 
             }
@@ -10802,7 +10802,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into hitsTakenBlockedPerSecondDictionary");
+                    logger.Warn(ex, "Could not insert into hitsTakenBlockedPerSecondDictionary");
                 }
             }
 
@@ -10821,7 +10821,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into actionsPerMinuteDictionary");
+                    logger.Warn(ex, "Could not insert into actionsPerMinuteDictionary");
                 }
             }
 
@@ -10834,7 +10834,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into overlayModeDictionary");
+                    logger.Warn(ex, "Could not insert into overlayModeDictionary");
                 }
             }
 
@@ -10849,7 +10849,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1AttackMultiplierDictionary");
+                    logger.Warn(ex, "Could not insert into monster1AttackMultiplierDictionary");
                 }
             }
 
@@ -10864,7 +10864,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1DefenseRateDictionary");
+                    logger.Warn(ex, "Could not insert into monster1DefenseRateDictionary");
                 }
             }
 
@@ -10879,7 +10879,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1SizeMultiplierDictionary");
+                    logger.Warn(ex, "Could not insert into monster1SizeMultiplierDictionary");
                 }
             }
 
@@ -10894,7 +10894,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1PoisonThresholdDictionary");
+                    logger.Warn(ex, "Could not insert into monster1PoisonThresholdDictionary");
                 }
             }
 
@@ -10909,7 +10909,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1SleepThresholdDictionary");
+                    logger.Warn(ex, "Could not insert into monster1SleepThresholdDictionary");
                 }
             }
 
@@ -10924,7 +10924,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1ParalysisThresholdDictionary");
+                    logger.Warn(ex, "Could not insert into monster1ParalysisThresholdDictionary");
                 }
             }
 
@@ -10939,7 +10939,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1BlastThresholdDictionary");
+                    logger.Warn(ex, "Could not insert into monster1BlastThresholdDictionary");
                 }
             }
 
@@ -10954,7 +10954,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1StunThresholdDictionary");
+                    logger.Warn(ex, "Could not insert into monster1StunThresholdDictionary");
                 }
             }
         }
