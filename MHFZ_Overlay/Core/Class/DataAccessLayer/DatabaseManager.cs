@@ -348,7 +348,8 @@ namespace MHFZ_Overlay
                         Monster1ParalysisThresholdDictionary,
                         Monster1BlastThresholdDictionary,
                         Monster1StunThresholdDictionary,
-                        IsHighGradeEdition
+                        IsHighGradeEdition,
+                        RefreshRate
                         ) VALUES (
                         @QuestHash,
                         @CreatedAt,
@@ -395,7 +396,8 @@ namespace MHFZ_Overlay
                         @Monster1ParalysisThresholdDictionary,
                         @Monster1BlastThresholdDictionary,
                         @Monster1StunThresholdDictionary,
-                        @IsHighGradeEdition
+                        @IsHighGradeEdition,
+                        @RefreshRate
                         )";
 
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -518,9 +520,10 @@ namespace MHFZ_Overlay
                             Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = dataLoader.model.monster1StunThresholdDictionary;
 
                             int isHighGradeEdition = dataLoader.isHighGradeEdition ? 1 : 0;
+                            int refreshRate = s.RefreshRate;
 
                             string questData = string.Format(
-                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}",
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}",
                                 runID, createdAt, createdBy, questID, timeLeft,
                                 finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
                                 starGrade, rankName, objectiveName, date, attackBuffDictionary,
@@ -529,7 +532,8 @@ namespace MHFZ_Overlay
                                 keystrokesDictionary, mouseInputDictionary, gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary,
                                 actualOverlayMode, partySize, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary,
                                 monster4HPDictionary, monster1AttackMultiplierDictionary, monster1DefenseRateDictionary, monster1SizeMultiplierDictionary, monster1PoisonThresholdDictionary,
-                                monster1SleepThresholdDictionary, monster1ParalysisThresholdDictionary, monster1BlastThresholdDictionary, monster1StunThresholdDictionary, isHighGradeEdition
+                                monster1SleepThresholdDictionary, monster1ParalysisThresholdDictionary, monster1BlastThresholdDictionary, monster1StunThresholdDictionary, isHighGradeEdition,
+                                refreshRate
                                 );
 
                             // Calculate the hash value for the data in the row
@@ -581,6 +585,7 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@Monster1BlastThresholdDictionary", JsonConvert.SerializeObject(monster1BlastThresholdDictionary));
                             cmd.Parameters.AddWithValue("@Monster1StunThresholdDictionary", JsonConvert.SerializeObject(monster1StunThresholdDictionary));
                             cmd.Parameters.AddWithValue("@IsHighGradeEdition", isHighGradeEdition);
+                            cmd.Parameters.AddWithValue("@RefreshRate", refreshRate);
 
                             cmd.ExecuteNonQuery();
                         }
@@ -3055,6 +3060,7 @@ namespace MHFZ_Overlay
                     Monster1BlastThresholdDictionary TEXT NOT NULL,
                     Monster1StunThresholdDictionary TEXT NOT NULL,
                     IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)),
+                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1,30)),
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
                     -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
@@ -9694,7 +9700,8 @@ namespace MHFZ_Overlay
                     MODIFY COLUMN Monster1BlastThresholdDictionary TEXT NOT NULL AFTER Monster1ParalysisThresholdDictionary,
                     MODIFY COLUMN Monster1StunThresholdDictionary TEXT NOT NULL AFTER Monster1BlastThresholdDictionary;
                     MODIFY COLUMN IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) AFTER Monster1StunThresholdDictionary;
-                    ";
+                    MODIFY COLUMN RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1, 30)) AFTER IsHighGradeEdition;                    
+";
             using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
             {
                 cmd.ExecuteNonQuery();
