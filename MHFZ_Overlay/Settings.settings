@@ -761,5 +761,14 @@
     <Setting Name="RefreshRate" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30</Value>
     </Setting>
+    <Setting Name="PersonalBestAttemptsShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PersonalBestAttemptsX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">380</Value>
+    </Setting>
+    <Setting Name="PersonalBestAttemptsY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">170</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

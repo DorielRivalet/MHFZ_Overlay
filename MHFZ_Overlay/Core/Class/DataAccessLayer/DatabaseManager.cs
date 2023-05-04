@@ -611,57 +611,80 @@ namespace MHFZ_Overlay
                             runID = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
-                        long personalBest = 0;
-
-                        using (SQLiteCommand cmd = new SQLiteCommand(
-                        @"SELECT 
-                            TimeLeft, 
-                            FinalTimeValue,
-                            FinalTimeDisplay,
-                            ActualOverlayMode,
-                            pg.WeaponTypeID
-                        FROM 
-                            Quests q
-                        JOIN
-                            PlayerGear pg ON q.RunID = pg.RunID
-                        WHERE 
-                            QuestID = @questID
-                            AND pg.WeaponTypeID = @weaponTypeID
-                            AND ActualOverlayMode = @category
-                            AND PartySize = 1
-                        ORDER BY 
-                            FinalTimeValue ASC
-                        LIMIT 1", conn))
+                        if (dataLoader.model.PartySize() == 1)
                         {
-                            cmd.Parameters.AddWithValue("@questID", dataLoader.model.QuestID());
-                            cmd.Parameters.AddWithValue("@weaponTypeID", dataLoader.model.WeaponType());
-                            cmd.Parameters.AddWithValue("@category", actualOverlayMode);
+                            long personalBest = 0;
+                            int questID = dataLoader.model.QuestID();
+                            int weaponType = dataLoader.model.WeaponType();
+                            bool improvedPersonalBest = false;
 
-                            var reader = cmd.ExecuteReader();
-                            if (reader.Read())
+                            using (SQLiteCommand cmd = new SQLiteCommand(
+                            @"SELECT 
+                                TimeLeft, 
+                                FinalTimeValue,
+                                FinalTimeDisplay,
+                                ActualOverlayMode,
+                                pg.WeaponTypeID
+                            FROM 
+                                Quests q
+                            JOIN
+                                PlayerGear pg ON q.RunID = pg.RunID
+                            WHERE 
+                                QuestID = @questID
+                                AND pg.WeaponTypeID = @weaponTypeID
+                                AND ActualOverlayMode = @category
+                                AND PartySize = 1
+                            ORDER BY 
+                                FinalTimeValue ASC
+                            LIMIT 1", conn))
                             {
-                                long time = 0;
-                                time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
-                                personalBest = time;
+                                cmd.Parameters.AddWithValue("@questID", questID);
+                                cmd.Parameters.AddWithValue("@weaponTypeID", weaponType);
+                                cmd.Parameters.AddWithValue("@category", actualOverlayMode);
+
+                                var reader = cmd.ExecuteReader();
+                                if (reader.Read())
+                                {
+                                    long time = 0;
+                                    time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                                    personalBest = time;
+                                }
                             }
-                        }
 
-                        // TODO: do i need to check for party size?
-                        sql = @"INSERT INTO PersonalBests(
-                        RunID,
-                        Attempts
-                        ) VALUES (
-                        @RunID,
-                        @Attempts)";
-                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                        {
-                            int finalTimeValue = model.TimeDefInt() - model.TimeInt();
-                            if (finalTimeValue < personalBest || personalBest == 0)
+                            sql = @"INSERT INTO PersonalBests(
+                            RunID,
+                            Attempts
+                            ) VALUES (
+                            @RunID,
+                            @Attempts)";
+                            using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                             {
-                                cmd.Parameters.AddWithValue("@RunID", runID);
-                                cmd.Parameters.AddWithValue("@Attempts", attempts);
-                                // Execute the stored procedure
-                                cmd.ExecuteNonQuery();
+                                int finalTimeValue = model.TimeDefInt() - model.TimeInt();
+                                if (finalTimeValue < personalBest || personalBest == 0)
+                                {
+                                    improvedPersonalBest = true;
+                                    cmd.Parameters.AddWithValue("@RunID", runID);
+                                    cmd.Parameters.AddWithValue("@Attempts", attempts);
+                                    // Execute the stored procedure
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+                            if (improvedPersonalBest)
+                            {
+                                sql = @"UPDATE PersonalBestAttempts 
+                                    SET 
+                                        Attempts = 0 
+                                    WHERE 
+                                        (QuestID, WeaponTypeID, ActualOverlayMode) = (@QuestID, @WeaponTypeID, @ActualOverlayMode)";
+                                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                                {
+                                    cmd.Parameters.AddWithValue("@QuestID", questID);
+                                    cmd.Parameters.AddWithValue("@WeaponTypeID", weaponType);
+                                    cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+                                    // Execute the stored procedure
+                                    cmd.ExecuteNonQuery();
+                                }
                             }
                         }
 
@@ -2787,7 +2810,7 @@ namespace MHFZ_Overlay
             if (schemaChanged)
             {
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
-                MessageBox.Show(@"ERROR: The database schema got updated in the latest version. Please make sure that both MHFZ_Overlay.sqlite and reference_schema.json don't exist in the current overlay directory, so that the program can make new ones",
+                MessageBox.Show(@"WARNING: The database schema got updated in the latest version. Please make sure that both MHFZ_Overlay.sqlite and reference_schema.json don't exist in the current overlay directory, so that the program can make new ones",
                 "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Warn("Invalid database schema");
 
@@ -4003,6 +4026,22 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
+                    sql = @"CREATE TABLE IF NOT EXISTS PersonalBestAttempts(
+                    PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    QuestID INTEGER NOT NULL,
+                    WeaponTypeID INTEGER NOT NULL,
+                    ActualOverlayMode TEXT NOT NULL,
+                    Attempts INTEGER NOT NULL,
+                    FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
+                    )
+                    ";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
                     #region gacha
                     // a mh game but like a MUD. hunt in-game to get many kinds of points for this game. hunt and tame monsters. challenge other CPU players/monsters.
 
@@ -4601,7 +4640,7 @@ namespace MHFZ_Overlay
                     }
                 }
             }
-
+            logger.Info("Personal best time elapsed value: {0}", personalBest);
             return personalBest;
         }
 
@@ -4904,6 +4943,65 @@ namespace MHFZ_Overlay
             return attempts;
         }
 
+        public int UpsertPersonalBestAttempts(long questID, int weaponTypeID, string category)
+        {
+            int attempts = 0;
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    int numRetries = 0;
+                    bool success = false;
+                    while (!success && numRetries < 3)
+                    {
+                        try
+                        {
+                            using (SQLiteCommand command = new SQLiteCommand(conn))
+                            {
+                                command.CommandText =
+                                    @"INSERT INTO 
+                            PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
+                        VALUES 
+                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1)
+                        ON CONFLICT 
+                            (QuestID, WeaponTypeID, ActualOverlayMode) 
+                        DO UPDATE
+                        SET 
+                            Attempts = Attempts + 1
+                        RETURNING 
+                            Attempts;";
+
+                                command.Parameters.AddWithValue("@QuestID", questID);
+                                command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+                                command.Parameters.AddWithValue("@ActualOverlayMode", category);
+
+                                attempts = Convert.ToInt32(command.ExecuteScalar());
+                            }
+                            transaction.Commit();
+                            success = true;
+                        }
+                        catch (SQLiteException ex)
+                        {
+                            if (ex.ResultCode == SQLiteErrorCode.Locked || ex.ResultCode == SQLiteErrorCode.Busy)
+                            {
+                                // Database is locked, retry after a short delay
+                                numRetries++;
+                                Thread.Sleep(1000);
+                            }
+                            else
+                            {
+                                // Some other error occurred, abort the transaction
+                                HandleError(transaction, ex);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return attempts;
+        }
 
         public long GetQuestAttempts(long questID, int weaponTypeID, string category)
         {
@@ -9514,6 +9612,22 @@ namespace MHFZ_Overlay
             FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
             UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
             )";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS PersonalBestAttempts(
+                    PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    QuestID INTEGER NOT NULL,
+                    WeaponTypeID INTEGER NOT NULL,
+                    ActualOverlayMode TEXT NOT NULL,
+                    Attempts INTEGER NOT NULL,
+                    FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
+                    )
+                    ";
             using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
             {
                 cmd.ExecuteNonQuery();

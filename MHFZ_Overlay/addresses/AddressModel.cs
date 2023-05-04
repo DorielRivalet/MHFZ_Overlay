@@ -74,6 +74,7 @@ namespace MHFZ_Overlay.addresses
         public bool ShowQuestID { get; set; } = true;
         public bool ShowQuestAttemptsInfo { get; set; } = true;
         public bool ShowPersonalBestTimePercentInfo { get; set; } = true;
+        public bool ShowPersonalBestAttemptsInfo { get; set; } = true;
         public bool ShowLocationTextInfo { get; set; } = true;
         public bool ShowQuestNameInfo { get; set; } = true;
         public bool ShowMonsterHPBars { get; set; } = true;

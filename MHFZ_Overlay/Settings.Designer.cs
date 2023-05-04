@@ -3058,5 +3058,41 @@ namespace MHFZ_Overlay {
                 this["RefreshRate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PersonalBestAttemptsShown {
+            get {
+                return ((bool)(this["PersonalBestAttemptsShown"]));
+            }
+            set {
+                this["PersonalBestAttemptsShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("380")]
+        public double PersonalBestAttemptsX {
+            get {
+                return ((double)(this["PersonalBestAttemptsX"]));
+            }
+            set {
+                this["PersonalBestAttemptsX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("170")]
+        public double PersonalBestAttemptsY {
+            get {
+                return ((double)(this["PersonalBestAttemptsY"]));
+            }
+            set {
+                this["PersonalBestAttemptsY"] = value;
+            }
+        }
     }
 }

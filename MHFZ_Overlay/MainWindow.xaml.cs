@@ -15,9 +15,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
+using System.Reactive;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
@@ -1238,6 +1241,8 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowPersonalBestInfo = v && s.PersonalBestShown;
             DataLoader.model.ShowQuestAttemptsInfo = v && s.QuestAttemptsShown;
             DataLoader.model.ShowPersonalBestTimePercentInfo = v && s.PersonalBestTimePercentShown;
+            DataLoader.model.ShowPersonalBestAttemptsInfo = v && s.PersonalBestAttemptsShown;
+
         }
 
         #endregion
@@ -2625,6 +2630,10 @@ namespace MHFZ_Overlay
                     s.PersonalBestTimePercentX = (double)(pos.X - XOffset);
                     s.PersonalBestTimePercentY = (double)(pos.Y - YOffset);
                     break;
+                case "PersonalBestAttemptsInfo":
+                    s.PersonalBestAttemptsX = (double)(pos.X - XOffset);
+                    s.PersonalBestAttemptsY = (double)(pos.Y - YOffset);
+                    break;
 
                 // Monster
                 case "Monster1HpBar":
@@ -2845,6 +2854,7 @@ namespace MHFZ_Overlay
             PlayerAtkInfoBorder.BorderThickness = thickness;
             PlayerHitsTakenBlockedInfoBorder.BorderThickness = thickness;
             QuestAttemptsInfoBorder.BorderThickness = thickness;
+            PersonalBestAttemptsInfoBorder.BorderThickness= thickness;
             QuestNameInfoBorder.BorderThickness = thickness;
             SessionTimeInfoBorder.BorderThickness = thickness;
             SharpnessInfoBorder.BorderThickness = thickness;
@@ -2935,6 +2945,20 @@ namespace MHFZ_Overlay
             }));
         }
 
+        private async void UpdatePersonalBestAttempts()
+        {
+            string category = OverlayModeWatermarkTextBlock.Text;
+            int weaponType = DataLoader.model.WeaponType();
+            long questID = DataLoader.model.QuestID();
+
+            int attempts = await Task.Run(() => databaseManager.UpsertPersonalBestAttempts(questID, weaponType, category));
+
+            await Dispatcher.BeginInvoke(new Action(() =>
+            {
+                personalBestAttemptsTextBlock.Text = attempts.ToString();
+            }));
+        }
+
         /// <summary>
         /// Gets the mezeporta festival minigame score depending on area id
         /// </summary>
@@ -3009,6 +3033,8 @@ namespace MHFZ_Overlay
             }
         }
 
+        private SemaphoreSlim semaphore = new SemaphoreSlim(1);
+
         //TODO: optimization
         private void CheckQuestStateForDatabaseLogging()
         {
@@ -3036,6 +3062,7 @@ namespace MHFZ_Overlay
                 {
                     calculatedQuestAttempts = true;
                     UpdateQuestAttempts();
+                    UpdatePersonalBestAttempts();
                 }
             }
 

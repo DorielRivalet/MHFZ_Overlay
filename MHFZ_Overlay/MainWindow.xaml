@@ -10,7 +10,8 @@
         d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
         x:Name="Window"
-        Title="MHF-Z Overlay"         Height="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"
+        Title="MHF-Z Overlay"         
+        Height="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"
         Width="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" Background="Transparent" AllowsTransparency="True" WindowStyle="None"
         Style="{StaticResource WinAll}"
         FontFamily="{StaticResource Source Code Pro Bold}"
@@ -97,7 +98,7 @@
 
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
             <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="{Binding QuestTimeMode}" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isOnPace}" x:Name="timeRemainingTextBox" Text="{x:Bind DataLoader.model.Time}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isOnPace}" x:Name="timerTextBlock" Text="{x:Bind DataLoader.model.Time}" Margin="4,0,0,0"/>
         </Grid>
         <Grid x:Name="ActionsPerMinuteInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowAPM, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
@@ -296,7 +297,6 @@
                                Row1Width="4" 
                                Row2Width="3" />
         </Grid>
-
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster2HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster2HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster2HealthBarY}" Width="500" Height="40" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonster2HPBar, Converter={StaticResource BoolToVis}}">
             <Grid.RowDefinitions>
@@ -315,7 +315,6 @@
                                    Row1Width="4" 
                                    Row2Width="3"/>
         </Grid>
-
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster3HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster3HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster3HealthBarY}" Width="500" Height="40" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonster3HPBar, Converter={StaticResource BoolToVis}}">
             <Grid.RowDefinitions>
@@ -334,7 +333,6 @@
                                   Row1Width="4" 
                                   Row2Width="3" />
         </Grid>
-
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster4HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster4HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster4HealthBarY}" Width="500" Height="40" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonster4HPBar, Converter={StaticResource BoolToVis}}">
             <Grid.RowDefinitions>
@@ -353,7 +351,6 @@
                                    Row1Width="4" 
                                    Row2Width="3" />
         </Grid>
-
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterAtkMultInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterAtkMult, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
@@ -596,6 +593,21 @@
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
             <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Attempts" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
             <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="questAttemptsTextBlock" Text="0" Margin="4,0,0,0"/>
+        </Grid>
+        <Grid x:Name="PersonalBestAttemptsInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPersonalBestAttemptsInfo, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="2*" />
+                <ColumnDefinition  Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="UI/Icons/png/quest_1.png"/>
+            <Border x:Name="PersonalBestAttemptsInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
+
+            <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="PB Attempts" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+            <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="personalBestAttemptsTextBlock" Text="0" Margin="4,0,0,0"/>
         </Grid>
         <Grid x:Name="PersonalBestTimePercentInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPersonalBestTimePercentInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
