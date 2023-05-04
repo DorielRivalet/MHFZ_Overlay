@@ -7,6 +7,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.WPF;
 using MHFZ_Overlay.Core.Class;
+using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Newtonsoft.Json;
@@ -921,26 +922,12 @@ namespace MHFZ_Overlay
         {
             string textToSave = GearStats.Text;
 
-
             if (GetTextFormatMode() == "Code Block")
                 textToSave = string.Format("```text\n{0}\n```", textToSave);
             else if (GetTextFormatMode() == "Markdown")
                 textToSave = MainWindow.DataLoader.model.MarkdownSavedGearStats;
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
-            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
-            string dateTime = DateTime.Now.ToString();
-            dateTime = dateTime.Replace("/", "-");
-            dateTime = dateTime.Replace(" ", "_");
-            dateTime = dateTime.Replace(":", "-");
-            saveFileDialog.FileName = "Set-" + dateTime;
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                File.WriteAllText(saveFileDialog.FileName, textToSave);
-                logger.Info("FILE OPERATION: saved {0}", saveFileDialog.FileName);
-            }
-
+            FileManager.SaveTextFile(textToSave, "GearStats");
         }
 
         /// <summary>
@@ -959,7 +946,7 @@ namespace MHFZ_Overlay
             else if (GetTextFormatMode() == "Image")
             {
                 GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-                CopyUIElementToClipboard(GearTextGrid);
+                FileManager.CopyUIElementToClipboard(GearTextGrid);
                 GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
                 return;
             }
@@ -970,87 +957,11 @@ namespace MHFZ_Overlay
 
         private void BtnImageFile_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog savefile = new SaveFileDialog();
-            string dateTime = DateTime.Now.ToString();
-            dateTime = dateTime.Replace("/", "-");
-            dateTime = dateTime.Replace(" ", "_");
-            dateTime = dateTime.Replace(":", "-");
-            savefile.FileName = "HunterSet-" + dateTime + ".png";
-            savefile.Filter = "PNG files (*.png)|*.png";
-            savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
-
-            if (savefile.ShowDialog() == true)
-            {
-                GearImageGrid.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
-                CreateBitmapFromVisual(GearImageGrid, savefile.FileName);
-                CopyUIElementToClipboard(GearImageGrid);
-                GearImageGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-                logger.Info("FILE OPERATION: saved {0}", savefile.FileName);
-            }
+            var fileName = "HunterSet";
+            FileManager.SaveElementAsImageFile(GearImageGrid, fileName);
         }
 
-        /// <summary>
-        /// Copies a UI element to the clipboard as an image.
-        /// </summary>
-        /// <param name="element">The element to copy.</param>
-        public static void CopyUIElementToClipboard(FrameworkElement element)
-        {
-            double width = element.ActualWidth;
-            double height = element.ActualHeight;
-
-            if (width <= 0 || height <= 0)
-            {
-                System.Windows.MessageBox.Show("Please load the stats by first visiting the text tab in the configuration window", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                return;
-            }
-
-            RenderTargetBitmap bmpCopied = new RenderTargetBitmap((int)Math.Round(width), (int)Math.Round(height), 96, 96, PixelFormats.Default);
-            DrawingVisual dv = new DrawingVisual();
-            using (DrawingContext dc = dv.RenderOpen())
-            {
-                VisualBrush vb = new VisualBrush(element);
-                dc.DrawRectangle(vb, null, new Rect(new Point(), new Size(width, height)));
-            }
-            bmpCopied.Render(dv);
-            Clipboard.SetImage(bmpCopied);
-        }
-
-        public static void CreateBitmapFromVisual(Visual target, string fileName)
-        {
-            if (target == null || string.IsNullOrEmpty(fileName))
-            {
-                return;
-            }
-
-            Rect bounds = VisualTreeHelper.GetDescendantBounds(target);
-
-            if (bounds.Width <= 0 || bounds.Height <= 0)
-            {
-                System.Windows.MessageBox.Show("Please load the gear stats by visiting the text tab in the configuration window", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                return;
-            }
-
-            RenderTargetBitmap renderTarget = new RenderTargetBitmap((Int32)bounds.Width, (Int32)bounds.Height, 96, 96, PixelFormats.Pbgra32);
-
-            DrawingVisual visual = new DrawingVisual();
-
-            using (DrawingContext context = visual.RenderOpen())
-            {
-                VisualBrush visualBrush = new VisualBrush(target);
-                visualBrush.Stretch = Stretch.None;
-                context.DrawRectangle(visualBrush, null, new Rect(new Point(), bounds.Size));
-
-            }
-
-            renderTarget.Render(visual);
-            PngBitmapEncoder bitmapEncoder = new PngBitmapEncoder();
-            bitmapEncoder.Frames.Add(BitmapFrame.Create(renderTarget));
-            using (Stream stm = File.Create(fileName))
-            {
-                bitmapEncoder.Save(stm);
-                logger.Info("FILE OPERATION: created {0}", fileName);
-            }
-        }
+        
 
         private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1060,25 +971,7 @@ namespace MHFZ_Overlay
         // on generate csv button click
         protected void BtnLogFile_Click(object sender, EventArgs e)
         {
-            SaveFileDialog savefile = new SaveFileDialog();
-            string dateTime = DateTime.Now.ToString();
-            dateTime = dateTime.Replace("/", "-");
-            dateTime = dateTime.Replace(" ", "_");
-            dateTime = dateTime.Replace(":", "-");
-            savefile.FileName = "HuntedLog-" + dateTime + ".csv";
-            savefile.Filter = "CSV files (*.csv)|*.csv";
-            savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HuntedLogs\";
-
-            //https://stackoverflow.com/questions/11776781/savefiledialog-make-problems-with-streamwriter-in-c-sharp
-            if (savefile.ShowDialog() == true)
-            {
-                using (var writer = new StreamWriter(savefile.FileName))
-                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-                {
-                    csv.WriteRecords(Monsters);
-                }
-                logger.Info("FILE OPERATION: saved {0}", savefile.FileName);
-            }
+            FileManager.SaveClassRecordsAsCSVFile(Monsters);
         }
 
 
@@ -1093,21 +986,8 @@ namespace MHFZ_Overlay
 
         private void BtnGuildCardFile_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog savefile = new SaveFileDialog();
-            string dateTime = DateTime.Now.ToString();
-            dateTime = dateTime.Replace("/", "-");
-            dateTime = dateTime.Replace(" ", "_");
-            dateTime = dateTime.Replace(":", "-");
-            savefile.FileName = "GuildCard-" + dateTime + ".png";
-            savefile.Filter = "PNG files (*.png)|*.png";
-            savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
-
-            if (savefile.ShowDialog() == true)
-            {
-                CreateBitmapFromVisual(GuildCardGrid, savefile.FileName);
-                CopyUIElementToClipboard(GuildCardGrid);
-                logger.Info("FILE OPERATION: saved {0}", savefile.FileName);
-            }
+            var fileName = "GuildCard";
+            FileManager.SaveElementAsImageFile(GuildCardGrid, fileName);
         }
 
         private void ChangeMonsterInfo()
@@ -1283,65 +1163,7 @@ namespace MHFZ_Overlay
         {
             MainWindow.DataLoader.BackupSettings();
 
-            // Show a Save File Dialog to let the user choose the location for the JSON file
-            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
-            saveFileDialog.FileName = "user_settings"; // Default file name
-            saveFileDialog.DefaultExt = ".json"; // Default file extension
-            saveFileDialog.Filter = "JSON files (.json)|*.json"; // Filter files by extension
-
-            // Show the Save File Dialog
-            Nullable<bool> result = saveFileDialog.ShowDialog();
-
-            // If the user clicked the Save button and selected a file
-            if (result == true)
-            {
-                // Get the user settings from the Settings class
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
-                // Create a dictionary to store the user settings
-                Dictionary<string, Setting> settings = new Dictionary<string, Setting>();
-
-                // Get a list of the user settings properties sorted alphabetically by name
-                List<System.Configuration.SettingsProperty> sortedSettings = s.Properties.Cast<System.Configuration.SettingsProperty>().OrderBy(setting => setting.Name).ToList();
-
-                // Loop through the user settings properties and add them to the dictionary
-                foreach (System.Configuration.SettingsProperty setting in sortedSettings)
-                {
-                    string settingName = setting.Name;
-                    string settingDefaultValue = setting.DefaultValue.ToString();
-                    string settingPropertyType = setting.PropertyType.ToString();
-                    string settingIsReadOnly = setting.IsReadOnly.ToString();
-                    string settingProvider = setting.Provider.ToString();
-                    string settingProviderApplicationName = setting.Provider.ApplicationName;
-                    string settingProviderDescription = setting.Provider.Description;
-                    string settingProviderName = setting.Provider.Name;
-                    string settingValue = s[settingName].ToString();
-
-                    // Create a new Setting object and set its properties
-                    Setting settingObject = new Setting
-                    {
-                        Value = settingValue,
-                        DefaultValue = settingDefaultValue,
-                        PropertyType = settingPropertyType,
-                        IsReadOnly = settingIsReadOnly,
-                        Provider = settingProvider,
-                        ProviderName = settingProviderName,
-                        ProviderApplicationName = settingProviderApplicationName,
-                        ProviderDescription = settingProviderDescription
-                    };
-
-                    // Add the key and Setting object to the dictionary
-                    settings.Add(settingName, settingObject);
-                }
-
-                // Serialize the dictionary to a JSON string
-                string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
-
-                // Save the JSON string to the selected file
-                File.WriteAllText(saveFileDialog.FileName, json);
-                logger.Info("FILE OPERATION: saved {0}", saveFileDialog.FileName);
-
-            }
+            FileManager.SaveSettingsAsJSON();
         }
 
         private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
@@ -1351,13 +1173,7 @@ namespace MHFZ_Overlay
 
             MainWindow.DataLoader.model.ValidateGameFolder();
 
-            if (MainWindow.DataLoader.databaseChanged)
-            {
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-                MessageBox.Show("Please update the database structure", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-                logger.Warn("DATABASE OPERATION: Database structure needs update");
-                s.EnableQuestLogging = false;
-            }
+            DatabaseManager.GetInstance().CheckIfSchemaChanged(MainWindow.DataLoader);
         }
 
         private void CountryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1675,26 +1491,16 @@ namespace MHFZ_Overlay
         {
             string textToSave = questLogGearStatsTextBlock.Text;
             textToSave = string.Format("```text\n{0}\n```", textToSave);
-
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
-            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
-            string dateTime = DateTime.Now.ToString();
-            dateTime = dateTime.Replace("/", "-");
-            dateTime = dateTime.Replace(" ", "_");
-            dateTime = dateTime.Replace(":", "-");
-            saveFileDialog.FileName = "Run-" + RunIDTextBox.Text.Trim() + "-Set-" + dateTime;
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                File.WriteAllText(saveFileDialog.FileName, textToSave);
-                logger.Info("FILE OPERATION: saved {0}", saveFileDialog.FileName);
-            }
+            var fileName = "Set";
+            var beginningFileName = "Run";
+            var beginningText = RunIDTextBox.Text.Trim();
+            FileManager.SaveTextFile(textToSave, fileName, beginningFileName, beginningText);
         }
 
         private void QuestLogGearBtnCopyFile_Click(object sender, RoutedEventArgs e)
         {
             questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-            CopyUIElementToClipboard(questLogGearStatsTextBlock);
+            FileManager.CopyUIElementToClipboard(questLogGearStatsTextBlock);
             questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
         }
 
@@ -1710,25 +1516,13 @@ namespace MHFZ_Overlay
             string textToSave = compendiumTextBlock.Text;
             textToSave = string.Format("```text\n{0}\n```", textToSave);
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
-            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
-            string dateTime = DateTime.Now.ToString();
-            dateTime = dateTime.Replace("/", "-");
-            dateTime = dateTime.Replace(" ", "_");
-            dateTime = dateTime.Replace(":", "-");
-            saveFileDialog.FileName = "Compendium-" + dateTime;
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                File.WriteAllText(saveFileDialog.FileName, textToSave);
-                logger.Info("FILE OPERATION: saved {0}", saveFileDialog.FileName);
-            }
+            FileManager.SaveTextFile(textToSave, "Compendium");
         }
 
         private void CompendiumBtnCopyFile_Click(object sender, RoutedEventArgs e)
         {
             compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-            CopyUIElementToClipboard(compendiumInformationStackPanel);
+            FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
             compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
         }
 

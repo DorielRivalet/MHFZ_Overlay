@@ -1,9 +1,12 @@
 ﻿using Memory;
 
+// Most Addresses from https://github.com/suzaku01/ 
 namespace MHFZ_Overlay.addresses
 {
 
-    /// Most Addresses from https://github.com/suzaku01/
+    /// <summary>
+    /// Inherits from AddressModel and provides the memory address of the hit count value (etc.) when the game is running in non-High Grade Edition (HGE) mode.
+    /// </summary>
     public class AddressModelNotHGE : AddressModel
     {
         public AddressModelNotHGE(Mem m) : base(m)

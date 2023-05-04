@@ -816,9 +816,9 @@
                         <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="12" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
                         <xctk:ColorPicker Grid.Column="1" Grid.Row="12" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
                         
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="13" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}"/>
+                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="13" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}" ToolTip="If disabled, information will only be shown in quest runs"/>
                         <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="13" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>
-                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="14" Text="Always Show Player Info" Style="{StaticResource ConfigTextBox}"/>
+                        <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="14" Text="Always Show Player Info" Style="{StaticResource ConfigTextBox}" ToolTip="If disabled, information will only be shown in quest runs"/>
                         <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="14" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowPlayerInfo}"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster 1 Icon"/>

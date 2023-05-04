@@ -1,5 +1,6 @@
 ﻿using Memory;
 using MHFZ_Overlay.addresses;
+using MHFZ_Overlay.Core.Class.IO;
 using NLog;
 using Squirrel;
 using System;
@@ -15,7 +16,7 @@ using System.Windows;
 namespace MHFZ_Overlay
 {
     /// <summary>
-    /// DataLoader
+    /// Responsible for loading data into the application. It has a DatabaseManager object that is used to access and manipulate the database. It also has instances of AddressModelNotHGE and AddressModelHGE classes, which inherit from the AddressModel abstract class. Depending on the state of the game, one of these instances is used to get the hit count value (etc.) from the memory.
     /// </summary>
     public class DataLoader
     {
@@ -39,9 +40,7 @@ namespace MHFZ_Overlay
         {
             string settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
             string destination = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
-            File.Copy(settingsFile, destination, true);
-            logger.Info("FILE OPERATION: Backed up settings. Original file: {0}, Destination: {1}", settingsFile, destination);
-            MessageBox.Show(string.Format("Backed up settings. Original file: {0}, Destination: {1}", settingsFile, destination), "MHF-Z Overlay Settings", MessageBoxButton.OK, MessageBoxImage.Information);
+            FileManager.CopyFileToDestination(settingsFile, destination, true, "Backed up settings", true);
         }
 
         /// <summary>
@@ -53,51 +52,9 @@ namespace MHFZ_Overlay
             //Restore settings after application update            
             string destFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
             string sourceFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
-            // Check if we have settings that we need to restore
-            if (!File.Exists(sourceFile))
-            {
-                // Nothing we need to do
-                logger.Info("FILE OPERATION: File not found at {0}", sourceFile);
-                return;
-            }
-            // Create directory as needed
-            try
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(destFile));
-                logger.Info("FILE OPERATION: creating directory {0}", Path.GetDirectoryName(destFile));
+            var restorationMessage = "Restored settings";
 
-            }
-            catch (Exception ex)
-            {
-                logger.Info(ex, "FILE OPERATION: Did not make directory for {0}", destFile);
-            }
-
-            // Copy our backup file in place 
-            try
-            {
-                File.Copy(sourceFile, destFile, true);
-                logger.Info("FILE OPERATION: copying {0} into {1}", sourceFile, destFile);
-
-            }
-            catch (Exception ex)
-            {
-                logger.Info(ex, "FILE OPERATION: Did not copy backup file. Source: {0}, Destination: {1} ", sourceFile, destFile);
-
-            }
-
-            // Delete backup file
-            try
-            {
-                File.Delete(sourceFile);
-                logger.Info("FILE OPERATION: deleting {0}", sourceFile);
-
-            }
-            catch (Exception ex)
-            {
-                logger.Info(ex, "FILE OPERATION: Did not delete backup file. Source: {0}", sourceFile);
-            }
-
-            logger.Info("FILE OPERATION: Restored settings. Source: {0}, Destination: {1}", sourceFile, destFile);
+            FileManager.RestoreFileFromSourceToDestination(destFile, sourceFile, restorationMessage);
         }
 
         // TODO: would like to make this a singleton but its complicated
@@ -208,12 +165,7 @@ namespace MHFZ_Overlay
 
                 // Check if the version file exists in the database folder
                 string previousVersionPath = Path.Combine(databasePath, "previous-version.txt");
-                if (!File.Exists(previousVersionPath))
-                {
-                    // Create the version file if it doesn't exist
-                    File.Create(previousVersionPath);
-                    logger.Info("FILE OPERATION: creating version file at {0}", previousVersionPath);
-                }
+                FileManager.CreateFileIfNotExists(previousVersionPath, "Creating version file at ");
 
                 s.PreviousVersionFilePath = previousVersionPath;
 
@@ -319,39 +271,8 @@ namespace MHFZ_Overlay
                 // Get a list of all files and folders in the game folder
                 string[] files = Directory.GetFiles(mhfDirectory, "*", SearchOption.AllDirectories);
                 string[] folders = Directory.GetDirectories(mhfDirectory, "*", SearchOption.AllDirectories);
-                List<string> illegalFiles = new List<string>();
-
-                // Check for banned files and file extensions
-                foreach (string file in files)
-                {
-                    string fileName = Path.GetFileName(file);
-                    string extension = Path.GetExtension(file);
-
-                    if (bannedFiles.Contains(fileName.ToLower()) || bannedFileExtensions.Contains(extension.ToLower()))
-                    {
-                        illegalFiles.Add(file);
-                    }
-                }
-
-                // Check for banned folders
-                foreach (string folder in folders)
-                {
-                    string folderName = Path.GetFileName(folder);
-
-                    if (bannedFolders.Contains(folderName.ToLower()))
-                    {
-                        illegalFiles.Add(folder);
-                    }
-                }
-
-                if (illegalFiles.Count > 0)
-                {
-                    // If there are any banned files or folders, display an error message and exit the application
-                    string message = string.Format("The following files or folders are not allowed:\n{0}", string.Join("\n", illegalFiles));
-                    MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    logger.Fatal("FILE OPERATION: {0}", message);
-                    Environment.Exit(0);
-                }
+                var isFatal = true;
+                FileManager.CheckIfFileExtensionFolderExists(files, folders, bannedFiles, bannedFileExtensions, bannedFolders, isFatal);
             }
             else
             {

@@ -1,4 +1,5 @@
 ﻿using Dictionary;
+using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Microsoft.VisualBasic;
@@ -47,6 +48,17 @@ namespace MHFZ_Overlay
         private string _customDatabasePath;
         private string dataSource;
 
+        public void CheckIfSchemaChanged(DataLoader mainWindowDataLoader)
+        {
+            if (mainWindowDataLoader.databaseChanged)
+            {
+                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                MessageBox.Show("Please update the database structure", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
+                logger.Warn("Database structure needs update");
+                s.EnableQuestLogging = false;
+            }
+        }
+
         //TODO test
         public void CheckIfUserSetDatabasePath()
         {
@@ -58,7 +70,7 @@ namespace MHFZ_Overlay
 
                 // Show warning to user that they should set a custom database path to prevent data loss on update
                 MessageBox.Show("Warning: The database is currently stored in the default location and will be deleted on update. Please select a custom database location to prevent data loss.", "MHFZ-Overlay Data Loss Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                logger.Warn("DATABASE OPERATION: The database file is being saved to the overlay default location");
+                logger.Warn("The database file is being saved to the overlay default location");
                 // Use default database path
                 _customDatabasePath = _connectionString;
             }
@@ -69,7 +81,7 @@ namespace MHFZ_Overlay
 
             if (!File.Exists(_customDatabasePath))
             {
-                logger.Info("DATABASE OPERATION: {0} not found, creating file", _customDatabasePath);
+                logger.Info("{0} not found, creating file", _customDatabasePath);
                 SQLiteConnection.CreateFile(_customDatabasePath);
             }
 
@@ -144,7 +156,7 @@ namespace MHFZ_Overlay
                 catch (SQLiteException ex)
                 {
                     MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    logger.Error(ex, "DATABASE OPERATION: Invalid database file");
+                    logger.Error(ex, "Invalid database file");
                     Environment.Exit(0);
                 }
 
@@ -162,21 +174,24 @@ namespace MHFZ_Overlay
                 {
                     conn.Open();
 
+                    var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
+
+                    var doesReferenceSchemaFileExist = FileManager.CheckIfFileExists(referenceSchemaFilePath, "Checking reference schema");
                     // Check if the reference schema file exists
-                    if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json")))
+                    if (!doesReferenceSchemaFileExist)
                     {
-                        logger.Info("FILE OPERATION: {0} not found, creating file", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
+                        logger.Info("Creating reference schema");
                         CreateReferenceSchemaJSONFromLocalDatabaseFile(conn);
                     }
                     else
                     {
                         // Load the reference schema file
-                        var referenceSchemaJson = File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
+                        var referenceSchemaJson = File.ReadAllText(referenceSchemaFilePath);
                         var referenceSchema = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, object>>>(referenceSchemaJson);
 
                         // Create a dictionary to store the current schema
                         var currentSchema = CreateReferenceSchemaJSONFromLocalDatabaseFile(conn, false);
-                        logger.Info("FILE OPERATION: {0} found, comparing file", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
+                        logger.Info("Found existing reference schema, comparing schemas", referenceSchemaFilePath);
                         CompareDatabaseSchemas(referenceSchema, currentSchema);
                     }
                 }
@@ -184,7 +199,7 @@ namespace MHFZ_Overlay
                 if (schemaChanged)
                 {
                     MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    logger.Warn("DATABASE OPERATION: Invalid database schema");
+                    logger.Warn("Invalid database schema");
                 }
             }
 
@@ -1811,7 +1826,7 @@ namespace MHFZ_Overlay
                             transaction.Rollback();
                         // Handle a SQL exception
                         MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState + "\n\n" + ex.HelpLink + "\n\n" + ex.ResultCode + "\n\n" + ex.ErrorCode + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        logger.Error(ex, "DATABASE OPERATION: An error occurred while accessing the database");
+                        logger.Error(ex, "An error occurred while accessing the database");
                     }
                     catch (IOException ex)
                     {
@@ -1819,7 +1834,7 @@ namespace MHFZ_Overlay
                             transaction.Rollback();
                         // Handle an I/O exception
                         MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        logger.Error(ex, "FILE OPERATION: An error occurred while accessing a file");
+                        logger.Error(ex, "An error occurred while accessing a file");
 
                     }
                     catch (ArgumentException ex)
@@ -2345,7 +2360,7 @@ namespace MHFZ_Overlay
 
             // Handle the exception and show an error message to the user
             MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            logger.Error(ex, "DATABASE OPERATION: An error occurred");
+            logger.Error(ex, "An error occurred");
         }
 
         public void MakeDeserealizedQuestInfoDictionariesFromRunID(SQLiteConnection conn, DataLoader dataLoader, int runID)
@@ -2453,7 +2468,7 @@ namespace MHFZ_Overlay
                 }
             }
 
-            logger.Info("DATABASE OPERATION: Stored overlay hash {0}", overlayHash);
+            logger.Info("Stored overlay hash {0}", overlayHash);
             return overlayHash;
         }
 
@@ -2506,14 +2521,14 @@ namespace MHFZ_Overlay
             {
                 // Handle a SQL exception
                 MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Error(ex, "DATABASE OPERATION: An error occurred while accessing the database");
+                logger.Error(ex, "An error occurred while accessing the database");
 
             }
             catch (IOException ex)
             {
                 // Handle an I/O exception
                 MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Error(ex, "FILE OPERATION: An error occurred while accessing a file");
+                logger.Error(ex, "An error occurred while accessing a file");
 
             }
             catch (Exception ex)
@@ -2678,11 +2693,9 @@ namespace MHFZ_Overlay
             {
                 // Serialize the schema dictionary to a JSON string
                 var json = JsonConvert.SerializeObject(schema, Formatting.Indented);
-
+                var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
                 // Write the JSON string to the reference schema file
-                File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"), json);
-                logger.Info("FILE OPERATION: writing into {0}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
-
+                FileManager.WriteToFile(referenceSchemaFilePath, json);
             }
 
             return schema;
@@ -2776,7 +2789,7 @@ namespace MHFZ_Overlay
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                 MessageBox.Show(@"ERROR: The database schema got updated in the latest version. Please make sure that both MHFZ_Overlay.sqlite and reference_schema.json don't exist in the current overlay directory, so that the program can make new ones",
                 "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Warn("DATABASE OPERATION: Invalid database schema");
+                logger.Warn("Invalid database schema");
 
                 s.EnableQuestLogging = false;
             }
@@ -7808,7 +7821,7 @@ namespace MHFZ_Overlay
         {
             if (!MezFesMinigame.ID.ContainsKey(previousMezFesArea) || previousMezFesScore <= 0)
             {
-                logger.Error("DATABASE OPERATION: wrong mezfes area or empty score, area id: {0}, score: {1}", previousMezFesArea, previousMezFesScore);
+                logger.Error("wrong mezfes area or empty score, area id: {0}, score: {1}", previousMezFesArea, previousMezFesScore);
                 return;
             }
 
@@ -9436,9 +9449,7 @@ namespace MHFZ_Overlay
 
                                 string databasePath = Path.Combine(mhfDirectory, "database");
                                 backupFileName = Path.Combine(databasePath, "MHFZ_Overlay_" + previousVersion + ".sqlite");
-                                File.Copy(s.DatabaseFilePath, backupFileName);
-                                logger.Info("FILE OPERATION: copying {0} into {1}", s.DatabaseFilePath, backupFileName);
-
+                                FileManager.CopyFileToDestination(databasePath, backupFileName, false, "Copied database file", true);
                             }
                             else
                             {
@@ -9465,7 +9476,7 @@ namespace MHFZ_Overlay
                             {
                                 // Perform the update
                                 versionUpdates[previousVersion]();
-                                logger.Info("DATABASE OPERATION: Database schema updated from {0} to {1}", previousVersion, MainWindow.CurrentProgramVersion);
+                                logger.Info("Database schema updated from {0} to {1}", previousVersion, MainWindow.CurrentProgramVersion);
                             }
                             else
                             {
@@ -9477,7 +9488,7 @@ namespace MHFZ_Overlay
                         else
                         {
                             MessageBox.Show("Cannot use the overlay with an outdated database schema", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            logger.Fatal("DATABASE OPERATION: Outdated database schema");
+                            logger.Fatal("Outdated database schema");
                             Environment.Exit(0);
                         }
                     }
@@ -9721,23 +9732,23 @@ namespace MHFZ_Overlay
         private void WritePreviousVersionToFile()
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+            var previousVersionFilePath = s.PreviousVersionFilePath.Trim();
+            var logMessage = "Error with version file";
 
-            // TODO why does this error?
+            // TODO why does this error? also find a way to put this in FileManager
             try
             {
-                if (File.ReadAllText(s.PreviousVersionFilePath) == "")
-                    previousVersion = MainWindow.CurrentProgramVersion;
+                if (File.ReadAllText(previousVersionFilePath) == "")
+                    previousVersion = MainWindow.CurrentProgramVersion.Trim();
                 else
-                    previousVersion = File.ReadAllText(s.PreviousVersionFilePath);
+                    previousVersion = File.ReadAllText(previousVersionFilePath);
 
-                using (StreamWriter writer = new StreamWriter(s.PreviousVersionFilePath, false))
-                {
-                    writer.WriteLine(previousVersion);
-                }
+                File.WriteAllText(previousVersionFilePath, previousVersion);
+                logger.Info("Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "FILE OPERATION: Error with version file");
+                logger.Error(ex, logMessage);
             }
         }
 
