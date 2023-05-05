@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using MHFZ_Overlay.Core.Class.Application;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Octokit;
@@ -15,7 +16,6 @@ using System.Windows.Controls;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Application = System.Windows.Application;
 
 namespace MHFZ_Overlay.Core.Class.IO
 {
@@ -200,7 +200,7 @@ namespace MHFZ_Overlay.Core.Class.IO
                 if (result == true)
                 {
                     // Get the user settings from the Settings class
-                    Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                    Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
                     // Create a dictionary to store the user settings
                     Dictionary<string, Setting> settings = new Dictionary<string, Setting>();
@@ -384,7 +384,7 @@ namespace MHFZ_Overlay.Core.Class.IO
                 string message = string.Format("The following files or folders are not allowed:\n{0}", string.Join("\n", illegalFiles));
                 MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Fatal(message);
-                Environment.Exit(0);
+                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
             }
 
             return doesExist;

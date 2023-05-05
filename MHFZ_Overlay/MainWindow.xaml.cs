@@ -6,6 +6,8 @@ using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
+using MHFZ_Overlay.Core.Class.Application;
+using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;
 using Microsoft.Extensions.DependencyModel;
 using NLog;
@@ -61,11 +63,10 @@ namespace MHFZ_Overlay
 
         #region system tray
 
-        private NotifyIcon _notifyIcon;
+        internal static NotifyIcon _notifyIcon = new NotifyIcon();
 
         private void CreateSystemTrayIcon()
         {
-            _notifyIcon = new NotifyIcon();
             var iconPath = "UI\\Icons\\ico\\mhfzoverlayicon256.ico";
             var iconStream = Application.GetResourceStream(new Uri(iconPath, UriKind.Relative)).Stream;
             var icon = new System.Drawing.Icon(iconStream);
@@ -274,19 +275,6 @@ namespace MHFZ_Overlay
                 else
                     return "Unknown Server";
             }
-        }
-
-        //Dispose client        
-        /// <summary>
-        /// Cleanups the Discord RPC instance.
-        /// </summary>
-        void Cleanup()
-        {
-            if (Client != null)//&& ShowDiscordRPC)
-            {
-                Client.Dispose();
-            }
-
         }
 
         /// <summary>
@@ -625,9 +613,8 @@ namespace MHFZ_Overlay
                         logger.Info("Detected closed game");
 
                         //https://stackoverflow.com/a/9050477/18859245
-                        Cleanup();
-                        databaseManager.StoreSessionTime(this);
-                        Environment.Exit(0);
+                        ApplicationManager.DiscordRPCCleanup(Client);
+                        ApplicationManager.HandleShutdown(_notifyIcon);
                     }
                     else
                     {
@@ -689,7 +676,7 @@ namespace MHFZ_Overlay
             }
             catch (Exception ex)
             {
-                WriteCrashLog(ex);
+                LoggingManager.WriteCrashLog(ex, Client, _notifyIcon);
                 // the flushing is done automatically according to the docs
             }
         }
@@ -793,28 +780,6 @@ namespace MHFZ_Overlay
             Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
             Brush blueBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
             AnimateOutlinedTextBlock(locationTextBlock, blackBrush, blueBrush);
-        }
-
-        private void WriteCrashLog(Exception ex)
-        {
-            string dateTime = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-            string logFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"MHFZ_Overlay\\MHFZ_Overlay-CrashLog-{dateTime}.txt");
-
-            // Log the exception to a file
-            using (StreamWriter sw = new StreamWriter(logFilePath, true))
-            {
-                sw.WriteLine("Date: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                sw.WriteLine("Message: " + ex.Message);
-                sw.WriteLine("Stack Trace: " + ex.StackTrace);
-            }
-
-            System.Windows.MessageBox.Show("Fatal error, closing overlay. See the crash log in the overlay folder for more information.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            logger.Fatal(ex, "Program crashed");
-
-            //https://stackoverflow.com/a/9050477/18859245
-            Cleanup();
-            databaseManager.StoreSessionTime(this);
-            Environment.Exit(0);
         }
 
         int curNum = 0;
@@ -2744,10 +2709,8 @@ namespace MHFZ_Overlay
         #region clickbuttons
         private void ReloadButton_Click(object sender, RoutedEventArgs e)
         {
-            Cleanup();
-            databaseManager.StoreSessionTime(this);
-            Environment.Exit(0);
-            System.Windows.Forms.Application.Restart();
+            ApplicationManager.DiscordRPCCleanup(Client);
+            ApplicationManager.HandleRestart(_notifyIcon);
         }
 
         ConfigWindow? configWindow;
@@ -2762,21 +2725,15 @@ namespace MHFZ_Overlay
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            Cleanup();
-            databaseManager.StoreSessionTime(this);
-            Environment.Exit(0);
+            ApplicationManager.DiscordRPCCleanup(Client);
+            ApplicationManager.HandleShutdown(_notifyIcon);
         }
 
         //https://stackoverflow.com/questions/4773632/how-do-i-restart-a-wpf-application
         private void ReloadButton_Key()
         {
-            Cleanup();
-            databaseManager.StoreSessionTime(this);
-            _notifyIcon.Visible = false;
-            _notifyIcon.Icon = null;
-            _notifyIcon.Dispose();
-            System.Windows.Forms.Application.Restart();
-            System.Windows.Application.Current.Shutdown();
+            ApplicationManager.DiscordRPCCleanup(Client);
+            ApplicationManager.HandleRestart(_notifyIcon);
         }
 
         private void OpenConfigButton_Key()
@@ -2805,12 +2762,8 @@ namespace MHFZ_Overlay
 
         private void CloseButton_Key()
         {
-            Cleanup();
-            databaseManager.StoreSessionTime(this);
-            _notifyIcon.Visible = false;
-            _notifyIcon.Icon = null;
-            _notifyIcon.Dispose();
-            Environment.Exit(0);
+            ApplicationManager.DiscordRPCCleanup(Client);
+            ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
         }
 
         private void MainGrid_MouseMove(object sender, MouseEventArgs e)
@@ -3032,8 +2985,6 @@ namespace MHFZ_Overlay
                 DataLoader.model.previousMezFesScore = 0;
             }
         }
-
-        private SemaphoreSlim semaphore = new SemaphoreSlim(1);
 
         //TODO: optimization
         private void CheckQuestStateForDatabaseLogging()

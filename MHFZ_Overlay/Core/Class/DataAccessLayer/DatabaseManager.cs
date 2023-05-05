@@ -1,4 +1,5 @@
 ﻿using Dictionary;
+using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
@@ -157,7 +158,7 @@ namespace MHFZ_Overlay
                 {
                     MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     logger.Error(ex, "Invalid database file");
-                    Environment.Exit(0);
+                    ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
                 }
 
                 using (var conn = new SQLiteConnection(dataSource))
@@ -2497,16 +2498,17 @@ namespace MHFZ_Overlay
 
         #region session time
 
+        public DateTime DatabaseStartTime = DateTime.Now;
+
         /// <summary>
         /// Stores the session time.
         /// </summary>
         /// <param name="window">The window.</param>
-        public void StoreSessionTime(MainWindow window)
+        public void StoreSessionTime(DateTime ProgramStart)
         {
             try
             {
                 DateTime ProgramEnd = DateTime.Now;
-                DateTime ProgramStart = window.ProgramStart;
                 TimeSpan duration = ProgramEnd - ProgramStart;
                 int sessionDuration = (int)duration.TotalSeconds;
 
@@ -4640,7 +4642,6 @@ namespace MHFZ_Overlay
                     }
                 }
             }
-            logger.Info("Personal best time elapsed value: {0}", personalBest);
             return personalBest;
         }
 
@@ -9554,7 +9555,7 @@ namespace MHFZ_Overlay
                                 // The "mhf.exe" process was not found
                                 MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                 logger.Fatal("mhf.exe not found");
-                                Environment.Exit(0);
+                                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
                             }
 
                             // Create a dictionary to store the version updates
@@ -9580,14 +9581,14 @@ namespace MHFZ_Overlay
                             {
                                 MessageBox.Show("The current version and the previous version aren't the same, however no update was found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                 logger.Fatal("The current version and the previous version aren't the same, however no update was found");
-                                Environment.Exit(0);
+                                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
                             }
                         }
                         else
                         {
                             MessageBox.Show("Cannot use the overlay with an outdated database schema", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                             logger.Fatal("Outdated database schema");
-                            Environment.Exit(0);
+                            ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
                         }
                     }
                 }

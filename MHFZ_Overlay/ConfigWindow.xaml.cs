@@ -1097,6 +1097,7 @@ namespace MHFZ_Overlay
 
             var issuesForOctokit = await client.Issue.GetAllForRepository("DorielRivalet", "MHFZ_Overlay");
 
+            // TODO
             IssuesTextBlock.Text = (issuesForOctokit.Count - 2).ToString() + " Issue(s)";
 
             var watchers = await client.Activity.Watching.GetAllWatchers("DorielRivalet", "MHFZ_Overlay");
@@ -1741,7 +1742,7 @@ namespace MHFZ_Overlay
             graphChart.YAxes = YAxes;
         }
 
-        private void SetLineSeriesForPersonalBestByAttempts(Dictionary<long, long> data)
+        private void SetStepLineSeriesForPersonalBestByAttempts(Dictionary<long, long> data)
         {
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> collection = new();
@@ -1792,7 +1793,7 @@ namespace MHFZ_Overlay
             personalBestChart.YAxes = PersonalBestYAxes;
         }
 
-        private void SetLineSeriesForPersonalBestByDate(Dictionary<DateTime, long> data)
+        private void SetStepLineSeriesForPersonalBestByDate(Dictionary<DateTime, long> data)
         {
             List<ISeries> series = new();
 
@@ -3018,10 +3019,10 @@ namespace MHFZ_Overlay
             switch (personalBestSelectedType)
             {
                 case "(Quest ID) Personal Best by Date":
-                    SetLineSeriesForPersonalBestByDate(DatabaseManager.GetInstance().GetPersonalBestsByDate(questID, weaponTypeID, OverlayModeComboBox.Text));
+                    SetStepLineSeriesForPersonalBestByDate(DatabaseManager.GetInstance().GetPersonalBestsByDate(questID, weaponTypeID, OverlayModeComboBox.Text));
                     break;
                 case "(Quest ID) Personal Best by Attempts":
-                    SetLineSeriesForPersonalBestByAttempts(DatabaseManager.GetInstance().GetPersonalBestsByAttempts(questID, weaponTypeID, OverlayModeComboBox.Text));
+                    SetStepLineSeriesForPersonalBestByAttempts(DatabaseManager.GetInstance().GetPersonalBestsByAttempts(questID, weaponTypeID, OverlayModeComboBox.Text));
                     break;
                 default:
                     personalBestChart.Series = PersonalBestSeries;

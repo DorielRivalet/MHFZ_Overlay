@@ -1,5 +1,6 @@
 ﻿using Memory;
 using MHFZ_Overlay.addresses;
+using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.IO;
 using NLog;
 using Squirrel;
@@ -73,7 +74,7 @@ namespace MHFZ_Overlay
             // ... other app init code after ...
             RestoreSettings();
 
-            logger.Info($"DataLoader started");
+            logger.Info($"DataLoader initialized");
 
             int PID = m.GetProcIdFromName("mhf");
             if (PID > 0)
@@ -117,7 +118,7 @@ namespace MHFZ_Overlay
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 logger.Fatal("Launch game first");
-                Environment.Exit(0);
+                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
             }
         }
 
@@ -176,7 +177,7 @@ namespace MHFZ_Overlay
                 // The "mhf.exe" process was not found
                 MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Fatal("mhf.exe not found");
-                Environment.Exit(0);
+                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
             }
         }
 
@@ -223,7 +224,7 @@ namespace MHFZ_Overlay
                     logger.Fatal("Found banned process {0}", process.ProcessName);
 
                     // Close the overlay program
-                    Environment.Exit(0);
+                    ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
                 }
                 if (process.ProcessName == "MHFZ_Overlay")
                 {
@@ -241,7 +242,7 @@ namespace MHFZ_Overlay
                 logger.Fatal("Found duplicate overlay");
 
                 // Close the overlay program
-                Environment.Exit(0);
+                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
             }
             if (gameCount > 1)
             {
@@ -250,7 +251,7 @@ namespace MHFZ_Overlay
                 logger.Fatal("Found duplicate game");
 
                 // Close the overlay program
-                Environment.Exit(0);
+                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
             }
         }
 
@@ -279,7 +280,7 @@ namespace MHFZ_Overlay
                 // The "mhf.exe" process was not found
                 MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Fatal("mhf.exe not found");
-                Environment.Exit(0);
+                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
             }
         }
 
@@ -363,7 +364,7 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 logger.Fatal("Launch game first");
-                Environment.Exit(0);
+                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
                 return;
             }
             long searchAddress = m.AoBScan("89 04 8D 00 C6 43 00 61 E9").Result.FirstOrDefault();
