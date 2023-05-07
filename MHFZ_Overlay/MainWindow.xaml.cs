@@ -576,6 +576,7 @@ namespace MHFZ_Overlay
             var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
                 pidToSearch);
             //Find the automation element matching the criteria
+            // TODO what is this?
             AutomationElement element = AutomationElement.RootElement.FindFirst(
                 TreeScope.Children, condition);
 

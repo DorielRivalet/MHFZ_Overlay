@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Octokit;
 using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -255,6 +256,7 @@ namespace MHFZ_Overlay.Core.Class.IO
 
         public static void CopyFileToDestination(string file, string destination, bool overwrite = false, string logMessage = "", bool showMessageBox = true)
         {
+            logger.Info("Copying file to destination. Original file: {1}, Destination: {2}", file, destination);
             File.Copy(file, destination, overwrite);
             logger.Info("{0}. Original file: {1}, Destination: {2}", logMessage, file, destination);
             if (showMessageBox)
@@ -400,6 +402,64 @@ namespace MHFZ_Overlay.Core.Class.IO
             catch (Exception ex)
             {
                 logger.Error(ex, "Could not write to file path {0}", path);
+            }
+        }
+
+        public static void CreateDatabaseBackup(SQLiteConnection connection, string BackupFolderName)
+        {
+            try
+            {
+                // Get the path of the current database file
+                string databaseFilePath = connection.FileName;
+
+                // Get the directory path where the database file is located
+                string databaseDirectoryPath = Path.GetDirectoryName(databaseFilePath);
+
+                // Create the backups folder if it does not exist
+                string backupsFolderPath = Path.Combine(databaseDirectoryPath, BackupFolderName);
+                if (!Directory.Exists(backupsFolderPath))
+                {
+                    Directory.CreateDirectory(backupsFolderPath);
+                }
+
+                // Create the backup file name with a timestamp
+                string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+                string backupFileName = $"database_backup_{timestamp}.sqlite";
+
+                // Create the full path for the backup file
+                string backupFilePath = Path.Combine(backupsFolderPath, backupFileName);
+
+                logger.Info("Making database backup. Database file path: {0}. Backup file path: {1}", databaseFilePath, backupFilePath);
+                // Create a backup of the database file
+                File.Copy(databaseFilePath, backupFilePath, true);
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception and show an error message to the user
+                MessageBox.Show("An error occurred while creating a database backup: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Error(ex, "An error occurred while creating a database backup");
+            }
+        }
+
+        public static void DeleteFile(string path)
+        {
+            try
+            {
+                var doesFileExist = CheckIfFileExists(path, string.Format("Checking if path exists: {0}", path));
+                // Check if the file exists
+                if (doesFileExist)
+                {
+                    logger.Info("Deleting {0}", path);
+                    File.Delete(path);
+                }
+                else
+                {
+                    logger.Info($"{path} does not exist.");
+                }
+            } 
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Could not delete file {0}", path);
             }
         }
     }

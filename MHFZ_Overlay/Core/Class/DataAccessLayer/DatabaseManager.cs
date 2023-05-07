@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
 using NLog.Targets;
+using Octokit;
 using SharpCompress.Common;
 using System;
 using System.Collections;
@@ -22,6 +23,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -41,6 +43,8 @@ namespace MHFZ_Overlay
 
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        private const string BackupFolderName = "backups";
+
         private DatabaseManager()
         {
             logger.Info($"DatabaseManager initialized");
@@ -53,7 +57,7 @@ namespace MHFZ_Overlay
         {
             if (mainWindowDataLoader.databaseChanged)
             {
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
+                Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                 MessageBox.Show("Please update the database structure", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
                 logger.Warn("Database structure needs update");
                 s.EnableQuestLogging = false;
@@ -102,6 +106,7 @@ namespace MHFZ_Overlay
         #region program time
 
         // Calculate the total time spent using the program
+        // TODO: add transaction. check if others also need transaction.
         public TimeSpan CalculateTotalTimeSpent()
         {
             TimeSpan totalTimeSpent = TimeSpan.Zero;
@@ -199,8 +204,9 @@ namespace MHFZ_Overlay
 
                 if (schemaChanged)
                 {
-                    MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    logger.Warn("Invalid database schema");
+                    MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    logger.Fatal("Outdated database schema");
+                    ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
                 }
             }
 
@@ -2812,10 +2818,14 @@ namespace MHFZ_Overlay
             if (schemaChanged)
             {
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
-                MessageBox.Show(@"WARNING: The database schema got updated in the latest version. Please make sure that both MHFZ_Overlay.sqlite and reference_schema.json don't exist in the current overlay directory, so that the program can make new ones",
-                "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Warn("Invalid database schema");
+                logger.Error("Invalid database schema");
+                MessageBox.Show(
+@"The database schema got updated in the latest version. 
 
+Please make sure that both MHFZ_Overlay.sqlite (in the game\database directory) and reference_schema.json (in the current overlay directory) don't exist, so that the program can make new ones. 
+
+Disabling Quest Logging.",
+                "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
                 s.EnableQuestLogging = false;
             }
 
@@ -3050,55 +3060,55 @@ namespace MHFZ_Overlay
                     //Create the Quests table
                     sql = @"CREATE TABLE IF NOT EXISTS Quests 
                     (
-                    QuestHash TEXT NOT NULL,
-                    CreatedAt TEXT NOT NULL,
-                    CreatedBy TEXT NOT NULL,
+                    QuestHash TEXT NOT NULL DEFAULT '',
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
                     RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0), 
-                    TimeLeft INTEGER NOT NULL,
-                    FinalTimeValue INTEGER NOT NULL,
-                    FinalTimeDisplay TEXT NOT NULL, 
-                    ObjectiveImage TEXT NOT NULL,
-                    ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0), 
-                    ObjectiveQuantity INTEGER NOT NULL, 
-                    StarGrade INTEGER NOT NULL, 
-                    RankName TEXT NOT NULL, 
-                    ObjectiveName TEXT NOT NULL, 
-                    Date TEXT NOT NULL,
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    TimeLeft INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeValue INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeDisplay TEXT NOT NULL DEFAULT '', 
+                    ObjectiveImage TEXT NOT NULL DEFAULT '',
+                    ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0) DEFAULT 0, 
+                    ObjectiveQuantity INTEGER NOT NULL DEFAULT 0, 
+                    StarGrade INTEGER NOT NULL DEFAULT 0, 
+                    RankName TEXT NOT NULL DEFAULT '', 
+                    ObjectiveName TEXT NOT NULL DEFAULT '', 
+                    Date TEXT NOT NULL DEFAULT '',
                     YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
-                    -- DpsData TEXT NOT NULL,
-                    AttackBuffDictionary TEXT NOT NULL,
-                    HitCountDictionary TEXT NOT NULL,
-                    HitsPerSecondDictionary TEXT NOT NULL,
-                    DamageDealtDictionary TEXT NOT NULL,
-                    DamagePerSecondDictionary TEXT NOT NULL,
-                    AreaChangesDictionary TEXT NOT NULL,
-                    CartsDictionary TEXT NOT NULL,
-                    HitsTakenBlockedDictionary TEXT NOT NULL,
-                    HitsTakenBlockedPerSecondDictionary TEXT NOT NULL,
-                    PlayerHPDictionary TEXT NOT NULL,
-                    PlayerStaminaDictionary TEXT NOT NULL,
-                    KeystrokesDictionary TEXT NOT NULL,
-                    MouseInputDictionary TEXT NOT NULL,
-                    GamepadInputDictionary TEXT NOT NULL,
-                    ActionsPerMinuteDictionary TEXT NOT NULL,
-                    OverlayModeDictionary TEXT NOT NULL,
-                    ActualOverlayMode TEXT NOT NULL,
-                    PartySize INTEGER NOT NULL,
-                    Monster1HPDictionary TEXT NOT NULL,
-                    Monster2HPDictionary TEXT NOT NULL,
-                    Monster3HPDictionary TEXT NOT NULL,
-                    Monster4HPDictionary TEXT NOT NULL,
-                    Monster1AttackMultiplierDictionary TEXT NOT NULL,
-                    Monster1DefenseRateDictionary TEXT NOT NULL,
-                    Monster1SizeMultiplierDictionary TEXT NOT NULL,
-                    Monster1PoisonThresholdDictionary TEXT NOT NULL,
-                    Monster1SleepThresholdDictionary TEXT NOT NULL,
-                    Monster1ParalysisThresholdDictionary TEXT NOT NULL,
-                    Monster1BlastThresholdDictionary TEXT NOT NULL,
-                    Monster1StunThresholdDictionary TEXT NOT NULL,
-                    IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)),
-                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1,30)),
+                    -- DpsData TEXT NOT NULL DEFAULT '',
+                    AttackBuffDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitCountDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamageDealtDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamagePerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    AreaChangesDictionary TEXT NOT NULL DEFAULT '{}',
+                    CartsDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerHPDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerStaminaDictionary TEXT NOT NULL DEFAULT '{}',
+                    KeystrokesDictionary TEXT NOT NULL DEFAULT '{}',
+                    MouseInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    GamepadInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActionsPerMinuteDictionary TEXT NOT NULL DEFAULT '{}',
+                    OverlayModeDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    PartySize INTEGER NOT NULL DEFAULT 0,
+                    Monster1HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster2HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster3HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster4HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1PoisonThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SleepThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
+                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1,30)) DEFAULT 30,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
                     -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
@@ -9575,6 +9585,176 @@ namespace MHFZ_Overlay
 
         #endregion
 
+        #region migrations
+
+        private int GetUserVersion(SQLiteConnection connection)
+        {
+            int version = 0;
+            using (SQLiteTransaction transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    string sql = @"PRAGMA user_version";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+                    {
+                        object result = cmd.ExecuteScalar();
+                        if (result != DBNull.Value)
+                        {
+                            version = Convert.ToInt32(result);
+                            logger.Info("Current user_version is {0}", version);
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+            return version;
+        }
+
+        private void SetUserVersion(SQLiteConnection connection, int version)
+        {
+            using (SQLiteTransaction transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    string sql = $"PRAGMA user_version = {version}";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    logger.Info("Set user_version to {0}", version);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        // TODO: i dont like using goto, but it seems to make code more succinct in this case.
+        // https://stackoverflow.com/questions/550662/database-schema-updates
+        // https://stackoverflow.com/questions/989558/best-practices-for-in-app-database-migration-for-sqlite
+        /*
+        The only schema altering commands directly supported by SQLite are the "rename table", "rename column", 
+        "add column", "drop column" commands shown above. However, applications can make other arbitrary changes to 
+        the format of a table using a simple sequence of operations. The steps to make arbitrary 
+        changes to the schema design of some table X are as follows:
+
+        1. If foreign key constraints are enabled, disable them using PRAGMA foreign_keys=OFF.
+
+        2. Start a transaction.
+
+        3. Remember the format of all indexes, triggers, and views associated with table X. This information will be needed in step 8 below. One way to do this is to run a query like the following: SELECT type, sql FROM sqlite_schema WHERE tbl_name='X'.
+
+        4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+
+        5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+
+        6. Drop the old table X: DROP TABLE X.
+
+        7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+
+        8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+
+        9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+
+        10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
+
+        11. Commit the transaction started in step 2.
+
+        12. If foreign keys constraints were originally enabled, re-enable them now.
+         */
+        private void MigrateToSchemaFromVersion(SQLiteConnection conn, int fromVersion) 
+        {
+            // 1. If foreign key constraints are enabled, disable them using PRAGMA foreign_keys=OFF.
+            DisableForeignKeyConstraints(conn);
+
+            // 2. Start a transaction.
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    int newVersion = fromVersion;
+                    // allow migrations to fall through switch cases to do a complete run
+                    // start with current version + 1
+                    //[self beginTransaction];
+                    switch (fromVersion)
+                    {
+                        default:
+                            logger.Info("No new schema updates found. Schema version: {0}", fromVersion);
+                            MessageBox.Show(string.Format(
+@"No new schema updates found! Schema version: {0}", fromVersion), 
+                                string.Format("MHF-Z Overlay Database Update ({0} to {1})", 
+                                previousVersion, 
+                                MainWindow.CurrentProgramVersion), 
+                                MessageBoxButton.OK, 
+                                MessageBoxImage.Information);
+                            return;
+                        case 0://v0.22.0 or older (TODO: does this work with older or just v0.22.0?)
+                            // change pin type to mode 'pin' for keyboard handling changes
+                            // removing types from previous schema
+                            //sqlite3_exec(db, "DELETE FROM types;", NULL, NULL, NULL);
+                            //NSLog(@"installing current types");
+                            //[self loadInitialData];
+                            {
+                                PerformUpdateToVersion_0_23_0(conn);
+                                newVersion++;
+                                logger.Info("Updated schema to version v0.23.0. usser_version {0}", newVersion);
+                                break;
+                                //goto case 1;
+                            }
+                        //case 1://v0.23.0
+                            //adds support for recent view tracking
+                            //sqlite3_exec(db, "ALTER TABLE entries ADD COLUMN touched_at TEXT;", NULL, NULL, NULL);
+                            //{
+                                //PerformUpdateToVersion_0_24_0(conn);
+                                //newVersion++;
+                                //goto case 2;
+                            //}
+                        //case 2://v0.24.0
+                            //sqlite3_exec(db, "ALTER TABLE categories ADD COLUMN image TEXT;", NULL, NULL, NULL);
+                            //sqlite3_exec(db, "ALTER TABLE categories ADD COLUMN entry_count INTEGER;", NULL, NULL, NULL);
+                            //sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS categories_id_idx ON categories(id);", NULL, NULL, NULL);
+                            //sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS categories_name_id ON categories(name);", NULL, NULL, NULL);
+                            //sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS entries_id_idx ON entries(id);", NULL, NULL, NULL);
+
+                            // etc...
+                            //{
+                                //PerformUpdateToVersion_0_25_0(conn);
+                                //newVersion++;
+                                //break;
+                            //}
+                    }
+
+                    //[self setSchemaVersion];
+                    SetUserVersion(conn, newVersion);
+
+                    // 11. Commit the transaction started in step 2.
+                    transaction.Commit();
+
+                    MessageBox.Show("Updated database schema, you may proceed.",
+                    string.Format("MHF-Z Overlay Database Update ({0} to {1})",
+                    previousVersion,
+                    MainWindow.CurrentProgramVersion),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+
+            // 12. If foreign keys constraints were originally enabled, re-enable them now.
+            EnableForeignKeyConstraints(conn);
+            //[self endTransaction];
+        }
+
         private void UpdateDatabaseSchema(SQLiteConnection connection)
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
@@ -9583,12 +9763,17 @@ namespace MHFZ_Overlay
             {
                 try
                 {
-                    string backupFileName = "";
+                    int currentUserVersion = GetUserVersion(connection);
 
-                    if (MainWindow.CurrentProgramVersion.Trim() != previousVersion.Trim())
+                    if (MainWindow.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0)
                     {
-                        MessageBoxResult result = MessageBox.Show("A new version of the program has been installed. Do you want to perform the necessary database updates? A backup of your current MHFZ_Overlay.sqlite file will be done if you accept.\n\nUpdating the database structure may take some time.",
-                                                         string.Format("Program Update ({0} to {1})", previousVersion, MainWindow.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult result = MessageBox.Show(
+@"A new version of the program has been installed.
+
+Do you want to perform the necessary database updates? A backup of your current MHFZ_Overlay.sqlite file will be done if you accept.
+
+Updating the database structure may take some time, it will transport all of your current data straight to the latest database structure, regardless of the previous database version.",
+                                                         string.Format("MHF-Z Overlay Database Update ({0} to {1})", previousVersion, MainWindow.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                         if (result == MessageBoxResult.Yes)
                         {
                             // Make a backup of the current SQLite file before updating the schema
@@ -9598,15 +9783,7 @@ namespace MHFZ_Overlay
 
                             if (processes.Length > 0)
                             {
-                                // Get the location of the first "mhf.exe" process
-                                string mhfPath = processes[0].MainModule.FileName;
-
-                                // Get the directory that contains "mhf.exe"
-                                string mhfDirectory = Path.GetDirectoryName(mhfPath);
-
-                                string databasePath = Path.Combine(mhfDirectory, "database");
-                                backupFileName = Path.Combine(databasePath, "MHFZ_Overlay_" + previousVersion + ".sqlite");
-                                FileManager.CopyFileToDestination(databasePath, backupFileName, false, "Copied database file", true);
+                                FileManager.CreateDatabaseBackup(connection, BackupFolderName);
                             }
                             else
                             {
@@ -9616,31 +9793,14 @@ namespace MHFZ_Overlay
                                 ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
                             }
 
-                            // Create a dictionary to store the version updates
-                            var versionUpdates = new Dictionary<string, Action>
-                            {
-                                { "v0.22.0", () => {
-                                    PerformUpdateToVersion_0_23_0(connection);
-                                    PerformUpdateToVersion_0_24_0(connection);
-                                }},
-                                { "v0.23.0", () => {
-                                    PerformUpdateToVersion_0_24_0(connection);
-                                }},
-                            };
-
-                            // Check if an update is needed
-                            if (versionUpdates.ContainsKey(previousVersion))
-                            {
-                                // Perform the update
-                                versionUpdates[previousVersion]();
-                                logger.Info("Database schema updated from {0} to {1}", previousVersion, MainWindow.CurrentProgramVersion);
-                            }
-                            else
-                            {
-                                MessageBox.Show("The current version and the previous version aren't the same, however no update was found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                logger.Fatal("The current version and the previous version aren't the same, however no update was found");
-                                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
-                            }
+                            MigrateToSchemaFromVersion(connection, currentUserVersion);
+                            var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
+                            FileManager.DeleteFile(referenceSchemaFilePath);
+                            // later on it creates it
+                            // see this comment: Check if the reference schema file exists
+                            //MessageBox.Show("The current version and the previous version aren't the same, however no update was found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            //logger.Fatal("The current version and the previous version aren't the same, however no update was found");
+                            //ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
                         }
                         else
                         {
@@ -9649,6 +9809,8 @@ namespace MHFZ_Overlay
                             ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
                         }
                     }
+
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -9657,8 +9819,14 @@ namespace MHFZ_Overlay
             }
         }
 
-        // TODO this is repeating code. also not sure if the data types handling is correct
-        private static void PerformUpdateToVersion_0_23_0(SQLiteConnection connection)
+        private void RecreateReferenceSchemaJSON(SQLiteConnection connection, int currentUserVersion)
+        {
+
+        }
+
+        // TODO: this is repeating code. also not sure if the data types handling is correct
+        // UPDATE: so it turns out, data types are suggestions, not rules.
+        private void PerformUpdateToVersion_0_23_0(SQLiteConnection connection)
         {
             // Perform database updates for version 0.23.0
             string sql = @"CREATE TABLE IF NOT EXISTS QuestAttempts(
@@ -9928,30 +10096,314 @@ namespace MHFZ_Overlay
                 cmd.ExecuteNonQuery();
             }
 
-            sql = @"ALTER TABLE Quests
-                    MODIFY COLUMN Monster1HPDictionary TEXT NOT NULL AFTER PartySize,
-                    MODIFY COLUMN Monster2HPDictionary TEXT NOT NULL AFTER Monster1HPDictionary,
-                    MODIFY COLUMN Monster3HPDictionary TEXT NOT NULL AFTER Monster2HPDictionary,
-                    MODIFY COLUMN Monster4HPDictionary TEXT NOT NULL AFTER Monster3HPDictionary,
-                    MODIFY COLUMN Monster1AttackMultiplierDictionary TEXT NOT NULL AFTER Monster4HPDictionary,
-                    MODIFY COLUMN Monster1DefenseRateDictionary TEXT NOT NULL AFTER Monster1AttackMultiplierDictionary,
-                    MODIFY COLUMN Monster1SizeMultiplierDictionary TEXT NOT NULL AFTER Monster1DefenseRateDictionary,
-                    MODIFY COLUMN Monster1PoisonThresholdDictionary TEXT NOT NULL AFTER Monster1SizeMultiplierDictionary,
-                    MODIFY COLUMN Monster1SleepThresholdDictionary TEXT NOT NULL AFTER Monster1PoisonThresholdDictionary,
-                    MODIFY COLUMN Monster1ParalysisThresholdDictionary TEXT NOT NULL AFTER Monster1SleepThresholdDictionary,
-                    MODIFY COLUMN Monster1BlastThresholdDictionary TEXT NOT NULL AFTER Monster1ParalysisThresholdDictionary,
-                    MODIFY COLUMN Monster1StunThresholdDictionary TEXT NOT NULL AFTER Monster1BlastThresholdDictionary;
-                    MODIFY COLUMN IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) AFTER Monster1StunThresholdDictionary;
-                    MODIFY COLUMN RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1, 30)) AFTER IsHighGradeEdition;                    
-";
-            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-            {
-                cmd.ExecuteNonQuery();
-            }
+            //            sql = @"ALTER TABLE Quests
+            //                    MODIFY COLUMN Monster1HPDictionary TEXT NOT NULL AFTER PartySize,
+            //                    MODIFY COLUMN Monster2HPDictionary TEXT NOT NULL AFTER Monster1HPDictionary,
+            //                    MODIFY COLUMN Monster3HPDictionary TEXT NOT NULL AFTER Monster2HPDictionary,
+            //                    MODIFY COLUMN Monster4HPDictionary TEXT NOT NULL AFTER Monster3HPDictionary,
+            //                    MODIFY COLUMN Monster1AttackMultiplierDictionary TEXT NOT NULL AFTER Monster4HPDictionary,
+            //                    MODIFY COLUMN Monster1DefenseRateDictionary TEXT NOT NULL AFTER Monster1AttackMultiplierDictionary,
+            //                    MODIFY COLUMN Monster1SizeMultiplierDictionary TEXT NOT NULL AFTER Monster1DefenseRateDictionary,
+            //                    MODIFY COLUMN Monster1PoisonThresholdDictionary TEXT NOT NULL AFTER Monster1SizeMultiplierDictionary,
+            //                    MODIFY COLUMN Monster1SleepThresholdDictionary TEXT NOT NULL AFTER Monster1PoisonThresholdDictionary,
+            //                    MODIFY COLUMN Monster1ParalysisThresholdDictionary TEXT NOT NULL AFTER Monster1SleepThresholdDictionary,
+            //                    MODIFY COLUMN Monster1BlastThresholdDictionary TEXT NOT NULL AFTER Monster1ParalysisThresholdDictionary,
+            //                    MODIFY COLUMN Monster1StunThresholdDictionary TEXT NOT NULL AFTER Monster1BlastThresholdDictionary;
+            //                    MODIFY COLUMN IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) AFTER Monster1StunThresholdDictionary;
+            //                    MODIFY COLUMN RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1, 30)) AFTER IsHighGradeEdition;                    
+            //";
+            //            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            //            {
+            //                cmd.ExecuteNonQuery();
+            //            }
 
+            sql = @"CREATE TABLE new_Quests
+                    (
+                    QuestHash TEXT NOT NULL DEFAULT '',
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
+                    RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    TimeLeft INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeValue INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeDisplay TEXT NOT NULL DEFAULT '', 
+                    ObjectiveImage TEXT NOT NULL DEFAULT '',
+                    ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0) DEFAULT 0, 
+                    ObjectiveQuantity INTEGER NOT NULL DEFAULT 0, 
+                    StarGrade INTEGER NOT NULL DEFAULT 0, 
+                    RankName TEXT NOT NULL DEFAULT '', 
+                    ObjectiveName TEXT NOT NULL DEFAULT '', 
+                    Date TEXT NOT NULL DEFAULT '',
+                    YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
+                    -- DpsData TEXT NOT NULL DEFAULT '',
+                    AttackBuffDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitCountDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamageDealtDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamagePerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    AreaChangesDictionary TEXT NOT NULL DEFAULT '{}',
+                    CartsDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerHPDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerStaminaDictionary TEXT NOT NULL DEFAULT '{}',
+                    KeystrokesDictionary TEXT NOT NULL DEFAULT '{}',
+                    MouseInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    GamepadInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActionsPerMinuteDictionary TEXT NOT NULL DEFAULT '{}',
+                    OverlayModeDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    PartySize INTEGER NOT NULL DEFAULT 0,
+                    Monster1HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster2HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster3HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster4HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1PoisonThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SleepThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
+                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1,30)) DEFAULT 30,
+                    FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
+                    FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
+                    -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
+                    )";
+
+            // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+            AlterTableSchema(connection, "Quests", sql);
+
+            // https://www.sqlite.org/lang_altertable.html#otheralter must read
             // Repeat the same pattern for other version updates
             // By using ALTER TABLE, you can make changes to the structure of a table
             // without having to recreate the table and manually transfer all the data.
+        }
+
+        // Define a function that takes a connection string, the name of the table to alter (X), and the new schema for the table (as a SQL string)
+        private void AlterTableSchema(SQLiteConnection connection, string tableName, string newSchema)
+        {
+            try
+            {
+                // 3. Remember the format of all indexes, triggers, and views associated with table X. This information will be needed in step 8 below. One way to do this is to run a query like the following: SELECT type, sql FROM sqlite_schema WHERE tbl_name='X'.
+                // Remember the format of all indexes, triggers, and views associated with table X
+                SQLiteCommand rememberFormat = new SQLiteCommand("SELECT type, sql FROM sqlite_schema WHERE tbl_name=@tableName;", connection);
+                rememberFormat.Parameters.AddWithValue("@tableName", tableName);
+                SQLiteDataReader reader = rememberFormat.ExecuteReader();
+                List<string> indexSqls = new List<string>();
+                List<string> triggerSqls = new List<string>();
+                List<string> viewSqls = new List<string>();
+                while (reader.Read())
+                {
+                    string type = reader.GetString(0);
+                    string sql = reader.GetString(1);
+                    if (type == "index")
+                    {
+                        indexSqls.Add(sql);
+                    }
+                    else if (type == "trigger")
+                    {
+                        triggerSqls.Add(sql);
+                    }
+                    else if (type == "view")
+                    {
+                        viewSqls.Add(sql);
+                    }
+                }
+                reader.Close();
+
+                // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+                // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
+                using (SQLiteCommand createTable = new SQLiteCommand(newSchema, connection))
+                {
+                    createTable.ExecuteNonQuery();
+                }
+
+                logger.Info("Created table new_{0}", tableName);
+
+                // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+                // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
+                string insertSql = "INSERT INTO new_" + tableName + " SELECT * FROM " + tableName + ";";
+                using (SQLiteCommand insertData = new SQLiteCommand(insertSql, connection))
+                {
+                    insertData.ExecuteNonQuery();
+                }
+
+                logger.Info("Transferred data from {0} to new_{1}", tableName, tableName);
+
+                // 6. Drop the old table X: DROP TABLE X.
+                // Drop the old table X
+                using (SQLiteCommand dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
+                {
+                    dropTable.ExecuteNonQuery();
+                }
+
+                logger.Info("Deleted table {0}", tableName);
+
+                // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+                // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
+                using (SQLiteCommand renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
+                {
+                    renameTable.ExecuteNonQuery();
+                }
+
+                logger.Info("Renamed new_{0} to {1}", tableName, tableName);
+
+                // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+                // Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X
+                foreach (string indexSql in indexSqls)
+                {
+                    using (SQLiteCommand createIndex = new SQLiteCommand(indexSql, connection))
+                    {
+                        createIndex.ExecuteNonQuery();
+                    }
+                }
+                foreach (string triggerSql in triggerSqls)
+                {
+                    using (SQLiteCommand createTrigger = new SQLiteCommand(triggerSql, connection))
+                    {
+                        createTrigger.ExecuteNonQuery();
+                    }
+                }
+                foreach (string viewSql in viewSqls)
+                {
+                    using (SQLiteCommand createView = new SQLiteCommand(viewSql, connection))
+                    {
+                        createView.ExecuteNonQuery();
+                    }
+                }
+
+                // TODO: since im not using any views this still needs testing in case i make views someday.
+                // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+                //using (SQLite
+                // Check if any views refer to table X in a way that is affected by the schema change
+                SQLiteCommand findViews = new SQLiteCommand("SELECT name, sql FROM sqlite_master WHERE type='view' AND sql LIKE '% " + tableName + " %';", connection);
+                SQLiteDataReader viewReader = findViews.ExecuteReader();
+                List<string> viewNames = new List<string>();
+                List<string> viewSqlsModified = new List<string>();
+                while (viewReader.Read())
+                {
+                    viewNames.Add(viewReader.GetString(0));
+                    string viewSql = viewReader.GetString(1);
+                    viewSql = viewSql.Replace(tableName, "new_" + tableName);
+                    viewSqlsModified.Add(viewSql);
+                }
+                viewReader.Close();
+
+                // Drop those views using DROP VIEW
+                foreach (string viewName in viewNames)
+                {
+                    using (SQLiteCommand dropView = new SQLiteCommand("DROP VIEW " + viewName + ";", connection))
+                    {
+                        dropView.ExecuteNonQuery();
+                    }
+                }
+
+                // TODO: test
+                // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
+                for (int i = 0; i < viewNames.Count; i++)
+                {
+                    using (SQLiteCommand createView = new SQLiteCommand(viewSqlsModified[i], connection))
+                    {
+                        createView.ExecuteNonQuery();
+                    }
+                }
+
+                string foreignKeysViolations = CheckForeignKeys(connection);
+
+                // 10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
+                if (foreignKeysViolations != "") 
+                {
+                    logger.Fatal("Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
+                    MessageBox.Show("Foreign keys violations detected, closing program.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Roll back the transaction if any errors occur
+                logger.Error(ex, "Could not alter table {0}", tableName);
+            }
+        }
+
+        // Define a function that takes a connection string and the name of the table to check for foreign key violations
+        public string CheckForeignKeys(SQLiteConnection connection, string tableName = "")
+        {
+            string query = "PRAGMA foreign_key_check";
+            if (!string.IsNullOrEmpty(tableName))
+            {
+                query += "('" + tableName + "')";
+            }
+
+            using (SQLiteCommand command = new SQLiteCommand(query, connection))
+            {
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        // There are foreign key violations
+                        var violations = new List<Dictionary<string, object>>();
+
+                        while (reader.Read())
+                        {
+                            var violation = new Dictionary<string, object>();
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                violation[reader.GetName(i)] = reader.GetValue(i);
+                            }
+                            violations.Add(violation);
+                        }
+                        logger.Error(violations);
+                        return JsonConvert.SerializeObject(violations);
+                    }
+                    else
+                    {
+                        // No foreign key violations
+                        logger.Info("No foreign key violations found.");
+                        return "";
+                    }
+                }
+            }
+        }
+
+        private void EnableForeignKeyConstraints(SQLiteConnection connection)
+        {
+            try
+            {
+                string sql = @"PRAGMA foreign_keys = ON";
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                logger.Info("Enabled foreign key constraints");
+            } 
+            catch (Exception ex)
+            {
+                logger.Fatal("Could not toggle foreign key constraints", ex);
+                MessageBox.Show("Could not toggle foreign key constraints", "MHF-Z Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+            }
+        }
+
+        private void DisableForeignKeyConstraints(SQLiteConnection connection)
+        {
+            try
+            {
+                string sql = @"PRAGMA foreign_keys = OFF";
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                logger.Info("Disabled foreign key constraints");
+            }
+            catch (Exception ex)
+            {
+                logger.Fatal("Could not toggle foreign key constraints", ex);
+                MessageBox.Show("Could not toggle foreign key constraints", "MHF-Z Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+            }
         }
 
         private static void PerformUpdateToVersion_0_24_0(SQLiteConnection connection)
@@ -9997,6 +10449,8 @@ namespace MHFZ_Overlay
             }
             return version;
         }
+
+        #endregion
 
 
         #endregion
