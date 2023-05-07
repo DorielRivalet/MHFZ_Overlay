@@ -4044,6 +4044,64 @@ namespace MHFZ_Overlay
                         cmd.ExecuteNonQuery();
                     }
 
+                    sql = @"CREATE TABLE IF NOT EXISTS ZenithGauntlets(
+                        ZenithGauntletID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        WeaponType TEXT NOT NULL,
+                        Category TEXT NOT NULL,
+                        TotalFramesElapsed INTEGER NOT NULL,
+                        TotalTimeElapsed TEXT NOT NULL,
+                        Run1ID INTEGER NOT NULL,
+                        Run2ID INTEGER NOT NULL,
+                        Run3ID INTEGER NOT NULL,
+                        Run4ID INTEGER NOT NULL,
+                        Run5ID INTEGER NOT NULL,
+                        Run6ID INTEGER NOT NULL,
+                        Run7ID INTEGER NOT NULL,
+                        Run8ID INTEGER NOT NULL,
+                        Run9ID INTEGER NOT NULL,
+                        Run10ID INTEGER NOT NULL,
+                        Run11ID INTEGER NOT NULL,
+                        Run12ID INTEGER NOT NULL,
+                        Run13ID INTEGER NOT NULL,
+                        Run14ID INTEGER NOT NULL,
+                        Run15ID INTEGER NOT NULL,
+                        Run16ID INTEGER NOT NULL,
+                        Run17ID INTEGER NOT NULL,
+                        Run18ID INTEGER NOT NULL,
+                        Run19ID INTEGER NOT NULL,
+                        Run20ID INTEGER NOT NULL,
+                        Run21ID INTEGER NOT NULL,
+                        Run22ID INTEGER NOT NULL,
+                        Run23ID INTEGER NOT NULL,
+                        FOREIGN KEY(Run1ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run2ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run3ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run4ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run5ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run6ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run7ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run8ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run9ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run10ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run11ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run12ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run13ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run14ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run15ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run16ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run17ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run18ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run19ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run20ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run21ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run22ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run23ID) REFERENCES Quests(RunID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
                     #region gacha
                     // a mh game but like a MUD. hunt in-game to get many kinds of points for this game. hunt and tame monsters. challenge other CPU players/monsters.
 
@@ -9629,6 +9687,64 @@ namespace MHFZ_Overlay
                     UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
                     )
                     ";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS ZenithGauntlets(
+                        ZenithGauntletID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        WeaponType TEXT NOT NULL,
+                        Category TEXT NOT NULL,
+                        TotalFramesElapsed INTEGER NOT NULL,
+                        TotalTimeElapsed TEXT NOT NULL,
+                        Run1ID INTEGER NOT NULL,
+                        Run2ID INTEGER NOT NULL,
+                        Run3ID INTEGER NOT NULL,
+                        Run4ID INTEGER NOT NULL,
+                        Run5ID INTEGER NOT NULL,
+                        Run6ID INTEGER NOT NULL,
+                        Run7ID INTEGER NOT NULL,
+                        Run8ID INTEGER NOT NULL,
+                        Run9ID INTEGER NOT NULL,
+                        Run10ID INTEGER NOT NULL,
+                        Run11ID INTEGER NOT NULL,
+                        Run12ID INTEGER NOT NULL,
+                        Run13ID INTEGER NOT NULL,
+                        Run14ID INTEGER NOT NULL,
+                        Run15ID INTEGER NOT NULL,
+                        Run16ID INTEGER NOT NULL,
+                        Run17ID INTEGER NOT NULL,
+                        Run18ID INTEGER NOT NULL,
+                        Run19ID INTEGER NOT NULL,
+                        Run20ID INTEGER NOT NULL,
+                        Run21ID INTEGER NOT NULL,
+                        Run22ID INTEGER NOT NULL,
+                        Run23ID INTEGER NOT NULL,
+                        FOREIGN KEY(Run1ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run2ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run3ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run4ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run5ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run6ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run7ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run8ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run9ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run10ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run11ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run12ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run13ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run14ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run15ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run16ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run17ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run18ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run19ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run20ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run21ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run22ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run23ID) REFERENCES Quests(RunID)
+                    )";
             using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
             {
                 cmd.ExecuteNonQuery();
