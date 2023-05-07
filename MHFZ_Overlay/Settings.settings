@@ -770,5 +770,8 @@
     <Setting Name="PersonalBestAttemptsY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">170</Value>
     </Setting>
+    <Setting Name="EnableNationality" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

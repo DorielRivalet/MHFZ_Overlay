@@ -3094,5 +3094,17 @@ namespace MHFZ_Overlay {
                 this["PersonalBestAttemptsY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableNationality {
+            get {
+                return ((bool)(this["EnableNationality"]));
+            }
+            set {
+                this["EnableNationality"] = value;
+            }
+        }
     }
 }

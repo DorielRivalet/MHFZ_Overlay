@@ -2911,7 +2911,7 @@ Disabling Quest Logging.",
                                 discordServerID = s.DiscordServerID;
                                 gender = s.GenderExport;
                                 //TODO test
-                                nationality = dataLoader.model.Countries.ToList()[s.PlayerNationalityIndex].Name.Common;
+                                nationality = s.EnableNationality ? dataLoader.model.Countries.ToList()[s.PlayerNationalityIndex].Name.Common : "World";
                             }
 
                             // Set the parameter values
