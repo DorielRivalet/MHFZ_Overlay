@@ -9704,7 +9704,7 @@ Disabling Quest Logging.",
                             {
                                 PerformUpdateToVersion_0_23_0(conn);
                                 newVersion++;
-                                logger.Info("Updated schema to version v0.23.0. usser_version {0}", newVersion);
+                                logger.Info("Updated schema to version v0.23.0. user_version {0}", newVersion);
                                 break;
                                 //goto case 1;
                             }
@@ -9817,11 +9817,6 @@ Updating the database structure may take some time, it will transport all of you
                     HandleError(transaction, ex);
                 }
             }
-        }
-
-        private void RecreateReferenceSchemaJSON(SQLiteConnection connection, int currentUserVersion)
-        {
-
         }
 
         // TODO: this is repeating code. also not sure if the data types handling is correct
@@ -10275,6 +10270,8 @@ Updating the database structure may take some time, it will transport all of you
                     }
                 }
 
+                logger.Info("Indexes: {0}, Triggers: {1}, Views: {2}", indexSqls.Count, triggerSqls.Count, viewSqls.Count);
+
                 // TODO: since im not using any views this still needs testing in case i make views someday.
                 // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
                 //using (SQLite
@@ -10310,6 +10307,8 @@ Updating the database structure may take some time, it will transport all of you
                         createView.ExecuteNonQuery();
                     }
                 }
+
+                logger.Info("Views affected: {0}", viewSqlsModified.Count);
 
                 string foreignKeysViolations = CheckForeignKeys(connection);
 

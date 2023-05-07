@@ -33,6 +33,15 @@ body:
     validations:
       required: true
   - type: textarea
+    id: operating-system
+    attributes:
+      label: What operating system are you using?
+      description: Operating system
+      placeholder: Tell us what operating system you using (Windows 11, Windows 10, etc.)
+      value: "Windows 10 21H2"
+    validations:
+      required: true
+  - type: textarea
     id: version
     attributes:
       label: What version of the program are you using?
