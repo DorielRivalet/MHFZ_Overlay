@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using MHFZ_Overlay.Core.Class.Application;
+using MHFZ_Overlay.Core.Class.Log;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Octokit;
@@ -384,9 +385,9 @@ namespace MHFZ_Overlay.Core.Class.IO
             {
                 // If there are any banned files or folders, display an error message and exit the application
                 string message = string.Format("The following files or folders are not allowed:\n{0}", string.Join("\n", illegalFiles));
-                MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Fatal(message);
-                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                ApplicationManager.HandleShutdown();
             }
 
             return doesExist;
@@ -436,7 +437,7 @@ namespace MHFZ_Overlay.Core.Class.IO
             catch (Exception ex)
             {
                 // Handle the exception and show an error message to the user
-                MessageBox.Show("An error occurred while creating a database backup: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("An error occurred while creating a database backup: " + ex.Message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Error(ex, "An error occurred while creating a database backup");
             }
         }

@@ -1,6 +1,7 @@
 ﻿using Dictionary;
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.IO;
+using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Microsoft.VisualBasic;
@@ -161,14 +162,17 @@ namespace MHFZ_Overlay
                 }
                 catch (SQLiteException ex)
                 {
-                    MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     logger.Error(ex, "Invalid database file");
-                    ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                    ApplicationManager.HandleShutdown();
                 }
 
                 using (var conn = new SQLiteConnection(dataSource))
                 {
                     conn.Open();
+
+                    // Toggle comment this for testing the error handling
+                    ThrowException(conn);
 
                     CreateDatabaseTables(conn, dataLoader);
                     CreateDatabaseIndexes(conn);
@@ -206,7 +210,7 @@ namespace MHFZ_Overlay
                 {
                     MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     logger.Fatal("Outdated database schema");
-                    ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                    ApplicationManager.HandleShutdown();
                 }
             }
 
@@ -1855,7 +1859,7 @@ namespace MHFZ_Overlay
                         if (transaction != null)
                             transaction.Rollback();
                         // Handle a SQL exception
-                        MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState + "\n\n" + ex.HelpLink + "\n\n" + ex.ResultCode + "\n\n" + ex.ErrorCode + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState + "\n\n" + ex.HelpLink + "\n\n" + ex.ResultCode + "\n\n" + ex.ErrorCode + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         logger.Error(ex, "An error occurred while accessing the database");
                     }
                     catch (IOException ex)
@@ -1863,7 +1867,7 @@ namespace MHFZ_Overlay
                         if (transaction != null)
                             transaction.Rollback();
                         // Handle an I/O exception
-                        MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         logger.Error(ex, "An error occurred while accessing a file");
 
                     }
@@ -1871,7 +1875,7 @@ namespace MHFZ_Overlay
                     {
                         if (transaction != null)
                             transaction.Rollback();
-                        MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         logger.Error(ex, "ArgumentException");
 
                     }
@@ -2388,9 +2392,10 @@ namespace MHFZ_Overlay
             if (transaction != null)
                 transaction.Rollback();
 
-            // Handle the exception and show an error message to the user
-            MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             logger.Error(ex, "An error occurred");
+
+            // Handle the exception and show an error message to the user
+            LoggingManager.PromptForOpeningLogs();
         }
 
         public void MakeDeserealizedQuestInfoDictionariesFromRunID(SQLiteConnection conn, DataLoader dataLoader, int runID)
@@ -2540,6 +2545,8 @@ namespace MHFZ_Overlay
                             }
                             // Commit the transaction
                             transaction.Commit();
+
+                            logger.Info("Stored session time. Duration: {0}", TimeSpan.FromSeconds(sessionDuration).ToString(@"hh\:mm\:ss\.ff"));
                         }
                         catch (Exception ex)
                         {
@@ -2551,21 +2558,21 @@ namespace MHFZ_Overlay
             catch (SQLiteException ex)
             {
                 // Handle a SQL exception
-                MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Error(ex, "An error occurred while accessing the database");
 
             }
             catch (IOException ex)
             {
                 // Handle an I/O exception
-                MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Error(ex, "An error occurred while accessing a file");
 
             }
             catch (Exception ex)
             {
                 // Handle any other exception
-                MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Error(ex, "An error occurred");
 
             }
@@ -6881,7 +6888,7 @@ Disabling Quest Logging.",
                             {
                                 if (!reader.HasRows)
                                 {
-                                    //MessageBox.Show(String.Format("Runs not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), "MHF-Z Overlay Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    //MessageBox.Show(String.Format("Runs not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                     return weaponUsageData;
                                 }
                                 else
@@ -6967,7 +6974,7 @@ Disabling Quest Logging.",
                             {
                                 if (!reader.HasRows)
                                 {
-                                    MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), "MHF-Z Overlay Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                     return;
                                 }
                                 else
@@ -7010,7 +7017,7 @@ Disabling Quest Logging.",
                             {
                                 if (!reader.HasRows)
                                 {
-                                    MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), "MHF-Z Overlay Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                     return;
                                 }
                                 while (reader.Read())
@@ -9788,9 +9795,9 @@ Updating the database structure may take some time, it will transport all of you
                             else
                             {
                                 // The "mhf.exe" process was not found
-                                MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                 logger.Fatal("mhf.exe not found");
-                                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                                ApplicationManager.HandleShutdown();
                             }
 
                             MigrateToSchemaFromVersion(connection, currentUserVersion);
@@ -9798,15 +9805,15 @@ Updating the database structure may take some time, it will transport all of you
                             FileManager.DeleteFile(referenceSchemaFilePath);
                             // later on it creates it
                             // see this comment: Check if the reference schema file exists
-                            //MessageBox.Show("The current version and the previous version aren't the same, however no update was found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            //MessageBox.Show("The current version and the previous version aren't the same, however no update was found", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             //logger.Fatal("The current version and the previous version aren't the same, however no update was found");
                             //ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
                         }
                         else
                         {
-                            MessageBox.Show("Cannot use the overlay with an outdated database schema", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("Cannot use the overlay with an outdated database schema", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             logger.Fatal("Outdated database schema");
-                            ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                            ApplicationManager.HandleShutdown();
                         }
                     }
 
@@ -10317,7 +10324,7 @@ Updating the database structure may take some time, it will transport all of you
                 {
                     logger.Fatal("Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
                     MessageBox.Show("Foreign keys violations detected, closing program.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                    ApplicationManager.HandleShutdown();
                 }
             }
             catch (Exception ex)
@@ -10382,7 +10389,7 @@ Updating the database structure may take some time, it will transport all of you
             {
                 logger.Fatal("Could not toggle foreign key constraints", ex);
                 MessageBox.Show("Could not toggle foreign key constraints", "MHF-Z Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                ApplicationManager.HandleShutdown();
             }
         }
 
@@ -10401,7 +10408,7 @@ Updating the database structure may take some time, it will transport all of you
             {
                 logger.Fatal("Could not toggle foreign key constraints", ex);
                 MessageBox.Show("Could not toggle foreign key constraints", "MHF-Z Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                ApplicationManager.HandleShutdown();
             }
         }
 
@@ -10451,6 +10458,31 @@ Updating the database structure may take some time, it will transport all of you
 
         #endregion
 
+        /// <summary>
+        /// Throws an exception.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        private void ThrowException(SQLiteConnection conn)
+        {
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    // Execute an invalid SQL statement to trigger an exception
+                    using (var command = new SQLiteCommand("SELECT * FROM non_existent_table", conn))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+
+                    // Commit the transaction
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
 
         #endregion
     }

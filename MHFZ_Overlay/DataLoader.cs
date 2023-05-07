@@ -2,6 +2,7 @@
 using MHFZ_Overlay.addresses;
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.IO;
+using MHFZ_Overlay.Core.Class.Log;
 using NLog;
 using Squirrel;
 using System;
@@ -54,7 +55,7 @@ namespace MHFZ_Overlay
             string destFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
             string sourceFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
             var restorationMessage = "Restored settings";
-
+            logger.Info("Restore our settings backup if any. Destination: {0}. Source: {1}", destFile, sourceFile);
             FileManager.RestoreFileFromSourceToDestination(destFile, sourceFile, restorationMessage);
         }
 
@@ -116,9 +117,9 @@ namespace MHFZ_Overlay
             }
             else
             {
-                System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 logger.Fatal("Launch game first");
-                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                ApplicationManager.HandleShutdown();
             }
         }
 
@@ -175,9 +176,9 @@ namespace MHFZ_Overlay
             else
             {
                 // The "mhf.exe" process was not found
-                MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Fatal("mhf.exe not found");
-                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                ApplicationManager.HandleShutdown();
             }
         }
 
@@ -224,7 +225,7 @@ namespace MHFZ_Overlay
                     logger.Fatal("Found banned process {0}", process.ProcessName);
 
                     // Close the overlay program
-                    ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                    ApplicationManager.HandleShutdown();
                 }
                 if (process.ProcessName == "MHFZ_Overlay")
                 {
@@ -242,7 +243,7 @@ namespace MHFZ_Overlay
                 logger.Fatal("Found duplicate overlay");
 
                 // Close the overlay program
-                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                ApplicationManager.HandleShutdown();
             }
             if (gameCount > 1)
             {
@@ -251,7 +252,7 @@ namespace MHFZ_Overlay
                 logger.Fatal("Found duplicate game");
 
                 // Close the overlay program
-                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                ApplicationManager.HandleShutdown();
             }
         }
 
@@ -278,9 +279,9 @@ namespace MHFZ_Overlay
             else
             {
                 // The "mhf.exe" process was not found
-                MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Fatal("mhf.exe not found");
-                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                ApplicationManager.HandleShutdown();
             }
         }
 
@@ -364,7 +365,7 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
             {
                 System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 logger.Fatal("Launch game first");
-                ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                ApplicationManager.HandleShutdown();
                 return;
             }
             long searchAddress = m.AoBScan("89 04 8D 00 C6 43 00 61 E9").Result.FirstOrDefault();

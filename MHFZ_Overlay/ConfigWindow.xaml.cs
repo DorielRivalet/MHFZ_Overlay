@@ -8,6 +8,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.WPF;
 using MHFZ_Overlay.Core.Class;
 using MHFZ_Overlay.Core.Class.IO;
+using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Newtonsoft.Json;
@@ -754,6 +755,7 @@ namespace MHFZ_Overlay
             Close();
         }
 
+        // TODO does this cover everything?
         private void DisposeAllWebViews()
         {
             webViewFerias.Dispose();
@@ -1411,7 +1413,7 @@ namespace MHFZ_Overlay
             if (DatabaseManager.GetInstance().UpdateYoutubeLink(sender, e, runID, youtubeLink))
                 MessageBox.Show(String.Format("Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink), "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             else
-                MessageBox.Show(String.Format("Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(String.Format("Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void UpdateYoutubeLink_Loaded(object sender, RoutedEventArgs e)
@@ -1433,7 +1435,7 @@ namespace MHFZ_Overlay
             }
             else
             {
-                MessageBox.Show("Run not found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Run not found", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

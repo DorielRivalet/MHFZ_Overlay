@@ -14,27 +14,29 @@ namespace MHFZ_Overlay.Core.Class.Application
         private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public static void HandleShutdown(NotifyIcon _notifyIcon)
+        public static void HandleShutdown()
         {
             //https://stackoverflow.com/a/9050477/18859245
             databaseManager.StoreSessionTime(databaseManager.DatabaseStartTime);
-            DisposeNotifyIcon(_notifyIcon);
-            logger.Info("Stored session time, closing overlay");
+            ApplicationManager.DiscordRPCCleanup();
+            DisposeNotifyIcon();
+            logger.Info("Closing overlay");
             Environment.Exit(0);
         }
 
-        public static void DisposeNotifyIcon(NotifyIcon _notifyIcon)
+        public static void DisposeNotifyIcon()
         {
-            _notifyIcon.Visible = false;
-            _notifyIcon.Icon = null;
-            _notifyIcon.Dispose();
+            MainWindow._notifyIcon.Visible = false;
+            MainWindow._notifyIcon.Icon = null;
+            MainWindow._notifyIcon.Dispose();
+            logger.Info("Disposed Notify Icon");
         }
 
-        public static void HandleRestart(NotifyIcon _notifyIcon)
+        public static void HandleRestart()
         {
             databaseManager.StoreSessionTime(databaseManager.DatabaseStartTime);
-            DisposeNotifyIcon(_notifyIcon);
-            logger.Info("Stored session time, restarting overlay");
+            DisposeNotifyIcon();
+            logger.Info("Restarting overlay");
             System.Windows.Forms.Application.Restart();
             System.Windows.Application.Current.Shutdown();
         }
@@ -43,11 +45,11 @@ namespace MHFZ_Overlay.Core.Class.Application
         /// <summary>
         /// Cleanups the Discord RPC instance.
         /// </summary>
-        public static void DiscordRPCCleanup(DiscordRpcClient Client)
+        public static void DiscordRPCCleanup()
         {
-            if (Client != null)//&& ShowDiscordRPC)
+            if (MainWindow.discordRPCClient != null)//&& ShowDiscordRPC)
             {
-                Client.Dispose();
+                MainWindow.discordRPCClient.Dispose();
                 logger.Info("Disposed Discord RPC");
             }
         }

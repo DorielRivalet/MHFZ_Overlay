@@ -141,6 +141,7 @@ namespace MHFZ_Overlay
 
         #endregion
 
+        // TODO add discord manager class
         #region discord rpc
 
         /// <summary>
@@ -149,7 +150,7 @@ namespace MHFZ_Overlay
         /// <value>
         /// The client.
         /// </value>
-        private DiscordRpcClient Client;
+        public static DiscordRpcClient discordRPCClient;
 
         //Called when your application first starts.
         //For example, just before your main loop, on OnEnable for unity.
@@ -160,14 +161,14 @@ namespace MHFZ_Overlay
             NOTE: 	If you are using Unity3D, you must use the full constructor and define
                      the pipe connection.
             */
-            Client = new DiscordRpcClient(GetDiscordClientID);
+            discordRPCClient = new DiscordRpcClient(GetDiscordClientID);
 
             //Set the logger
 
             //Subscribe to events
 
             //Connect to the RPC
-            Client.Initialize();
+            discordRPCClient.Initialize();
 
             //Set the rich presence
             //Call this as many times as you want and anywhere in your code.
@@ -348,7 +349,7 @@ namespace MHFZ_Overlay
                     };
                 }
 
-                Client.SetPresence(presenceTemplate);
+                discordRPCClient.SetPresence(presenceTemplate);
                 isDiscordRPCRunning = true;
             }
         }
@@ -614,8 +615,8 @@ namespace MHFZ_Overlay
                         logger.Info("Detected closed game");
 
                         //https://stackoverflow.com/a/9050477/18859245
-                        ApplicationManager.DiscordRPCCleanup(Client);
-                        ApplicationManager.HandleShutdown(_notifyIcon);
+                        ApplicationManager.DiscordRPCCleanup();
+                        ApplicationManager.HandleShutdown();
                     }
                     else
                     {
@@ -677,7 +678,7 @@ namespace MHFZ_Overlay
             }
             catch (Exception ex)
             {
-                LoggingManager.WriteCrashLog(ex, Client, _notifyIcon);
+                LoggingManager.WriteCrashLog(ex);
                 // the flushing is done automatically according to the docs
             }
         }
@@ -2486,7 +2487,7 @@ namespace MHFZ_Overlay
                 presenceTemplate.Assets.SmallImageText = smallImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? smallImageTextString : smallImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
             }
 
-            Client.SetPresence(presenceTemplate);
+            discordRPCClient.SetPresence(presenceTemplate);
         }
 
         #endregion
@@ -2710,8 +2711,8 @@ namespace MHFZ_Overlay
         #region clickbuttons
         private void ReloadButton_Click(object sender, RoutedEventArgs e)
         {
-            ApplicationManager.DiscordRPCCleanup(Client);
-            ApplicationManager.HandleRestart(_notifyIcon);
+            ApplicationManager.DiscordRPCCleanup();
+            ApplicationManager.HandleRestart();
         }
 
         ConfigWindow? configWindow;
@@ -2726,15 +2727,15 @@ namespace MHFZ_Overlay
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            ApplicationManager.DiscordRPCCleanup(Client);
-            ApplicationManager.HandleShutdown(_notifyIcon);
+            ApplicationManager.DiscordRPCCleanup();
+            ApplicationManager.HandleShutdown();
         }
 
         //https://stackoverflow.com/questions/4773632/how-do-i-restart-a-wpf-application
         private void ReloadButton_Key()
         {
-            ApplicationManager.DiscordRPCCleanup(Client);
-            ApplicationManager.HandleRestart(_notifyIcon);
+            ApplicationManager.DiscordRPCCleanup();
+            ApplicationManager.HandleRestart();
         }
 
         private void OpenConfigButton_Key()
@@ -2763,8 +2764,8 @@ namespace MHFZ_Overlay
 
         private void CloseButton_Key()
         {
-            ApplicationManager.DiscordRPCCleanup(Client);
-            ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+            ApplicationManager.DiscordRPCCleanup();
+            ApplicationManager.HandleShutdown();
         }
 
         private void MainGrid_MouseMove(object sender, MouseEventArgs e)
