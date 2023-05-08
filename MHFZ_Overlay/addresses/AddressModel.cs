@@ -4,6 +4,7 @@ using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
+using MHFZ_Overlay.Core.Class.Discord;
 using MHFZ_Overlay.UI.Class;
 using NLog;
 using RESTCountries.NET.Models;
@@ -13,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -31,6 +33,8 @@ namespace MHFZ_Overlay.addresses
     {
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
+
         #region properties
 
         public readonly Mem M;
@@ -46,7 +50,7 @@ namespace MHFZ_Overlay.addresses
         public AddressModel(Mem m)
         {
             logger.Info($"AddressModel initialized");
-
+            logger.Trace(new StackTrace().ToString());
             M = m;
         }
 
@@ -858,28 +862,13 @@ namespace MHFZ_Overlay.addresses
         }
 
         /// <summary>
-        /// Gets a value indicating whether [show discord quest names].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [show discord quest names]; otherwise, <c>false</c>.
-        /// </value>
-        public bool ShowDiscordQuestNames()
-        {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.DiscordQuestNameShown)
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
         /// Gets the name of the quest.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         public string GetQuestNameFromID(int id)
         {
-            if (!(ShowDiscordQuestNames())) return "";
+            if (!(DiscordManager.ShowDiscordQuestNames())) return "";
             string QuestValue1;
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             Dictionary.Quests.QuestIDs.TryGetValue(id, out QuestValue1);  //returns true
@@ -4500,7 +4489,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public static string GetDivaSkillNameFromID(int id)
+        public string GetDivaSkillNameFromID(int id)
         {
             Dictionary.DivaSkillList.DivaSkillID.TryGetValue(id, out string? divaskillaname);
             return divaskillaname + "";
@@ -4511,7 +4500,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public static string GetItemName(int id)
+        public string GetItemName(int id)
         {
             string itemValue1;
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
@@ -4526,10 +4515,24 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public static string GetArmorSkill(int id)
+        public string GetArmorSkill(int id)
         {
             Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(id, out string? skillname);
             if (skillname == "" || skillname == null)
+                return "None";
+            else
+                return skillname + "";
+        }
+
+        /// <summary>
+        /// Gets the armor skill.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetArmorSkillWithNull(int id)
+        {
+            Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(id, out string? skillname);
+            if (skillname == "")
                 return "None";
             else
                 return skillname + "";
@@ -6108,16 +6111,16 @@ namespace MHFZ_Overlay.addresses
             }
             else
             {
-                ActiveSkills activeSkills = DatabaseManager.GetInstance().GetActiveSkills((long)runID);
-                AmmoPouch ammoPouch = DatabaseManager.GetInstance().GetAmmoPouch((long)runID);
-                AutomaticSkills automaticSkills = DatabaseManager.GetInstance().GetAutomaticSkills((long)runID);
-                CaravanSkills caravanSkills = DatabaseManager.GetInstance().GetCaravanSkills((long)runID);
-                PlayerGear playerGear = DatabaseManager.GetInstance().GetPlayerGear((long)runID);
-                PlayerInventory playerInventory = DatabaseManager.GetInstance().GetPlayerInventory((long)runID);
-                UI.Class.RoadDureSkills roadDureSkills = DatabaseManager.GetInstance().GetRoadDureSkills((long)runID);
-                StyleRankSkills styleRankSkills = DatabaseManager.GetInstance().GetStyleRankSkills((long)runID);
-                ZenithSkills zenithSkills = DatabaseManager.GetInstance().GetZenithSkills((long)runID);
-                Quest quest = DatabaseManager.GetInstance().GetQuest((long)runID);
+                ActiveSkills activeSkills = databaseManager.GetActiveSkills((long)runID);
+                AmmoPouch ammoPouch = databaseManager.GetAmmoPouch((long)runID);
+                AutomaticSkills automaticSkills = databaseManager.GetAutomaticSkills((long)runID);
+                CaravanSkills caravanSkills = databaseManager.GetCaravanSkills((long)runID);
+                PlayerGear playerGear = databaseManager.GetPlayerGear((long)runID);
+                PlayerInventory playerInventory = databaseManager.GetPlayerInventory((long)runID);
+                UI.Class.RoadDureSkills roadDureSkills = databaseManager.GetRoadDureSkills((long)runID);
+                StyleRankSkills styleRankSkills = databaseManager.GetStyleRankSkills((long)runID);
+                ZenithSkills zenithSkills = databaseManager.GetZenithSkills((long)runID);
+                Quest quest = databaseManager.GetQuest((long)runID);
 
                 var createdBy = playerGear.CreatedBy;
                 if (createdBy == null)
@@ -6452,12 +6455,12 @@ Party Size: {32}",
             if (createdBy == null)
                 return "Program Version Not Found.\n\nReload the section.";
 
-            QuestCompendium questCompendium = DatabaseManager.GetInstance().GetQuestCompendium();
-            GearCompendium gearCompendium = DatabaseManager.GetInstance().GetGearCompendium();
-            PerformanceCompendium performanceCompendium = DatabaseManager.GetInstance().GetPerformanceCompendium();
-            MezFesCompendium mezeportaFestivalCompendium = DatabaseManager.GetInstance().GetMezFesCompendium();
-            MiscellaneousCompendium miscellaneousCompendium = DatabaseManager.GetInstance().GetMiscellaneousCompendium();
-            MonsterCompendium monsterCompendium = DatabaseManager.GetInstance().GetMonsterCompendium();
+            QuestCompendium questCompendium = databaseManager.GetQuestCompendium();
+            GearCompendium gearCompendium = databaseManager.GetGearCompendium();
+            PerformanceCompendium performanceCompendium = databaseManager.GetPerformanceCompendium();
+            MezFesCompendium mezeportaFestivalCompendium = databaseManager.GetMezFesCompendium();
+            MiscellaneousCompendium miscellaneousCompendium = databaseManager.GetMiscellaneousCompendium();
+            MonsterCompendium monsterCompendium = databaseManager.GetMonsterCompendium();
 
 
             var mostCompletedQuest = questCompendium.MostCompletedQuestRuns;
@@ -9383,7 +9386,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         /// <returns></returns>
         public string GetObjectiveNameFromID(int id, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             //TODO dictionary
             return id switch
             {
@@ -9409,7 +9412,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         /// <returns></returns>
         public string GetObjective1Quantity(bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             if (Objective1Quantity() <= 1)
                 return "";
             // hunt / capture / slay
@@ -9422,13 +9425,37 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
 
         /// <summary>
+        /// Gets the objective1 current quantity.
+        /// </summary>
+        /// <returns></returns>
+        public string GetObjective1CurrentQuantity(bool isLargeImageText = false)
+        {
+            if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (ObjectiveType() == 0x0 || ObjectiveType() == 0x02 || ObjectiveType() == 0x1002)
+            {
+                if (Objective1Quantity() <= 1)
+                    return "";
+                else
+                    return Objective1CurrentQuantityItem().ToString() + "/";
+            }
+            else
+            {
+                if (Objective1Quantity() <= 1)
+                    return "";
+                else
+                    //increases when u hit a dead large monster
+                    return Objective1CurrentQuantityMonster().ToString() + "/";
+            }
+        }
+
+        /// <summary>
         /// Gets the rank name from identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         public string GetRankNameFromID(int id, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             return GetRankName(id);
         }
 
@@ -9474,7 +9501,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         /// <returns></returns>
         public string GetStarGrade(bool isLargeImageText = false)
         {
-            if ((ShowDiscordQuestNames() && !(isLargeImageText)) || CaravanOverride())
+            if ((DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) || CaravanOverride())
                 return "";
 
             if (IsToggeableDifficulty())
@@ -9585,7 +9612,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         /// <returns></returns>
         public string GetRealMonsterName(string iconName, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             //quest ids:
             //mp road: 23527
             //solo road: 23628
@@ -9650,7 +9677,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         /// <returns></returns>
         public string GetObjective1Name(int id, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             string? objValue1;
             Dictionary.Items.ItemIDs.TryGetValue(id, out objValue1);  //returns true
             return objValue1 + "";
@@ -11309,6 +11336,242 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 TimeSpan duration = ProgramEnd - ProgramStart;
                 return duration;
             }
+        }
+
+        #region ehp
+        public int currentMonster1MaxHP { get; set; } = 0;
+        /// <summary>
+        /// Shows the current hp percentage.
+        /// </summary>
+        /// <returns></returns>
+        public static bool ShowCurrentHPPercentage()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableCurrentHPPercentage)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Gets the monster1 ehp percent.
+        /// </summary>
+        /// <returns></returns>
+        public string GetMonster1EHPPercent()
+        {
+            if (currentMonster1MaxHP < int.Parse(Monster1HP))
+                currentMonster1MaxHP = int.Parse(Monster1HP);
+
+            if (currentMonster1MaxHP == 0 || GetMonster1EHP() == 0) //should be OK
+                currentMonster1MaxHP = 1;
+
+            if (!(ShowCurrentHPPercentage()))
+                return "";
+
+            return string.Format(" ({0:0}%)", (float)int.Parse(Monster1HP) / currentMonster1MaxHP * 100.0);
+        }
+
+        /// <summary>
+        /// Gets the monster1 ehp.
+        /// </summary>
+        /// <returns></returns>
+        public int GetMonster1EHP()
+        {
+            return DisplayMonsterEHP(Monster1DefMult(), Monster1HPInt(), Monster1DefMult());
+        }
+
+        /// <summary>
+        /// Gets the monster1 maximum ehp.
+        /// </summary>
+        /// <returns></returns>
+        public int GetMonster1MaxEHP()
+        {
+            return currentMonster1MaxHP;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Gets the max faints
+        /// </summary>
+        /// <returns></returns>
+        public string GetMaxFaints()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            switch (s.MaxFaintsOverride)
+            {
+                default:
+                    return MaxFaints().ToString();
+                case "Normal Quests":
+                    return MaxFaints().ToString();
+                case "Shiten/Conquest/Pioneer/Daily/Caravan/Interception Quests":
+                    return AlternativeMaxFaints().ToString();
+                case "Automatic":
+                    if (roadOverride() != null && roadOverride() == false)
+                        return MaxFaints().ToString();
+
+                if 
+                (
+                    (
+                        CaravanOverride() && !
+                        (
+                            QuestID() == 23603 ||
+                            RankBand() == 70 ||
+                            QuestID() == 23602 ||
+                            QuestID() == 23604 ||
+                            QuestID() == 23588 ||
+                            QuestID() == 23592 ||
+                            QuestID() == 23596 ||
+                            QuestID() == 23601 ||
+                            QuestID() == 23599 ||
+                            QuestID() == 23595 ||
+                            QuestID() == 23591 ||
+                            QuestID() == 23587 ||
+                            QuestID() == 23598 ||
+                            QuestID() == 23594 ||
+                            QuestID() == 23590 ||
+                            QuestID() == 23586 ||
+                            QuestID() == 23597 ||
+                            QuestID() == 23593 ||
+                            QuestID() == 23589 ||
+                            QuestID() == 23585
+                        )
+                    )
+
+                    ||
+
+                    QuestID() == 23603 ||
+                    RankBand() == 70 ||
+                    QuestID() == 23602 ||
+                    QuestID() == 23604 ||
+                    QuestID() == 23588 ||
+                    QuestID() == 23592 ||
+                    QuestID() == 23596 ||
+                    QuestID() == 23601 ||
+                    QuestID() == 23599 ||
+                    QuestID() == 23595 ||
+                    QuestID() == 23591 ||
+                    QuestID() == 23587 ||
+                    QuestID() == 23598 ||
+                    QuestID() == 23594 ||
+                    QuestID() == 23590 ||
+                    QuestID() == 23586 ||
+                    QuestID() == 23597 ||
+                    QuestID() == 23593 ||
+                    QuestID() == 23589 ||
+                    QuestID() == 23585
+                    )
+                {
+                    return AlternativeMaxFaints().ToString();
+                }
+                else
+                {
+                    return MaxFaints().ToString();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the color of the armor.
+        /// </summary>
+        /// <returns></returns>
+        public string GetArmorColor()
+        {
+            Dictionary.ArmorColorList.ArmorColorID.TryGetValue(ArmorColor(), out string? colorname);
+            return colorname + "";
+        }
+
+        /// <summary>
+        /// Gets the weapon style from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetWeaponStyleFromID(int id)
+        {
+            return id switch
+            {
+                0 => "Earth",
+                1 => "Heaven",
+                2 => "Storm",
+                3 => "Extreme",
+                _ => "None",
+            };
+        }
+
+        /// <summary>
+        /// Gets the area icon from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetAreaIconFromID(int id) //TODO: are highlands, tidal island or painted falls icons correct?
+        {
+            if (id >= 470 && id < 0)
+                return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+            else
+                return FindAreaIcon(id);
+        }
+
+        public static string FindAreaIcon(int id)
+        {
+            List<int> AreaGroup = new List<int> { 0 };
+
+            foreach (KeyValuePair<List<int>, string> kvp in AreaIconDictionary.AreaIconID)
+            {
+                List<int> areaIDs = kvp.Key;
+
+                if (areaIDs.Contains(id))
+                {
+                    AreaGroup = kvp.Key;
+                    break;
+                }
+            }
+            return DetermineAreaIcon(AreaGroup);
+        }
+
+        public static string DetermineAreaIcon(List<int> key)
+        {
+            bool areaIcon = AreaIconDictionary.AreaIconID.ContainsKey(key);
+            if (!areaIcon)
+                return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+            else
+                return AreaIconDictionary.AreaIconID[key];
+        }
+
+        /// <summary>
+        /// Gets the poogie clothes.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetPoogieClothes(int id)
+        {
+            string? clothesValue1;
+            _ = Dictionary.PoogieCostumeList.PoogieCostumeID.TryGetValue(id, out clothesValue1);  //returns true
+            return clothesValue1 + "";
+        }
+
+        /// <summary>
+        /// Gets the caravan skills.
+        /// </summary>
+        /// <returns></returns>
+        public string GetCaravanSkillsWithoutMarkdown(DataLoader dataLoader)
+        {
+            int id1 = dataLoader.model.CaravanSkill1();
+            int id2 = dataLoader.model.CaravanSkill2();
+            int id3 = dataLoader.model.CaravanSkill3();
+
+            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id1, out string? caravanSkillName1);
+            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id2, out string? caravanSkillName2);
+            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id3, out string? caravanSkillName3);
+
+            if (caravanSkillName1 == "" || caravanSkillName1 == "None")
+                return "None";
+            else if (caravanSkillName2 == "" || caravanSkillName2 == "None")
+                return caravanSkillName1 + "";
+            else if (caravanSkillName3 == "" || caravanSkillName3 == "None")
+                return caravanSkillName1 + ", " + caravanSkillName2;
+            else
+                return caravanSkillName1 + ", " + caravanSkillName2 + ", " + caravanSkillName3;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

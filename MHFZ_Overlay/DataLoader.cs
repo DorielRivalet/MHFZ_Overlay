@@ -63,8 +63,7 @@ namespace MHFZ_Overlay
         // this loads first before MainWindow constructor is called. meaning this runs twice.
         public DataLoader()
         {
-            Debug.WriteLine("DataLoader constructor called. Call stack:");
-            Debug.WriteLine(new StackTrace().ToString());
+            logger.Trace("DataLoader constructor called. Call stack: {0}", new StackTrace().ToString());
 
             // run Squirrel first, as the app may exit after these run
             SquirrelAwareApp.HandleEvents(
@@ -351,7 +350,7 @@ The overlay might take some time to start due to databases.
 Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
+        private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
 
         /// <summary>
         /// Creates the code cave.

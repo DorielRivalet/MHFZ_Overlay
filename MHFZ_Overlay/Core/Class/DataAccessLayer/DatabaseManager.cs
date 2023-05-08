@@ -98,9 +98,11 @@ namespace MHFZ_Overlay
         {
             if (instance == null)
             {
+                logger.Info("Singleton not found, creating instance.");
                 instance = new DatabaseManager();
             }
-
+            logger.Info("Singleton found, returning instance.");
+            logger.Trace(new StackTrace().ToString());
             return instance;
         }
 
@@ -172,7 +174,7 @@ namespace MHFZ_Overlay
                     conn.Open();
 
                     // Toggle comment this for testing the error handling
-                    ThrowException(conn);
+                    //ThrowException(conn);
 
                     CreateDatabaseTables(conn, dataLoader);
                     CreateDatabaseIndexes(conn);
@@ -438,18 +440,18 @@ namespace MHFZ_Overlay
                             //Gathering/etc
                             if ((dataLoader.model.ObjectiveType() == 0x0 || dataLoader.model.ObjectiveType() == 0x02 || dataLoader.model.ObjectiveType() == 0x1002) && (dataLoader.model.QuestID() != 23527 && dataLoader.model.QuestID() != 23628 && dataLoader.model.QuestID() != 21731 && dataLoader.model.QuestID() != 21749 && dataLoader.model.QuestID() != 21746 && dataLoader.model.QuestID() != 21750))
                             {
-                                objectiveImage = MainWindow.GetAreaIconFromID(dataLoader.model.AreaID());
+                                objectiveImage = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
                             }
                             //Tenrou Sky Corridor areas
                             else if (dataLoader.model.AreaID() == 391 || dataLoader.model.AreaID() == 392 || dataLoader.model.AreaID() == 394 || dataLoader.model.AreaID() == 415 || dataLoader.model.AreaID() == 416)
                             {
-                                objectiveImage = MainWindow.GetAreaIconFromID(dataLoader.model.AreaID());
+                                objectiveImage = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
 
                             }
                             //Duremudira Doors
                             else if (dataLoader.model.AreaID() == 399 || dataLoader.model.AreaID() == 414)
                             {
-                                objectiveImage = MainWindow.GetAreaIconFromID(dataLoader.model.AreaID());
+                                objectiveImage = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
                             }
                             //Duremudira Arena
                             else if (dataLoader.model.AreaID() == 398)
@@ -459,7 +461,7 @@ namespace MHFZ_Overlay
                             //Hunter's Road Base Camp
                             else if (dataLoader.model.AreaID() == 459)
                             {
-                                objectiveImage = MainWindow.GetAreaIconFromID(dataLoader.model.AreaID());
+                                objectiveImage = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
                             }
                             //Raviente
                             else if (dataLoader.model.AreaID() == 309 || (dataLoader.model.AreaID() >= 311 && dataLoader.model.AreaID() <= 321) || (dataLoader.model.AreaID() >= 417 && dataLoader.model.AreaID() <= 422) || dataLoader.model.AreaID() == 437 || (dataLoader.model.AreaID() >= 440 && dataLoader.model.AreaID() <= 444))
@@ -2392,10 +2394,8 @@ namespace MHFZ_Overlay
             if (transaction != null)
                 transaction.Rollback();
 
-            logger.Error(ex, "An error occurred");
-
             // Handle the exception and show an error message to the user
-            LoggingManager.PromptForOpeningLogs();
+            LoggingManager.WriteCrashLog(ex);
         }
 
         public void MakeDeserealizedQuestInfoDictionariesFromRunID(SQLiteConnection conn, DataLoader dataLoader, int runID)
@@ -5494,8 +5494,6 @@ Disabling Quest Logging.",
             }
             return zenithSkills;
         }
-
-
 
         public CaravanSkills GetCaravanSkills(long runID)
         {

@@ -30,9 +30,10 @@ namespace MHFZ_Overlay.Core.Class.Log
             System.Windows.MessageBox.Show(@"Fatal error, closing overlay. See the crash log in the overlay\logs folder for more information.", FATAL_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             logger.Fatal(ex, logMessage);
             PromptForOpeningLogs();
+            ApplicationManager.HandleShutdown();
         }
 
-        public static void PromptForOpeningLogs()
+        private static void PromptForOpeningLogs()
         {
             var logFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "logs", "logs.log");
 
@@ -58,8 +59,6 @@ namespace MHFZ_Overlay.Core.Class.Log
                     System.Windows.MessageBox.Show("Could not open the log file: " + ex.Message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-
-            ApplicationManager.HandleShutdown();
         }
     }
 }

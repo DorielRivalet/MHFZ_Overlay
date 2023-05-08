@@ -61,6 +61,8 @@ namespace MHFZ_Overlay
 
         private static string randomMonsterImage = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png";
 
+        private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
+
         public static Uri MonsterInfoLink
         {
             get { return new Uri(randomMonsterImage, UriKind.RelativeOrAbsolute); }
@@ -558,7 +560,7 @@ namespace MHFZ_Overlay
 
             replaceAllMonsterInfoFeriasLinks();
 
-            weaponUsageData = DatabaseManager.GetInstance().CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
+            weaponUsageData = databaseManager.CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
         }
 
         private List<WeaponUsageMapper> weaponUsageData = new();
@@ -1176,7 +1178,7 @@ namespace MHFZ_Overlay
 
             MainWindow.DataLoader.model.ValidateGameFolder();
 
-            DatabaseManager.GetInstance().CheckIfSchemaChanged(MainWindow.DataLoader);
+            databaseManager.CheckIfSchemaChanged(MainWindow.DataLoader);
         }
 
         private void CountryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1204,7 +1206,7 @@ namespace MHFZ_Overlay
             if (!string.IsNullOrEmpty(QuestIDTextBox.Text))
             {
                 SetDefaultInfoInQuestIDWeaponSection();
-                DatabaseManager.GetInstance().QuestIDButton_Click(sender, e, this);
+                databaseManager.QuestIDButton_Click(sender, e, this);
             }
         }
 
@@ -1325,11 +1327,11 @@ namespace MHFZ_Overlay
 
             if (comboBox.SelectedIndex == 0)
             {
-                weaponUsageData = DatabaseManager.GetInstance().CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
+                weaponUsageData = databaseManager.CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
             }
             else if (comboBox.SelectedIndex == 1)
             {
-                weaponUsageData = DatabaseManager.GetInstance().CalculateTotalWeaponUsage(this, MainWindow.DataLoader, true);
+                weaponUsageData = databaseManager.CalculateTotalWeaponUsage(this, MainWindow.DataLoader, true);
             }
             else
             {
@@ -1410,7 +1412,7 @@ namespace MHFZ_Overlay
             // Get the quest ID and new YouTube link from the textboxes
             long runID = long.Parse(RunIDTextBox.Text.Trim());
             string youtubeLink = youtubeLinkTextBox.Text.Trim();
-            if (DatabaseManager.GetInstance().UpdateYoutubeLink(sender, e, runID, youtubeLink))
+            if (databaseManager.UpdateYoutubeLink(sender, e, runID, youtubeLink))
                 MessageBox.Show(String.Format("Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink), "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             else
                 MessageBox.Show(String.Format("Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -1424,7 +1426,7 @@ namespace MHFZ_Overlay
         private void YoutubeIconButton_Click(object sender, RoutedEventArgs e)
         {
             long runID = long.Parse(RunIDTextBox.Text.Trim());
-            string youtubeLink = DatabaseManager.GetInstance().GetYoutubeLinkForRunID(runID);
+            string youtubeLink = databaseManager.GetYoutubeLinkForRunID(runID);
             if (youtubeLink != "")
             {
                 var sInfo = new System.Diagnostics.ProcessStartInfo(youtubeLink)
@@ -1447,7 +1449,7 @@ namespace MHFZ_Overlay
         private void MostRecentRuns_ListViewLoaded(object sender, RoutedEventArgs e)
         {
             mostRecentRunsListView = (ListView)sender;
-            MainWindow.DataLoader.model.RecentRuns = DatabaseManager.GetInstance().GetRecentRuns();
+            MainWindow.DataLoader.model.RecentRuns = databaseManager.GetRecentRuns();
             mostRecentRunsListView.ItemsSource = MainWindow.DataLoader.model.RecentRuns;
             mostRecentRunsListView.DataContext = MainWindow.DataLoader.model.RecentRuns;
             mostRecentRunsListView.Items.Refresh();
@@ -1456,7 +1458,7 @@ namespace MHFZ_Overlay
         private void Top20Runs_ListViewLoaded(object sender, RoutedEventArgs e)
         {
             top20RunsListView = (ListView)sender;
-            MainWindow.DataLoader.model.FastestRuns = DatabaseManager.GetInstance().GetFastestRuns(this);
+            MainWindow.DataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this);
             top20RunsListView.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
             top20RunsListView.DataContext = MainWindow.DataLoader.model.FastestRuns;
             top20RunsListView.Items.Refresh();
@@ -1476,7 +1478,7 @@ namespace MHFZ_Overlay
             selectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ", "");
             if (selectedWeapon == "")
                 return;
-            MainWindow.DataLoader.model.FastestRuns = DatabaseManager.GetInstance().GetFastestRuns(this, selectedWeapon);
+            MainWindow.DataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this, selectedWeapon);
             top20RunsListView.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
             top20RunsListView.DataContext = MainWindow.DataLoader.model.FastestRuns;
             top20RunsListView.Items.Refresh();
@@ -2245,8 +2247,8 @@ namespace MHFZ_Overlay
 
         private Dictionary<string, int> GetMostCommonInputs(long runID)
         {
-            var keystrokesDictionary = DatabaseManager.GetInstance().GetKeystrokesDictionary(runID);
-            var mouseInputDictionary = DatabaseManager.GetInstance().GetMouseInputDictionary(runID);
+            var keystrokesDictionary = databaseManager.GetKeystrokesDictionary(runID);
+            var mouseInputDictionary = databaseManager.GetMouseInputDictionary(runID);
             var combinedDictionary = keystrokesDictionary.Concat(mouseInputDictionary)
                 .GroupBy(kvp => kvp.Value)
                 .ToDictionary(g => g.Key, g => g.Count());
@@ -2557,119 +2559,119 @@ namespace MHFZ_Overlay
             switch (selectedOption)
             {
                 case "(General) Most Quest Completions":
-                    SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostQuestCompletions());
+                    SetColumnSeriesForDictionaryIntInt(databaseManager.GetMostQuestCompletions());
                     break;
                 case "(General) Quest Durations":
-                    CreateQuestDurationStackedChart(DatabaseManager.GetInstance().GetTotalTimeSpentInQuests());
+                    CreateQuestDurationStackedChart(databaseManager.GetTotalTimeSpentInQuests());
                     break;
                 case "(General) Most Common Objective Types":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonObjectiveTypes());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonObjectiveTypes());
                     break;
                 case "(General) Most Common Star Grades":
-                    SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostCommonStarGrades());
+                    SetColumnSeriesForDictionaryIntInt(databaseManager.GetMostCommonStarGrades());
                     break;
                 case "(General) Most Common Rank Bands":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonRankBands());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonRankBands());
                     break;
                 case "(General) Most Common Objective":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonObjectives());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonObjectives());
                     break;
                 case "(General) Quests Completed by Date":
-                    SetColumnSeriesForDictionaryDateInt(DatabaseManager.GetInstance().GetQuestsCompletedByDate());
+                    SetColumnSeriesForDictionaryDateInt(databaseManager.GetQuestsCompletedByDate());
                     break;
                 case "(General) Most Common Party Size":
-                    SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostCommonPartySize());
+                    SetColumnSeriesForDictionaryIntInt(databaseManager.GetMostCommonPartySize());
                     break;
                 case "(General) Most Common Set Name":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonSetNames());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonSetNames());
                     break;
                 case "(General) Most Common Weapon Name":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonWeaponNames());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonWeaponNames());
                     break;
                 case "(General) Most Common Head Piece":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonHeadPieces());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonHeadPieces());
                     break;
                 case "(General) Most Common Chest Piece":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonChestPieces());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonChestPieces());
                     break;
                 case "(General) Most Common Arms Piece":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonArmsPieces());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonArmsPieces());
                     break;
                 case "(General) Most Common Waist Piece":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonWaistPieces());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonWaistPieces());
                     break;
                 case "(General) Most Common Legs Piece":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonLegsPieces());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonLegsPieces());
                     break;
                 case "(General) Most Common Diva Skill":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonDivaSkill());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonDivaSkill());
                     break;
                 case "(General) Most Common Guild Food":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonGuildFood());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonGuildFood());
                     break;
                 case "(General) Most Common Style Rank Skills":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonStyleRankSkills());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonStyleRankSkills());
                     break;
                 case "(General) Most Common Caravan Skills":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonCaravanSkills());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonCaravanSkills());
                     break;
                 case "(General) Most Common Category":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonCategory());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonCategory());
                     break;
                 case "(Run ID) Attack Buff":
-                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetAttackBuffDictionary(runID));
+                    SetLineSeriesForDictionaryIntInt(databaseManager.GetAttackBuffDictionary(runID));
                     return;
                 case "(Run ID) Hit Count":
-                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetHitCountDictionary(runID));
+                    SetLineSeriesForDictionaryIntInt(databaseManager.GetHitCountDictionary(runID));
                     return;
                 case "(Run ID) Hits per Second":
-                    SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetHitsPerSecondDictionary(runID));
+                    SetLineSeriesForDictionaryIntDouble(databaseManager.GetHitsPerSecondDictionary(runID));
                     return;
                 case "(Run ID) Damage Dealt":
-                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetDamageDealtDictionary(runID));
+                    SetLineSeriesForDictionaryIntInt(databaseManager.GetDamageDealtDictionary(runID));
                     return;
                 case "(Run ID) Damage per Second":
-                    SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetDamagePerSecondDictionary(runID));
+                    SetLineSeriesForDictionaryIntDouble(databaseManager.GetDamagePerSecondDictionary(runID));
                     return;
                 case "(Run ID) Carts":
-                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetCartsDictionary(runID));
+                    SetLineSeriesForDictionaryIntInt(databaseManager.GetCartsDictionary(runID));
                     return;
                 case "(Run ID) Hits Taken/Blocked":
-                    SetHitsTakenBlocked(DatabaseManager.GetInstance().GetHitsTakenBlockedDictionary(runID));
+                    SetHitsTakenBlocked(databaseManager.GetHitsTakenBlockedDictionary(runID));
                     return;
                 case "(Run ID) Hits Taken/Blocked per Second":
-                    SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetHitsTakenBlockedPerSecondDictionary(runID));
+                    SetLineSeriesForDictionaryIntDouble(databaseManager.GetHitsTakenBlockedPerSecondDictionary(runID));
                     return;
                 case "(Run ID) Player Health and Stamina":
-                    SetPlayerHealthStamina(DatabaseManager.GetInstance().GetPlayerHPDictionary(runID), DatabaseManager.GetInstance().GetPlayerStaminaDictionary(runID));
+                    SetPlayerHealthStamina(databaseManager.GetPlayerHPDictionary(runID), databaseManager.GetPlayerStaminaDictionary(runID));
                     return;
                 case "(Run ID) Most Common Player Input":
                     SetColumnSeriesForDictionaryStringInt(GetMostCommonInputs(runID));
                     break;
                 case "(Run ID) Actions per Minute":
-                    SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetActionsPerMinuteDictionary(runID));
+                    SetLineSeriesForDictionaryIntDouble(databaseManager.GetActionsPerMinuteDictionary(runID));
                     return;
                 case "(Run ID) Monster HP":
-                    SetMonsterHP(CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster1HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster2HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster3HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster4HPDictionary(runID)));
+                    SetMonsterHP(CalculateMonsterHP(databaseManager.GetMonster1HPDictionary(runID)), CalculateMonsterHP(databaseManager.GetMonster2HPDictionary(runID)), CalculateMonsterHP(databaseManager.GetMonster3HPDictionary(runID)), CalculateMonsterHP(databaseManager.GetMonster4HPDictionary(runID)));
                     return;
                 case "(Run ID) Monster Attack Multiplier":
-                    SetMonsterAttackMultiplier(CalculateMonsterMultiplier(DatabaseManager.GetInstance().GetMonster1AttackMultiplierDictionary(runID)));
+                    SetMonsterAttackMultiplier(CalculateMonsterMultiplier(databaseManager.GetMonster1AttackMultiplierDictionary(runID)));
                     return;
                 case "(Run ID) Monster Defense Rate":
-                    SetMonsterDefenseRate(CalculateMonsterMultiplier(DatabaseManager.GetInstance().GetMonster1DefenseRateDictionary(runID)));
+                    SetMonsterDefenseRate(CalculateMonsterMultiplier(databaseManager.GetMonster1DefenseRateDictionary(runID)));
                     return;
                 case "(Run ID) Monster Status Ailments Thresholds":
                     SetMonsterStatusAilmentsThresholds(
                         CalculateMonsterStatusAilmentThresholds(
-                            DatabaseManager.GetInstance().GetMonster1PoisonThresholdDictionary(runID)),
+                            databaseManager.GetMonster1PoisonThresholdDictionary(runID)),
                         CalculateMonsterStatusAilmentThresholds(
-                            DatabaseManager.GetInstance().GetMonster1SleepThresholdDictionary(runID)),
+                            databaseManager.GetMonster1SleepThresholdDictionary(runID)),
                         CalculateMonsterStatusAilmentThresholds(
-                            DatabaseManager.GetInstance().GetMonster1ParalysisThresholdDictionary(runID)),
+                            databaseManager.GetMonster1ParalysisThresholdDictionary(runID)),
                         CalculateMonsterStatusAilmentThresholds(
-                            DatabaseManager.GetInstance().GetMonster1BlastThresholdDictionary(runID)),
+                            databaseManager.GetMonster1BlastThresholdDictionary(runID)),
                         CalculateMonsterStatusAilmentThresholds(
-                            DatabaseManager.GetInstance().GetMonster1StunThresholdDictionary(runID)
+                            databaseManager.GetMonster1StunThresholdDictionary(runID)
                             )
                         );
                     return;
@@ -2808,16 +2810,16 @@ namespace MHFZ_Overlay
             switch (selectedOption)
             {
                 case "Inventory":
-                    statsTextTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPlayerInventoryDictionary(runID));
+                    statsTextTextBlock.Text = FormatInventory(databaseManager.GetPlayerInventoryDictionary(runID));
                     break;
                 case "Ammo":
-                    statsTextTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetAmmoDictionary(runID));
+                    statsTextTextBlock.Text = FormatInventory(databaseManager.GetAmmoDictionary(runID));
                     break;
                 case "Partnya Bag":
-                    statsTextTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPartnyaBagDictionary(runID));
+                    statsTextTextBlock.Text = FormatInventory(databaseManager.GetPartnyaBagDictionary(runID));
                     break;
                 case "Area Changes":
-                    statsTextTextBlock.Text = DisplayAreaChanges(DatabaseManager.GetInstance().GetAreaChangesDictionary(runID));
+                    statsTextTextBlock.Text = DisplayAreaChanges(databaseManager.GetAreaChangesDictionary(runID));
                     break;
             }
         }
@@ -3021,10 +3023,10 @@ namespace MHFZ_Overlay
             switch (personalBestSelectedType)
             {
                 case "(Quest ID) Personal Best by Date":
-                    SetStepLineSeriesForPersonalBestByDate(DatabaseManager.GetInstance().GetPersonalBestsByDate(questID, weaponTypeID, OverlayModeComboBox.Text));
+                    SetStepLineSeriesForPersonalBestByDate(databaseManager.GetPersonalBestsByDate(questID, weaponTypeID, OverlayModeComboBox.Text));
                     break;
                 case "(Quest ID) Personal Best by Attempts":
-                    SetStepLineSeriesForPersonalBestByAttempts(DatabaseManager.GetInstance().GetPersonalBestsByAttempts(questID, weaponTypeID, OverlayModeComboBox.Text));
+                    SetStepLineSeriesForPersonalBestByAttempts(databaseManager.GetPersonalBestsByAttempts(questID, weaponTypeID, OverlayModeComboBox.Text));
                     break;
                 default:
                     personalBestChart.Series = PersonalBestSeries;
@@ -3038,7 +3040,7 @@ namespace MHFZ_Overlay
         {
             var chart = sender as PolarChart;
             hunterPerformanceChart = chart;
-            SetPolarLineSeriesForHunterPerformance(DatabaseManager.GetInstance().GetPerformanceCompendium());
+            SetPolarLineSeriesForHunterPerformance(databaseManager.GetPerformanceCompendium());
         }
 
         private void CompendiumInformationStackPanel_Loaded(object sender, RoutedEventArgs e)
