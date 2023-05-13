@@ -15,6 +15,9 @@ using System.Windows.Forms;
 
 namespace MHFZ_Overlay.Core.Class.Log
 {
+    /// <summary>
+    /// Handles logging functionality. Uses NLog.
+    /// </summary>
     internal class LoggingManager
     {
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();

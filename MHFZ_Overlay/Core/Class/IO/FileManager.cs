@@ -21,6 +21,9 @@ using System.Windows.Media.Imaging;
 
 namespace MHFZ_Overlay.Core.Class.IO
 {
+    /// <summary>
+    /// Handles file creation, copying and deletion. Also handles the clipboard (TODO: might want another class for this).
+    /// </summary>
     internal class FileManager
     {
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();

@@ -133,11 +133,6 @@ namespace MHFZ_Overlay
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
 
-        /// <summary>
-        /// The current program version. TODO: put in env var
-        /// </summary>
-        public const string CurrentProgramVersion = "v0.22.0";
-
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);
 
@@ -262,7 +257,7 @@ namespace MHFZ_Overlay
 
             CreateSystemTrayIcon();
 
-            logger.Info("Loaded MHF-Z Overlay {0}", CurrentProgramVersion);
+            logger.Info("Loaded MHF-Z Overlay {0}", App.CurrentProgramVersion);
 
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
         }
@@ -324,17 +319,17 @@ namespace MHFZ_Overlay
             var releases = await ghClient.Repository.Release.GetAll("DorielRivalet", "MHFZ_Overlay");
             var latest = releases[0];
             var latestRelease = latest.TagName;
-            if (latestRelease != MainWindow.CurrentProgramVersion)
+            if (latestRelease != App.CurrentProgramVersion)
             {
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 if (s.EnableUpdateNotifier)
                 {
-                    System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(String.Format("Detected different version ({0}) from latest ({1}). Do you want to download the file?", CurrentProgramVersion, latest.TagName), "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No);
+                    System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(String.Format("Detected different version ({0}) from latest ({1}). Do you want to update the overlay?", App.CurrentProgramVersion, latest.TagName), "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No);
                     logger.Info("Detected different overlay version");
 
                     if (messageBoxResult.ToString() == "Yes")
                     {
-                        OpenLink("https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/Releases.7z");
+                        await App.UpdateMyApp();
                     }
                 }
             }

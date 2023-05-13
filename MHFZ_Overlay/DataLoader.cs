@@ -24,55 +24,11 @@ namespace MHFZ_Overlay
     {
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        // https://github.com/Squirrel/Squirrel.Windows/issues/198#issuecomment-299262613
-        // Indeed you can use the methods below to backup your settings,
-        // typically just after your update has completed,
-        // so just after your call to await mgr.UpdateApp();
-        // You want to restore them at the very beginning of your program,
-        // like just after Squirrel's event handler registration.
-        // Don't try doing a restore from the onAppUpdate it won't work.
-        // By the look of it onAppUpdate is executing from the older app process
-        // as it would not get access to the newer app data folder.
-
-        /// <summary>
-        /// Make a backup of our settings.
-        /// Used to persist settings across updates.
-        /// </summary>
-        public void BackupSettings()
-        {
-            string settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
-            string destination = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
-            FileManager.CopyFileToDestination(settingsFile, destination, true, "Backed up settings", true);
-        }
-
-        /// <summary>
-        /// Restore our settings backup if any.
-        /// Used to persist settings across updates.
-        /// </summary>
-        private static void RestoreSettings()
-        {
-            //Restore settings after application update            
-            string destFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
-            string sourceFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
-            var restorationMessage = "Restored settings";
-            logger.Info("Restore our settings backup if any. Destination: {0}. Source: {1}", destFile, sourceFile);
-            FileManager.RestoreFileFromSourceToDestination(destFile, sourceFile, restorationMessage);
-        }
-
         // TODO: would like to make this a singleton but its complicated
         // this loads first before MainWindow constructor is called. meaning this runs twice.
         public DataLoader()
         {
             logger.Trace("DataLoader constructor called. Call stack: {0}", new StackTrace().ToString());
-
-            // run Squirrel first, as the app may exit after these run
-            SquirrelAwareApp.HandleEvents(
-                onInitialInstall: OnAppInstall,
-                onAppUninstall: OnAppUninstall,
-                onEveryRun: OnAppRun);
-
-            // ... other app init code after ...
-            RestoreSettings();
 
             logger.Info($"DataLoader initialized");
 
@@ -303,52 +259,6 @@ namespace MHFZ_Overlay
         public AddressModel model { get; }
 
         #endregion
-
-        /// <summary>
-        /// Called when [application install].
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="tools">The tools.</param>
-        private static void OnAppInstall(SemanticVersion version, IAppTools tools)
-        {
-            MessageBox.Show("【MHF-Z】Overlay is now installed. Creating a shortcut.", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
-            tools.CreateShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
-        }
-
-        /// <summary>
-        /// Called when [application uninstall].
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="tools">The tools.</param>
-        private static void OnAppUninstall(SemanticVersion version, IAppTools tools)
-        {
-            MessageBox.Show("【MHF-Z】Overlay has been uninstalled. Removing shortcut.", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
-            tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
-        }
-
-        /// <summary>
-        /// Called when [application run].
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="tools">The tools.</param>
-        /// <param name="firstRun">if set to <c>true</c> [first run].</param>
-        private static void OnAppRun(SemanticVersion version, IAppTools tools, bool firstRun)
-        {
-            tools.SetProcessAppUserModelId();
-            // show a welcome message when the app is first installed
-            if (firstRun) MessageBox.Show(
-@"【MHF-Z】Overlay is now running! Thanks for installing【MHF-Z】Overlay.
-
-Hotkeys: Shift+F1 (Configuration) | Shift+F5 (Restart) | Shift+F6 (Close)
-
-As an alternative to hotkeys, you can check your system tray options by right-clicking the icon.
-
-Press Alt+Enter if your game resolution changed.
-
-The overlay might take some time to start due to databases.
-
-Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
 
         private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
 

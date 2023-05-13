@@ -144,7 +144,7 @@ DocProject/Help/*.hhp
 DocProject/Help/Html2
 DocProject/Help/html
 
-# Click-Once directory
+# Click-Once directory and Clowd.Squirrel
 publish/
 
 # Publish Web Output

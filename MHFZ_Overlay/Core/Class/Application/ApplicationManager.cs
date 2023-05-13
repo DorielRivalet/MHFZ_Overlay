@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace MHFZ_Overlay.Core.Class.Application
 {
+    /// <summary>
+    /// Handles the application's state changes (shutdown, restart, etc.)
+    /// </summary>
     internal class ApplicationManager
     {
         private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();

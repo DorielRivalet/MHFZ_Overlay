@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace MHFZ_Overlay.Core.Class.Discord
 {
+    /// <summary>
+    /// Handles the Discord Rich Presence. Should not operate if the user is not enabling it.
+    /// </summary>
     internal class DiscordManager
     {
 
@@ -184,7 +187,7 @@ namespace MHFZ_Overlay.Core.Class.Discord
         /// </summary>
         private static RichPresence presenceTemplate = new RichPresence()
         {
-            Details = "【MHF-Z】Overlay " + MainWindow.CurrentProgramVersion,
+            Details = "【MHF-Z】Overlay " + App.CurrentProgramVersion,
             State = "Loading...",
             //check img folder
             Assets = new Assets()
@@ -196,7 +199,7 @@ namespace MHFZ_Overlay.Core.Class.Discord
             },
             Buttons = new DiscordRPC.Button[]
                 {
-                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+ MainWindow.CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay"},
+                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+ App.CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay"},
                     new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
                 }
         };
@@ -231,7 +234,7 @@ namespace MHFZ_Overlay.Core.Class.Discord
                 presenceTemplate.Buttons = new DiscordRPC.Button[] { };
                 presenceTemplate.Buttons = new DiscordRPC.Button[]
                 {
-                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+ MainWindow.CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay"},
+                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+ App.CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay"},
                     new DiscordRPC.Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" }
                 };
 
@@ -240,7 +243,7 @@ namespace MHFZ_Overlay.Core.Class.Discord
                     presenceTemplate.Buttons = new DiscordRPC.Button[] { };
                     presenceTemplate.Buttons = new DiscordRPC.Button[]
                     {
-                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+ MainWindow.CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay"},
+                    new DiscordRPC.Button() {Label = "【MHF-Z】Overlay "+ App.CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay"},
                     new DiscordRPC.Button() { Label = "Join Discord Server", Url = String.Format("https://discord.com/invite/{0}",GetDiscordServerInvite)}
                     };
                 }

@@ -35,7 +35,9 @@ using Formatting = Newtonsoft.Json.Formatting;
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
 {
-    // Singleton
+    /// <summary>
+    /// Handles the SQLite database, MHFZ_Overlay.sqlite. A singleton.
+    /// </summary>
     internal class DatabaseManager
     {
         private string _connectionString;
@@ -9696,7 +9698,7 @@ Disabling Quest Logging.",
 @"No new schema updates found! Schema version: {0}", fromVersion), 
                                 string.Format("MHF-Z Overlay Database Update ({0} to {1})", 
                                 previousVersion, 
-                                MainWindow.CurrentProgramVersion), 
+                                App.CurrentProgramVersion), 
                                 MessageBoxButton.OK, 
                                 MessageBoxImage.Information);
                             return;
@@ -9745,7 +9747,7 @@ Disabling Quest Logging.",
                     MessageBox.Show("Updated database schema, you may proceed.",
                     string.Format("MHF-Z Overlay Database Update ({0} to {1})",
                     previousVersion,
-                    MainWindow.CurrentProgramVersion),
+                    App.CurrentProgramVersion),
                     MessageBoxButton.OK,
                     MessageBoxImage.Information);
                 }
@@ -9770,7 +9772,7 @@ Disabling Quest Logging.",
                 {
                     int currentUserVersion = GetUserVersion(connection);
 
-                    if (MainWindow.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0)
+                    if (App.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0)
                     {
                         MessageBoxResult result = MessageBox.Show(
 @"A new version of the program has been installed.
@@ -9778,7 +9780,7 @@ Disabling Quest Logging.",
 Do you want to perform the necessary database updates? A backup of your current MHFZ_Overlay.sqlite file will be done if you accept.
 
 Updating the database structure may take some time, it will transport all of your current data straight to the latest database structure, regardless of the previous database version.",
-                                                         string.Format("MHF-Z Overlay Database Update ({0} to {1})", previousVersion, MainWindow.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+                                                         string.Format("MHF-Z Overlay Database Update ({0} to {1})", previousVersion, App.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                         if (result == MessageBoxResult.Yes)
                         {
                             // Make a backup of the current SQLite file before updating the schema
@@ -10426,7 +10428,7 @@ Updating the database structure may take some time, it will transport all of you
             try
             {
                 if (File.ReadAllText(previousVersionFilePath) == "")
-                    previousVersion = MainWindow.CurrentProgramVersion.Trim();
+                    previousVersion = App.CurrentProgramVersion.Trim();
                 else
                     previousVersion = File.ReadAllText(previousVersionFilePath);
 

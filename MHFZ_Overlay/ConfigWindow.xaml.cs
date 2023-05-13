@@ -1166,9 +1166,9 @@ namespace MHFZ_Overlay
         // TODO: test
         private void ExportUserSettings_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.DataLoader.BackupSettings();
+            //MainWindow.DataLoader.BackupSettings();
 
-            FileManager.SaveSettingsAsJSON();
+            //FileManager.SaveSettingsAsJSON();
         }
 
         private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
