@@ -1,3 +1,6 @@
+# ignore Clowd.Squirrel exe
+Update.exe
+
 # ignore claudiaIDE
 .claudiaideconfig
 

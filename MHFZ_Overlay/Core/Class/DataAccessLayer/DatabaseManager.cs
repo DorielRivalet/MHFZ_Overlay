@@ -2392,12 +2392,17 @@ namespace MHFZ_Overlay
         /// <param name="ex">The ex.</param>
         private void HandleError(SQLiteTransaction? transaction, Exception ex)
         {
+            var serverVersion = "";
+
             // Roll back the transaction
             if (transaction != null)
+            {
+                serverVersion = transaction.Connection.ServerVersion;
                 transaction.Rollback();
+            }
 
             // Handle the exception and show an error message to the user
-            LoggingManager.WriteCrashLog(ex);
+            LoggingManager.WriteCrashLog(ex, $"SQLite error (version: {serverVersion})");
         }
 
         public void MakeDeserealizedQuestInfoDictionariesFromRunID(SQLiteConnection conn, DataLoader dataLoader, int runID)
@@ -9701,7 +9706,7 @@ Disabling Quest Logging.",
                                 App.CurrentProgramVersion), 
                                 MessageBoxButton.OK, 
                                 MessageBoxImage.Information);
-                            return;
+                            break;
                         case 0://v0.22.0 or older (TODO: does this work with older or just v0.22.0?)
                             // change pin type to mode 'pin' for keyboard handling changes
                             // removing types from previous schema
@@ -9744,12 +9749,6 @@ Disabling Quest Logging.",
                     // 11. Commit the transaction started in step 2.
                     transaction.Commit();
 
-                    MessageBox.Show("Updated database schema, you may proceed.",
-                    string.Format("MHF-Z Overlay Database Update ({0} to {1})",
-                    previousVersion,
-                    App.CurrentProgramVersion),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
@@ -10325,6 +10324,10 @@ Updating the database structure may take some time, it will transport all of you
                     logger.Fatal("Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
                     MessageBox.Show("Foreign keys violations detected, closing program.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
+                }
+                else
+                {
+                    logger.Info("No foreign keys violations found");
                 }
             }
             catch (Exception ex)
