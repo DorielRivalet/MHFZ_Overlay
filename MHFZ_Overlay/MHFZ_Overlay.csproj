@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <PlatformTarget>anycpu</PlatformTarget>
-	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PlatformTarget>x86</PlatformTarget>
+	<RuntimeIdentifier>win-x86</RuntimeIdentifier>
     <UseWindowsForms>True</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>mhfzoverlayicon256.ico</ApplicationIcon>
@@ -353,7 +353,7 @@
     <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.516" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
     <PackageReference Include="Memory.dll.x86" Version="1.2.24" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="7.0.0" />
@@ -365,7 +365,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Octokit" Version="5.1.0" />
+    <PackageReference Include="Octokit" Version="6.0.0" />
     <PackageReference Include="RESTCountries.NET" Version="3.0.1" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.4" />
