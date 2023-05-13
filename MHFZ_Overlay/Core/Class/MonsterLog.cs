@@ -1,7 +1,7 @@
 ﻿namespace MHFZ_Overlay
 {
     /// <summary>
-    /// affected by player stats
+    /// Affected by player stats
     /// </summary>
     public class MonsterLog
     {

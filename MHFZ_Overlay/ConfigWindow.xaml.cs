@@ -7,6 +7,9 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.WPF;
 using MHFZ_Overlay.Core.Class;
+using MHFZ_Overlay.Core.Class.IO;
+using MHFZ_Overlay.Core.Class.Log;
+using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Newtonsoft.Json;
 using NLog;
@@ -24,6 +27,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -53,7 +57,11 @@ namespace MHFZ_Overlay
         /// </value>
         private MainWindow MainWindow { get; }
 
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         private static string randomMonsterImage = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png";
+
+        private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
 
         public static Uri MonsterInfoLink
         {
@@ -487,18 +495,8 @@ namespace MHFZ_Overlay
         public ConfigWindow(MainWindow mainWindow)
         {
             InitializeComponent();
-            var config = new NLog.Config.LoggingConfiguration();
 
-            // Targets where to log to: File
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
-
-            // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
-
-            // Apply config           
-            NLog.LogManager.Configuration = config;
-
-            logger.Info($"PROGRAM OPERATION: ConfigWindow initialized");
+            logger.Info($"ConfigWindow initialized");
 
             Topmost = true;
             MainWindow = mainWindow;
@@ -562,7 +560,7 @@ namespace MHFZ_Overlay
 
             replaceAllMonsterInfoFeriasLinks();
 
-            weaponUsageData = DatabaseManager.GetInstance().CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
+            weaponUsageData = databaseManager.CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
         }
 
         private List<WeaponUsageMapper> weaponUsageData = new();
@@ -759,6 +757,7 @@ namespace MHFZ_Overlay
             Close();
         }
 
+        // TODO does this cover everything?
         private void DisposeAllWebViews()
         {
             webViewFerias.Dispose();
@@ -833,7 +832,7 @@ namespace MHFZ_Overlay
         private void DefaultButton_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show("Resetting settings, are you sure?", "MHFZ Overlay - Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-            if (result == MessageBoxResult.Yes) 
+            if (result == MessageBoxResult.Yes)
             {
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 DisposeAllWebViews();
@@ -927,26 +926,12 @@ namespace MHFZ_Overlay
         {
             string textToSave = GearStats.Text;
 
-
             if (GetTextFormatMode() == "Code Block")
                 textToSave = string.Format("```text\n{0}\n```", textToSave);
             else if (GetTextFormatMode() == "Markdown")
                 textToSave = MainWindow.DataLoader.model.MarkdownSavedGearStats;
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
-            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
-            string dateTime = DateTime.Now.ToString();
-            dateTime = dateTime.Replace("/", "-");
-            dateTime = dateTime.Replace(" ", "_");
-            dateTime = dateTime.Replace(":", "-");
-            saveFileDialog.FileName = "Set-" + dateTime;
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                File.WriteAllText(saveFileDialog.FileName, textToSave);
-                logger.Info("FILE OPERATION: saved {0}", saveFileDialog.FileName);
-            }
-
+            FileManager.SaveTextFile(textToSave, "GearStats");
         }
 
         /// <summary>
@@ -965,7 +950,7 @@ namespace MHFZ_Overlay
             else if (GetTextFormatMode() == "Image")
             {
                 GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-                CopyUIElementToClipboard(GearTextGrid);
+                FileManager.CopyUIElementToClipboard(GearTextGrid);
                 GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
                 return;
             }
@@ -976,86 +961,11 @@ namespace MHFZ_Overlay
 
         private void BtnImageFile_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog savefile = new SaveFileDialog();
-            string dateTime = DateTime.Now.ToString();
-            dateTime = dateTime.Replace("/", "-");
-            dateTime = dateTime.Replace(" ", "_");
-            dateTime = dateTime.Replace(":", "-");
-            savefile.FileName = "HunterSet-" + dateTime + ".png";
-            savefile.Filter = "PNG files (*.png)|*.png";
-            savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
-
-            if (savefile.ShowDialog() == true)
-            {
-                GearImageGrid.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
-                CreateBitmapFromVisual(GearImageGrid, savefile.FileName);
-                CopyUIElementToClipboard(GearImageGrid);
-                GearImageGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-                logger.Info("FILE OPERATION: saved {0}", savefile.FileName);
-            }
+            var fileName = "HunterSet";
+            FileManager.SaveElementAsImageFile(GearImageGrid, fileName);
         }
 
-        /// <summary>
-        /// Copies a UI element to the clipboard as an image.
-        /// </summary>
-        /// <param name="element">The element to copy.</param>
-        public static void CopyUIElementToClipboard(FrameworkElement element)
-        {
-            double width = element.ActualWidth;
-            double height = element.ActualHeight;
-            if (width <= 0 || height <= 0)
-            {
-                System.Windows.MessageBox.Show("Please load the gear stats by visiting the text tab in the configuration window", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                return;
-            }
-
-            RenderTargetBitmap bmpCopied = new RenderTargetBitmap((int)Math.Round(width), (int)Math.Round(height), 96, 96, PixelFormats.Default);
-            DrawingVisual dv = new DrawingVisual();
-            using (DrawingContext dc = dv.RenderOpen())
-            {
-                VisualBrush vb = new VisualBrush(element);
-                dc.DrawRectangle(vb, null, new Rect(new Point(), new Size(width, height)));
-            }
-            bmpCopied.Render(dv);
-            Clipboard.SetImage(bmpCopied);
-        }
-
-        public static void CreateBitmapFromVisual(Visual target, string fileName)
-        {
-            if (target == null || string.IsNullOrEmpty(fileName))
-            {
-                return;
-            }
-
-            Rect bounds = VisualTreeHelper.GetDescendantBounds(target);
-
-            if (bounds.Width <= 0 || bounds.Height <= 0)
-            {
-                System.Windows.MessageBox.Show("Please load the gear stats by visiting the text tab in the configuration window", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                return;
-            }
-
-            RenderTargetBitmap renderTarget = new RenderTargetBitmap((Int32)bounds.Width, (Int32)bounds.Height, 96, 96, PixelFormats.Pbgra32);
-
-            DrawingVisual visual = new DrawingVisual();
-
-            using (DrawingContext context = visual.RenderOpen())
-            {
-                VisualBrush visualBrush = new VisualBrush(target);
-                visualBrush.Stretch = Stretch.None;
-                context.DrawRectangle(visualBrush, null, new Rect(new Point(), bounds.Size));
-
-            }
-
-            renderTarget.Render(visual);
-            PngBitmapEncoder bitmapEncoder = new PngBitmapEncoder();
-            bitmapEncoder.Frames.Add(BitmapFrame.Create(renderTarget));
-            using (Stream stm = File.Create(fileName))
-            {
-                bitmapEncoder.Save(stm);
-                logger.Info("FILE OPERATION: created {0}", fileName);
-            }
-        }
+        
 
         private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1065,25 +975,7 @@ namespace MHFZ_Overlay
         // on generate csv button click
         protected void BtnLogFile_Click(object sender, EventArgs e)
         {
-            SaveFileDialog savefile = new SaveFileDialog();
-            string dateTime = DateTime.Now.ToString();
-            dateTime = dateTime.Replace("/", "-");
-            dateTime = dateTime.Replace(" ", "_");
-            dateTime = dateTime.Replace(":", "-");
-            savefile.FileName = "HuntedLog-" + dateTime + ".csv";
-            savefile.Filter = "CSV files (*.csv)|*.csv";
-            savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HuntedLogs\";
-
-            //https://stackoverflow.com/questions/11776781/savefiledialog-make-problems-with-streamwriter-in-c-sharp
-            if (savefile.ShowDialog() == true)
-            {
-                using (var writer = new StreamWriter(savefile.FileName))
-                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-                {
-                    csv.WriteRecords(Monsters);
-                }
-                logger.Info("FILE OPERATION: saved {0}", savefile.FileName);
-            }
+            FileManager.SaveClassRecordsAsCSVFile(Monsters);
         }
 
 
@@ -1098,21 +990,8 @@ namespace MHFZ_Overlay
 
         private void BtnGuildCardFile_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog savefile = new SaveFileDialog();
-            string dateTime = DateTime.Now.ToString();
-            dateTime = dateTime.Replace("/", "-");
-            dateTime = dateTime.Replace(" ", "_");
-            dateTime = dateTime.Replace(":", "-");
-            savefile.FileName = "GuildCard-" + dateTime + ".png";
-            savefile.Filter = "PNG files (*.png)|*.png";
-            savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
-
-            if (savefile.ShowDialog() == true)
-            {
-                CreateBitmapFromVisual(GuildCardGrid, savefile.FileName);
-                CopyUIElementToClipboard(GuildCardGrid);
-                logger.Info("FILE OPERATION: saved {0}", savefile.FileName);
-            }
+            var fileName = "GuildCard";
+            FileManager.SaveElementAsImageFile(GuildCardGrid, fileName);
         }
 
         private void ChangeMonsterInfo()
@@ -1222,6 +1101,7 @@ namespace MHFZ_Overlay
 
             var issuesForOctokit = await client.Issue.GetAllForRepository("DorielRivalet", "MHFZ_Overlay");
 
+            // TODO
             IssuesTextBlock.Text = (issuesForOctokit.Count - 2).ToString() + " Issue(s)";
 
             var watchers = await client.Activity.Watching.GetAllWatchers("DorielRivalet", "MHFZ_Overlay");
@@ -1286,70 +1166,10 @@ namespace MHFZ_Overlay
         // TODO: test
         private void ExportUserSettings_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.DataLoader.BackupSettings();
+            //MainWindow.DataLoader.BackupSettings();
 
-            // Show a Save File Dialog to let the user choose the location for the JSON file
-            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
-            saveFileDialog.FileName = "user_settings"; // Default file name
-            saveFileDialog.DefaultExt = ".json"; // Default file extension
-            saveFileDialog.Filter = "JSON files (.json)|*.json"; // Filter files by extension
-
-            // Show the Save File Dialog
-            Nullable<bool> result = saveFileDialog.ShowDialog();
-
-            // If the user clicked the Save button and selected a file
-            if (result == true)
-            {
-                // Get the user settings from the Settings class
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
-                // Create a dictionary to store the user settings
-                Dictionary<string, Setting> settings = new Dictionary<string, Setting>();
-
-                // Get a list of the user settings properties sorted alphabetically by name
-                List<System.Configuration.SettingsProperty> sortedSettings = s.Properties.Cast<System.Configuration.SettingsProperty>().OrderBy(setting => setting.Name).ToList();
-
-                // Loop through the user settings properties and add them to the dictionary
-                foreach (System.Configuration.SettingsProperty setting in sortedSettings)
-                {
-                    string settingName = setting.Name;
-                    string settingDefaultValue = setting.DefaultValue.ToString();
-                    string settingPropertyType = setting.PropertyType.ToString();
-                    string settingIsReadOnly = setting.IsReadOnly.ToString();
-                    string settingProvider = setting.Provider.ToString();
-                    string settingProviderApplicationName = setting.Provider.ApplicationName;
-                    string settingProviderDescription = setting.Provider.Description;
-                    string settingProviderName = setting.Provider.Name;
-                    string settingValue = s[settingName].ToString();
-
-                    // Create a new Setting object and set its properties
-                    Setting settingObject = new Setting
-                    {
-                        Value = settingValue,
-                        DefaultValue = settingDefaultValue,
-                        PropertyType = settingPropertyType,
-                        IsReadOnly = settingIsReadOnly,
-                        Provider = settingProvider,
-                        ProviderName = settingProviderName,
-                        ProviderApplicationName = settingProviderApplicationName,
-                        ProviderDescription = settingProviderDescription
-                    };
-
-                    // Add the key and Setting object to the dictionary
-                    settings.Add(settingName, settingObject);
-                }
-
-                // Serialize the dictionary to a JSON string
-                string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
-
-                // Save the JSON string to the selected file
-                File.WriteAllText(saveFileDialog.FileName, json);
-                logger.Info("FILE OPERATION: saved {0}", saveFileDialog.FileName);
-
-            }
+            //FileManager.SaveSettingsAsJSON();
         }
-
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
         {
@@ -1358,13 +1178,7 @@ namespace MHFZ_Overlay
 
             MainWindow.DataLoader.model.ValidateGameFolder();
 
-            if (MainWindow.DataLoader.databaseChanged)
-            {
-                Settings s = (Settings)Application.Current.TryFindResource("Settings");
-                MessageBox.Show("Please update the database structure", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-                logger.Warn("DATABASE OPERATION: Database structure needs update");
-                s.EnableQuestLogging = false;
-            }
+            databaseManager.CheckIfSchemaChanged(MainWindow.DataLoader);
         }
 
         private void CountryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1392,7 +1206,7 @@ namespace MHFZ_Overlay
             if (!string.IsNullOrEmpty(QuestIDTextBox.Text))
             {
                 SetDefaultInfoInQuestIDWeaponSection();
-                DatabaseManager.GetInstance().QuestIDButton_Click(sender, e, this);
+                databaseManager.QuestIDButton_Click(sender, e, this);
             }
         }
 
@@ -1510,66 +1324,14 @@ namespace MHFZ_Overlay
             MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
             MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
             MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
 
             if (comboBox.SelectedIndex == 0)
             {
-                weaponUsageData = DatabaseManager.GetInstance().CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
+                weaponUsageData = databaseManager.CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
             }
             else if (comboBox.SelectedIndex == 1)
             {
-                weaponUsageData = DatabaseManager.GetInstance().CalculateTotalWeaponUsage(this, MainWindow.DataLoader, true);
+                weaponUsageData = databaseManager.CalculateTotalWeaponUsage(this, MainWindow.DataLoader, true);
             }
             else
             {
@@ -1623,58 +1385,6 @@ namespace MHFZ_Overlay
                 MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
                 MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
                 MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageEarthStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageHeavenStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
-                MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
 
                 weaponUsageChart.SyncContext = MainWindow.DataLoader.model.weaponUsageSync;
 
@@ -1688,9 +1398,12 @@ namespace MHFZ_Overlay
         private ListView mostRecentRunsListView;
         private ListView top20RunsListView;
         private TextBlock questLogGearStatsTextBlock;
+        private TextBlock compendiumTextBlock;
         private CartesianChart graphChart;
         private TextBlock statsTextTextBlock;
         private CartesianChart personalBestChart;
+        private PolarChart hunterPerformanceChart;
+        private StackPanel compendiumInformationStackPanel;
         private string personalBestSelectedWeapon = "";
         private string personalBestSelectedType = "";
 
@@ -1699,10 +1412,10 @@ namespace MHFZ_Overlay
             // Get the quest ID and new YouTube link from the textboxes
             long runID = long.Parse(RunIDTextBox.Text.Trim());
             string youtubeLink = youtubeLinkTextBox.Text.Trim();
-            if (DatabaseManager.GetInstance().UpdateYoutubeLink(sender, e, runID, youtubeLink))
+            if (databaseManager.UpdateYoutubeLink(sender, e, runID, youtubeLink))
                 MessageBox.Show(String.Format("Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink), "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             else
-                MessageBox.Show(String.Format("Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(String.Format("Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void UpdateYoutubeLink_Loaded(object sender, RoutedEventArgs e)
@@ -1713,7 +1426,7 @@ namespace MHFZ_Overlay
         private void YoutubeIconButton_Click(object sender, RoutedEventArgs e)
         {
             long runID = long.Parse(RunIDTextBox.Text.Trim());
-            string youtubeLink = DatabaseManager.GetInstance().GetYoutubeLinkForRunID(runID);
+            string youtubeLink = databaseManager.GetYoutubeLinkForRunID(runID);
             if (youtubeLink != "")
             {
                 var sInfo = new System.Diagnostics.ProcessStartInfo(youtubeLink)
@@ -1724,7 +1437,7 @@ namespace MHFZ_Overlay
             }
             else
             {
-                MessageBox.Show("Run not found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Run not found", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1736,7 +1449,7 @@ namespace MHFZ_Overlay
         private void MostRecentRuns_ListViewLoaded(object sender, RoutedEventArgs e)
         {
             mostRecentRunsListView = (ListView)sender;
-            MainWindow.DataLoader.model.RecentRuns = DatabaseManager.GetInstance().GetRecentRuns();
+            MainWindow.DataLoader.model.RecentRuns = databaseManager.GetRecentRuns();
             mostRecentRunsListView.ItemsSource = MainWindow.DataLoader.model.RecentRuns;
             mostRecentRunsListView.DataContext = MainWindow.DataLoader.model.RecentRuns;
             mostRecentRunsListView.Items.Refresh();
@@ -1745,7 +1458,7 @@ namespace MHFZ_Overlay
         private void Top20Runs_ListViewLoaded(object sender, RoutedEventArgs e)
         {
             top20RunsListView = (ListView)sender;
-            MainWindow.DataLoader.model.FastestRuns = DatabaseManager.GetInstance().GetFastestRuns(this);
+            MainWindow.DataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this);
             top20RunsListView.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
             top20RunsListView.DataContext = MainWindow.DataLoader.model.FastestRuns;
             top20RunsListView.Items.Refresh();
@@ -1765,7 +1478,7 @@ namespace MHFZ_Overlay
             selectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ", "");
             if (selectedWeapon == "")
                 return;
-            MainWindow.DataLoader.model.FastestRuns = DatabaseManager.GetInstance().GetFastestRuns(this, selectedWeapon);
+            MainWindow.DataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this, selectedWeapon);
             top20RunsListView.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
             top20RunsListView.DataContext = MainWindow.DataLoader.model.FastestRuns;
             top20RunsListView.Items.Refresh();
@@ -1783,27 +1496,39 @@ namespace MHFZ_Overlay
         {
             string textToSave = questLogGearStatsTextBlock.Text;
             textToSave = string.Format("```text\n{0}\n```", textToSave);
-
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
-            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HunterSets\";
-            string dateTime = DateTime.Now.ToString();
-            dateTime = dateTime.Replace("/", "-");
-            dateTime = dateTime.Replace(" ", "_");
-            dateTime = dateTime.Replace(":", "-");
-            saveFileDialog.FileName = "Run-" + RunIDTextBox.Text.Trim() + "-Set-" + dateTime;
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                File.WriteAllText(saveFileDialog.FileName, textToSave);
-                logger.Info("FILE OPERATION: saved {0}", saveFileDialog.FileName);
-            }
+            var fileName = "Set";
+            var beginningFileName = "Run";
+            var beginningText = RunIDTextBox.Text.Trim();
+            FileManager.SaveTextFile(textToSave, fileName, beginningFileName, beginningText);
         }
 
         private void QuestLogGearBtnCopyFile_Click(object sender, RoutedEventArgs e)
         {
             questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-            CopyUIElementToClipboard(questLogGearStatsTextBlock);
+            FileManager.CopyUIElementToClipboard(questLogGearStatsTextBlock);
             questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+        }
+
+        private void Compendium_Loaded(object sender, RoutedEventArgs e)
+        {
+            var textBlock = sender as TextBlock;
+            textBlock.Text = MainWindow.DataLoader.model.GenerateCompendium(MainWindow.DataLoader);
+            compendiumTextBlock = textBlock;
+        }
+
+        private void CompendiumBtnSaveFile_Click(object sender, RoutedEventArgs e)
+        {
+            string textToSave = compendiumTextBlock.Text;
+            textToSave = string.Format("```text\n{0}\n```", textToSave);
+
+            FileManager.SaveTextFile(textToSave, "Compendium");
+        }
+
+        private void CompendiumBtnCopyFile_Click(object sender, RoutedEventArgs e)
+        {
+            compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+            FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
+            compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
         }
 
         private ISeries[] Series { get; set; }
@@ -2008,9 +1733,9 @@ namespace MHFZ_Overlay
             {
                 new Axis
                 {
-                    NameTextSize= 12,
-                    TextSize=12,
-                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NameTextSize = 12,
+                    TextSize = 12,
+                    NamePadding = new LiveChartsCore.Drawing.Padding(0),
                     NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                     LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                 }
@@ -2021,7 +1746,7 @@ namespace MHFZ_Overlay
             graphChart.YAxes = YAxes;
         }
 
-        private void SetLineSeriesForPersonalBestByAttempts(Dictionary<long,long> data)
+        private void SetStepLineSeriesForPersonalBestByAttempts(Dictionary<long, long> data)
         {
             List<ISeries> series = new();
             ObservableCollection<ObservablePoint> collection = new();
@@ -2031,12 +1756,11 @@ namespace MHFZ_Overlay
                 collection.Add(new ObservablePoint(entry.Key, entry.Value));
             }
 
-            series.Add(new LineSeries<ObservablePoint>
+            series.Add(new StepLineSeries<ObservablePoint>
             {
                 Values = collection,
                 TooltipLabelFormatter = (chartPoint) =>
                 $"Attempt {chartPoint.SecondaryValue}: {MainWindow.DataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
-                LineSmoothness = 0,
                 GeometrySize = 0,
                 Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
@@ -2046,7 +1770,8 @@ namespace MHFZ_Overlay
             {
                 new Axis
                 {
-                    TextSize=12,
+                    MinStep = 1,
+                    TextSize = 12,
                     //Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
                     NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                     LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
@@ -2057,9 +1782,11 @@ namespace MHFZ_Overlay
             {
                 new Axis
                 {
-                    NameTextSize= 12,
-                    TextSize=12,
-                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    MinLimit = 0,
+                    NameTextSize = 12,
+                    MinStep = 1,
+                    TextSize = 12,
+                    NamePadding = new LiveChartsCore.Drawing.Padding(0),
                     NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                     LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                 }
@@ -2070,7 +1797,7 @@ namespace MHFZ_Overlay
             personalBestChart.YAxes = PersonalBestYAxes;
         }
 
-        private void SetLineSeriesForPersonalBestByDate(Dictionary<DateTime, long> data)
+        private void SetStepLineSeriesForPersonalBestByDate(Dictionary<DateTime, long> data)
         {
             List<ISeries> series = new();
 
@@ -2096,10 +1823,9 @@ namespace MHFZ_Overlay
                 prevTime = time;
             }
 
-            series.Add(new LineSeries<DateTimePoint>
+            series.Add(new StepLineSeries<DateTimePoint>
             {
                 Values = collection,
-                LineSmoothness = 0,
                 GeometrySize = 0,
                 Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
@@ -2136,9 +1862,11 @@ namespace MHFZ_Overlay
             {
                 new Axis
                 {
-                    NameTextSize= 12,
-                    TextSize=12,
-                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    MinLimit = 0,
+                    MinStep = 1,
+                    NameTextSize = 12,
+                    TextSize = 12,
+                    NamePadding = new LiveChartsCore.Drawing.Padding(0),
                     NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                     LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                 }
@@ -2224,6 +1952,8 @@ namespace MHFZ_Overlay
                 Values = healthCollection,
                 LineSmoothness = .5,
                 GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) =>
+                $"Health: {((long)chartPoint.PrimaryValue)}",
                 Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ffa6e3a1"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ffa6e3a1", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#ffa6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
             });
@@ -2233,8 +1963,225 @@ namespace MHFZ_Overlay
                 Values = staminaCollection,
                 LineSmoothness = .5,
                 GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) =>
+                $"Stamina: {((long)chartPoint.PrimaryValue)}",
                 Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff9e2af"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff9e2af", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    TextSize=12,
+                    Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    NameTextSize= 12,
+                    TextSize=12,
+                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            graphChart.Series = series;
+            graphChart.XAxes = XAxes;
+            graphChart.YAxes = YAxes;
+        }
+
+        public void SetMonsterAttackMultiplier(Dictionary<int, double> attack)
+        {
+            List<ISeries> series = new();
+            ObservableCollection<ObservablePoint> attackCollection = new();
+
+            Dictionary<int, double> newAttack = GetElapsedTimeForDictionaryIntDouble(attack);
+
+            foreach (var entry in newAttack)
+            {
+                attackCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new StepLineSeries<ObservablePoint>
+            {
+                Values = attackCollection,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#f38ba8"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#f38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#f38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    TextSize=12,
+                    Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    NameTextSize= 12,
+                    TextSize=12,
+                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            graphChart.Series = series;
+            graphChart.XAxes = XAxes;
+            graphChart.YAxes = YAxes;
+        }
+
+        public void SetMonsterDefenseRate(Dictionary<int, double> defense)
+        {
+            List<ISeries> series = new();
+            ObservableCollection<ObservablePoint> defenseCollection = new();
+
+            Dictionary<int, double> newDefense = GetElapsedTimeForDictionaryIntDouble(defense);
+
+            foreach (var entry in newDefense)
+            {
+                defenseCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new StepLineSeries<ObservablePoint>
+            {
+                Values = defenseCollection,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#74c7ec"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#74c7ec", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#74c7ec", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    TextSize=12,
+                    Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    NameTextSize= 12,
+                    TextSize=12,
+                    NamePadding= new LiveChartsCore.Drawing.Padding(0),
+                    NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+                }
+            };
+
+            graphChart.Series = series;
+            graphChart.XAxes = XAxes;
+            graphChart.YAxes = YAxes;
+        }
+
+        private void SetMonsterStatusAilmentsThresholds(Dictionary<int, int> poison, Dictionary<int, int> sleep, Dictionary<int, int> para, Dictionary<int, int> blast, Dictionary<int, int> stun)
+        {
+            List<ISeries> series = new();
+            ObservableCollection<ObservablePoint> poisonCollection = new();
+            ObservableCollection<ObservablePoint> sleepCollection = new();
+            ObservableCollection<ObservablePoint> paraCollection = new();
+            ObservableCollection<ObservablePoint> blastCollection = new();
+            ObservableCollection<ObservablePoint> stunCollection = new();
+
+            Dictionary<int, int> newPoison = GetElapsedTime(poison);
+            Dictionary<int, int> newSleep = GetElapsedTime(sleep);
+            Dictionary<int, int> newPara = GetElapsedTime(para);
+            Dictionary<int, int> newBlast = GetElapsedTime(blast);
+            Dictionary<int, int> newStun = GetElapsedTime(stun);
+
+            foreach (var entry in newPoison)
+            {
+                poisonCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            foreach (var entry in newSleep)
+            {
+                sleepCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            foreach (var entry in newPara)
+            {
+                paraCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            foreach (var entry in newBlast)
+            {
+                blastCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            foreach (var entry in newStun)
+            {
+                stunCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = poisonCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) =>
+                $"Poison: {((long)chartPoint.PrimaryValue)}",
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#cba6f7"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#cba6f7", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#cba6f7", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = sleepCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) => $"Sleep: {((long)chartPoint.PrimaryValue)}",
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#74c7ec"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#74c7ec", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#74c7ec", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = paraCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) => $"Paralysis: {((long)chartPoint.PrimaryValue)}",
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#f9e2af"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#f9e2af", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#f9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = blastCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) => $"Blast: {((long)chartPoint.PrimaryValue)}",
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6e3a1"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6e3a1", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = stunCollection,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                TooltipLabelFormatter = (chartPoint) => $"Stun: {((long)chartPoint.PrimaryValue)}",
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#7f849c"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#7f849c", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#7f849c", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
             });
 
             XAxes = new Axis[]
@@ -2300,8 +2247,8 @@ namespace MHFZ_Overlay
 
         private Dictionary<string, int> GetMostCommonInputs(long runID)
         {
-            var keystrokesDictionary = DatabaseManager.GetInstance().GetKeystrokesDictionary(runID);
-            var mouseInputDictionary = DatabaseManager.GetInstance().GetMouseInputDictionary(runID);
+            var keystrokesDictionary = databaseManager.GetKeystrokesDictionary(runID);
+            var mouseInputDictionary = databaseManager.GetMouseInputDictionary(runID);
             var combinedDictionary = keystrokesDictionary.Concat(mouseInputDictionary)
                 .GroupBy(kvp => kvp.Value)
                 .ToDictionary(g => g.Key, g => g.Count());
@@ -2338,6 +2285,40 @@ namespace MHFZ_Overlay
                 // get the value of the inner dictionary
                 int hp = entry.Value.Values.First();
                 dictionary.Add(time, hp);
+                i++;
+            }
+
+            return dictionary;
+        }
+
+        private Dictionary<int, double> CalculateMonsterMultiplier(Dictionary<int, Dictionary<int, double>> monsterDictionary)
+        {
+            Dictionary<int, double> dictionary = new Dictionary<int, double>();
+
+            int i = 1;
+            foreach (var entry in monsterDictionary)
+            {
+                int time = int.Parse(entry.Key.ToString());
+                // get the value of the inner dictionary
+                double mult = entry.Value.Values.First();
+                dictionary.Add(time, mult);
+                i++;
+            }
+
+            return dictionary;
+        }
+
+        private Dictionary<int, int> CalculateMonsterStatusAilmentThresholds(Dictionary<int, Dictionary<int, int>> monsterDictionary)
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            int i = 1;
+            foreach (var entry in monsterDictionary)
+            {
+                int time = int.Parse(entry.Key.ToString());
+                // get the value of the inner dictionary
+                int threshold = entry.Value.Values.First();
+                dictionary.Add(time, threshold);
                 i++;
             }
 
@@ -2441,6 +2422,104 @@ namespace MHFZ_Overlay
             graphChart.YAxes = YAxes;
         }
 
+        private string GetHunterPerformanceValueType(double value)
+        {
+            switch (value)
+            {
+                case 0:
+                    return "True Raw";
+                case 1:
+                    return "DPH";
+                case 2:
+                    return "DPS";
+                case 3:
+                    return "Hits/s";
+                case 4:
+                    return "Blocked Hits/s";
+                case 5:
+                    return "APM";
+                default:
+                    return "None";
+            }
+        }
+
+        private void SetPolarLineSeriesForHunterPerformance(PerformanceCompendium performanceCompendium)
+        {
+            List<ISeries> series = new();
+            ObservableCollection<double> performanceCollection = new();
+
+            performanceCollection.Add(performanceCompendium.TrueRawMedian / performanceCompendium.HighestTrueRaw);
+            performanceCollection.Add(performanceCompendium.SingleHitDamageMedian / performanceCompendium.HighestSingleHitDamage);
+            performanceCollection.Add(performanceCompendium.DPSMedian / performanceCompendium.HighestDPS);
+            performanceCollection.Add(performanceCompendium.HitsPerSecondMedian / performanceCompendium.HighestHitsPerSecond);
+            performanceCollection.Add(performanceCompendium.HitsTakenBlockedPerSecondMedian / performanceCompendium.HighestHitsTakenBlockedPerSecond);
+            performanceCollection.Add(performanceCompendium.ActionsPerMinuteMedian / performanceCompendium.HighestActionsPerMinute);
+
+            series.Add(new PolarLineSeries<double>
+            {
+                Values = performanceCollection,
+                LineSmoothness = 0,
+                GeometrySize = 0,
+                IsClosed = true,
+                GeometryFill = null,
+                GeometryStroke = null,
+                TooltipLabelFormatter = value => string.Format("{0}: {1:0.##}%", GetHunterPerformanceValueType(value.SecondaryValue), value.PrimaryValue * 100),
+                //DataLabelsFormatter = value => TimeSpan.FromSeconds(value.PrimaryValue / 30.0).ToString(@"hh\:mm\:ss"),
+                Stroke = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            });
+
+            //XAxes = new Axis[]
+            //{
+            //    new Axis
+            //    {
+            //        TextSize=12,
+            //        Labeler = (value) => MainWindow.DataLoader.model.GetTimeElapsed(value),
+            //        NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+            //        LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+            //    }
+            //};
+
+            //YAxes = new Axis[]
+            //{
+            //    new Axis
+            //    {
+            //        NameTextSize= 12,
+            //        TextSize=12,
+            //        NamePadding= new LiveChartsCore.Drawing.Padding(0),
+            //        NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+            //        LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
+            //    }
+            //};
+
+            PolarAxis[] RadiusAxes = new PolarAxis[]
+            {
+                new PolarAxis
+                {
+                    // formats the value as a number with 2 decimals.
+                    Labeler = value => string.Format("{0:0}%", value * 100),
+                    LabelsBackground = new LiveChartsCore.Drawing.LvcColor(0x1e,0x1e,0x2e,0xa8),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#cdd6f4a8")))
+                }
+            };
+
+            PolarAxis[] AngleAxes = new PolarAxis[]
+            {
+                new PolarAxis
+                {
+                    Labels = new[] { "TRaw", "DPH", "DPS", "Hits/s", "Blocks/s", "APM" },
+                    LabelsBackground = new LiveChartsCore.Drawing.LvcColor(0x1e,0x1e,0x2e,0xa8),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#cdd6f4a8"))),
+                    MinStep = 1,
+                    ForceStepToMin = true
+                }
+            };
+
+            hunterPerformanceChart.AngleAxes = AngleAxes;
+            hunterPerformanceChart.RadiusAxes = RadiusAxes;
+            hunterPerformanceChart.Series = series;
+        }
+
         private void GraphsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
@@ -2480,100 +2559,121 @@ namespace MHFZ_Overlay
             switch (selectedOption)
             {
                 case "(General) Most Quest Completions":
-                    SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostQuestCompletions());
+                    SetColumnSeriesForDictionaryIntInt(databaseManager.GetMostQuestCompletions());
                     break;
                 case "(General) Quest Durations":
-                    CreateQuestDurationStackedChart(DatabaseManager.GetInstance().GetTotalTimeSpentInQuests());
+                    CreateQuestDurationStackedChart(databaseManager.GetTotalTimeSpentInQuests());
                     break;
                 case "(General) Most Common Objective Types":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonObjectiveTypes());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonObjectiveTypes());
                     break;
                 case "(General) Most Common Star Grades":
-                    SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostCommonStarGrades());
+                    SetColumnSeriesForDictionaryIntInt(databaseManager.GetMostCommonStarGrades());
                     break;
                 case "(General) Most Common Rank Bands":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonRankBands());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonRankBands());
                     break;
                 case "(General) Most Common Objective":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonObjectives());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonObjectives());
                     break;
                 case "(General) Quests Completed by Date":
-                    SetColumnSeriesForDictionaryDateInt(DatabaseManager.GetInstance().GetQuestsCompletedByDate());
+                    SetColumnSeriesForDictionaryDateInt(databaseManager.GetQuestsCompletedByDate());
                     break;
                 case "(General) Most Common Party Size":
-                    SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetMostCommonPartySize());
+                    SetColumnSeriesForDictionaryIntInt(databaseManager.GetMostCommonPartySize());
                     break;
                 case "(General) Most Common Set Name":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonSetNames());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonSetNames());
                     break;
                 case "(General) Most Common Weapon Name":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonWeaponNames());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonWeaponNames());
                     break;
                 case "(General) Most Common Head Piece":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonHeadPieces());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonHeadPieces());
                     break;
                 case "(General) Most Common Chest Piece":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonChestPieces());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonChestPieces());
                     break;
                 case "(General) Most Common Arms Piece":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonArmsPieces());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonArmsPieces());
                     break;
                 case "(General) Most Common Waist Piece":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonWaistPieces());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonWaistPieces());
                     break;
                 case "(General) Most Common Legs Piece":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonLegsPieces());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonLegsPieces());
                     break;
                 case "(General) Most Common Diva Skill":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonDivaSkill());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonDivaSkill());
                     break;
                 case "(General) Most Common Guild Food":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonGuildFood());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonGuildFood());
                     break;
                 case "(General) Most Common Style Rank Skills":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonStyleRankSkills());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonStyleRankSkills());
                     break;
                 case "(General) Most Common Caravan Skills":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonCaravanSkills());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonCaravanSkills());
                     break;
                 case "(General) Most Common Category":
-                    SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetInstance().GetMostCommonCategory());
+                    SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonCategory());
                     break;
                 case "(Run ID) Attack Buff":
-                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetAttackBuffDictionary(runID));
+                    SetLineSeriesForDictionaryIntInt(databaseManager.GetAttackBuffDictionary(runID));
                     return;
                 case "(Run ID) Hit Count":
-                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetHitCountDictionary(runID));
+                    SetLineSeriesForDictionaryIntInt(databaseManager.GetHitCountDictionary(runID));
                     return;
                 case "(Run ID) Hits per Second":
-                    SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetHitsPerSecondDictionary(runID));
+                    SetLineSeriesForDictionaryIntDouble(databaseManager.GetHitsPerSecondDictionary(runID));
                     return;
                 case "(Run ID) Damage Dealt":
-                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetDamageDealtDictionary(runID));
+                    SetLineSeriesForDictionaryIntInt(databaseManager.GetDamageDealtDictionary(runID));
                     return;
                 case "(Run ID) Damage per Second":
-                    SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetDamagePerSecondDictionary(runID));
+                    SetLineSeriesForDictionaryIntDouble(databaseManager.GetDamagePerSecondDictionary(runID));
                     return;
                 case "(Run ID) Carts":
-                    SetLineSeriesForDictionaryIntInt(DatabaseManager.GetInstance().GetCartsDictionary(runID));
-                    return;
-                case "(Run ID) Monster HP":
-                    SetMonsterHP(CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster1HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster2HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster3HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetInstance().GetMonster4HPDictionary(runID)));
+                    SetLineSeriesForDictionaryIntInt(databaseManager.GetCartsDictionary(runID));
                     return;
                 case "(Run ID) Hits Taken/Blocked":
-                    SetHitsTakenBlocked(DatabaseManager.GetInstance().GetHitsTakenBlockedDictionary(runID));
+                    SetHitsTakenBlocked(databaseManager.GetHitsTakenBlockedDictionary(runID));
                     return;
                 case "(Run ID) Hits Taken/Blocked per Second":
-                    SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetHitsTakenBlockedPerSecondDictionary(runID));
+                    SetLineSeriesForDictionaryIntDouble(databaseManager.GetHitsTakenBlockedPerSecondDictionary(runID));
                     return;
                 case "(Run ID) Player Health and Stamina":
-                    SetPlayerHealthStamina(DatabaseManager.GetInstance().GetPlayerHPDictionary(runID), DatabaseManager.GetInstance().GetPlayerStaminaDictionary(runID));
+                    SetPlayerHealthStamina(databaseManager.GetPlayerHPDictionary(runID), databaseManager.GetPlayerStaminaDictionary(runID));
                     return;
                 case "(Run ID) Most Common Player Input":
                     SetColumnSeriesForDictionaryStringInt(GetMostCommonInputs(runID));
                     break;
                 case "(Run ID) Actions per Minute":
-                    SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetInstance().GetActionsPerMinuteDictionary(runID));
+                    SetLineSeriesForDictionaryIntDouble(databaseManager.GetActionsPerMinuteDictionary(runID));
+                    return;
+                case "(Run ID) Monster HP":
+                    SetMonsterHP(CalculateMonsterHP(databaseManager.GetMonster1HPDictionary(runID)), CalculateMonsterHP(databaseManager.GetMonster2HPDictionary(runID)), CalculateMonsterHP(databaseManager.GetMonster3HPDictionary(runID)), CalculateMonsterHP(databaseManager.GetMonster4HPDictionary(runID)));
+                    return;
+                case "(Run ID) Monster Attack Multiplier":
+                    SetMonsterAttackMultiplier(CalculateMonsterMultiplier(databaseManager.GetMonster1AttackMultiplierDictionary(runID)));
+                    return;
+                case "(Run ID) Monster Defense Rate":
+                    SetMonsterDefenseRate(CalculateMonsterMultiplier(databaseManager.GetMonster1DefenseRateDictionary(runID)));
+                    return;
+                case "(Run ID) Monster Status Ailments Thresholds":
+                    SetMonsterStatusAilmentsThresholds(
+                        CalculateMonsterStatusAilmentThresholds(
+                            databaseManager.GetMonster1PoisonThresholdDictionary(runID)),
+                        CalculateMonsterStatusAilmentThresholds(
+                            databaseManager.GetMonster1SleepThresholdDictionary(runID)),
+                        CalculateMonsterStatusAilmentThresholds(
+                            databaseManager.GetMonster1ParalysisThresholdDictionary(runID)),
+                        CalculateMonsterStatusAilmentThresholds(
+                            databaseManager.GetMonster1BlastThresholdDictionary(runID)),
+                        CalculateMonsterStatusAilmentThresholds(
+                            databaseManager.GetMonster1StunThresholdDictionary(runID)
+                            )
+                        );
                     return;
             }
 
@@ -2710,16 +2810,16 @@ namespace MHFZ_Overlay
             switch (selectedOption)
             {
                 case "Inventory":
-                    statsTextTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPlayerInventoryDictionary(runID));
+                    statsTextTextBlock.Text = FormatInventory(databaseManager.GetPlayerInventoryDictionary(runID));
                     break;
                 case "Ammo":
-                    statsTextTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetAmmoDictionary(runID));
+                    statsTextTextBlock.Text = FormatInventory(databaseManager.GetAmmoDictionary(runID));
                     break;
                 case "Partnya Bag":
-                    statsTextTextBlock.Text = FormatInventory(DatabaseManager.GetInstance().GetPartnyaBagDictionary(runID));
+                    statsTextTextBlock.Text = FormatInventory(databaseManager.GetPartnyaBagDictionary(runID));
                     break;
                 case "Area Changes":
-                    statsTextTextBlock.Text = DisplayAreaChanges(DatabaseManager.GetInstance().GetAreaChangesDictionary(runID));
+                    statsTextTextBlock.Text = DisplayAreaChanges(databaseManager.GetAreaChangesDictionary(runID));
                     break;
             }
         }
@@ -2745,7 +2845,7 @@ namespace MHFZ_Overlay
                 switch (selectedOption)
                 {
                     default:
-                        logger.Warn("PROGRAM OPERATION: Could not find preset name for settings");
+                        logger.Warn("Could not find preset name for settings");
                         return;
                     case "None":
                         return;
@@ -2818,6 +2918,41 @@ namespace MHFZ_Overlay
 
                         s.Monster1IconShown = true;
                         break;
+
+                    case "HP Only":
+                        s.EnableDamageNumbers = false;
+                        s.EnableSharpness = false;
+                        s.PartThresholdShown = false;
+                        s.HitCountShown = false;
+                        s.PlayerAtkShown = false;
+                        s.MonsterAtkMultShown = false;
+                        s.MonsterDefrateShown = false;
+                        s.MonsterSizeShown = false;
+                        s.MonsterPoisonShown = false;
+                        s.MonsterParaShown = false;
+                        s.MonsterSleepShown = false;
+                        s.MonsterBlastShown = false;
+                        s.MonsterStunShown = false;
+                        s.DamagePerSecondShown = false;
+                        s.TotalHitsTakenBlockedShown = false;
+                        s.PlayerAPMGraphShown = false;
+                        s.PlayerAttackGraphShown = false;
+                        s.PlayerDPSGraphShown = false;
+                        s.PlayerHitsPerSecondGraphShown = false;
+                        s.TimerInfoShown = false;
+                        s.EnableMap = false;
+                        s.ActionsPerMinuteShown = false;
+                        s.PersonalBestShown = false;
+
+                        s.OverlayModeWatermarkShown = false;
+
+                        s.Monster1IconShown = false;
+
+                        s.Monster1HealthBarShown = true;
+                        s.Monster2HealthBarShown = true;
+                        s.Monster3HealthBarShown = true;
+                        s.Monster4HealthBarShown = true;
+                        break;
                 }
             }
         }
@@ -2888,10 +3023,10 @@ namespace MHFZ_Overlay
             switch (personalBestSelectedType)
             {
                 case "(Quest ID) Personal Best by Date":
-                    SetLineSeriesForPersonalBestByDate(DatabaseManager.GetInstance().GetPersonalBestsByDate(questID, weaponTypeID, OverlayModeComboBox.Text));
+                    SetStepLineSeriesForPersonalBestByDate(databaseManager.GetPersonalBestsByDate(questID, weaponTypeID, OverlayModeComboBox.Text));
                     break;
                 case "(Quest ID) Personal Best by Attempts":
-                    SetLineSeriesForPersonalBestByAttempts(DatabaseManager.GetInstance().GetPersonalBestsByAttempts(questID, weaponTypeID, OverlayModeComboBox.Text));
+                    SetStepLineSeriesForPersonalBestByAttempts(databaseManager.GetPersonalBestsByAttempts(questID, weaponTypeID, OverlayModeComboBox.Text));
                     break;
                 default:
                     personalBestChart.Series = PersonalBestSeries;
@@ -2899,6 +3034,19 @@ namespace MHFZ_Overlay
                     personalBestChart.YAxes = PersonalBestYAxes;
                     break;
             }
+        }
+
+        private void HunterPerformancePolarChart_Loaded(object sender, RoutedEventArgs e)
+        {
+            var chart = sender as PolarChart;
+            hunterPerformanceChart = chart;
+            SetPolarLineSeriesForHunterPerformance(databaseManager.GetPerformanceCompendium());
+        }
+
+        private void CompendiumInformationStackPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            var stackPanel = sender as StackPanel;
+            compendiumInformationStackPanel = stackPanel;
         }
     }
     /* LoadConfig on startup

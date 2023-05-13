@@ -10,9 +10,11 @@
         d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
         x:Name="Window"
-        Title="MHF-Z Overlay"         Height="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"
-        Width="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" Background="Transparent" AllowsTransparency="True" WindowStyle="None" FontFamily="{StaticResource Source Code Pro Bold}"
+        Title="MHF-Z Overlay"         
+        Height="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"
+        Width="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" Background="Transparent" AllowsTransparency="True" WindowStyle="None"
         Style="{StaticResource WinAll}"
+        FontFamily="{StaticResource Source Code Pro Bold}"
         >
     <Window.Resources>
         <local:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
@@ -20,7 +22,7 @@
     </Window.Resources>
     
     <Canvas x:Name="MainGrid" Width="3840 " Height="2160" Background="Transparent" AllowDrop="True" Drop="MainGrid_Drop" DragOver="MainGrid_DragOver"  MouseMove="MainGrid_MouseMove">
-        <Grid x:Name="ConfigGrid" Canvas.Top="0" Canvas.Left="0">
+        <Grid x:Name="ConfigGrid" Canvas.Top="0" Canvas.Left="0" >
             <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -39,9 +41,9 @@
             </Grid.RowDefinitions>
             <Border x:Name="SharpnessInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <local:OutlinedTextBlock HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.SharpnessNumber}" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding SharpnessColor}"/>
+            <local:OutlinedTextBlock HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.SharpnessNumber}" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding SharpnessColor}"/>
         </Grid>
-        <Grid x:Name="SessionTimeInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=SessionTimeX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=SessionTimeY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowSessionTimeInfo, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="SessionTimeInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=SessionTimeX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=SessionTimeY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowSessionTimeInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
@@ -53,9 +55,9 @@
             <Border x:Name="SessionTimeInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
-            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Session" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Session" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
             <!--TODO: x:Bind-->
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="sessionTimeTextBlock" Text="{Binding CurrentSessionTime, StringFormat=hh\\:mm\\:ss}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="sessionTimeTextBlock" Text="{Binding CurrentSessionTime, StringFormat=hh\\:mm\\:ss}" Margin="4,0,0,0"/>
         </Grid>
         <Grid x:Name="OverlayModeWatermark" Canvas.Left="{Binding Source={StaticResource Settings},Path=OverlayModeWatermarkX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=OverlayModeWatermarkY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayModeWatermark, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
@@ -66,9 +68,9 @@
             </Grid.RowDefinitions>
             <Border x:Name="OverlayModeWatermarkBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <local:OutlinedTextBlock x:Name="OverlayModeWatermarkTextBlock" Opacity=".5" HorizontalAlignment="Left" Text="{Binding OverlayModeWatermarkText}" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+            <local:OutlinedTextBlock x:Name="OverlayModeWatermarkTextBlock" Opacity=".5" HorizontalAlignment="Left" Text="{Binding OverlayModeWatermarkText}" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" Grid.Column="0" Grid.Row="0" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
         </Grid>
-        <Grid x:Name="PersonalBestInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PersonalBestX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PersonalBestY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPersonalBestInfo, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="PersonalBestInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PersonalBestX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PersonalBestY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPersonalBestInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
@@ -77,13 +79,13 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Border x:Name="PersonalBestInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
-            <Image Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding PersonalBestIcon}"/>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding PersonalBestIcon}"/>
 
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
-            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="PB" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isOnBestPace}" x:Name="personalBestTextBlock" Text="--:--.--" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="PB" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+            <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isOnBestPace}" x:Name="personalBestTextBlock" Text="--:--.--" Margin="4,0,0,0"/>
         </Grid>
-        <Grid x:Name="TimerInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=TimerX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=TimerY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowTimerInfo, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="TimerInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=TimerX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=TimerY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowTimerInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
@@ -95,10 +97,10 @@
             <Border x:Name="TimerInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
-            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="{Binding QuestTimeMode}" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isOnPace}" x:Name="timeRemainingTextBox" Text="{x:Bind DataLoader.model.Time}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="{Binding QuestTimeMode}" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+            <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isOnPace}" x:Name="timerTextBlock" Text="{x:Bind DataLoader.model.Time}" Margin="4,0,0,0"/>
         </Grid>
-        <Grid x:Name="ActionsPerMinuteInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowAPM, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="ActionsPerMinuteInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowAPM, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
@@ -108,13 +110,13 @@
             </Grid.RowDefinitions>
             <Border x:Name="ActionsPerMinuteInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <Image Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding APMIcon}"/>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding APMIcon}"/>
 
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
-            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="APM" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isAverageAPM}" Text="{x:Bind $'{DataLoader.model.APM:0.0}'}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="APM" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isAverageAPM}" Text="{x:Bind $'{DataLoader.model.APM:0.0}'}" Margin="4,0,0,0"/>
         </Grid>
-        <Grid x:Name="DamagePerSecondInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerDPSX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerDPSY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowDamagePerSecond, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="DamagePerSecondInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerDPSX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerDPSY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowDamagePerSecond, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
@@ -122,14 +124,14 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Image Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding DPSIcon}"/>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding DPSIcon}"/>
             <Border x:Name="DamagePerSecondInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
-            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="DPS" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isHighestDPS}" Text="{x:Bind $'{DataLoader.model.DPS:0.0}'}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="DPS" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isHighestDPS}" Text="{x:Bind $'{DataLoader.model.DPS:0.0}'}" Margin="4,0,0,0"/>
         </Grid>
-        <Grid x:Name="HitCountInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=HitCountX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=HitCountY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowHitCountInfo, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="HitCountInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=HitCountX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=HitCountY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowHitCountInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
@@ -137,13 +139,13 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Image Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding HitCountIcon}"/>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding HitCountIcon}"/>
             <Border x:Name="HitCountInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Hit Count" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isAverageHitsPerSecond}" x:Name="hitCountTextBow" Text="{x:Bind DataLoader.model.HitCount}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Hit Count" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isAverageHitsPerSecond}" x:Name="hitCountTextBow" Text="{x:Bind DataLoader.model.HitCount}" Margin="4,0,0,0"/>
         </Grid>
-        <Grid x:Name="PlayerAtkInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerAtkX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerAtkY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPlayerAtkInfo, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="PlayerAtkInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerAtkX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerAtkY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPlayerAtkInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
@@ -151,13 +153,13 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Image Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding PlayerAttackIcon}"/>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding PlayerAttackIcon}"/>
             <Border x:Name="PlayerAtkInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Player Atk." Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isHighestAtk}" x:Name="playerAtkTextBox" Text="{x:Bind DataLoader.model.ATK}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Player Atk." Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isHighestAtk}" x:Name="playerAtkTextBox" Text="{x:Bind DataLoader.model.ATK}" Margin="4,0,0,0"/>
         </Grid>
-        <Grid x:Name="PlayerHitsTakenBlockedInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=TotalHitsTakenBlockedX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=TotalHitsTakenBlockedY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPlayerHitsTakenBlockedInfo, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="PlayerHitsTakenBlockedInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=TotalHitsTakenBlockedX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=TotalHitsTakenBlockedY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPlayerHitsTakenBlockedInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
@@ -165,13 +167,13 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Image Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding PlayerHitsTakenBlockedIcon}"/>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding PlayerHitsTakenBlockedIcon}"/>
             <Border x:Name="PlayerHitsTakenBlockedInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Hits Taken" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isPlayerHit}" x:Name="playerNotHitTextBox" Text="{x:Bind DataLoader.model.TotalHitsTakenBlockedStats}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Hits Taken" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
+            <local:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isPlayerHit}" x:Name="playerNotHitTextBox" Text="{x:Bind DataLoader.model.TotalHitsTakenBlockedStats}" Margin="4,0,0,0"/>
         </Grid>
-        <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="MonsterPartThreshold" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster1PartX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster1PartY}" Width="800" Height="80" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+        <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="MonsterPartThreshold" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster1PartX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster1PartY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterPartHP, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="1*" />
@@ -186,16 +188,16 @@
             </Grid.RowDefinitions>
             <Border x:Name="MonsterPartThresholdBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Grid.RowSpan="10" BorderThickness="0"/>
 
-            <local:OutlinedTextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part1Number}" Grid.Column="0" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part2Number}" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part3Number}" Grid.Column="2" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part4Number}" Grid.Column="3" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part5Number}" Grid.Column="4" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part6Number}" Grid.Column="0" Grid.Row="1" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part7Number}" Grid.Column="1" Grid.Row="1" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part8Number}" Grid.Column="2" Grid.Row="1" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part9Number}" Grid.Column="3" Grid.Row="1" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part10Number}" Grid.Column="4" Grid.Row="1" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part1Number}" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part2Number}" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part3Number}" Grid.Column="2" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part4Number}" Grid.Column="3" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part5Number}" Grid.Column="4" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part6Number}" Grid.Column="0" Grid.Row="1"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part7Number}" Grid.Column="1" Grid.Row="1"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part8Number}" Grid.Column="2" Grid.Row="1"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part9Number}" Grid.Column="3" Grid.Row="1"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
+            <local:OutlinedTextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part10Number}" Grid.Column="4" Grid.Row="1"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="KBMLayoutGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=KBMLayoutX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=KBMLayoutY}" Width="150" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowKBMLayout, Converter={StaticResource BoolToVis}}">
@@ -295,7 +297,6 @@
                                Row1Width="4" 
                                Row2Width="3" />
         </Grid>
-
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster2HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster2HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster2HealthBarY}" Width="500" Height="40" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonster2HPBar, Converter={StaticResource BoolToVis}}">
             <Grid.RowDefinitions>
@@ -314,7 +315,6 @@
                                    Row1Width="4" 
                                    Row2Width="3"/>
         </Grid>
-
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster3HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster3HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster3HealthBarY}" Width="500" Height="40" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonster3HPBar, Converter={StaticResource BoolToVis}}">
             <Grid.RowDefinitions>
@@ -333,7 +333,6 @@
                                   Row1Width="4" 
                                   Row2Width="3" />
         </Grid>
-
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster4HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster4HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster4HealthBarY}" Width="500" Height="40" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonster4HPBar, Converter={StaticResource BoolToVis}}">
             <Grid.RowDefinitions>
@@ -352,8 +351,7 @@
                                    Row1Width="4" 
                                    Row2Width="3" />
         </Grid>
-
-        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterAtkMultInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}" Width="250" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterAtkMultInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterAtkMult, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="1*" />
@@ -364,11 +362,11 @@
             </Grid.RowDefinitions>
             <Border x:Name="MonsterAtkMultInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <Image Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding MonsterAttackMultiplierIcon}"/>
-            <local:OutlinedTextBlock  Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Atk. Mult." Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{x:Bind DataLoader.model.AtkMult}" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isHighestMonsterAttackMultiplier}" x:Name="atkMultTextBox"/>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding MonsterAttackMultiplierIcon}"/>
+            <local:OutlinedTextBlock  Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Atk. Mult." Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{x:Bind DataLoader.model.AtkMult}" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isHighestMonsterAttackMultiplier}" x:Name="atkMultTextBox" Margin="4,0,0,0"/>
         </Grid>
-        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterDefrateInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterDefrateX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterDefrateY}" Width="250" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterDefrateInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterDefrateX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterDefrateY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterDefrate, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="1*" />
@@ -377,13 +375,13 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Image Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding MonsterDefrateIcon}"/>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding MonsterDefrateIcon}"/>
             <Border x:Name="MonsterDefrateInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <local:OutlinedTextBlock  Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Defrate" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{x:Bind DataLoader.model.DefMult}" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isLowestMonsterDefrate}" x:Name="defMultTextBox"/>
+            <local:OutlinedTextBlock  Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Defrate" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{x:Bind DataLoader.model.DefMult}" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding isLowestMonsterDefrate}" x:Name="defMultTextBox" Margin="4,0,0,0"/>
         </Grid>
-        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterSizeInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterSizeX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterSizeY}" Width="250" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+        <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterSizeInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterSizeX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterSizeY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterSize, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="1*" />
@@ -392,11 +390,11 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Image Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="UI/Icons/png/study.png"/>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="UI/Icons/png/study.png"/>
             <Border x:Name="MonsterSizeInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Size" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{x:Bind DataLoader.model.Size}" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="sizeTextBox"/>
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Size" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
+            <local:OutlinedTextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Text="{x:Bind DataLoader.model.Size}" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" x:Name="sizeTextBox" Margin="4,0,0,0"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterPoisonInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterPoisonX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterPoisonY}" Width="300" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonsterPoison, Converter={StaticResource BoolToVis}}">
@@ -566,7 +564,7 @@
 
             <Image Source="{Binding CurrentMap}" Grid.Column="0" Grid.Row="0"/>
         </Grid>
-        <Grid x:Name="QuestIDGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=QuestIDX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=QuestIDY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowQuestID, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="QuestIDGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=QuestIDX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=QuestIDY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowQuestID, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
@@ -574,14 +572,14 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Image Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="UI/Icons/png/quest_host.png"/>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="UI/Icons/png/quest_host.png"/>
             <Border x:Name="QuestIDGridBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
-            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Quest ID" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
-            <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" Text="{x:Bind DataLoader.model.QuestIDBind}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Quest ID" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}"/>
+            <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" Text="{x:Bind DataLoader.model.QuestIDBind}" Margin="4,0,0,0"/>
         </Grid>
-        <Grid x:Name="QuestAttemptsInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=QuestAttemptsX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=QuestAttemptsY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowQuestAttemptsInfo, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="QuestAttemptsInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=QuestAttemptsX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=QuestAttemptsY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowQuestAttemptsInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
@@ -589,14 +587,14 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Image Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="UI/Icons/png/ticket.png"/>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="UI/Icons/png/ticket.png"/>
             <Border x:Name="QuestAttemptsInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
-            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Attempts" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
-            <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="questAttemptsTextBlock" Text="0" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="Attempts" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+            <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="questAttemptsTextBlock" Text="0" Margin="4,0,0,0"/>
         </Grid>
-        <Grid x:Name="PersonalBestTimePercentInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPersonalBestTimePercentInfo, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="PersonalBestAttemptsInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPersonalBestAttemptsInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
@@ -604,12 +602,27 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Button Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/flag-checkered-solid.xaml'}"/>
+            <Image Height="30" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="UI/Icons/png/quest_1.png"/>
+            <Border x:Name="PersonalBestAttemptsInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
+
+            <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="PB Attempts" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+            <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="personalBestAttemptsTextBlock" Text="0" Margin="4,0,0,0"/>
+        </Grid>
+        <Grid x:Name="PersonalBestTimePercentInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowPersonalBestTimePercentInfo, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="2*" />
+                <ColumnDefinition  Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Button Height="30" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatIcon, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/flag-checkered-solid.xaml'}"/>
             <Border x:Name="PersonalBestTimePercentInfoBorder" BorderBrush="#ff0000" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
             <!--<TextBlock Foreground="#cdd6f4"  FontFamily="Source Code Pro" IsHitTestVisible="False" Style="{StaticResource MainTextBox}" Grid.Column="0" Grid.Row="0" Text="Hit Count"/>-->
-            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="PB%" Grid.Column="0" Grid.Row="0" FontFamily="MS Gothic" FontSize="21" FontWeight="Bold" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
-            <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Source Code Pro Bold}" FontSize="16" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="personalBestTimePercentTextblock" Text="{Binding PersonalBestTimePercent}" Margin="4,0,0,0"/>
+            <local:OutlinedTextBlock Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowOverlayStatText, Converter={StaticResource BoolToVis}}"  HorizontalAlignment="Left" Text="PB%" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" />
+            <local:OutlinedTextBlock HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="personalBestTimePercentTextblock" Text="{Binding PersonalBestTimePercent}" Margin="4,0,0,0"/>
         </Grid>
         <Grid x:Name="QuestNameInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=QuestNameX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=QuestNameY}" Width="650" Height="80" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowQuestNameInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >

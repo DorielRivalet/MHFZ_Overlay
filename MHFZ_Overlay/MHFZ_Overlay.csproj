@@ -7,6 +7,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <PlatformTarget>x86</PlatformTarget>
+	<RuntimeIdentifier>win-x86</RuntimeIdentifier>
     <UseWindowsForms>True</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>mhfzoverlayicon256.ico</ApplicationIcon>
@@ -15,6 +16,20 @@
 	<CodeAnalysisRuleSet>..\.sonarlint\dorielrivalet_mhfz_overlaycsharp.ruleset</CodeAnalysisRuleSet>
     <!-- Project is not a test project -->
     <SonarQubeTestProject>false</SonarQubeTestProject>
+	<DebugType>pdbonly</DebugType>
+	<AssemblyTitle>MHFZ_Overlay</AssemblyTitle>
+	<AssemblyName>MHFZ_Overlay</AssemblyName>
+	<Title>mhfz-overlay</Title>
+	<Copyright>Doriel Rivalet</Copyright>
+	<Authors>Doriel Rivalet</Authors>
+	<Version>0.22.0</Version>
+	<PackageProjectUrl>https://github.com/DorielRivalet/mhfz-overlay</PackageProjectUrl>
+	<RepositoryUrl></RepositoryUrl>
+	<PackageTags>monster-hunter</PackageTags>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	<PackageIcon>mhfzoverlay128.png</PackageIcon>
+	<Description>A simple, customizable overlay with Discord Rich Presence integration for Monster Hunter Frontier Z on Windows</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -22,6 +37,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="NLog.config" />
     <None Remove="UI\Background\1.png" />
     <None Remove="UI\Background\2.png" />
     <None Remove="UI\Background\3.png" />
@@ -85,6 +101,7 @@
     <None Remove="UI\Icons\gif\scroll_rainbow.gif" />
     <None Remove="UI\Icons\guild_food.png" />
     <None Remove="UI\Icons\helm.png" />
+    <None Remove="UI\Icons\ico\mhfzoverlayicon256.ico" />
     <None Remove="UI\Icons\knife.png" />
     <None Remove="UI\Icons\loading.png" />
     <None Remove="UI\Icons\monster.png" />
@@ -177,6 +194,7 @@
     <None Remove="UI\Icons\png\small_saf.png" />
     <None Remove="UI\Icons\png\small_sns.png" />
     <None Remove="UI\Icons\png\small_tonfa.png" />
+    <None Remove="UI\Icons\png\whetstone.png" />
     <None Remove="UI\Icons\png\world.png" />
     <None Remove="UI\Icons\poison.png" />
     <None Remove="UI\Icons\quest_host.png" />
@@ -192,6 +210,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="UI\Icons\123_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\Antenna_Icon_White.xaml" />
     <Page Remove="UI\Icons\Armor_Sphere_Icon_White.xaml" />
     <Page Remove="UI\Icons\badge.xaml" />
@@ -239,6 +258,7 @@
     <Page Remove="UI\Icons\issues.xaml" />
     <Page Remove="UI\Icons\Jelly_Icon_White.xaml" />
     <Page Remove="UI\Icons\Jewel_Icon_White.xaml" />
+    <Page Remove="UI\Icons\keyboard_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\leaderboard_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\Leg_Carve_Icon_White.xaml" />
     <Page Remove="UI\Icons\manage_history_FILL0_wght400_GRAD0_opsz48.xaml" />
@@ -263,6 +283,7 @@
     <Page Remove="UI\Icons\Settings.xaml" />
     <Page Remove="UI\Icons\Shell_Icon_White.xaml" />
     <Page Remove="UI\Icons\Spiderweb_Icon_White.xaml" />
+    <Page Remove="UI\Icons\sports_esports_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\stacked_bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Page Remove="UI\Icons\Star.xaml" />
     <Page Remove="UI\Icons\Steak_Icon_White.xaml" />
@@ -282,7 +303,18 @@
 
   <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dorielrivalet_mhfz_overlay\CSharp\SonarLint.xml" Link="SonarLint.xml" />
-    <Content Include="mhfzoverlayicon256.ico" />
+    <Content Include="mhfzoverlay128.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="mhfzoverlayicon256.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="UI\Icons\ico\mhfzoverlayicon256.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="UI\Background\9.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -299,17 +331,19 @@
     <Resource Include="UI\Fonts\OpenSans-Regular.ttf" />
     <Resource Include="UI\Fonts\OpenSans-SemiBold.ttf" />
     <Resource Include="UI\Fonts\OpenSans-SemiBoldItalic.ttf" />
+    <Resource Include="UI\Icons\123_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\database_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\flag-checkered-solid.xaml" />
     <Resource Include="UI\Icons\gif\scroll_rainbow.gif" />
+    <Resource Include="UI\Icons\keyboard_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\leaderboard_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\manage_history_FILL0_wght400_GRAD0_opsz48.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="CompiledBindings.WPF" Version="1.0.15" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="Discord.Net" Version="3.10.0" />
@@ -319,21 +353,26 @@
     <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.516" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
     <PackageReference Include="Memory.dll.x86" Version="1.2.24" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1722.45" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1774.30" />
     <PackageReference Include="MouseKeyHook" Version="5.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NLog" Version="5.1.3" />
-    <PackageReference Include="Octokit" Version="5.0.4" />
+    <PackageReference Include="NLog" Version="5.1.4" />
+    <PackageReference Include="NuGet.CommandLine" Version="6.5.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Octokit" Version="6.0.0" />
     <PackageReference Include="RESTCountries.NET" Version="3.0.1" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.4" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
+    <PackageReference Include="XamlAnimatedGif" Version="2.1.1" />
     <PackageReference Include="XInput.Wrapper" Version="0.3.1" />
     <PackageReference Include="xunit" Version="2.4.2" />
   </ItemGroup>
@@ -582,6 +621,7 @@
     <Resource Include="UI\Icons\png\small_tonfa.png" />
     <Resource Include="UI\Icons\png\study.png" />
     <Resource Include="UI\Icons\png\stun.png" />
+    <Resource Include="UI\Icons\png\whetstone.png" />
     <Resource Include="UI\Icons\png\world.png" />
     <Resource Include="UI\Icons\query_stats_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\Sac_Icon_White.xaml" />
@@ -591,6 +631,7 @@
     <Resource Include="UI\Icons\search_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\Shell_Icon_White.xaml" />
     <Resource Include="UI\Icons\Spiderweb_Icon_White.xaml" />
+    <Resource Include="UI\Icons\sports_esports_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\stacked_bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
     <Resource Include="UI\Icons\Steak_Icon_White.xaml" />
     <Resource Include="UI\Icons\Sturdy_Shell_Icon_White.xaml" />
@@ -676,9 +717,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="mhfzoverlay128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Update="Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Update.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

@@ -481,7 +481,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public double TimerX {
             get {
                 return ((double)(this["TimerX"]));
@@ -517,7 +517,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public double HitCountX {
             get {
                 return ((double)(this["HitCountX"]));
@@ -553,7 +553,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public double PlayerAtkX {
             get {
                 return ((double)(this["PlayerAtkX"]));
@@ -601,7 +601,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1060")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1140")]
         public double MonsterAtkMultX {
             get {
                 return ((double)(this["MonsterAtkMultX"]));
@@ -637,7 +637,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1060")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1140")]
         public double MonsterDefrateX {
             get {
                 return ((double)(this["MonsterDefrateX"]));
@@ -673,7 +673,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1060")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1140")]
         public double MonsterSizeX {
             get {
                 return ((double)(this["MonsterSizeX"]));
@@ -1645,7 +1645,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public double PlayerDPSX {
             get {
                 return ((double)(this["PlayerDPSX"]));
@@ -1873,7 +1873,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public double TotalHitsTakenBlockedX {
             get {
                 return ((double)(this["TotalHitsTakenBlockedX"]));
@@ -2017,7 +2017,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public double ActionsPerMinuteX {
             get {
                 return ((double)(this["ActionsPerMinuteX"]));
@@ -2317,7 +2317,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        [global::System.Configuration.DefaultSettingValueAttribute("380")]
         public double QuestIDX {
             get {
                 return ((double)(this["QuestIDX"]));
@@ -2689,7 +2689,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-80")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public double PersonalBestX {
             get {
                 return ((double)(this["PersonalBestX"]));
@@ -2737,7 +2737,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-70")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public double SessionTimeX {
             get {
                 return ((double)(this["SessionTimeX"]));
@@ -2785,7 +2785,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        [global::System.Configuration.DefaultSettingValueAttribute("380")]
         public double QuestAttemptsX {
             get {
                 return ((double)(this["QuestAttemptsX"]));
@@ -2917,7 +2917,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        [global::System.Configuration.DefaultSettingValueAttribute("380")]
         public double PersonalBestTimePercentX {
             get {
                 return ((double)(this["PersonalBestTimePercentX"]));
@@ -2936,6 +2936,174 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["PersonalBestTimePercentY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MS Gothic")]
+        public string PrimaryFontFamily {
+            get {
+                return ((string)(this["PrimaryFontFamily"]));
+            }
+            set {
+                this["PrimaryFontFamily"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("21")]
+        public string PrimaryFontSize {
+            get {
+                return ((string)(this["PrimaryFontSize"]));
+            }
+            set {
+                this["PrimaryFontSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bold")]
+        public string PrimaryFontWeight {
+            get {
+                return ((string)(this["PrimaryFontWeight"]));
+            }
+            set {
+                this["PrimaryFontWeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Source Code Pro")]
+        public string SecondaryFontFamily {
+            get {
+                return ((string)(this["SecondaryFontFamily"]));
+            }
+            set {
+                this["SecondaryFontFamily"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
+        public string SecondaryFontSize {
+            get {
+                return ((string)(this["SecondaryFontSize"]));
+            }
+            set {
+                this["SecondaryFontSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bold")]
+        public string SecondaryFontWeight {
+            get {
+                return ((string)(this["SecondaryFontWeight"]));
+            }
+            set {
+                this["SecondaryFontWeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MS Gothic")]
+        public string DamageNumbersFontFamily {
+            get {
+                return ((string)(this["DamageNumbersFontFamily"]));
+            }
+            set {
+                this["DamageNumbersFontFamily"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bold")]
+        public string DamageNumbersFontWeight {
+            get {
+                return ((string)(this["DamageNumbersFontWeight"]));
+            }
+            set {
+                this["DamageNumbersFontWeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableOutsideMezeportaLoadingWarning {
+            get {
+                return ((bool)(this["EnableOutsideMezeportaLoadingWarning"]));
+            }
+            set {
+                this["EnableOutsideMezeportaLoadingWarning"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int RefreshRate {
+            get {
+                return ((int)(this["RefreshRate"]));
+            }
+            set {
+                this["RefreshRate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PersonalBestAttemptsShown {
+            get {
+                return ((bool)(this["PersonalBestAttemptsShown"]));
+            }
+            set {
+                this["PersonalBestAttemptsShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("380")]
+        public double PersonalBestAttemptsX {
+            get {
+                return ((double)(this["PersonalBestAttemptsX"]));
+            }
+            set {
+                this["PersonalBestAttemptsX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("170")]
+        public double PersonalBestAttemptsY {
+            get {
+                return ((double)(this["PersonalBestAttemptsY"]));
+            }
+            set {
+                this["PersonalBestAttemptsY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableNationality {
+            get {
+                return ((bool)(this["EnableNationality"]));
+            }
+            set {
+                this["EnableNationality"] = value;
             }
         }
     }

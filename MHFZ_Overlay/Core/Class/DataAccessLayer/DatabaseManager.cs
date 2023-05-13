@@ -1,57 +1,71 @@
 ﻿using Dictionary;
-using FluentMigrator.Runner;
+using MHFZ_Overlay.Core.Class.Application;
+using MHFZ_Overlay.Core.Class.IO;
+using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
+using NLog.Targets;
 using Octokit;
+using SharpCompress.Common;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using Formatting = Newtonsoft.Json.Formatting;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
 {
-    // Singleton
+    /// <summary>
+    /// Handles the SQLite database, MHFZ_Overlay.sqlite. A singleton.
+    /// </summary>
     internal class DatabaseManager
     {
         private string _connectionString;
 
         private static DatabaseManager instance;
+
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        private const string BackupFolderName = "backups";
 
         private DatabaseManager()
         {
-            var config = new NLog.Config.LoggingConfiguration();
-
-            // Targets where to log to: File
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
-
-            // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
-
-            // Apply config           
-            NLog.LogManager.Configuration = config;
-
-            logger.Info($"PROGRAM OPERATION: DatabaseManager initialized");
+            logger.Info($"DatabaseManager initialized");
         }
 
         private string _customDatabasePath;
         private string dataSource;
+
+        public void CheckIfSchemaChanged(DataLoader mainWindowDataLoader)
+        {
+            if (mainWindowDataLoader.databaseChanged)
+            {
+                Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+                MessageBox.Show("Please update the database structure", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
+                logger.Warn("Database structure needs update");
+                s.EnableQuestLogging = false;
+            }
+        }
 
         //TODO test
         public void CheckIfUserSetDatabasePath()
@@ -64,7 +78,7 @@ namespace MHFZ_Overlay
 
                 // Show warning to user that they should set a custom database path to prevent data loss on update
                 MessageBox.Show("Warning: The database is currently stored in the default location and will be deleted on update. Please select a custom database location to prevent data loss.", "MHFZ-Overlay Data Loss Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                logger.Warn("DATABASE OPERATION: The database file is being saved to the overlay default location");
+                logger.Warn("The database file is being saved to the overlay default location");
                 // Use default database path
                 _customDatabasePath = _connectionString;
             }
@@ -75,7 +89,7 @@ namespace MHFZ_Overlay
 
             if (!File.Exists(_customDatabasePath))
             {
-                logger.Info("DATABASE OPERATION: {0} not found, creating file", _customDatabasePath);
+                logger.Info("{0} not found, creating file", _customDatabasePath);
                 SQLiteConnection.CreateFile(_customDatabasePath);
             }
 
@@ -86,15 +100,18 @@ namespace MHFZ_Overlay
         {
             if (instance == null)
             {
+                logger.Info("Singleton not found, creating instance.");
                 instance = new DatabaseManager();
             }
-
+            logger.Info("Singleton found, returning instance.");
+            logger.Trace(new StackTrace().ToString());
             return instance;
         }
 
         #region program time
 
         // Calculate the total time spent using the program
+        // TODO: add transaction. check if others also need transaction.
         public TimeSpan CalculateTotalTimeSpent()
         {
             TimeSpan totalTimeSpent = TimeSpan.Zero;
@@ -149,14 +166,17 @@ namespace MHFZ_Overlay
                 }
                 catch (SQLiteException ex)
                 {
-                    MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    logger.Error(ex, "DATABASE OPERATION: Invalid database file");
-                    Environment.Exit(0);
+                    MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    logger.Error(ex, "Invalid database file");
+                    ApplicationManager.HandleShutdown();
                 }
 
                 using (var conn = new SQLiteConnection(dataSource))
                 {
                     conn.Open();
+
+                    // Toggle comment this for testing the error handling
+                    //ThrowException(conn);
 
                     CreateDatabaseTables(conn, dataLoader);
                     CreateDatabaseIndexes(conn);
@@ -168,29 +188,33 @@ namespace MHFZ_Overlay
                 {
                     conn.Open();
 
+                    var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
+
+                    var doesReferenceSchemaFileExist = FileManager.CheckIfFileExists(referenceSchemaFilePath, "Checking reference schema");
                     // Check if the reference schema file exists
-                    if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json")))
+                    if (!doesReferenceSchemaFileExist)
                     {
-                        logger.Info("FILE OPERATION: {0} not found, creating file", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
+                        logger.Info("Creating reference schema");
                         CreateReferenceSchemaJSONFromLocalDatabaseFile(conn);
                     }
                     else
                     {
                         // Load the reference schema file
-                        var referenceSchemaJson = File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
+                        var referenceSchemaJson = File.ReadAllText(referenceSchemaFilePath);
                         var referenceSchema = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, object>>>(referenceSchemaJson);
 
                         // Create a dictionary to store the current schema
                         var currentSchema = CreateReferenceSchemaJSONFromLocalDatabaseFile(conn, false);
-                        logger.Info("FILE OPERATION: {0} found, comparing file", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
+                        logger.Info("Found existing reference schema, comparing schemas", referenceSchemaFilePath);
                         CompareDatabaseSchemas(referenceSchema, currentSchema);
                     }
                 }
 
                 if (schemaChanged)
                 {
-                    MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    logger.Warn("DATABASE OPERATION: Invalid database schema");
+                    MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    logger.Fatal("Outdated database schema");
+                    ApplicationManager.HandleShutdown();
                 }
             }
 
@@ -331,10 +355,6 @@ namespace MHFZ_Overlay
                         DamagePerSecondDictionary,
                         AreaChangesDictionary,
                         CartsDictionary,
-                        Monster1HPDictionary,
-                        Monster2HPDictionary,
-                        Monster3HPDictionary,
-                        Monster4HPDictionary,
                         HitsTakenBlockedDictionary,
                         HitsTakenBlockedPerSecondDictionary,
                         PlayerHPDictionary,
@@ -345,7 +365,21 @@ namespace MHFZ_Overlay
                         ActionsPerMinuteDictionary,
                         OverlayModeDictionary,
                         ActualOverlayMode,
-                        PartySize
+                        PartySize,
+                        Monster1HPDictionary,
+                        Monster2HPDictionary,
+                        Monster3HPDictionary,
+                        Monster4HPDictionary,
+                        Monster1AttackMultiplierDictionary,
+                        Monster1DefenseRateDictionary,
+                        Monster1SizeMultiplierDictionary,
+                        Monster1PoisonThresholdDictionary,
+                        Monster1SleepThresholdDictionary,
+                        Monster1ParalysisThresholdDictionary,
+                        Monster1BlastThresholdDictionary,
+                        Monster1StunThresholdDictionary,
+                        IsHighGradeEdition,
+                        RefreshRate
                         ) VALUES (
                         @QuestHash,
                         @CreatedAt,
@@ -369,10 +403,6 @@ namespace MHFZ_Overlay
                         @DamagePerSecondDictionary,
                         @AreaChangesDictionary,
                         @CartsDictionary,
-                        @Monster1HPDictionary,
-                        @Monster2HPDictionary,
-                        @Monster3HPDictionary,
-                        @Monster4HPDictionary,
                         @HitsTakenBlockedDictionary,
                         @HitsTakenBlockedPerSecondDictionary,
                         @PlayerHPDictionary,
@@ -383,7 +413,21 @@ namespace MHFZ_Overlay
                         @ActionsPerMinuteDictionary,
                         @OverlayModeDictionary,
                         @ActualOverlayMode,
-                        @PartySize
+                        @PartySize,
+                        @Monster1HPDictionary,
+                        @Monster2HPDictionary,
+                        @Monster3HPDictionary,
+                        @Monster4HPDictionary,
+                        @Monster1AttackMultiplierDictionary,
+                        @Monster1DefenseRateDictionary,
+                        @Monster1SizeMultiplierDictionary,
+                        @Monster1PoisonThresholdDictionary,
+                        @Monster1SleepThresholdDictionary,
+                        @Monster1ParalysisThresholdDictionary,
+                        @Monster1BlastThresholdDictionary,
+                        @Monster1StunThresholdDictionary,
+                        @IsHighGradeEdition,
+                        @RefreshRate
                         )";
 
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -398,18 +442,18 @@ namespace MHFZ_Overlay
                             //Gathering/etc
                             if ((dataLoader.model.ObjectiveType() == 0x0 || dataLoader.model.ObjectiveType() == 0x02 || dataLoader.model.ObjectiveType() == 0x1002) && (dataLoader.model.QuestID() != 23527 && dataLoader.model.QuestID() != 23628 && dataLoader.model.QuestID() != 21731 && dataLoader.model.QuestID() != 21749 && dataLoader.model.QuestID() != 21746 && dataLoader.model.QuestID() != 21750))
                             {
-                                objectiveImage = MainWindow.GetAreaIconFromID(dataLoader.model.AreaID());
+                                objectiveImage = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
                             }
                             //Tenrou Sky Corridor areas
                             else if (dataLoader.model.AreaID() == 391 || dataLoader.model.AreaID() == 392 || dataLoader.model.AreaID() == 394 || dataLoader.model.AreaID() == 415 || dataLoader.model.AreaID() == 416)
                             {
-                                objectiveImage = MainWindow.GetAreaIconFromID(dataLoader.model.AreaID());
+                                objectiveImage = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
 
                             }
                             //Duremudira Doors
                             else if (dataLoader.model.AreaID() == 399 || dataLoader.model.AreaID() == 414)
                             {
-                                objectiveImage = MainWindow.GetAreaIconFromID(dataLoader.model.AreaID());
+                                objectiveImage = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
                             }
                             //Duremudira Arena
                             else if (dataLoader.model.AreaID() == 398)
@@ -419,7 +463,7 @@ namespace MHFZ_Overlay
                             //Hunter's Road Base Camp
                             else if (dataLoader.model.AreaID() == 459)
                             {
-                                objectiveImage = MainWindow.GetAreaIconFromID(dataLoader.model.AreaID());
+                                objectiveImage = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
                             }
                             //Raviente
                             else if (dataLoader.model.AreaID() == 309 || (dataLoader.model.AreaID() >= 311 && dataLoader.model.AreaID() <= 321) || (dataLoader.model.AreaID() >= 417 && dataLoader.model.AreaID() <= 422) || dataLoader.model.AreaID() == 437 || (dataLoader.model.AreaID() >= 440 && dataLoader.model.AreaID() <= 444))
@@ -461,10 +505,6 @@ namespace MHFZ_Overlay
                             Dictionary<int, int> areaChangesDictionary = dataLoader.model.areaChangesDictionary;
                             Dictionary<int, int> cartsDictionary = dataLoader.model.cartsDictionary;
                             // time <monsterid, monsterhp>
-                            Dictionary<int, Dictionary<int, int>> monster1HPDictionary = dataLoader.model.monster1HPDictionary;
-                            Dictionary<int, Dictionary<int, int>> monster2HPDictionary = dataLoader.model.monster2HPDictionary;
-                            Dictionary<int, Dictionary<int, int>> monster3HPDictionary = dataLoader.model.monster3HPDictionary;
-                            Dictionary<int, Dictionary<int, int>> monster4HPDictionary = dataLoader.model.monster4HPDictionary;
                             Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = dataLoader.model.hitsTakenBlockedDictionary;
                             Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = dataLoader.model.hitsTakenBlockedPerSecondDictionary;
                             Dictionary<int, int> playerHPDictionary = dataLoader.model.playerHPDictionary;
@@ -495,16 +535,35 @@ namespace MHFZ_Overlay
 
                             int partySize = dataLoader.model.PartySize();
 
+                            Dictionary<int, Dictionary<int, int>> monster1HPDictionary = dataLoader.model.monster1HPDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster2HPDictionary = dataLoader.model.monster2HPDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster3HPDictionary = dataLoader.model.monster3HPDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster4HPDictionary = dataLoader.model.monster4HPDictionary;
+
+                            Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionary = dataLoader.model.monster1AttackMultiplierDictionary;
+                            Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionary = dataLoader.model.monster1DefenseRateDictionary;
+                            Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionary = dataLoader.model.monster1SizeMultiplierDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionary = dataLoader.model.monster1PoisonThresholdDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionary = dataLoader.model.monster1SleepThresholdDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = dataLoader.model.monster1ParalysisThresholdDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = dataLoader.model.monster1BlastThresholdDictionary;
+                            Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = dataLoader.model.monster1StunThresholdDictionary;
+
+                            int isHighGradeEdition = dataLoader.isHighGradeEdition ? 1 : 0;
+                            int refreshRate = s.RefreshRate;
+
                             string questData = string.Format(
-                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}",
+                                "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}",
                                 runID, createdAt, createdBy, questID, timeLeft,
                                 finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
                                 starGrade, rankName, objectiveName, date, attackBuffDictionary,
                                 hitCountDictionary, hitsPerSecondDictionary, damageDealtDictionary, damagePerSecondDictionary, areaChangesDictionary,
-                                cartsDictionary, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary, monster4HPDictionary,
-                                hitsTakenBlockedDictionary, hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary, keystrokesDictionary,
-                                mouseInputDictionary, gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary, actualOverlayMode,
-                                partySize
+                                cartsDictionary, hitsTakenBlockedDictionary, hitsTakenBlockedPerSecondDictionary, playerHPDictionary, playerStaminaDictionary,
+                                keystrokesDictionary, mouseInputDictionary, gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary,
+                                actualOverlayMode, partySize, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary,
+                                monster4HPDictionary, monster1AttackMultiplierDictionary, monster1DefenseRateDictionary, monster1SizeMultiplierDictionary, monster1PoisonThresholdDictionary,
+                                monster1SleepThresholdDictionary, monster1ParalysisThresholdDictionary, monster1BlastThresholdDictionary, monster1StunThresholdDictionary, isHighGradeEdition,
+                                refreshRate
                                 );
 
                             // Calculate the hash value for the data in the row
@@ -532,10 +591,6 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@DamagePerSecondDictionary", JsonConvert.SerializeObject(damagePerSecondDictionary));
                             cmd.Parameters.AddWithValue("@AreaChangesDictionary", JsonConvert.SerializeObject(areaChangesDictionary));
                             cmd.Parameters.AddWithValue("@CartsDictionary", JsonConvert.SerializeObject(cartsDictionary));
-                            cmd.Parameters.AddWithValue("@Monster1HPDictionary", JsonConvert.SerializeObject(monster1HPDictionary));
-                            cmd.Parameters.AddWithValue("@Monster2HPDictionary", JsonConvert.SerializeObject(monster2HPDictionary));
-                            cmd.Parameters.AddWithValue("@Monster3HPDictionary", JsonConvert.SerializeObject(monster3HPDictionary));
-                            cmd.Parameters.AddWithValue("@Monster4HPDictionary", JsonConvert.SerializeObject(monster4HPDictionary));
                             cmd.Parameters.AddWithValue("@HitsTakenBlockedDictionary", JsonConvert.SerializeObject(hitsTakenBlockedDictionary));
                             cmd.Parameters.AddWithValue("@HitsTakenBlockedPerSecondDictionary", JsonConvert.SerializeObject(hitsTakenBlockedPerSecondDictionary));
                             cmd.Parameters.AddWithValue("@PlayerHPDictionary", JsonConvert.SerializeObject(playerHPDictionary));
@@ -547,6 +602,20 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@OverlayModeDictionary", JsonConvert.SerializeObject(overlayModeDictionary));
                             cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
                             cmd.Parameters.AddWithValue("@PartySize", partySize);
+                            cmd.Parameters.AddWithValue("@Monster1HPDictionary", JsonConvert.SerializeObject(monster1HPDictionary));
+                            cmd.Parameters.AddWithValue("@Monster2HPDictionary", JsonConvert.SerializeObject(monster2HPDictionary));
+                            cmd.Parameters.AddWithValue("@Monster3HPDictionary", JsonConvert.SerializeObject(monster3HPDictionary));
+                            cmd.Parameters.AddWithValue("@Monster4HPDictionary", JsonConvert.SerializeObject(monster4HPDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1AttackMultiplierDictionary", JsonConvert.SerializeObject(monster1AttackMultiplierDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1DefenseRateDictionary", JsonConvert.SerializeObject(monster1DefenseRateDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1SizeMultiplierDictionary", JsonConvert.SerializeObject(monster1SizeMultiplierDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1PoisonThresholdDictionary", JsonConvert.SerializeObject(monster1PoisonThresholdDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1SleepThresholdDictionary", JsonConvert.SerializeObject(monster1SleepThresholdDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1ParalysisThresholdDictionary", JsonConvert.SerializeObject(monster1ParalysisThresholdDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1BlastThresholdDictionary", JsonConvert.SerializeObject(monster1BlastThresholdDictionary));
+                            cmd.Parameters.AddWithValue("@Monster1StunThresholdDictionary", JsonConvert.SerializeObject(monster1StunThresholdDictionary));
+                            cmd.Parameters.AddWithValue("@IsHighGradeEdition", isHighGradeEdition);
+                            cmd.Parameters.AddWithValue("@RefreshRate", refreshRate);
 
                             cmd.ExecuteNonQuery();
                         }
@@ -557,56 +626,80 @@ namespace MHFZ_Overlay
                             runID = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
-                        long personalBest = 0;
-
-                        using (SQLiteCommand cmd = new SQLiteCommand(
-                        @"SELECT 
-                            TimeLeft, 
-                            FinalTimeValue,
-                            FinalTimeDisplay,
-                            ActualOverlayMode,
-                            pg.WeaponTypeID
-                        FROM 
-                            Quests q
-                        JOIN
-                            PlayerGear pg ON q.RunID = pg.RunID
-                        WHERE 
-                            QuestID = @questID
-                            AND pg.WeaponTypeID = @weaponTypeID
-                            AND ActualOverlayMode = @category
-                            AND PartySize = 1
-                        ORDER BY 
-                            FinalTimeValue ASC
-                        LIMIT 1", conn))
+                        if (dataLoader.model.PartySize() == 1)
                         {
-                            cmd.Parameters.AddWithValue("@questID", dataLoader.model.QuestID());
-                            cmd.Parameters.AddWithValue("@weaponTypeID", dataLoader.model.WeaponType());
-                            cmd.Parameters.AddWithValue("@category", actualOverlayMode);
+                            long personalBest = 0;
+                            int questID = dataLoader.model.QuestID();
+                            int weaponType = dataLoader.model.WeaponType();
+                            bool improvedPersonalBest = false;
 
-                            var reader = cmd.ExecuteReader();
-                            if (reader.Read())
+                            using (SQLiteCommand cmd = new SQLiteCommand(
+                            @"SELECT 
+                                TimeLeft, 
+                                FinalTimeValue,
+                                FinalTimeDisplay,
+                                ActualOverlayMode,
+                                pg.WeaponTypeID
+                            FROM 
+                                Quests q
+                            JOIN
+                                PlayerGear pg ON q.RunID = pg.RunID
+                            WHERE 
+                                QuestID = @questID
+                                AND pg.WeaponTypeID = @weaponTypeID
+                                AND ActualOverlayMode = @category
+                                AND PartySize = 1
+                            ORDER BY 
+                                FinalTimeValue ASC
+                            LIMIT 1", conn))
                             {
-                                long time = 0;
-                                time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
-                                personalBest = time;
+                                cmd.Parameters.AddWithValue("@questID", questID);
+                                cmd.Parameters.AddWithValue("@weaponTypeID", weaponType);
+                                cmd.Parameters.AddWithValue("@category", actualOverlayMode);
+
+                                var reader = cmd.ExecuteReader();
+                                if (reader.Read())
+                                {
+                                    long time = 0;
+                                    time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                                    personalBest = time;
+                                }
                             }
-                        }
 
-                        sql = @"INSERT INTO PersonalBests(
-                        RunID,
-                        Attempts
-                        ) VALUES (
-                        @RunID,
-                        @Attempts)";
-                        using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                        {
-                            int finalTimeValue = model.TimeDefInt() - model.TimeInt();
-                            if (finalTimeValue < personalBest || personalBest == 0)
+                            sql = @"INSERT INTO PersonalBests(
+                            RunID,
+                            Attempts
+                            ) VALUES (
+                            @RunID,
+                            @Attempts)";
+                            using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                             {
-                                cmd.Parameters.AddWithValue("@RunID", runID);
-                                cmd.Parameters.AddWithValue("@Attempts", attempts);
-                                // Execute the stored procedure
-                                cmd.ExecuteNonQuery();
+                                int finalTimeValue = model.TimeDefInt() - model.TimeInt();
+                                if (finalTimeValue < personalBest || personalBest == 0)
+                                {
+                                    improvedPersonalBest = true;
+                                    cmd.Parameters.AddWithValue("@RunID", runID);
+                                    cmd.Parameters.AddWithValue("@Attempts", attempts);
+                                    // Execute the stored procedure
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+                            if (improvedPersonalBest)
+                            {
+                                sql = @"UPDATE PersonalBestAttempts 
+                                    SET 
+                                        Attempts = 0 
+                                    WHERE 
+                                        (QuestID, WeaponTypeID, ActualOverlayMode) = (@QuestID, @WeaponTypeID, @ActualOverlayMode)";
+                                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                                {
+                                    cmd.Parameters.AddWithValue("@QuestID", questID);
+                                    cmd.Parameters.AddWithValue("@WeaponTypeID", weaponType);
+                                    cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+                                    // Execute the stored procedure
+                                    cmd.ExecuteNonQuery();
+                                }
                             }
                         }
 
@@ -1770,24 +1863,24 @@ namespace MHFZ_Overlay
                         if (transaction != null)
                             transaction.Rollback();
                         // Handle a SQL exception
-                        MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState + "\n\n" + ex.HelpLink + "\n\n" + ex.ResultCode + "\n\n" + ex.ErrorCode + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        logger.Error(ex, "DATABASE OPERATION: An error occurred while accessing the database");
+                        MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState + "\n\n" + ex.HelpLink + "\n\n" + ex.ResultCode + "\n\n" + ex.ErrorCode + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        logger.Error(ex, "An error occurred while accessing the database");
                     }
                     catch (IOException ex)
                     {
                         if (transaction != null)
                             transaction.Rollback();
                         // Handle an I/O exception
-                        MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        logger.Error(ex, "FILE OPERATION: An error occurred while accessing a file");
+                        MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        logger.Error(ex, "An error occurred while accessing a file");
 
                     }
                     catch (ArgumentException ex)
                     {
                         if (transaction != null)
                             transaction.Rollback();
-                        MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        logger.Error(ex, "PROGRAM OPERATION: ArgumentException");
+                        MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        logger.Error(ex, "ArgumentException");
 
                     }
                     catch (Exception ex)
@@ -2299,13 +2392,17 @@ namespace MHFZ_Overlay
         /// <param name="ex">The ex.</param>
         private void HandleError(SQLiteTransaction? transaction, Exception ex)
         {
+            var serverVersion = "";
+
             // Roll back the transaction
             if (transaction != null)
+            {
+                serverVersion = transaction.Connection.ServerVersion;
                 transaction.Rollback();
+            }
 
             // Handle the exception and show an error message to the user
-            MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            logger.Error(ex, "DATABASE OPERATION: An error occurred");
+            LoggingManager.WriteCrashLog(ex, $"SQLite error (version: {serverVersion})");
         }
 
         public void MakeDeserealizedQuestInfoDictionariesFromRunID(SQLiteConnection conn, DataLoader dataLoader, int runID)
@@ -2412,21 +2509,24 @@ namespace MHFZ_Overlay
                     }
                 }
             }
+
+            logger.Info("Stored overlay hash {0}", overlayHash);
             return overlayHash;
         }
 
         #region session time
 
+        public DateTime DatabaseStartTime = DateTime.Now;
+
         /// <summary>
         /// Stores the session time.
         /// </summary>
         /// <param name="window">The window.</param>
-        public void StoreSessionTime(MainWindow window)
+        public void StoreSessionTime(DateTime ProgramStart)
         {
             try
             {
                 DateTime ProgramEnd = DateTime.Now;
-                DateTime ProgramStart = window.ProgramStart;
                 TimeSpan duration = ProgramEnd - ProgramStart;
                 int sessionDuration = (int)duration.TotalSeconds;
 
@@ -2452,6 +2552,8 @@ namespace MHFZ_Overlay
                             }
                             // Commit the transaction
                             transaction.Commit();
+
+                            logger.Info("Stored session time. Duration: {0}", TimeSpan.FromSeconds(sessionDuration).ToString(@"hh\:mm\:ss\.ff"));
                         }
                         catch (Exception ex)
                         {
@@ -2463,22 +2565,22 @@ namespace MHFZ_Overlay
             catch (SQLiteException ex)
             {
                 // Handle a SQL exception
-                MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Error(ex, "DATABASE OPERATION: An error occurred while accessing the database");
+                MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Error(ex, "An error occurred while accessing the database");
 
             }
             catch (IOException ex)
             {
                 // Handle an I/O exception
-                MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Error(ex, "FILE OPERATION: An error occurred while accessing a file");
+                MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Error(ex, "An error occurred while accessing a file");
 
             }
             catch (Exception ex)
             {
                 // Handle any other exception
-                MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Error(ex, "PROGRAM OPERATION: An error occurred");
+                MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Error(ex, "An error occurred");
 
             }
         }
@@ -2576,7 +2678,9 @@ namespace MHFZ_Overlay
                                     // Set the table name
                                     using (var cmd2 = conn.CreateCommand())
                                     {
-                                        cmd2.CommandText = $"SELECT tbl_name FROM sqlite_master WHERE name='{objectName}'";
+                                        cmd2.CommandText = "SELECT tbl_name FROM sqlite_master WHERE name=@name";
+                                        cmd2.Parameters.AddWithValue("@name", objectName);
+
                                         var tableName = cmd2.ExecuteScalar().ToString();
 
                                         // Initialize the schema entry for the table if it doesn't exist
@@ -2597,7 +2701,9 @@ namespace MHFZ_Overlay
                                     // Set the table name
                                     using (var cmd3 = conn.CreateCommand())
                                     {
-                                        cmd3.CommandText = $"SELECT tbl_name FROM sqlite_master WHERE name='{objectName}'";
+                                        cmd3.CommandText = "SELECT tbl_name FROM sqlite_master WHERE name=@name";
+                                        cmd3.Parameters.AddWithValue("@name", objectName);
+
                                         var tableName = cmd3.ExecuteScalar().ToString();
 
                                         // Initialize the schema entry for the table if it doesn't exist
@@ -2632,11 +2738,9 @@ namespace MHFZ_Overlay
             {
                 // Serialize the schema dictionary to a JSON string
                 var json = JsonConvert.SerializeObject(schema, Formatting.Indented);
-
+                var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
                 // Write the JSON string to the reference schema file
-                File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"), json);
-                logger.Info("FILE OPERATION: writing into {0}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json"));
-
+                FileManager.WriteToFile(referenceSchemaFilePath, json);
             }
 
             return schema;
@@ -2728,10 +2832,14 @@ namespace MHFZ_Overlay
             if (schemaChanged)
             {
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
-                MessageBox.Show(@"ERROR: The database schema got updated in the latest version. Please make sure that both MHFZ_Overlay.sqlite and reference_schema.json don't exist in the current overlay directory, so that the program can make new ones",
-                "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
-                logger.Warn("DATABASE OPERATION: Invalid database schema");
+                logger.Error("Invalid database schema");
+                MessageBox.Show(
+@"The database schema got updated in the latest version. 
 
+Please make sure that both MHFZ_Overlay.sqlite (in the game\database directory) and reference_schema.json (in the current overlay directory) don't exist, so that the program can make new ones. 
+
+Disabling Quest Logging.",
+                "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
                 s.EnableQuestLogging = false;
             }
 
@@ -2817,7 +2925,7 @@ namespace MHFZ_Overlay
                                 discordServerID = s.DiscordServerID;
                                 gender = s.GenderExport;
                                 //TODO test
-                                nationality = dataLoader.model.Countries.ToList()[s.PlayerNationalityIndex].Name.Common;
+                                nationality = s.EnableNationality ? dataLoader.model.Countries.ToList()[s.PlayerNationalityIndex].Name.Common : "World";
                             }
 
                             // Set the parameter values
@@ -2943,8 +3051,8 @@ namespace MHFZ_Overlay
                     // Create table to store program usage time
                     string sql = @"CREATE TABLE IF NOT EXISTS Session (
                     SessionID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    StartTime DATETIME NOT NULL,
-                    EndTime DATETIME NOT NULL,
+                    StartTime TEXT NOT NULL,
+                    EndTime TEXT NOT NULL,
                     SessionDuration INTEGER NOT NULL)";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
@@ -2953,7 +3061,7 @@ namespace MHFZ_Overlay
 
                     sql = @"CREATE TABLE IF NOT EXISTS Audit(
                     AuditID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     ChangeType TEXT NOT NULL,
                     HashValue TEXT NOT NULL
@@ -2966,45 +3074,55 @@ namespace MHFZ_Overlay
                     //Create the Quests table
                     sql = @"CREATE TABLE IF NOT EXISTS Quests 
                     (
-                    QuestHash TEXT NOT NULL,
-                    CreatedAt DATETIME NOT NULL,
-                    CreatedBy TEXT NOT NULL,
+                    QuestHash TEXT NOT NULL DEFAULT '',
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
                     RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0), 
-                    TimeLeft INTEGER NOT NULL,
-                    FinalTimeValue INTEGER NOT NULL,
-                    FinalTimeDisplay TEXT NOT NULL, 
-                    ObjectiveImage TEXT NOT NULL,
-                    ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0), 
-                    ObjectiveQuantity INTEGER NOT NULL, 
-                    StarGrade INTEGER NOT NULL, 
-                    RankName TEXT NOT NULL, 
-                    ObjectiveName TEXT NOT NULL, 
-                    Date DATETIME NOT NULL,
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    TimeLeft INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeValue INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeDisplay TEXT NOT NULL DEFAULT '', 
+                    ObjectiveImage TEXT NOT NULL DEFAULT '',
+                    ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0) DEFAULT 0, 
+                    ObjectiveQuantity INTEGER NOT NULL DEFAULT 0, 
+                    StarGrade INTEGER NOT NULL DEFAULT 0, 
+                    RankName TEXT NOT NULL DEFAULT '', 
+                    ObjectiveName TEXT NOT NULL DEFAULT '', 
+                    Date TEXT NOT NULL DEFAULT '',
                     YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
-                    -- DpsData TEXT NOT NULL,
-                    AttackBuffDictionary TEXT NOT NULL,
-                    HitCountDictionary TEXT NOT NULL,
-                    HitsPerSecondDictionary TEXT NOT NULL,
-                    DamageDealtDictionary TEXT NOT NULL,
-                    DamagePerSecondDictionary TEXT NOT NULL,
-                    AreaChangesDictionary TEXT NOT NULL,
-                    CartsDictionary TEXT NOT NULL,
-                    Monster1HPDictionary TEXT NOT NULL,
-                    Monster2HPDictionary TEXT NOT NULL,
-                    Monster3HPDictionary TEXT NOT NULL,
-                    Monster4HPDictionary TEXT NOT NULL,
-                    HitsTakenBlockedDictionary TEXT NOT NULL,
-                    HitsTakenBlockedPerSecondDictionary TEXT NOT NULL,
-                    PlayerHPDictionary TEXT NOT NULL,
-                    PlayerStaminaDictionary TEXT NOT NULL,
-                    KeystrokesDictionary TEXT NOT NULL,
-                    MouseInputDictionary TEXT NOT NULL,
-                    GamepadInputDictionary TEXT NOT NULL,
-                    ActionsPerMinuteDictionary TEXT NOT NULL,
-                    OverlayModeDictionary TEXT NOT NULL,
-                    ActualOverlayMode TEXT NOT NULL,
-                    PartySize INTEGER NOT NULL,
+                    -- DpsData TEXT NOT NULL DEFAULT '',
+                    AttackBuffDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitCountDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamageDealtDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamagePerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    AreaChangesDictionary TEXT NOT NULL DEFAULT '{}',
+                    CartsDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerHPDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerStaminaDictionary TEXT NOT NULL DEFAULT '{}',
+                    KeystrokesDictionary TEXT NOT NULL DEFAULT '{}',
+                    MouseInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    GamepadInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActionsPerMinuteDictionary TEXT NOT NULL DEFAULT '{}',
+                    OverlayModeDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    PartySize INTEGER NOT NULL DEFAULT 0,
+                    Monster1HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster2HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster3HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster4HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1PoisonThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SleepThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
+                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1,30)) DEFAULT 30,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
                     -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
@@ -3161,7 +3279,7 @@ namespace MHFZ_Overlay
                     sql = @"
                     CREATE TABLE IF NOT EXISTS GameFolder (
                     GameFolderHash TEXT NOT NULL,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     GameFolderID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3252,7 +3370,7 @@ namespace MHFZ_Overlay
                     // Create the PlayerGear table
                     sql = @"CREATE TABLE IF NOT EXISTS PlayerGear (
                     PlayerGearHash TEXT NOT NULL,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     PlayerGearID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL, 
@@ -3464,7 +3582,7 @@ namespace MHFZ_Overlay
                     InsertDictionaryDataIntoTable(Dictionary.ArmorLegs.ArmorLegIDs, "AllLegsPieces", "LegsPieceID", "LegsPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS ZenithSkills(
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     ZenithSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3499,7 +3617,7 @@ namespace MHFZ_Overlay
                     InsertDictionaryDataIntoTable(Dictionary.ZenithSkillList.ZenithSkillID, "AllZenithSkills", "ZenithSkillID", "ZenithSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AutomaticSkills(
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     AutomaticSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3532,7 +3650,7 @@ namespace MHFZ_Overlay
                     InsertDictionaryDataIntoTable(Dictionary.ArmorSkillList.ArmorSkillID, "AllArmorSkills", "ArmorSkillID", "ArmorSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS ActiveSkills(
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     ActiveSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3582,7 +3700,7 @@ namespace MHFZ_Overlay
                     }
 
                     sql = @"CREATE TABLE IF NOT EXISTS CaravanSkills(
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     CaravanSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3610,7 +3728,7 @@ namespace MHFZ_Overlay
                     InsertDictionaryDataIntoTable(Dictionary.CaravanSkillList.CaravanSkillID, "AllCaravanSkills", "CaravanSkillID", "CaravanSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS StyleRankSkills(
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     StyleRankSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3637,7 +3755,7 @@ namespace MHFZ_Overlay
 
                     // Create the PlayerInventory table
                     sql = @"CREATE TABLE IF NOT EXISTS PlayerInventory (
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     PlayerInventoryID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3709,7 +3827,7 @@ namespace MHFZ_Overlay
                     }
 
                     sql = @"CREATE TABLE IF NOT EXISTS AmmoPouch (
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     AmmoPouchID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3751,7 +3869,7 @@ namespace MHFZ_Overlay
                     }
 
                     sql = @"CREATE TABLE IF NOT EXISTS PartnyaBag (
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     PartnyaBagID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3793,7 +3911,7 @@ namespace MHFZ_Overlay
                     }
 
                     sql = @"CREATE TABLE IF NOT EXISTS RoadDureSkills (
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     RoadDureSkillsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RunID INTEGER NOT NULL,
@@ -3898,11 +4016,11 @@ namespace MHFZ_Overlay
 
                     sql = @"CREATE TABLE IF NOT EXISTS Bingo(
                     BingoID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     Difficulty TEXT NOT NULL,
                     MonsterList TEXT NOT NULL,
-                    ElapsedTime DATETIME NOT NULL,
+                    ElapsedTime TEXT NOT NULL,
                     Score INTEGER NOT NULL
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -3923,11 +4041,85 @@ namespace MHFZ_Overlay
 
                     sql = @"CREATE TABLE IF NOT EXISTS MezFes(
                     MezFesID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     MezFesMinigameID INTEGER NOT NULL,
                     Score INTEGER NOT NULL,
                     FOREIGN KEY(MezFesMinigameID) REFERENCES MezFesMinigames(MezFesMinigameID)
+                    )";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS PersonalBestAttempts(
+                    PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    QuestID INTEGER NOT NULL,
+                    WeaponTypeID INTEGER NOT NULL,
+                    ActualOverlayMode TEXT NOT NULL,
+                    Attempts INTEGER NOT NULL,
+                    FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
+                    )
+                    ";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    sql = @"CREATE TABLE IF NOT EXISTS ZenithGauntlets(
+                        ZenithGauntletID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        WeaponType TEXT NOT NULL,
+                        Category TEXT NOT NULL,
+                        TotalFramesElapsed INTEGER NOT NULL,
+                        TotalTimeElapsed TEXT NOT NULL,
+                        Run1ID INTEGER NOT NULL,
+                        Run2ID INTEGER NOT NULL,
+                        Run3ID INTEGER NOT NULL,
+                        Run4ID INTEGER NOT NULL,
+                        Run5ID INTEGER NOT NULL,
+                        Run6ID INTEGER NOT NULL,
+                        Run7ID INTEGER NOT NULL,
+                        Run8ID INTEGER NOT NULL,
+                        Run9ID INTEGER NOT NULL,
+                        Run10ID INTEGER NOT NULL,
+                        Run11ID INTEGER NOT NULL,
+                        Run12ID INTEGER NOT NULL,
+                        Run13ID INTEGER NOT NULL,
+                        Run14ID INTEGER NOT NULL,
+                        Run15ID INTEGER NOT NULL,
+                        Run16ID INTEGER NOT NULL,
+                        Run17ID INTEGER NOT NULL,
+                        Run18ID INTEGER NOT NULL,
+                        Run19ID INTEGER NOT NULL,
+                        Run20ID INTEGER NOT NULL,
+                        Run21ID INTEGER NOT NULL,
+                        Run22ID INTEGER NOT NULL,
+                        Run23ID INTEGER NOT NULL,
+                        FOREIGN KEY(Run1ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run2ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run3ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run4ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run5ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run6ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run7ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run8ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run9ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run10ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run11ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run12ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run13ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run14ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run15ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run16ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run17ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run18ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run19ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run20ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run21ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run22ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run23ID) REFERENCES Quests(RunID)
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
@@ -4532,7 +4724,6 @@ namespace MHFZ_Overlay
                     }
                 }
             }
-
             return personalBest;
         }
 
@@ -4835,6 +5026,65 @@ namespace MHFZ_Overlay
             return attempts;
         }
 
+        public int UpsertPersonalBestAttempts(long questID, int weaponTypeID, string category)
+        {
+            int attempts = 0;
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    int numRetries = 0;
+                    bool success = false;
+                    while (!success && numRetries < 3)
+                    {
+                        try
+                        {
+                            using (SQLiteCommand command = new SQLiteCommand(conn))
+                            {
+                                command.CommandText =
+                                    @"INSERT INTO 
+                            PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
+                        VALUES 
+                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1)
+                        ON CONFLICT 
+                            (QuestID, WeaponTypeID, ActualOverlayMode) 
+                        DO UPDATE
+                        SET 
+                            Attempts = Attempts + 1
+                        RETURNING 
+                            Attempts;";
+
+                                command.Parameters.AddWithValue("@QuestID", questID);
+                                command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+                                command.Parameters.AddWithValue("@ActualOverlayMode", category);
+
+                                attempts = Convert.ToInt32(command.ExecuteScalar());
+                            }
+                            transaction.Commit();
+                            success = true;
+                        }
+                        catch (SQLiteException ex)
+                        {
+                            if (ex.ResultCode == SQLiteErrorCode.Locked || ex.ResultCode == SQLiteErrorCode.Busy)
+                            {
+                                // Database is locked, retry after a short delay
+                                numRetries++;
+                                Thread.Sleep(1000);
+                            }
+                            else
+                            {
+                                // Some other error occurred, abort the transaction
+                                HandleError(transaction, ex);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return attempts;
+        }
 
         public long GetQuestAttempts(long questID, int weaponTypeID, string category)
         {
@@ -5252,8 +5502,6 @@ namespace MHFZ_Overlay
             return zenithSkills;
         }
 
-
-
         public CaravanSkills GetCaravanSkills(long runID)
         {
             CaravanSkills caravanSkills = new CaravanSkills();
@@ -5638,6 +5886,237 @@ namespace MHFZ_Overlay
                     try
                     {
                         using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster4HPDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, double>> GetMonster1AttackMultiplierDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, double>> dictionary = new Dictionary<int, Dictionary<int, double>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1AttackMultiplierDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, double>> GetMonster1DefenseRateDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, double>> dictionary = new Dictionary<int, Dictionary<int, double>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1DefenseRateDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, int>> GetMonster1PoisonThresholdDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1PoisonThresholdDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, int>> GetMonster1SleepThresholdDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1SleepThresholdDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, int>> GetMonster1ParalysisThresholdDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1ParalysisThresholdDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, int>> GetMonster1BlastThresholdDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1BlastThresholdDictionary FROM Quests WHERE RunID = @runID", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@runID", runID);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public Dictionary<int, Dictionary<int, int>> GetMonster1StunThresholdDictionary(long runID)
+        {
+            Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand cmd = new SQLiteCommand("SELECT Monster1StunThresholdDictionary FROM Quests WHERE RunID = @runID", conn))
                         {
                             cmd.Parameters.AddWithValue("@runID", runID);
 
@@ -6274,7 +6753,7 @@ namespace MHFZ_Overlay
                                                 QuestID = (long)reader["QuestID"],
                                                 YoutubeID = (string)reader["YoutubeID"],
                                                 FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
-                                                Date = (DateTime)reader["Date"]
+                                                Date = DateTime.Parse((string)reader["Date"])
                                             });
                                         }
                                     }
@@ -6340,7 +6819,7 @@ namespace MHFZ_Overlay
                                             QuestID = (long)reader["QuestID"],
                                             YoutubeID = (string)reader["YoutubeID"],
                                             FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
-                                            Date = (DateTime)reader["Date"],
+                                            Date = DateTime.Parse((string)reader["Date"]),
                                             ActualOverlayMode = (string)reader["ActualOverlayMode"],
                                             PartySize = (long)reader["PartySize"]
                                         };
@@ -6414,7 +6893,7 @@ namespace MHFZ_Overlay
                             {
                                 if (!reader.HasRows)
                                 {
-                                    //MessageBox.Show(String.Format("Runs not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), "MHF-Z Overlay Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    //MessageBox.Show(String.Format("Runs not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                     return weaponUsageData;
                                 }
                                 else
@@ -6431,7 +6910,7 @@ namespace MHFZ_Overlay
                                         lock (dataLoader.model.weaponUsageSync)
                                         {
                                             // Use the weaponTypeID, styleID, and runCount values to populate your
-                                            // livechart graph
+                                            // LiveChart graph
                                             // use a switch statement or a lookup table to convert the
                                             // weaponTypeID and styleID to their corresponding string names
 
@@ -6500,7 +6979,7 @@ namespace MHFZ_Overlay
                             {
                                 if (!reader.HasRows)
                                 {
-                                    MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), "MHF-Z Overlay Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                     return;
                                 }
                                 else
@@ -6543,7 +7022,7 @@ namespace MHFZ_Overlay
                             {
                                 if (!reader.HasRows)
                                 {
-                                    MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), "MHF-Z Overlay Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                     return;
                                 }
                                 while (reader.Read())
@@ -7521,7 +8000,7 @@ namespace MHFZ_Overlay
         {
             if (!MezFesMinigame.ID.ContainsKey(previousMezFesArea) || previousMezFesScore <= 0)
             {
-                logger.Error("DATABASE OPERATION: wrong mezfes area or empty score, area id: {0}, score: {1}", previousMezFesArea, previousMezFesScore);
+                logger.Error("wrong mezfes area or empty score, area id: {0}, score: {1}", previousMezFesArea, previousMezFesScore);
                 return;
             }
 
@@ -7565,6 +8044,1723 @@ namespace MHFZ_Overlay
             }
         }
 
+        // TODO: i still need to reorganize all regions. ideally i put in separate classes/files. maybe a DatabaseHelper class?
+        #region database functions
+
+        /// <summary>
+        /// Helper function to calculate the median of a list of integers
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        private static double CalculateMedianOfList(List<int> values)
+        {
+            int count = values.Count;
+            if (count % 2 == 0)
+            {
+                // Even number of values, average the middle two
+                int middleIndex = count / 2;
+                return (values[middleIndex - 1] + values[middleIndex]) / 2.0;
+            }
+            else
+            {
+                // Odd number of values, return the middle value
+                int middleIndex = (count - 1) / 2;
+                return values[middleIndex];
+            }
+        }
+
+        /// <summary>
+        /// Gets the average of field.
+        /// </summary>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private double GetAverageOfDictionaryField(string tableName, string fieldName, SQLiteConnection conn)
+        {
+            var query = $"SELECT {fieldName} FROM {tableName}";
+
+            double sumOfValues = 0;
+            int numberOfEntries = 0;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string valueDictionaryString = (string)reader[fieldName];
+
+                        if (string.IsNullOrEmpty(valueDictionaryString) || valueDictionaryString == "{}")
+                            continue;
+
+                        var valueDictionary = JObject.Parse(valueDictionaryString)
+                            .ToObject<Dictionary<double, double>>();
+
+                        double averageOfValueValues = valueDictionary.Values.Average();
+                        sumOfValues += averageOfValueValues;
+                        numberOfEntries++;
+                    }
+                }
+            }
+
+            double averageValue = sumOfValues / numberOfEntries;
+
+            return averageValue;
+        }
+
+        /// <summary>
+        /// Gets the median of field.
+        /// </summary>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private double GetMedianOfDictionaryField(string tableName, string fieldName, SQLiteConnection conn)
+        {
+            var query = $"SELECT {fieldName} FROM {tableName}";
+            var valueList = new List<double>();
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string valueDictionaryString = (string)reader[fieldName];
+                        if (string.IsNullOrEmpty(valueDictionaryString) || valueDictionaryString == "{}")
+                            continue;
+                        var valueDictionary = JObject.Parse(valueDictionaryString).ToObject<Dictionary<double, double>>();
+                        valueList.AddRange(valueDictionary.Values);
+                    }
+                }
+            }
+
+            valueList.Sort();
+            double medianValue = valueList.Count % 2 == 0
+                ? (valueList[valueList.Count / 2] + valueList[valueList.Count / 2 - 1]) / 2.0
+                : valueList[valueList.Count / 2];
+
+            return medianValue;
+        }
+
+        /// <summary>
+        /// Gets the mode of field.
+        /// </summary>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private double GetModeOfDictionaryField(string tableName, string fieldName, SQLiteConnection conn)
+        {
+            var query = $"SELECT {fieldName} FROM {tableName}";
+            var valueDictionary = new Dictionary<double, int>();
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string valueDictionaryString = (string)reader[fieldName];
+
+                        if (string.IsNullOrEmpty(valueDictionaryString) || valueDictionaryString == "{}")
+                            continue;
+
+                        var dict = JObject.Parse(valueDictionaryString).ToObject<Dictionary<double, double>>();
+
+                        foreach (var value in dict.Values)
+                        {
+                            if (valueDictionary.ContainsKey(value))
+                                valueDictionary[value]++;
+                            else
+                                valueDictionary.Add(value, 1);
+                        }
+                    }
+                }
+            }
+
+            double modeValue = 0;
+            int maxCount = 0;
+
+            foreach (var kvp in valueDictionary)
+            {
+                if (kvp.Value > maxCount)
+                {
+                    modeValue = kvp.Key;
+                    maxCount = kvp.Value;
+                }
+            }
+
+            return modeValue;
+        }
+
+        /// <summary>
+        /// Gets the row with highest value.
+        /// </summary>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private (double, long) GetRowWithHighestDictionaryValue(string tableName, string fieldName, SQLiteConnection conn)
+        {
+            var query = $"SELECT {fieldName}, RunID FROM {tableName}";
+
+            double highestValue = 0;
+            long highestValueRunID = 0;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long runID = (long)reader["RunID"];
+                        string valueDictionaryString = (string)reader[fieldName];
+
+                        if (string.IsNullOrEmpty(valueDictionaryString) || valueDictionaryString == "{}")
+                            continue;
+
+                        var valueDictionary = JObject.Parse(valueDictionaryString)
+                            .ToObject<Dictionary<double, double>>();
+
+                        double maxValueInField = valueDictionary.Values.Max();
+
+                        if (maxValueInField > highestValue)
+                        {
+                            highestValue = maxValueInField;
+                            highestValueRunID = runID;
+                        }
+                    }
+                }
+            }
+
+            return (highestValue, highestValueRunID);
+        }
+
+        /// <summary>
+        /// Gets the quest with highest hits taken blocked.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private (double, long) GetQuestWithHighestHitsTakenBlocked(SQLiteConnection conn)
+        {
+            var query = "SELECT RunID, HitsTakenBlockedDictionary FROM Quests";
+            long highestHitsTakenBlockedRunID = 0;
+            int highestHitsTakenBlockedCount = 0;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long runID = (long)reader["RunID"];
+                        string hitsTakenBlockedDictionaryString = (string)reader["HitsTakenBlockedDictionary"];
+
+                        if (string.IsNullOrEmpty(hitsTakenBlockedDictionaryString) || hitsTakenBlockedDictionaryString == "{}")
+                            continue;
+
+                        var hitsTakenBlocked = JObject.Parse(hitsTakenBlockedDictionaryString)
+    .ToObject<Dictionary<double, Dictionary<double, double>>>();
+
+                        int hitsTakenBlockedCount = hitsTakenBlocked.Count;
+                        if (hitsTakenBlockedCount > highestHitsTakenBlockedCount)
+                        {
+                            highestHitsTakenBlockedCount = hitsTakenBlockedCount;
+                            highestHitsTakenBlockedRunID = runID;
+                        }
+                    }
+                }
+            }
+
+            return ((double)highestHitsTakenBlockedCount, highestHitsTakenBlockedRunID);
+        }
+
+        /// <summary>
+        /// Gets the average hits taken blocked count.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private double GetAverageHitsTakenBlockedCount(SQLiteConnection conn)
+        {
+            var totalQuestRunsQuery = "SELECT COUNT(*) as TotalQuestRuns FROM Quests";
+            var hitsTakenBlockedCountQuery = "SELECT HitsTakenBlockedDictionary FROM Quests";
+            double sumOfHitsTakenBlockedCount = 0;
+            int totalQuestRuns = 0;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(totalQuestRunsQuery, conn))
+            {
+                totalQuestRuns = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+
+            using (SQLiteCommand cmd = new SQLiteCommand(hitsTakenBlockedCountQuery, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string hitsTakenBlockedDictionaryString = (string)reader["HitsTakenBlockedDictionary"];
+
+                        if (string.IsNullOrEmpty(hitsTakenBlockedDictionaryString) || hitsTakenBlockedDictionaryString == "{}")
+                            continue;
+
+                        var hitsTakenBlocked = JObject.Parse(hitsTakenBlockedDictionaryString)
+                            .ToObject<Dictionary<double, Dictionary<double, double>>>();
+
+                        int hitsTakenBlockedCount = hitsTakenBlocked.Count;
+                        sumOfHitsTakenBlockedCount += hitsTakenBlockedCount;
+                    }
+                }
+            }
+
+            double averageHitsTakenBlockedCount = sumOfHitsTakenBlockedCount / totalQuestRuns;
+            return averageHitsTakenBlockedCount;
+        }
+
+        /// <summary>
+        /// Gets the median hits taken blocked count.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private double GetMedianHitsTakenBlockedCount(SQLiteConnection conn)
+        {
+            var hitsTakenBlockedCountQuery = "SELECT HitsTakenBlockedDictionary FROM Quests";
+            var hitsTakenBlockedCountList = new List<int>();
+
+            using (SQLiteCommand cmd = new SQLiteCommand(hitsTakenBlockedCountQuery, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string hitsTakenBlockedDictionaryString = (string)reader["HitsTakenBlockedDictionary"];
+
+                        if (string.IsNullOrEmpty(hitsTakenBlockedDictionaryString) || hitsTakenBlockedDictionaryString == "{}")
+                            continue;
+
+                        var hitsTakenBlocked = JObject.Parse(hitsTakenBlockedDictionaryString)
+                            .ToObject<Dictionary<double, Dictionary<double, double>>>();
+
+                        int hitsTakenBlockedCount = hitsTakenBlocked.Count;
+                        hitsTakenBlockedCountList.Add(hitsTakenBlockedCount);
+                    }
+                }
+            }
+
+            hitsTakenBlockedCountList.Sort();
+
+            double medianHitsTakenBlockedCount;
+            int count = hitsTakenBlockedCountList.Count;
+
+            if (count % 2 == 0)
+            {
+                int middle = count / 2;
+                medianHitsTakenBlockedCount = (hitsTakenBlockedCountList[middle - 1] + hitsTakenBlockedCountList[middle]) / 2.0;
+            }
+            else
+            {
+                int middle = count / 2;
+                medianHitsTakenBlockedCount = hitsTakenBlockedCountList[middle];
+            }
+
+            return medianHitsTakenBlockedCount;
+        }
+
+        /// <summary>
+        /// Gets the total count of value in dictionary field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private long GetTotalCountOfValueInDictionaryField(string field, string table, SQLiteConnection conn)
+        {
+            var query = $"SELECT {field} FROM {table}";
+            long totalCount = 0;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string valueDictionaryString = (string)reader[field];
+
+                        if (string.IsNullOrEmpty(valueDictionaryString) || valueDictionaryString == "{}")
+                            continue;
+
+                        if (field == "HitsTakenBlockedDictionary" && table == "Quests")
+                        {
+                            var dictionary = JObject.Parse(valueDictionaryString)
+                            .ToObject<Dictionary<double, Dictionary<double, double>>>();
+                            totalCount += dictionary.Count;
+                        }
+                        else if (table == "Quests" && (field == "KeystrokesDictionary" || field == "MouseInputDictionary" || field == "GamepadInputDictionary"))
+                        {
+                            var dictionary = JObject.Parse(valueDictionaryString)
+                            .ToObject<Dictionary<double, string>>();
+                            totalCount += dictionary.Count;
+                        }
+                        else
+                        {
+                            var dictionary = JObject.Parse(valueDictionaryString)
+                            .ToObject<Dictionary<double, double>>();
+                            totalCount += dictionary.Count;
+                        }
+                    }
+                }
+            }
+
+            return totalCount;
+        }
+
+        /// <summary>
+        /// Gets the table row count.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private long GetTableRowCount(string fieldName, string tableName, SQLiteConnection conn)
+        {
+            string sql = $"SELECT COUNT({fieldName}) FROM {tableName}";
+            using (SQLiteCommand command = new SQLiteCommand(sql, conn))
+            {
+                return Convert.ToInt64(command.ExecuteScalar());
+            }
+        }
+
+        /// <summary>
+        /// Gets the count of int value.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private static long GetCountOfIntValue(string fieldName, string tableName, int value, SQLiteConnection conn)
+        {
+            long count = 0;
+            string query = $"SELECT COUNT(*) FROM {tableName} WHERE {fieldName} = @value";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@value", value);
+                count = Convert.ToInt64(cmd.ExecuteScalar());
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// Gets the count of string value.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private static long GetCountOfStringValue(string fieldName, string tableName, string value, SQLiteConnection conn)
+        {
+            long count = 0;
+            string query = $"SELECT COUNT(*) FROM {tableName} WHERE {fieldName} = @value";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@value", value);
+                count = Convert.ToInt64(cmd.ExecuteScalar());
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// Get the maximum value of a given field in a given table
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="table"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
+        private static long GetMaxValue(string field, string table, SQLiteConnection conn)
+        {
+            string query = $"SELECT MAX({field}) FROM {table} WHERE {field} IS NOT NULL";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                long maxValue = (long)cmd.ExecuteScalar();
+                return maxValue;
+            }
+        }
+
+        /// <summary>
+        /// Get the minimum value of a given field in a given table
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="table"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
+        private static long GetMinValue(string field, string table, SQLiteConnection conn)
+        {
+            string query = $"SELECT MIN({field}) FROM {table} WHERE {field} IS NOT NULL";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                long minValue = (long)cmd.ExecuteScalar();
+                return minValue;
+            }
+        }
+
+        /// <summary>
+        /// Get the average value of a given field in a given table
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="table"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
+        private static double GetAvgValue(string field, string table, SQLiteConnection conn)
+        {
+            string query = $"SELECT AVG({field}) FROM {table} WHERE {field} IS NOT NULL";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                double avgValue = (double)cmd.ExecuteScalar();
+                return avgValue;
+            }
+        }
+
+        /// <summary>
+        /// Get the median value of a given field in a given table
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="table"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
+        private static double GetMedianValue(string field, string table, SQLiteConnection conn)
+        {
+            string query = $"SELECT {field} FROM {table} WHERE {field} IS NOT NULL ORDER BY {field}";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    if (!reader.HasRows)
+                    {
+                        return 0.0;
+                    }
+                    List<long> values = new List<long>();
+                    while (reader.Read())
+                    {
+                        values.Add(reader.GetInt64(0));
+                    }
+                    long[] valuesArray = values.ToArray();
+                    Array.Sort(valuesArray);
+                    int count = valuesArray.Length;
+                    double medianValue = (count % 2 == 0) ? ((double)valuesArray[count / 2] + (double)valuesArray[(count / 2) - 1]) / 2 : (double)valuesArray[count / 2];
+                    return medianValue;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the mode value of a given field in a given table
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="table"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
+        private static long GetModeValue(string field, string table, SQLiteConnection conn)
+        {
+            string query = $"SELECT {field}, COUNT(*) as count FROM {table} WHERE {field} IS NOT NULL GROUP BY {field} ORDER BY count DESC LIMIT 1";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return reader.GetInt64(0);
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Gets the total unique armor pieces.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private long GetTotalUniqueArmorPieces(SQLiteConnection conn)
+        {
+            long totalUniqueArmorPieces = 0;
+
+            var query = @"
+                            SELECT 
+                                COUNT(DISTINCT HeadID) + 
+                                COUNT(DISTINCT ChestID) + 
+                                COUNT(DISTINCT ArmsID) + 
+                                COUNT(DISTINCT WaistID) + 
+                                COUNT(DISTINCT LegsID) AS TotalUniqueArmorPieces
+                            FROM PlayerGear
+                        ";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        totalUniqueArmorPieces += (long)reader["TotalUniqueArmorPieces"];
+                    }
+                }
+            }
+
+            return totalUniqueArmorPieces;
+        }
+
+        /// <summary>
+        /// Gets the total unique weapon i ds.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private long GetTotalUniqueWeaponIDs(SQLiteConnection conn)
+        {
+            long totalUniqueWeaponIDs = 0;
+
+            var query = @"
+                            SELECT 
+                                COUNT(DISTINCT BlademasterWeaponID) + 
+                                COUNT(DISTINCT GunnerWeaponID) AS TotalUniqueWeaponIDs
+                            FROM PlayerGear
+                        ";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        totalUniqueWeaponIDs += (long)reader["TotalUniqueWeaponIDs"];
+                    }
+                }
+            }
+
+            return totalUniqueWeaponIDs;
+        }
+
+        /// <summary>
+        /// Gets the total unique decorations. Does not count weapon slots, as those are meant to use sigils
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private long GetTotalUniqueDecorations(SQLiteConnection conn)
+        {
+            long totalUniqueDecorations = 0;
+
+            var query = @"
+                        SELECT 
+                            COUNT(DISTINCT HeadSlot1ID) +
+                            COUNT(DISTINCT HeadSlot2ID) +
+                            COUNT(DISTINCT HeadSlot3ID) +
+                            COUNT(DISTINCT ChestSlot1ID) +
+                            COUNT(DISTINCT ChestSlot2ID) +
+                            COUNT(DISTINCT ChestSlot3ID) +
+                            COUNT(DISTINCT ArmsSlot1ID) +
+                            COUNT(DISTINCT ArmsSlot2ID) +
+                            COUNT(DISTINCT ArmsSlot3ID) +
+                            COUNT(DISTINCT WaistSlot1ID) +
+                            COUNT(DISTINCT WaistSlot2ID) +
+                            COUNT(DISTINCT WaistSlot3ID) +
+                            COUNT(DISTINCT LegsSlot1ID) +
+                            COUNT(DISTINCT LegsSlot2ID) +
+                            COUNT(DISTINCT LegsSlot3ID) AS TotalUniqueDecorations
+                        FROM PlayerGear
+                        ";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        totalUniqueDecorations += (long)reader["TotalUniqueDecorations"];
+                    }
+                }
+            }
+
+            return totalUniqueDecorations;
+        }
+
+        /// <summary>
+        /// Gets the most common decoration identifier.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private long GetMostCommonDecorationID(SQLiteConnection conn)
+        {
+            Dictionary<long, long> decorationCounts = new Dictionary<long, long>();
+
+            var query = @"
+                        SELECT HeadSlot1ID, HeadSlot2ID, HeadSlot3ID, 
+                               ChestSlot1ID, ChestSlot2ID, ChestSlot3ID, 
+                               ArmsSlot1ID, ArmsSlot2ID, ArmsSlot3ID, 
+                               WaistSlot1ID, WaistSlot2ID, WaistSlot3ID, 
+                               LegsSlot1ID, LegsSlot2ID, LegsSlot3ID 
+                        FROM PlayerGear
+                        ";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long?[] decorationIDs = {
+                                        reader.IsDBNull(0) ? null : (long?)reader.GetInt64(0),
+                                        reader.IsDBNull(1) ? null : (long?)reader.GetInt64(1),
+                                        reader.IsDBNull(2) ? null : (long?)reader.GetInt64(2),
+                                        reader.IsDBNull(3) ? null : (long?)reader.GetInt64(3),
+                                        reader.IsDBNull(4) ? null : (long?)reader.GetInt64(4),
+                                        reader.IsDBNull(5) ? null : (long?)reader.GetInt64(5),
+                                        reader.IsDBNull(6) ? null : (long?)reader.GetInt64(6),
+                                        reader.IsDBNull(7) ? null : (long?)reader.GetInt64(7),
+                                        reader.IsDBNull(8) ? null : (long?)reader.GetInt64(8),
+                                        reader.IsDBNull(9) ? null : (long?)reader.GetInt64(9),
+                                        reader.IsDBNull(10) ? null : (long?)reader.GetInt64(10),
+                                        reader.IsDBNull(11) ? null : (long?)reader.GetInt64(11),
+                                        reader.IsDBNull(12) ? null : (long?)reader.GetInt64(12),
+                                        reader.IsDBNull(13) ? null : (long?)reader.GetInt64(13),
+                                    };
+
+                        foreach (long? decorationID in decorationIDs)
+                        {
+                            if (decorationID.HasValue && decorationID.Value != 0)
+                            {
+                                if (decorationCounts.ContainsKey(decorationID.Value))
+                                {
+                                    decorationCounts[decorationID.Value]++;
+                                }
+                                else
+                                {
+                                    decorationCounts[decorationID.Value] = 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            long? mostCommonDecorationID = decorationCounts.OrderByDescending(x => x.Value).Select(x => (long?)x.Key).FirstOrDefault();
+
+            return (long)mostCommonDecorationID;        
+        }
+
+        private long GetLeastUsedArmorSkillID(SQLiteConnection conn)
+        {
+            long leastUsedArmorSkillID = 0;
+
+            var query = @"
+                        SELECT ActiveSkill1ID, ActiveSkill2ID, ActiveSkill3ID, ActiveSkill4ID, ActiveSkill5ID,
+                               ActiveSkill6ID, ActiveSkill7ID, ActiveSkill8ID, ActiveSkill9ID, ActiveSkill10ID,
+                               ActiveSkill11ID, ActiveSkill12ID, ActiveSkill13ID, ActiveSkill14ID, ActiveSkill15ID,
+                               ActiveSkill16ID, ActiveSkill17ID, ActiveSkill18ID, ActiveSkill19ID
+                        FROM ActiveSkills
+                        ";
+
+            Dictionary<long, long> skillCounts = new Dictionary<long, long>();
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            long skillID = reader.GetInt64(i);
+
+                            if (skillID != 0)
+                            {
+                                if (skillCounts.ContainsKey(skillID))
+                                {
+                                    skillCounts[skillID]++;
+                                }
+                                else
+                                {
+                                    skillCounts[skillID] = 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            leastUsedArmorSkillID = skillCounts.OrderBy(x => x.Value).Select(x => x.Key).FirstOrDefault();
+
+            return (long)leastUsedArmorSkillID;
+        }
+
+        /// <summary>
+        /// Gets the maximum value with WHERE clause.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <param name="whereField">The where field.</param>
+        /// <param name="whereValue">The where value.</param>
+        /// <returns></returns>
+        private static long GetMaxValueWithWhere(string field, string table, SQLiteConnection conn, string whereField, long whereValue)
+        {
+            string query = $"SELECT MAX({field}) FROM {table} WHERE {whereField} = @whereValue";
+            using (var command = new SQLiteCommand(query, conn))
+            {
+                command.Parameters.AddWithValue("@whereValue", whereValue);
+                return (long)command.ExecuteScalar();
+            }
+        }
+
+        /// <summary>
+        /// Gets the minimum value with WHERE clause.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <param name="whereField">The where field.</param>
+        /// <param name="whereValue">The where value.</param>
+        /// <returns></returns>
+        private static long GetMinValueWithWhere(string field, string table, SQLiteConnection conn, string whereField, long whereValue)
+        {
+            string query = $"SELECT MIN({field}) FROM {table} WHERE {whereField} = @whereValue";
+            using (var command = new SQLiteCommand(query, conn))
+            {
+                command.Parameters.AddWithValue("@whereValue", whereValue);
+                return (long)command.ExecuteScalar();
+            }
+        }
+
+        /// <summary>
+        /// Gets the average value with WHERE clause.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <param name="whereField">The where field.</param>
+        /// <param name="whereValue">The where value.</param>
+        /// <returns></returns>
+        private static double GetAverageValueWithWhere(string field, string table, SQLiteConnection conn, string whereField, long whereValue)
+        {
+            string query = $"SELECT AVG({field}) FROM {table} WHERE {whereField} = @whereValue";
+            using (var command = new SQLiteCommand(query, conn))
+            {
+                command.Parameters.AddWithValue("@whereValue", whereValue);
+                return (double)command.ExecuteScalar();
+            }
+        }
+
+        /// <summary>
+        /// Gets the median value with WHERE clause.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <param name="whereField">The where field.</param>
+        /// <param name="whereValue">The where value.</param>
+        /// <returns></returns>
+        private static double GetMedianValueWithWhere(string field, string table, SQLiteConnection conn, string whereField, long whereValue)
+        {
+            // TODO: not sure if correct
+            string query = $"SELECT AVG({field}) FROM (SELECT {field}, ROW_NUMBER() OVER (ORDER BY {field}) AS RowNum, COUNT(*) OVER() AS TotalRows FROM {table} WHERE {whereField} = @whereValue) temp WHERE RowNum BETWEEN (TotalRows/2) + 1 AND (TotalRows/2) + 2;";
+            using (var command = new SQLiteCommand(query, conn))
+            {
+                command.Parameters.AddWithValue("@whereValue", whereValue);
+                return (double)command.ExecuteScalar();
+            }
+        }
+
+        /// <summary>
+        /// Gets the record with highest value in field.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
+        private (double, long) GetRecordWithHighestValueInField(SQLiteConnection conn, string tableName, string fieldName)
+        {
+            var query = $"SELECT RunID, {fieldName} FROM {tableName}";
+            long highestValueRunID = 0;
+            double highestValue = 0;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long runID = (long)reader["RunID"];
+                        string fieldValueString = (string)reader[fieldName];
+
+                        if (string.IsNullOrEmpty(fieldValueString) || fieldValueString == "{}")
+                            continue;
+
+                        var fieldValue = JObject.Parse(fieldValueString)
+                                                .ToObject<Dictionary<double, Dictionary<double, double>>>();
+
+                        double fieldValueMax = fieldValue.Max(kv1 => kv1.Value.Max(kv2 => kv2.Value));
+                        if (fieldValueMax > highestValue)
+                        {
+                            highestValue = fieldValueMax;
+                            highestValueRunID = runID;
+                        }
+                    }
+                }
+            }
+
+            return (highestValue, highestValueRunID);
+        }
+
+        /// <summary>
+        /// Gets the record with lowest value in field.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
+        private (double, long) GetRecordWithLowestValueInField(SQLiteConnection conn, string tableName, string fieldName)
+        {
+            var query = $"SELECT RunID, {fieldName} FROM {tableName}";
+            long lowestValueRunID = 0;
+            double lowestValue = double.MaxValue;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long runID = (long)reader["RunID"];
+                        string fieldValueString = (string)reader[fieldName];
+
+                        if (string.IsNullOrEmpty(fieldValueString) || fieldValueString == "{}")
+                            continue;
+
+                        var fieldValue = JObject.Parse(fieldValueString)
+                                                .ToObject<Dictionary<double, Dictionary<double, double>>>();
+
+                        double value = fieldValue.Min(kv1 => kv1.Value.Min(kv2 => kv2.Value));
+                        if (value < lowestValue)
+                        {
+                            lowestValue = value;
+                            lowestValueRunID = runID;
+                        }
+                    }
+                }
+            }
+
+            return (lowestValue, lowestValueRunID);
+        }
+
+        /// <summary>
+        /// Gets the most completed quest run.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private (long, long) GetMostCompletedQuestRun(SQLiteConnection conn)
+        {
+            long timesCompleted = 0;
+            long questId = 0;
+
+            var query = @"
+                        SELECT QuestID, COUNT(*) as TimesCompleted
+                        FROM Quests
+                        GROUP BY QuestID
+                        ORDER BY TimesCompleted DESC
+                        LIMIT 1";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        // The most completed quest ID
+                        questId = (long)reader["QuestID"];
+
+                        // The number of times the quest was completed
+                        timesCompleted = (long)reader["TimesCompleted"];
+
+                    }
+                }
+            }
+
+            return (timesCompleted, questId);
+        }
+
+        /// <summary>
+        /// Gets the most completed quest runs attempted.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private long GetMostCompletedQuestRunsAttempted(SQLiteConnection conn, long MostCompletedQuestRunsQuestID)
+        {
+            long attempts = 0;
+            var query = @"
+                SELECT SUM(Attempts) AS TotalAttempts
+                FROM QuestAttempts
+                WHERE QuestID = @questId";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@questId", MostCompletedQuestRunsQuestID);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        attempts = (long)reader["TotalAttempts"];
+                    }
+                }
+            }
+
+            return attempts;
+        }
+
+        /// <summary>
+        /// Gets the most attempted quest run.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private (long, long) GetMostAttemptedQuestRun(SQLiteConnection conn)
+        {
+            long questID = 0;
+            long attempts = 0;
+            var query = @"
+            SELECT q.QuestID, SUM(q.Attempts) AS Attempts
+            FROM QuestAttempts q
+            JOIN (
+                SELECT QuestID, COUNT(*) AS TotalAttempts
+                FROM QuestAttempts
+                GROUP BY QuestID
+                ORDER BY TotalAttempts DESC
+                LIMIT 1
+            ) m ON q.QuestID = m.QuestID
+            GROUP BY q.QuestID";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        questID = (long)reader["QuestID"];
+                        attempts = (long)reader["Attempts"];
+                    }
+                }
+            }
+            return (attempts, questID);
+        }
+
+        /// <summary>
+        /// Gets the most attempted quest runs completed.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <param name="MostAttemptedQuestRunsQuestID">The most attempted quest runs quest identifier.</param>
+        /// <returns></returns>
+        private long GetMostAttemptedQuestRunsCompleted(SQLiteConnection conn, long MostAttemptedQuestRunsQuestID)
+        {
+            long timesCompleted = 0;
+
+            var query = @"
+                        SELECT COUNT(*) AS TimesCompleted
+                        FROM Quests
+                        WHERE QuestID = @QuestID";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@QuestID", MostAttemptedQuestRunsQuestID);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        // The number of times the most attempted quest was completed
+                        timesCompleted = (long)reader["TimesCompleted"];
+
+                    }
+                }
+            }
+            return timesCompleted;
+        }
+
+        /// <summary>
+        /// Get the sum of values in a given field in a given table, excluding null values
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="table"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
+        private static long GetSumValue(string field, string table, SQLiteConnection conn)
+        {
+            string query = $"SELECT SUM({field}) FROM {table} WHERE {field} IS NOT NULL";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+            {
+                long sum = Convert.ToInt64(cmd.ExecuteScalar());
+                return sum;
+            }
+        }
+
+        /// <summary>
+        /// Takes the field parameter and returns the percentage of non-zero values in that field
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private static double GetNonZeroPercentageOfField(string field, string table, SQLiteConnection conn)
+        {
+            // Initialize variables to hold the total number of entries and the number of entries with non-zero field values
+            long totalEntries = 0;
+            long nonZeroEntries = 0;
+
+            // Query to get the total number of entries and the number of entries with non-zero field values
+            string query = $"SELECT COUNT(*) AS TotalEntries, COUNT(CASE WHEN {field} != 0 THEN 1 ELSE NULL END) AS NonZeroEntries FROM {table}";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        totalEntries = (long)reader["TotalEntries"];
+                        nonZeroEntries = (long)reader["NonZeroEntries"];
+                    }
+                }
+            }
+
+            // Calculate the percentage of non-zero values
+            double percentage = nonZeroEntries * 100.0 / totalEntries;
+
+            return percentage;
+        }
+
+        /// <summary>
+        /// Gets the solo quests percentage.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        /// <returns></returns>
+        private double GetSoloQuestsPercentage(SQLiteConnection conn)
+        {
+            // Initialize variables to hold the total number of quests and the number of solo quests
+            long totalQuests = 0;
+            long soloQuests = 0;
+
+            // Query to get the total number of quests and the number of solo quests
+            var query = @"
+                        SELECT COUNT(*) AS TotalQuests,
+                               COUNT(CASE WHEN PartySize = 1 THEN 1 ELSE NULL END) AS SoloQuests
+                        FROM Quests
+                    ";
+
+            using (var cmd = new SQLiteCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        totalQuests = (long)reader["TotalQuests"];
+                        soloQuests = (long)reader["SoloQuests"];
+                    }
+                }
+            }
+
+            // Calculate the percentage of solo quests
+            return soloQuests * 100.0 / totalQuests;
+        }
+
+        #endregion
+
+        #region compendium
+
+        public QuestCompendium GetQuestCompendium()
+        {
+            QuestCompendium questCompendium = new QuestCompendium();
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // TODO i guess this works?
+                        (questCompendium.MostCompletedQuestRuns, questCompendium.MostCompletedQuestRunsQuestID) = GetMostCompletedQuestRun(conn);
+                        questCompendium.MostCompletedQuestRunsAttempted = GetMostCompletedQuestRunsAttempted(conn, questCompendium.MostCompletedQuestRunsQuestID);
+                        (questCompendium.MostAttemptedQuestRuns, questCompendium.MostAttemptedQuestRunsQuestID) = GetMostAttemptedQuestRun(conn);
+                        questCompendium.MostAttemptedQuestRunsCompleted = GetMostAttemptedQuestRunsCompleted(conn, questCompendium.MostAttemptedQuestRunsQuestID);
+                        questCompendium.TotalQuestsCompleted = GetTableRowCount("RunID", "Quests", conn);
+                        questCompendium.TotalQuestsAttempted = GetSumValue("Attempts", "QuestAttempts", conn);
+                        questCompendium.QuestCompletionTimeElapsedAverage = GetAvgValue("FinalTimeValue", "Quests", conn);
+                        questCompendium.QuestCompletionTimeElapsedMedian = GetMedianValue("FinalTimeValue", "Quests", conn);
+
+                        var query = @"SELECT SUM(FinalTimeValue) AS TotalTimeElapsed
+                        FROM Quests
+                        ";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    long value = (long)reader["TotalTimeElapsed"];
+
+                                    questCompendium.TotalTimeElapsedQuests = value;
+
+                                }
+                            }
+                        }
+
+                        // Initialize a list to hold the final cart values
+                        List<int> finalCartValues = new List<int>();
+
+                        // Query to get the last cart value from each quest entry
+                        query = @"SELECT CartsDictionary FROM Quests WHERE CartsDictionary IS NOT NULL";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    string cartsDictionaryJson = reader.GetString(0);
+                                    if (!string.IsNullOrEmpty(cartsDictionaryJson) && cartsDictionaryJson != "{}")
+                                    {
+                                        // Deserialize the carts dictionary JSON string
+                                        Dictionary<int, int> cartsDictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartsDictionaryJson);
+
+                                        // Get the last cart value from the dictionary
+                                        int finalCartValue = cartsDictionary.Values.LastOrDefault();
+
+                                        // Add the final cart value to the list
+                                        finalCartValues.Add(finalCartValue);
+                                    }
+                                }
+                            }
+                        }
+
+                        // Calculate the average and median final cart values
+                        if (finalCartValues.Count > 0)
+                        {
+                            questCompendium.TotalCartsInQuestAverage = finalCartValues.Average();
+                            questCompendium.TotalCartsInQuestMedian = CalculateMedianOfList(finalCartValues);
+                        }
+                        else
+                        {
+                            // No quest entries with non-empty carts dictionaries found
+                            questCompendium.TotalCartsInQuestAverage = 0;
+                            questCompendium.TotalCartsInQuestMedian = 0;
+                        }
+
+                        questCompendium.TotalCartsInQuest = finalCartValues.Sum();
+
+                        // Initialize dictionary to hold the total carts for each quest ID
+                        Dictionary<int, int> questTotalCarts = new Dictionary<int, int>();
+
+                        // Query to get carts dictionary for all quests with non-empty carts dictionary
+                        query = @"SELECT QuestId, CartsDictionary FROM Quests WHERE CartsDictionary IS NOT NULL AND CartsDictionary != '{}'";
+
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int questId = Convert.ToInt32(reader["QuestId"]);
+                                    string cartsDictionaryJson = reader.GetString(1);
+
+                                    // Deserialize carts dictionary JSON string
+                                    Dictionary<int, int> cartsDictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartsDictionaryJson);
+
+                                    // Add total carts for this quest to the questTotalCarts dictionary
+                                    int totalCarts = cartsDictionary.Values.Sum();
+                                    questTotalCarts[questId] = totalCarts;
+                                }
+                            }
+                        }
+
+                        // Get quest ID with the most total carts
+                        if (questTotalCarts.Count > 0)
+                        {
+                            int mostCompletedQuestId = questTotalCarts.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+                            int totalCartsInMostCompletedQuest = questTotalCarts[mostCompletedQuestId];
+
+                            questCompendium.MostCompletedQuestWithCartsQuestID = mostCompletedQuestId;
+                            questCompendium.MostCompletedQuestWithCarts = totalCartsInMostCompletedQuest;
+                        }
+                        else
+                        {
+                            // No quest entries with non-empty carts dictionaries found
+                            questCompendium.MostCompletedQuestWithCartsQuestID = 0;
+                            questCompendium.MostCompletedQuestWithCarts = 0;
+                        }
+
+                        questCompendium.PercentOfSoloQuests = GetSoloQuestsPercentage(conn);
+                        questCompendium.QuestPartySizeAverage = GetAvgValue("PartySize", "Quests", conn);
+                        questCompendium.QuestPartySizeMedian = GetMedianValue("PartySize", "Quests", conn);
+                        questCompendium.QuestPartySizeMode = GetModeValue("PartySize", "Quests", conn);
+                        questCompendium.PercentOfGuildFood = GetNonZeroPercentageOfField("GuildFoodID", "PlayerGear", conn);
+                        questCompendium.MostCommonGuildFood = GetModeValue("GuildFoodID", "PlayerGear", conn);
+                        questCompendium.MostCommonDivaSkill = GetModeValue("DivaSkillID", "PlayerGear", conn);
+                        questCompendium.PercentOfDivaSkill = GetNonZeroPercentageOfField("DivaSkillID", "PlayerGear", conn);
+
+                        // Query to get the item IDs for each player gear row
+                        query = @"
+                        SELECT 
+                            PlayerInventoryID, 
+                            Item1ID, 
+                            Item2ID, 
+                            Item3ID, 
+                            Item4ID, 
+                            Item5ID,
+                            Item6ID,
+                            Item7ID,
+                            Item8ID,
+                            Item9ID,
+                            Item10ID,
+                            Item11ID,
+                            Item12ID,
+                            Item13ID,
+                            Item14ID,
+                            Item15ID,
+                            Item16ID,
+                            Item17ID,
+                            Item18ID,
+                            Item19ID,
+                            Item20ID
+                        FROM PlayerInventory";
+
+                        // Create a list to hold the PlayerInventoryItemIds objects
+                        List<PlayerInventoryItemIds> playerInventoryItemIdsList = new List<PlayerInventoryItemIds>();
+
+                        // Loop through the query results and create a PlayerInventoryItemIds object for each row
+                        using (var cmd = new SQLiteCommand(query, conn))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    long playerInventoryID = (long)reader["PlayerInventoryID"];
+                                    List<long> itemIds = new List<long>();
+
+                                    for (int i = 1; i <= 20; i++)
+                                    {
+                                        long itemId = (long)reader[$"Item{i}ID"];
+                                        itemIds.Add(itemId);
+                                    }
+
+                                    var playerInventoryItemIds = new PlayerInventoryItemIds
+                                    {
+                                        PlayerInventoryID = playerInventoryID,
+                                        ItemIds = itemIds
+                                    };
+
+                                    playerInventoryItemIdsList.Add(playerInventoryItemIds);
+                                }
+                            }
+                        }
+
+                        // Loop through the PlayerInventoryItemIds objects and check if any of them have a skill fruit item ID
+                        int skillFruitUsageCount = 0;
+                        foreach (var playerInventoryItemIds in playerInventoryItemIdsList)
+                        {
+                            foreach (var itemId in playerInventoryItemIds.ItemIds)
+                            {
+                                if (Dictionary.SkillFruits.ItemID.ContainsKey(itemId))
+                                {
+                                    skillFruitUsageCount++;
+                                    break;
+                                }
+                            }
+                        }
+
+                        // Calculate the percentage of skill fruit usage
+                        double skillFruitUsagePercentage = skillFruitUsageCount * 100.0 / GetTableRowCount("RunID", "Quests", conn);
+
+                        questCompendium.PercentOfSkillFruit = skillFruitUsagePercentage;
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return questCompendium;
+        }
+
+        public GearCompendium GetGearCompendium()
+        {
+            GearCompendium gearCompendium = new GearCompendium();
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        gearCompendium.MostUsedWeaponType = GetModeValue("WeaponTypeID", "PlayerGear", conn);
+
+                        gearCompendium.TotalUniqueArmorPiecesUsed = GetTotalUniqueArmorPieces(conn);
+
+                        gearCompendium.TotalUniqueWeaponsUsed = GetTotalUniqueWeaponIDs(conn);
+
+                        gearCompendium.TotalUniqueDecorationsUsed = GetTotalUniqueDecorations(conn);
+
+                        gearCompendium.MostCommonDecorationID = GetMostCommonDecorationID(conn);
+
+                        gearCompendium.LeastUsedArmorSkill = GetLeastUsedArmorSkillID(conn);
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+
+            return gearCompendium;
+        }
+
+        public PerformanceCompendium GetPerformanceCompendium()
+        {
+            PerformanceCompendium performanceCompendium = new PerformanceCompendium();
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        (performanceCompendium.HighestTrueRaw, performanceCompendium.HighestTrueRawRunID) = GetRowWithHighestDictionaryValue("Quests", "AttackBuffDictionary", conn);
+                        performanceCompendium.TrueRawAverage = GetAverageOfDictionaryField("Quests", "AttackBuffDictionary", conn);
+                        performanceCompendium.TrueRawMedian = GetMedianOfDictionaryField("Quests", "AttackBuffDictionary", conn);
+
+                        (performanceCompendium.HighestActionsPerMinute, performanceCompendium.HighestActionsPerMinuteRunID) = GetRowWithHighestDictionaryValue("Quests", "ActionsPerMinuteDictionary", conn);
+                        performanceCompendium.ActionsPerMinuteAverage = GetAverageOfDictionaryField("Quests", "ActionsPerMinuteDictionary", conn);
+                        performanceCompendium.ActionsPerMinuteMedian = GetMedianOfDictionaryField("Quests", "ActionsPerMinuteDictionary", conn);
+
+                        (performanceCompendium.HighestDPS, performanceCompendium.HighestDPSRunID) = GetRowWithHighestDictionaryValue("Quests", "DamagePerSecondDictionary", conn);
+                        performanceCompendium.DPSAverage = GetAverageOfDictionaryField("Quests", "DamagePerSecondDictionary", conn);
+                        performanceCompendium.DPSMedian = GetMedianOfDictionaryField("Quests", "DamagePerSecondDictionary", conn);
+
+                        (performanceCompendium.HighestHitCount, performanceCompendium.HighestHitCountRunID) = GetRowWithHighestDictionaryValue("Quests", "HitCountDictionary", conn);
+                        performanceCompendium.HitCountAverage = GetAverageOfDictionaryField("Quests", "HitCountDictionary", conn);
+                        performanceCompendium.HitCountMedian = GetMedianOfDictionaryField("Quests", "HitCountDictionary", conn);
+
+                        (performanceCompendium.HighestHitsPerSecond, performanceCompendium.HighestHitsPerSecondRunID) = GetRowWithHighestDictionaryValue("Quests", "HitsPerSecondDictionary", conn);
+                        performanceCompendium.HitsPerSecondAverage = GetAverageOfDictionaryField("Quests", "HitsPerSecondDictionary", conn);
+                        performanceCompendium.HitsPerSecondMedian = GetMedianOfDictionaryField("Quests", "HitsPerSecondDictionary", conn);
+
+                        (performanceCompendium.HighestHitsTakenBlockedPerSecond, performanceCompendium.HighestHitsTakenBlockedPerSecondRunID) = GetRowWithHighestDictionaryValue("Quests", "HitsTakenBlockedPerSecondDictionary", conn);
+                        performanceCompendium.HitsTakenBlockedPerSecondAverage = GetAverageOfDictionaryField("Quests", "HitsTakenBlockedPerSecondDictionary", conn);
+                        performanceCompendium.HitsTakenBlockedPerSecondMedian = GetMedianOfDictionaryField("Quests", "HitsTakenBlockedPerSecondDictionary", conn); ;
+
+                        (performanceCompendium.HighestSingleHitDamage, performanceCompendium.HighestSingleHitDamageRunID) = GetRowWithHighestDictionaryValue("Quests", "DamageDealtDictionary", conn);
+                        performanceCompendium.SingleHitDamageAverage = GetAverageOfDictionaryField("Quests", "DamageDealtDictionary", conn);
+                        performanceCompendium.SingleHitDamageMedian = GetMedianOfDictionaryField("Quests", "DamageDealtDictionary", conn);
+
+                        (performanceCompendium.HighestHitsTakenBlocked, performanceCompendium.HighestHitsTakenBlockedRunID) = GetQuestWithHighestHitsTakenBlocked(conn);
+                        performanceCompendium.HitsTakenBlockedAverage = GetAverageHitsTakenBlockedCount(conn);
+                        performanceCompendium.HitsTakenBlockedMedian = GetMedianHitsTakenBlockedCount(conn);
+
+                        performanceCompendium.TotalActions = GetTotalCountOfValueInDictionaryField("KeystrokesDictionary", "Quests", conn) + GetTotalCountOfValueInDictionaryField("MouseInputDictionary", "Quests", conn) + GetTotalCountOfValueInDictionaryField("GamepadInputDictionary", "Quests", conn);
+                        performanceCompendium.TotalHitsCount = GetTotalCountOfValueInDictionaryField("HitCountDictionary", "Quests", conn);
+                        performanceCompendium.TotalHitsTakenBlocked = GetTotalCountOfValueInDictionaryField("HitsTakenBlockedDictionary", "Quests", conn);
+
+                        performanceCompendium.HealthAverage = GetAverageOfDictionaryField("Quests", "PlayerHPDictionary", conn);
+                        performanceCompendium.HealthMedian = GetMedianOfDictionaryField("Quests", "PlayerHPDictionary", conn);
+                        performanceCompendium.HealthMode = GetModeOfDictionaryField("Quests", "PlayerHPDictionary", conn);
+
+                        performanceCompendium.StaminaAverage = GetAverageOfDictionaryField("Quests", "PlayerStaminaDictionary", conn);
+                        performanceCompendium.StaminaMedian = GetMedianOfDictionaryField("Quests", "PlayerStaminaDictionary", conn);
+                        performanceCompendium.StaminaMode = GetModeOfDictionaryField("Quests", "PlayerStaminaDictionary", conn);
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return performanceCompendium;
+        }
+
+        public MezFesCompendium GetMezFesCompendium()
+        {
+            MezFesCompendium mezFesCompendium = new MezFesCompendium();
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        mezFesCompendium.MinigamesPlayed = GetTableRowCount("MezFesID", "MezFes", conn);
+                        mezFesCompendium.UrukiPachinkoTimesPlayed = GetCountOfIntValue("MezFesMinigameID", "MezFes", 464, conn);
+                        mezFesCompendium.UrukiPachinkoHighscore = GetMaxValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 464);
+                        mezFesCompendium.UrukiPachinkoAverageScore = GetAverageValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 464);
+                        mezFesCompendium.UrukiPachinkoMedianScore = GetMedianValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 464);
+
+                        mezFesCompendium.GuukuScoopTimesPlayed = GetCountOfIntValue("MezFesMinigameID", "MezFes", 466, conn);
+                        mezFesCompendium.GuukuScoopHighscore = GetMaxValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 466);
+                        mezFesCompendium.GuukuScoopAverageScore = GetAverageValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 466);
+                        mezFesCompendium.GuukuScoopMedianScore = GetMedianValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 466);
+
+                        mezFesCompendium.NyanrendoTimesPlayed = GetCountOfIntValue("MezFesMinigameID", "MezFes", 467, conn);
+                        mezFesCompendium.NyanrendoHighscore = GetMaxValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 467);
+                        mezFesCompendium.NyanrendoAverageScore = GetAverageValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 467);
+                        mezFesCompendium.NyanrendoMedianScore = GetMedianValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 467);
+
+                        mezFesCompendium.PanicHoneyTimesPlayed = GetCountOfIntValue("MezFesMinigameID", "MezFes", 468, conn);
+                        mezFesCompendium.PanicHoneyHighscore = GetMaxValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 468);
+                        mezFesCompendium.PanicHoneyAverageScore = GetAverageValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 468);
+                        mezFesCompendium.PanicHoneyMedianScore = GetMedianValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 468);
+
+                        mezFesCompendium.DokkanBattleCatsTimesPlayed = GetCountOfIntValue("MezFesMinigameID", "MezFes", 469, conn);
+                        mezFesCompendium.DokkanBattleCatsHighscore = GetMaxValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 469);
+                        mezFesCompendium.DokkanBattleCatsAverageScore = GetAverageValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 469);
+                        mezFesCompendium.DokkanBattleCatsMedianScore = GetMedianValueWithWhere("Score", "MezFes", conn, "MezFesMinigameID", 469);
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return mezFesCompendium;
+        }
+
+        public MonsterCompendium GetMonsterCompendium()
+        {
+            MonsterCompendium monsterCompendium = new MonsterCompendium();
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        (monsterCompendium.HighestMonsterAttackMultiplier, monsterCompendium.HighestMonsterAttackMultiplierRunID) = GetRecordWithHighestValueInField(conn, "Quests", "Monster1AttackMultiplierDictionary");
+                        (monsterCompendium.LowestMonsterAttackMultiplier, monsterCompendium.LowestMonsterAttackMultiplierRunID) = GetRecordWithLowestValueInField(conn, "Quests", "Monster1AttackMultiplierDictionary");
+
+                        (monsterCompendium.HighestMonsterDefenseRate, monsterCompendium.HighestMonsterDefenseRateRunID) = GetRecordWithHighestValueInField(conn, "Quests", "Monster1DefenseRateDictionary");
+                        (monsterCompendium.LowestMonsterDefenseRate, monsterCompendium.LowestMonsterDefenseRateRunID) = GetRecordWithLowestValueInField(conn, "Quests", "Monster1DefenseRateDictionary");
+
+                        (monsterCompendium.HighestMonsterSizeMultiplier, monsterCompendium.HighestMonsterSizeMultiplierRunID) = GetRecordWithHighestValueInField(conn, "Quests", "Monster1SizeMultiplierDictionary");
+                        (monsterCompendium.LowestMonsterSizeMultiplier, monsterCompendium.LowestMonsterSizeMultiplierRunID) = GetRecordWithLowestValueInField(conn, "Quests", "Monster1SizeMultiplierDictionary");
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return monsterCompendium;
+        }
+
+        public MiscellaneousCompendium GetMiscellaneousCompendium()
+        {
+            MiscellaneousCompendium miscellaneousCompendium = new MiscellaneousCompendium();
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        miscellaneousCompendium.TotalOverlaySessions = GetTableRowCount("SessionID", "Session", conn);
+                        miscellaneousCompendium.HighestSessionDuration = GetMaxValue("SessionDuration", "Session", conn);
+                        miscellaneousCompendium.LowestSessionDuration = GetMinValue("SessionDuration", "Session", conn);
+                        miscellaneousCompendium.AverageSessionDuration = GetAvgValue("SessionDuration", "Session", conn);
+                        miscellaneousCompendium.MedianSessionDuration = GetMedianValue("SessionDuration", "Session", conn);
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleError(transaction, ex);
+                    }
+                }
+            }
+            return miscellaneousCompendium;
+        }
+
+        #endregion
+
+        #region migrations
+
+        private int GetUserVersion(SQLiteConnection connection)
+        {
+            int version = 0;
+            using (SQLiteTransaction transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    string sql = @"PRAGMA user_version";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+                    {
+                        object result = cmd.ExecuteScalar();
+                        if (result != DBNull.Value)
+                        {
+                            version = Convert.ToInt32(result);
+                            logger.Info("Current user_version is {0}", version);
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+            return version;
+        }
+
+        private void SetUserVersion(SQLiteConnection connection, int version)
+        {
+            using (SQLiteTransaction transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    string sql = $"PRAGMA user_version = {version}";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    logger.Info("Set user_version to {0}", version);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        // TODO: i dont like using goto, but it seems to make code more succinct in this case.
+        // https://stackoverflow.com/questions/550662/database-schema-updates
+        // https://stackoverflow.com/questions/989558/best-practices-for-in-app-database-migration-for-sqlite
+        /*
+        The only schema altering commands directly supported by SQLite are the "rename table", "rename column", 
+        "add column", "drop column" commands shown above. However, applications can make other arbitrary changes to 
+        the format of a table using a simple sequence of operations. The steps to make arbitrary 
+        changes to the schema design of some table X are as follows:
+
+        1. If foreign key constraints are enabled, disable them using PRAGMA foreign_keys=OFF.
+
+        2. Start a transaction.
+
+        3. Remember the format of all indexes, triggers, and views associated with table X. This information will be needed in step 8 below. One way to do this is to run a query like the following: SELECT type, sql FROM sqlite_schema WHERE tbl_name='X'.
+
+        4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+
+        5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+
+        6. Drop the old table X: DROP TABLE X.
+
+        7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+
+        8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+
+        9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+
+        10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
+
+        11. Commit the transaction started in step 2.
+
+        12. If foreign keys constraints were originally enabled, re-enable them now.
+         */
+        private void MigrateToSchemaFromVersion(SQLiteConnection conn, int fromVersion) 
+        {
+            // 1. If foreign key constraints are enabled, disable them using PRAGMA foreign_keys=OFF.
+            DisableForeignKeyConstraints(conn);
+
+            // 2. Start a transaction.
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    int newVersion = fromVersion;
+                    // allow migrations to fall through switch cases to do a complete run
+                    // start with current version + 1
+                    //[self beginTransaction];
+                    switch (fromVersion)
+                    {
+                        default:
+                            logger.Info("No new schema updates found. Schema version: {0}", fromVersion);
+                            MessageBox.Show(string.Format(
+@"No new schema updates found! Schema version: {0}", fromVersion), 
+                                string.Format("MHF-Z Overlay Database Update ({0} to {1})", 
+                                previousVersion, 
+                                App.CurrentProgramVersion), 
+                                MessageBoxButton.OK, 
+                                MessageBoxImage.Information);
+                            break;
+                        case 0://v0.22.0 or older (TODO: does this work with older or just v0.22.0?)
+                            // change pin type to mode 'pin' for keyboard handling changes
+                            // removing types from previous schema
+                            //sqlite3_exec(db, "DELETE FROM types;", NULL, NULL, NULL);
+                            //NSLog(@"installing current types");
+                            //[self loadInitialData];
+                            {
+                                PerformUpdateToVersion_0_23_0(conn);
+                                newVersion++;
+                                logger.Info("Updated schema to version v0.23.0. user_version {0}", newVersion);
+                                break;
+                                //goto case 1;
+                            }
+                        //case 1://v0.23.0
+                            //adds support for recent view tracking
+                            //sqlite3_exec(db, "ALTER TABLE entries ADD COLUMN touched_at TEXT;", NULL, NULL, NULL);
+                            //{
+                                //PerformUpdateToVersion_0_24_0(conn);
+                                //newVersion++;
+                                //goto case 2;
+                            //}
+                        //case 2://v0.24.0
+                            //sqlite3_exec(db, "ALTER TABLE categories ADD COLUMN image TEXT;", NULL, NULL, NULL);
+                            //sqlite3_exec(db, "ALTER TABLE categories ADD COLUMN entry_count INTEGER;", NULL, NULL, NULL);
+                            //sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS categories_id_idx ON categories(id);", NULL, NULL, NULL);
+                            //sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS categories_name_id ON categories(name);", NULL, NULL, NULL);
+                            //sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS entries_id_idx ON entries(id);", NULL, NULL, NULL);
+
+                            // etc...
+                            //{
+                                //PerformUpdateToVersion_0_25_0(conn);
+                                //newVersion++;
+                                //break;
+                            //}
+                    }
+
+                    //[self setSchemaVersion];
+                    SetUserVersion(conn, newVersion);
+
+                    // 11. Commit the transaction started in step 2.
+                    transaction.Commit();
+
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+
+            // 12. If foreign keys constraints were originally enabled, re-enable them now.
+            EnableForeignKeyConstraints(conn);
+            //[self endTransaction];
+        }
+
         private void UpdateDatabaseSchema(SQLiteConnection connection)
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
@@ -7573,12 +9769,17 @@ namespace MHFZ_Overlay
             {
                 try
                 {
-                    string backupFileName = "";
+                    int currentUserVersion = GetUserVersion(connection);
 
-                    if (MainWindow.CurrentProgramVersion.Trim() != previousVersion.Trim())
+                    if (App.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0)
                     {
-                        MessageBoxResult result = MessageBox.Show("A new version of the program has been installed. Do you want to perform the necessary database updates? A backup of your current MHFZ_Overlay.sqlite file will be done if you accept.\n\nUpdating the database structure may take some time.",
-                                                         string.Format("Program Update ({0} to {1})",previousVersion,MainWindow.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult result = MessageBox.Show(
+@"A new version of the program has been installed.
+
+Do you want to perform the necessary database updates? A backup of your current MHFZ_Overlay.sqlite file will be done if you accept.
+
+Updating the database structure may take some time, it will transport all of your current data straight to the latest database structure, regardless of the previous database version.",
+                                                         string.Format("MHF-Z Overlay Database Update ({0} to {1})", previousVersion, App.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                         if (result == MessageBoxResult.Yes)
                         {
                             // Make a backup of the current SQLite file before updating the schema
@@ -7588,59 +9789,34 @@ namespace MHFZ_Overlay
 
                             if (processes.Length > 0)
                             {
-                                // Get the location of the first "mhf.exe" process
-                                string mhfPath = processes[0].MainModule.FileName;
-
-                                // Get the directory that contains "mhf.exe"
-                                string mhfDirectory = Path.GetDirectoryName(mhfPath);
-
-                                string databasePath = Path.Combine(mhfDirectory, "database");
-                                backupFileName = Path.Combine(databasePath, "MHFZ_Overlay_" + previousVersion + ".sqlite");
-                                File.Copy(s.DatabaseFilePath, backupFileName);
-                                logger.Info("FILE OPERATION: copying {0} into {1}", s.DatabaseFilePath, backupFileName);
-
+                                FileManager.CreateDatabaseBackup(connection, BackupFolderName);
                             }
                             else
                             {
                                 // The "mhf.exe" process was not found
-                                MessageBox.Show("The 'mhf.exe' process was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                logger.Fatal("PROGRAM OPERATION: mhf.exe not found");
-                                Environment.Exit(0);
+                                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                logger.Fatal("mhf.exe not found");
+                                ApplicationManager.HandleShutdown();
                             }
 
-                            // Create a dictionary to store the version updates
-                            var versionUpdates = new Dictionary<string, Action>
-                            {
-                                { "v0.22.0", () => {
-                                    PerformUpdateToVersion_0_23_0(connection);
-                                    PerformUpdateToVersion_0_24_0(connection);
-                                }},
-                                { "v0.23.0", () => {
-                                    PerformUpdateToVersion_0_24_0(connection);
-                                }},
-                            };
-
-                            // Check if an update is needed
-                            if (versionUpdates.ContainsKey(previousVersion))
-                            {
-                                // Perform the update
-                                versionUpdates[previousVersion]();
-                                logger.Info("DATABASE OPERATION: Database schema updated from {0} to {1}", previousVersion, MainWindow.CurrentProgramVersion);
-                            }
-                            else
-                            {
-                                MessageBox.Show("The current version and the previous version aren't the same, however no update was found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                logger.Fatal("PROGRAM OPERATION: The current version and the previous version aren't the same, however no update was found");
-                                Environment.Exit(0);
-                            }
+                            MigrateToSchemaFromVersion(connection, currentUserVersion);
+                            var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
+                            FileManager.DeleteFile(referenceSchemaFilePath);
+                            // later on it creates it
+                            // see this comment: Check if the reference schema file exists
+                            //MessageBox.Show("The current version and the previous version aren't the same, however no update was found", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            //logger.Fatal("The current version and the previous version aren't the same, however no update was found");
+                            //ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
                         }
                         else
                         {
-                            MessageBox.Show("Cannot use the overlay with an outdated database schema", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            logger.Fatal("DATABASE OPERATION: Outdated database schema");
-                            Environment.Exit(0);
+                            MessageBox.Show("Cannot use the overlay with an outdated database schema", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            logger.Fatal("Outdated database schema");
+                            ApplicationManager.HandleShutdown();
                         }
                     }
+
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -7649,8 +9825,9 @@ namespace MHFZ_Overlay
             }
         }
 
-        // TODO this is repeating code
-        private static void PerformUpdateToVersion_0_23_0(SQLiteConnection connection)
+        // TODO: this is repeating code. also not sure if the data types handling is correct
+        // UPDATE: so it turns out, data types are suggestions, not rules.
+        private void PerformUpdateToVersion_0_23_0(SQLiteConnection connection)
         {
             // Perform database updates for version 0.23.0
             string sql = @"CREATE TABLE IF NOT EXISTS QuestAttempts(
@@ -7663,6 +9840,80 @@ namespace MHFZ_Overlay
             FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
             UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
             )";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS PersonalBestAttempts(
+                    PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    QuestID INTEGER NOT NULL,
+                    WeaponTypeID INTEGER NOT NULL,
+                    ActualOverlayMode TEXT NOT NULL,
+                    Attempts INTEGER NOT NULL,
+                    FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
+                    )
+                    ";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            sql = @"CREATE TABLE IF NOT EXISTS ZenithGauntlets(
+                        ZenithGauntletID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        WeaponType TEXT NOT NULL,
+                        Category TEXT NOT NULL,
+                        TotalFramesElapsed INTEGER NOT NULL,
+                        TotalTimeElapsed TEXT NOT NULL,
+                        Run1ID INTEGER NOT NULL,
+                        Run2ID INTEGER NOT NULL,
+                        Run3ID INTEGER NOT NULL,
+                        Run4ID INTEGER NOT NULL,
+                        Run5ID INTEGER NOT NULL,
+                        Run6ID INTEGER NOT NULL,
+                        Run7ID INTEGER NOT NULL,
+                        Run8ID INTEGER NOT NULL,
+                        Run9ID INTEGER NOT NULL,
+                        Run10ID INTEGER NOT NULL,
+                        Run11ID INTEGER NOT NULL,
+                        Run12ID INTEGER NOT NULL,
+                        Run13ID INTEGER NOT NULL,
+                        Run14ID INTEGER NOT NULL,
+                        Run15ID INTEGER NOT NULL,
+                        Run16ID INTEGER NOT NULL,
+                        Run17ID INTEGER NOT NULL,
+                        Run18ID INTEGER NOT NULL,
+                        Run19ID INTEGER NOT NULL,
+                        Run20ID INTEGER NOT NULL,
+                        Run21ID INTEGER NOT NULL,
+                        Run22ID INTEGER NOT NULL,
+                        Run23ID INTEGER NOT NULL,
+                        FOREIGN KEY(Run1ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run2ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run3ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run4ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run5ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run6ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run7ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run8ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run9ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run10ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run11ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run12ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run13ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run14ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run15ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run16ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run17ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run18ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run19ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run20ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run21ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run22ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run23ID) REFERENCES Quests(RunID)
+                    )";
             using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
             {
                 cmd.ExecuteNonQuery();
@@ -7708,11 +9959,11 @@ namespace MHFZ_Overlay
 
             sql = @"CREATE TABLE IF NOT EXISTS Bingo(
                     BingoID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     Difficulty TEXT NOT NULL,
                     MonsterList TEXT NOT NULL,
-                    ElapsedTime DATETIME NOT NULL,
+                    ElapsedTime TEXT NOT NULL,
                     Score INTEGER NOT NULL
                     )";
             using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
@@ -7731,7 +9982,7 @@ namespace MHFZ_Overlay
 
             sql = @"CREATE TABLE IF NOT EXISTS MezFes(
                     MezFesID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt DATETIME NOT NULL,
+                    CreatedAt TEXT NOT NULL,
                     CreatedBy TEXT NOT NULL,
                     MinigameID INTEGER NOT NULL,
                     Score TEXT NOT NULL,
@@ -7846,9 +10097,322 @@ namespace MHFZ_Overlay
                 cmd.ExecuteNonQuery();
             }
 
+            //            sql = @"ALTER TABLE Quests
+            //                    MODIFY COLUMN Monster1HPDictionary TEXT NOT NULL AFTER PartySize,
+            //                    MODIFY COLUMN Monster2HPDictionary TEXT NOT NULL AFTER Monster1HPDictionary,
+            //                    MODIFY COLUMN Monster3HPDictionary TEXT NOT NULL AFTER Monster2HPDictionary,
+            //                    MODIFY COLUMN Monster4HPDictionary TEXT NOT NULL AFTER Monster3HPDictionary,
+            //                    MODIFY COLUMN Monster1AttackMultiplierDictionary TEXT NOT NULL AFTER Monster4HPDictionary,
+            //                    MODIFY COLUMN Monster1DefenseRateDictionary TEXT NOT NULL AFTER Monster1AttackMultiplierDictionary,
+            //                    MODIFY COLUMN Monster1SizeMultiplierDictionary TEXT NOT NULL AFTER Monster1DefenseRateDictionary,
+            //                    MODIFY COLUMN Monster1PoisonThresholdDictionary TEXT NOT NULL AFTER Monster1SizeMultiplierDictionary,
+            //                    MODIFY COLUMN Monster1SleepThresholdDictionary TEXT NOT NULL AFTER Monster1PoisonThresholdDictionary,
+            //                    MODIFY COLUMN Monster1ParalysisThresholdDictionary TEXT NOT NULL AFTER Monster1SleepThresholdDictionary,
+            //                    MODIFY COLUMN Monster1BlastThresholdDictionary TEXT NOT NULL AFTER Monster1ParalysisThresholdDictionary,
+            //                    MODIFY COLUMN Monster1StunThresholdDictionary TEXT NOT NULL AFTER Monster1BlastThresholdDictionary;
+            //                    MODIFY COLUMN IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) AFTER Monster1StunThresholdDictionary;
+            //                    MODIFY COLUMN RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1, 30)) AFTER IsHighGradeEdition;                    
+            //";
+            //            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            //            {
+            //                cmd.ExecuteNonQuery();
+            //            }
+
+            sql = @"CREATE TABLE new_Quests
+                    (
+                    QuestHash TEXT NOT NULL DEFAULT '',
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
+                    RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    TimeLeft INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeValue INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeDisplay TEXT NOT NULL DEFAULT '', 
+                    ObjectiveImage TEXT NOT NULL DEFAULT '',
+                    ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0) DEFAULT 0, 
+                    ObjectiveQuantity INTEGER NOT NULL DEFAULT 0, 
+                    StarGrade INTEGER NOT NULL DEFAULT 0, 
+                    RankName TEXT NOT NULL DEFAULT '', 
+                    ObjectiveName TEXT NOT NULL DEFAULT '', 
+                    Date TEXT NOT NULL DEFAULT '',
+                    YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
+                    -- DpsData TEXT NOT NULL DEFAULT '',
+                    AttackBuffDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitCountDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamageDealtDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamagePerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    AreaChangesDictionary TEXT NOT NULL DEFAULT '{}',
+                    CartsDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerHPDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerStaminaDictionary TEXT NOT NULL DEFAULT '{}',
+                    KeystrokesDictionary TEXT NOT NULL DEFAULT '{}',
+                    MouseInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    GamepadInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActionsPerMinuteDictionary TEXT NOT NULL DEFAULT '{}',
+                    OverlayModeDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    PartySize INTEGER NOT NULL DEFAULT 0,
+                    Monster1HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster2HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster3HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster4HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1PoisonThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SleepThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
+                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1,30)) DEFAULT 30,
+                    FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
+                    FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
+                    -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
+                    )";
+
+            // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+            AlterTableSchema(connection, "Quests", sql);
+
+            // https://www.sqlite.org/lang_altertable.html#otheralter must read
             // Repeat the same pattern for other version updates
             // By using ALTER TABLE, you can make changes to the structure of a table
             // without having to recreate the table and manually transfer all the data.
+        }
+
+        // Define a function that takes a connection string, the name of the table to alter (X), and the new schema for the table (as a SQL string)
+        private void AlterTableSchema(SQLiteConnection connection, string tableName, string newSchema)
+        {
+            try
+            {
+                // 3. Remember the format of all indexes, triggers, and views associated with table X. This information will be needed in step 8 below. One way to do this is to run a query like the following: SELECT type, sql FROM sqlite_schema WHERE tbl_name='X'.
+                // Remember the format of all indexes, triggers, and views associated with table X
+                SQLiteCommand rememberFormat = new SQLiteCommand("SELECT type, sql FROM sqlite_schema WHERE tbl_name=@tableName;", connection);
+                rememberFormat.Parameters.AddWithValue("@tableName", tableName);
+                SQLiteDataReader reader = rememberFormat.ExecuteReader();
+                List<string> indexSqls = new List<string>();
+                List<string> triggerSqls = new List<string>();
+                List<string> viewSqls = new List<string>();
+                while (reader.Read())
+                {
+                    string type = reader.GetString(0);
+                    string sql = reader.GetString(1);
+                    if (type == "index")
+                    {
+                        indexSqls.Add(sql);
+                    }
+                    else if (type == "trigger")
+                    {
+                        triggerSqls.Add(sql);
+                    }
+                    else if (type == "view")
+                    {
+                        viewSqls.Add(sql);
+                    }
+                }
+                reader.Close();
+
+                // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+                // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
+                using (SQLiteCommand createTable = new SQLiteCommand(newSchema, connection))
+                {
+                    createTable.ExecuteNonQuery();
+                }
+
+                logger.Info("Created table new_{0}", tableName);
+
+                // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+                // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
+                string insertSql = "INSERT INTO new_" + tableName + " SELECT * FROM " + tableName + ";";
+                using (SQLiteCommand insertData = new SQLiteCommand(insertSql, connection))
+                {
+                    insertData.ExecuteNonQuery();
+                }
+
+                logger.Info("Transferred data from {0} to new_{1}", tableName, tableName);
+
+                // 6. Drop the old table X: DROP TABLE X.
+                // Drop the old table X
+                using (SQLiteCommand dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
+                {
+                    dropTable.ExecuteNonQuery();
+                }
+
+                logger.Info("Deleted table {0}", tableName);
+
+                // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+                // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
+                using (SQLiteCommand renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
+                {
+                    renameTable.ExecuteNonQuery();
+                }
+
+                logger.Info("Renamed new_{0} to {1}", tableName, tableName);
+
+                // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+                // Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X
+                foreach (string indexSql in indexSqls)
+                {
+                    using (SQLiteCommand createIndex = new SQLiteCommand(indexSql, connection))
+                    {
+                        createIndex.ExecuteNonQuery();
+                    }
+                }
+                foreach (string triggerSql in triggerSqls)
+                {
+                    using (SQLiteCommand createTrigger = new SQLiteCommand(triggerSql, connection))
+                    {
+                        createTrigger.ExecuteNonQuery();
+                    }
+                }
+                foreach (string viewSql in viewSqls)
+                {
+                    using (SQLiteCommand createView = new SQLiteCommand(viewSql, connection))
+                    {
+                        createView.ExecuteNonQuery();
+                    }
+                }
+
+                logger.Info("Indexes: {0}, Triggers: {1}, Views: {2}", indexSqls.Count, triggerSqls.Count, viewSqls.Count);
+
+                // TODO: since im not using any views this still needs testing in case i make views someday.
+                // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+                //using (SQLite
+                // Check if any views refer to table X in a way that is affected by the schema change
+                SQLiteCommand findViews = new SQLiteCommand("SELECT name, sql FROM sqlite_master WHERE type='view' AND sql LIKE '% " + tableName + " %';", connection);
+                SQLiteDataReader viewReader = findViews.ExecuteReader();
+                List<string> viewNames = new List<string>();
+                List<string> viewSqlsModified = new List<string>();
+                while (viewReader.Read())
+                {
+                    viewNames.Add(viewReader.GetString(0));
+                    string viewSql = viewReader.GetString(1);
+                    viewSql = viewSql.Replace(tableName, "new_" + tableName);
+                    viewSqlsModified.Add(viewSql);
+                }
+                viewReader.Close();
+
+                // Drop those views using DROP VIEW
+                foreach (string viewName in viewNames)
+                {
+                    using (SQLiteCommand dropView = new SQLiteCommand("DROP VIEW " + viewName + ";", connection))
+                    {
+                        dropView.ExecuteNonQuery();
+                    }
+                }
+
+                // TODO: test
+                // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
+                for (int i = 0; i < viewNames.Count; i++)
+                {
+                    using (SQLiteCommand createView = new SQLiteCommand(viewSqlsModified[i], connection))
+                    {
+                        createView.ExecuteNonQuery();
+                    }
+                }
+
+                logger.Info("Views affected: {0}", viewSqlsModified.Count);
+
+                string foreignKeysViolations = CheckForeignKeys(connection);
+
+                // 10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
+                if (foreignKeysViolations != "") 
+                {
+                    logger.Fatal("Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
+                    MessageBox.Show("Foreign keys violations detected, closing program.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ApplicationManager.HandleShutdown();
+                }
+                else
+                {
+                    logger.Info("No foreign keys violations found");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Roll back the transaction if any errors occur
+                logger.Error(ex, "Could not alter table {0}", tableName);
+            }
+        }
+
+        // Define a function that takes a connection string and the name of the table to check for foreign key violations
+        public string CheckForeignKeys(SQLiteConnection connection, string tableName = "")
+        {
+            string query = "PRAGMA foreign_key_check";
+            if (!string.IsNullOrEmpty(tableName))
+            {
+                query += "('" + tableName + "')";
+            }
+
+            using (SQLiteCommand command = new SQLiteCommand(query, connection))
+            {
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        // There are foreign key violations
+                        var violations = new List<Dictionary<string, object>>();
+
+                        while (reader.Read())
+                        {
+                            var violation = new Dictionary<string, object>();
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                violation[reader.GetName(i)] = reader.GetValue(i);
+                            }
+                            violations.Add(violation);
+                        }
+                        logger.Error(violations);
+                        return JsonConvert.SerializeObject(violations);
+                    }
+                    else
+                    {
+                        // No foreign key violations
+                        logger.Info("No foreign key violations found.");
+                        return "";
+                    }
+                }
+            }
+        }
+
+        private void EnableForeignKeyConstraints(SQLiteConnection connection)
+        {
+            try
+            {
+                string sql = @"PRAGMA foreign_keys = ON";
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                logger.Info("Enabled foreign key constraints");
+            } 
+            catch (Exception ex)
+            {
+                logger.Fatal("Could not toggle foreign key constraints", ex);
+                MessageBox.Show("Could not toggle foreign key constraints", "MHF-Z Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ApplicationManager.HandleShutdown();
+            }
+        }
+
+        private void DisableForeignKeyConstraints(SQLiteConnection connection)
+        {
+            try
+            {
+                string sql = @"PRAGMA foreign_keys = OFF";
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                logger.Info("Disabled foreign key constraints");
+            }
+            catch (Exception ex)
+            {
+                logger.Fatal("Could not toggle foreign key constraints", ex);
+                MessageBox.Show("Could not toggle foreign key constraints", "MHF-Z Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ApplicationManager.HandleShutdown();
+            }
         }
 
         private static void PerformUpdateToVersion_0_24_0(SQLiteConnection connection)
@@ -7860,23 +10424,23 @@ namespace MHFZ_Overlay
         private void WritePreviousVersionToFile()
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+            var previousVersionFilePath = s.PreviousVersionFilePath.Trim();
+            var logMessage = "Error with version file";
 
-            // TODO why does this error?
+            // TODO why does this error? also find a way to put this in FileManager
             try
             {
-                if (File.ReadAllText(s.PreviousVersionFilePath) == "")
-                    previousVersion = MainWindow.CurrentProgramVersion;
+                if (File.ReadAllText(previousVersionFilePath) == "")
+                    previousVersion = App.CurrentProgramVersion.Trim();
                 else
-                    previousVersion = File.ReadAllText(s.PreviousVersionFilePath);
+                    previousVersion = File.ReadAllText(previousVersionFilePath);
 
-                using (StreamWriter writer = new StreamWriter(s.PreviousVersionFilePath, false))
-                {
-                    writer.WriteLine(previousVersion);
-                }
+                File.WriteAllText(previousVersionFilePath, previousVersion);
+                logger.Info("Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                logger.Error(ex, "FILE OPERATION: Error with version file");
+                logger.Error(ex, logMessage);
             }
         }
 
@@ -7895,37 +10459,61 @@ namespace MHFZ_Overlay
             return version;
         }
 
+        #endregion
+
+        /// <summary>
+        /// Throws an exception.
+        /// </summary>
+        /// <param name="conn">The connection.</param>
+        private void ThrowException(SQLiteConnection conn)
+        {
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    // Execute an invalid SQL statement to trigger an exception
+                    using (var command = new SQLiteCommand("SELECT * FROM non_existent_table", conn))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+
+                    // Commit the transaction
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
 
         #endregion
     }
 }
-/* TODO
- * add checker for triggers and indexes changes
- * 
- * USE BLOB for attack buff list and hit count list.
- * data structure: list<int (timeint), int (hit count / attack buff)>
- * 
- * 
- * 
-You can use LINQ to perform various operations on lists, such as filtering, sorting, and aggregating data. Here's an example of how you can use LINQ to calculate the average attack buff of a particular quest run with a particular weapon type:
-
-To calculate the maximum attack buff of a particular quest run with a particular weapon type, you can use the Max() method:
-
-To calculate the maximum attack buff of all quest runs of a particular quest with a particular weapon type, you can use LINQ to group the attack buff values by quest and weapon type, and then use the Max() method to find the maximum attack buff for each group:
-
-This will return a list of groups, each containing the quest ID, weapon type, and maximum attack buff for a particular quest and weapon type. You can then iterate over this list to find the maximum attack buff for all quest runs. 
- 
-Include info from more spreadsheets (speedrun calculation etc)
-
-LINQ (Language Integrated Query) is a set of features in C# that allows you to write queries to filter, transform, and aggregate data in your code. It works with various data sources, including arrays, lists, and dictionaries.
-
-For example, if you want to calculate the average attack buff for a particular quest run with a particular weapon type, you could use LINQ's Average method like this:
-
-To calculate the maximum attack buff for a particular quest run with a particular weapon type, you could use LINQ's Max method like this:
-
-To calculate the maximum attack buff of all quest runs of a particular quest with a particular weapon type, you would need to store the attack buff dictionaries for each quest run in a list or collection and then use LINQ's Max method like this:
-
-This would select the maximum attack buff value for each dictionary in the list, and then find the overall maximum value from those.
-
-You can read more about LINQ and its various methods and features in the C# documentation: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/
- */
+/// <TODO>
+/// * add checker for triggers and indexes changes
+/// * USE BLOB for attack buff list and hit count list.
+/// * data structure: list < int(timeint), int(hit count / attack buff) >
+/// You can use LINQ to perform various operations on lists, such as filtering, sorting, and aggregating data. Here's an example of how you can use LINQ to calculate the average attack buff of a particular quest run with a particular weapon type:
+///
+/// To calculate the maximum attack buff of a particular quest run with a particular weapon type, you can use the Max() method:
+///
+/// To calculate the maximum attack buff of all quest runs of a particular quest with a particular weapon type, you can use LINQ to group the attack buff values by quest and weapon type, and then use the Max() method to find the maximum attack buff for each group:
+///
+/// This will return a list of groups, each containing the quest ID, weapon type, and maximum attack buff for a particular quest and weapon type. You can then iterate over this list to find the maximum attack buff for all quest runs. 
+///
+/// Include info from more spreadsheets (speedrun calculation etc)
+///
+/// LINQ(Language Integrated Query) is a set of features in C# that allows you to write queries to filter, transform, and aggregate data in your code. It works with various data sources, including arrays, lists, and dictionaries.
+///
+/// For example, if you want to calculate the average attack buff for a particular quest run with a particular weapon type, you could use LINQ's Average method like this:
+///
+/// To calculate the maximum attack buff for a particular quest run with a particular weapon type, you could use LINQ's Max method like this:
+///
+/// To calculate the maximum attack buff of all quest runs of a particular quest with a particular weapon type, you would need to store the attack buff dictionaries for each quest run in a list or collection and then use LINQ's Max method like this:
+///
+/// This would select the maximum attack buff value for each dictionary in the list, and then find the overall maximum value from those.
+///
+/// You can read more about LINQ and its various methods and features in the C# documentation: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/
+/// 
+/// </TODO>

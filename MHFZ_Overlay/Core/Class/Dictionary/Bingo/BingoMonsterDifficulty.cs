@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Dictionary
 {
@@ -96,7 +92,7 @@ namespace Dictionary
                 "Zenith★2 Gravios",
                 "Zenith★2 Doragyurosu",
                 "Zenith★2 Bogabadorumu",
-                } 
+                }
             },
             {"Medium", new List<string>{
                 "Zenith★3 Espinas",
@@ -130,7 +126,7 @@ namespace Dictionary
                 "Lv9999 Crimson Fatalis",
                 "Lv9999 Shantien",
                 "2nd District Duremudira"
-                } 
+                }
             },
             {"Hard", new List<string>{
                 "Zenith★4 Espinas",
@@ -165,7 +161,7 @@ namespace Dictionary
                 "Golden Deviljho",
                 "Upper Shiten Unknown",
                 "Upper Shiten Disufiroa"
-                } 
+                }
             }
         };
     }

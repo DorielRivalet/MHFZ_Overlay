@@ -1,11 +1,20 @@
 name: "💡 Feature Request"
 description: Create a new ticket for a new feature request
-title: "[REQUEST] - <title>"
+title: "[REQUEST] - title"
 labels: [
   "question",
   "enhancement"
 ]
+assignees:
+  - DorielRivalet
 body:
+  - type: checkboxes
+    attributes:
+      label: Is there an existing feature request for this?
+      description: Please search to see if a feature request already exists for the feature you are requesting.
+      options:
+      - label: I have searched the existing feature requests
+        required: true
   - type: textarea
     id: summary
     attributes:

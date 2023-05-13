@@ -6182,7 +6182,7 @@ namespace Dictionary
             {55960, "≪辿異★１クエスト≫ みんなで★１辿異種針纏竜"},
             {55961, "≪辿異★１クエスト≫ 戌年にさようなら"},
             {55962, "≪Ｇ★７Event≫ いますぐ依頼の裂水竜"},
-            {55963, "≪G★1 Events≫ Rafan G Transmog Exchange"},
+            {55963, "≪G★1 Events≫ Rafan G Transmog Exchange"}, // TODO
             {55964, "≪G★3 Events≫ Festi Joy [Transmogs I]"},
             {55965, "≪★1 Zenith Quest≫ Festi Joy [Vora]"},
             {55966, "≪★1 Zenith Quest≫ Festi Joy [Azura]"},

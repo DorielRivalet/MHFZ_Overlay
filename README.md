@@ -8,6 +8,8 @@
 ![CircleCI](https://img.shields.io/circleci/build/github/DorielRivalet/mhfz-overlay?label=CircleCI&style=flat)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DorielRivalet/mhfz-overlay?style=flat)
 ![GitHub repo size](https://img.shields.io/github/repo-size/DorielRivalet/mhfz-overlay?style=flat)
+[![LOC](https://tokei.rs/b1/github/DorielRivalet/mhfz-overlay)](https://github.com/XAMPPRocky/tokei)
+[![wakatime](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a.svg)](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a)
 
 <div align = center>
 
@@ -44,11 +46,17 @@ The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospac
 ## Installation
 
 1. [Get **ALL** of the requirements](#requirements)
-2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/Releases.7z)
-3. Make sure Windows or your antivirus did not delete the files (because it reads the games memory, Windows might detect it as a trojan, so you might have to get it out of quarantine)
-4. Unzip it anywhere. Run `mhfz-overlaySetup.exe` **as Administrator**
+2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/MHFZ_OverlaySetup.exe)
+3. Make sure *Windows* or your antivirus did not delete the file (because it reads the game's memory, *Windows* might detect it as a trojan, so you might have to get it out of quarantine)
+4. Run `MHFZ_OverlaySetup.exe` **as Administrator**
 5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
 6. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
+
+### DISCLAIMER
+
+If you obtained the mhfz-overlay software from any source other than GitHub releases, please be aware that there are no guarantees that the program has the same code as the version in this repository, nor that it was created by the same individual(s), or that it represents the latest version.
+
+We strongly recommend that you verify the authenticity and integrity of the software by comparing the SHA-256 checksum we provide against the checksum of the software you have obtained. The SHA-256 checksum can be found in the GitHub release notes and can be used to ensure that the software you are using matches the code in this repository. We assume no responsibility for any issues or problems that may arise from the use of software obtained from other sources.
 
 [View CHANGELOG.md](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md)
 
@@ -59,6 +67,10 @@ The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospac
 - `Shift+F1` Open Configuration
 - `Shift+F5` Restart Overlay
 - `Shift+F6` Exit
+
+As an alternative to hotkeys, you can check your system tray options by right-clicking the icon.
+
+![System Tray options](./demo/systemtray.png)
 
 **It's recommended to start the overlay when you are done loading into Mezeporta.**
 
@@ -141,9 +153,11 @@ Includes icons!
 
 ![Watermarks](./demo/speedrun.png)
 
-- [x] Quest Runs Database (check weapon usage, set YouTube URLs, view past statistics, etc!)
+- [x] Quest Runs Database (check weapon usage, set YouTube URLs, view past statistics, etc.!)
 
 ![Weapon Usage](./demo/databaseweaponusage.png)
+
+![Compendium of Personal Statistics](./demo/compendium.png)
 
 ![Top 20](./demo/databasetop20.png)
 
@@ -159,9 +173,7 @@ Includes icons!
 
 - [x] Also includes personal best times by date and by attempts! The total frames elapsed are shown in the graph.
 
-![Personal Best by Date](./demo/personalbest1.png)
-
-![Personal Best by Attempts](./demo/personalbest2.png)
+![Personal Best by Attempts](./demo/personalbest1.png)
 
 **Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located inside the database folder, which is inside your game folder.
 
@@ -226,7 +238,6 @@ If the HP shows 0/1 then change area for it to load.
 - Selecting monsters for body parts and monster status
 - Fix max HP for Road
 - Allow lock-on to be used to select monsters
-- Overlay font options
 - Add shortcut for saving
 - Monster stats import/export
 - Automatically set default positions according to screen resolution
@@ -238,7 +249,6 @@ If the HP shows 0/1 then change area for it to load.
 - PvP addresses
 - Handle multiple objectives information
 - Zenith information in Road
-- Settings import/export
 - Raviente Support Part Info
 - Detect UL/HC
 - Guild Pugi address
@@ -282,6 +292,10 @@ This repository includes two main documentation files:
 - **`docs/README.md`**: This file is meant for developers and technical users who are contributing to the project or working on the codebase. It contains information about the software's intricacies, as well as instructions for deploying the project.
 
 We recommend consulting the appropriate documentation file based on your needs. If you have any questions or issues, feel free to [contact us](https://github.com/DorielRivalet/mhfz-overlay/issues/new/choose) for support.
+
+## Project Development
+
+[GitHub Projects](https://github.com/DorielRivalet/mhfz-overlay/projects?query=is%3Aopen)
 
 ## Code Analysis
 

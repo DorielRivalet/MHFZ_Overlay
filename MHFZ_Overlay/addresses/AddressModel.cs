@@ -1,10 +1,10 @@
 ﻿using Dictionary;
-using DiscordRPC;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
+using MHFZ_Overlay.Core.Class.Discord;
 using MHFZ_Overlay.UI.Class;
 using NLog;
 using RESTCountries.NET.Models;
@@ -25,8 +25,16 @@ using Application = System.Windows.Application;
 
 namespace MHFZ_Overlay.addresses
 {
+    /// <summary>
+    /// Abstract class that defines the base properties and methods that are shared between AddressModelNotHGE and AddressModelHGE classes. It has a Mem object, which is used to read and write data from the game's memory. It also has properties that represent the selected monster, the hit count value, and the monster's health points.
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public abstract class AddressModel : INotifyPropertyChanged
     {
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
+
         #region properties
 
         public readonly Mem M;
@@ -39,21 +47,10 @@ namespace MHFZ_Overlay.addresses
         private int SavedMonster1ID = 0;
         private int SavedMonster2ID = 0;
 
-        public AddressModel(Mem m) {
-
-            var config = new NLog.Config.LoggingConfiguration();
-
-            // Targets where to log to: File
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logs.log" };
-
-            // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
-
-            // Apply config           
-            NLog.LogManager.Configuration = config;
-
-            logger.Info($"PROGRAM OPERATION: AddressModel initialized");
-
+        public AddressModel(Mem m)
+        {
+            logger.Info($"AddressModel initialized");
+            logger.Trace(new StackTrace().ToString());
             M = m;
         }
 
@@ -81,6 +78,7 @@ namespace MHFZ_Overlay.addresses
         public bool ShowQuestID { get; set; } = true;
         public bool ShowQuestAttemptsInfo { get; set; } = true;
         public bool ShowPersonalBestTimePercentInfo { get; set; } = true;
+        public bool ShowPersonalBestAttemptsInfo { get; set; } = true;
         public bool ShowLocationTextInfo { get; set; } = true;
         public bool ShowQuestNameInfo { get; set; } = true;
         public bool ShowMonsterHPBars { get; set; } = true;
@@ -109,8 +107,6 @@ namespace MHFZ_Overlay.addresses
 
 
         #endregion
-
-
 
         #region abstract vars
         abstract public bool IsNotRoad();
@@ -731,20 +727,20 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                return string.Format("Monster Hunter Frontier Z Overlay {0}", MainWindow.CurrentProgramVersion);
+                return string.Format("Monster Hunter Frontier Z Overlay {0}", App.CurrentProgramVersion);
             }
         }
 
         public string GetFullCurrentProgramVersion()
         {
-            return string.Format("Monster Hunter Frontier Z Overlay {0}", MainWindow.CurrentProgramVersion);
+            return string.Format("Monster Hunter Frontier Z Overlay {0}", App.CurrentProgramVersion);
         }
 
         public static string SimplifiedCurrentProgramVersion
         {
             get
             {
-                return string.Format("MHF-Z Overlay {0}", MainWindow.CurrentProgramVersion);
+                return string.Format("MHF-Z Overlay {0}", App.CurrentProgramVersion);
             }
         }
 
@@ -866,28 +862,13 @@ namespace MHFZ_Overlay.addresses
         }
 
         /// <summary>
-        /// Gets a value indicating whether [show discord quest names].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [show discord quest names]; otherwise, <c>false</c>.
-        /// </value>
-        public bool ShowDiscordQuestNames()
-        {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.DiscordQuestNameShown)
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
         /// Gets the name of the quest.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         public string GetQuestNameFromID(int id)
         {
-            if (!(ShowDiscordQuestNames())) return "";
+            if (!(DiscordManager.ShowDiscordQuestNames())) return "";
             string QuestValue1;
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             Dictionary.Quests.QuestIDs.TryGetValue(id, out QuestValue1);  //returns true
@@ -935,9 +916,9 @@ namespace MHFZ_Overlay.addresses
                 element = AutomationElement.RootElement.FindFirst(
     TreeScope.Children, condition);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                logger.Warn(ex, "PROGRAM OPERATION: Could not find AutomationElement");
+                logger.Warn(ex, "Could not find AutomationElement");
             }
 
             if (element == null || pidToSearch == 0)
@@ -985,35 +966,35 @@ namespace MHFZ_Overlay.addresses
                 return "(World Select) ";
             else if (
                 !(
-                    (QuestID() != 0 
-                    && TimeDefInt() > TimeInt() 
-                    && int.Parse(ATK) > 0) 
+                    (QuestID() != 0
+                    && TimeDefInt() > TimeInt()
+                    && int.Parse(ATK) > 0)
                     || (IsRoad() || IsDure())
-                ) 
-                || s.EnableDamageNumbers 
-                || s.EnableSharpness 
-                || s.PartThresholdShown 
-                || s.HitCountShown 
-                || s.PlayerAtkShown 
-                || s.MonsterAtkMultShown 
-                || s.MonsterDefrateShown 
-                || s.MonsterSizeShown 
-                || s.MonsterPoisonShown 
-                || s.MonsterParaShown 
-                || s.MonsterSleepShown 
-                || s.MonsterBlastShown 
-                || s.MonsterStunShown 
-                || s.DamagePerSecondShown 
-                || s.TotalHitsTakenBlockedShown 
-                || s.PlayerAPMGraphShown 
-                || s.PlayerAttackGraphShown 
-                || s.PlayerDPSGraphShown 
-                || s.PlayerHitsPerSecondGraphShown 
-                || s.EnableQuestPaceColor 
-                || s.Monster1HealthBarShown 
-                || s.Monster2HealthBarShown 
-                || s.Monster3HealthBarShown 
-                || s.Monster4HealthBarShown 
+                )
+                || s.EnableDamageNumbers
+                || s.EnableSharpness
+                || s.PartThresholdShown
+                || s.HitCountShown
+                || s.PlayerAtkShown
+                || s.MonsterAtkMultShown
+                || s.MonsterDefrateShown
+                || s.MonsterSizeShown
+                || s.MonsterPoisonShown
+                || s.MonsterParaShown
+                || s.MonsterSleepShown
+                || s.MonsterBlastShown
+                || s.MonsterStunShown
+                || s.DamagePerSecondShown
+                || s.TotalHitsTakenBlockedShown
+                || s.PlayerAPMGraphShown
+                || s.PlayerAttackGraphShown
+                || s.PlayerDPSGraphShown
+                || s.PlayerHitsPerSecondGraphShown
+                || s.EnableQuestPaceColor
+                || s.Monster1HealthBarShown
+                || s.Monster2HealthBarShown
+                || s.Monster3HealthBarShown
+                || s.Monster4HealthBarShown
                 || s.EnableMap
                 || s.PersonalBestTimePercentShown
                 || s.EnablePersonalBestPaceColor) //TODO monster 1 overview? and update README
@@ -1780,7 +1761,7 @@ namespace MHFZ_Overlay.addresses
                     return "#f5e0dc";
                 }
 
-                var timePercent = int.Parse(PersonalBestTimePercent.Replace("%",""));
+                var timePercent = int.Parse(PersonalBestTimePercent.Replace("%", ""));
                 var monster1HPPercent = (float)Monster1HPInt() / int.Parse(Monster1MaxHP) * 100.0;
 
                 if (timePercent >= monster1HPPercent && ShowPersonalBestPaceColor())
@@ -1811,7 +1792,7 @@ namespace MHFZ_Overlay.addresses
                         personalBestTimeFramesElapsed = TimeDefInt() - personalBestInFrames;
                     else
                         personalBestTimeFramesElapsed = personalBestInFrames;
-                    var elapsedPersonalBestTimePercent = CalculatePersonalBestInFramesPercent(personalBestTimeFramesElapsed);                    
+                    var elapsedPersonalBestTimePercent = CalculatePersonalBestInFramesPercent(personalBestTimeFramesElapsed);
 
                     return string.Format("{0:0}%", elapsedPersonalBestTimePercent);
                 }
@@ -1881,8 +1862,6 @@ namespace MHFZ_Overlay.addresses
         public string APMIcon { get; set; } = "UI/Icons/png/flame_ul.png";
 
         public string PersonalBestIcon { get; set; } = "UI/Icons/png/quest_clock.png";
-
-
 
         ///<summary>
         ///<para>Player true raw</para>
@@ -2058,6 +2037,57 @@ namespace MHFZ_Overlay.addresses
         }
 
         /// <summary>
+        /// Gets the size.
+        /// </summary>
+        /// <value>
+        /// The size.
+        /// </value>
+        public double Monster1SizeMultForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => double.Parse(Monster1Size().Replace("%", "")),
+                1 => double.Parse(Monster2Size().Replace("%", "")),
+                _ => double.Parse(Monster1Size().Replace("%", "")),
+            };
+        }
+
+        /// <summary>
+        /// Gets the atk mult.
+        /// </summary>
+        /// <value>
+        /// The atk mult.
+        /// </value>
+        public double Monster1AttackMultForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => double.Parse(Monster1AtkMult()),
+                1 => double.Parse(Monster2AtkMult()),
+                _ => double.Parse(Monster1AtkMult()),
+            };
+        }
+
+        /// <summary>
+        /// Gets the defrate multiplier.
+        /// </summary>
+        /// <value>
+        /// The defrate multiplier.
+        /// </value>
+        public double Monster1DefMultForDictionary()
+        {
+            switch (SelectedMonster)
+            {
+                case 0:
+                    return double.Parse(Monster1DefMult().ToString());
+                case 1:
+                    return double.Parse(Monster2DefMult().ToString());
+                default:
+                    return double.Parse(Monster1DefMult().ToString());
+            }
+        }
+
+        /// <summary>
         /// Displays the monster ehp.
         /// </summary>
         /// <param name="defrate">The defrate.</param>
@@ -2096,9 +2126,6 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// Gets the current poison.
         /// </summary>
-        /// <value>
-        /// The poison current.
-        /// </value>
         public int PoisonCurrent
         {
             get
@@ -2138,9 +2165,6 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// Gets the current sleep.
         /// </summary>
-        /// <value>
-        /// The sleep current.
-        /// </value>
         public int SleepCurrent
         {
             get
@@ -2180,9 +2204,6 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// Gets the current paralysis.
         /// </summary>
-        /// <value>
-        /// The para current.
-        /// </value>
         public int ParaCurrent
         {
             get
@@ -2222,9 +2243,6 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// Gets the current blast.
         /// </summary>
-        /// <value>
-        /// The blast current.
-        /// </value>
         public int BlastCurrent
         {
             get
@@ -2264,9 +2282,6 @@ namespace MHFZ_Overlay.addresses
         /// <summary>
         /// Gets the current stun.
         /// </summary>
-        /// <value>
-        /// The stun current.
-        /// </value>
         public int StunCurrent
         {
             get
@@ -2301,6 +2316,71 @@ namespace MHFZ_Overlay.addresses
                     _ => Monster1StunNeed(),
                 };
             }
+        }
+
+        /// <summary>
+        /// Gets the current poison.
+        /// </summary>
+        public int Monster1PoisonForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => Monster1Poison(),
+                1 => Monster2Poison(),
+                _ => Monster1Poison(),
+            };
+        }
+
+        /// <summary>
+        /// Gets the current sleep.
+        /// </summary>
+        public int Monster1SleepForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => Monster1Sleep(),
+                1 => Monster2Sleep(),
+                _ => Monster1Sleep(),
+            };
+        }
+
+        /// <summary>
+        /// Gets the current paralysis.
+        /// </summary>
+        public int Monster1ParalysisForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => Monster1Para(),
+                1 => Monster2Para(),
+                _ => Monster1Para(),
+            };
+        }
+
+        /// <summary>
+        /// Gets the current blast.
+        /// </summary>
+        public int Monster1BlastForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => Monster1Blast(),
+                1 => Monster2Blast(),
+                _ => Monster1Blast(),
+            };
+        }
+
+        /// <summary>
+        /// Gets the current stun.
+        /// </summary>
+        public int Monster1StunForDictionary()
+        {
+            return SelectedMonster switch
+            {
+                0 => Monster1Stun(),
+                1 => Monster2Stun(),
+                _ => Monster1Stun(),
+            };
         }
 
         #endregion
@@ -4409,7 +4489,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public static string GetDivaSkillNameFromID(int id)
+        public string GetDivaSkillNameFromID(int id)
         {
             Dictionary.DivaSkillList.DivaSkillID.TryGetValue(id, out string? divaskillaname);
             return divaskillaname + "";
@@ -4420,7 +4500,7 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public static string GetItemName(int id)
+        public string GetItemName(int id)
         {
             string itemValue1;
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
@@ -4435,10 +4515,24 @@ namespace MHFZ_Overlay.addresses
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public static string GetArmorSkill(int id)
+        public string GetArmorSkill(int id)
         {
             Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(id, out string? skillname);
             if (skillname == "" || skillname == null)
+                return "None";
+            else
+                return skillname + "";
+        }
+
+        /// <summary>
+        /// Gets the armor skill.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetArmorSkillWithNull(int id)
+        {
+            Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(id, out string? skillname);
+            if (skillname == "")
                 return "None";
             else
                 return skillname + "";
@@ -4609,7 +4703,6 @@ namespace MHFZ_Overlay.addresses
 
                 if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
                     SkillName6 = "";
-
                 else
                     SkillName6 += "";
 
@@ -6012,22 +6105,22 @@ namespace MHFZ_Overlay.addresses
                     showGouBoost = " (After Gou/Muscle Boost)";
                 //zp in bold for markdown
                 //fruits and speedrunner items also in bold
-                SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
-                MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n\n**Road/Duremudira Skills:**\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
-                return string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", MainWindow.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
+                SavedGearStats = string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", App.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
+                MarkdownSavedGearStats = string.Format("__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n\n**Road/Duremudira Skills:**\n{26}\n", App.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
+                return string.Format("【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", App.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(), TotalDefense().ToString(), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
             }
             else
             {
-                ActiveSkills activeSkills = DatabaseManager.GetInstance().GetActiveSkills((long)runID);
-                AmmoPouch ammoPouch = DatabaseManager.GetInstance().GetAmmoPouch((long)runID);
-                AutomaticSkills automaticSkills = DatabaseManager.GetInstance().GetAutomaticSkills((long)runID);
-                CaravanSkills caravanSkills = DatabaseManager.GetInstance().GetCaravanSkills((long)runID);
-                PlayerGear playerGear = DatabaseManager.GetInstance().GetPlayerGear((long)runID);
-                PlayerInventory playerInventory = DatabaseManager.GetInstance().GetPlayerInventory((long)runID);
-                UI.Class.RoadDureSkills roadDureSkills = DatabaseManager.GetInstance().GetRoadDureSkills((long)runID);
-                StyleRankSkills styleRankSkills = DatabaseManager.GetInstance().GetStyleRankSkills((long)runID);
-                ZenithSkills zenithSkills = DatabaseManager.GetInstance().GetZenithSkills((long)runID);
-                Quest quest = DatabaseManager.GetInstance().GetQuest((long)runID);
+                ActiveSkills activeSkills = databaseManager.GetActiveSkills((long)runID);
+                AmmoPouch ammoPouch = databaseManager.GetAmmoPouch((long)runID);
+                AutomaticSkills automaticSkills = databaseManager.GetAutomaticSkills((long)runID);
+                CaravanSkills caravanSkills = databaseManager.GetCaravanSkills((long)runID);
+                PlayerGear playerGear = databaseManager.GetPlayerGear((long)runID);
+                PlayerInventory playerInventory = databaseManager.GetPlayerInventory((long)runID);
+                UI.Class.RoadDureSkills roadDureSkills = databaseManager.GetRoadDureSkills((long)runID);
+                StyleRankSkills styleRankSkills = databaseManager.GetStyleRankSkills((long)runID);
+                ZenithSkills zenithSkills = databaseManager.GetZenithSkills((long)runID);
+                Quest quest = databaseManager.GetQuest((long)runID);
 
                 var createdBy = playerGear.CreatedBy;
                 if (createdBy == null)
@@ -6170,6 +6263,544 @@ Party Size: {32}",
             {
                 return GenerateGearStats();
             }
+        }
+
+        private int CalculateTotalLargeMonstersHunted()
+        {
+            return RoadFatalisSlain() +
+                FirstDistrictDuremudiraSlays() +
+                SecondDistrictDuremudiraSlays() +
+                RathianHunted() +
+                FatalisHunted() +
+                YianKutKuHunted() +
+                LaoShanLungHunted() +
+                CephadromeHunted() +
+                RathalosHunted() +
+                DiablosHunted() +
+                KhezuHunted() +
+                GraviosHunted() +
+                GypcerosHunted() +
+                PlesiothHunted() +
+                BasariosHunted() +
+                MonoblosHunted() +
+                VelocidromeHunted() +
+                GendromeHunted() +
+                IodromeHunted() +
+                KirinHunted() +
+                CrimsonFatalisHunted() +
+                PinkRathianHunted() +
+                BlueYianKutKuHunted() +
+                PurpleGypcerosHunted() +
+                YianGarugaHunted() +
+                SilverRathalosHunted() +
+                GoldRathianHunted() +
+                BlackDiablosHunted() +
+                WhiteMonoblosHunted() +
+                RedKhezuHunted() +
+                GreenPlesiothHunted() +
+                BlackGraviosHunted() +
+                DaimyoHermitaurHunted() +
+                AzureRathalosHunted() +
+                AshenLaoShanLungHunted() +
+                BlangongaHunted() +
+                CongalalaHunted() +
+                RajangHunted() +
+
+                KushalaDaoraHunted() +
+                ShenGaorenHunted() +
+
+                YamaTsukamiHunted() +
+                ChameleosHunted() +
+                RustedKushalaDaoraHunted() +
+
+
+                LunastraHunted() +
+                TeostraHunted() +
+                ShogunCeanataurHunted() +
+                BulldromeHunted() +
+                WhiteFatalisHunted() +
+
+                HypnocHunted() +
+                VolganosHunted() +
+                TigrexHunted() +
+                AkantorHunted() +
+                BrightHypnocHunted() +
+                RedVolganosHunted() +
+                EspinasHunted() +
+                OrangeEspinasHunted() +
+                SilverHypnocHunted() +
+                AkuraVashimuHunted() +
+                AkuraJebiaHunted() +
+
+                BerukyurosuHunted() +
+                PariapuriaHunted() +
+                WhiteEspinasHunted() +
+                KamuOrugaronHunted() +
+                NonoOrugaronHunted() +
+                DyuragauaHunted() +
+                DoragyurosuHunted() +
+                GurenzeburuHunted() +
+                RukodioraHunted() +
+                UnknownHunted() +
+                GogomoaHunted() +
+                TaikunZamuzaHunted() +
+                AbioruguHunted() +
+                KuarusepusuHunted() +
+                OdibatorasuHunted() +
+                DisufiroaHunted() +
+                RebidioraHunted() +
+                AnorupatisuHunted() +
+                HyujikikiHunted() +
+                MidogaronHunted() +
+                GiaoruguHunted() +
+                MiRuHunted() +
+                FarunokkuHunted() +
+                PokaradonHunted() +
+                ShantienHunted() +
+                GoruganosuHunted() +
+                AruganosuHunted() +
+                BaruragaruHunted() +
+                ZerureusuHunted() +
+                GougarfHunted() +
+                ForokururuHunted() +
+                MeraginasuHunted() +
+                DiorexHunted() +
+                GarubaDaoraHunted() +
+                InagamiHunted() +
+                VarusaburosuHunted() +
+                PoborubarumuHunted() +
+
+                GureadomosuHunted() +
+                HarudomeruguHunted() +
+                ToridclessHunted() +
+                GasurabazuraHunted() +
+                YamaKuraiHunted() +
+                ZinogreHunted() +
+                DeviljhoHunted() +
+                BrachydiosHunted() +
+                ToaTesukatoraHunted() +
+                BariothHunted() +
+                UragaanHunted() +
+                StygianZinogreHunted() +
+                GuanzorumuHunted() +
+                StarvingDeviljhoHunted() +
+                VoljangHunted() +
+                NargacugaHunted() +
+                KeoaruboruHunted() +
+                ZenaserisuHunted() +
+                GoreMagalaHunted() +
+                BlinkingNargacugaHunted() +
+                ShagaruMagalaHunted() +
+                AmatsuHunted() +
+                ElzelionHunted() +
+                ArrogantDuremudiraHunted() +
+                SeregiosHunted() +
+                BogabadorumuHunted() +
+                BlitzkriegBogabadorumuHunted() +
+                SparklingZerureusuHunted() +
+                KingShakalakaHunted();
+        }
+
+        private int CalculateTotalSmallMonstersHunted()
+        {
+            return KelbiHunted() +
+            MosswineHunted() +
+            BullfangoHunted() +
+
+            FelyneHunted() +
+            AptonothHunted() +
+            GenpreyHunted() +
+            VelocipreyHunted() +
+            VespoidHunted() +
+            MelynxHunted() +
+            HornetaurHunted() +
+            ApcerosHunted() +
+            RocksHunted() +
+            IopreyHunted() +
+            CephalosHunted() +
+
+            GiapreyHunted() +
+
+            GreatThunderbugHunted() +
+
+            ShakalakaHunted() +
+            BlangoHunted() +
+            CongaHunted() +
+            RemobraHunted() +
+            HermitaurHunted() +
+            AntekaHunted() +
+            PopoHunted() +
+
+            CeanataurHunted() +
+
+            CactusHunted() +
+            GorgeObjectsHunted() +
+            BurukkuHunted() +
+            ErupeHunted() +
+            PokaraHunted() +
+            UrukiHunted() +
+
+            KusubamiHunted() +
+            PSO2RappyHunted();
+        }
+
+        /// <summary>
+        /// Generates the compendium.
+        /// </summary>
+        /// <returns></returns>
+        public string GenerateCompendium(DataLoader dataLoader)
+        {
+            var createdBy = GetFullCurrentProgramVersion();
+            var createdAt = DateTime.UtcNow;
+            if (createdBy == null)
+                return "Program Version Not Found.\n\nReload the section.";
+
+            QuestCompendium questCompendium = databaseManager.GetQuestCompendium();
+            GearCompendium gearCompendium = databaseManager.GetGearCompendium();
+            PerformanceCompendium performanceCompendium = databaseManager.GetPerformanceCompendium();
+            MezFesCompendium mezeportaFestivalCompendium = databaseManager.GetMezFesCompendium();
+            MiscellaneousCompendium miscellaneousCompendium = databaseManager.GetMiscellaneousCompendium();
+            MonsterCompendium monsterCompendium = databaseManager.GetMonsterCompendium();
+
+
+            var mostCompletedQuest = questCompendium.MostCompletedQuestRuns;
+            var mostCompletedQuestAttempts = questCompendium.MostCompletedQuestRunsAttempted;
+            var mostCompletedQuestID = questCompendium.MostCompletedQuestRunsQuestID;
+
+            var mostAttemptedQuest = questCompendium.MostAttemptedQuestRuns;
+            var mostAttemptedQuestCompletions = questCompendium.MostAttemptedQuestRunsCompleted;
+            var mostAttemptedQuestID = questCompendium.MostAttemptedQuestRunsQuestID;
+
+            var totalQuestsCompleted = questCompendium.TotalQuestsCompleted;
+            var totalQuestsAttempted = questCompendium.TotalQuestsAttempted;
+
+            var questCompletionTimeElapsedAverage = questCompendium.QuestCompletionTimeElapsedAverage;
+            var questCompletionTimeElapsedMedian = questCompendium.QuestCompletionTimeElapsedMedian;
+
+            var totalTimeElapsedDuringQuest = questCompendium.TotalTimeElapsedQuests;
+
+            var mostCompletedQuestWithCarts = questCompendium.MostCompletedQuestWithCarts;
+            var mostCompletedQuestWithCartsQuestID = questCompendium.MostCompletedQuestWithCartsQuestID;
+
+            var totalCartsInQuest = questCompendium.TotalCartsInQuest;
+            var totalCartsInQuestAverage = questCompendium.TotalCartsInQuestAverage;
+            var totalCartsInQuestMedian = questCompendium.TotalCartsInQuestMedian;
+
+            var questPartySizeAverage = questCompendium.QuestPartySizeAverage;
+            var questPartySizeMedian = questCompendium.QuestPartySizeMedian;
+            var questPartySizeMode = questCompendium.QuestPartySizeMode;
+
+            var percentOfSoloQuests = questCompendium.PercentOfSoloQuests;
+            var percentOfGuildFood = questCompendium.PercentOfGuildFood;
+            var percentOfDivaSkill = questCompendium.PercentOfDivaSkill;
+            var percentOfSkillFruit = questCompendium.PercentOfSkillFruit;
+            var mostCommonDivaSkill = questCompendium.MostCommonDivaSkill;
+            var mostCommonGuildFood = questCompendium.MostCommonGuildFood;
+
+            var mostUsedWeaponType = gearCompendium.MostUsedWeaponType;
+            var totalUniqueArmorPieces = gearCompendium.TotalUniqueArmorPiecesUsed;
+            var totalUniqueWeapons = gearCompendium.TotalUniqueWeaponsUsed;
+            var totalUniqueDecorations = gearCompendium.TotalUniqueDecorationsUsed;
+
+            var mostCommonDecorationID = gearCompendium.MostCommonDecorationID;
+            var leastUsedArmorSkill = gearCompendium.LeastUsedArmorSkill;
+
+            var highestTrueRaw = performanceCompendium.HighestTrueRaw;
+            var trueRawAverage = performanceCompendium.TrueRawAverage;
+            var trueRawMedian = performanceCompendium.TrueRawMedian;
+            var highestTrueRawRunID = performanceCompendium.HighestTrueRawRunID;
+
+            var highestSingleHitDamage = performanceCompendium.HighestSingleHitDamage;
+            var singleHitDamageAverage = performanceCompendium.SingleHitDamageAverage;
+            var singleHitDamageMedian = performanceCompendium.SingleHitDamageMedian;
+            var highestSingleHitDamageRunID = performanceCompendium.HighestSingleHitDamageRunID;
+
+            var highestHitCount = performanceCompendium.HighestHitCount;
+            var hitCountAverage = performanceCompendium.HitCountAverage;
+            var hitCountMedian = performanceCompendium.HitCountMedian;
+            var highestHitCountRunID = performanceCompendium.HighestHitCountRunID;
+
+            var highestHitsTakenBlocked = performanceCompendium.HighestHitsTakenBlocked;
+            var hitsTakenBlockedAverage = performanceCompendium.HitsTakenBlockedAverage;
+            var hitsTakenBlockedMedian = performanceCompendium.HitsTakenBlockedMedian;
+            var highestHitsTakenBlockedRunID = performanceCompendium.HighestHitsTakenBlockedRunID;
+
+            var highestDPS = performanceCompendium.HighestDPS;
+            var DPSAverage = performanceCompendium.DPSAverage;
+            var DPSMedian = performanceCompendium.DPSMedian;
+            var highestDPSRunID = performanceCompendium.HighestDPSRunID;
+
+            var highestHitsPerSecond = performanceCompendium.HighestHitsPerSecond;
+            var hitsPerSecondAverage = performanceCompendium.HitsPerSecondAverage;
+            var hitsPerSecondMedian = performanceCompendium.HitsPerSecondMedian;
+            var highestHitsPerSecondRunID = performanceCompendium.HighestHitsPerSecondRunID;
+
+            var highestHitsTakenBlockedPerSecond = performanceCompendium.HighestHitsTakenBlockedPerSecond;
+            var hitsTakenBlockedPerSecondAverage = performanceCompendium.HitsTakenBlockedPerSecondAverage;
+            var hitsTakenBlockedPerSecondMedian = performanceCompendium.HitsTakenBlockedPerSecondMedian;
+            var highestHitsTakenBlockedPerSecondRunID = performanceCompendium.HighestHitsTakenBlockedPerSecondRunID;
+
+            var highestActionsPerMinute = performanceCompendium.HighestActionsPerMinute;
+            var actionsPerMinuteAverage = performanceCompendium.ActionsPerMinuteAverage;
+            var actionsPerMinuteMedian = performanceCompendium.ActionsPerMinuteMedian;
+            var highestActionsPerMinuteRunID = performanceCompendium.HighestActionsPerMinuteRunID;
+
+            var totalHitsCount = performanceCompendium.TotalHitsCount;
+            var totalHitsTakenBlocked = performanceCompendium.TotalHitsTakenBlocked;
+            var totalActions = performanceCompendium.TotalActions;
+
+            var healthAverage = performanceCompendium.HealthAverage;
+            var healthMedian = performanceCompendium.HealthMedian;
+            var healthMode = performanceCompendium.HealthMode;
+
+            var staminaAverage = performanceCompendium.StaminaAverage;
+            var staminaMedian = performanceCompendium.StaminaMedian;
+            var staminaMode = performanceCompendium.StaminaMode;
+
+            var minigamesPlayed = mezeportaFestivalCompendium.MinigamesPlayed;
+
+            var urukiPachinkoTimesPlayed = mezeportaFestivalCompendium.UrukiPachinkoTimesPlayed;
+            var urukiPachinkoHighscore = mezeportaFestivalCompendium.UrukiPachinkoHighscore;
+            var urukiPachinkoScoreAverage = mezeportaFestivalCompendium.UrukiPachinkoAverageScore;
+            var urukiPachinkoScoreMedian = mezeportaFestivalCompendium.UrukiPachinkoMedianScore;
+
+            var guukuScoopTimesPlayed = mezeportaFestivalCompendium.GuukuScoopTimesPlayed;
+            var guukuScoopHighscore = mezeportaFestivalCompendium.GuukuScoopHighscore;
+            var guukuScoopScoreAverage = mezeportaFestivalCompendium.GuukuScoopAverageScore;
+            var guukuScoopScoreMedian = mezeportaFestivalCompendium.GuukuScoopMedianScore;
+
+            var nyanrendoTimesPlayed = mezeportaFestivalCompendium.NyanrendoTimesPlayed;
+            var nyanrendoHighscore = mezeportaFestivalCompendium.NyanrendoHighscore;
+            var nyanrendoScoreAverage = mezeportaFestivalCompendium.NyanrendoAverageScore;
+            var nyanrendoScoreMedian = mezeportaFestivalCompendium.NyanrendoMedianScore;
+
+            var panicHoneyTimesPlayed = mezeportaFestivalCompendium.PanicHoneyTimesPlayed;
+            var panicHoneyHighscore = mezeportaFestivalCompendium.PanicHoneyHighscore;
+            var panicHoneyScoreAverage = mezeportaFestivalCompendium.PanicHoneyAverageScore;
+            var panicHoneyScoreMedian = mezeportaFestivalCompendium.PanicHoneyMedianScore;
+
+            var dokkanBattleCatsTimesPlayed = mezeportaFestivalCompendium.DokkanBattleCatsTimesPlayed;
+            var dokkanBattleCatsHighscore = mezeportaFestivalCompendium.DokkanBattleCatsHighscore;
+            var dokkanBattleCatsScoreAverage = mezeportaFestivalCompendium.DokkanBattleCatsAverageScore;
+            var dokkanBattleCatsScoreMedian = mezeportaFestivalCompendium.DokkanBattleCatsMedianScore;
+
+            var monster1AttackMultiplierHighest = monsterCompendium.HighestMonsterAttackMultiplier;
+            var monster1AttackMultiplierHighestRunID = monsterCompendium.HighestMonsterAttackMultiplierRunID;
+
+            var monster1AttackMultiplierLowest = monsterCompendium.LowestMonsterAttackMultiplier;
+            var monster1AttackMultiplierLowestRunID = monsterCompendium.LowestMonsterAttackMultiplierRunID;
+
+            var monster1DefenseRateHighest = monsterCompendium.HighestMonsterDefenseRate;
+            var monster1DefenseRateHighestRunID = monsterCompendium.HighestMonsterDefenseRateRunID;
+
+            var monster1DefenseRateLowest = monsterCompendium.LowestMonsterDefenseRate;
+            var monster1DefenseRateLowestRunID = monsterCompendium.LowestMonsterDefenseRateRunID;
+
+            var monster1SizeMultiplierHighest = monsterCompendium.HighestMonsterSizeMultiplier;
+            var monster1SizeMultiplierHighestRunID = monsterCompendium.HighestMonsterSizeMultiplierRunID;
+
+            var monster1SizeMultiplierLowest = monsterCompendium.LowestMonsterSizeMultiplier;
+            var monster1SizeMultiplierLowestRunID = monsterCompendium.LowestMonsterSizeMultiplierRunID;
+
+            var totalLargeMonstersHunted = CalculateTotalLargeMonstersHunted();
+            var totalSmallMonstersHunted = CalculateTotalSmallMonstersHunted();
+
+            var totalOverlaySessions = miscellaneousCompendium.TotalOverlaySessions;
+            var sessionDurationHighest = miscellaneousCompendium.HighestSessionDuration;
+            var sessionDurationLowest = miscellaneousCompendium.LowestSessionDuration;
+            var sessionDurationAverage = miscellaneousCompendium.AverageSessionDuration;
+            var sessionDurationMedian = miscellaneousCompendium.MedianSessionDuration;
+
+            Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue((int)mostCommonGuildFood, out string? mostCommonGuildFoodName);
+            Dictionary.DivaSkillList.DivaSkillID.TryGetValue((int)mostCommonDivaSkill, out string? mostCommonDivaSkillName);
+            Dictionary.WeaponTypes.WeaponTypeID.TryGetValue((int)mostUsedWeaponType, out string? mostUsedWeaponTypeName);
+            Dictionary.Items.ItemIDs.TryGetValue((int)mostCommonDecorationID, out string? mostCommonDecorationName);
+            Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue((int)leastUsedArmorSkill, out string? leastUsedArmorSkillName);
+
+            return string.Format(
+@"{0} (UTC)
+{1}
+
+Quest
+Most Completed Quest: {2} (Attempted {3}) [Quest ID {4}]
+Most Attempted Quest: {5} (Completed {6}) [Quest ID {7}]
+Total Quests Completed/Attempted: {8}/{9}
+Quest Completion Time Elapsed (Average/Median): {10} / {11}
+Total Time Elapsed during Quest: {12}
+Most Completed Quest with Carts: {13} [Quest ID {14}]
+Total Carts in Quest (Average/Median): {15} ({16}/{17})
+Quest Party Size (Average/Median/Mode): {18}/{19}/{20}
+Percent of Solo Quests: {21}
+Percent of Guild Food in Quests: {22}
+Percent of Diva Skill in Quests: {23}
+Percent of Skill Fruit in Quests: {24}
+Most Common Diva Skill in Quests: {25}
+Most Common Guild Food in Quests: {26}
+
+Gear
+Most Used Weapon Type: {27}
+Total Unique Armor Pieces/Weapons/Decorations used: {28}/{29}/{30}
+Most Common Decoration: {31} [ID {32}]
+Least Used Armor Skill: {33}
+
+Hunter Performance
+Highest True Raw (Average/Median): {34} ({35}/{36}) [Run ID {37}]
+Highest Single Hit Damage (Average/Median): {38} ({39}/{40}) [Run ID {41}]
+Highest Hit Count (Average/Median): {42} ({43}/{44}) [Run ID {45}]
+Highest Hits Taken/Blocked (Average/Median): {46} ({47}/{48}) [Run ID {49}]
+Highest DPS (Average/Median): {50} ({51}/{52}) [Run ID {53}]
+Highest Hits per Second (Average/Median): {54} ({55}/{56}) [Run ID {57}]
+Highest Hits Taken/Blocked per Second (Average/Median): {58} ({59}/{60}) [Run ID {61}]
+Highest Actions per Minute (Average/Median): {62} ({63}/{64}) [Run ID {65}]
+Total Hits Count: {66}
+Total Hits Taken/Blocked: {67}
+Total Actions: {68}
+Health (Average/Median/Mode): {69}/{70}/{71}
+Stamina (Average/Median/Mode): {72}/{73}/{74}
+
+Mezeporta Festival (MezFes)
+Minigames Played: {75}
+Uruki Pachinko Times Played: {76}
+Uruki Pachinko High-score (Average/Median): {77} ({78}/{79})
+Guuku Scoop Times Played: {80}
+Guuku Scoop High-score (Average/Median): {81} ({82}/{83})
+Nyanrendo Times Played: {84}
+Nyanrendo High-score (Average/Median): {85} ({86}/{87})
+Panic Honey Times Played: {88}
+Panic Honey High-score (Average/Median): {89} ({90}/{91})
+Dokkan Battle Cats Times Played: {92}
+Dokkan Battle Cats High-score (Average/Median): {93} ({94}/{95})
+
+Monster
+Highest Monster Attack Multiplier: {96} [Run ID {97}]
+Lowest Monster Attack Multiplier: {98} [Run ID {99}]
+Highest Monster Defense Rate: {100} [Run ID {101}]
+Lowest Monster Defense Rate: {102} [Run ID {103}]
+Highest Monster Size Multiplier: {104} [Run ID {105}]
+Lowest Monster Size Multiplier: {106} [Run ID {107}]
+Total Large Monsters Hunted: {108}
+Total Small Monsters Hunted: {109}
+
+Miscellaneous
+Total Overlay Sessions: {110}
+Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
+",
+            createdAt,
+            createdBy,
+            mostCompletedQuest,
+            mostCompletedQuestAttempts,
+            mostCompletedQuestID,
+            mostAttemptedQuest,
+            mostAttemptedQuestCompletions,
+            mostAttemptedQuestID,
+            totalQuestsCompleted,
+            totalQuestsAttempted,
+            dataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedAverage),
+            dataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedMedian),
+            dataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)totalTimeElapsedDuringQuest),
+            mostCompletedQuestWithCarts,
+            mostCompletedQuestWithCartsQuestID,
+            totalCartsInQuest,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", totalCartsInQuestAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", totalCartsInQuestMedian),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", questPartySizeAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", questPartySizeMedian),
+            questPartySizeMode,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfSoloQuests),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfGuildFood),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfDivaSkill),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfSkillFruit),
+            mostCommonDivaSkillName,
+            mostCommonGuildFoodName,
+            mostUsedWeaponTypeName,
+            totalUniqueArmorPieces,
+            totalUniqueWeapons,
+            totalUniqueDecorations,
+            mostCommonDecorationName,
+            mostCommonDecorationID.ToString("X"),
+            leastUsedArmorSkillName,
+            highestTrueRaw,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", trueRawAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", trueRawMedian),
+            highestTrueRawRunID,
+            highestSingleHitDamage,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", singleHitDamageAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", singleHitDamageMedian),
+            highestSingleHitDamageRunID,
+            highestHitCount,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitCountAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitCountMedian),
+            highestHitCountRunID,
+            highestHitsTakenBlocked,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedMedian),
+            highestHitsTakenBlockedRunID,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestDPS),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", DPSAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", DPSMedian),
+            highestDPSRunID,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestHitsPerSecond),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsPerSecondAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsPerSecondMedian),
+            highestHitsPerSecondRunID,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestHitsTakenBlockedPerSecond),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedPerSecondAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedPerSecondMedian),
+            highestHitsTakenBlockedPerSecondRunID,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestActionsPerMinute),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", actionsPerMinuteAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", actionsPerMinuteMedian),
+            highestActionsPerMinuteRunID,
+            totalHitsCount,
+            totalHitsTakenBlocked,
+            totalActions,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", healthAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", healthMedian),
+            healthMode,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", staminaAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", staminaMedian),
+            staminaMode,
+            minigamesPlayed,
+            urukiPachinkoTimesPlayed,
+            urukiPachinkoHighscore,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", urukiPachinkoScoreAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", urukiPachinkoScoreMedian),
+            guukuScoopTimesPlayed,
+            guukuScoopHighscore,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", guukuScoopScoreAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", guukuScoopScoreMedian),
+            nyanrendoTimesPlayed,
+            nyanrendoHighscore,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", nyanrendoScoreAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", nyanrendoScoreMedian),
+            panicHoneyTimesPlayed,
+            panicHoneyHighscore,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", panicHoneyScoreAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", panicHoneyScoreMedian),
+            dokkanBattleCatsTimesPlayed,
+            dokkanBattleCatsHighscore,
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dokkanBattleCatsScoreAverage),
+            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dokkanBattleCatsScoreMedian),
+            monster1AttackMultiplierHighest,
+            monster1AttackMultiplierHighestRunID,
+            monster1AttackMultiplierLowest,
+            monster1AttackMultiplierLowestRunID,
+            monster1DefenseRateHighest,
+            monster1DefenseRateHighestRunID,
+            monster1DefenseRateLowest,
+            monster1DefenseRateLowestRunID,
+            monster1SizeMultiplierHighest,
+            monster1SizeMultiplierHighestRunID,
+            monster1SizeMultiplierLowest,
+            monster1SizeMultiplierLowestRunID,
+            totalLargeMonstersHunted,
+            totalSmallMonstersHunted,
+            totalOverlaySessions,
+            TimeSpan.FromSeconds(sessionDurationHighest).ToString("hh\\:mm\\:ss\\.ff"),
+            TimeSpan.FromSeconds(sessionDurationLowest).ToString("hh\\:mm\\:ss\\.ff"),
+            TimeSpan.FromSeconds(sessionDurationAverage).ToString("hh\\:mm\\:ss\\.ff"),
+            TimeSpan.FromSeconds(sessionDurationMedian).ToString("hh\\:mm\\:ss\\.ff")
+            );
         }
 
         #region get game info
@@ -8365,7 +8996,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
                 case 65:
                     if (RankBand() == 32)
-                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_teostra.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_teostra.gif";
                     else
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/teostra.png";
 
@@ -8400,8 +9031,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akura_vashimu.png";
 
                 case 89:
-                    if (RankBand() == 32 || RankBand() == 54)
+                    if (RankBand() == 54)
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/thirsty_pariapuria.png";
+                    else if (RankBand() == 32)
+                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_pariapuria.gif";
                     else
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pariapuria.png";
 
@@ -8409,7 +9042,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     if (RankBand() >= 64 && RankBand() <= 67)
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_doragyurosu.gif";
                     else if (RankBand() == 32)
-                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_doragyurosu.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_doragyurosu.gif";
                     else
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/doragyurosu.png";
 
@@ -8421,6 +9054,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 case 100:
                     if (RankBand() == 70 || RankBand() == 54)
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shiten_unknown.png";
+                    else if (RankBand() == 32)                        
+                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_unknown.gif";
                     else
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/unknown.png";
 
@@ -8431,7 +9066,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/taikun_zamuza.png";
                 case 106:
                     if (RankBand() == 32)
-                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_odibatorasu.png";
+                        return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_odibatorasu.gif";
                     else
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/odibatorasu.png";
                 case 107:
@@ -8638,7 +9273,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public List<ISeries> damagePerSecondSeries { get; set; } = new();
         public List<ISeries> actionsPerMinuteSeries { get; set; } = new();
         public List<ISeries> hitsPerSecondSeries { get; set; } = new();
-        
+
         public List<ISeries> weaponUsageSeries { get; set; } = new();
 
         public string GetTimeElapsed(double frames)
@@ -8751,7 +9386,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         /// <returns></returns>
         public string GetObjectiveNameFromID(int id, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             //TODO dictionary
             return id switch
             {
@@ -8777,7 +9412,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         /// <returns></returns>
         public string GetObjective1Quantity(bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             if (Objective1Quantity() <= 1)
                 return "";
             // hunt / capture / slay
@@ -8790,13 +9425,37 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
 
         /// <summary>
+        /// Gets the objective1 current quantity.
+        /// </summary>
+        /// <returns></returns>
+        public string GetObjective1CurrentQuantity(bool isLargeImageText = false)
+        {
+            if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (ObjectiveType() == 0x0 || ObjectiveType() == 0x02 || ObjectiveType() == 0x1002)
+            {
+                if (Objective1Quantity() <= 1)
+                    return "";
+                else
+                    return Objective1CurrentQuantityItem().ToString() + "/";
+            }
+            else
+            {
+                if (Objective1Quantity() <= 1)
+                    return "";
+                else
+                    //increases when u hit a dead large monster
+                    return Objective1CurrentQuantityMonster().ToString() + "/";
+            }
+        }
+
+        /// <summary>
         /// Gets the rank name from identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         public string GetRankNameFromID(int id, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             return GetRankName(id);
         }
 
@@ -8842,7 +9501,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         /// <returns></returns>
         public string GetStarGrade(bool isLargeImageText = false)
         {
-            if ((ShowDiscordQuestNames() && !(isLargeImageText)) || CaravanOverride())
+            if ((DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) || CaravanOverride())
                 return "";
 
             if (IsToggeableDifficulty())
@@ -8953,7 +9612,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         /// <returns></returns>
         public string GetRealMonsterName(string iconName, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             //quest ids:
             //mp road: 23527
             //solo road: 23628
@@ -9018,7 +9677,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         /// <returns></returns>
         public string GetObjective1Name(int id, bool isLargeImageText = false)
         {
-            if (ShowDiscordQuestNames() && !(isLargeImageText)) return "";
+            if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             string? objValue1;
             Dictionary.Items.ItemIDs.TryGetValue(id, out objValue1);  //returns true
             return objValue1 + "";
@@ -9162,7 +9821,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             if (s.GameFolderPath == "" || s.GameFolderPath == null)
             {
                 MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-                logger.Warn("PROGRAM OPERATION: Game folder path not found");
+                logger.Warn("Game folder path not found");
                 s.EnableQuestLogging = false;
                 return false;
             }
@@ -9170,7 +9829,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             if (s.DatabaseFilePath == "" || s.DatabaseFilePath == null)
             {
                 MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-                logger.Warn("PROGRAM OPERATION: Database file path not found");
+                logger.Warn("Database file path not found");
                 s.EnableQuestLogging = false;
                 return false;
             }
@@ -9194,7 +9853,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 + String.Join(", ", findFiles) + "\n" +
                 "gameFolderFiles: " + String.Join(", ", gameFolderFiles),
                 "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
-                logger.Warn("PROGRAM OPERATION: Missing game files");
+                logger.Warn("Missing game files");
                 s.EnableQuestLogging = false;
                 return false;
             }
@@ -9365,6 +10024,23 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public Dictionary<int, string> overlayModeDictionary = new Dictionary<int, string>();
 
+        public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionary = new Dictionary<int, Dictionary<int, double>>();
+        public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionary = new Dictionary<int, Dictionary<int, double>>();
+        public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionary = new Dictionary<int, Dictionary<int, double>>();
+        public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionaryDeserealized;
+        public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionaryDeserealized;
+
         public int previousTimeInt = 0;
         public int previousAttackBuffInt = 0;
         public int previousHitCountInt = 0;
@@ -9387,6 +10063,15 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public double previousHitsPerSecond = 0;
         public double previousActionsPerMinute = 0;
         public string previousOverlayMode = "N/A";
+
+        public double previousMonster1AttackMultiplier = 0;
+        public double previousMonster1DefenseRate = 0;
+        public double previousMonster1SizeMultiplier = 0;
+        public int previousMonster1PoisonThreshold = 0;
+        public int previousMonster1SleepThreshold = 0;
+        public int previousMonster1ParalysisThreshold = 0;
+        public int previousMonster1BlastThreshold = 0;
+        public int previousMonster1StunThreshold = 0;
 
         public List<Dictionary<int, int>> InsertInventoryDictionaryIntoList(string inventoryType)
         {
@@ -9616,8 +10301,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return (double)(TimeDefInt() - TimeInt()) / 30;
         }
 
-        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-
         public int previousRoadFloor = 0;
 
         public void InsertQuestInfoIntoDictionaries()
@@ -9651,7 +10334,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into attackBuffDictionary");
+                    logger.Warn(ex, "Could not insert into attackBuffDictionary");
                 }
             }
 
@@ -9664,7 +10347,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into hitCountDictionary");
+                    logger.Warn(ex, "Could not insert into hitCountDictionary");
                 }
             }
 
@@ -9683,7 +10366,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into damagePerSecondDictionary");
+                    logger.Warn(ex, "Could not insert into damagePerSecondDictionary");
                 }
 
             }
@@ -9697,7 +10380,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into cartsDictionary");
+                    logger.Warn(ex, "Could not insert into cartsDictionary");
                 }
             }
 
@@ -9710,7 +10393,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into areaChangesDictionary");
+                    logger.Warn(ex, "Could not insert into areaChangesDictionary");
                 }
             }
 
@@ -9725,7 +10408,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster1HPDictionary");
+                    logger.Warn(ex, "Could not insert into monster1HPDictionary");
                 }
             }
 
@@ -9740,7 +10423,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster2HPDictionary");
+                    logger.Warn(ex, "Could not insert into monster2HPDictionary");
                 }
             }
 
@@ -9755,7 +10438,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster3HPDictionary");
+                    logger.Warn(ex, "Could not insert into monster3HPDictionary");
                 }
 
             }
@@ -9771,7 +10454,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into monster4HPDictionary");
+                    logger.Warn(ex, "Could not insert into monster4HPDictionary");
                 }
             }
 
@@ -9795,7 +10478,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerInventoryDictionary");
+                    logger.Warn(ex, "Could not insert into playerInventoryDictionary");
                 }
             }
             else if (loadedItemsAtQuestStart && !playerInventoryDictionary.Values.Any())
@@ -9900,7 +10583,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerInventoryDictionary");
+                    logger.Warn(ex, "Could not insert into playerInventoryDictionary");
                 }
             }
 
@@ -9924,7 +10607,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerAmmoPouchDictionary");
+                    logger.Warn(ex, "Could not insert into playerAmmoPouchDictionary");
                 }
             }
             else if (loadedItemsAtQuestStart && !playerAmmoPouchDictionary.Values.Any())
@@ -9988,7 +10671,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerAmmoPouchDictionary");
+                    logger.Warn(ex, "Could not insert into playerAmmoPouchDictionary");
                 }
             }
 
@@ -10012,7 +10695,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into partnyaBagDictionary");
+                    logger.Warn(ex, "Could not insert into partnyaBagDictionary");
                 }
             }
             else if (loadedItemsAtQuestStart && !partnyaBagDictionary.Values.Any())
@@ -10077,7 +10760,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into partnyaBagDictionary");
+                    logger.Warn(ex, "Could not insert into partnyaBagDictionary");
                 }
             }
 
@@ -10092,7 +10775,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into hitsTakenBlockedDictionary");
+                    logger.Warn(ex, "Could not insert into hitsTakenBlockedDictionary");
                 }
             }
 
@@ -10105,7 +10788,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerHPDictionary");
+                    logger.Warn(ex, "Could not insert into playerHPDictionary");
                 }
             }
 
@@ -10118,7 +10801,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into playerStaminaDictionary");
+                    logger.Warn(ex, "Could not insert into playerStaminaDictionary");
                 }
             }
 
@@ -10137,7 +10820,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into hitsPerSecondDictionary");
+                    logger.Warn(ex, "Could not insert into hitsPerSecondDictionary");
                 }
 
             }
@@ -10151,7 +10834,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into hitsTakenBlockedPerSecondDictionary");
+                    logger.Warn(ex, "Could not insert into hitsTakenBlockedPerSecondDictionary");
                 }
             }
 
@@ -10170,7 +10853,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into actionsPerMinuteDictionary");
+                    logger.Warn(ex, "Could not insert into actionsPerMinuteDictionary");
                 }
             }
 
@@ -10183,7 +10866,127 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn(ex, "PROGRAM OPERATION: Could not insert into overlayModeDictionary");
+                    logger.Warn(ex, "Could not insert into overlayModeDictionary");
+                }
+            }
+
+            if (previousMonster1AttackMultiplier != Monster1AttackMultForDictionary() && !monster1AttackMultiplierDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1AttackMultiplier = Monster1AttackMultForDictionary();
+                    Dictionary<int, double> monster1AttackMultiplierDictionaryMonsterInfo = new Dictionary<int, double>();
+                    monster1AttackMultiplierDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1AttackMultForDictionary());
+                    monster1AttackMultiplierDictionary.Add(TimeInt(), monster1AttackMultiplierDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "Could not insert into monster1AttackMultiplierDictionary");
+                }
+            }
+
+            if (previousMonster1DefenseRate != Monster1DefMultForDictionary() && !monster1DefenseRateDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1DefenseRate = Monster1DefMultForDictionary();
+                    Dictionary<int, double> monster1DefenseRateDictionaryMonsterInfo = new Dictionary<int, double>();
+                    monster1DefenseRateDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1DefMultForDictionary());
+                    monster1DefenseRateDictionary.Add(TimeInt(), monster1DefenseRateDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "Could not insert into monster1DefenseRateDictionary");
+                }
+            }
+
+            if (previousMonster1SizeMultiplier != Monster1SizeMultForDictionary() && !monster1SizeMultiplierDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1SizeMultiplier = Monster1SizeMultForDictionary();
+                    Dictionary<int, double> monster1SizeMultiplierDictionaryMonsterInfo = new Dictionary<int, double>();
+                    monster1SizeMultiplierDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1SizeMultForDictionary());
+                    monster1SizeMultiplierDictionary.Add(TimeInt(), monster1SizeMultiplierDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "Could not insert into monster1SizeMultiplierDictionary");
+                }
+            }
+
+            if (previousMonster1PoisonThreshold != Monster1PoisonForDictionary() && !monster1PoisonThresholdDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1PoisonThreshold = Monster1PoisonForDictionary();
+                    Dictionary<int, int> monster1PoisonThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster1PoisonThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1PoisonForDictionary());
+                    monster1PoisonThresholdDictionary.Add(TimeInt(), monster1PoisonThresholdDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "Could not insert into monster1PoisonThresholdDictionary");
+                }
+            }
+
+            if (previousMonster1SleepThreshold != Monster1SleepForDictionary() && !monster1SleepThresholdDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1SleepThreshold = Monster1SleepForDictionary();
+                    Dictionary<int, int> monster1SleepThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster1SleepThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1SleepForDictionary());
+                    monster1SleepThresholdDictionary.Add(TimeInt(), monster1SleepThresholdDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "Could not insert into monster1SleepThresholdDictionary");
+                }
+            }
+
+            if (previousMonster1ParalysisThreshold != Monster1ParalysisForDictionary() && !monster1ParalysisThresholdDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1ParalysisThreshold = Monster1ParalysisForDictionary();
+                    Dictionary<int, int> monster1ParalysisThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster1ParalysisThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1ParalysisForDictionary());
+                    monster1ParalysisThresholdDictionary.Add(TimeInt(), monster1ParalysisThresholdDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "Could not insert into monster1ParalysisThresholdDictionary");
+                }
+            }
+
+            if (previousMonster1BlastThreshold != Monster1BlastForDictionary() && !monster1BlastThresholdDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1BlastThreshold = Monster1BlastForDictionary();
+                    Dictionary<int, int> monster1BlastThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster1BlastThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1BlastForDictionary());
+                    monster1BlastThresholdDictionary.Add(TimeInt(), monster1BlastThresholdDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "Could not insert into monster1BlastThresholdDictionary");
+                }
+            }
+
+            if (previousMonster1StunThreshold != Monster1StunForDictionary() && !monster1StunThresholdDictionary.ContainsKey(TimeInt()))
+            {
+                try
+                {
+                    previousMonster1StunThreshold = Monster1StunForDictionary();
+                    Dictionary<int, int> monster1StunThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                    monster1StunThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1StunForDictionary());
+                    monster1StunThresholdDictionary.Add(TimeInt(), monster1StunThresholdDictionaryMonsterInfo);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "Could not insert into monster1StunThresholdDictionary");
                 }
             }
         }
@@ -10293,6 +11096,16 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             previousActionsPerMinute = 0;
             previousOverlayMode = "N/A";
             previousRoadFloor = 0;
+
+            previousMonster1AttackMultiplier = 0;
+            previousMonster1DefenseRate = 0;
+            previousMonster1SizeMultiplier = 0;
+            previousMonster1PoisonThreshold = 0;
+            previousMonster1SleepThreshold = 0;
+            previousMonster1ParalysisThreshold = 0;
+            previousMonster1BlastThreshold = 0;
+            previousMonster1StunThreshold = 0;
+
         }
 
         public void clearQuestInfoDictionaries()
@@ -10320,6 +11133,16 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             gamepadInputDictionary.Clear();
             actionsPerMinuteDictionary.Clear();
             overlayModeDictionary.Clear();
+
+            monster1AttackMultiplierDictionary.Clear();
+            monster1DefenseRateDictionary.Clear();
+            monster1SizeMultiplierDictionary.Clear();
+            monster1PoisonThresholdDictionary.Clear();
+            monster1SleepThresholdDictionary.Clear();
+            monster1ParalysisThresholdDictionary.Clear();
+            monster1BlastThresholdDictionary.Clear();
+            monster1StunThresholdDictionary.Clear();
+
         }
 
         public void clearGraphCollections()
@@ -10428,6 +11251,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         public ObservableCollection<Option> QuestLogsSearchOption { get; set; } = new ObservableCollection<Option>()
         {
+            new Option{Name = "Compendium", IsSelected = false},
             new Option{Name = "Personal Best", IsSelected = false},
             new Option{Name = "Gear", IsSelected = false},
             new Option{Name = "Top 20", IsSelected = false},
@@ -10512,6 +11336,242 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 TimeSpan duration = ProgramEnd - ProgramStart;
                 return duration;
             }
+        }
+
+        #region ehp
+        public int currentMonster1MaxHP { get; set; } = 0;
+        /// <summary>
+        /// Shows the current hp percentage.
+        /// </summary>
+        /// <returns></returns>
+        public static bool ShowCurrentHPPercentage()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            if (s.EnableCurrentHPPercentage)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Gets the monster1 ehp percent.
+        /// </summary>
+        /// <returns></returns>
+        public string GetMonster1EHPPercent()
+        {
+            if (currentMonster1MaxHP < int.Parse(Monster1HP))
+                currentMonster1MaxHP = int.Parse(Monster1HP);
+
+            if (currentMonster1MaxHP == 0 || GetMonster1EHP() == 0) //should be OK
+                currentMonster1MaxHP = 1;
+
+            if (!(ShowCurrentHPPercentage()))
+                return "";
+
+            return string.Format(" ({0:0}%)", (float)int.Parse(Monster1HP) / currentMonster1MaxHP * 100.0);
+        }
+
+        /// <summary>
+        /// Gets the monster1 ehp.
+        /// </summary>
+        /// <returns></returns>
+        public int GetMonster1EHP()
+        {
+            return DisplayMonsterEHP(Monster1DefMult(), Monster1HPInt(), Monster1DefMult());
+        }
+
+        /// <summary>
+        /// Gets the monster1 maximum ehp.
+        /// </summary>
+        /// <returns></returns>
+        public int GetMonster1MaxEHP()
+        {
+            return currentMonster1MaxHP;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Gets the max faints
+        /// </summary>
+        /// <returns></returns>
+        public string GetMaxFaints()
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+
+            switch (s.MaxFaintsOverride)
+            {
+                default:
+                    return MaxFaints().ToString();
+                case "Normal Quests":
+                    return MaxFaints().ToString();
+                case "Shiten/Conquest/Pioneer/Daily/Caravan/Interception Quests":
+                    return AlternativeMaxFaints().ToString();
+                case "Automatic":
+                    if (roadOverride() != null && roadOverride() == false)
+                        return MaxFaints().ToString();
+
+                if 
+                (
+                    (
+                        CaravanOverride() && !
+                        (
+                            QuestID() == 23603 ||
+                            RankBand() == 70 ||
+                            QuestID() == 23602 ||
+                            QuestID() == 23604 ||
+                            QuestID() == 23588 ||
+                            QuestID() == 23592 ||
+                            QuestID() == 23596 ||
+                            QuestID() == 23601 ||
+                            QuestID() == 23599 ||
+                            QuestID() == 23595 ||
+                            QuestID() == 23591 ||
+                            QuestID() == 23587 ||
+                            QuestID() == 23598 ||
+                            QuestID() == 23594 ||
+                            QuestID() == 23590 ||
+                            QuestID() == 23586 ||
+                            QuestID() == 23597 ||
+                            QuestID() == 23593 ||
+                            QuestID() == 23589 ||
+                            QuestID() == 23585
+                        )
+                    )
+
+                    ||
+
+                    QuestID() == 23603 ||
+                    RankBand() == 70 ||
+                    QuestID() == 23602 ||
+                    QuestID() == 23604 ||
+                    QuestID() == 23588 ||
+                    QuestID() == 23592 ||
+                    QuestID() == 23596 ||
+                    QuestID() == 23601 ||
+                    QuestID() == 23599 ||
+                    QuestID() == 23595 ||
+                    QuestID() == 23591 ||
+                    QuestID() == 23587 ||
+                    QuestID() == 23598 ||
+                    QuestID() == 23594 ||
+                    QuestID() == 23590 ||
+                    QuestID() == 23586 ||
+                    QuestID() == 23597 ||
+                    QuestID() == 23593 ||
+                    QuestID() == 23589 ||
+                    QuestID() == 23585
+                    )
+                {
+                    return AlternativeMaxFaints().ToString();
+                }
+                else
+                {
+                    return MaxFaints().ToString();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the color of the armor.
+        /// </summary>
+        /// <returns></returns>
+        public string GetArmorColor()
+        {
+            Dictionary.ArmorColorList.ArmorColorID.TryGetValue(ArmorColor(), out string? colorname);
+            return colorname + "";
+        }
+
+        /// <summary>
+        /// Gets the weapon style from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetWeaponStyleFromID(int id)
+        {
+            return id switch
+            {
+                0 => "Earth",
+                1 => "Heaven",
+                2 => "Storm",
+                3 => "Extreme",
+                _ => "None",
+            };
+        }
+
+        /// <summary>
+        /// Gets the area icon from identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetAreaIconFromID(int id) //TODO: are highlands, tidal island or painted falls icons correct?
+        {
+            if (id >= 470 && id < 0)
+                return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+            else
+                return FindAreaIcon(id);
+        }
+
+        public static string FindAreaIcon(int id)
+        {
+            List<int> AreaGroup = new List<int> { 0 };
+
+            foreach (KeyValuePair<List<int>, string> kvp in AreaIconDictionary.AreaIconID)
+            {
+                List<int> areaIDs = kvp.Key;
+
+                if (areaIDs.Contains(id))
+                {
+                    AreaGroup = kvp.Key;
+                    break;
+                }
+            }
+            return DetermineAreaIcon(AreaGroup);
+        }
+
+        public static string DetermineAreaIcon(List<int> key)
+        {
+            bool areaIcon = AreaIconDictionary.AreaIconID.ContainsKey(key);
+            if (!areaIcon)
+                return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+            else
+                return AreaIconDictionary.AreaIconID[key];
+        }
+
+        /// <summary>
+        /// Gets the poogie clothes.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public string GetPoogieClothes(int id)
+        {
+            string? clothesValue1;
+            _ = Dictionary.PoogieCostumeList.PoogieCostumeID.TryGetValue(id, out clothesValue1);  //returns true
+            return clothesValue1 + "";
+        }
+
+        /// <summary>
+        /// Gets the caravan skills.
+        /// </summary>
+        /// <returns></returns>
+        public string GetCaravanSkillsWithoutMarkdown(DataLoader dataLoader)
+        {
+            int id1 = dataLoader.model.CaravanSkill1();
+            int id2 = dataLoader.model.CaravanSkill2();
+            int id3 = dataLoader.model.CaravanSkill3();
+
+            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id1, out string? caravanSkillName1);
+            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id2, out string? caravanSkillName2);
+            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id3, out string? caravanSkillName3);
+
+            if (caravanSkillName1 == "" || caravanSkillName1 == "None")
+                return "None";
+            else if (caravanSkillName2 == "" || caravanSkillName2 == "None")
+                return caravanSkillName1 + "";
+            else if (caravanSkillName3 == "" || caravanSkillName3 == "None")
+                return caravanSkillName1 + ", " + caravanSkillName2;
+            else
+                return caravanSkillName1 + ", " + caravanSkillName2 + ", " + caravanSkillName3;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

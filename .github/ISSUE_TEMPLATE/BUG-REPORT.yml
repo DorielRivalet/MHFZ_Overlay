@@ -1,17 +1,44 @@
 name: "🐛 Bug Report"
 description: File a bug report
-title: "[BUG] - <title>"
+title: "[BUG] - title"
 labels: ["bug"]
 assignees:
   - DorielRivalet
 body:
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+      - label: I have searched the existing issues
+        required: true
   - type: textarea
     id: what-happened
     attributes:
       label: What happened?
-      description: Also tell us, what did you expect to happen? Please add the crash log or log file information if you have them, you can find them in the overlay folder
+      description: Also tell us, what did you expect to happen? Please add the crash log or log file information if you have it, you can find it in the overlay folder, inside the log folder. If possible, add instructions on how to reproduce the bug.
       placeholder: Tell us what you see!
       value: "A bug happened! Here is my crash log"
+    validations:
+      required: true
+  - type: dropdown
+    id: bug-frequency
+    attributes:
+      label: How often does the bug occur?
+      multiple: false
+      options:
+        - Rarely
+        - Sometimes
+        - Always
+    validations:
+      required: true
+  - type: textarea
+    id: operating-system
+    attributes:
+      label: What operating system are you using?
+      description: Operating system
+      placeholder: Tell us what operating system you using (Windows 11, Windows 10, etc.)
+      value: "Windows 10 21H2"
     validations:
       required: true
   - type: textarea
@@ -19,7 +46,7 @@ body:
     attributes:
       label: What version of the program are you using?
       description: Program Version
-      placeholder: Tell us what version you using
+      placeholder: Tell us what version you using (x.y.z)
       value: "Latest version"
     validations:
       required: true
@@ -31,6 +58,16 @@ body:
       options:
         - High-Grade Edition
         - Non High-Grade Edition
+    validations:
+      required: true
+  - type: input
+    id: quest-id
+    attributes:
+      label: Quest ID
+      description: What is the Quest ID where the issue occurs? Enter the quest ID that you see in the overlay, enabled by going into Config -> Quest Log -> Settings. If the issue occurs in multiple quests, enter an example quest ID and tell us in the issue description that it happens in multiple quests. If the issue occurs outside quests, enter 0. 
+      placeholder: 64123
+    validations:
+      required: true
   - type: markdown
     attributes:
       value: |

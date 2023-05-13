@@ -117,7 +117,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="TimerX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">-80</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="TimerY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">400</Value>
@@ -126,7 +126,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="HitCountX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">-80</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="HitCountY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">560</Value>
@@ -135,7 +135,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="PlayerAtkX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">-80</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="PlayerAtkY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">600</Value>
@@ -147,7 +147,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="MonsterAtkMultX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1060</Value>
+      <Value Profile="(Default)">1140</Value>
     </Setting>
     <Setting Name="MonsterAtkMultY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">200</Value>
@@ -156,7 +156,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="MonsterDefrateX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1060</Value>
+      <Value Profile="(Default)">1140</Value>
     </Setting>
     <Setting Name="MonsterDefrateY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">230</Value>
@@ -165,7 +165,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="MonsterSizeX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1060</Value>
+      <Value Profile="(Default)">1140</Value>
     </Setting>
     <Setting Name="MonsterSizeY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">260</Value>
@@ -408,7 +408,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PlayerDPSX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">-80</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="PlayerDPSY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">520</Value>
@@ -465,7 +465,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="TotalHitsTakenBlockedX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">-80</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="TotalHitsTakenBlockedY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">640</Value>
@@ -501,7 +501,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ActionsPerMinuteX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">-80</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="ActionsPerMinuteY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">480</Value>
@@ -576,7 +576,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="QuestIDX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">300</Value>
+      <Value Profile="(Default)">380</Value>
     </Setting>
     <Setting Name="QuestIDY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">50</Value>
@@ -669,7 +669,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="PersonalBestX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">-80</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="PersonalBestY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">440</Value>
@@ -681,7 +681,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SessionTimeX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">-70</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="SessionTimeY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">180</Value>
@@ -693,7 +693,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="QuestAttemptsX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">300</Value>
+      <Value Profile="(Default)">380</Value>
     </Setting>
     <Setting Name="QuestAttemptsY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">90</Value>
@@ -726,10 +726,52 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="PersonalBestTimePercentX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">300</Value>
+      <Value Profile="(Default)">380</Value>
     </Setting>
     <Setting Name="PersonalBestTimePercentY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">130</Value>
+    </Setting>
+    <Setting Name="PrimaryFontFamily" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MS Gothic</Value>
+    </Setting>
+    <Setting Name="PrimaryFontSize" Type="System.String" Scope="User">
+      <Value Profile="(Default)">21</Value>
+    </Setting>
+    <Setting Name="PrimaryFontWeight" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bold</Value>
+    </Setting>
+    <Setting Name="SecondaryFontFamily" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Source Code Pro</Value>
+    </Setting>
+    <Setting Name="SecondaryFontSize" Type="System.String" Scope="User">
+      <Value Profile="(Default)">16</Value>
+    </Setting>
+    <Setting Name="SecondaryFontWeight" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bold</Value>
+    </Setting>
+    <Setting Name="DamageNumbersFontFamily" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MS Gothic</Value>
+    </Setting>
+    <Setting Name="DamageNumbersFontWeight" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bold</Value>
+    </Setting>
+    <Setting Name="EnableOutsideMezeportaLoadingWarning" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="RefreshRate" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="PersonalBestAttemptsShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PersonalBestAttemptsX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">380</Value>
+    </Setting>
+    <Setting Name="PersonalBestAttemptsY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">170</Value>
+    </Setting>
+    <Setting Name="EnableNationality" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

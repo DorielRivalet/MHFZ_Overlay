@@ -52,7 +52,7 @@ If you're experiencing a slowdown in your game while recording with OBS and usin
 
 - System resources: Recording gameplay with OBS and running an overlay can be resource-intensive, especially if your computer has limited CPU or GPU resources. Try closing any unnecessary programs, lowering in-game graphics settings, or upgrading your hardware to meet the requirements for recording and overlay usage.
 
-- Overlay settings: The settings of the overlay can also impact performance. Make sure your overlay settings are optimized for performance, such as using lower resolution and disabling any unnecessary features.
+- Overlay settings: The settings of the overlay can also impact performance. Make sure your overlay settings are optimized for performance, such as using lower resolution and disabling any unnecessary features. Try one of the configuration presets, such as Speedrun, Zen or HP only. Lastly, try reducing the maximum resolution values. As a last resort, try lowering the Refresh Rate, at the cost of stats accuracy.
 
 - OBS settings: Review your OBS settings to ensure they are optimized for recording. Adjusting bitrate, resolution, and frame rate settings in OBS can help improve performance while recording with an overlay.
 
@@ -85,7 +85,7 @@ If you have any questions about versioning or how to upgrade your software, plea
 
 ## Where do I find my logs or crash files?
 
-In the folder where `MHFZ_Overlay.exe` is, there should be a log file named `logs.log` and optionally a `MHFZ_Overlay-CrashLog-Date.txt` file with the date of a crash that has occurred. These files are useful for debugging the program. You should only send the relevant text in the logs when reporting an issue, not the whole file.
+In the folder where `MHFZ_Overlay.exe` is, there should be a `log` folder with a log file named `logs.log`. This file is useful for debugging the program. You should only send the relevant text in the logs when reporting an issue, not the whole file, so only send the last lines where appropiate. Look out for words such as WARN, ERROR, or FATAL.
 
 ## Does this software support other operating systems?
 

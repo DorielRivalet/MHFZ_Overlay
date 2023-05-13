@@ -1,12 +1,6 @@
-﻿using Discord;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 /*
 [Flags]: Indicates that an enum is intended to be used as a bit field, 
@@ -174,5 +168,25 @@ namespace MHFZ_Overlay.Core.Enum
         SleepPLUS2 = 8192,
         NULL2 = 16384,
         NULL3 = 32768
+    }
+
+    /// <summary>
+    /// Quest states
+    /// </summary>
+    [Flags]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum QuestState : uint
+    {
+        [DefaultValue(None)]
+        None = 0,
+        Achieved_Main_Objective = 1,
+        UNK1 = 2,
+        UNK2 = 4,
+        UNK3 = 8,
+        UNK4 = 16,
+        UNK5 = 32,
+        UNK6 = 64,
+        UNK7 = 128,
+        Quest_Clear = Achieved_Main_Objective | UNK7
     }
 }

@@ -6,13 +6,7 @@ Our software uses structured logging to provide a clear and concise record of ev
 
 ### Logging with NLog
 
-We have implemented a labeling system to categorize log messages into three main categories:
-
-- DATABASE OPERATION: Log messages related to database operations.
-- FILE OPERATION: Log messages related to I/O operations.
-- PROGRAM OPERATION: Log messages related to any other operations.
-
-All logs are saved to a file called `logs.log`, which is located in the same directory as the program. In the event of a crash, crash logs will be created with information about the crash, including the date and time, in the file name.
+All logs are saved to a file called `logs.log`, which is inside the logs folder, located in the same directory as the program. In the event of a crash, crash logs will be created with information about the crash, including the date and time, in the file name. Should the application exit because of such errors, the log will be labeled as FATAL.
 
 ### Goals
 

@@ -103,7 +103,7 @@ namespace Dictionary
             {62, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Pink"]},//
             {63, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Overlay1"]},//
             {64, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Blue"]},//
-            
+            {65, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Red"]},// teo
             {66, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Red"]},//
             {67, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Blue"]},//
             {68, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Maroon"]},//
@@ -127,13 +127,13 @@ namespace Dictionary
             {86, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Green"]},//
             {87, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Rosewater"]},//
             {88, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Rosewater"]},//
-            
+            {89, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Maroon"]},// paria
             {90, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]},//
             {91, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Base"]},//
             {92, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]},//
             {93, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Peach"]},//
             {94, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Green"]},//
-            
+            {95, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Mauve"]},// dora
             {96, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Blue"]},//
             {97, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Rosewater"]},//
             {98, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Rosewater"]},//
@@ -144,14 +144,14 @@ namespace Dictionary
             {103, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Peach"]},//
             {104, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Green"]},//
             {105, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Blue"]},//
-            
+            {106, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Red"]},// odi
             {107, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Subtext1"]},//
             {108, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Teal"]},//
             {109, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Sapphire"]},//
             {110, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Rosewater"]},//
             {111, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Maroon"]},//
             {112, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Sapphire"]},//
-            
+            {113, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Crust"]},// mi ru
             {114, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Teal"]},//
             {115, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Subtext1"]},//
             {116, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Sapphire"]},//
@@ -184,7 +184,7 @@ namespace Dictionary
             {143, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Rosewater"]},//
             {144, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Maroon"]},//
             {145, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Lavender"]},//
-            
+            {146, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Sky"]},// zin
             {147, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Maroon"]},//
             {148, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Blue"]},//
             {149, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Crust"]},//
@@ -192,7 +192,8 @@ namespace Dictionary
             {151, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]},//
             {152, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Yellow"]},//
             {153, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Maroon"]},//
-
+            {154, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Peach"]},// guanzo
+            {155, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Maroon"]},// starving
             {156, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Rosewater"]},//
             {157, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Rosewater"]},//
             {158, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Peach"]},//
@@ -203,7 +204,7 @@ namespace Dictionary
             {163, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]},//
             {164, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Subtext1"]},//
             {165, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]},//
-
+            {166, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Mauve"]},// elzelion
             {167, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Lavender"]},//
             {168, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Rosewater"]},//
             {169, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Rosewater"]},//

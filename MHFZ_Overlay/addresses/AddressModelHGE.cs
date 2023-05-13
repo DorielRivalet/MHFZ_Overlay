@@ -1,9 +1,11 @@
 ﻿using Memory;
 
+// Most Addresses from https://github.com/suzaku01/ 
 namespace MHFZ_Overlay.addresses
 {
-
-    /// Most Addresses from https://github.com/suzaku01/
+    /// <summary>
+    /// Inherits from AddressModel and provides the memory address of the hit count value (etc.) when the game is running in HGE mode.
+    /// </summary>
     internal class AddressModelHGE : AddressModel
     {
         public AddressModelHGE(Mem m) : base(m)
@@ -196,10 +198,10 @@ namespace MHFZ_Overlay.addresses
         public override int UrukiPachinkoSeed() => M.ReadByte("mhfo-hd.dll+EE2691A");
         public override int UrukiPachinkoMeat() => M.ReadByte("mhfo-hd.dll+EE26914");
         public override int UrukiPachinkoChain() => M.ReadByte("mhfo-hd.dll+EE26900");
-        public override int UrukiPachinkoScore() => M.Read2Byte("mhfo-hd.dll+EE2690C");
-        public override int UrukiPachinkoBonusScore() => M.Read2Byte("mhfo-hd.dl+EE26910");
-        public override int NyanrendoScore() => M.Read2Byte("mhfo-hd.dll+EE26900");
-        public override int DokkanBattleCatsScore() => M.Read2Byte("mhfo-hd.dll+EE268F8");
+        public override int UrukiPachinkoScore() => M.ReadInt("mhfo-hd.dll+EE2690C");
+        public override int UrukiPachinkoBonusScore() => M.ReadInt("mhfo-hd.dll+EE26910");
+        public override int NyanrendoScore() => M.ReadInt("mhfo-hd.dll+EE26900");
+        public override int DokkanBattleCatsScore() => M.ReadInt("mhfo-hd.dll+EE268F8");
         public override int DokkanBattleCatsScale() => M.ReadByte("mhfo-hd.dll+EE26A8C");
         public override int DokkanBattleCatsShell() => M.ReadByte("mhfo-hd.dll+EE268F4");
         public override int DokkanBattleCatsCamp() => M.ReadByte("mhfo-hd.dll+EE26A8A");
@@ -207,7 +209,7 @@ namespace MHFZ_Overlay.addresses
         public override int GuukuScoopMedium() => M.ReadByte("mhfo-hd.dll+EE26934");
         public override int GuukuScoopLarge() => M.ReadByte("mhfo-hd.dll+EE26938");
         public override int GuukuScoopGolden() => M.ReadByte("mhfo-hd.dll+EE2693C");
-        public override int GuukuScoopScore() => M.Read2Byte("mhfo-hd.dll+EE26924");
+        public override int GuukuScoopScore() => M.ReadInt("mhfo-hd.dll+EE26924");
         public override int PanicHoneyScore() => M.ReadByte("mhfo-hd.dll+EE26908");
         // TODO: Volpkun Together addresses
         public override int Sharpness() => M.Read2Byte("mhfo-hd.dll+DC6C276");
@@ -300,7 +302,8 @@ namespace MHFZ_Overlay.addresses
         public override int StarGrades() => M.ReadByte("mhfo-hd.dll+E774CAE");
 
         public override int CurrentFaints() => M.ReadByte("mhfo-hd.dll+DC6C35B");
-        public override int MaxFaints() => M.ReadByte("mhfo-hd.dll+C4C8FE8");
+        //public override int MaxFaints() => M.ReadByte("mhfo-hd.dll+C4C8FE8");
+        public override int MaxFaints() => M.ReadByte("mhfo-hd.dll+2B20C0C");
         public override int AlternativeMaxFaints() => M.ReadByte("mhfo-hd.dll+2AFA814");
 
         public override int CaravanSkill1() => M.ReadByte("mhfo-hd.dll+DC6C448");
