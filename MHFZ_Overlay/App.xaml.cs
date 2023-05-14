@@ -20,6 +20,7 @@ namespace MHFZ_Overlay
     public partial class App : Application
     {
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        public static bool isClowdSquirrelUpdating = false;
 
         /// <summary>
         /// The current program version. TODO: put in env var
@@ -89,9 +90,9 @@ namespace MHFZ_Overlay
         /// <param name="tools">The tools.</param>
         private static void OnAppInstall(SemanticVersion version, IAppTools tools)
         {
+            logger.Info("Created overlay shortcut");
             MessageBox.Show("【MHF-Z】Overlay is now installed. Creating a shortcut.", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
             tools.CreateShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
-            logger.Info("Created overlay shortcut");
         }
 
         /// <summary>
@@ -101,9 +102,9 @@ namespace MHFZ_Overlay
         /// <param name="tools">The tools.</param>
         private static void OnAppUninstall(SemanticVersion version, IAppTools tools)
         {
+            logger.Info("Removed overlay shortcut");
             MessageBox.Show("【MHF-Z】Overlay has been uninstalled. Removing shortcut.", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
             tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
-            logger.Info("Removed overlay shortcut");
         }
 
         /// <summary>
@@ -118,6 +119,7 @@ namespace MHFZ_Overlay
             // show a welcome message when the app is first installed
             if (firstRun) 
             {
+                logger.Info("Running overlay for first time");
                 MessageBox.Show(
 @"【MHF-Z】Overlay is now running! Thanks for installing【MHF-Z】Overlay.
 
@@ -131,7 +133,6 @@ The overlay might take some time to start due to databases.
 
 Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                logger.Info("Running overlay for first time");
             }
         }
 
@@ -144,6 +145,7 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
 
         public static async Task UpdateMyApp()
         {
+            isClowdSquirrelUpdating = true;
             try
             {
                 using var mgr = new GithubUpdateManager(@"https://github.com/DorielRivalet/mhfz-overlay");
@@ -160,12 +162,14 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
                 else
                 {
                     logger.Error("No updates available");
+                    isClowdSquirrelUpdating = false;
                     MessageBox.Show("No updates available", "MHF-Z Overlay Update", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                isClowdSquirrelUpdating = false;
                 MessageBox.Show("An error has occurred with the update process, see logs.log for more information", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

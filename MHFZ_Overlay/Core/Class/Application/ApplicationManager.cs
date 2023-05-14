@@ -20,6 +20,9 @@ namespace MHFZ_Overlay.Core.Class.Application
         private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        /// <summary>
+        /// Handles the shutdown.
+        /// </summary>
         public static void HandleShutdown()
         {
             //https://stackoverflow.com/a/9050477/18859245
@@ -30,6 +33,9 @@ namespace MHFZ_Overlay.Core.Class.Application
             Environment.Exit(0);
         }
 
+        /// <summary>
+        /// Disposes the notify icon.
+        /// </summary>
         public static void DisposeNotifyIcon()
         {
             MainWindow._notifyIcon.Visible = false;
@@ -38,6 +44,9 @@ namespace MHFZ_Overlay.Core.Class.Application
             logger.Info("Disposed Notify Icon");
         }
 
+        /// <summary>
+        /// Handles the restart.
+        /// </summary>
         public static void HandleRestart()
         {
             databaseManager.StoreSessionTime(databaseManager.DatabaseStartTime);
@@ -48,7 +57,9 @@ namespace MHFZ_Overlay.Core.Class.Application
             System.Windows.Application.Current.Shutdown();
         }
 
-        // This should never run if possible, only used as last resort
+        /// <summary>
+        /// This should never run if possible, only used as last resort
+        /// </summary>
         public static void HandleGameShutdown()
         {
             logger.Info("Closing game");
@@ -56,6 +67,10 @@ namespace MHFZ_Overlay.Core.Class.Application
             MessageBox.Show("The game was closed due to a fatal overlay error, please report this to the developer", LoggingManager.FATAL_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        /// <summary>
+        /// Kills the process.
+        /// </summary>
+        /// <param name="processName">Name of the process.</param>
         public static void KillProcess(string processName)
         {
             try 
@@ -94,6 +109,10 @@ namespace MHFZ_Overlay.Core.Class.Application
             }
         }
 
+        /// <summary>
+        /// Closes the process.
+        /// </summary>
+        /// <param name="processName">Name of the process.</param>
         public static void CloseProcess(string processName)
         {
             try

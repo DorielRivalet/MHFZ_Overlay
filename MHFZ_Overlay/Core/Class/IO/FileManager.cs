@@ -28,6 +28,14 @@ namespace MHFZ_Overlay.Core.Class.IO
     {
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        /// <summary>
+        /// Saves the text file.
+        /// </summary>
+        /// <param name="textToSave">The text to save.</param>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="initialDirectory">The initial directory.</param>
+        /// <param name="beginningFileName">Name of the beginning file.</param>
+        /// <param name="beginningText">The beginning text.</param>
         public static void SaveTextFile(string textToSave, string fileName, string initialDirectory = @"USERDATA\HunterInfo\", string beginningFileName = "", string beginningText = "")
         {
             try
@@ -54,6 +62,12 @@ namespace MHFZ_Overlay.Core.Class.IO
             }
         }
 
+        /// <summary>
+        /// Saves the element as image file.
+        /// </summary>
+        /// <param name="gridToSave">The grid to save.</param>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="initialDirectory">The initial directory.</param>
         public static void SaveElementAsImageFile(Grid gridToSave, string fileName, string initialDirectory = @"USERDATA\HunterInfo\")
         {
             try
@@ -115,6 +129,11 @@ namespace MHFZ_Overlay.Core.Class.IO
             }
         }
 
+        /// <summary>
+        /// Creates the bitmap from visual.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="fileName">Name of the file.</param>
         public static void CreateBitmapFromVisual(Visual target, string fileName)
         {
             try
@@ -159,6 +178,10 @@ namespace MHFZ_Overlay.Core.Class.IO
             }
         }
 
+        /// <summary>
+        /// Saves the class records as CSV file.
+        /// </summary>
+        /// <param name="Monsters">The monsters.</param>
         public static void SaveClassRecordsAsCSVFile(MonsterLog[] Monsters)
         {
             try
@@ -188,6 +211,9 @@ namespace MHFZ_Overlay.Core.Class.IO
             }
         }
 
+        /// <summary>
+        /// Saves the settings as json.
+        /// </summary>
         public static void SaveSettingsAsJSON()
         {
             try
@@ -258,15 +284,29 @@ namespace MHFZ_Overlay.Core.Class.IO
             }
         }
 
+        /// <summary>
+        /// Copies the file to destination.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="destination">The destination.</param>
+        /// <param name="overwrite">if set to <c>true</c> [overwrite].</param>
+        /// <param name="logMessage">The log message.</param>
+        /// <param name="showMessageBox">if set to <c>true</c> [show message box].</param>
         public static void CopyFileToDestination(string file, string destination, bool overwrite = false, string logMessage = "", bool showMessageBox = true)
         {
-            logger.Info("Copying file to destination. Original file: {1}, Destination: {2}", file, destination);
+            logger.Info("Copying file to destination. Original file: {0}, Destination: {1}", file, destination);
             File.Copy(file, destination, overwrite);
             logger.Info("{0}. Original file: {1}, Destination: {2}", logMessage, file, destination);
             if (showMessageBox)
-                MessageBox.Show(string.Format("{0}. Original file: {0}, Destination: {1}", logMessage, file, destination), "MHF-Z Overlay", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(string.Format("{0}. Original file: {1}, Destination: {2}", logMessage, file, destination), LoggingManager.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        /// <summary>
+        /// Restores the file from source to destination.
+        /// </summary>
+        /// <param name="destFile">The dest file.</param>
+        /// <param name="sourceFile">The source file.</param>
+        /// <param name="logMessage">The log message.</param>
         public static void RestoreFileFromSourceToDestination(string destFile, string sourceFile, string logMessage)
         {
             // Check if we have settings that we need to restore
@@ -279,8 +319,8 @@ namespace MHFZ_Overlay.Core.Class.IO
             // Create directory as needed
             try
             {
+                logger.Info("Creating directory if it doesn't exist: {0}", Path.GetDirectoryName(destFile));
                 Directory.CreateDirectory(Path.GetDirectoryName(destFile));
-                logger.Info("Creating directory {0}", Path.GetDirectoryName(destFile));
 
             }
             catch (Exception ex)
@@ -291,22 +331,19 @@ namespace MHFZ_Overlay.Core.Class.IO
             // Copy our backup file in place 
             try
             {
-                File.Copy(sourceFile, destFile, true);
                 logger.Info("Copying {0} into {1}", sourceFile, destFile);
-
+                File.Copy(sourceFile, destFile, true);
             }
             catch (Exception ex)
             {
                 logger.Info(ex, "Did not copy backup file. Source: {0}, Destination: {1} ", sourceFile, destFile);
-
             }
 
             // Delete backup file
             try
             {
-                File.Delete(sourceFile);
                 logger.Info("Deleting {0}", sourceFile);
-
+                File.Delete(sourceFile);
             }
             catch (Exception ex)
             {
@@ -316,6 +353,12 @@ namespace MHFZ_Overlay.Core.Class.IO
             logger.Info("{0}. Source: {1}, Destination: {2}", logMessage, sourceFile, destFile);
         }
 
+        /// <summary>
+        /// Creates the file if not exists.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="logMessage">The log message.</param>
+        /// <returns></returns>
         public static bool CreateFileIfNotExists(string path, string logMessage)
         {
             var doesExist = File.Exists(path);
@@ -337,6 +380,12 @@ namespace MHFZ_Overlay.Core.Class.IO
             }
         }
 
+        /// <summary>
+        /// Checks if file exists.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="logMessage">The log message.</param>
+        /// <returns></returns>
         public static bool CheckIfFileExists(string path, string logMessage)
         {
             try
@@ -352,6 +401,16 @@ namespace MHFZ_Overlay.Core.Class.IO
             }
         }
 
+        /// <summary>
+        /// Checks if file, extension, or folder exists.
+        /// </summary>
+        /// <param name="files">The files.</param>
+        /// <param name="folders">The folders.</param>
+        /// <param name="bannedFiles">The banned files.</param>
+        /// <param name="bannedFileExtensions">The banned file extensions.</param>
+        /// <param name="bannedFolders">The banned folders.</param>
+        /// <param name="isFatal">if set to <c>true</c> [is fatal].</param>
+        /// <returns></returns>
         public static bool CheckIfFileExtensionFolderExists(string[] files, string[] folders, List<string> bannedFiles, List<string> bannedFileExtensions, List<string> bannedFolders, bool isFatal = true)
         {
             var doesExist = false;
@@ -388,14 +447,19 @@ namespace MHFZ_Overlay.Core.Class.IO
             {
                 // If there are any banned files or folders, display an error message and exit the application
                 string message = string.Format("The following files or folders are not allowed:\n{0}", string.Join("\n", illegalFiles));
-                MessageBox.Show(message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Fatal(message);
+                MessageBox.Show(message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
 
             return doesExist;
         }
 
+        /// <summary>
+        /// Writes to file.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="textToWrite">The text to write.</param>
         public static void WriteToFile(string path, string textToWrite)
         {
             try
@@ -409,10 +473,17 @@ namespace MHFZ_Overlay.Core.Class.IO
             }
         }
 
+        /// <summary>
+        /// Creates the database backup.
+        /// </summary>
+        /// <param name="connection">The connection.</param>
+        /// <param name="BackupFolderName">Name of the backup folder.</param>
         public static void CreateDatabaseBackup(SQLiteConnection connection, string BackupFolderName)
         {
             try
             {
+                logger.Info("Creating database backup");
+
                 // Get the path of the current database file
                 string databaseFilePath = connection.FileName;
 
@@ -440,11 +511,15 @@ namespace MHFZ_Overlay.Core.Class.IO
             catch (Exception ex)
             {
                 // Handle the exception and show an error message to the user
-                MessageBox.Show("An error occurred while creating a database backup: " + ex.Message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Error(ex, "An error occurred while creating a database backup");
+                MessageBox.Show("An error occurred while creating a database backup: " + ex.Message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
+        /// <summary>
+        /// Deletes the file.
+        /// </summary>
+        /// <param name="path">The path.</param>
         public static void DeleteFile(string path)
         {
             try

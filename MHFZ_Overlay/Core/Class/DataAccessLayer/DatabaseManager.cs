@@ -62,8 +62,8 @@ namespace MHFZ_Overlay
             if (mainWindowDataLoader.databaseChanged)
             {
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
-                MessageBox.Show("Please update the database structure", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
                 logger.Warn("Database structure needs update");
+                MessageBox.Show("Please update the database structure", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
                 s.EnableQuestLogging = false;
             }
         }
@@ -78,8 +78,8 @@ namespace MHFZ_Overlay
                 _connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
 
                 // Show warning to user that they should set a custom database path to prevent data loss on update
-                MessageBox.Show("Warning: The database is currently stored in the default location and will be deleted on update. Please select a custom database location to prevent data loss.", "MHFZ-Overlay Data Loss Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 logger.Warn("The database file is being saved to the overlay default location");
+                MessageBox.Show("Warning: The database is currently stored in the default location and will be deleted on update. Please select a custom database location to prevent data loss.", "MHFZ-Overlay Data Loss Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 // Use default database path
                 _customDatabasePath = _connectionString;
             }
@@ -167,8 +167,8 @@ namespace MHFZ_Overlay
                 }
                 catch (SQLiteException ex)
                 {
-                    MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     logger.Error(ex, "Invalid database file");
+                    MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
                 }
 
@@ -213,8 +213,8 @@ namespace MHFZ_Overlay
 
                 if (schemaChanged)
                 {
-                    MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     logger.Fatal("Outdated database schema");
+                    MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
                 }
             }
@@ -251,6 +251,13 @@ namespace MHFZ_Overlay
             return hashString;
         }
 
+        /// <summary>
+        /// Insert personal best
+        /// </summary>
+        /// <param name="dataLoader"></param>
+        /// <param name="currentPersonalBest"></param>
+        /// <param name="attempts"></param>
+        /// <param name="runID"></param>
         public void InsertPersonalBest(DataLoader dataLoader, long currentPersonalBest, long attempts, int runID)
         {
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
@@ -291,6 +298,12 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Insert quest data
+        /// </summary>
+        /// <param name="dataLoader"></param>
+        /// <param name="attempts"></param>
+        /// <returns></returns>
         public int InsertQuestData(DataLoader dataLoader, int attempts)
         {
             logger.Info("Inserting quest data");
@@ -317,7 +330,6 @@ namespace MHFZ_Overlay
                 string sql;
                 DateTime createdAt = DateTime.Now;
                 string createdBy = dataLoader.model.GetFullCurrentProgramVersion();
-                // TODO: tomotaka is 2, hygogg is 3, etc. prob make a dictionary that holds these.
                 int playerID = 1;
 
                 using (SQLiteTransaction transaction = conn.BeginTransaction())
@@ -1892,25 +1904,23 @@ namespace MHFZ_Overlay
                         if (transaction != null)
                             transaction.Rollback();
                         // Handle a SQL exception
-                        MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState + "\n\n" + ex.HelpLink + "\n\n" + ex.ResultCode + "\n\n" + ex.ErrorCode + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         logger.Error(ex, "An error occurred while accessing the database");
+                        MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState + "\n\n" + ex.HelpLink + "\n\n" + ex.ResultCode + "\n\n" + ex.ErrorCode + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch (IOException ex)
                     {
                         if (transaction != null)
                             transaction.Rollback();
                         // Handle an I/O exception
-                        MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         logger.Error(ex, "An error occurred while accessing a file");
-
+                        MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch (ArgumentException ex)
                     {
                         if (transaction != null)
                             transaction.Rollback();
-                        MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         logger.Error(ex, "ArgumentException");
-
+                        MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch (Exception ex)
                     {
@@ -2594,23 +2604,20 @@ namespace MHFZ_Overlay
             catch (SQLiteException ex)
             {
                 // Handle a SQL exception
-                MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Error(ex, "An error occurred while accessing the database");
-
+                MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (IOException ex)
             {
                 // Handle an I/O exception
-                MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Error(ex, "An error occurred while accessing a file");
-
+                MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
                 // Handle any other exception
-                MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Error(ex, "An error occurred");
-
+                MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -9801,8 +9808,10 @@ Disabling Quest Logging.",
                 {
                     int currentUserVersion = GetUserVersion(connection);
 
-                    if (App.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0)
+                    if (!App.isClowdSquirrelUpdating && (App.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0))
                     {
+                        logger.Info("Found different program version or userVersion 0. Current: {0}, Previous: {1}, userVersion: {2}", App.CurrentProgramVersion, previousVersion, currentUserVersion);
+
                         MessageBoxResult result = MessageBox.Show(
 @"A new version of the program has been installed.
 
@@ -9824,8 +9833,8 @@ Updating the database structure may take some time, it will transport all of you
                             else
                             {
                                 // The "mhf.exe" process was not found
-                                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                 logger.Fatal("mhf.exe not found");
+                                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                 ApplicationManager.HandleShutdown();
                             }
 
@@ -9840,8 +9849,8 @@ Updating the database structure may take some time, it will transport all of you
                         }
                         else
                         {
-                            MessageBox.Show("Cannot use the overlay with an outdated database schema", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             logger.Fatal("Outdated database schema");
+                            MessageBox.Show("Cannot use the overlay with an outdated database schema", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             ApplicationManager.HandleShutdown();
                         }
                     }
@@ -10148,7 +10157,7 @@ Updating the database structure may take some time, it will transport all of you
             //                cmd.ExecuteNonQuery();
             //            }
 
-            sql = @"CREATE TABLE new_Quests
+            sql = @"CREATE TABLE IF NOT EXISTS new_Quests
                     (
                     QuestHash TEXT NOT NULL DEFAULT '',
                     CreatedAt TEXT NOT NULL DEFAULT '',
@@ -10256,7 +10265,7 @@ Updating the database structure may take some time, it will transport all of you
                     createTable.ExecuteNonQuery();
                 }
 
-                logger.Debug("Created table new_{0}", tableName);
+                logger.Debug("Created table if not exists new_{0}", tableName);
 
                 // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
                 // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X

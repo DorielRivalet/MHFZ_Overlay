@@ -131,8 +131,8 @@ namespace MHFZ_Overlay
             else
             {
                 // The "mhf.exe" process was not found
-                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Fatal("mhf.exe not found");
+                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         }
@@ -161,6 +161,9 @@ namespace MHFZ_Overlay
 
         public void CheckForExternalProcesses()
         {
+            if (App.isClowdSquirrelUpdating)
+                return;
+
             var processList = System.Diagnostics.Process.GetProcesses();
             int overlayCount = 0;
             int gameCount = 0;
@@ -168,16 +171,16 @@ namespace MHFZ_Overlay
             {
                 if (process.ProcessName == "GameOverlayUI")
                 {
-                    MessageBox.Show($"Having Steam Overlay open while MHF-Z Overlay is running may decrease performance. ({process.ProcessName} found)", "Warning");
                     logger.Warn("Found Steam overlay: {0}", process.ProcessName);
+                    MessageBox.Show($"Having Steam Overlay open while MHF-Z Overlay is running may decrease performance. ({process.ProcessName} found)", "Warning");
                     continue;
                 }
                 if (bannedProcesses.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
                 {
 
                     // processName is a substring of one of the banned process strings
-                    MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
                     logger.Fatal("Found banned process {0}", process.ProcessName);
+                    MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
 
                     // Close the overlay program
                     ApplicationManager.HandleShutdown();
@@ -194,8 +197,8 @@ namespace MHFZ_Overlay
             if (overlayCount > 1)
             {
                 // More than one "MHFZ_Overlay" process is running
-                MessageBox.Show("Close other instances of the overlay before opening a new one", "Error");
                 logger.Fatal("Found duplicate overlay");
+                MessageBox.Show("Close other instances of the overlay before opening a new one", "Error");
 
                 // Close the overlay program
                 ApplicationManager.HandleShutdown();
@@ -203,8 +206,8 @@ namespace MHFZ_Overlay
             if (gameCount > 1)
             {
                 // More than one game process is running
-                MessageBox.Show("Close other instances of the game before opening a new one", "Error");
                 logger.Fatal("Found duplicate game");
+                MessageBox.Show("Close other instances of the game before opening a new one", "Error");
 
                 // Close the overlay program
                 ApplicationManager.HandleShutdown();
@@ -234,8 +237,8 @@ namespace MHFZ_Overlay
             else
             {
                 // The "mhf.exe" process was not found
-                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Fatal("mhf.exe not found");
+                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         }
@@ -272,8 +275,8 @@ namespace MHFZ_Overlay
             Process? proc = LoadMHFODLL(PID);
             if (proc == null)
             {
-                System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 logger.Fatal("Launch game first");
+                System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
                 return;
             }

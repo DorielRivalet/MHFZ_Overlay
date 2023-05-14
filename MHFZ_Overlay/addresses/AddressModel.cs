@@ -9820,16 +9820,16 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             //check if the folder is named dat and contains dat, emd, and sqd.
             if (s.GameFolderPath == "" || s.GameFolderPath == null)
             {
-                MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
                 logger.Warn("Game folder path not found");
+                MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
                 s.EnableQuestLogging = false;
                 return false;
             }
 
             if (s.DatabaseFilePath == "" || s.DatabaseFilePath == null)
             {
-                MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
                 logger.Warn("Database file path not found");
+                MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
                 s.EnableQuestLogging = false;
                 return false;
             }
