@@ -325,7 +325,7 @@ namespace MHFZ_Overlay.Core.Class.IO
                 {
                     // Create the version file if it doesn't exist
                     File.Create(path);
-                    logger.Info("{0}{0}", logMessage, path);
+                    logger.Info("{0}{1}", logMessage, path);
                     doesExist = true;
                 }
                 return doesExist;

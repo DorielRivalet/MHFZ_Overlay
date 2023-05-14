@@ -113,6 +113,10 @@ Open the overlay settings, go to General tab, press the Backup settings button, 
 
 The JSON file is meant to be used for debugging or troubleshooting purposes.
 
+## How to check the downloaded file hashes?
+
+Open PowerShell and enter the command `Get-FileHash (drag and drop your file into the terminal)`. Check if the hashes provided by the developer are the same as the hashes provided by PowerShell. If they are the same, the files shouldn't have been tampered with. If the command worked, you should get SHA256 in the `Algorithm` column, and the hash value in the `Hash` column, along with the Path provided.
+
 ## My question isn't answered here, how can I contact the developers?
 
 First, you may want to check the issues that have already been reported [here](https://github.com/DorielRivalet/mhfz-overlay/issues)
