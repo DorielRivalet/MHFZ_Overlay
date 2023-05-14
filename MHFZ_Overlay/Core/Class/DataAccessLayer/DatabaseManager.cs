@@ -9829,6 +9829,9 @@ Updating the database structure may take some time, it will transport all of you
         // UPDATE: so it turns out, data types are suggestions, not rules.
         private void PerformUpdateToVersion_0_23_0(SQLiteConnection connection)
         {
+            // TODO
+            throw new Exception("TODO unfinished code");
+
             // Perform database updates for version 0.23.0
             string sql = @"CREATE TABLE IF NOT EXISTS QuestAttempts(
             QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -10175,7 +10178,7 @@ Updating the database structure may take some time, it will transport all of you
                     )";
 
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
-            AlterTableSchema(connection, "Quests", sql);
+            //AlterTableQuests(connection, sql);
 
             // https://www.sqlite.org/lang_altertable.html#otheralter must read
             // Repeat the same pattern for other version updates
@@ -10184,6 +10187,216 @@ Updating the database structure may take some time, it will transport all of you
         }
 
         // Define a function that takes a connection string, the name of the table to alter (X), and the new schema for the table (as a SQL string)
+        private void AlterTableQuests(SQLiteConnection connection, string newSchema)
+        {
+            var tableName = "Quests";
+
+            try
+            {
+                // 3. Remember the format of all indexes, triggers, and views associated with table X. This information will be needed in step 8 below. One way to do this is to run a query like the following: SELECT type, sql FROM sqlite_schema WHERE tbl_name='X'.
+                // Remember the format of all indexes, triggers, and views associated with table X
+                SQLiteCommand rememberFormat = new SQLiteCommand("SELECT type, sql FROM sqlite_schema WHERE tbl_name=@tableName;", connection);
+                rememberFormat.Parameters.AddWithValue("@tableName", tableName);
+                SQLiteDataReader reader = rememberFormat.ExecuteReader();
+                List<string> indexSqls = new List<string>();
+                List<string> triggerSqls = new List<string>();
+                List<string> viewSqls = new List<string>();
+                while (reader.Read())
+                {
+                    string type = reader.GetString(0);
+                    string sql = reader.GetString(1);
+                    if (type == "index")
+                    {
+                        indexSqls.Add(sql);
+                    }
+                    else if (type == "trigger")
+                    {
+                        triggerSqls.Add(sql);
+                    }
+                    else if (type == "view")
+                    {
+                        viewSqls.Add(sql);
+                    }
+                }
+                reader.Close();
+
+                // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+                // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
+                using (SQLiteCommand createTable = new SQLiteCommand(newSchema, connection))
+                {
+                    createTable.ExecuteNonQuery();
+                }
+
+                logger.Info("Created table new_{0}", tableName);
+
+                // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+                // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
+                string insertSql = 
+@"INSERT INTO new_Quests (QuestHash,
+                    CreatedAt,
+                    CreatedBy,
+                    RunID, 
+                    QuestID, 
+                    TimeLeft,
+                    FinalTimeValue,
+                    FinalTimeDisplay, 
+                    ObjectiveImage,
+                    ObjectiveTypeID, 
+                    ObjectiveQuantity, 
+                    StarGrade, 
+                    RankName, 
+                    ObjectiveName, 
+                    Date,
+                    YouTubeID,
+                    AttackBuffDictionary,
+                    HitCountDictionary,
+                    HitsPerSecondDictionary,
+                    DamageDealtDictionary,
+                    DamagePerSecondDictionary,
+                    AreaChangesDictionary,
+                    CartsDictionary,
+                    HitsTakenBlockedDictionary,
+                    HitsTakenBlockedPerSecondDictionary,
+                    PlayerHPDictionary,
+                    PlayerStaminaDictionary,
+                    KeystrokesDictionary,
+                    MouseInputDictionary,
+                    GamepadInputDictionary,
+                    ActionsPerMinuteDictionary,
+                    OverlayModeDictionary,
+                    ActualOverlayMode,
+                    PartySize,
+                    Monster1HPDictionary,
+                    Monster2HPDictionary,
+                    Monster3HPDictionary,
+                    Monster4HPDictionary,
+                    Monster1AttackMultiplierDictionary,
+                    Monster1DefenseRateDictionary,
+                    Monster1SizeMultiplierDictionary,
+                    Monster1PoisonThresholdDictionary,
+                    Monster1SleepThresholdDictionary,
+                    Monster1ParalysisThresholdDictionary,
+                    Monster1BlastThresholdDictionary,
+                    Monster1StunThresholdDictionary,
+                    IsHighGradeEdition,
+                    RefreshRate)
+                    SELECT () FROM Quests ;";
+                using (SQLiteCommand insertData = new SQLiteCommand(insertSql, connection))
+                {
+                    insertData.ExecuteNonQuery();
+                }
+
+                logger.Info("Transferred data from {0} to new_{1}", tableName, tableName);
+
+                // 6. Drop the old table X: DROP TABLE X.
+                // Drop the old table X
+                using (SQLiteCommand dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
+                {
+                    dropTable.ExecuteNonQuery();
+                }
+
+                logger.Info("Deleted table {0}", tableName);
+
+                // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+                // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
+                using (SQLiteCommand renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
+                {
+                    renameTable.ExecuteNonQuery();
+                }
+
+                logger.Info("Renamed new_{0} to {1}", tableName, tableName);
+
+                // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+                // Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X
+                foreach (string indexSql in indexSqls)
+                {
+                    using (SQLiteCommand createIndex = new SQLiteCommand(indexSql, connection))
+                    {
+                        createIndex.ExecuteNonQuery();
+                    }
+                }
+                foreach (string triggerSql in triggerSqls)
+                {
+                    using (SQLiteCommand createTrigger = new SQLiteCommand(triggerSql, connection))
+                    {
+                        createTrigger.ExecuteNonQuery();
+                    }
+                }
+                foreach (string viewSql in viewSqls)
+                {
+                    using (SQLiteCommand createView = new SQLiteCommand(viewSql, connection))
+                    {
+                        createView.ExecuteNonQuery();
+                    }
+                }
+
+                logger.Info("Indexes: {0}, Triggers: {1}, Views: {2}", indexSqls.Count, triggerSqls.Count, viewSqls.Count);
+
+                // TODO: since im not using any views this still needs testing in case i make views someday.
+                // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+                //using (SQLite
+                // Check if any views refer to table X in a way that is affected by the schema change
+                SQLiteCommand findViews = new SQLiteCommand("SELECT name, sql FROM sqlite_master WHERE type='view' AND sql LIKE '% " + tableName + " %';", connection);
+                SQLiteDataReader viewReader = findViews.ExecuteReader();
+                List<string> viewNames = new List<string>();
+                List<string> viewSqlsModified = new List<string>();
+                while (viewReader.Read())
+                {
+                    viewNames.Add(viewReader.GetString(0));
+                    string viewSql = viewReader.GetString(1);
+                    viewSql = viewSql.Replace(tableName, "new_" + tableName);
+                    viewSqlsModified.Add(viewSql);
+                }
+                viewReader.Close();
+
+                // Drop those views using DROP VIEW
+                foreach (string viewName in viewNames)
+                {
+                    using (SQLiteCommand dropView = new SQLiteCommand("DROP VIEW " + viewName + ";", connection))
+                    {
+                        dropView.ExecuteNonQuery();
+                    }
+                }
+
+                // TODO: test
+                // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
+                for (int i = 0; i < viewNames.Count; i++)
+                {
+                    using (SQLiteCommand createView = new SQLiteCommand(viewSqlsModified[i], connection))
+                    {
+                        createView.ExecuteNonQuery();
+                    }
+                }
+
+                logger.Info("Views affected: {0}", viewSqlsModified.Count);
+
+                string foreignKeysViolations = CheckForeignKeys(connection);
+
+                // 10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
+                if (foreignKeysViolations != "")
+                {
+                    logger.Fatal("Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
+                    MessageBox.Show("Foreign keys violations detected, closing program.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ApplicationManager.HandleShutdown();
+                }
+                else
+                {
+                    logger.Info("No foreign keys violations found");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Roll back the transaction if any errors occur
+                logger.Error(ex, "Could not alter table {0}", tableName);
+            }
+        }
+
+        /// <summary>
+        /// Both tables must have the same column count. Define a function that takes a connection string, the name of the table to alter (X), and the new schema for the table (as a SQL string)
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="tableName"></param>
+        /// <param name="newSchema"></param>
         private void AlterTableSchema(SQLiteConnection connection, string tableName, string newSchema)
         {
             try
