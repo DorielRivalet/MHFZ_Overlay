@@ -1,5 +1,6 @@
-﻿//https://github.com/ricochhet/MHF-Quest-Resources/blob/main/FrontierTools/Utils/ItemDictionary.cs
+﻿// https://github.com/ricochhet/MHF-Quest-Resources/blob/main/FrontierTools/Utils/ItemDictionary.cs
 using System.Collections.Generic;
+using GetText;
 
 namespace Dictionary
 {

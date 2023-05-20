@@ -1632,6 +1632,17 @@ namespace MHFZ_Overlay
             // check if quest clear 
             if (DataLoader.model.QuestState() == 1 && !DataLoader.model.questCleared)
             {
+                // TODO test on dure/road/etc
+                // If this code is ever reached, it is not known if the cause is from the overlay interacting with the server,
+                // or just the overlay itself.
+                // The overlay does NOT write to memory addresses.
+                if (DataLoader.model.TimeDefInt() - DataLoader.model.TimeInt() == 0)
+                {
+                    logger.Fatal("Illegal quest completion time [ID {0}]", DataLoader.model.QuestID());
+                    ApplicationManager.HandleGameShutdown();
+                    LoggingManager.WriteCrashLog(new Exception($"Illegal quest completion time [ID {DataLoader.model.QuestID()}]"));
+                }
+
                 DataLoader.model.questCleared = true;
                 DataLoader.model.loadedItemsAtQuestStart = false;
                 if (s.EnableQuestLogging)

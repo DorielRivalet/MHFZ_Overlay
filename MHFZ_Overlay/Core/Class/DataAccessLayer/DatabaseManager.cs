@@ -4,6 +4,7 @@ using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
+using Microsoft.Data.Sqlite;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -61,8 +62,8 @@ namespace MHFZ_Overlay
             if (mainWindowDataLoader.databaseChanged)
             {
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
-                MessageBox.Show("Please update the database structure", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
                 logger.Warn("Database structure needs update");
+                MessageBox.Show("Please update the database structure", LoggingManager.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
                 s.EnableQuestLogging = false;
             }
         }
@@ -77,8 +78,8 @@ namespace MHFZ_Overlay
                 _connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
 
                 // Show warning to user that they should set a custom database path to prevent data loss on update
-                MessageBox.Show("Warning: The database is currently stored in the default location and will be deleted on update. Please select a custom database location to prevent data loss.", "MHFZ-Overlay Data Loss Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 logger.Warn("The database file is being saved to the overlay default location");
+                MessageBox.Show("Warning: The database is currently stored in the default location and will be deleted on update. Please select a custom database location to prevent data loss.", "MHFZ-Overlay Data Loss Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 // Use default database path
                 _customDatabasePath = _connectionString;
             }
@@ -166,8 +167,8 @@ namespace MHFZ_Overlay
                 }
                 catch (SQLiteException ex)
                 {
-                    MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     logger.Error(ex, "Invalid database file");
+                    MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
                 }
 
@@ -212,8 +213,8 @@ namespace MHFZ_Overlay
 
                 if (schemaChanged)
                 {
-                    MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     logger.Fatal("Outdated database schema");
+                    MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
                 }
             }
@@ -250,6 +251,13 @@ namespace MHFZ_Overlay
             return hashString;
         }
 
+        /// <summary>
+        /// Insert personal best
+        /// </summary>
+        /// <param name="dataLoader"></param>
+        /// <param name="currentPersonalBest"></param>
+        /// <param name="attempts"></param>
+        /// <param name="runID"></param>
         public void InsertPersonalBest(DataLoader dataLoader, long currentPersonalBest, long attempts, int runID)
         {
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
@@ -290,8 +298,16 @@ namespace MHFZ_Overlay
             }
         }
 
+        /// <summary>
+        /// Insert quest data
+        /// </summary>
+        /// <param name="dataLoader"></param>
+        /// <param name="attempts"></param>
+        /// <returns></returns>
         public int InsertQuestData(DataLoader dataLoader, int attempts)
         {
+            logger.Info("Inserting quest data");
+
             int runID = 0;
             string actualOverlayMode = "";
             dataLoader.model.ShowSaveIcon = true;
@@ -314,7 +330,6 @@ namespace MHFZ_Overlay
                 string sql;
                 DateTime createdAt = DateTime.Now;
                 string createdBy = dataLoader.model.GetFullCurrentProgramVersion();
-                // TODO: tomotaka is 2, hygogg is 3, etc. prob make a dictionary that holds these.
                 int playerID = 1;
 
                 using (SQLiteTransaction transaction = conn.BeginTransaction())
@@ -620,6 +635,8 @@ namespace MHFZ_Overlay
                             cmd.ExecuteNonQuery();
                         }
 
+                        logger.Debug("Inserted into Quests table");
+
                         sql = "SELECT LAST_INSERT_ROWID()";
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
@@ -682,6 +699,7 @@ namespace MHFZ_Overlay
                                     cmd.Parameters.AddWithValue("@Attempts", attempts);
                                     // Execute the stored procedure
                                     cmd.ExecuteNonQuery();
+                                    logger.Debug("Inserted into PersonalBests table");
                                 }
                             }
 
@@ -699,6 +717,7 @@ namespace MHFZ_Overlay
                                     cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
                                     // Execute the stored procedure
                                     cmd.ExecuteNonQuery();
+                                    logger.Debug("Updated PersonalBestAttempts table");
                                 }
                             }
                         }
@@ -765,6 +784,8 @@ namespace MHFZ_Overlay
                             cmd.ExecuteNonQuery();
                         }
 
+                        logger.Debug("Inserted into GameFolder table");
+
                         InsertPlayerDictionaryDataIntoTable(conn, dataLoader);
 
                         // Insert data into the ZenithSkills table
@@ -813,6 +834,8 @@ namespace MHFZ_Overlay
                             cmd.ExecuteNonQuery();
                         }
 
+                        logger.Debug("Inserted into ZenithSkills table");
+
                         sql = "SELECT LAST_INSERT_ROWID()";
                         int zenithSkillsID;
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -860,6 +883,8 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@AutomaticSkill6ID", automaticSkill6ID);
                             cmd.ExecuteNonQuery();
                         }
+
+                        logger.Debug("Inserted into AutomaticSkills table");
 
                         sql = "SELECT LAST_INSERT_ROWID()";
                         int automaticSkillsID;
@@ -961,6 +986,8 @@ namespace MHFZ_Overlay
                             cmd.ExecuteNonQuery();
                         }
 
+                        logger.Debug("Inserted into ActiveSkills table");
+
                         sql = "SELECT LAST_INSERT_ROWID()";
                         int activeSkillsID;
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -997,6 +1024,8 @@ namespace MHFZ_Overlay
                             cmd.ExecuteNonQuery();
                         }
 
+                        logger.Debug("Inserted into CaravanSkills table");
+
                         sql = "SELECT LAST_INSERT_ROWID()";
                         int caravanSkillsID;
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -1028,6 +1057,8 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@StyleRankSkill2ID", styleRankSkill2ID);
                             cmd.ExecuteNonQuery();
                         }
+
+                        logger.Debug("Inserted into StyleRankSkills table");
 
                         sql = "SELECT LAST_INSERT_ROWID()";
                         int styleRankSkillsID;
@@ -1215,6 +1246,8 @@ namespace MHFZ_Overlay
                             cmd.ExecuteNonQuery();
                         }
 
+                        logger.Debug("Inserted into PlayerInventory table");
+
                         sql = "SELECT LAST_INSERT_ROWID()";
                         int playerInventoryID;
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -1321,6 +1354,8 @@ namespace MHFZ_Overlay
                             cmd.ExecuteNonQuery();
                         }
 
+                        logger.Debug("Inserted into AmmoPouch table");
+
                         sql = "SELECT LAST_INSERT_ROWID()";
                         int ammoPouchID;
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -1426,6 +1461,8 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@Item10Quantity", item10Quantity);
                             cmd.ExecuteNonQuery();
                         }
+
+                        logger.Debug("Inserted into PartnyaBag table");
 
                         sql = "SELECT LAST_INSERT_ROWID()";
                         int partnyaBagID;
@@ -1582,6 +1619,8 @@ namespace MHFZ_Overlay
                             cmd.Parameters.AddWithValue("@RoadDureSkill16Level", roadDureSkill16Level);
                             cmd.ExecuteNonQuery();
                         }
+
+                        logger.Debug("Inserted into RoadDureSkills table");
 
                         sql = "SELECT LAST_INSERT_ROWID()";
                         int roadDureSkillsID;
@@ -1854,6 +1893,8 @@ namespace MHFZ_Overlay
 
                             // Execute the stored procedure
                             cmd.ExecuteNonQuery();
+
+                            logger.Debug("Inserted into PlayerGear table");
                         }
                         // Commit the transaction
                         transaction.Commit();
@@ -1863,25 +1904,23 @@ namespace MHFZ_Overlay
                         if (transaction != null)
                             transaction.Rollback();
                         // Handle a SQL exception
-                        MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState + "\n\n" + ex.HelpLink + "\n\n" + ex.ResultCode + "\n\n" + ex.ErrorCode + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         logger.Error(ex, "An error occurred while accessing the database");
+                        MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState + "\n\n" + ex.HelpLink + "\n\n" + ex.ResultCode + "\n\n" + ex.ErrorCode + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch (IOException ex)
                     {
                         if (transaction != null)
                             transaction.Rollback();
                         // Handle an I/O exception
-                        MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         logger.Error(ex, "An error occurred while accessing a file");
-
+                        MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch (ArgumentException ex)
                     {
                         if (transaction != null)
                             transaction.Rollback();
-                        MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         logger.Error(ex, "ArgumentException");
-
+                        MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch (Exception ex)
                     {
@@ -2565,23 +2604,20 @@ namespace MHFZ_Overlay
             catch (SQLiteException ex)
             {
                 // Handle a SQL exception
-                MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Error(ex, "An error occurred while accessing the database");
-
+                MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (IOException ex)
             {
                 // Handle an I/O exception
-                MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Error(ex, "An error occurred while accessing a file");
-
+                MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
                 // Handle any other exception
-                MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 logger.Error(ex, "An error occurred");
-
+                MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -2839,7 +2875,7 @@ namespace MHFZ_Overlay
 Please make sure that both MHFZ_Overlay.sqlite (in the game\database directory) and reference_schema.json (in the current overlay directory) don't exist, so that the program can make new ones. 
 
 Disabling Quest Logging.",
-                "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
+                LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 s.EnableQuestLogging = false;
             }
 
@@ -2950,6 +2986,7 @@ Disabling Quest Logging.",
                     HandleError(transaction, ex);
                 }
             }
+            logger.Debug("Inserted into Players table");
         }
 
         /// <summary>
@@ -9771,8 +9808,10 @@ Disabling Quest Logging.",
                 {
                     int currentUserVersion = GetUserVersion(connection);
 
-                    if (App.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0)
+                    if (!App.isClowdSquirrelUpdating && (App.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0))
                     {
+                        logger.Info("Found different program version or userVersion 0. Current: {0}, Previous: {1}, userVersion: {2}", App.CurrentProgramVersion, previousVersion, currentUserVersion);
+
                         MessageBoxResult result = MessageBox.Show(
 @"A new version of the program has been installed.
 
@@ -9794,8 +9833,8 @@ Updating the database structure may take some time, it will transport all of you
                             else
                             {
                                 // The "mhf.exe" process was not found
-                                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                 logger.Fatal("mhf.exe not found");
+                                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                 ApplicationManager.HandleShutdown();
                             }
 
@@ -9810,8 +9849,8 @@ Updating the database structure may take some time, it will transport all of you
                         }
                         else
                         {
-                            MessageBox.Show("Cannot use the overlay with an outdated database schema", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             logger.Fatal("Outdated database schema");
+                            MessageBox.Show("Cannot use the overlay with an outdated database schema", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             ApplicationManager.HandleShutdown();
                         }
                     }
@@ -9829,9 +9868,6 @@ Updating the database structure may take some time, it will transport all of you
         // UPDATE: so it turns out, data types are suggestions, not rules.
         private void PerformUpdateToVersion_0_23_0(SQLiteConnection connection)
         {
-            // TODO
-            throw new Exception("TODO unfinished code");
-
             // Perform database updates for version 0.23.0
             string sql = @"CREATE TABLE IF NOT EXISTS QuestAttempts(
             QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -10121,7 +10157,7 @@ Updating the database structure may take some time, it will transport all of you
             //                cmd.ExecuteNonQuery();
             //            }
 
-            sql = @"CREATE TABLE new_Quests
+            sql = @"CREATE TABLE IF NOT EXISTS new_Quests
                     (
                     QuestHash TEXT NOT NULL DEFAULT '',
                     CreatedAt TEXT NOT NULL DEFAULT '',
@@ -10178,7 +10214,7 @@ Updating the database structure may take some time, it will transport all of you
                     )";
 
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
-            //AlterTableQuests(connection, sql);
+            AlterTableQuests(connection, sql);
 
             // https://www.sqlite.org/lang_altertable.html#otheralter must read
             // Repeat the same pattern for other version updates
@@ -10189,6 +10225,8 @@ Updating the database structure may take some time, it will transport all of you
         // Define a function that takes a connection string, the name of the table to alter (X), and the new schema for the table (as a SQL string)
         private void AlterTableQuests(SQLiteConnection connection, string newSchema)
         {
+            logger.Info("Altering Quests table");
+
             var tableName = "Quests";
 
             try
@@ -10227,66 +10265,93 @@ Updating the database structure may take some time, it will transport all of you
                     createTable.ExecuteNonQuery();
                 }
 
-                logger.Info("Created table new_{0}", tableName);
+                logger.Debug("Created table if not exists new_{0}", tableName);
 
                 // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
                 // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
-                string insertSql = 
-@"INSERT INTO new_Quests (QuestHash,
-                    CreatedAt,
-                    CreatedBy,
-                    RunID, 
-                    QuestID, 
-                    TimeLeft,
-                    FinalTimeValue,
-                    FinalTimeDisplay, 
-                    ObjectiveImage,
-                    ObjectiveTypeID, 
-                    ObjectiveQuantity, 
-                    StarGrade, 
-                    RankName, 
-                    ObjectiveName, 
-                    Date,
-                    YouTubeID,
-                    AttackBuffDictionary,
-                    HitCountDictionary,
-                    HitsPerSecondDictionary,
-                    DamageDealtDictionary,
-                    DamagePerSecondDictionary,
-                    AreaChangesDictionary,
-                    CartsDictionary,
-                    HitsTakenBlockedDictionary,
-                    HitsTakenBlockedPerSecondDictionary,
-                    PlayerHPDictionary,
-                    PlayerStaminaDictionary,
-                    KeystrokesDictionary,
-                    MouseInputDictionary,
-                    GamepadInputDictionary,
-                    ActionsPerMinuteDictionary,
-                    OverlayModeDictionary,
-                    ActualOverlayMode,
-                    PartySize,
-                    Monster1HPDictionary,
-                    Monster2HPDictionary,
-                    Monster3HPDictionary,
-                    Monster4HPDictionary,
-                    Monster1AttackMultiplierDictionary,
-                    Monster1DefenseRateDictionary,
-                    Monster1SizeMultiplierDictionary,
-                    Monster1PoisonThresholdDictionary,
-                    Monster1SleepThresholdDictionary,
-                    Monster1ParalysisThresholdDictionary,
-                    Monster1BlastThresholdDictionary,
-                    Monster1StunThresholdDictionary,
-                    IsHighGradeEdition,
-                    RefreshRate)
-                    SELECT () FROM Quests ;";
-                using (SQLiteCommand insertData = new SQLiteCommand(insertSql, connection))
+
+                // Get the number of rows in the Quests table
+                string countQuery = "SELECT COUNT(*) FROM Quests";
+                using (var command = new SQLiteCommand(countQuery, connection))
                 {
-                    insertData.ExecuteNonQuery();
+                    int rowCount = Convert.ToInt32(command.ExecuteScalar());
+
+                    logger.Debug("Inserting default values into new_Quests");
+
+                    // Insert rows with default values into new_Quests
+                    string insertQuery = $"INSERT INTO new_Quests DEFAULT VALUES";
+                    for (int i = 0; i < rowCount; i++)
+                    {
+                        using (var insertCommand = new SQLiteCommand(insertQuery, connection))
+                        {
+                            insertCommand.ExecuteNonQuery();
+                        }
+                    }
+
+                    logger.Debug("Inserted default values into new_Quests");
+
+                    // Update values from Quests to new_Quests
+                    string updateQuery = @"
+        UPDATE new_Quests
+        SET QuestHash = (SELECT QuestHash FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            CreatedAt = (SELECT CreatedAt FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            CreatedBy = (SELECT CreatedBy FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            QuestID = (SELECT QuestID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            TimeLeft = (SELECT TimeLeft FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            FinalTimeValue = (SELECT FinalTimeValue FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            FinalTimeDisplay = (SELECT FinalTimeDisplay FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveImage = (SELECT ObjectiveImage FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveTypeID = (SELECT ObjectiveTypeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveQuantity = (SELECT ObjectiveQuantity FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            StarGrade = (SELECT StarGrade FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            RankName = (SELECT RankName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveName = (SELECT ObjectiveName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Date = (SELECT Date FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            YouTubeID = (SELECT YouTubeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            AttackBuffDictionary = (SELECT AttackBuffDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitCountDictionary = (SELECT HitCountDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitsPerSecondDictionary = (SELECT HitsPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            DamageDealtDictionary = (SELECT DamageDealtDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            DamagePerSecondDictionary = (SELECT DamagePerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            AreaChangesDictionary = (SELECT AreaChangesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            CartsDictionary = (SELECT CartsDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitsTakenBlockedDictionary = (SELECT HitsTakenBlockedDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitsTakenBlockedPerSecondDictionary = (SELECT HitsTakenBlockedPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PlayerHPDictionary = (SELECT PlayerHPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PlayerStaminaDictionary = (SELECT PlayerStaminaDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            KeystrokesDictionary = (SELECT KeystrokesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            MouseInputDictionary = (SELECT MouseInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            GamepadInputDictionary = (SELECT GamepadInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ActionsPerMinuteDictionary = (SELECT ActionsPerMinuteDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            OverlayModeDictionary = (SELECT OverlayModeDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ActualOverlayMode = (SELECT ActualOverlayMode FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PartySize = (SELECT PartySize FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1HPDictionary = (SELECT Monster1HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster2HPDictionary = (SELECT Monster2HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster3HPDictionary = (SELECT Monster3HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster4HPDictionary = (SELECT Monster4HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID)
+            WHERE EXISTS (SELECT 1 FROM Quests WHERE Quests.RunID = new_Quests.RunID)"
+                    ;
+                    /*
+                    Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1PoisonThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SleepThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
+                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1,30)) DEFAULT 30,
+                    */
+
+                    using (var updateCommand = new SQLiteCommand(updateQuery, connection))
+                    {
+                        updateCommand.ExecuteNonQuery();
+                    }
                 }
 
-                logger.Info("Transferred data from {0} to new_{1}", tableName, tableName);
+                logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
 
                 // 6. Drop the old table X: DROP TABLE X.
                 // Drop the old table X
@@ -10295,7 +10360,7 @@ Updating the database structure may take some time, it will transport all of you
                     dropTable.ExecuteNonQuery();
                 }
 
-                logger.Info("Deleted table {0}", tableName);
+                logger.Debug("Deleted table {0}", tableName);
 
                 // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
                 // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
@@ -10304,7 +10369,7 @@ Updating the database structure may take some time, it will transport all of you
                     renameTable.ExecuteNonQuery();
                 }
 
-                logger.Info("Renamed new_{0} to {1}", tableName, tableName);
+                logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
 
                 // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
                 // Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X
@@ -10330,7 +10395,7 @@ Updating the database structure may take some time, it will transport all of you
                     }
                 }
 
-                logger.Info("Indexes: {0}, Triggers: {1}, Views: {2}", indexSqls.Count, triggerSqls.Count, viewSqls.Count);
+                logger.Debug("Indexes: {0}, Triggers: {1}, Views: {2}", indexSqls.Count, triggerSqls.Count, viewSqls.Count);
 
                 // TODO: since im not using any views this still needs testing in case i make views someday.
                 // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
@@ -10368,7 +10433,7 @@ Updating the database structure may take some time, it will transport all of you
                     }
                 }
 
-                logger.Info("Views affected: {0}", viewSqlsModified.Count);
+                logger.Debug("Views affected: {0}", viewSqlsModified.Count);
 
                 string foreignKeysViolations = CheckForeignKeys(connection);
 
@@ -10376,13 +10441,15 @@ Updating the database structure may take some time, it will transport all of you
                 if (foreignKeysViolations != "")
                 {
                     logger.Fatal("Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
-                    MessageBox.Show("Foreign keys violations detected, closing program.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Foreign keys violations detected, closing program.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
                 }
                 else
                 {
-                    logger.Info("No foreign keys violations found");
+                    logger.Debug("No foreign keys violations found");
                 }
+
+                logger.Info("Altered Quests table successfully");
             }
             catch (Exception ex)
             {
@@ -10399,6 +10466,8 @@ Updating the database structure may take some time, it will transport all of you
         /// <param name="newSchema"></param>
         private void AlterTableSchema(SQLiteConnection connection, string tableName, string newSchema)
         {
+            logger.Info("Altering table {0}", tableName);
+
             try
             {
                 // 3. Remember the format of all indexes, triggers, and views associated with table X. This information will be needed in step 8 below. One way to do this is to run a query like the following: SELECT type, sql FROM sqlite_schema WHERE tbl_name='X'.
@@ -10435,7 +10504,7 @@ Updating the database structure may take some time, it will transport all of you
                     createTable.ExecuteNonQuery();
                 }
 
-                logger.Info("Created table new_{0}", tableName);
+                logger.Debug("Created table new_{0}", tableName);
 
                 // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
                 // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
@@ -10445,7 +10514,7 @@ Updating the database structure may take some time, it will transport all of you
                     insertData.ExecuteNonQuery();
                 }
 
-                logger.Info("Transferred data from {0} to new_{1}", tableName, tableName);
+                logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
 
                 // 6. Drop the old table X: DROP TABLE X.
                 // Drop the old table X
@@ -10454,7 +10523,7 @@ Updating the database structure may take some time, it will transport all of you
                     dropTable.ExecuteNonQuery();
                 }
 
-                logger.Info("Deleted table {0}", tableName);
+                logger.Debug("Deleted table {0}", tableName);
 
                 // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
                 // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
@@ -10463,7 +10532,7 @@ Updating the database structure may take some time, it will transport all of you
                     renameTable.ExecuteNonQuery();
                 }
 
-                logger.Info("Renamed new_{0} to {1}", tableName, tableName);
+                logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
 
                 // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
                 // Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X
@@ -10489,7 +10558,7 @@ Updating the database structure may take some time, it will transport all of you
                     }
                 }
 
-                logger.Info("Indexes: {0}, Triggers: {1}, Views: {2}", indexSqls.Count, triggerSqls.Count, viewSqls.Count);
+                logger.Debug("Indexes: {0}, Triggers: {1}, Views: {2}", indexSqls.Count, triggerSqls.Count, viewSqls.Count);
 
                 // TODO: since im not using any views this still needs testing in case i make views someday.
                 // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
@@ -10527,7 +10596,7 @@ Updating the database structure may take some time, it will transport all of you
                     }
                 }
 
-                logger.Info("Views affected: {0}", viewSqlsModified.Count);
+                logger.Debug("Views affected: {0}", viewSqlsModified.Count);
 
                 string foreignKeysViolations = CheckForeignKeys(connection);
 
@@ -10540,8 +10609,10 @@ Updating the database structure may take some time, it will transport all of you
                 }
                 else
                 {
-                    logger.Info("No foreign keys violations found");
+                    logger.Debug("No foreign keys violations found");
                 }
+
+                logger.Info("Altered table {0} successfully", tableName);
             }
             catch (Exception ex)
             {
@@ -10553,6 +10624,8 @@ Updating the database structure may take some time, it will transport all of you
         // Define a function that takes a connection string and the name of the table to check for foreign key violations
         public string CheckForeignKeys(SQLiteConnection connection, string tableName = "")
         {
+            logger.Debug("Checking foreign keys");
+
             string query = "PRAGMA foreign_key_check";
             if (!string.IsNullOrEmpty(tableName))
             {
@@ -10583,7 +10656,7 @@ Updating the database structure may take some time, it will transport all of you
                     else
                     {
                         // No foreign key violations
-                        logger.Info("No foreign key violations found.");
+                        logger.Debug("No foreign key violations found.");
                         return "";
                     }
                 }
@@ -10604,7 +10677,7 @@ Updating the database structure may take some time, it will transport all of you
             catch (Exception ex)
             {
                 logger.Fatal("Could not toggle foreign key constraints", ex);
-                MessageBox.Show("Could not toggle foreign key constraints", "MHF-Z Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Could not toggle foreign key constraints", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         }
@@ -10623,7 +10696,7 @@ Updating the database structure may take some time, it will transport all of you
             catch (Exception ex)
             {
                 logger.Fatal("Could not toggle foreign key constraints", ex);
-                MessageBox.Show("Could not toggle foreign key constraints", "MHF-Z Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Could not toggle foreign key constraints", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         }

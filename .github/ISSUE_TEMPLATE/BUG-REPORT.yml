@@ -65,7 +65,7 @@ body:
     attributes:
       label: Quest ID
       description: What is the Quest ID where the issue occurs? Enter the quest ID that you see in the overlay, enabled by going into Config -> Quest Log -> Settings. If the issue occurs in multiple quests, enter an example quest ID and tell us in the issue description that it happens in multiple quests. If the issue occurs outside quests, enter 0. 
-      placeholder: 64123
+      placeholder: '64123'
     validations:
       required: true
   - type: markdown

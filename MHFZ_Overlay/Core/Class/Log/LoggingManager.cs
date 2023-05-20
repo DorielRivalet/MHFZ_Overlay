@@ -30,8 +30,8 @@ namespace MHFZ_Overlay.Core.Class.Log
 
         public static void WriteCrashLog(Exception ex, string logMessage = "Program crashed")
         {
-            System.Windows.MessageBox.Show(@"Fatal error, closing overlay. See the crash log in the overlay\logs folder for more information.", FATAL_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             logger.Fatal(ex, logMessage);
+            System.Windows.MessageBox.Show(@"Fatal error, closing overlay. See the crash log in the overlay\logs folder for more information.", FATAL_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             PromptForOpeningLogs();
             ApplicationManager.HandleShutdown();
         }

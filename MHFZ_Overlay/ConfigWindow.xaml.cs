@@ -815,7 +815,7 @@ namespace MHFZ_Overlay
         }
 
         /// <summary>
-        /// Defaults the key press.
+        /// Set default settings
         /// </summary>
         public void DefaultKey_Press()
         {
@@ -831,7 +831,7 @@ namespace MHFZ_Overlay
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void DefaultButton_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Resetting settings, are you sure?", "MHFZ Overlay - Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            var result = MessageBox.Show("Resetting settings, are you sure?", LoggingManager.INFO_TITLE, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
             if (result == MessageBoxResult.Yes)
             {
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
