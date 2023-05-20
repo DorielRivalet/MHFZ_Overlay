@@ -1,8 +1,8 @@
 blank_issues_enabled: true
 contact_links:
-  name: "\U0001F4DA Frequently Asked Questions"
+  - name: "\U0001F4DA Frequently Asked Questions"
     url: https://github.com/DorielvRivalet/mhfz-overlay/tree/main/FAQ.md
     about: Documentation for users of mhfz-overlay
-  name: "\U0001F4DA Documentation"
+  - name: "\U0001F4DA Documentation"
     url: https://github.com/DorielRivalet/mhfz-overlay/tree/main/docs/
     about: Documentation for people interested in developing and contributing for mhfz-overlay
