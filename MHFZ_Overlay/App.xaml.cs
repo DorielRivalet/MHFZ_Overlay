@@ -10,6 +10,8 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System;
+using EZlion;
+using GetText;
 
 // TODO: all of this needs testing
 namespace MHFZ_Overlay

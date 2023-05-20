@@ -63,7 +63,7 @@ namespace MHFZ_Overlay
             {
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                 logger.Warn("Database structure needs update");
-                MessageBox.Show("Please update the database structure", "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please update the database structure", LoggingManager.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
                 s.EnableQuestLogging = false;
             }
         }
@@ -214,7 +214,7 @@ namespace MHFZ_Overlay
                 if (schemaChanged)
                 {
                     logger.Fatal("Outdated database schema");
-                    MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
                 }
             }
@@ -2875,7 +2875,7 @@ namespace MHFZ_Overlay
 Please make sure that both MHFZ_Overlay.sqlite (in the game\database directory) and reference_schema.json (in the current overlay directory) don't exist, so that the program can make new ones. 
 
 Disabling Quest Logging.",
-                "Monster Hunter Frontier Z Overlay", MessageBoxButton.OK, MessageBoxImage.Error);
+                LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 s.EnableQuestLogging = false;
             }
 
@@ -10441,7 +10441,7 @@ Updating the database structure may take some time, it will transport all of you
                 if (foreignKeysViolations != "")
                 {
                     logger.Fatal("Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
-                    MessageBox.Show("Foreign keys violations detected, closing program.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Foreign keys violations detected, closing program.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
                 }
                 else
@@ -10677,7 +10677,7 @@ Updating the database structure may take some time, it will transport all of you
             catch (Exception ex)
             {
                 logger.Fatal("Could not toggle foreign key constraints", ex);
-                MessageBox.Show("Could not toggle foreign key constraints", "MHF-Z Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Could not toggle foreign key constraints", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         }
@@ -10696,7 +10696,7 @@ Updating the database structure may take some time, it will transport all of you
             catch (Exception ex)
             {
                 logger.Fatal("Could not toggle foreign key constraints", ex);
-                MessageBox.Show("Could not toggle foreign key constraints", "MHF-Z Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Could not toggle foreign key constraints", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         }

@@ -73,7 +73,7 @@ namespace MHFZ_Overlay
             else
             {
                 logger.Fatal("Launch game first");
-                System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Please launch game first", LoggingManager.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         }
@@ -86,7 +86,7 @@ namespace MHFZ_Overlay
 
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                 if (s.EnableOutsideMezeportaLoadingWarning)
-                    System.Windows.MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                    System.Windows.MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", LoggingManager.WARNING_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
             }
         }
 
@@ -276,18 +276,20 @@ namespace MHFZ_Overlay
             if (proc == null)
             {
                 logger.Fatal("Launch game first");
-                System.Windows.MessageBox.Show("Please launch game first", "Error - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Please launch game first", LoggingManager.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
                 return;
             }
             long searchAddress = m.AoBScan("89 04 8D 00 C6 43 00 61 E9").Result.FirstOrDefault();
             if (searchAddress.ToString("X8") == "00000000")
             {
-                //Create codecave and get its address
+                logger.Info("Creating code cave");
+
+                // Create code cave and get its address
                 long baseScanAddress = m.AoBScan("0F B7 8a 24 06 00 00 0f b7 ?? ?? ?? c1 c1 e1 0b").Result.FirstOrDefault();
                 UIntPtr codecaveAddress = m.CreateCodeCave(baseScanAddress.ToString("X8"), new byte[] { 0x0F, 0xB7, 0x8A, 0x24, 0x06, 0x00, 0x00, 0x0F, 0xB7, 0x52, 0x0C, 0x88, 0x15, 0x21, 0x00, 0x0F, 0x15, 0x8B, 0xC1, 0xC1, 0xE1, 0x0B, 0x0F, 0xBF, 0xC9, 0xC1, 0xE8, 0x05, 0x09, 0xC8, 0x01, 0xD2, 0xB9, 0x8E, 0x76, 0x21, 0x25, 0x29, 0xD1, 0x66, 0x8B, 0x11, 0x66, 0xF7, 0xD2, 0x0F, 0xBF, 0xCA, 0x0F, 0xBF, 0x15, 0xC4, 0x22, 0xEA, 0x17, 0x31, 0xC8, 0x31, 0xD0, 0xB9, 0xC0, 0x5E, 0x73, 0x16, 0x0F, 0xBF, 0xD1, 0x31, 0xD0, 0x60, 0x8B, 0x0D, 0x21, 0x00, 0x0F, 0x15, 0x89, 0x04, 0x8D, 0x00, 0xC6, 0x43, 0x00, 0x61 }, 63, 0x100);
 
-                //Change addresses
+                // Change addresses
                 UIntPtr storeValueAddress = codecaveAddress + 125;                  //address where store some value?
                 string storeValueAddressString = storeValueAddress.ToString("X8");
                 byte[] storeValueAddressByte = Enumerable.Range(0, storeValueAddressString.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(storeValueAddressString.Substring(x, 2), 16)).ToArray();
@@ -351,10 +353,14 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         Process? LoadMHFODLL(int PID)
         {
+            logger.Info("Loading MHFODLL");
             //Search and get mhfo-hd.dll module base address
             Process proccess = Process.GetProcessById(PID);
             if (proccess == null)
+            {
+                logger.Warn("Process not found");
                 return null;
+            }
             var ModuleList = new List<string>();
             foreach (ProcessModule md in proccess.Modules)
             {
