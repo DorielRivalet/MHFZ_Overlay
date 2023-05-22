@@ -1,5 +1,6 @@
 ﻿using Dictionary;
 using DiscordRPC;
+using EZlion.Mapper;
 using Gma.System.MouseKeyHook;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
@@ -485,7 +486,7 @@ namespace MHFZ_Overlay
             if (s == null || !s.QuestNameShown)
                 return;
 
-            Dictionary.Quests.QuestIDs.TryGetValue(DataLoader.model.previousQuestID, out string? previousQuestID);
+            EZlion.Mapper.Quest.IDName.TryGetValue(DataLoader.model.previousQuestID, out string? previousQuestID);
             questNameTextBlock.Text = previousQuestID;
             Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
             Brush peachBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x87));
@@ -560,7 +561,7 @@ namespace MHFZ_Overlay
             if (s == null || !s.LocationTextShown)
                 return;
 
-            Dictionary.MapAreaList.MapAreaID.TryGetValue(DataLoader.model.previousGlobalAreaID, out string? previousGlobalAreaID);
+            Location.IDName.TryGetValue(DataLoader.model.previousGlobalAreaID, out string? previousGlobalAreaID);
             locationTextBlock.Text = previousGlobalAreaID;
             Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
             Brush blueBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));

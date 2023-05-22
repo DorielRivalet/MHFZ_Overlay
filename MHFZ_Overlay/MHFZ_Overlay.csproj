@@ -24,7 +24,8 @@
 	<Authors>Doriel Rivalet</Authors>
 	<Version>0.22.0</Version>
 	<PackageProjectUrl>https://github.com/DorielRivalet/mhfz-overlay</PackageProjectUrl>
-	<RepositoryUrl></RepositoryUrl>
+	<RepositoryUrl>https://github.com/DorielRivalet/mhfz-overlay.git</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
 	<PackageTags>monster-hunter</PackageTags>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -349,7 +350,7 @@
     <PackageReference Include="Discord.Net" Version="3.10.0" />
     <PackageReference Include="DiscordRichPresence" Version="1.1.3.18" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
-    <PackageReference Include="EZlion" Version="2.0.0-beta" />
+    <PackageReference Include="EZlion" Version="5.0.0-beta" />
     <PackageReference Include="FluentMigrator" Version="3.3.2" />
     <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />

@@ -1,5 +1,6 @@
 ﻿using Dictionary;
 using DiscordRPC;
+using EZlion.Mapper;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -497,7 +498,7 @@ namespace MHFZ_Overlay.Core.Class.Discord
         /// <returns></returns>
         private static string GetWeaponNameFromID(int id)
         {
-            Dictionary.WeaponTypes.WeaponTypeID.TryGetValue(id, out string? weaponname);
+            WeaponType.IDName.TryGetValue(id, out string? weaponname);
             return weaponname + "";
         }
 

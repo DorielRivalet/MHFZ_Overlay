@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using Dictionary;
+using EZlion.Mapper;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Measure;
@@ -2774,7 +2775,7 @@ namespace MHFZ_Overlay
                 var area = entry.Value;
                 sb.AppendLine(timeString + " ");
 
-                Dictionary.MapAreaList.MapAreaID.TryGetValue(area, out string? itemName);
+                Location.IDName.TryGetValue(area, out string? itemName);
                 sb.Append(itemName);
                 sb.AppendLine();
                 sb.AppendLine();
@@ -2785,7 +2786,7 @@ namespace MHFZ_Overlay
         private string GetItemName(int itemID)
         {
             // implement code to get item name based on itemID
-            Items.ItemIDs.TryGetValue(itemID, out string value);
+            Item.IDName.TryGetValue(itemID, out string value);
             return value;
         }
 
@@ -3018,7 +3019,7 @@ namespace MHFZ_Overlay
             };
 
             long questID = long.Parse(QuestIDTextBox.Text.Trim());
-            int weaponTypeID = Dictionary.WeaponTypes.WeaponTypeID.FirstOrDefault(x => x.Value == personalBestSelectedWeapon).Key;
+            int weaponTypeID = WeaponType.IDName.FirstOrDefault(x => x.Value == personalBestSelectedWeapon).Key;
 
             switch (personalBestSelectedType)
             {

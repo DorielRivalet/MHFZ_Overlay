@@ -1,4 +1,5 @@
-﻿using Dictionary;
+﻿using CsvHelper.Configuration.Attributes;
+using Dictionary;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
@@ -23,6 +24,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Automation;
 using Application = System.Windows.Application;
+using EZlion.Mapper;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -872,7 +874,7 @@ namespace MHFZ_Overlay.addresses
             if (!(DiscordManager.ShowDiscordQuestNames())) return "";
             string QuestValue1;
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            Dictionary.Quests.QuestIDs.TryGetValue(id, out QuestValue1);  //returns true
+            EZlion.Mapper.Quest.IDName.TryGetValue(id, out QuestValue1);  //returns true
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
             return QuestValue1 + "";
@@ -1139,7 +1141,7 @@ namespace MHFZ_Overlay.addresses
         {
             List<int> partMonsterGroup = new List<int> { 0 };
 
-            foreach (KeyValuePair<List<int>, List<string>> kvp in MonsterPartDictionary.MonsterPartID)
+            foreach (KeyValuePair<List<int>, List<string>> kvp in MonsterPart.IDName)
             {
                 List<int> monsterIDs = kvp.Key;
 
@@ -1154,7 +1156,7 @@ namespace MHFZ_Overlay.addresses
 
         private static string DeterminePartName(List<int> key, int slot)
         {
-            bool keyFound = MonsterPartDictionary.MonsterPartID.ContainsKey(key);
+            bool keyFound = MonsterPart.IDName.ContainsKey(key);
 
             if (!keyFound)
             {
@@ -1162,10 +1164,10 @@ namespace MHFZ_Overlay.addresses
             }
             else
             {
-                if (slot > MonsterPartDictionary.MonsterPartID[key].Count)
+                if (slot > MonsterPart.IDName[key].Count)
                     return "None";
                 else
-                    return MonsterPartDictionary.MonsterPartID[key][slot];
+                    return MonsterPart.IDName[key][slot];
             }
         }
 
@@ -3361,7 +3363,7 @@ namespace MHFZ_Overlay.addresses
 
                 if (className == "Blademaster")
                 {
-                    Dictionary.BlademasterWeapons.BlademasterWeaponIDs.TryGetValue(BlademasterWeaponID(), out string? wepname);
+                    WeaponBlademaster.IDName.TryGetValue(BlademasterWeaponID(), out string? wepname);
                     string address = BlademasterWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
 
                     return string.Format("{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
@@ -3369,7 +3371,7 @@ namespace MHFZ_Overlay.addresses
                 }
                 else if (className == "Gunner")
                 {
-                    Dictionary.GunnerWeapons.GunnerWeaponIDs.TryGetValue(GunnerWeaponID(), out string? wepname);
+                    WeaponGunner.IDName.TryGetValue(GunnerWeaponID(), out string? wepname);
                     string address = GunnerWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
                     return string.Format("{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
                 }
@@ -3393,14 +3395,14 @@ namespace MHFZ_Overlay.addresses
 
             if (className == "Blademaster")
             {
-                Dictionary.BlademasterWeapons.BlademasterWeaponIDs.TryGetValue((int)weaponID, out string? wepname);
+                WeaponBlademaster.IDName.TryGetValue((int)weaponID, out string? wepname);
                 string address = weaponID.ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
 
                 return string.Format("{0} ({1}) | {2}\n{3} | {4} | {5}", wepname, address, style, weaponSlot1, weaponSlot2, weaponSlot3);
             }
             else if (className == "Gunner")
             {
-                Dictionary.GunnerWeapons.GunnerWeaponIDs.TryGetValue((int)weaponID, out string? wepname);
+                WeaponGunner.IDName.TryGetValue((int)weaponID, out string? wepname);
                 string address = weaponID.ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
                 return string.Format("{0} ({1}) | {2}\n{3} | {4} | {5}", wepname, address, style, weaponSlot1, weaponSlot2, weaponSlot3);
             }
@@ -3426,16 +3428,16 @@ namespace MHFZ_Overlay.addresses
                 int Item9 = AmmoPouchItem9ID();
                 int Item10 = AmmoPouchItem10ID();
 
-                Dictionary.Items.ItemIDs.TryGetValue(Item1, out string? ItemName1);
-                Dictionary.Items.ItemIDs.TryGetValue(Item2, out string? ItemName2);
-                Dictionary.Items.ItemIDs.TryGetValue(Item3, out string? ItemName3);
-                Dictionary.Items.ItemIDs.TryGetValue(Item4, out string? ItemName4);
-                Dictionary.Items.ItemIDs.TryGetValue(Item5, out string? ItemName5);
-                Dictionary.Items.ItemIDs.TryGetValue(Item6, out string? ItemName6);
-                Dictionary.Items.ItemIDs.TryGetValue(Item7, out string? ItemName7);
-                Dictionary.Items.ItemIDs.TryGetValue(Item8, out string? ItemName8);
-                Dictionary.Items.ItemIDs.TryGetValue(Item9, out string? ItemName9);
-                Dictionary.Items.ItemIDs.TryGetValue(Item10, out string? ItemName10);
+                Item.IDName.TryGetValue(Item1, out string? ItemName1);
+                Item.IDName.TryGetValue(Item2, out string? ItemName2);
+                Item.IDName.TryGetValue(Item3, out string? ItemName3);
+                Item.IDName.TryGetValue(Item4, out string? ItemName4);
+                Item.IDName.TryGetValue(Item5, out string? ItemName5);
+                Item.IDName.TryGetValue(Item6, out string? ItemName6);
+                Item.IDName.TryGetValue(Item7, out string? ItemName7);
+                Item.IDName.TryGetValue(Item8, out string? ItemName8);
+                Item.IDName.TryGetValue(Item9, out string? ItemName9);
+                Item.IDName.TryGetValue(Item10, out string? ItemName10);
 
                 //. also the values have to be skipped if item slot is empty
                 if (ItemName1 == null || ItemName1 == "None" || ItemName1 == "" || AmmoPouchItem1Qty() == 0)
@@ -3542,7 +3544,7 @@ namespace MHFZ_Overlay.addresses
                 string[] itemNames = new string[20];
                 for (int i = 0; i < 20; i++)
                 {
-                    if (Dictionary.Items.ItemIDs.TryGetValue(itemIDs[i], out string? itemName))
+                    if (Item.IDName.TryGetValue(itemIDs[i], out string? itemName))
                     {
                         if (GetTextFormat() == "Markdown" && IsMetaItem(itemIDs[i]) && itemName != null && itemName != "None" && itemName != "")
                         {
@@ -3580,7 +3582,7 @@ namespace MHFZ_Overlay.addresses
             for (int i = 0; i < items.Length; i++)
             {
                 int id = items[i];
-                if (Dictionary.Items.ItemIDs.TryGetValue(id, out string value))
+                if (Item.IDName.TryGetValue(id, out string value))
                 {
                     if (value != "None" && value != "")
                     {
@@ -3611,7 +3613,7 @@ namespace MHFZ_Overlay.addresses
             for (int i = 0; i < skills.Length; i++)
             {
                 int id = skills[i];
-                if (Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(id, out string value) && value != "None" && value != "")
+                if (SkillRoadTower.IDName.TryGetValue(id, out string value) && value != "None" && value != "")
                 {
                     name += value;
                     if (i != skills.Length - 1)
@@ -3633,7 +3635,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                Dictionary.ArmorHeads.ArmorHeadIDs.TryGetValue(ArmorHeadID(), out string? piecename);
+                ArmorHead.IDName.TryGetValue(ArmorHeadID(), out string? piecename);
 
                 if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
                     piecename = string.Format("**{0}**", piecename);
@@ -3645,7 +3647,7 @@ namespace MHFZ_Overlay.addresses
 
         public string GetArmorHeadNameForRunID(int armorHeadID, int headSlot1ID, int headslot2ID, int headSlot3ID)
         {
-            Dictionary.ArmorHeads.ArmorHeadIDs.TryGetValue(armorHeadID, out string? piecename);
+            ArmorHead.IDName.TryGetValue(armorHeadID, out string? piecename);
 
             string address = armorHeadID.ToString("X4").ToUpper();
             return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(headSlot1ID), GetDecoName(headslot2ID), GetDecoName(headSlot3ID));
@@ -3661,7 +3663,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(ArmorChestID(), out string? piecename);
+                ArmorChest.IDName.TryGetValue(ArmorChestID(), out string? piecename);
 
                 if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
                     piecename = string.Format("**{0}**", piecename);
@@ -3673,7 +3675,7 @@ namespace MHFZ_Overlay.addresses
 
         public string GetArmorChestNameForRunID(int armorID, int slot1ID, int slot2ID, int slot3ID)
         {
-            Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(armorID, out string? piecename);
+            ArmorChest.IDName.TryGetValue(armorID, out string? piecename);
 
             string address = armorID.ToString("X4").ToUpper();
             return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(slot1ID), GetDecoName(slot2ID), GetDecoName(slot3ID));
@@ -3689,7 +3691,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                Dictionary.ArmorArms.ArmorArmIDs.TryGetValue(ArmorArmsID(), out string? piecename);
+                ArmorArms.IDName.TryGetValue(ArmorArmsID(), out string? piecename);
 
                 if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
                     piecename = string.Format("**{0}**", piecename);
@@ -3701,7 +3703,7 @@ namespace MHFZ_Overlay.addresses
 
         public string GetArmorArmNameForRunID(int armorID, int slot1ID, int slot2ID, int slot3ID)
         {
-            Dictionary.ArmorArms.ArmorArmIDs.TryGetValue(armorID, out string? piecename);
+            ArmorArms.IDName.TryGetValue(armorID, out string? piecename);
 
             string address = armorID.ToString("X4").ToUpper();
             return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(slot1ID), GetDecoName(slot2ID), GetDecoName(slot3ID));
@@ -3717,7 +3719,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                Dictionary.ArmorWaists.ArmorWaistIDs.TryGetValue(ArmorWaistID(), out string? piecename);
+                ArmorWaist.IDName.TryGetValue(ArmorWaistID(), out string? piecename);
 
                 if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
                     piecename = string.Format("**{0}**", piecename);
@@ -3729,7 +3731,7 @@ namespace MHFZ_Overlay.addresses
 
         public string GetArmorWaistNameForRunID(int armorID, int slot1ID, int slot2ID, int slot3ID)
         {
-            Dictionary.ArmorWaists.ArmorWaistIDs.TryGetValue(armorID, out string? piecename);
+            ArmorWaist.IDName.TryGetValue(armorID, out string? piecename);
 
             string address = armorID.ToString("X4").ToUpper();
             return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(slot1ID), GetDecoName(slot2ID), GetDecoName(slot3ID));
@@ -3745,7 +3747,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(ArmorLegsID(), out string? piecename);
+                ArmorLegs.IDName.TryGetValue(ArmorLegsID(), out string? piecename);
 
                 if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
                     piecename = string.Format("**{0}**", piecename);
@@ -3757,7 +3759,7 @@ namespace MHFZ_Overlay.addresses
 
         public string GetArmorLegNameForRunID(int armorID, int slot1ID, int slot2ID, int slot3ID)
         {
-            Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(armorID, out string? piecename);
+            ArmorLegs.IDName.TryGetValue(armorID, out string? piecename);
 
             string address = armorID.ToString("X4").ToUpper();
             return string.Format("{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(slot1ID), GetDecoName(slot2ID), GetDecoName(slot3ID));
@@ -3773,7 +3775,7 @@ namespace MHFZ_Overlay.addresses
         {
             string? DecoName = "";
 
-            bool keyFound = Dictionary.Items.ItemIDs.TryGetValue(id, out DecoName);
+            bool keyFound = Item.IDName.TryGetValue(id, out DecoName);
 
             if (GetTextFormat() == "Markdown" && IsMetaItem(id) && (DecoName != null && DecoName == "None" && DecoName != "") && keyFound)
                 DecoName = string.Format("**{0}**", DecoName);//TODO: test
@@ -3805,7 +3807,7 @@ namespace MHFZ_Overlay.addresses
         /// </value>
         public string GetSigilName(int slot)
         {
-            Dictionary<int, string> sigilSkillList = (Dictionary<int, string>)Dictionary.SigilSkillList.SigilSkillID;
+            Dictionary<int, string> sigilSkillList = (Dictionary<int, string>)SkillSigil.IDName;
             int[] sigilNames = new int[] { Sigil1Name1(), Sigil1Name2(), Sigil1Name3(), Sigil2Name1(), Sigil2Name2(), Sigil2Name3(), Sigil3Name1(), Sigil3Name2(), Sigil3Name3() };
             int[] sigilValues = new int[] { Sigil1Value1(), Sigil1Value2(), Sigil1Value3(), Sigil2Value1(), Sigil2Value2(), Sigil2Value3(), Sigil3Value1(), Sigil3Value2(), Sigil3Value3() };
             string[] sigilTypes = new string[9];
@@ -3852,7 +3854,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                Dictionary.Items.ItemIDs.TryGetValue(Cuff1ID(), out string? cuffname);
+                Item.IDName.TryGetValue(Cuff1ID(), out string? cuffname);
                 string address = Cuff1ID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", cuffname, address);
             }
@@ -3860,7 +3862,7 @@ namespace MHFZ_Overlay.addresses
 
         public string GetCuffName(int cuffID)
         {
-            Dictionary.Items.ItemIDs.TryGetValue(cuffID, out string? cuffname);
+            Item.IDName.TryGetValue(cuffID, out string? cuffname);
             string address = cuffID.ToString("X4").ToUpper();
             return string.Format("{0} ({1})", cuffname, address);
         }
@@ -3875,7 +3877,7 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                Dictionary.Items.ItemIDs.TryGetValue(Cuff2ID(), out string? cuffname);
+                Item.IDName.TryGetValue(Cuff2ID(), out string? cuffname);
                 string address = Cuff2ID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", cuffname, address);
             }
@@ -3972,9 +3974,9 @@ namespace MHFZ_Overlay.addresses
                 int id2 = CaravanSkill2();
                 int id3 = CaravanSkill3();
 
-                Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id1, out string? caravanSkillName1);
-                Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id2, out string? caravanSkillName2);
-                Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id3, out string? caravanSkillName3);
+                SkillCaravan.IDName.TryGetValue(id1, out string? caravanSkillName1);
+                SkillCaravan.IDName.TryGetValue(id2, out string? caravanSkillName2);
+                SkillCaravan.IDName.TryGetValue(id3, out string? caravanSkillName3);
 
                 if (GetTextFormat() == "Markdown")
                 {
@@ -4006,7 +4008,7 @@ namespace MHFZ_Overlay.addresses
             for (int i = 0; i < skills.Length; i++)
             {
                 int skillId = skills[i];
-                if (Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(skillId, out string skillName)
+                if (SkillCaravan.IDName.TryGetValue(skillId, out string skillName)
                     && skillName != "None" && skillName != "")
                 {
                     SkillName += skillName;
@@ -4355,7 +4357,7 @@ namespace MHFZ_Overlay.addresses
                 {
                     int skillNum = i + 1;
                     int skillID = (int)this.GetType().GetMethod($"ZenithSkill{skillNum}").Invoke(this, null);
-                    if (Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(skillID, out string skillName))
+                    if (SkillZenith.IDName.TryGetValue(skillID, out string skillName))
                     {
                         if (IsMaxZenithSkill(skillID) && skillName != "None" && skillName != "")
                         {
@@ -4390,7 +4392,7 @@ namespace MHFZ_Overlay.addresses
             for (int i = 0; i < skills.Length; i++)
             {
                 int skillId = skills[i];
-                if (Dictionary.ZenithSkillList.ZenithSkillID.TryGetValue(skillId, out string skillName))
+                if (SkillZenith.IDName.TryGetValue(skillId, out string skillName))
                 {
                     if (skillName != "None" && skillName != "")
                     {
@@ -4441,7 +4443,7 @@ namespace MHFZ_Overlay.addresses
                 string[] skillNames = new string[19];
                 for (int i = 0; i < 19; i++)
                 {
-                    Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(skills[i], out string? skillName);
+                    SkillArmor.IDName.TryGetValue(skills[i], out string? skillName);
                     skillNames[i] = skillName ?? "";
                 }
 
@@ -4467,7 +4469,7 @@ namespace MHFZ_Overlay.addresses
             for (int i = 0; i < skills.Length; i++)
             {
                 int skillId = skills[i];
-                if (Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(skillId, out string skillName))
+                if (SkillArmor.IDName.TryGetValue(skillId, out string skillName))
                 {
                     if (skillName != "None" && skillName != "")
                     {
@@ -4492,7 +4494,7 @@ namespace MHFZ_Overlay.addresses
         /// <returns></returns>
         public string GetDivaSkillNameFromID(int id)
         {
-            Dictionary.DivaSkillList.DivaSkillID.TryGetValue(id, out string? divaskillaname);
+            SkillDiva.IDName.TryGetValue(id, out string? divaskillaname);
             return divaskillaname + "";
         }
 
@@ -4505,7 +4507,7 @@ namespace MHFZ_Overlay.addresses
         {
             string itemValue1;
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            Dictionary.Items.ItemIDs.TryGetValue(id, out itemValue1);  //returns true
+            Item.IDName.TryGetValue(id, out itemValue1);  //returns true
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
             return itemValue1 + "";
@@ -4518,7 +4520,7 @@ namespace MHFZ_Overlay.addresses
         /// <returns></returns>
         public string GetArmorSkill(int id)
         {
-            Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(id, out string? skillname);
+            SkillArmor.IDName.TryGetValue(id, out string? skillname);
             if (skillname == "" || skillname == null)
                 return "None";
             else
@@ -4532,7 +4534,7 @@ namespace MHFZ_Overlay.addresses
         /// <returns></returns>
         public string GetArmorSkillWithNull(int id)
         {
-            Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(id, out string? skillname);
+            SkillArmor.IDName.TryGetValue(id, out string? skillname);
             if (skillname == "")
                 return "None";
             else
@@ -4660,12 +4662,12 @@ namespace MHFZ_Overlay.addresses
         {
             get
             {
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(AutomaticSkillWeapon(), out string? SkillName1);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(AutomaticSkillHead(), out string? SkillName2);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(AutomaticSkillChest(), out string? SkillName3);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(AutomaticSkillArms(), out string? SkillName4);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(AutomaticSkillWaist(), out string? SkillName5);
-                Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(AutomaticSkillLegs(), out string? SkillName6);
+                SkillArmor.IDName.TryGetValue(AutomaticSkillWeapon(), out string? SkillName1);
+                SkillArmor.IDName.TryGetValue(AutomaticSkillHead(), out string? SkillName2);
+                SkillArmor.IDName.TryGetValue(AutomaticSkillChest(), out string? SkillName3);
+                SkillArmor.IDName.TryGetValue(AutomaticSkillArms(), out string? SkillName4);
+                SkillArmor.IDName.TryGetValue(AutomaticSkillWaist(), out string? SkillName5);
+                SkillArmor.IDName.TryGetValue(AutomaticSkillLegs(), out string? SkillName6);
 
                 if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
                     SkillName1 = "";
@@ -4721,7 +4723,7 @@ namespace MHFZ_Overlay.addresses
             for (int i = 0; i < skills.Length; i++)
             {
                 int skillId = skills[i];
-                if (Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue(skillId, out string skillName))
+                if (SkillArmor.IDName.TryGetValue(skillId, out string skillName))
                 {
                     if (skillName != "None" && skillName != "")
                     {
@@ -4813,8 +4815,8 @@ namespace MHFZ_Overlay.addresses
                 int Skill1 = StyleRank1();
                 int Skill2 = StyleRank2();
 
-                Dictionary.StyleRankSkillList.StyleRankSkillID.TryGetValue(Skill1, out string? SkillName1);
-                Dictionary.StyleRankSkillList.StyleRankSkillID.TryGetValue(Skill2, out string? SkillName2);
+                SkillStyleRank.IDName.TryGetValue(Skill1, out string? SkillName1);
+                SkillStyleRank.IDName.TryGetValue(Skill2, out string? SkillName2);
 
                 SkillName1 += "";
                 SkillName2 += "";
@@ -4865,7 +4867,7 @@ namespace MHFZ_Overlay.addresses
             for (int i = 0; i < skills.Length; i++)
             {
                 int skillId = skills[i];
-                if (Dictionary.StyleRankSkillList.StyleRankSkillID.TryGetValue(skillId, out string skillName))
+                if (SkillStyleRank.IDName.TryGetValue(skillId, out string skillName))
                 {
                     if (skillName != "None" && skillName != "")
                     {
@@ -5696,22 +5698,22 @@ namespace MHFZ_Overlay.addresses
                 int Skill15 = RoadDureSkill15Name();
                 int Skill16 = RoadDureSkill16Name();
 
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill1, out string? SkillName1);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill2, out string? SkillName2);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill3, out string? SkillName3);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill4, out string? SkillName4);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill5, out string? SkillName5);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill6, out string? SkillName6);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill7, out string? SkillName7);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill8, out string? SkillName8);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill9, out string? SkillName9);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill10, out string? SkillName10);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill11, out string? SkillName11);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill12, out string? SkillName12);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill13, out string? SkillName13);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill14, out string? SkillName14);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill15, out string? SkillName15);
-                Dictionary.RoadDureSkills.RoadDureSkillIDs.TryGetValue(Skill16, out string? SkillName16);
+                SkillRoadTower.IDName.TryGetValue(Skill1, out string? SkillName1);
+                SkillRoadTower.IDName.TryGetValue(Skill2, out string? SkillName2);
+                SkillRoadTower.IDName.TryGetValue(Skill3, out string? SkillName3);
+                SkillRoadTower.IDName.TryGetValue(Skill4, out string? SkillName4);
+                SkillRoadTower.IDName.TryGetValue(Skill5, out string? SkillName5);
+                SkillRoadTower.IDName.TryGetValue(Skill6, out string? SkillName6);
+                SkillRoadTower.IDName.TryGetValue(Skill7, out string? SkillName7);
+                SkillRoadTower.IDName.TryGetValue(Skill8, out string? SkillName8);
+                SkillRoadTower.IDName.TryGetValue(Skill9, out string? SkillName9);
+                SkillRoadTower.IDName.TryGetValue(Skill10, out string? SkillName10);
+                SkillRoadTower.IDName.TryGetValue(Skill11, out string? SkillName11);
+                SkillRoadTower.IDName.TryGetValue(Skill12, out string? SkillName12);
+                SkillRoadTower.IDName.TryGetValue(Skill13, out string? SkillName13);
+                SkillRoadTower.IDName.TryGetValue(Skill14, out string? SkillName14);
+                SkillRoadTower.IDName.TryGetValue(Skill15, out string? SkillName15);
+                SkillRoadTower.IDName.TryGetValue(Skill16, out string? SkillName16);
 
                 string SkillLevel1 = RoadDureSkill1Level().ToString();
                 string SkillLevel2 = RoadDureSkill2Level().ToString();
@@ -6121,7 +6123,7 @@ namespace MHFZ_Overlay.addresses
                 UI.Class.RoadDureSkills roadDureSkills = databaseManager.GetRoadDureSkills((long)runID);
                 StyleRankSkills styleRankSkills = databaseManager.GetStyleRankSkills((long)runID);
                 ZenithSkills zenithSkills = databaseManager.GetZenithSkills((long)runID);
-                Quest quest = databaseManager.GetQuest((long)runID);
+                MHFZ_Overlay.UI.Class.Quest quest = databaseManager.GetQuest((long)runID);
 
                 var createdBy = playerGear.CreatedBy;
                 if (createdBy == null)
@@ -6153,8 +6155,8 @@ namespace MHFZ_Overlay.addresses
                 var ammo = GetItemsForRunID(new int[] { (int)ammoPouch.Item1ID, (int)ammoPouch.Item2ID, (int)ammoPouch.Item3ID, (int)ammoPouch.Item4ID, (int)ammoPouch.Item5ID, (int)ammoPouch.Item6ID, (int)ammoPouch.Item7ID, (int)ammoPouch.Item8ID, (int)ammoPouch.Item9ID, (int)ammoPouch.Item10ID });
                 var poogieItem = GetItemName((int)playerGear.PoogieItemID);
                 var roadDureSkillsList = GetRoadDureSkillsForRunID(new int[] { (int)roadDureSkills.RoadDureSkill1ID, (int)roadDureSkills.RoadDureSkill2ID, (int)roadDureSkills.RoadDureSkill3ID, (int)roadDureSkills.RoadDureSkill4ID, (int)roadDureSkills.RoadDureSkill5ID, (int)roadDureSkills.RoadDureSkill6ID, (int)roadDureSkills.RoadDureSkill7ID, (int)roadDureSkills.RoadDureSkill8ID, (int)roadDureSkills.RoadDureSkill9ID, (int)roadDureSkills.RoadDureSkill10ID, (int)roadDureSkills.RoadDureSkill11ID, (int)roadDureSkills.RoadDureSkill12ID, (int)roadDureSkills.RoadDureSkill13ID, (int)roadDureSkills.RoadDureSkill14ID, (int)roadDureSkills.RoadDureSkill15ID, (int)roadDureSkills.RoadDureSkill16ID });
-                var questName = Dictionary.Quests.QuestIDs[(int)quest.QuestID];
-                var questObjectiveType = Dictionary.ObjectiveTypeList.ObjectiveTypeID[(int)quest.ObjectiveTypeID];
+                var questName = EZlion.Mapper.Quest.IDName[(int)quest.QuestID];
+                var questObjectiveType = EZlion.Mapper.ObjectiveType.IDName[(int)quest.ObjectiveTypeID];
                 var questObjectiveQuantity = quest.ObjectiveQuantity;
                 var questObjectiveName = quest.ObjectiveName;
                 var questCategory = quest.ActualOverlayMode;
@@ -6612,11 +6614,11 @@ Party Size: {32}",
             var sessionDurationAverage = miscellaneousCompendium.AverageSessionDuration;
             var sessionDurationMedian = miscellaneousCompendium.MedianSessionDuration;
 
-            Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue((int)mostCommonGuildFood, out string? mostCommonGuildFoodName);
-            Dictionary.DivaSkillList.DivaSkillID.TryGetValue((int)mostCommonDivaSkill, out string? mostCommonDivaSkillName);
-            Dictionary.WeaponTypes.WeaponTypeID.TryGetValue((int)mostUsedWeaponType, out string? mostUsedWeaponTypeName);
-            Dictionary.Items.ItemIDs.TryGetValue((int)mostCommonDecorationID, out string? mostCommonDecorationName);
-            Dictionary.ArmorSkillList.ArmorSkillID.TryGetValue((int)leastUsedArmorSkill, out string? leastUsedArmorSkillName);
+            SkillArmor.IDName.TryGetValue((int)mostCommonGuildFood, out string? mostCommonGuildFoodName);
+            SkillDiva.IDName.TryGetValue((int)mostCommonDivaSkill, out string? mostCommonDivaSkillName);
+            EZlion.Mapper.WeaponType.IDName.TryGetValue((int)mostUsedWeaponType, out string? mostUsedWeaponTypeName);
+            Item.IDName.TryGetValue((int)mostCommonDecorationID, out string? mostCommonDecorationName);
+            SkillArmor.IDName.TryGetValue((int)leastUsedArmorSkill, out string? leastUsedArmorSkillName);
 
             return string.Format(
 @"{0} (UTC)
@@ -8658,7 +8660,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
                 if (className == "Blademaster")
                 {
-                    Dictionary.BlademasterWeapons.BlademasterWeaponIDs.TryGetValue(BlademasterWeaponID(), out string? wepname);
+                    WeaponBlademaster.IDName.TryGetValue(BlademasterWeaponID(), out string? wepname);
                     string address = BlademasterWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
 
                     return string.Format("{0}{1} ({2})", wepname, lv, address);
@@ -8666,7 +8668,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 else if (className == "Gunner")
                 {
-                    Dictionary.GunnerWeapons.GunnerWeaponIDs.TryGetValue(GunnerWeaponID(), out string? wepname);
+                    WeaponGunner.IDName.TryGetValue(GunnerWeaponID(), out string? wepname);
                     string address = GunnerWeaponID().ToString("X4").ToUpper();  // gives you hex 4 digit "007B"
                     return string.Format("{0}{1} ({2})", wepname, lv, address);
                 }
@@ -8689,7 +8691,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             get
             {
-                Dictionary.ArmorHeads.ArmorHeadIDs.TryGetValue(ArmorHeadID(), out string? piecename);
+                ArmorHead.IDName.TryGetValue(ArmorHeadID(), out string? piecename);
                 string address = ArmorHeadID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", piecename, address);
             }
@@ -8699,7 +8701,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             get
             {
-                Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(ArmorChestID(), out string? piecename);
+                ArmorChest.IDName.TryGetValue(ArmorChestID(), out string? piecename);
                 string address = ArmorChestID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", piecename, address);
             }
@@ -8709,7 +8711,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             get
             {
-                Dictionary.ArmorArms.ArmorArmIDs.TryGetValue(ArmorArmsID(), out string? piecename);
+                ArmorArms.IDName.TryGetValue(ArmorArmsID(), out string? piecename);
                 string address = ArmorArmsID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", piecename, address);
             }
@@ -8719,7 +8721,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             get
             {
-                Dictionary.ArmorWaists.ArmorWaistIDs.TryGetValue(ArmorWaistID(), out string? piecename);
+                ArmorWaist.IDName.TryGetValue(ArmorWaistID(), out string? piecename);
                 string address = ArmorWaistID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", piecename, address);
             }
@@ -8729,7 +8731,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             get
             {
-                Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(ArmorLegsID(), out string? piecename);
+                ArmorLegs.IDName.TryGetValue(ArmorLegsID(), out string? piecename);
                 string address = ArmorLegsID().ToString("X4").ToUpper();
                 return string.Format("{0} ({1})", piecename, address);
             }
@@ -8784,13 +8786,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
                 if (className == "Blademaster")
                 {
-                    Dictionary.BlademasterWeapons.BlademasterWeaponIDs.TryGetValue(BlademasterWeaponID(), out string? wepname);
+                    WeaponBlademaster.IDName.TryGetValue(BlademasterWeaponID(), out string? wepname);
                     return string.Format("{0}{1}", wepname, lv);
 
                 }
                 else if (className == "Gunner")
                 {
-                    Dictionary.GunnerWeapons.GunnerWeaponIDs.TryGetValue(GunnerWeaponID(), out string? wepname);
+                    WeaponGunner.IDName.TryGetValue(GunnerWeaponID(), out string? wepname);
                     return string.Format("{0}{1}", wepname, lv);
                 }
                 else
@@ -8817,7 +8819,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             get
             {
-                Dictionary.ArmorHeads.ArmorHeadIDs.TryGetValue(ArmorHeadID(), out string? piecename);
+                ArmorHead.IDName.TryGetValue(ArmorHeadID(), out string? piecename);
                 return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorHeadDeco1ID(), 0, true), GetDecoName(ArmorHeadDeco2ID(), 0, true), GetDecoName(ArmorHeadDeco3ID(), 0, true));
             }
         }
@@ -8826,7 +8828,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             get
             {
-                Dictionary.ArmorChests.ArmorChestIDs.TryGetValue(ArmorChestID(), out string? piecename);
+                ArmorChest.IDName.TryGetValue(ArmorChestID(), out string? piecename);
                 return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorChestDeco1ID(), 0, true), GetDecoName(ArmorChestDeco2ID(), 0, true), GetDecoName(ArmorChestDeco3ID(), 0, true));
             }
         }
@@ -8835,7 +8837,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             get
             {
-                Dictionary.ArmorArms.ArmorArmIDs.TryGetValue(ArmorArmsID(), out string? piecename);
+                ArmorArms.IDName.TryGetValue(ArmorArmsID(), out string? piecename);
                 return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorArmsDeco1ID(), 0, true), GetDecoName(ArmorArmsDeco2ID(), 0, true), GetDecoName(ArmorArmsDeco3ID(), 0, true));
             }
         }
@@ -8844,7 +8846,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             get
             {
-                Dictionary.ArmorWaists.ArmorWaistIDs.TryGetValue(ArmorWaistID(), out string? piecename);
+                ArmorWaist.IDName.TryGetValue(ArmorWaistID(), out string? piecename);
                 return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorWaistDeco1ID(), 0, true), GetDecoName(ArmorWaistDeco2ID(), 0, true), GetDecoName(ArmorWaistDeco3ID(), 0, true));
             }
         }
@@ -8853,7 +8855,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             get
             {
-                Dictionary.ArmorLegs.ArmorLegIDs.TryGetValue(ArmorLegsID(), out string? piecename);
+                ArmorLegs.IDName.TryGetValue(ArmorLegsID(), out string? piecename);
                 return string.Format("{0} | {1} | {2} | {3}", piecename, GetDecoName(ArmorLegsDeco1ID(), 0, true), GetDecoName(ArmorLegsDeco2ID(), 0, true), GetDecoName(ArmorLegsDeco3ID(), 0, true));
             }
         }
@@ -8917,7 +8919,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             get
             {
-                Dictionary.DivaSkillList.DivaSkillID.TryGetValue(DivaSkill(), out string? divaskillaname);
+                SkillDiva.IDName.TryGetValue(DivaSkill(), out string? divaskillaname);
                 return divaskillaname + "";
             }
 
@@ -9680,7 +9682,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             if (DiscordManager.ShowDiscordQuestNames() && !(isLargeImageText)) return "";
             string? objValue1;
-            Dictionary.Items.ItemIDs.TryGetValue(id, out objValue1);  //returns true
+            Item.IDName.TryGetValue(id, out objValue1);  //returns true
             return objValue1 + "";
         }
 
@@ -9693,8 +9695,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             if (id == 0)
                 return "Loading...";
-            Dictionary.MapAreaList.MapAreaID.TryGetValue(id, out string? areaname);
-            Dictionary.MapAreaList.MapAreaID.TryGetValue(RavienteAreaID(), out string? raviareaname);
+            Location.IDName.TryGetValue(id, out string? areaname);
+            Location.IDName.TryGetValue(RavienteAreaID(), out string? raviareaname);
 
             switch (getRaviName())
             {
@@ -11479,7 +11481,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         /// <returns></returns>
         public string GetArmorColor()
         {
-            Dictionary.ArmorColorList.ArmorColorID.TryGetValue(ArmorColor(), out string? colorname);
+            EZlion.Mapper.ArmorColor.IDName.TryGetValue(ArmorColor(), out string? colorname);
             return colorname + "";
         }
 
@@ -11547,7 +11549,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public string GetPoogieClothes(int id)
         {
             string? clothesValue1;
-            _ = Dictionary.PoogieCostumeList.PoogieCostumeID.TryGetValue(id, out clothesValue1);  //returns true
+            _ = EZlion.Mapper.PoogieCostume.IDName.TryGetValue(id, out clothesValue1);  //returns true
             return clothesValue1 + "";
         }
 
@@ -11561,9 +11563,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             int id2 = dataLoader.model.CaravanSkill2();
             int id3 = dataLoader.model.CaravanSkill3();
 
-            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id1, out string? caravanSkillName1);
-            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id2, out string? caravanSkillName2);
-            Dictionary.CaravanSkillList.CaravanSkillID.TryGetValue(id3, out string? caravanSkillName3);
+            SkillCaravan.IDName.TryGetValue(id1, out string? caravanSkillName1);
+            SkillCaravan.IDName.TryGetValue(id2, out string? caravanSkillName2);
+            SkillCaravan.IDName.TryGetValue(id3, out string? caravanSkillName3);
 
             if (caravanSkillName1 == "" || caravanSkillName1 == "None")
                 return "None";

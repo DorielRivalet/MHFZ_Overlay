@@ -1,4 +1,5 @@
 ﻿using Dictionary;
+using EZlion.Mapper;
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
@@ -32,6 +33,7 @@ using System.Windows.Documents;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Formatting = Newtonsoft.Json.Formatting;
+using Quest = MHFZ_Overlay.UI.Class.Quest;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -3234,7 +3236,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.RanksBandsList.RankBandsID, "RankName", "RankNameID", "RankNameName", conn);
+                    InsertDictionaryDataIntoTable(RankBand.IDName, "RankName", "RankNameID", "RankNameName", conn);
 
                     //Create the ObjectiveTypes table
                     sql = @"CREATE TABLE IF NOT EXISTS ObjectiveType
@@ -3245,7 +3247,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ObjectiveTypeList.ObjectiveTypeID, "ObjectiveType", "ObjectiveTypeID", "ObjectiveTypeName", conn);
+                    InsertDictionaryDataIntoTable(ObjectiveType.IDName, "ObjectiveType", "ObjectiveTypeID", "ObjectiveTypeName", conn);
 
                     //Create the QuestNames table
                     sql = @"CREATE TABLE IF NOT EXISTS QuestName
@@ -3256,7 +3258,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Quests.QuestIDs, "QuestName", "QuestNameID", "QuestNameName", conn);
+                    InsertDictionaryDataIntoTable(EZlion.Mapper.Quest.IDName, "QuestName", "QuestNameID", "QuestNameName", conn);
 
                     // Create the Players table
                     //do an UPDATE when inserting quests. since its just local player?
@@ -3344,7 +3346,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(WeaponTypes.WeaponTypeID, "WeaponType", "WeaponTypeID", "WeaponTypeName", conn);
+                    InsertDictionaryDataIntoTable(WeaponType.IDName, "WeaponType", "WeaponTypeID", "WeaponTypeName", conn);
 
                     // Create the Item table
                     sql = @"CREATE TABLE IF NOT EXISTS Item (
@@ -3355,7 +3357,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Items.ItemIDs, "Item", "ItemID", "ItemName", conn);
+                    InsertDictionaryDataIntoTable(Item.IDName, "Item", "ItemID", "ItemName", conn);
 
                     // Create the Area table
                     sql = @"CREATE TABLE IF NOT EXISTS Area (
@@ -3506,7 +3508,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.DivaSkillList.DivaSkillID, "AllDivaSkills", "DivaSkillID", "DivaSkillName", conn);
+                    InsertDictionaryDataIntoTable(SkillDiva.IDName, "AllDivaSkills", "DivaSkillID", "DivaSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS WeaponStyles (
                       StyleID INTEGER PRIMARY KEY,
@@ -3517,7 +3519,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.WeaponStyles.WeaponStyleID, "WeaponStyles", "StyleID", "StyleName", conn);
+                    InsertDictionaryDataIntoTable(WeaponStyle.IDName, "WeaponStyles", "StyleID", "StyleName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS WeaponIcon (
                       WeaponIconID INTEGER PRIMARY KEY,
@@ -3539,7 +3541,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.WeaponClass.WeaponClassID, "WeaponClass", "WeaponClassID", "WeaponClassName", conn);
+                    InsertDictionaryDataIntoTable(WeaponClass.IDName, "WeaponClass", "WeaponClassID", "WeaponClassName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllBlademasterWeapons (
                       BlademasterWeaponID INTEGER PRIMARY KEY,
@@ -3550,7 +3552,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.BlademasterWeapons.BlademasterWeaponIDs, "AllBlademasterWeapons", "BlademasterWeaponID", "BlademasterWeaponName", conn);
+                    InsertDictionaryDataIntoTable(WeaponBlademaster.IDName, "AllBlademasterWeapons", "BlademasterWeaponID", "BlademasterWeaponName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllGunnerWeapons (
                       GunnerWeaponID INTEGER PRIMARY KEY,
@@ -3561,7 +3563,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.GunnerWeapons.GunnerWeaponIDs, "AllGunnerWeapons", "GunnerWeaponID", "GunnerWeaponName", conn);
+                    InsertDictionaryDataIntoTable(WeaponGunner.IDName, "AllGunnerWeapons", "GunnerWeaponID", "GunnerWeaponName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllHeadPieces (
                       HeadPieceID INTEGER PRIMARY KEY,
@@ -3572,7 +3574,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ArmorHeads.ArmorHeadIDs, "AllHeadPieces", "HeadPieceID", "HeadPieceName", conn);
+                    InsertDictionaryDataIntoTable(ArmorHead.IDName, "AllHeadPieces", "HeadPieceID", "HeadPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllChestPieces (
                       ChestPieceID INTEGER PRIMARY KEY,
@@ -3583,7 +3585,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ArmorChests.ArmorChestIDs, "AllChestPieces", "ChestPieceID", "ChestPieceName", conn);
+                    InsertDictionaryDataIntoTable(ArmorChest.IDName, "AllChestPieces", "ChestPieceID", "ChestPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllArmsPieces (
                       ArmsPieceID INTEGER PRIMARY KEY,
@@ -3594,7 +3596,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ArmorArms.ArmorArmIDs, "AllArmsPieces", "ArmsPieceID", "ArmsPieceName", conn);
+                    InsertDictionaryDataIntoTable(ArmorArms.IDName, "AllArmsPieces", "ArmsPieceID", "ArmsPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllWaistPieces (
                       WaistPieceID INTEGER PRIMARY KEY,
@@ -3605,7 +3607,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ArmorWaists.ArmorWaistIDs, "AllWaistPieces", "WaistPieceID", "WaistPieceName", conn);
+                    InsertDictionaryDataIntoTable(ArmorWaist.IDName, "AllWaistPieces", "WaistPieceID", "WaistPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllLegsPieces (
                       LegsPieceID INTEGER PRIMARY KEY,
@@ -3616,7 +3618,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ArmorLegs.ArmorLegIDs, "AllLegsPieces", "LegsPieceID", "LegsPieceName", conn);
+                    InsertDictionaryDataIntoTable(ArmorLegs.IDName, "AllLegsPieces", "LegsPieceID", "LegsPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS ZenithSkills(
                     CreatedAt TEXT NOT NULL,
@@ -3651,7 +3653,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ZenithSkillList.ZenithSkillID, "AllZenithSkills", "ZenithSkillID", "ZenithSkillName", conn);
+                    InsertDictionaryDataIntoTable(SkillZenith.IDName, "AllZenithSkills", "ZenithSkillID", "ZenithSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AutomaticSkills(
                     CreatedAt TEXT NOT NULL,
@@ -3684,7 +3686,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ArmorSkillList.ArmorSkillID, "AllArmorSkills", "ArmorSkillID", "ArmorSkillName", conn);
+                    InsertDictionaryDataIntoTable(SkillArmor.IDName, "AllArmorSkills", "ArmorSkillID", "ArmorSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS ActiveSkills(
                     CreatedAt TEXT NOT NULL,
@@ -3762,7 +3764,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.CaravanSkillList.CaravanSkillID, "AllCaravanSkills", "CaravanSkillID", "CaravanSkillName", conn);
+                    InsertDictionaryDataIntoTable(SkillCaravan.IDName, "AllCaravanSkills", "CaravanSkillID", "CaravanSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS StyleRankSkills(
                     CreatedAt TEXT NOT NULL,
@@ -3788,7 +3790,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.StyleRankSkillList.StyleRankSkillID, "AllStyleRankSkills", "StyleRankSkillID", "StyleRankSkillName", conn);
+                    InsertDictionaryDataIntoTable(SkillStyleRank.IDName, "AllStyleRankSkills", "StyleRankSkillID", "StyleRankSkillName", conn);
 
                     // Create the PlayerInventory table
                     sql = @"CREATE TABLE IF NOT EXISTS PlayerInventory (
@@ -4015,7 +4017,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.RoadDureSkills.RoadDureSkillIDs, "AllRoadDureSkills", "RoadDureSkillID", "RoadDureSkillName", conn);
+                    InsertDictionaryDataIntoTable(SkillRoadTower.IDName, "AllRoadDureSkills", "RoadDureSkillID", "RoadDureSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS QuestAttempts(
                     QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -6758,7 +6760,7 @@ Disabling Quest Logging.",
                                         ORDER BY 
                                             FinalTimeValue ASC
                                         LIMIT 20";
-                                weaponTypeID = WeaponTypes.WeaponTypeID.FirstOrDefault(x => x.Value == weaponName).Key;
+                                weaponTypeID = WeaponType.IDName.FirstOrDefault(x => x.Value == weaponName).Key;
                             }
 
                             using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -6951,8 +6953,8 @@ Disabling Quest Logging.",
                                             // use a switch statement or a lookup table to convert the
                                             // weaponTypeID and styleID to their corresponding string names
 
-                                            weaponType = Dictionary.WeaponTypes.WeaponTypeID[int.Parse(weaponTypeID.ToString())];
-                                            style = Dictionary.WeaponStyles.WeaponStyleID[int.Parse(styleID.ToString())];
+                                            weaponType = WeaponType.IDName[int.Parse(weaponTypeID.ToString())];
+                                            style = WeaponStyle.IDName[int.Parse(styleID.ToString())];
                                             weaponUsageData.Add(new WeaponUsageMapper(weaponType, style, (int)runCount));
                                         }
                                     }
@@ -7024,7 +7026,7 @@ Disabling Quest Logging.",
                                     reader.Read();
                                     configWindow.SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri(reader["ObjectiveImage"].ToString()));
                                     configWindow.SelectedQuestNameTextBlock.Text = reader["QuestNameName"].ToString();
-                                    configWindow.SelectedQuestObjectiveTextBlock.Text = string.Format("{0} {1} {2}", Dictionary.ObjectiveTypeList.ObjectiveTypeID[int.Parse(reader["ObjectiveTypeID"].ToString())], reader["ObjectiveQuantity"], reader["ObjectiveName"]);
+                                    configWindow.SelectedQuestObjectiveTextBlock.Text = string.Format("{0} {1} {2}", ObjectiveType.IDName[int.Parse(reader["ObjectiveTypeID"].ToString())], reader["ObjectiveQuantity"], reader["ObjectiveName"]);
                                     configWindow.CurrentTimeTextBlock.Text = DateTime.Now.ToString();
 
                                 }
@@ -7064,7 +7066,7 @@ Disabling Quest Logging.",
                                 }
                                 while (reader.Read())
                                 {
-                                    Dictionary.WeaponTypes.WeaponTypeID.TryGetValue(Convert.ToInt32(reader["WeaponTypeID"]), out string? weaponType);
+                                    WeaponType.IDName.TryGetValue(Convert.ToInt32(reader["WeaponTypeID"]), out string? weaponType);
 
                                     int bestTime;
                                     if (reader["BestTime"] == DBNull.Value)
@@ -7223,7 +7225,7 @@ Disabling Quest Logging.",
                                 while (reader.Read())
                                 {
                                     int objectiveTypeID = reader.GetInt32(0);
-                                    string objectiveTypeName = ObjectiveTypeList.ObjectiveTypeID[objectiveTypeID];
+                                    string objectiveTypeName = ObjectiveType.IDName[objectiveTypeID];
                                     int count = reader.GetInt32(1);
                                     objectiveCounts.Add(objectiveTypeName, count);
                                 }
@@ -7311,7 +7313,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string pieceName = ArmorHeads.ArmorHeadIDs[field];
+                                    string pieceName = ArmorHead.IDName[field];
                                     fieldCounts.Add(pieceName, count);
                                 }
                             }
@@ -7355,7 +7357,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string pieceName = ArmorChests.ArmorChestIDs[field];
+                                    string pieceName = ArmorChest.IDName[field];
                                     fieldCounts.Add(pieceName, count);
                                 }
                             }
@@ -7399,7 +7401,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string pieceName = ArmorArms.ArmorArmIDs[field];
+                                    string pieceName = ArmorArms.IDName[field];
                                     fieldCounts.Add(pieceName, count);
                                 }
                             }
@@ -7443,7 +7445,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string pieceName = ArmorWaists.ArmorWaistIDs[field];
+                                    string pieceName = ArmorWaist.IDName[field];
                                     fieldCounts.Add(pieceName, count);
                                 }
                             }
@@ -7487,7 +7489,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string pieceName = ArmorLegs.ArmorLegIDs[field];
+                                    string pieceName = ArmorLegs.IDName[field];
                                     fieldCounts.Add(pieceName, count);
                                 }
                             }
@@ -7531,7 +7533,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string name = DivaSkillList.DivaSkillID[field];
+                                    string name = SkillDiva.IDName[field];
                                     fieldCounts.Add(name, count);
                                 }
                             }
@@ -7575,7 +7577,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string name = ArmorSkillList.ArmorSkillID[field];
+                                    string name = SkillArmor.IDName[field];
                                     fieldCounts.Add(name, count);
                                 }
                             }
@@ -7796,13 +7798,13 @@ Disabling Quest Logging.",
                                     int weaponID = reader.GetInt32(1);
                                     int frequency = reader.GetInt32(2);
                                     string weaponName = "";
-                                    if (BlademasterWeapons.BlademasterWeaponIDs.ContainsKey(weaponID) && WeaponClass.WeaponClassID[weaponClassID] == "Blademaster")
+                                    if (WeaponBlademaster.IDName.ContainsKey(weaponID) && WeaponClass.IDName[weaponClassID] == "Blademaster")
                                     {
-                                        weaponName = BlademasterWeapons.BlademasterWeaponIDs[weaponID];
+                                        weaponName = WeaponBlademaster.IDName[weaponID];
                                     }
-                                    else if (GunnerWeapons.GunnerWeaponIDs.ContainsKey(weaponID) && WeaponClass.WeaponClassID[weaponClassID] == "Gunner")
+                                    else if (WeaponGunner.IDName.ContainsKey(weaponID) && WeaponClass.IDName[weaponClassID] == "Gunner")
                                     {
-                                        weaponName = GunnerWeapons.GunnerWeaponIDs[weaponID];
+                                        weaponName = WeaponGunner.IDName[weaponID];
                                     }
                                     if (!string.IsNullOrEmpty(weaponName))
                                     {
@@ -7858,7 +7860,7 @@ Disabling Quest Logging.",
                                 {
                                     int skillID = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string skillName = StyleRankSkillList.StyleRankSkillID[skillID];
+                                    string skillName = SkillStyleRank.IDName[skillID];
                                     if (!skillCounts.ContainsKey(skillName))
                                     {
                                         skillCounts.Add(skillName, count);
@@ -7925,7 +7927,7 @@ Disabling Quest Logging.",
                                 {
                                     int skillID = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string skillName = CaravanSkillList.CaravanSkillID[skillID];
+                                    string skillName = SkillCaravan.IDName[skillID];
                                     if (!skillCounts.ContainsKey(skillName))
                                     {
                                         skillCounts.Add(skillName, count);
