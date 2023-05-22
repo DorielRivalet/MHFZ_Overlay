@@ -9808,7 +9808,7 @@ Disabling Quest Logging.",
                 {
                     int currentUserVersion = GetUserVersion(connection);
 
-                    if (!App.isClowdSquirrelUpdating && (App.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0))
+                    if (App.isClowdSquirrelUpdating == false && (App.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0))
                     {
                         logger.Info("Found different program version or userVersion 0. Current: {0}, Previous: {1}, userVersion: {2}", App.CurrentProgramVersion, previousVersion, currentUserVersion);
 
