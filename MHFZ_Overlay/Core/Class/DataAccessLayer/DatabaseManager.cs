@@ -1,4 +1,7 @@
-﻿using Dictionary;
+﻿// Copyright 2023 The mhfz-overlay Authors.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+using Dictionary;
 using EZlion.Mapper;
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.IO;

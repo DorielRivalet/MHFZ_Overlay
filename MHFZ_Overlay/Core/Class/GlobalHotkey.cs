@@ -1,4 +1,7 @@
-﻿/*https://stackoverflow.com/a/65412682/18859245*/
+﻿// Copyright 2023 The mhfz-overlay Authors.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+/*https://stackoverflow.com/a/65412682/18859245*/
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;

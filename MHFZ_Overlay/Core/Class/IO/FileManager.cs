@@ -1,4 +1,7 @@
-﻿using CsvHelper;
+﻿// Copyright 2023 The mhfz-overlay Authors.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+using CsvHelper;
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.Log;
 using Microsoft.Win32;

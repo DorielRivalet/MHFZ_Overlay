@@ -109,9 +109,19 @@ Make sure to run as Administrator.
 
 ## How to import/export settings from the overlay?
 
-Open the overlay settings, go to General tab, press the Backup settings button, and then save to a file. Next time you open the overlay, the settings are automatically restored from this backup and the backup is deleted. So if you wish to have persistent settings during updates, press the backup button just before updating to a newer version.
+Open the overlay settings, go to General tab, press the Open Settings Folder button. This is where your user settings file is stored. If you wish to replace current settings from another settings file:
 
-The JSON file is meant to be used for debugging or troubleshooting purposes.
+1. Close the overlay.
+2. Copy/Paste and overwrite, with the current same folder and file name.
+3. Start the overlay.
+
+Also keep in mind that when you update the overlay from the program itself, the following happens:
+
+1. Your current settings are automatically and temporarily backed up.
+2. Restores the settings from this backup.
+3. The backup file is automatically deleted.
+
+This way, there are no lost settings when updating, and you don't have to make the backup manually.
 
 ## How to check the downloaded file hashes?
 

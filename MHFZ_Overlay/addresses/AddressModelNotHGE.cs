@@ -1,4 +1,7 @@
-﻿using Memory;
+﻿// Copyright 2023 The mhfz-overlay Authors.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+using Memory;
 
 // Most Addresses from https://github.com/suzaku01/ 
 namespace MHFZ_Overlay.addresses

@@ -1,4 +1,7 @@
-﻿using Squirrel;
+﻿// Copyright 2023 The mhfz-overlay Authors.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+using Squirrel;
 using System.Windows;
 using NLog;
 using MHFZ_Overlay.Core.Class.Log;
