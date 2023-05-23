@@ -9800,6 +9800,21 @@ Disabling Quest Logging.",
             //[self endTransaction];
         }
 
+        /* TODO:
+        with previous installation (v0.22.0):
+        1) database update without program update: did settings save? [X] no error logs? [X] database triggers work? [X]
+        2) database update with program update: did settings save? [X] no error logs? [X] database triggers work? [X]
+        3) program update without database update: did settings save? [] no error logs? [] database triggers work? []
+        4) program update with database update: same as 2)
+        NOTE: i actually cant do 3) because asking for database update comes first.
+
+        without previous installation:
+        5) database update without program update: did settings save? [] no error logs? [] database triggers work? []
+        6) database update with program update: did settings save? [] no error logs? [] database triggers work? []
+        7) program update without database update: did settings save? [] no error logs? [] database triggers work? []
+        8) program update with database update: same as 6)
+        see NOTE for 7)
+        */
         private void UpdateDatabaseSchema(SQLiteConnection connection)
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
@@ -10934,11 +10949,7 @@ Updating the database structure may take some time, it will transport all of you
             // TODO why does this error? also find a way to put this in FileManager
             try
             {
-                if (File.ReadAllText(previousVersionFilePath) == "")
-                    previousVersion = App.CurrentProgramVersion.Trim();
-                else
-                    previousVersion = File.ReadAllText(previousVersionFilePath);
-
+                previousVersion = App.CurrentProgramVersion.Trim();
                 File.WriteAllText(previousVersionFilePath, previousVersion);
                 logger.Info("Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
             }
