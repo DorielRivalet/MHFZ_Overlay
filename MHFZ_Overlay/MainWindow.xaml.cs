@@ -84,26 +84,70 @@ namespace MHFZ_Overlay
             _notifyIcon.Visible = true;
 
             var contextMenu = new ContextMenuStrip();
-            contextMenu.Items.Add("Open Configuration", null, Option1_Click);
-            contextMenu.Items.Add("Restart Application", null, Option2_Click);
-            contextMenu.Items.Add("Close Application", null, Option3_Click);
+            contextMenu.Items.Add("Settings", null, OptionSettings_Click);
+            contextMenu.Items.Add(new ToolStripSeparator());
+            contextMenu.Items.Add("Help", null, OptionHelp_Click);
+            contextMenu.Items.Add("Documentation", null, OptionDocumentation_Click);
+            contextMenu.Items.Add("Report Bug", null, OptionReportBug_Click);
+            contextMenu.Items.Add("Request Feature", null, OptionRequestFeature_Click);
+            contextMenu.Items.Add("Send Feedback", null, OptionSendFeedback_Click);
+            contextMenu.Items.Add(new ToolStripSeparator());
+            contextMenu.Items.Add("Restart", null, OptionRestart_Click);
+            contextMenu.Items.Add("Exit", null, OptionExit_Click);
+            contextMenu.Items.Add(new ToolStripSeparator());
+            contextMenu.Items.Add("About", null, OptionAbout_Click);
 
             _notifyIcon.ContextMenuStrip = contextMenu;
         }
 
-        private void Option1_Click(object sender, EventArgs e)
+        private void _notifyIcon_Click(object sender, EventArgs e)
         {
             OpenConfigButton_Key();
         }
 
-        private void Option2_Click(object sender, EventArgs e)
+        private void OptionSettings_Click(object sender, EventArgs e)
+        {
+            OpenConfigButton_Key();
+        }
+
+        private void OptionHelp_Click(object sender, EventArgs e)
+        {
+            OpenLink("https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md");
+        }
+
+        private void OptionDocumentation_Click(object sender, EventArgs e)
+        {
+            OpenLink("https://github.com/DorielRivalet/mhfz-overlay/tree/main/docs");
+        }
+
+        private void OptionReportBug_Click(object sender, EventArgs e)
+        {
+            OpenLink("https://github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=bug&projects=&template=BUG-REPORT.yml&title=%5BBUG%5D+-+title");
+        }
+
+        private void OptionRequestFeature_Click(object sender, EventArgs e)
+        {
+            OpenLink("https://github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=question%2Cenhancement&projects=&template=FEATURE-REQUEST.yml&title=%5BREQUEST%5D+-+title");
+        }
+
+        private void OptionSendFeedback_Click(object sender, EventArgs e)
+        {
+            OpenLink("https://forms.gle/hrAVWMcYS5HEo1v7A");
+        }
+
+        private void OptionRestart_Click(object sender, EventArgs e)
         {
             ReloadButton_Key();
         }
 
-        private void Option3_Click(object sender, EventArgs e)
+        private void OptionExit_Click(object sender, EventArgs e)
         {
             CloseButton_Key();
+        }
+
+        private void OptionAbout_Click(object sender, EventArgs e)
+        {
+            OpenLink("https://github.com/DorielRivalet/mhfz-overlay");
         }
 
         #endregion
@@ -339,6 +383,7 @@ namespace MHFZ_Overlay
             }
         }
 
+        // TODO: refactor to somewhere else
         /// <summary>
         /// Opens the link. https://stackoverflow.com/a/60221582/18859245
         /// </summary>
