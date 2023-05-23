@@ -128,7 +128,7 @@ As an alternative to hotkeys, you can check your system tray options by right-cl
 
 Press Alt+Enter if your game resolution changed.
 
-The overlay might take some time to start due to databases.
+The overlay might take some time to start due to databases. The next time you run the program, you may be asked to update the database.
 
 Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
 

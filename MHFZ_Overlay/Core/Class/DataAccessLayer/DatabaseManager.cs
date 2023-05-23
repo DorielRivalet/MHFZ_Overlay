@@ -9823,6 +9823,7 @@ Disabling Quest Logging.",
                 {
                     int currentUserVersion = GetUserVersion(connection);
 
+                    // this will always run the next time the user runs the program after a fresh install. So it always runs at least once.
                     if (App.isClowdSquirrelUpdating == false && (App.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0))
                     {
                         logger.Info("Found different program version or userVersion 0. Current: {0}, Previous: {1}, userVersion: {2}", App.CurrentProgramVersion, previousVersion, currentUserVersion);

@@ -698,7 +698,7 @@
                             <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
-                        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Backup settings" ToolTip="Export user settings to JSON file and make a backup for settings when updating overlay" Click="ExportUserSettings_Click"/>
+                        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Open Settings Folder" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click"/>
 
                         <TextBlock Margin="5,5,5,5" ToolTip="Select a settings preset configuration" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Configuration Preset"/>
                         <ComboBox x:Name="settingsPresetComboBox" Grid.Column="1" Grid.Row="1" SelectedIndex="0" SelectionChanged="settingsPresetComboBox_SelectionChanged">

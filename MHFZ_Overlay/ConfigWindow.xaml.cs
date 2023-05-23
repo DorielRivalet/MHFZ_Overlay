@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -1164,12 +1165,20 @@ namespace MHFZ_Overlay
             }
         }
 
-        // TODO: test
-        private void ExportUserSettings_Click(object sender, RoutedEventArgs e)
+        private void OpenSettingsFolder_Click(object sender, RoutedEventArgs e)
         {
-            //MainWindow.DataLoader.BackupSettings();
-
-            //FileManager.SaveSettingsAsJSON();
+            try
+            {
+                string settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+                string settingsFolder = Path.GetDirectoryName(settingsFile);
+                // Open file manager at the specified folder
+                Process.Start("explorer.exe", settingsFolder);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                MessageBox.Show("Could not open settings folder", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
