@@ -3316,20 +3316,20 @@ Disabling Quest Logging.",
                         Diva defense related strings such as activating buffs and skills in second week of event.
                      */
                     sql = @"
-                    CREATE TABLE IF NOT EXISTS GameFolder (
-                    GameFolderHash TEXT NOT NULL,
-                    CreatedAt TEXT NOT NULL,
-                    CreatedBy TEXT NOT NULL,
+                    CREATE TABLE IF NOT EXISTS new_GameFolder (
+                    GameFolderHash TEXT NOT NULL DEFAULT '',
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
                     GameFolderID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    RunID INTEGER NOT NULL,
-                    GameFolderPath TEXT NOT NULL,
-                    mhfdatHash TEXT NOT NULL,
-                    mhfemdHash TEXT NOT NULL,
-                    mhfinfHash TEXT NOT NULL,
-                    mhfsqdHash TEXT NOT NULL,
-                    mhfodllHash TEXT NOT NULL,
-                    mhfohddllHash TEXT NOT NULL,
-                    mhfexeHash TEXT NOT NULL,
+                    RunID INTEGER NOT NULL DEFAULT 0,
+                    GameFolderPath TEXT NOT NULL DEFAULT '',
+                    mhfdatHash TEXT NOT NULL DEFAULT '',
+                    mhfemdHash TEXT NOT NULL DEFAULT '',
+                    mhfinfHash TEXT NOT NULL DEFAULT '',
+                    mhfsqdHash TEXT NOT NULL DEFAULT '',
+                    mhfodllHash TEXT NOT NULL DEFAULT '',
+                    mhfohddllHash TEXT NOT NULL DEFAULT '',
+                    mhfexeHash TEXT NOT NULL DEFAULT '',
                     FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -10218,6 +10218,26 @@ Updating the database structure may take some time, it will transport all of you
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             AlterTableQuests(connection, sql);
 
+            sql = @"
+                    CREATE TABLE IF NOT EXISTS new_GameFolder (
+                    GameFolderHash TEXT NOT NULL DEFAULT '',
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
+                    GameFolderID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL DEFAULT 0,
+                    GameFolderPath TEXT NOT NULL DEFAULT '',
+                    mhfdatHash TEXT NOT NULL DEFAULT '',
+                    mhfemdHash TEXT NOT NULL DEFAULT '',
+                    mhfinfHash TEXT NOT NULL DEFAULT '',
+                    mhfsqdHash TEXT NOT NULL DEFAULT '',
+                    mhfodllHash TEXT NOT NULL DEFAULT '',
+                    mhfohddllHash TEXT NOT NULL DEFAULT '',
+                    mhfexeHash TEXT NOT NULL DEFAULT '',
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                    )";
+
+            AlterTableGameFolder(connection, sql);
+
             // https://www.sqlite.org/lang_altertable.html#otheralter must read
             // Repeat the same pattern for other version updates
             // By using ALTER TABLE, you can make changes to the structure of a table
@@ -10452,6 +10472,202 @@ Updating the database structure may take some time, it will transport all of you
                 }
 
                 logger.Info("Altered Quests table successfully");
+            }
+            catch (Exception ex)
+            {
+                // Roll back the transaction if any errors occur
+                logger.Error(ex, "Could not alter table {0}", tableName);
+            }
+        }
+
+        private void AlterTableGameFolder(SQLiteConnection connection, string newSchema)
+        {
+            logger.Info("Altering GameFolder table");
+
+            var tableName = "GameFolder";
+
+            try
+            {
+                // 3. Remember the format of all indexes, triggers, and views associated with table X. This information will be needed in step 8 below. One way to do this is to run a query like the following: SELECT type, sql FROM sqlite_schema WHERE tbl_name='X'.
+                // Remember the format of all indexes, triggers, and views associated with table X
+                SQLiteCommand rememberFormat = new SQLiteCommand("SELECT type, sql FROM sqlite_schema WHERE tbl_name=@tableName;", connection);
+                rememberFormat.Parameters.AddWithValue("@tableName", tableName);
+                SQLiteDataReader reader = rememberFormat.ExecuteReader();
+                List<string> indexSqls = new List<string>();
+                List<string> triggerSqls = new List<string>();
+                List<string> viewSqls = new List<string>();
+                while (reader.Read())
+                {
+                    string type = reader.GetString(0);
+                    string sql = reader.GetString(1);
+                    if (type == "index")
+                    {
+                        indexSqls.Add(sql);
+                    }
+                    else if (type == "trigger")
+                    {
+                        triggerSqls.Add(sql);
+                    }
+                    else if (type == "view")
+                    {
+                        viewSqls.Add(sql);
+                    }
+                }
+                reader.Close();
+
+                // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+                // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
+                using (SQLiteCommand createTable = new SQLiteCommand(newSchema, connection))
+                {
+                    createTable.ExecuteNonQuery();
+                }
+
+                logger.Debug("Created table if not exists new_{0}", tableName);
+
+                // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+                // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
+
+                string countQuery = "SELECT COUNT(*) FROM GameFolder";
+                using (var command = new SQLiteCommand(countQuery, connection))
+                {
+                    int rowCount = Convert.ToInt32(command.ExecuteScalar());
+
+                    logger.Debug("Inserting default values into new_GameFolder");
+
+                    // Insert rows with default values into new_Quests
+                    string insertQuery = $"INSERT INTO new_GameFolder DEFAULT VALUES";
+                    for (int i = 0; i < rowCount; i++)
+                    {
+                        using (var insertCommand = new SQLiteCommand(insertQuery, connection))
+                        {
+                            insertCommand.ExecuteNonQuery();
+                        }
+                    }
+
+                    logger.Debug("Inserted default values into new_GameFolder");
+
+                    string updateQuery = @"
+        UPDATE new_GameFolder
+        SET GameFolderHash = (SELECT GameFolderHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            CreatedAt = (SELECT CreatedAt FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            CreatedBy = (SELECT CreatedBy FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            RunID = (SELECT RunID FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            GameFolderPath = (SELECT GameFolderPath FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfdatHash = (SELECT mhfdatHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfemdHash = (SELECT mhfemdHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfinfHash = (SELECT mhfinfHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfsqdHash = (SELECT mhfsqdHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfodllHash = (SELECT mhfodllHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfohddllHash = (SELECT mhfohddllHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfexeHash = (SELECT mhfexeHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID)
+            WHERE EXISTS (SELECT 1 FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID)"
+                    ;
+
+                    using (var updateCommand = new SQLiteCommand(updateQuery, connection))
+                    {
+                        updateCommand.ExecuteNonQuery();
+                    }
+                }
+
+                logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
+
+                // 6. Drop the old table X: DROP TABLE X.
+                // Drop the old table X
+                using (SQLiteCommand dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
+                {
+                    dropTable.ExecuteNonQuery();
+                }
+
+                logger.Debug("Deleted table {0}", tableName);
+
+                // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+                // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
+                using (SQLiteCommand renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
+                {
+                    renameTable.ExecuteNonQuery();
+                }
+
+                logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
+
+                // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+                // Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X
+                foreach (string indexSql in indexSqls)
+                {
+                    using (SQLiteCommand createIndex = new SQLiteCommand(indexSql, connection))
+                    {
+                        createIndex.ExecuteNonQuery();
+                    }
+                }
+                foreach (string triggerSql in triggerSqls)
+                {
+                    using (SQLiteCommand createTrigger = new SQLiteCommand(triggerSql, connection))
+                    {
+                        createTrigger.ExecuteNonQuery();
+                    }
+                }
+                foreach (string viewSql in viewSqls)
+                {
+                    using (SQLiteCommand createView = new SQLiteCommand(viewSql, connection))
+                    {
+                        createView.ExecuteNonQuery();
+                    }
+                }
+
+                logger.Debug("Indexes: {0}, Triggers: {1}, Views: {2}", indexSqls.Count, triggerSqls.Count, viewSqls.Count);
+
+                // TODO: since im not using any views this still needs testing in case i make views someday.
+                // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+                //using (SQLite
+                // Check if any views refer to table X in a way that is affected by the schema change
+                SQLiteCommand findViews = new SQLiteCommand("SELECT name, sql FROM sqlite_master WHERE type='view' AND sql LIKE '% " + tableName + " %';", connection);
+                SQLiteDataReader viewReader = findViews.ExecuteReader();
+                List<string> viewNames = new List<string>();
+                List<string> viewSqlsModified = new List<string>();
+                while (viewReader.Read())
+                {
+                    viewNames.Add(viewReader.GetString(0));
+                    string viewSql = viewReader.GetString(1);
+                    viewSql = viewSql.Replace(tableName, "new_" + tableName);
+                    viewSqlsModified.Add(viewSql);
+                }
+                viewReader.Close();
+
+                // Drop those views using DROP VIEW
+                foreach (string viewName in viewNames)
+                {
+                    using (SQLiteCommand dropView = new SQLiteCommand("DROP VIEW " + viewName + ";", connection))
+                    {
+                        dropView.ExecuteNonQuery();
+                    }
+                }
+
+                // TODO: test
+                // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
+                for (int i = 0; i < viewNames.Count; i++)
+                {
+                    using (SQLiteCommand createView = new SQLiteCommand(viewSqlsModified[i], connection))
+                    {
+                        createView.ExecuteNonQuery();
+                    }
+                }
+
+                logger.Debug("Views affected: {0}", viewSqlsModified.Count);
+
+                string foreignKeysViolations = CheckForeignKeys(connection);
+
+                // 10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
+                if (foreignKeysViolations != "")
+                {
+                    logger.Fatal("Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
+                    MessageBox.Show("Foreign keys violations detected, closing program.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    ApplicationManager.HandleShutdown();
+                }
+                else
+                {
+                    logger.Debug("No foreign keys violations found");
+                }
+
+                logger.Info("Altered GameFolder table successfully");
             }
             catch (Exception ex)
             {
