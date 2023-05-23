@@ -160,9 +160,9 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
                 }
                 else
                 {
-                    logger.Error("No updates available");
+                    logger.Error("No updates available.");
                     isClowdSquirrelUpdating = false;
-                    MessageBox.Show("No updates available", "MHF-Z Overlay Update", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("No updates available. If you want to check for updates manually, visit the GitHub repository at https://github.com/DorielRivalet/mhfz-overlay.", "MHF-Z Overlay Update", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)

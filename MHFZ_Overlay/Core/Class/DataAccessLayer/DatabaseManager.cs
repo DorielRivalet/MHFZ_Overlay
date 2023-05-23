@@ -3316,7 +3316,7 @@ Disabling Quest Logging.",
                         Diva defense related strings such as activating buffs and skills in second week of event.
                      */
                     sql = @"
-                    CREATE TABLE IF NOT EXISTS new_GameFolder (
+                    CREATE TABLE IF NOT EXISTS GameFolder (
                     GameFolderHash TEXT NOT NULL DEFAULT '',
                     CreatedAt TEXT NOT NULL DEFAULT '',
                     CreatedBy TEXT NOT NULL DEFAULT '',
@@ -9804,16 +9804,14 @@ Disabling Quest Logging.",
         with previous installation (v0.22.0):
         1) database update without program update: did settings save? [X] no error logs? [X] database triggers work? [X]
         2) database update with program update: did settings save? [X] no error logs? [X] database triggers work? [X]
-        3) program update without database update: did settings save? [] no error logs? [] database triggers work? []
+        3) program update without database update: did settings save? [X] no error logs? [X] database triggers work? [X]
         4) program update with database update: same as 2)
-        NOTE: i actually cant do 3) because asking for database update comes first.
 
         without previous installation:
-        5) database update without program update: did settings save? [] no error logs? [] database triggers work? []
-        6) database update with program update: did settings save? [] no error logs? [] database triggers work? []
-        7) program update without database update: did settings save? [] no error logs? [] database triggers work? []
+        5) database update without program update: did settings save? [?] no error logs? [X] database triggers work? [X]
+        6) database update with program update: did settings save? [?] no error logs? [X] database triggers work? [X]
+        7) program update without database update: did settings save? [?] no error logs? [X] database triggers work? [X]
         8) program update with database update: same as 6)
-        see NOTE for 7)
         */
         private void UpdateDatabaseSchema(SQLiteConnection connection)
         {
@@ -10940,6 +10938,7 @@ Updating the database structure may take some time, it will transport all of you
             // Add your update logic here
         }
 
+        // TODO: should i put this in FileManager?
         private void WritePreviousVersionToFile()
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
@@ -10968,7 +10967,7 @@ Updating the database structure may take some time, it will transport all of you
             {
                 using (StreamReader reader = new StreamReader(s.PreviousVersionFilePath))
                 {
-                    version = reader.ReadLine();
+                    version = reader.ReadToEnd();
                 }
             }
             return version;
