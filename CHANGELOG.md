@@ -1,5 +1,17 @@
 
 
+## [0.23.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.23.0...v0.23.1) (2023-05-24)
+
+
+### For Developers
+
+* bump version ([ddcf536](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ddcf536ef6a681db8e641cd9d8b369b7420a70de))
+* **deps-dev:** bump @commitlint/cli from 17.6.1 to 17.6.3 ([5e692b8](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5e692b84cecd527d67ad11c53c4bb03a0ba8cb13))
+* **deps-dev:** bump @commitlint/config-conventional ([1122820](https://github.com/DorielRivalet/MHFZ_Overlay/commit/1122820489cc8f6769a6003cd4af4dcde116248c))
+* **deps:** bump release-it from 15.10.1 to 15.10.3 ([966a28b](https://github.com/DorielRivalet/MHFZ_Overlay/commit/966a28bd1de8f63b894129fb9ed8f7b2cd4db5ad))
+* **deps:** bump vm2 from 3.9.17 to 3.9.18 ([a03cc15](https://github.com/DorielRivalet/MHFZ_Overlay/commit/a03cc15efc39f4d96a38c210ab0770a90b505948))
+* update documentation ([25b91c4](https://github.com/DorielRivalet/MHFZ_Overlay/commit/25b91c444ba917b8d0ff1811113431623b17f06d))
+
 ## [0.23.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.22.0...v0.23.0) (2023-05-23)
 
 
