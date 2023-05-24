@@ -1,4 +1,8 @@
-﻿using Dictionary;
+﻿// Copyright 2023 The mhfz-overlay Authors.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+using Dictionary;
+using EZlion.Mapper;
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
@@ -32,6 +36,7 @@ using System.Windows.Documents;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Formatting = Newtonsoft.Json.Formatting;
+using Quest = MHFZ_Overlay.UI.Class.Quest;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay
@@ -3234,7 +3239,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.RanksBandsList.RankBandsID, "RankName", "RankNameID", "RankNameName", conn);
+                    InsertDictionaryDataIntoTable(RankBand.IDName, "RankName", "RankNameID", "RankNameName", conn);
 
                     //Create the ObjectiveTypes table
                     sql = @"CREATE TABLE IF NOT EXISTS ObjectiveType
@@ -3245,7 +3250,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ObjectiveTypeList.ObjectiveTypeID, "ObjectiveType", "ObjectiveTypeID", "ObjectiveTypeName", conn);
+                    InsertDictionaryDataIntoTable(ObjectiveType.IDName, "ObjectiveType", "ObjectiveTypeID", "ObjectiveTypeName", conn);
 
                     //Create the QuestNames table
                     sql = @"CREATE TABLE IF NOT EXISTS QuestName
@@ -3256,7 +3261,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Quests.QuestIDs, "QuestName", "QuestNameID", "QuestNameName", conn);
+                    InsertDictionaryDataIntoTable(EZlion.Mapper.Quest.IDName, "QuestName", "QuestNameID", "QuestNameName", conn);
 
                     // Create the Players table
                     //do an UPDATE when inserting quests. since its just local player?
@@ -3315,19 +3320,19 @@ Disabling Quest Logging.",
                      */
                     sql = @"
                     CREATE TABLE IF NOT EXISTS GameFolder (
-                    GameFolderHash TEXT NOT NULL,
-                    CreatedAt TEXT NOT NULL,
-                    CreatedBy TEXT NOT NULL,
+                    GameFolderHash TEXT NOT NULL DEFAULT '',
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
                     GameFolderID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    RunID INTEGER NOT NULL,
-                    GameFolderPath TEXT NOT NULL,
-                    mhfdatHash TEXT NOT NULL,
-                    mhfemdHash TEXT NOT NULL,
-                    mhfinfHash TEXT NOT NULL,
-                    mhfsqdHash TEXT NOT NULL,
-                    mhfodllHash TEXT NOT NULL,
-                    mhfohddllHash TEXT NOT NULL,
-                    mhfexeHash TEXT NOT NULL,
+                    RunID INTEGER NOT NULL DEFAULT 0,
+                    GameFolderPath TEXT NOT NULL DEFAULT '',
+                    mhfdatHash TEXT NOT NULL DEFAULT '',
+                    mhfemdHash TEXT NOT NULL DEFAULT '',
+                    mhfinfHash TEXT NOT NULL DEFAULT '',
+                    mhfsqdHash TEXT NOT NULL DEFAULT '',
+                    mhfodllHash TEXT NOT NULL DEFAULT '',
+                    mhfohddllHash TEXT NOT NULL DEFAULT '',
+                    mhfexeHash TEXT NOT NULL DEFAULT '',
                     FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                     )";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -3344,7 +3349,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(WeaponTypes.WeaponTypeID, "WeaponType", "WeaponTypeID", "WeaponTypeName", conn);
+                    InsertDictionaryDataIntoTable(WeaponType.IDName, "WeaponType", "WeaponTypeID", "WeaponTypeName", conn);
 
                     // Create the Item table
                     sql = @"CREATE TABLE IF NOT EXISTS Item (
@@ -3355,7 +3360,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Items.ItemIDs, "Item", "ItemID", "ItemName", conn);
+                    InsertDictionaryDataIntoTable(Item.IDName, "Item", "ItemID", "ItemName", conn);
 
                     // Create the Area table
                     sql = @"CREATE TABLE IF NOT EXISTS Area (
@@ -3506,7 +3511,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.DivaSkillList.DivaSkillID, "AllDivaSkills", "DivaSkillID", "DivaSkillName", conn);
+                    InsertDictionaryDataIntoTable(SkillDiva.IDName, "AllDivaSkills", "DivaSkillID", "DivaSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS WeaponStyles (
                       StyleID INTEGER PRIMARY KEY,
@@ -3517,7 +3522,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.WeaponStyles.WeaponStyleID, "WeaponStyles", "StyleID", "StyleName", conn);
+                    InsertDictionaryDataIntoTable(WeaponStyle.IDName, "WeaponStyles", "StyleID", "StyleName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS WeaponIcon (
                       WeaponIconID INTEGER PRIMARY KEY,
@@ -3539,7 +3544,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.WeaponClass.WeaponClassID, "WeaponClass", "WeaponClassID", "WeaponClassName", conn);
+                    InsertDictionaryDataIntoTable(WeaponClass.IDName, "WeaponClass", "WeaponClassID", "WeaponClassName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllBlademasterWeapons (
                       BlademasterWeaponID INTEGER PRIMARY KEY,
@@ -3550,7 +3555,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.BlademasterWeapons.BlademasterWeaponIDs, "AllBlademasterWeapons", "BlademasterWeaponID", "BlademasterWeaponName", conn);
+                    InsertDictionaryDataIntoTable(WeaponBlademaster.IDName, "AllBlademasterWeapons", "BlademasterWeaponID", "BlademasterWeaponName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllGunnerWeapons (
                       GunnerWeaponID INTEGER PRIMARY KEY,
@@ -3561,7 +3566,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.GunnerWeapons.GunnerWeaponIDs, "AllGunnerWeapons", "GunnerWeaponID", "GunnerWeaponName", conn);
+                    InsertDictionaryDataIntoTable(WeaponGunner.IDName, "AllGunnerWeapons", "GunnerWeaponID", "GunnerWeaponName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllHeadPieces (
                       HeadPieceID INTEGER PRIMARY KEY,
@@ -3572,7 +3577,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ArmorHeads.ArmorHeadIDs, "AllHeadPieces", "HeadPieceID", "HeadPieceName", conn);
+                    InsertDictionaryDataIntoTable(ArmorHead.IDName, "AllHeadPieces", "HeadPieceID", "HeadPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllChestPieces (
                       ChestPieceID INTEGER PRIMARY KEY,
@@ -3583,7 +3588,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ArmorChests.ArmorChestIDs, "AllChestPieces", "ChestPieceID", "ChestPieceName", conn);
+                    InsertDictionaryDataIntoTable(ArmorChest.IDName, "AllChestPieces", "ChestPieceID", "ChestPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllArmsPieces (
                       ArmsPieceID INTEGER PRIMARY KEY,
@@ -3594,7 +3599,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ArmorArms.ArmorArmIDs, "AllArmsPieces", "ArmsPieceID", "ArmsPieceName", conn);
+                    InsertDictionaryDataIntoTable(ArmorArms.IDName, "AllArmsPieces", "ArmsPieceID", "ArmsPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllWaistPieces (
                       WaistPieceID INTEGER PRIMARY KEY,
@@ -3605,7 +3610,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ArmorWaists.ArmorWaistIDs, "AllWaistPieces", "WaistPieceID", "WaistPieceName", conn);
+                    InsertDictionaryDataIntoTable(ArmorWaist.IDName, "AllWaistPieces", "WaistPieceID", "WaistPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AllLegsPieces (
                       LegsPieceID INTEGER PRIMARY KEY,
@@ -3616,7 +3621,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ArmorLegs.ArmorLegIDs, "AllLegsPieces", "LegsPieceID", "LegsPieceName", conn);
+                    InsertDictionaryDataIntoTable(ArmorLegs.IDName, "AllLegsPieces", "LegsPieceID", "LegsPieceName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS ZenithSkills(
                     CreatedAt TEXT NOT NULL,
@@ -3651,7 +3656,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ZenithSkillList.ZenithSkillID, "AllZenithSkills", "ZenithSkillID", "ZenithSkillName", conn);
+                    InsertDictionaryDataIntoTable(SkillZenith.IDName, "AllZenithSkills", "ZenithSkillID", "ZenithSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS AutomaticSkills(
                     CreatedAt TEXT NOT NULL,
@@ -3684,7 +3689,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.ArmorSkillList.ArmorSkillID, "AllArmorSkills", "ArmorSkillID", "ArmorSkillName", conn);
+                    InsertDictionaryDataIntoTable(SkillArmor.IDName, "AllArmorSkills", "ArmorSkillID", "ArmorSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS ActiveSkills(
                     CreatedAt TEXT NOT NULL,
@@ -3762,7 +3767,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.CaravanSkillList.CaravanSkillID, "AllCaravanSkills", "CaravanSkillID", "CaravanSkillName", conn);
+                    InsertDictionaryDataIntoTable(SkillCaravan.IDName, "AllCaravanSkills", "CaravanSkillID", "CaravanSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS StyleRankSkills(
                     CreatedAt TEXT NOT NULL,
@@ -3788,7 +3793,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.StyleRankSkillList.StyleRankSkillID, "AllStyleRankSkills", "StyleRankSkillID", "StyleRankSkillName", conn);
+                    InsertDictionaryDataIntoTable(SkillStyleRank.IDName, "AllStyleRankSkills", "StyleRankSkillID", "StyleRankSkillName", conn);
 
                     // Create the PlayerInventory table
                     sql = @"CREATE TABLE IF NOT EXISTS PlayerInventory (
@@ -4015,7 +4020,7 @@ Disabling Quest Logging.",
                         cmd.ExecuteNonQuery();
                     }
 
-                    InsertDictionaryDataIntoTable(Dictionary.RoadDureSkills.RoadDureSkillIDs, "AllRoadDureSkills", "RoadDureSkillID", "RoadDureSkillName", conn);
+                    InsertDictionaryDataIntoTable(SkillRoadTower.IDName, "AllRoadDureSkills", "RoadDureSkillID", "RoadDureSkillName", conn);
 
                     sql = @"CREATE TABLE IF NOT EXISTS QuestAttempts(
                     QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -6758,7 +6763,7 @@ Disabling Quest Logging.",
                                         ORDER BY 
                                             FinalTimeValue ASC
                                         LIMIT 20";
-                                weaponTypeID = WeaponTypes.WeaponTypeID.FirstOrDefault(x => x.Value == weaponName).Key;
+                                weaponTypeID = WeaponType.IDName.FirstOrDefault(x => x.Value == weaponName).Key;
                             }
 
                             using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -6951,8 +6956,8 @@ Disabling Quest Logging.",
                                             // use a switch statement or a lookup table to convert the
                                             // weaponTypeID and styleID to their corresponding string names
 
-                                            weaponType = Dictionary.WeaponTypes.WeaponTypeID[int.Parse(weaponTypeID.ToString())];
-                                            style = Dictionary.WeaponStyles.WeaponStyleID[int.Parse(styleID.ToString())];
+                                            weaponType = WeaponType.IDName[int.Parse(weaponTypeID.ToString())];
+                                            style = WeaponStyle.IDName[int.Parse(styleID.ToString())];
                                             weaponUsageData.Add(new WeaponUsageMapper(weaponType, style, (int)runCount));
                                         }
                                     }
@@ -7024,7 +7029,7 @@ Disabling Quest Logging.",
                                     reader.Read();
                                     configWindow.SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri(reader["ObjectiveImage"].ToString()));
                                     configWindow.SelectedQuestNameTextBlock.Text = reader["QuestNameName"].ToString();
-                                    configWindow.SelectedQuestObjectiveTextBlock.Text = string.Format("{0} {1} {2}", Dictionary.ObjectiveTypeList.ObjectiveTypeID[int.Parse(reader["ObjectiveTypeID"].ToString())], reader["ObjectiveQuantity"], reader["ObjectiveName"]);
+                                    configWindow.SelectedQuestObjectiveTextBlock.Text = string.Format("{0} {1} {2}", ObjectiveType.IDName[int.Parse(reader["ObjectiveTypeID"].ToString())], reader["ObjectiveQuantity"], reader["ObjectiveName"]);
                                     configWindow.CurrentTimeTextBlock.Text = DateTime.Now.ToString();
 
                                 }
@@ -7064,7 +7069,7 @@ Disabling Quest Logging.",
                                 }
                                 while (reader.Read())
                                 {
-                                    Dictionary.WeaponTypes.WeaponTypeID.TryGetValue(Convert.ToInt32(reader["WeaponTypeID"]), out string? weaponType);
+                                    WeaponType.IDName.TryGetValue(Convert.ToInt32(reader["WeaponTypeID"]), out string? weaponType);
 
                                     int bestTime;
                                     if (reader["BestTime"] == DBNull.Value)
@@ -7223,7 +7228,7 @@ Disabling Quest Logging.",
                                 while (reader.Read())
                                 {
                                     int objectiveTypeID = reader.GetInt32(0);
-                                    string objectiveTypeName = ObjectiveTypeList.ObjectiveTypeID[objectiveTypeID];
+                                    string objectiveTypeName = ObjectiveType.IDName[objectiveTypeID];
                                     int count = reader.GetInt32(1);
                                     objectiveCounts.Add(objectiveTypeName, count);
                                 }
@@ -7311,7 +7316,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string pieceName = ArmorHeads.ArmorHeadIDs[field];
+                                    string pieceName = ArmorHead.IDName[field];
                                     fieldCounts.Add(pieceName, count);
                                 }
                             }
@@ -7355,7 +7360,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string pieceName = ArmorChests.ArmorChestIDs[field];
+                                    string pieceName = ArmorChest.IDName[field];
                                     fieldCounts.Add(pieceName, count);
                                 }
                             }
@@ -7399,7 +7404,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string pieceName = ArmorArms.ArmorArmIDs[field];
+                                    string pieceName = ArmorArms.IDName[field];
                                     fieldCounts.Add(pieceName, count);
                                 }
                             }
@@ -7443,7 +7448,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string pieceName = ArmorWaists.ArmorWaistIDs[field];
+                                    string pieceName = ArmorWaist.IDName[field];
                                     fieldCounts.Add(pieceName, count);
                                 }
                             }
@@ -7487,7 +7492,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string pieceName = ArmorLegs.ArmorLegIDs[field];
+                                    string pieceName = ArmorLegs.IDName[field];
                                     fieldCounts.Add(pieceName, count);
                                 }
                             }
@@ -7531,7 +7536,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string name = DivaSkillList.DivaSkillID[field];
+                                    string name = SkillDiva.IDName[field];
                                     fieldCounts.Add(name, count);
                                 }
                             }
@@ -7575,7 +7580,7 @@ Disabling Quest Logging.",
                                 {
                                     int field = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string name = ArmorSkillList.ArmorSkillID[field];
+                                    string name = SkillArmor.IDName[field];
                                     fieldCounts.Add(name, count);
                                 }
                             }
@@ -7796,13 +7801,13 @@ Disabling Quest Logging.",
                                     int weaponID = reader.GetInt32(1);
                                     int frequency = reader.GetInt32(2);
                                     string weaponName = "";
-                                    if (BlademasterWeapons.BlademasterWeaponIDs.ContainsKey(weaponID) && WeaponClass.WeaponClassID[weaponClassID] == "Blademaster")
+                                    if (WeaponBlademaster.IDName.ContainsKey(weaponID) && WeaponClass.IDName[weaponClassID] == "Blademaster")
                                     {
-                                        weaponName = BlademasterWeapons.BlademasterWeaponIDs[weaponID];
+                                        weaponName = WeaponBlademaster.IDName[weaponID];
                                     }
-                                    else if (GunnerWeapons.GunnerWeaponIDs.ContainsKey(weaponID) && WeaponClass.WeaponClassID[weaponClassID] == "Gunner")
+                                    else if (WeaponGunner.IDName.ContainsKey(weaponID) && WeaponClass.IDName[weaponClassID] == "Gunner")
                                     {
-                                        weaponName = GunnerWeapons.GunnerWeaponIDs[weaponID];
+                                        weaponName = WeaponGunner.IDName[weaponID];
                                     }
                                     if (!string.IsNullOrEmpty(weaponName))
                                     {
@@ -7858,7 +7863,7 @@ Disabling Quest Logging.",
                                 {
                                     int skillID = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string skillName = StyleRankSkillList.StyleRankSkillID[skillID];
+                                    string skillName = SkillStyleRank.IDName[skillID];
                                     if (!skillCounts.ContainsKey(skillName))
                                     {
                                         skillCounts.Add(skillName, count);
@@ -7925,7 +7930,7 @@ Disabling Quest Logging.",
                                 {
                                     int skillID = reader.GetInt32(0);
                                     int count = reader.GetInt32(1);
-                                    string skillName = CaravanSkillList.CaravanSkillID[skillID];
+                                    string skillName = SkillCaravan.IDName[skillID];
                                     if (!skillCounts.ContainsKey(skillName))
                                     {
                                         skillCounts.Add(skillName, count);
@@ -9798,6 +9803,19 @@ Disabling Quest Logging.",
             //[self endTransaction];
         }
 
+        /* TODO:
+        with previous installation (v0.22.0):
+        1) database update without program update: did settings save? [X] no error logs? [X] database triggers work? [X]
+        2) database update with program update: did settings save? [X] no error logs? [X] database triggers work? [X]
+        3) program update without database update: did settings save? [X] no error logs? [X] database triggers work? [X]
+        4) program update with database update: same as 2)
+
+        without previous installation:
+        5) database update without program update: did settings save? [?] no error logs? [X] database triggers work? [X]
+        6) database update with program update: did settings save? [?] no error logs? [X] database triggers work? [X]
+        7) program update without database update: did settings save? [?] no error logs? [X] database triggers work? [X]
+        8) program update with database update: same as 6)
+        */
         private void UpdateDatabaseSchema(SQLiteConnection connection)
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
@@ -9808,7 +9826,8 @@ Disabling Quest Logging.",
                 {
                     int currentUserVersion = GetUserVersion(connection);
 
-                    if (!App.isClowdSquirrelUpdating && (App.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0))
+                    // this will always run the next time the user runs the program after a fresh install. So it always runs at least once.
+                    if (App.isClowdSquirrelUpdating == false && (App.CurrentProgramVersion.Trim() != previousVersion.Trim() || currentUserVersion == 0))
                     {
                         logger.Info("Found different program version or userVersion 0. Current: {0}, Previous: {1}, userVersion: {2}", App.CurrentProgramVersion, previousVersion, currentUserVersion);
 
@@ -10216,6 +10235,26 @@ Updating the database structure may take some time, it will transport all of you
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             AlterTableQuests(connection, sql);
 
+            sql = @"
+                    CREATE TABLE IF NOT EXISTS new_GameFolder (
+                    GameFolderHash TEXT NOT NULL DEFAULT '',
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
+                    GameFolderID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL DEFAULT 0,
+                    GameFolderPath TEXT NOT NULL DEFAULT '',
+                    mhfdatHash TEXT NOT NULL DEFAULT '',
+                    mhfemdHash TEXT NOT NULL DEFAULT '',
+                    mhfinfHash TEXT NOT NULL DEFAULT '',
+                    mhfsqdHash TEXT NOT NULL DEFAULT '',
+                    mhfodllHash TEXT NOT NULL DEFAULT '',
+                    mhfohddllHash TEXT NOT NULL DEFAULT '',
+                    mhfexeHash TEXT NOT NULL DEFAULT '',
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                    )";
+
+            AlterTableGameFolder(connection, sql);
+
             // https://www.sqlite.org/lang_altertable.html#otheralter must read
             // Repeat the same pattern for other version updates
             // By using ALTER TABLE, you can make changes to the structure of a table
@@ -10450,6 +10489,202 @@ Updating the database structure may take some time, it will transport all of you
                 }
 
                 logger.Info("Altered Quests table successfully");
+            }
+            catch (Exception ex)
+            {
+                // Roll back the transaction if any errors occur
+                logger.Error(ex, "Could not alter table {0}", tableName);
+            }
+        }
+
+        private void AlterTableGameFolder(SQLiteConnection connection, string newSchema)
+        {
+            logger.Info("Altering GameFolder table");
+
+            var tableName = "GameFolder";
+
+            try
+            {
+                // 3. Remember the format of all indexes, triggers, and views associated with table X. This information will be needed in step 8 below. One way to do this is to run a query like the following: SELECT type, sql FROM sqlite_schema WHERE tbl_name='X'.
+                // Remember the format of all indexes, triggers, and views associated with table X
+                SQLiteCommand rememberFormat = new SQLiteCommand("SELECT type, sql FROM sqlite_schema WHERE tbl_name=@tableName;", connection);
+                rememberFormat.Parameters.AddWithValue("@tableName", tableName);
+                SQLiteDataReader reader = rememberFormat.ExecuteReader();
+                List<string> indexSqls = new List<string>();
+                List<string> triggerSqls = new List<string>();
+                List<string> viewSqls = new List<string>();
+                while (reader.Read())
+                {
+                    string type = reader.GetString(0);
+                    string sql = reader.GetString(1);
+                    if (type == "index")
+                    {
+                        indexSqls.Add(sql);
+                    }
+                    else if (type == "trigger")
+                    {
+                        triggerSqls.Add(sql);
+                    }
+                    else if (type == "view")
+                    {
+                        viewSqls.Add(sql);
+                    }
+                }
+                reader.Close();
+
+                // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+                // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
+                using (SQLiteCommand createTable = new SQLiteCommand(newSchema, connection))
+                {
+                    createTable.ExecuteNonQuery();
+                }
+
+                logger.Debug("Created table if not exists new_{0}", tableName);
+
+                // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+                // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
+
+                string countQuery = "SELECT COUNT(*) FROM GameFolder";
+                using (var command = new SQLiteCommand(countQuery, connection))
+                {
+                    int rowCount = Convert.ToInt32(command.ExecuteScalar());
+
+                    logger.Debug("Inserting default values into new_GameFolder");
+
+                    // Insert rows with default values into new_Quests
+                    string insertQuery = $"INSERT INTO new_GameFolder DEFAULT VALUES";
+                    for (int i = 0; i < rowCount; i++)
+                    {
+                        using (var insertCommand = new SQLiteCommand(insertQuery, connection))
+                        {
+                            insertCommand.ExecuteNonQuery();
+                        }
+                    }
+
+                    logger.Debug("Inserted default values into new_GameFolder");
+
+                    string updateQuery = @"
+        UPDATE new_GameFolder
+        SET GameFolderHash = (SELECT GameFolderHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            CreatedAt = (SELECT CreatedAt FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            CreatedBy = (SELECT CreatedBy FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            RunID = (SELECT RunID FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            GameFolderPath = (SELECT GameFolderPath FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfdatHash = (SELECT mhfdatHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfemdHash = (SELECT mhfemdHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfinfHash = (SELECT mhfinfHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfsqdHash = (SELECT mhfsqdHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfodllHash = (SELECT mhfodllHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfohddllHash = (SELECT mhfohddllHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID),
+            mhfexeHash = (SELECT mhfexeHash FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID)
+            WHERE EXISTS (SELECT 1 FROM GameFolder WHERE GameFolder.GameFolderID = new_GameFolder.GameFolderID)"
+                    ;
+
+                    using (var updateCommand = new SQLiteCommand(updateQuery, connection))
+                    {
+                        updateCommand.ExecuteNonQuery();
+                    }
+                }
+
+                logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
+
+                // 6. Drop the old table X: DROP TABLE X.
+                // Drop the old table X
+                using (SQLiteCommand dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
+                {
+                    dropTable.ExecuteNonQuery();
+                }
+
+                logger.Debug("Deleted table {0}", tableName);
+
+                // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+                // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
+                using (SQLiteCommand renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
+                {
+                    renameTable.ExecuteNonQuery();
+                }
+
+                logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
+
+                // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+                // Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X
+                foreach (string indexSql in indexSqls)
+                {
+                    using (SQLiteCommand createIndex = new SQLiteCommand(indexSql, connection))
+                    {
+                        createIndex.ExecuteNonQuery();
+                    }
+                }
+                foreach (string triggerSql in triggerSqls)
+                {
+                    using (SQLiteCommand createTrigger = new SQLiteCommand(triggerSql, connection))
+                    {
+                        createTrigger.ExecuteNonQuery();
+                    }
+                }
+                foreach (string viewSql in viewSqls)
+                {
+                    using (SQLiteCommand createView = new SQLiteCommand(viewSql, connection))
+                    {
+                        createView.ExecuteNonQuery();
+                    }
+                }
+
+                logger.Debug("Indexes: {0}, Triggers: {1}, Views: {2}", indexSqls.Count, triggerSqls.Count, viewSqls.Count);
+
+                // TODO: since im not using any views this still needs testing in case i make views someday.
+                // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+                //using (SQLite
+                // Check if any views refer to table X in a way that is affected by the schema change
+                SQLiteCommand findViews = new SQLiteCommand("SELECT name, sql FROM sqlite_master WHERE type='view' AND sql LIKE '% " + tableName + " %';", connection);
+                SQLiteDataReader viewReader = findViews.ExecuteReader();
+                List<string> viewNames = new List<string>();
+                List<string> viewSqlsModified = new List<string>();
+                while (viewReader.Read())
+                {
+                    viewNames.Add(viewReader.GetString(0));
+                    string viewSql = viewReader.GetString(1);
+                    viewSql = viewSql.Replace(tableName, "new_" + tableName);
+                    viewSqlsModified.Add(viewSql);
+                }
+                viewReader.Close();
+
+                // Drop those views using DROP VIEW
+                foreach (string viewName in viewNames)
+                {
+                    using (SQLiteCommand dropView = new SQLiteCommand("DROP VIEW " + viewName + ";", connection))
+                    {
+                        dropView.ExecuteNonQuery();
+                    }
+                }
+
+                // TODO: test
+                // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
+                for (int i = 0; i < viewNames.Count; i++)
+                {
+                    using (SQLiteCommand createView = new SQLiteCommand(viewSqlsModified[i], connection))
+                    {
+                        createView.ExecuteNonQuery();
+                    }
+                }
+
+                logger.Debug("Views affected: {0}", viewSqlsModified.Count);
+
+                string foreignKeysViolations = CheckForeignKeys(connection);
+
+                // 10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
+                if (foreignKeysViolations != "")
+                {
+                    logger.Fatal("Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
+                    MessageBox.Show("Foreign keys violations detected, closing program.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    ApplicationManager.HandleShutdown();
+                }
+                else
+                {
+                    logger.Debug("No foreign keys violations found");
+                }
+
+                logger.Info("Altered GameFolder table successfully");
             }
             catch (Exception ex)
             {
@@ -10707,6 +10942,7 @@ Updating the database structure may take some time, it will transport all of you
             // Add your update logic here
         }
 
+        // TODO: should i put this in FileManager?
         private void WritePreviousVersionToFile()
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
@@ -10716,11 +10952,7 @@ Updating the database structure may take some time, it will transport all of you
             // TODO why does this error? also find a way to put this in FileManager
             try
             {
-                if (File.ReadAllText(previousVersionFilePath) == "")
-                    previousVersion = App.CurrentProgramVersion.Trim();
-                else
-                    previousVersion = File.ReadAllText(previousVersionFilePath);
-
+                previousVersion = App.CurrentProgramVersion.Trim();
                 File.WriteAllText(previousVersionFilePath, previousVersion);
                 logger.Info("Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
             }
@@ -10739,7 +10971,7 @@ Updating the database structure may take some time, it will transport all of you
             {
                 using (StreamReader reader = new StreamReader(s.PreviousVersionFilePath))
                 {
-                    version = reader.ReadLine();
+                    version = reader.ReadToEnd();
                 }
             }
             return version;

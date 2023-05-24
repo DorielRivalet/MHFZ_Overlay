@@ -1,5 +1,9 @@
-﻿using CsvHelper;
+﻿// Copyright 2023 The mhfz-overlay Authors.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+using CsvHelper;
 using Dictionary;
+using EZlion.Mapper;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Measure;
@@ -19,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -1163,12 +1168,20 @@ namespace MHFZ_Overlay
             }
         }
 
-        // TODO: test
-        private void ExportUserSettings_Click(object sender, RoutedEventArgs e)
+        private void OpenSettingsFolder_Click(object sender, RoutedEventArgs e)
         {
-            //MainWindow.DataLoader.BackupSettings();
-
-            //FileManager.SaveSettingsAsJSON();
+            try
+            {
+                string settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+                string settingsFolder = Path.GetDirectoryName(settingsFile);
+                // Open file manager at the specified folder
+                Process.Start("explorer.exe", settingsFolder);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                MessageBox.Show("Could not open settings folder", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
@@ -2774,7 +2787,7 @@ namespace MHFZ_Overlay
                 var area = entry.Value;
                 sb.AppendLine(timeString + " ");
 
-                Dictionary.MapAreaList.MapAreaID.TryGetValue(area, out string? itemName);
+                Location.IDName.TryGetValue(area, out string? itemName);
                 sb.Append(itemName);
                 sb.AppendLine();
                 sb.AppendLine();
@@ -2785,7 +2798,7 @@ namespace MHFZ_Overlay
         private string GetItemName(int itemID)
         {
             // implement code to get item name based on itemID
-            Items.ItemIDs.TryGetValue(itemID, out string value);
+            Item.IDName.TryGetValue(itemID, out string value);
             return value;
         }
 
@@ -3018,7 +3031,7 @@ namespace MHFZ_Overlay
             };
 
             long questID = long.Parse(QuestIDTextBox.Text.Trim());
-            int weaponTypeID = Dictionary.WeaponTypes.WeaponTypeID.FirstOrDefault(x => x.Value == personalBestSelectedWeapon).Key;
+            int weaponTypeID = WeaponType.IDName.FirstOrDefault(x => x.Value == personalBestSelectedWeapon).Key;
 
             switch (personalBestSelectedType)
             {

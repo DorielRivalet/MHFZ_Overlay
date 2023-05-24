@@ -1,5 +1,9 @@
-﻿using Dictionary;
+﻿// Copyright 2023 The mhfz-overlay Authors.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+using Dictionary;
 using DiscordRPC;
+using EZlion.Mapper;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -497,7 +501,7 @@ namespace MHFZ_Overlay.Core.Class.Discord
         /// <returns></returns>
         private static string GetWeaponNameFromID(int id)
         {
-            Dictionary.WeaponTypes.WeaponTypeID.TryGetValue(id, out string? weaponname);
+            WeaponType.IDName.TryGetValue(id, out string? weaponname);
             return weaponname + "";
         }
 

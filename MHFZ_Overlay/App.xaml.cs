@@ -1,4 +1,7 @@
-﻿using Squirrel;
+﻿// Copyright 2023 The mhfz-overlay Authors.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+using Squirrel;
 using System.Windows;
 using NLog;
 using MHFZ_Overlay.Core.Class.Log;
@@ -10,8 +13,6 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System;
-using EZlion;
-using GetText;
 
 // TODO: all of this needs testing
 namespace MHFZ_Overlay
@@ -27,7 +28,7 @@ namespace MHFZ_Overlay
         /// <summary>
         /// The current program version. TODO: put in env var
         /// </summary>
-        public const string CurrentProgramVersion = "v0.22.0";
+        public const string CurrentProgramVersion = "v0.23.0";
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -46,7 +47,6 @@ namespace MHFZ_Overlay
             RestoreSettings();
             Settings.Default.Reload();
             logger.Info("Reloaded default settings");
-
             base.OnStartup(e);
         }
 
@@ -131,7 +131,7 @@ As an alternative to hotkeys, you can check your system tray options by right-cl
 
 Press Alt+Enter if your game resolution changed.
 
-The overlay might take some time to start due to databases.
+The overlay might take some time to start due to databases. The next time you run the program, you may be asked to update the database.
 
 Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -163,9 +163,9 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
                 }
                 else
                 {
-                    logger.Error("No updates available");
+                    logger.Error("No updates available.");
                     isClowdSquirrelUpdating = false;
-                    MessageBox.Show("No updates available", "MHF-Z Overlay Update", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("No updates available. If you want to check for updates manually, visit the GitHub repository at https://github.com/DorielRivalet/mhfz-overlay.", "MHF-Z Overlay Update", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
