@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MHFZ_Overlay", "MHFZ_Overlay\MHFZ_Overlay.csproj", "{65FE7F75-F3C5-4CB0-A3F1-303A18363551}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MHFZ_OverlayTest", "MHFZ_OverlayTest\MHFZ_OverlayTest.csproj", "{13ED7686-F93C-4DBC-9258-061DE45FFC60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MHFZ_OverlayTest", "MHFZ_OverlayTest\MHFZ_OverlayTest.csproj", "{13ED7686-F93C-4DBC-9258-061DE45FFC60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,12 +13,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{65FE7F75-F3C5-4CB0-A3F1-303A18363551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65FE7F75-F3C5-4CB0-A3F1-303A18363551}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65FE7F75-F3C5-4CB0-A3F1-303A18363551}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{65FE7F75-F3C5-4CB0-A3F1-303A18363551}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{65FE7F75-F3C5-4CB0-A3F1-303A18363551}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65FE7F75-F3C5-4CB0-A3F1-303A18363551}.Release|Any CPU.Build.0 = Release|Any CPU
-		{13ED7686-F93C-4DBC-9258-061DE45FFC60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13ED7686-F93C-4DBC-9258-061DE45FFC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13ED7686-F93C-4DBC-9258-061DE45FFC60}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{13ED7686-F93C-4DBC-9258-061DE45FFC60}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{13ED7686-F93C-4DBC-9258-061DE45FFC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13ED7686-F93C-4DBC-9258-061DE45FFC60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

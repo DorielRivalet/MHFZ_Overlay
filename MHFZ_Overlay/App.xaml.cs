@@ -28,7 +28,7 @@ namespace MHFZ_Overlay
         /// <summary>
         /// The current program version. TODO: put in env var
         /// </summary>
-        public const string CurrentProgramVersion = "v0.23.1";
+        public const string CurrentProgramVersion = "v0.23.2";
 
         protected override void OnStartup(StartupEventArgs e)
         {
