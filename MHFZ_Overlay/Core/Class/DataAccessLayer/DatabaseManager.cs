@@ -9886,6 +9886,8 @@ Updating the database structure may take some time, it will transport all of you
                     }
 
                     transaction.Commit();
+                    logger.Info("Successfully updated database schema");
+                    MessageBox.Show("Successfully updated database schema", LoggingManager.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {

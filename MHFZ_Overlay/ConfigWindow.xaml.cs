@@ -2837,6 +2837,7 @@ namespace MHFZ_Overlay
             }
         }
 
+        // TODO: double-check the settings and the conditionals in the other code
         private void settingsPresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
