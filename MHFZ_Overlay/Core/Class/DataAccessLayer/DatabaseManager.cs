@@ -2568,12 +2568,19 @@ namespace MHFZ_Overlay
         /// <param name="window">The window.</param>
         public void StoreSessionTime(DateTime ProgramStart)
         {
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot store session time. dataSource: {0}", dataSource);
+                return;
+            }
+
             try
             {
                 DateTime ProgramEnd = DateTime.Now;
                 TimeSpan duration = ProgramEnd - ProgramStart;
                 int sessionDuration = (int)duration.TotalSeconds;
 
+                // REMINDER: always check if dataSource string is valid
                 using (SQLiteConnection connection = new SQLiteConnection(dataSource))
                 {
                     // Open the connection
