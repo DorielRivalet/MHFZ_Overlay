@@ -9060,7 +9060,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 case 100:
                     if (RankBand() == 70 || RankBand() == 54)
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shiten_unknown.png";
-                    else if (RankBand() == 32)                        
+                    else if (RankBand() == 46)                        
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_unknown.gif";
                     else
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/unknown.png";
