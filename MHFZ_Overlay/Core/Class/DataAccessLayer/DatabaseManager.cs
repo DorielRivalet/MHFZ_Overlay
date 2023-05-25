@@ -122,6 +122,12 @@ namespace MHFZ_Overlay
         {
             TimeSpan totalTimeSpent = TimeSpan.Zero;
 
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot calculate total time spent. dataSource: {0}", dataSource);
+                return totalTimeSpent;
+            }
+
             using (var connection = new SQLiteConnection(dataSource))
             {
                 connection.Open();
@@ -265,6 +271,12 @@ namespace MHFZ_Overlay
         /// <param name="runID"></param>
         public void InsertPersonalBest(DataLoader dataLoader, long currentPersonalBest, long attempts, int runID)
         {
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot insert personal best. dataSource: {0}", dataSource);
+                return;
+            }
+
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -327,6 +339,12 @@ namespace MHFZ_Overlay
 
             if (!dataLoader.model.questCleared)
                 return runID;
+
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot insert quest data. dataSource: {0}", dataSource);
+                return runID;
+            }
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -2504,6 +2522,12 @@ namespace MHFZ_Overlay
         /// <returns></returns>
         public string StoreOverlayHash()
         {
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot store overlay hash. dataSource: {0}", dataSource);
+                return "";
+            }
+
             string overlayHash = "";
 
             // Find the path of the first found process with the name "MHFZ_Overlay.exe"
@@ -4640,6 +4664,11 @@ Disabling Quest Logging.",
 
         public string GetYoutubeLinkForRunID(long runID)
         {
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get youtube link for run ID. dataSource: {0}", dataSource);
+                return "";
+            }
             string youtubeLink = "";
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -4681,6 +4710,11 @@ Disabling Quest Logging.",
 
         public bool UpdateYoutubeLink(object sender, RoutedEventArgs e, long runID, string youtubeLink)
         {
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot update youtube link. dataSource: {0}", dataSource);
+                return false;
+            }
             bool success = false;
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -4724,6 +4758,11 @@ Disabling Quest Logging.",
 
         public long GetPersonalBestElapsedTimeValue(long questID, int weaponTypeID, string category)
         {
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get personal best elapsed time. dataSource: {0}", dataSource);
+                return 0;
+            }
             long personalBest = 0;
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
@@ -4779,6 +4818,11 @@ Disabling Quest Logging.",
         public string GetPersonalBest(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader)
         {
             string personalBest = "--:--.--";
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get personal best. dataSource: {0}", dataSource);
+                return personalBest;
+            }
 
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -4845,7 +4889,11 @@ Disabling Quest Logging.",
         public Dictionary<DateTime, long> GetPersonalBestsByDate(long questID, int weaponTypeID, string category)
         {
             Dictionary<DateTime, long> personalBests = new();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get personal bests by date. dataSource: {0}", dataSource);
+                return personalBests;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -4936,7 +4984,11 @@ Disabling Quest Logging.",
         public Dictionary<long, long> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category)
         {
             Dictionary<long, long> personalBests = new();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get personal bests by attempts. dataSource: {0}", dataSource);
+                return personalBests;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5018,7 +5070,11 @@ Disabling Quest Logging.",
         public int UpsertQuestAttempts(long questID, int weaponTypeID, string category)
         {
             int attempts = 0;
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot upsert quest attempts. dataSource: {0}", dataSource);
+                return attempts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5078,7 +5134,11 @@ Disabling Quest Logging.",
         public int UpsertPersonalBestAttempts(long questID, int weaponTypeID, string category)
         {
             int attempts = 0;
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot upsert personal best attempts. dataSource: {0}", dataSource);
+                return attempts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5138,7 +5198,11 @@ Disabling Quest Logging.",
         public long GetQuestAttempts(long questID, int weaponTypeID, string category)
         {
             long attempts = 0;
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get quest attempts. dataSource: {0}", dataSource);
+                return attempts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5182,7 +5246,11 @@ Disabling Quest Logging.",
         public AmmoPouch GetAmmoPouch(long runID)
         {
             AmmoPouch ammoPouch = new AmmoPouch();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get ammo pouch. dataSource: {0}", dataSource);
+                return ammoPouch;
+            }
             // Use a SQL query to retrieve the AmmoPouch data for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5226,7 +5294,11 @@ Disabling Quest Logging.",
         public PartnyaBag GetPartnyaBag(long runID)
         {
             PartnyaBag partnyaBag = new PartnyaBag();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get partnya bag. dataSource: {0}", dataSource);
+                return partnyaBag;
+            }
             // Use a SQL query to retrieve the PartnyaBag data for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5269,7 +5341,11 @@ Disabling Quest Logging.",
         public PlayerInventory GetPlayerInventory(long runID)
         {
             PlayerInventory playerInventory = new PlayerInventory();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get player inventory. dataSource: {0}", dataSource);
+                return playerInventory;
+            }
             // Use a SQL query to retrieve the PlayerInventory for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5312,6 +5388,11 @@ Disabling Quest Logging.",
         public Quest GetQuest(long runID)
         {
             Quest quest = new Quest();
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get quest. dataSource: {0}", dataSource);
+                return quest;
+            }
             // Use a SQL query to retrieve the Quest for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5386,7 +5467,11 @@ Disabling Quest Logging.",
         public UI.Class.RoadDureSkills GetRoadDureSkills(long runID)
         {
             UI.Class.RoadDureSkills roadDureSkills = new UI.Class.RoadDureSkills();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get road/dure skills. dataSource: {0}", dataSource);
+                return roadDureSkills;
+            }
             // Use a SQL query to retrieve the RoadDureSkills data for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5429,7 +5514,11 @@ Disabling Quest Logging.",
         public StyleRankSkills GetStyleRankSkills(long runID)
         {
             StyleRankSkills styleRankSkills = new StyleRankSkills();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get style rank skills. dataSource: {0}", dataSource);
+                return styleRankSkills;
+            }
             // Use a SQL query to retrieve the StyleRankSkills data for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5466,11 +5555,14 @@ Disabling Quest Logging.",
             return styleRankSkills;
         }
 
-
         public AutomaticSkills GetAutomaticSkills(long runID)
         {
             AutomaticSkills automaticSkills = new AutomaticSkills();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get automatic skills. dataSource: {0}", dataSource);
+                return automaticSkills;
+            }
             // Use a SQL query to retrieve the AutomaticSkills data for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5512,7 +5604,11 @@ Disabling Quest Logging.",
         public ZenithSkills GetZenithSkills(long runID)
         {
             ZenithSkills zenithSkills = new ZenithSkills();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get zenith skills. dataSource: {0}", dataSource);
+                return zenithSkills;
+            }
             // Use a SQL query to retrieve the ZenithSkills data for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5554,7 +5650,11 @@ Disabling Quest Logging.",
         public CaravanSkills GetCaravanSkills(long runID)
         {
             CaravanSkills caravanSkills = new CaravanSkills();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get caravan skills. dataSource: {0}", dataSource);
+                return caravanSkills;
+            }
             // Use a SQL query to retrieve the CaravanSkills data for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -5596,7 +5696,11 @@ Disabling Quest Logging.",
         public Dictionary<int, int> GetAttackBuffDictionary(long runID)
         {
             Dictionary<int, int> attackBuffDictionary = new Dictionary<int, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get attack buff dictionary. dataSource: {0}", dataSource);
+                return attackBuffDictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5629,7 +5733,11 @@ Disabling Quest Logging.",
         public Dictionary<int, int> GetHitCountDictionary(long runID)
         {
             Dictionary<int, int> dictionary = new Dictionary<int, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get hit count dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5662,7 +5770,11 @@ Disabling Quest Logging.",
         public Dictionary<int, double> GetHitsPerSecondDictionary(long runID)
         {
             Dictionary<int, double> dictionary = new Dictionary<int, double>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get hits per second dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5695,7 +5807,11 @@ Disabling Quest Logging.",
         public Dictionary<int, int> GetDamageDealtDictionary(long runID)
         {
             Dictionary<int, int> dictionary = new Dictionary<int, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get damage dealt dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5728,7 +5844,11 @@ Disabling Quest Logging.",
         public Dictionary<int, double> GetDamagePerSecondDictionary(long runID)
         {
             Dictionary<int, double> dictionary = new Dictionary<int, double>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get damage per second dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5761,7 +5881,11 @@ Disabling Quest Logging.",
         public Dictionary<int, int> GetAreaChangesDictionary(long runID)
         {
             Dictionary<int, int> dictionary = new Dictionary<int, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get area changes dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5794,7 +5918,11 @@ Disabling Quest Logging.",
         public Dictionary<int, int> GetCartsDictionary(long runID)
         {
             Dictionary<int, int> dictionary = new Dictionary<int, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get carts dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5827,7 +5955,11 @@ Disabling Quest Logging.",
         public Dictionary<int, Dictionary<int, int>> GetMonster1HPDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get monster 1 HP dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5860,7 +5992,11 @@ Disabling Quest Logging.",
         public Dictionary<int, Dictionary<int, int>> GetMonster2HPDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get monster 2 HP dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5893,7 +6029,11 @@ Disabling Quest Logging.",
         public Dictionary<int, Dictionary<int, int>> GetMonster3HPDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get monster 3 HP dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5926,7 +6066,11 @@ Disabling Quest Logging.",
         public Dictionary<int, Dictionary<int, int>> GetMonster4HPDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get monster 4 HP dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5959,7 +6103,11 @@ Disabling Quest Logging.",
         public Dictionary<int, Dictionary<int, double>> GetMonster1AttackMultiplierDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, double>> dictionary = new Dictionary<int, Dictionary<int, double>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get monster 1 attack multiplier dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -5992,7 +6140,11 @@ Disabling Quest Logging.",
         public Dictionary<int, Dictionary<int, double>> GetMonster1DefenseRateDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, double>> dictionary = new Dictionary<int, Dictionary<int, double>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get monster 1 defense rate dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6025,7 +6177,11 @@ Disabling Quest Logging.",
         public Dictionary<int, Dictionary<int, int>> GetMonster1PoisonThresholdDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get monster 1 poison threshold dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6058,7 +6214,11 @@ Disabling Quest Logging.",
         public Dictionary<int, Dictionary<int, int>> GetMonster1SleepThresholdDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get monster 1 sleep threshold dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6091,7 +6251,11 @@ Disabling Quest Logging.",
         public Dictionary<int, Dictionary<int, int>> GetMonster1ParalysisThresholdDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get monster 1 paralysis threshold dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6124,7 +6288,11 @@ Disabling Quest Logging.",
         public Dictionary<int, Dictionary<int, int>> GetMonster1BlastThresholdDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get monster 1 blast threshold dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6157,7 +6325,11 @@ Disabling Quest Logging.",
         public Dictionary<int, Dictionary<int, int>> GetMonster1StunThresholdDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get monster 1 stun threshold dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6190,7 +6362,11 @@ Disabling Quest Logging.",
         public Dictionary<int, List<Dictionary<int, int>>> GetPlayerInventoryDictionary(long runID)
         {
             Dictionary<int, List<Dictionary<int, int>>> dictionary = new Dictionary<int, List<Dictionary<int, int>>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get player inventory dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6223,7 +6399,11 @@ Disabling Quest Logging.",
         public Dictionary<int, List<Dictionary<int, int>>> GetAmmoDictionary(long runID)
         {
             Dictionary<int, List<Dictionary<int, int>>> dictionary = new Dictionary<int, List<Dictionary<int, int>>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get ammo dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6256,7 +6436,11 @@ Disabling Quest Logging.",
         public Dictionary<int, List<Dictionary<int, int>>> GetPartnyaBagDictionary(long runID)
         {
             Dictionary<int, List<Dictionary<int, int>>> dictionary = new Dictionary<int, List<Dictionary<int, int>>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get partnya bag dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6289,7 +6473,11 @@ Disabling Quest Logging.",
         public Dictionary<int, Dictionary<int, int>> GetHitsTakenBlockedDictionary(long runID)
         {
             Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get hits taken/blocked dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6322,7 +6510,11 @@ Disabling Quest Logging.",
         public Dictionary<int, double> GetHitsTakenBlockedPerSecondDictionary(long runID)
         {
             Dictionary<int, double> dictionary = new Dictionary<int, double>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get hits taken/blocked per second dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6355,7 +6547,11 @@ Disabling Quest Logging.",
         public Dictionary<int, int> GetPlayerHPDictionary(long runID)
         {
             Dictionary<int, int> dictionary = new Dictionary<int, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get player HP dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6388,7 +6584,11 @@ Disabling Quest Logging.",
         public Dictionary<int, int> GetPlayerStaminaDictionary(long runID)
         {
             Dictionary<int, int> dictionary = new Dictionary<int, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get player stamina dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6421,7 +6621,11 @@ Disabling Quest Logging.",
         public Dictionary<int, string> GetKeystrokesDictionary(long runID)
         {
             Dictionary<int, string> dictionary = new Dictionary<int, string>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get keystrokes dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6454,7 +6658,11 @@ Disabling Quest Logging.",
         public Dictionary<int, string> GetMouseInputDictionary(long runID)
         {
             Dictionary<int, string> dictionary = new Dictionary<int, string>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get mouse input dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6487,7 +6695,11 @@ Disabling Quest Logging.",
         public Dictionary<int, double> GetActionsPerMinuteDictionary(long runID)
         {
             Dictionary<int, double> dictionary = new Dictionary<int, double>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get actions per minute dictionary. dataSource: {0}", dataSource);
+                return dictionary;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6520,7 +6732,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonCategory()
         {
             Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common category. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6563,7 +6779,11 @@ Disabling Quest Logging.",
         public ActiveSkills GetActiveSkills(long runID)
         {
             ActiveSkills activeSkills = new ActiveSkills();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get active skills. dataSource: {0}", dataSource);
+                return activeSkills;
+            }
             // Use a SQL query to retrieve the ActiveSkills for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -6604,7 +6824,11 @@ Disabling Quest Logging.",
         public PlayerGear GetPlayerGear(long runID)
         {
             PlayerGear gearUsed = new PlayerGear();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get player gear. dataSource: {0}", dataSource);
+                return gearUsed;
+            }
             // Use a SQL query to retrieve the gear used for the specific RunID from the database
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
@@ -6707,6 +6931,11 @@ Disabling Quest Logging.",
         public List<FastestRun> GetFastestRuns(ConfigWindow configWindow, string weaponName = "All Weapons")
         {
             List<FastestRun> fastestRuns = new List<FastestRun>();
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get fastest runs. dataSource: {0}", dataSource);
+                return fastestRuns;
+            }
             if (long.TryParse(configWindow.QuestIDTextBox.Text.Trim(), out long questID))
             {
                 using (SQLiteConnection conn = new SQLiteConnection(dataSource))
@@ -6821,10 +7050,14 @@ Disabling Quest Logging.",
             return fastestRuns;
         }
 
-
         public List<RecentRuns> GetRecentRuns()
         {
             List<RecentRuns> recentRuns = new List<RecentRuns>();
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get recent runs. dataSource: {0}", dataSource);
+                return recentRuns;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6888,13 +7121,14 @@ Disabling Quest Logging.",
             return recentRuns;
         }
 
-
-
-
         public List<WeaponUsageMapper> CalculateTotalWeaponUsage(ConfigWindow configWindow, DataLoader dataLoader, bool isByQuestID = false)
         {
             List<WeaponUsageMapper> weaponUsageData = new List<WeaponUsageMapper>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot calculate total weapon usage. dataSource: {0}", dataSource);
+                return weaponUsageData;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -6985,9 +7219,13 @@ Disabling Quest Logging.",
             return weaponUsageData;
         }
 
-
         public void QuestIDButton_Click(object sender, RoutedEventArgs e, ConfigWindow configWindow)
         {
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot process quest ID button click. dataSource: {0}", dataSource);
+                return;
+            }
             // Execute query with only Quest ID
             int questID = int.Parse(configWindow.QuestIDTextBox.Text);
             string selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
@@ -7168,7 +7406,11 @@ Disabling Quest Logging.",
         public Dictionary<int, int> GetMostQuestCompletions()
         {
             Dictionary<int, int> questCompletions = new Dictionary<int, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most quest completions. dataSource: {0}", dataSource);
+                return questCompletions;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7211,7 +7453,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonObjectiveTypes()
         {
             Dictionary<string, int> objectiveCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common objective types. dataSource: {0}", dataSource);
+                return objectiveCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7255,7 +7501,11 @@ Disabling Quest Logging.",
         public Dictionary<int, int> GetMostCommonStarGrades()
         {
             Dictionary<int, int> fieldCounts = new Dictionary<int, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common star grades. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7298,7 +7548,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonHeadPieces()
         {
             Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common head pieces. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7342,7 +7596,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonChestPieces()
         {
             Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common chest pieces. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7386,7 +7644,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonArmsPieces()
         {
             Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common arms pieces. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7430,7 +7692,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonWaistPieces()
         {
             Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common waist pieces. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7474,7 +7740,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonLegsPieces()
         {
             Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common legs pieces. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7518,7 +7788,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonDivaSkill()
         {
             Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common diva skill. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7562,7 +7836,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonGuildFood()
         {
             Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common guild food. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7603,11 +7881,14 @@ Disabling Quest Logging.",
             return fieldCounts;
         }
 
-
         public Dictionary<string, int> GetMostCommonRankBands()
         {
             Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common rank bands. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7647,11 +7928,14 @@ Disabling Quest Logging.",
             return fieldCounts;
         }
 
-
         public Dictionary<string, int> GetMostCommonObjectives()
         {
             Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common objectives. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7694,7 +7978,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonSetNames()
         {
             Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common set names. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7737,7 +8025,11 @@ Disabling Quest Logging.",
         public Dictionary<DateTime, int> GetQuestsCompletedByDate()
         {
             Dictionary<DateTime, int> questsCompletedByDate = new Dictionary<DateTime, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get quests completed by date. dataSource: {0}", dataSource);
+                return questsCompletedByDate;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7780,7 +8072,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonWeaponNames()
         {
             Dictionary<string, int> weaponCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common weapon names. dataSource: {0}", dataSource);
+                return weaponCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7837,7 +8133,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonStyleRankSkills()
         {
             Dictionary<string, int> skillCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common style rank skills. dataSource: {0}", dataSource);
+                return skillCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7896,7 +8196,11 @@ Disabling Quest Logging.",
         public Dictionary<string, int> GetMostCommonCaravanSkills()
         {
             Dictionary<string, int> skillCounts = new Dictionary<string, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common caravan skills. dataSource: {0}", dataSource);
+                return skillCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -7963,7 +8267,11 @@ Disabling Quest Logging.",
         public Dictionary<int, int> GetMostCommonPartySize()
         {
             Dictionary<int, int> fieldCounts = new Dictionary<int, int>();
-
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get most common party size. dataSource: {0}", dataSource);
+                return fieldCounts;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -8006,6 +8314,11 @@ Disabling Quest Logging.",
         public Dictionary<int, int> GetTotalTimeSpentInQuests()
         {
             Dictionary<int, int> questTimeSpent = new Dictionary<int, int>();
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get total time spent in quests. dataSource: {0}", dataSource);
+                return questTimeSpent;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -8049,7 +8362,13 @@ Disabling Quest Logging.",
         {
             if (!MezFesMinigame.ID.ContainsKey(previousMezFesArea) || previousMezFesScore <= 0)
             {
-                logger.Error("wrong mezfes area or empty score, area id: {0}, score: {1}", previousMezFesArea, previousMezFesScore);
+                logger.Error("Wrong MezFes area or empty score. Area ID: {0}, Score: {1}", previousMezFesArea, previousMezFesScore);
+                return;
+            }
+
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot insert MezFes minigame score. dataSource: {0}", dataSource);
                 return;
             }
 
@@ -9238,6 +9557,11 @@ Disabling Quest Logging.",
         public QuestCompendium GetQuestCompendium()
         {
             QuestCompendium questCompendium = new QuestCompendium();
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get quest compendium. dataSource: {0}", dataSource);
+                return questCompendium;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -9455,6 +9779,11 @@ Disabling Quest Logging.",
         public GearCompendium GetGearCompendium()
         {
             GearCompendium gearCompendium = new GearCompendium();
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get gear compendium. dataSource: {0}", dataSource);
+                return gearCompendium;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -9489,6 +9818,11 @@ Disabling Quest Logging.",
         public PerformanceCompendium GetPerformanceCompendium()
         {
             PerformanceCompendium performanceCompendium = new PerformanceCompendium();
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get performance compendium. dataSource: {0}", dataSource);
+                return performanceCompendium;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -9554,6 +9888,11 @@ Disabling Quest Logging.",
         public MezFesCompendium GetMezFesCompendium()
         {
             MezFesCompendium mezFesCompendium = new MezFesCompendium();
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get MezFes compendium. dataSource: {0}", dataSource);
+                return mezFesCompendium;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -9601,6 +9940,11 @@ Disabling Quest Logging.",
         public MonsterCompendium GetMonsterCompendium()
         {
             MonsterCompendium monsterCompendium = new MonsterCompendium();
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get monster compendium. dataSource: {0}", dataSource);
+                return monsterCompendium;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
@@ -9631,6 +9975,11 @@ Disabling Quest Logging.",
         public MiscellaneousCompendium GetMiscellaneousCompendium()
         {
             MiscellaneousCompendium miscellaneousCompendium = new MiscellaneousCompendium();
+            if (dataSource == null || dataSource == "")
+            {
+                logger.Warn("Cannot get miscellaneous compendium. dataSource: {0}", dataSource);
+                return miscellaneousCompendium;
+            }
             using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
