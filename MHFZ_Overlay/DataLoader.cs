@@ -4,6 +4,7 @@
 using Memory;
 using MHFZ_Overlay.addresses;
 using MHFZ_Overlay.Core.Class.Application;
+using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
 using NLog;

@@ -28,6 +28,7 @@ using System.Windows;
 using System.Windows.Automation;
 using Application = System.Windows.Application;
 using EZlion.Mapper;
+using MHFZ_Overlay.Core.Class.DataAccessLayer;
 
 namespace MHFZ_Overlay.addresses
 {

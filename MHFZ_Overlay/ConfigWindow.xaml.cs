@@ -11,6 +11,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.WPF;
 using MHFZ_Overlay.Core.Class;
+using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;

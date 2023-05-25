@@ -11,6 +11,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
 using MHFZ_Overlay.Core.Class.Application;
+using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.Discord;
 using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;

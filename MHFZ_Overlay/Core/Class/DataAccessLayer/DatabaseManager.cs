@@ -39,7 +39,7 @@ using Formatting = Newtonsoft.Json.Formatting;
 using Quest = MHFZ_Overlay.UI.Class.Quest;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
-namespace MHFZ_Overlay
+namespace MHFZ_Overlay.Core.Class.DataAccessLayer
 {
     /// <summary>
     /// Handles the SQLite database, MHFZ_Overlay.sqlite. A singleton.

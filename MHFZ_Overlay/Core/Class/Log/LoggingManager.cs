@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 using DiscordRPC;
 using MHFZ_Overlay.Core.Class.Application;
+using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using NLog;
 using Octokit;
 using System;
