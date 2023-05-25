@@ -1,5 +1,17 @@
 
 
+## [0.24.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.24.0...v0.24.1) (2023-05-25)
+
+
+### Bug Fixes
+
+* database update process notification ([8b3b78c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/8b3b78cefabee45def4780e6d61543413a47c66e))
+
+
+### For Developers
+
+* bump version ([ad0a344](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ad0a344ad1d819f3a8c9b2a1d4827792e348b321))
+
 ## [0.24.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.23.2...v0.24.0) (2023-05-25)
 
 
