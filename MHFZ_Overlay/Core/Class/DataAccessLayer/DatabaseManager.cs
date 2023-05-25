@@ -11307,6 +11307,9 @@ Updating the database structure may take some time, it will transport all of you
             var logMessage = "Error with version file";
 
             // TODO why does this error? also find a way to put this in FileManager
+            // it seems the reason is multiple overlay programs (probably the update process too), but since
+            // we catch the error, it's not fatal (and by the time you get asked to update, we already wrote the previous
+            // version, so we are not left with a blank text file).
             try
             {
                 previousVersion = App.CurrentProgramVersion.Trim();

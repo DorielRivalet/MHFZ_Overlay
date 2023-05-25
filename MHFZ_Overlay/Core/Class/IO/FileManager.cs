@@ -523,7 +523,7 @@ namespace MHFZ_Overlay.Core.Class.IO
         {
             try
             {
-                var doesFileExist = CheckIfFileExists(path, string.Format("Checking if path exists: {0}", path));
+                var doesFileExist = CheckIfFileExists(path, string.Format("Checking if path exists for deletion: {0}", path));
                 // Check if the file exists
                 if (doesFileExist)
                 {
@@ -532,7 +532,7 @@ namespace MHFZ_Overlay.Core.Class.IO
                 }
                 else
                 {
-                    logger.Info($"{path} does not exist.");
+                    logger.Info($"{path} does not exist, canceling deletion process.");
                 }
             }
             catch (Exception ex)
