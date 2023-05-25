@@ -1,21 +1,13 @@
 ﻿// Copyright 2023 The mhfz-overlay Authors.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using DiscordRPC;
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
-using NLog;
-using Octokit;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
 
 namespace MHFZ_Overlay.Core.Class.Log
 {

@@ -1,17 +1,11 @@
 ﻿// Copyright 2023 The mhfz-overlay Authors.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using DiscordRPC;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.Discord;
 using MHFZ_Overlay.Core.Class.Log;
-using NLog;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MHFZ_Overlay.Core.Class.Application
@@ -77,7 +71,7 @@ namespace MHFZ_Overlay.Core.Class.Application
         /// <param name="processName">Name of the process.</param>
         public static void KillProcess(string processName)
         {
-            try 
+            try
             {
                 logger.Info("Killing process {0}", processName);
 
@@ -108,8 +102,8 @@ namespace MHFZ_Overlay.Core.Class.Application
                 }
             }
             catch (Exception ex)
-            { 
-                logger.Error(ex); 
+            {
+                logger.Error(ex);
             }
         }
 

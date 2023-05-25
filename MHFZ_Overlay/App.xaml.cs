@@ -1,18 +1,16 @@
 ﻿// Copyright 2023 The mhfz-overlay Authors.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using Squirrel;
-using System.Windows;
-using NLog;
-using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.Core.Class.IO;
-using Microsoft.Extensions.Logging;
-using System.Configuration;
-using System.Reflection;
-using System.IO;
-using System.Diagnostics;
-using System.Threading.Tasks;
+using MHFZ_Overlay.Core.Class.Log;
+using Squirrel;
 using System;
+using System.Configuration;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Windows;
 
 // TODO: all of this needs testing
 namespace MHFZ_Overlay
@@ -34,13 +32,13 @@ namespace MHFZ_Overlay
         {
             logger.Info("Started WPF application");
             logger.Trace("Call stack: {0}", new StackTrace().ToString());
-            logger.Debug("OS: {0}, is64BitOS: {1}, is64BitProcess: {2}, CLR version: {3}", Environment.OSVersion, Environment.Is64BitOperatingSystem, Environment.Is64BitProcess, Environment.Version); 
+            logger.Debug("OS: {0}, is64BitOS: {1}, is64BitProcess: {2}, CLR version: {3}", Environment.OSVersion, Environment.Is64BitOperatingSystem, Environment.Is64BitProcess, Environment.Version);
 
             // run Squirrel first, as the app may exit after these run
             SquirrelAwareApp.HandleEvents(
                 onInitialInstall: OnAppInstall,
                 onAppUninstall: OnAppUninstall,
-                onEveryRun: OnAppRun, 
+                onEveryRun: OnAppRun,
                 onAppUpdate: OnAppUpdate);
 
             // ... other app init code after ...
@@ -119,7 +117,7 @@ namespace MHFZ_Overlay
         {
             tools.SetProcessAppUserModelId();
             // show a welcome message when the app is first installed
-            if (firstRun) 
+            if (firstRun)
             {
                 logger.Info("Running overlay for first time");
                 MessageBox.Show(

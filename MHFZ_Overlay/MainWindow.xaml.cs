@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 using Dictionary;
-using DiscordRPC;
 using EZlion.Mapper;
 using Gma.System.MouseKeyHook;
 using LiveChartsCore;
@@ -16,24 +15,18 @@ using MHFZ_Overlay.Core.Class.Discord;
 using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;
 using Microsoft.Extensions.DependencyModel;
-using NLog;
 using Octokit;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Reactive;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -1366,7 +1359,7 @@ namespace MHFZ_Overlay
             PlayerAtkInfoBorder.BorderThickness = thickness;
             PlayerHitsTakenBlockedInfoBorder.BorderThickness = thickness;
             QuestAttemptsInfoBorder.BorderThickness = thickness;
-            PersonalBestAttemptsInfoBorder.BorderThickness= thickness;
+            PersonalBestAttemptsInfoBorder.BorderThickness = thickness;
             QuestNameInfoBorder.BorderThickness = thickness;
             SessionTimeInfoBorder.BorderThickness = thickness;
             SharpnessInfoBorder.BorderThickness = thickness;

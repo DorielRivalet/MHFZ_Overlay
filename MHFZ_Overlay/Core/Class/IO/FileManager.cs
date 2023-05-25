@@ -6,19 +6,14 @@ using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.Log;
 using Microsoft.Win32;
 using Newtonsoft.Json;
-using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -208,7 +203,8 @@ namespace MHFZ_Overlay.Core.Class.IO
                     }
                     logger.Info("Saved csv file {0}", savefile.FileName);
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 logger.Error(ex, "Could not save class records as CSV file");
             }
@@ -538,7 +534,7 @@ namespace MHFZ_Overlay.Core.Class.IO
                 {
                     logger.Info($"{path} does not exist.");
                 }
-            } 
+            }
             catch (Exception ex)
             {
                 logger.Error(ex, "Could not delete file {0}", path);

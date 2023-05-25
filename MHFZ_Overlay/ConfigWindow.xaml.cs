@@ -1,8 +1,6 @@
 ﻿// Copyright 2023 The mhfz-overlay Authors.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using CsvHelper;
-using Dictionary;
 using EZlion.Mapper;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
@@ -10,14 +8,11 @@ using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.WPF;
-using MHFZ_Overlay.Core.Class;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
-using Newtonsoft.Json;
-using NLog;
 using Octokit;
 using SkiaSharp;
 using System;
@@ -26,14 +21,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -41,10 +34,8 @@ using Application = System.Windows.Application;
 using Button = System.Windows.Controls.Button;
 using Clipboard = System.Windows.Clipboard;
 using ComboBox = System.Windows.Controls.ComboBox;
-using File = System.IO.File;
 using ListView = System.Windows.Controls.ListView;
 using MessageBox = System.Windows.MessageBox;
-using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using TextBox = System.Windows.Controls.TextBox;
 using Window = System.Windows.Window;
 
@@ -971,7 +962,7 @@ namespace MHFZ_Overlay
             FileManager.SaveElementAsImageFile(GearImageGrid, fileName);
         }
 
-        
+
 
         private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

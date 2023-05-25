@@ -1,17 +1,17 @@
 ﻿// Copyright 2023 The mhfz-overlay Authors.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using CsvHelper.Configuration.Attributes;
 using Dictionary;
+using EZlion.Mapper;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
+using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.Discord;
 using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;
-using NLog;
 using RESTCountries.NET.Models;
 using RESTCountries.NET.Services;
 using SkiaSharp;
@@ -27,8 +27,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Automation;
 using Application = System.Windows.Application;
-using EZlion.Mapper;
-using MHFZ_Overlay.Core.Class.DataAccessLayer;
 
 namespace MHFZ_Overlay.addresses
 {
@@ -9061,7 +9059,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 case 100:
                     if (RankBand() == 70 || RankBand() == 54)
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shiten_unknown.png";
-                    else if (RankBand() == 46)                        
+                    else if (RankBand() == 46)
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_unknown.gif";
                     else
                         return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/unknown.png";
@@ -11418,64 +11416,64 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                     if (roadOverride() != null && roadOverride() == false)
                         return MaxFaints().ToString();
 
-                if 
-                (
+                    if
                     (
-                        CaravanOverride() && !
                         (
-                            QuestID() == 23603 ||
-                            RankBand() == 70 ||
-                            QuestID() == 23602 ||
-                            QuestID() == 23604 ||
-                            QuestID() == 23588 ||
-                            QuestID() == 23592 ||
-                            QuestID() == 23596 ||
-                            QuestID() == 23601 ||
-                            QuestID() == 23599 ||
-                            QuestID() == 23595 ||
-                            QuestID() == 23591 ||
-                            QuestID() == 23587 ||
-                            QuestID() == 23598 ||
-                            QuestID() == 23594 ||
-                            QuestID() == 23590 ||
-                            QuestID() == 23586 ||
-                            QuestID() == 23597 ||
-                            QuestID() == 23593 ||
-                            QuestID() == 23589 ||
-                            QuestID() == 23585
+                            CaravanOverride() && !
+                            (
+                                QuestID() == 23603 ||
+                                RankBand() == 70 ||
+                                QuestID() == 23602 ||
+                                QuestID() == 23604 ||
+                                QuestID() == 23588 ||
+                                QuestID() == 23592 ||
+                                QuestID() == 23596 ||
+                                QuestID() == 23601 ||
+                                QuestID() == 23599 ||
+                                QuestID() == 23595 ||
+                                QuestID() == 23591 ||
+                                QuestID() == 23587 ||
+                                QuestID() == 23598 ||
+                                QuestID() == 23594 ||
+                                QuestID() == 23590 ||
+                                QuestID() == 23586 ||
+                                QuestID() == 23597 ||
+                                QuestID() == 23593 ||
+                                QuestID() == 23589 ||
+                                QuestID() == 23585
+                            )
                         )
-                    )
 
-                    ||
+                        ||
 
-                    QuestID() == 23603 ||
-                    RankBand() == 70 ||
-                    QuestID() == 23602 ||
-                    QuestID() == 23604 ||
-                    QuestID() == 23588 ||
-                    QuestID() == 23592 ||
-                    QuestID() == 23596 ||
-                    QuestID() == 23601 ||
-                    QuestID() == 23599 ||
-                    QuestID() == 23595 ||
-                    QuestID() == 23591 ||
-                    QuestID() == 23587 ||
-                    QuestID() == 23598 ||
-                    QuestID() == 23594 ||
-                    QuestID() == 23590 ||
-                    QuestID() == 23586 ||
-                    QuestID() == 23597 ||
-                    QuestID() == 23593 ||
-                    QuestID() == 23589 ||
-                    QuestID() == 23585
-                    )
-                {
-                    return AlternativeMaxFaints().ToString();
-                }
-                else
-                {
-                    return MaxFaints().ToString();
-                }
+                        QuestID() == 23603 ||
+                        RankBand() == 70 ||
+                        QuestID() == 23602 ||
+                        QuestID() == 23604 ||
+                        QuestID() == 23588 ||
+                        QuestID() == 23592 ||
+                        QuestID() == 23596 ||
+                        QuestID() == 23601 ||
+                        QuestID() == 23599 ||
+                        QuestID() == 23595 ||
+                        QuestID() == 23591 ||
+                        QuestID() == 23587 ||
+                        QuestID() == 23598 ||
+                        QuestID() == 23594 ||
+                        QuestID() == 23590 ||
+                        QuestID() == 23586 ||
+                        QuestID() == 23597 ||
+                        QuestID() == 23593 ||
+                        QuestID() == 23589 ||
+                        QuestID() == 23585
+                        )
+                    {
+                        return AlternativeMaxFaints().ToString();
+                    }
+                    else
+                    {
+                        return MaxFaints().ToString();
+                    }
             }
         }
 

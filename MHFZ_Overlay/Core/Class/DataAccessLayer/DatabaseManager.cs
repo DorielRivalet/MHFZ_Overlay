@@ -8,32 +8,20 @@ using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
-using Microsoft.Data.Sqlite;
-using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NLog;
-using NLog.Targets;
-using Octokit;
-using SharpCompress.Common;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
-using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Formatting = Newtonsoft.Json.Formatting;
 using Quest = MHFZ_Overlay.UI.Class.Quest;
@@ -9123,7 +9111,7 @@ Disabling Quest Logging.",
 
             long? mostCommonDecorationID = decorationCounts.OrderByDescending(x => x.Value).Select(x => (long?)x.Key).FirstOrDefault();
 
-            return mostCommonDecorationID == null ? 0 : (long)mostCommonDecorationID;        
+            return mostCommonDecorationID == null ? 0 : (long)mostCommonDecorationID;
         }
 
         private long GetLeastUsedArmorSkillID(SQLiteConnection conn)
@@ -10090,7 +10078,7 @@ Disabling Quest Logging.",
 
         12. If foreign keys constraints were originally enabled, re-enable them now.
          */
-        private void MigrateToSchemaFromVersion(SQLiteConnection conn, int fromVersion) 
+        private void MigrateToSchemaFromVersion(SQLiteConnection conn, int fromVersion)
         {
             // 1. If foreign key constraints are enabled, disable them using PRAGMA foreign_keys=OFF.
             DisableForeignKeyConstraints(conn);
@@ -10109,11 +10097,11 @@ Disabling Quest Logging.",
                         default:
                             logger.Info("No new schema updates found. Schema version: {0}", fromVersion);
                             MessageBox.Show(string.Format(
-@"No new schema updates found! Schema version: {0}", fromVersion), 
-                                string.Format("MHF-Z Overlay Database Update ({0} to {1})", 
-                                previousVersion, 
-                                App.CurrentProgramVersion), 
-                                MessageBoxButton.OK, 
+@"No new schema updates found! Schema version: {0}", fromVersion),
+                                string.Format("MHF-Z Overlay Database Update ({0} to {1})",
+                                previousVersion,
+                                App.CurrentProgramVersion),
+                                MessageBoxButton.OK,
                                 MessageBoxImage.Information);
                             break;
                         case 0://v0.22.0 or older (TODO: does this work with older or just v0.22.0?)
@@ -10129,15 +10117,15 @@ Disabling Quest Logging.",
                                 break;
                                 //goto case 1;
                             }
-                        //case 1://v0.23.0
+                            //case 1://v0.23.0
                             //adds support for recent view tracking
                             //sqlite3_exec(db, "ALTER TABLE entries ADD COLUMN touched_at TEXT;", NULL, NULL, NULL);
                             //{
-                                //PerformUpdateToVersion_0_24_0(conn);
-                                //newVersion++;
-                                //goto case 2;
+                            //PerformUpdateToVersion_0_24_0(conn);
+                            //newVersion++;
+                            //goto case 2;
                             //}
-                        //case 2://v0.24.0
+                            //case 2://v0.24.0
                             //sqlite3_exec(db, "ALTER TABLE categories ADD COLUMN image TEXT;", NULL, NULL, NULL);
                             //sqlite3_exec(db, "ALTER TABLE categories ADD COLUMN entry_count INTEGER;", NULL, NULL, NULL);
                             //sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS categories_id_idx ON categories(id);", NULL, NULL, NULL);
@@ -10146,9 +10134,9 @@ Disabling Quest Logging.",
 
                             // etc...
                             //{
-                                //PerformUpdateToVersion_0_25_0(conn);
-                                //newVersion++;
-                                //break;
+                            //PerformUpdateToVersion_0_25_0(conn);
+                            //newVersion++;
+                            //break;
                             //}
                     }
 
@@ -11205,7 +11193,7 @@ Updating the database structure may take some time, it will transport all of you
                 string foreignKeysViolations = CheckForeignKeys(connection);
 
                 // 10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
-                if (foreignKeysViolations != "") 
+                if (foreignKeysViolations != "")
                 {
                     logger.Fatal("Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
                     MessageBox.Show("Foreign keys violations detected, closing program.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -11277,7 +11265,7 @@ Updating the database structure may take some time, it will transport all of you
                     cmd.ExecuteNonQuery();
                 }
                 logger.Info("Enabled foreign key constraints");
-            } 
+            }
             catch (Exception ex)
             {
                 logger.Fatal("Could not toggle foreign key constraints", ex);

@@ -7,16 +7,12 @@ using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
-using NLog;
-using Squirrel;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 
 namespace MHFZ_Overlay
