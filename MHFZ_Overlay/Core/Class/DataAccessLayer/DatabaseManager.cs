@@ -9876,6 +9876,8 @@ Updating the database structure may take some time, it will transport all of you
                             //MessageBox.Show("The current version and the previous version aren't the same, however no update was found", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             //logger.Fatal("The current version and the previous version aren't the same, however no update was found");
                             //ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+                            logger.Info("Database update process finished");
+                            MessageBox.Show("Database update process finished", LoggingManager.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
                         {
@@ -9886,8 +9888,6 @@ Updating the database structure may take some time, it will transport all of you
                     }
 
                     transaction.Commit();
-                    logger.Info("Successfully updated database schema");
-                    MessageBox.Show("Successfully updated database schema", LoggingManager.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
