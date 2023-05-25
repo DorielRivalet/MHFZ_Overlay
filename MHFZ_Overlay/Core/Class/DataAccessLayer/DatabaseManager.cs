@@ -127,7 +127,7 @@ namespace MHFZ_Overlay
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "SELECT SUM(SessionDuration) FROM Session";
+                    command.CommandText = "SELECT TOTAL(SessionDuration) FROM Session";
                     object result = command.ExecuteScalar();
                     if (result != DBNull.Value)
                     {
@@ -8009,7 +8009,7 @@ Disabling Quest Logging.",
                         string sql =
                             @"SELECT 
                                 QuestID, 
-                                SUM(FinalTimeValue) as timeSpent 
+                                TOTAL(FinalTimeValue) as timeSpent 
                             FROM 
                                 Quests
                             GROUP BY 
@@ -8022,7 +8022,7 @@ Disabling Quest Logging.",
                                 while (reader.Read())
                                 {
                                     int questID = reader.GetInt32(0);
-                                    int timeSpent = reader.GetInt32(1);
+                                    int timeSpent = Convert.ToInt32(reader.GetDouble(1));
                                     questTimeSpent.Add(questID, timeSpent);
                                 }
                             }
@@ -8162,6 +8162,7 @@ Disabling Quest Logging.",
         {
             var query = $"SELECT {fieldName} FROM {tableName}";
             var valueList = new List<double>();
+            double medianValue = 0.0;
 
             using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
             {
@@ -8178,11 +8179,13 @@ Disabling Quest Logging.",
                 }
             }
 
-            valueList.Sort();
-            double medianValue = valueList.Count % 2 == 0
-                ? (valueList[valueList.Count / 2] + valueList[valueList.Count / 2 - 1]) / 2.0
-                : valueList[valueList.Count / 2];
-
+            if (valueList.Count > 0)
+            {
+                valueList.Sort();
+                medianValue = valueList.Count % 2 == 0
+                    ? (valueList[valueList.Count / 2] + valueList[valueList.Count / 2 - 1]) / 2.0
+                    : valueList[valueList.Count / 2];
+            }
             return medianValue;
         }
 
@@ -8392,19 +8395,23 @@ Disabling Quest Logging.",
 
             hitsTakenBlockedCountList.Sort();
 
-            double medianHitsTakenBlockedCount;
+            double medianHitsTakenBlockedCount = 0.0;
             int count = hitsTakenBlockedCountList.Count;
 
-            if (count % 2 == 0)
+            if (count > 0)
             {
-                int middle = count / 2;
-                medianHitsTakenBlockedCount = (hitsTakenBlockedCountList[middle - 1] + hitsTakenBlockedCountList[middle]) / 2.0;
+                if (count % 2 == 0)
+                {
+                    int middle = count / 2;
+                    medianHitsTakenBlockedCount = (hitsTakenBlockedCountList[middle - 1] + hitsTakenBlockedCountList[middle]) / 2.0;
+                }
+                else
+                {
+                    int middle = count / 2;
+                    medianHitsTakenBlockedCount = hitsTakenBlockedCountList[middle];
+                }
             }
-            else
-            {
-                int middle = count / 2;
-                medianHitsTakenBlockedCount = hitsTakenBlockedCountList[middle];
-            }
+
 
             return medianHitsTakenBlockedCount;
         }
@@ -8559,8 +8566,8 @@ Disabling Quest Logging.",
             string query = $"SELECT AVG({field}) FROM {table} WHERE {field} IS NOT NULL";
             using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
             {
-                double avgValue = (double)cmd.ExecuteScalar();
-                return avgValue;
+                var result = cmd.ExecuteScalar();
+                return result == DBNull.Value ? 0.0 : (double)result;
             }
         }
 
@@ -8790,7 +8797,7 @@ Disabling Quest Logging.",
 
             long? mostCommonDecorationID = decorationCounts.OrderByDescending(x => x.Value).Select(x => (long?)x.Key).FirstOrDefault();
 
-            return (long)mostCommonDecorationID;        
+            return mostCommonDecorationID == null ? 0 : (long)mostCommonDecorationID;        
         }
 
         private long GetLeastUsedArmorSkillID(SQLiteConnection conn)
@@ -8853,7 +8860,8 @@ Disabling Quest Logging.",
             using (var command = new SQLiteCommand(query, conn))
             {
                 command.Parameters.AddWithValue("@whereValue", whereValue);
-                return (long)command.ExecuteScalar();
+                var result = command.ExecuteScalar();
+                return result == DBNull.Value ? 0 : (long)result;
             }
         }
 
@@ -8872,7 +8880,8 @@ Disabling Quest Logging.",
             using (var command = new SQLiteCommand(query, conn))
             {
                 command.Parameters.AddWithValue("@whereValue", whereValue);
-                return (long)command.ExecuteScalar();
+                var result = command.ExecuteScalar();
+                return result == DBNull.Value ? 0 : (long)result;
             }
         }
 
@@ -8891,7 +8900,8 @@ Disabling Quest Logging.",
             using (var command = new SQLiteCommand(query, conn))
             {
                 command.Parameters.AddWithValue("@whereValue", whereValue);
-                return (double)command.ExecuteScalar();
+                var result = command.ExecuteScalar();
+                return result == DBNull.Value ? 0.0 : (double)result;
             }
         }
 
@@ -8911,7 +8921,8 @@ Disabling Quest Logging.",
             using (var command = new SQLiteCommand(query, conn))
             {
                 command.Parameters.AddWithValue("@whereValue", whereValue);
-                return (double)command.ExecuteScalar();
+                var result = command.ExecuteScalar();
+                return result == DBNull.Value ? 0.0 : (double)result;
             }
         }
 
@@ -9042,7 +9053,7 @@ Disabling Quest Logging.",
         {
             long attempts = 0;
             var query = @"
-                SELECT SUM(Attempts) AS TotalAttempts
+                SELECT TOTAL(Attempts) AS TotalAttempts
                 FROM QuestAttempts
                 WHERE QuestID = @questId";
 
@@ -9053,7 +9064,7 @@ Disabling Quest Logging.",
                 {
                     if (reader.Read())
                     {
-                        attempts = (long)reader["TotalAttempts"];
+                        attempts = Convert.ToInt64(reader["TotalAttempts"]);
                     }
                 }
             }
@@ -9071,7 +9082,7 @@ Disabling Quest Logging.",
             long questID = 0;
             long attempts = 0;
             var query = @"
-            SELECT q.QuestID, SUM(q.Attempts) AS Attempts
+            SELECT q.QuestID, TOTAL(q.Attempts) AS Attempts
             FROM QuestAttempts q
             JOIN (
                 SELECT QuestID, COUNT(*) AS TotalAttempts
@@ -9089,7 +9100,7 @@ Disabling Quest Logging.",
                     if (reader.Read())
                     {
                         questID = (long)reader["QuestID"];
-                        attempts = (long)reader["Attempts"];
+                        attempts = Convert.ToInt64(reader["Attempts"]);
                     }
                 }
             }
@@ -9137,7 +9148,7 @@ Disabling Quest Logging.",
         /// <returns></returns>
         private static long GetSumValue(string field, string table, SQLiteConnection conn)
         {
-            string query = $"SELECT SUM({field}) FROM {table} WHERE {field} IS NOT NULL";
+            string query = $"SELECT TOTAL({field}) FROM {table} WHERE {field} IS NOT NULL";
             using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
             {
                 long sum = Convert.ToInt64(cmd.ExecuteScalar());
@@ -9237,7 +9248,7 @@ Disabling Quest Logging.",
                         questCompendium.QuestCompletionTimeElapsedAverage = GetAvgValue("FinalTimeValue", "Quests", conn);
                         questCompendium.QuestCompletionTimeElapsedMedian = GetMedianValue("FinalTimeValue", "Quests", conn);
 
-                        var query = @"SELECT SUM(FinalTimeValue) AS TotalTimeElapsed
+                        var query = @"SELECT TOTAL(FinalTimeValue) AS TotalTimeElapsed
                         FROM Quests
                         ";
 
@@ -9247,7 +9258,7 @@ Disabling Quest Logging.",
                             {
                                 if (reader.Read())
                                 {
-                                    long value = (long)reader["TotalTimeElapsed"];
+                                    long value = Convert.ToInt64(reader["TotalTimeElapsed"]);
 
                                     questCompendium.TotalTimeElapsedQuests = value;
 
