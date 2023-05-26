@@ -359,9 +359,6 @@
     <Setting Name="MaxFaintsOverride" Type="System.String" Scope="User">
       <Value Profile="(Default)">Automatic</Value>
     </Setting>
-    <Setting Name="EnableAutoClose" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="EnableDamageMeter" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>

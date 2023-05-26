@@ -46,8 +46,9 @@ namespace MHFZ_Overlay
                     // TODO: does this warrant the program closing?
                     // ReShade or similar programs might trigger this warning. Does these affect overlay functionality?
                     // Imulion's version does not have anything in the catch block.
-                    //System.Windows.MessageBox.Show($"Warning: could not create code cave. ReShade or similar programs might trigger this warning. You can ignore this warning. \n\n{ex}", "Warning - MHFZ Overlay", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                    logger.Warn(ex, "Could not create code cave");
+                    // I'm marking this as error since overlay might interfere with custom shaders.
+                    logger.Error(ex, "Could not create code cave");
+                    System.Windows.MessageBox.Show($"Could not create code cave. ReShade or similar programs might trigger this error. Also make sure you are not loading the overlay when on game launcher", LoggingManager.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 }
 
                 if (!isHighGradeEdition)
@@ -215,7 +216,7 @@ namespace MHFZ_Overlay
 
                     // processName is a substring of one of the banned process strings
                     logger.Fatal("Found banned process {0}", process.ProcessName);
-                    MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", "Error");
+                    MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", LoggingManager.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
 
                     // Close the overlay program
                     ApplicationManager.HandleShutdown();
@@ -233,7 +234,7 @@ namespace MHFZ_Overlay
             {
                 // More than one "MHFZ_Overlay" process is running
                 logger.Fatal("Found duplicate overlay");
-                MessageBox.Show("Close other instances of the overlay before opening a new one", "Error");
+                MessageBox.Show("Close other instances of the overlay before opening a new one", LoggingManager.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
 
                 // Close the overlay program
                 ApplicationManager.HandleShutdown();
@@ -242,7 +243,7 @@ namespace MHFZ_Overlay
             {
                 // More than one game process is running
                 logger.Fatal("Found duplicate game");
-                MessageBox.Show("Close other instances of the game before opening a new one", "Error");
+                MessageBox.Show("Close other instances of the game before opening a new one", LoggingManager.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
 
                 // Close the overlay program
                 ApplicationManager.HandleShutdown();
@@ -278,7 +279,7 @@ namespace MHFZ_Overlay
                 {
                     // The "mhf.exe" process was not found
                     logger.Fatal("mhf.exe not found");
-                    MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", LoggingManager.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
                 }
             } 
@@ -421,7 +422,16 @@ namespace MHFZ_Overlay
             else
             {
                 index = ModuleList.IndexOf("mhfo.dll");
-                isHighGradeEdition = false;
+                if (index > 0)
+                {
+                    isHighGradeEdition = false;
+                }
+                else
+                {
+                    logger.Fatal("Could not find game dll");
+                    MessageBox.Show("Could not find game dll. Make sure you start the overlay inside Mezeporta.", LoggingManager.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    ApplicationManager.HandleShutdown();
+                }
             }
             return proccess;
         }

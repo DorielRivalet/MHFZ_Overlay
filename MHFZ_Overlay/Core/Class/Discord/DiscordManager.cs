@@ -35,10 +35,10 @@ namespace MHFZ_Overlay.Core.Class.Discord
         {
             if (instance == null)
             {
-                logger.Info("Singleton not found, creating instance.");
+                logger.Debug("Singleton not found, creating instance.");
                 instance = new DiscordManager();
             }
-            logger.Info("Singleton found, returning instance.");
+            logger.Debug("Singleton found, returning instance.");
             logger.Trace(new StackTrace().ToString());
             return instance;
         }

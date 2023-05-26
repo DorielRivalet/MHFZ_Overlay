@@ -847,31 +847,28 @@
                             <ComboBoxItem>https://xl3lackout.github.io/MHFZ-Ferias-English-Project/</ComboBoxItem>
                         </ComboBox>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Close overlay when closed game" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Close Overlay when Closed Game"/>
-                        <ToggleButton Grid.Row="21" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAutoClose}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show progress bar icons" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Progress Bar Icons"/>
+                        <ToggleButton Grid.Row="21" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ProgressBarIconsShown}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show progress bar icons" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Progress Bar Icons"/>
-                        <ToggleButton Grid.Row="22" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=ProgressBarIconsShown}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show overlay stats icons (you may have to reposition the cut-off stat text description)" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Overlay Stats Icons"/>
+                        <ToggleButton Grid.Row="22" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayStatIconShown}"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show overlay stats icons (you may have to reposition the cut-off stat text description)" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Overlay Stats Icons"/>
-                        <ToggleButton Grid.Row="23" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayStatIconShown}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Location Name when switching location" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Location Name"/>
+                        <ToggleButton Grid.Row="23" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=LocationTextShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Location Name X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="24" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=LocationTextX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Location Name Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="25" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=LocationTextY}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Location Name when switching location" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Location Name"/>
-                        <ToggleButton Grid.Row="24" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=LocationTextShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Location Name X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="25" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=LocationTextX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Location Name Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="26" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=LocationTextY}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Name when entering quests" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Quest Name"/>
+                        <ToggleButton Grid.Row="26" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=QuestNameShown}"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Quest Name X Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="27" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestNameX}"  PreviewTextInput="ValidateNumber"/>
+                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0"  Text="Quest Name Y Coordinate"/>
+                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="28" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestNameY}"  PreviewTextInput="ValidateNumber"/>
 
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Name when entering quests" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Quest Name"/>
-                        <ToggleButton Grid.Row="27" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=QuestNameShown}"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0"  Text="Quest Name X Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="28" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestNameX}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0"  Text="Quest Name Y Coordinate"/>
-                        <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="29" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestNameY}"  PreviewTextInput="ValidateNumber"/>
-
-                        <TextBlock Margin="5,5,5,5" ToolTip="Show a warning message box when starting the overlay outside Mezeporta" Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0"  Text="Outside Mezeporta Startup Warning"/>
-                        <ToggleButton Grid.Row="30" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableOutsideMezeportaLoadingWarning}"/>
+                        <TextBlock Margin="5,5,5,5" ToolTip="Show a warning message box when starting the overlay outside Mezeporta" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0"  Text="Outside Mezeporta Startup Warning"/>
+                        <ToggleButton Grid.Row="29" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableOutsideMezeportaLoadingWarning}"/>
                         <!--<Button Grid.Row="43" Grid.Column="0" Grid.ColumnSpan="2" Content="Import settings" ToolTip="Import user settings from file" Click="ImportUserSettings_Click"/>-->
                     </Grid>
                 </ScrollViewer>

@@ -141,8 +141,6 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
             logger.Info($"Clowd.Squirrel update process called. {nameof(SemanticVersion)}: {version}");
         }
 
-        private string programVersion = "";
-
         public static async Task UpdateMyApp()
         {
             isClowdSquirrelUpdating = true;

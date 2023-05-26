@@ -903,6 +903,10 @@ namespace MHFZ_Overlay.addresses
         //TODO convert to bool and remove isInLauncherBool?
         public string isInLauncher()
         {
+            // TODO: test
+            if (QuestID() != 0 ||
+            (AreaID() != 0 && Location.IDName.ContainsKey(AreaID()))) return "No";
+
             int pidToSearch = m.GetProcIdFromName("mhf");
             //Init a condition indicating that you want to search by process id.
             var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
@@ -2097,12 +2101,21 @@ namespace MHFZ_Overlay.addresses
         /// <returns></returns>
         public int DisplayMonsterEHP(decimal? defrate, int monsterhp, decimal? monsterdefrate)
         {
+            // TODO: test
             if (defrate > 0)
             {
+                decimal result = Convert.ToDecimal(monsterhp / monsterdefrate);
 
-#pragma warning disable CS8629 // Nullable value type may be null.
-                return (int)(monsterhp / monsterdefrate);
-#pragma warning restore CS8629 // Nullable value type may be null.
+                if (result <= int.MaxValue && result >= int.MinValue)
+                {
+                    return Convert.ToInt32(result);
+                }
+                else
+                {
+                    return 0;
+                    // Handle the case where the result is too large or too small for an int
+                    // Return an appropriate value or throw an exception if necessary
+                }
             }
             return 0;
         }
@@ -9265,10 +9278,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public ObservableCollection<long> weaponUsageStormStyle = new();
         public ObservableCollection<long> weaponUsageExtremeStyle = new();
 
-        private object attackBuffSync { get; } = new();
-        private object damagePerSecondSync { get; } = new();
-        private object actionsPerMinuteSync { get; } = new();
-        private object hitsPerSecondSync { get; } = new();
+        public object attackBuffSync { get; } = new();
+        public object damagePerSecondSync { get; } = new();
+        public object actionsPerMinuteSync { get; } = new();
+        public object hitsPerSecondSync { get; } = new();
         public object weaponUsageSync { get; set; } = new();
 
         public List<ISeries> attackBuffSeries { get; set; } = new();

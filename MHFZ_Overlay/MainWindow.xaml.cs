@@ -425,10 +425,10 @@ namespace MHFZ_Overlay
 
                 if (className == "MHFLAUNCH")
                 {
-                    System.Windows.MessageBox.Show("Detected launcher, please restart overlay when fully loading into Mezeporta.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                    logger.Info("Detected game launcher");
-
+                    logger.Error("Detected game launcher");
+                    System.Windows.MessageBox.Show("Detected launcher, please start the overlay when fully loading into Mezeporta. Closing overlay.", LoggingManager.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                     DataLoader.model.isInLauncherBool = true;
+                    ApplicationManager.HandleShutdown();
                 }
                 else
                 {
@@ -445,21 +445,10 @@ namespace MHFZ_Overlay
 
                     DataLoader.model.closedGame = true;
                     Settings s = (Settings)Application.Current.TryFindResource("Settings");
-
-                    if (s.EnableAutoClose)
-                    {
-                        System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                        logger.Info("Detected closed game");
-
-                        //https://stackoverflow.com/a/9050477/18859245
-                        ApplicationManager.HandleShutdown();
-                    }
-                    else
-                    {
-                        System.Windows.MessageBox.Show("Detected closed game, please restart overlay when fully loading into Mezeporta.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                        logger.Info("Detected closed game");
-
-                    }
+                    logger.Info("Detected closed game");
+                    System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please start the overlay when fully loading into Mezeporta.", LoggingManager.INFO_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                    //https://stackoverflow.com/a/9050477/18859245
+                    ApplicationManager.HandleShutdown();
                 };
             }
         }

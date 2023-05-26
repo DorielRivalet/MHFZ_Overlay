@@ -94,10 +94,10 @@ namespace MHFZ_Overlay.Core.Class.DataAccessLayer
         {
             if (instance == null)
             {
-                logger.Info("Singleton not found, creating instance.");
+                logger.Debug("Singleton not found, creating instance.");
                 instance = new DatabaseManager();
             }
-            logger.Info("Singleton found, returning instance.");
+            logger.Debug("Singleton found, returning instance.");
             logger.Trace(new StackTrace().ToString());
             return instance;
         }
