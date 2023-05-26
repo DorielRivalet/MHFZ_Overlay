@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using Xunit.Sdk;
 
 namespace MHFZ_Overlay
 {
@@ -69,6 +70,7 @@ namespace MHFZ_Overlay
                 databaseChanged = databaseManager.SetupLocalDatabase(this);
                 string overlayHash = databaseManager.StoreOverlayHash();
                 CheckIfLoadedInMezeporta();
+                CheckIfLoadedOutsideQuest();
             }
             else
             {
@@ -87,6 +89,16 @@ namespace MHFZ_Overlay
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                 if (s.EnableOutsideMezeportaLoadingWarning)
                     System.Windows.MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", LoggingManager.WARNING_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+            }
+        }
+
+        private void CheckIfLoadedOutsideQuest()
+        {
+            if (model.QuestID() != 0)
+            {
+                logger.Fatal("Loaded overlay inside quest {0}", model.QuestID());
+                System.Windows.MessageBox.Show("Loaded overlay inside quest. Please load the overlay outside quests.", LoggingManager.FATAL_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                LoggingManager.WriteCrashLog(new Exception("Loaded overlay inside quest"));
             }
         }
 
