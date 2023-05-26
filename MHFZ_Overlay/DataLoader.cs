@@ -48,7 +48,7 @@ namespace MHFZ_Overlay
                     // Imulion's version does not have anything in the catch block.
                     // I'm marking this as error since overlay might interfere with custom shaders.
                     logger.Error(ex, "Could not create code cave");
-                    System.Windows.MessageBox.Show($"Could not create code cave. ReShade or similar programs might trigger this error. Also make sure you are not loading the overlay when on game launcher", LoggingManager.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show("Could not create code cave. ReShade or similar programs might trigger this error. Also make sure you are not loading the overlay when on game launcher.", LoggingManager.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 }
 
                 if (!isHighGradeEdition)

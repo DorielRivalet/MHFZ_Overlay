@@ -302,6 +302,19 @@ namespace MHFZ_Overlay
             timer1Second.Tick += Timer1Second_Tick;
             timer1Second.Start();
 
+            // we run the 10 seconds timer tick once in the constructor
+            try
+            {
+                HideMonsterInfoWhenNotInQuest();
+                HidePlayerInfoWhenNotInQuest();
+                DataLoader.CheckForExternalProcesses();
+                DataLoader.CheckForIllegalModifications();
+            }
+            catch (Exception ex)
+            {
+                LoggingManager.WriteCrashLog(ex);
+            }
+
             DispatcherTimer timer10Seconds = new();
             timer10Seconds.Interval = new TimeSpan(0, 0, 10);
             timer10Seconds.Tick += Timer10Seconds_Tick;
@@ -1326,7 +1339,19 @@ namespace MHFZ_Overlay
             }
             catch (Exception ex)
             {
-                logger.Error("could not show configuration window", ex);
+                logger.Error("Could not show configuration window", ex);
+            }
+
+            try
+            {
+                HideMonsterInfoWhenNotInQuest();
+                HidePlayerInfoWhenNotInQuest();
+                DataLoader.CheckForExternalProcesses();
+                DataLoader.CheckForIllegalModifications();
+            }
+            catch (Exception ex)
+            {
+                LoggingManager.WriteCrashLog(ex);
             }
 
         }
