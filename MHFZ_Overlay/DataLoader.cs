@@ -159,6 +159,15 @@ namespace MHFZ_Overlay
             "scripts","plugins","script","plugin","localize-dat"
         };
 
+        private readonly List<string> allowedProcesses = new List<string>()
+        {
+            "LogiOverlay" // Logitech Bluetooth for mouse
+        };
+
+        private bool steamOverlayWarningShown = false;
+
+        // TODO: savvy users know the bypass. Short of making the overlay too involved in the user's machine, 
+        // there are currently no workarounds.
         public void CheckForExternalProcesses()
         {
             if (App.isClowdSquirrelUpdating)
@@ -167,12 +176,26 @@ namespace MHFZ_Overlay
             var processList = System.Diagnostics.Process.GetProcesses();
             int overlayCount = 0;
             int gameCount = 0;
+            // first we check for steam overlay, if found then skip to next iteration
+            // then we apply the whitelist, if found then skip to next iteration
+            // then we apply the blacklist
+            // then we check if the process is the overlay
+            // then we check if the process is the game
+            // then we check for disallowed duplicates
             foreach (var process in processList)
             {
-                if (process.ProcessName == "GameOverlayUI")
+                if (process.ProcessName == "GameOverlayUI" && !steamOverlayWarningShown)
                 {
                     logger.Warn("Found Steam overlay: {0}", process.ProcessName);
-                    MessageBox.Show($"Having Steam Overlay open while MHF-Z Overlay is running may decrease performance. ({process.ProcessName} found)", "Warning");
+                    var result = MessageBox.Show($"Having Steam Overlay open while MHF-Z Overlay is running may decrease performance. ({process.ProcessName} found)", LoggingManager.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        steamOverlayWarningShown = true;
+                    }
+                    continue;
+                }
+                if (allowedProcesses.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
+                {
                     continue;
                 }
                 if (bannedProcesses.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
