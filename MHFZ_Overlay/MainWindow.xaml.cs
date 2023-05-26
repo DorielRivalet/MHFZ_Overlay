@@ -295,9 +295,19 @@ namespace MHFZ_Overlay
 
             logger.Info("Found rendering tier {0}", renderingTier);
 
-            DataLoader.model.ShowSaveIcon = false;
-
             CreateSystemTrayIcon();
+
+            DispatcherTimer timer1Second = new();
+            timer1Second.Interval = new TimeSpan(0, 0, 1);
+            timer1Second.Tick += Timer1Second_Tick;
+            timer1Second.Start();
+
+            DispatcherTimer timer10Seconds = new();
+            timer10Seconds.Interval = new TimeSpan(0, 0, 10);
+            timer10Seconds.Tick += Timer10Seconds_Tick;
+            timer10Seconds.Start();
+
+            DataLoader.model.ShowSaveIcon = false;
 
             logger.Info("Loaded MHF-Z Overlay {0}", App.CurrentProgramVersion);
 
@@ -458,13 +468,10 @@ namespace MHFZ_Overlay
         private bool showedGameFolderWarning = false;
 
         // TODO: optimization
-        public void Timer_Tick(object? obj, EventArgs e)
+        private void Timer_Tick(object? obj, EventArgs e)
         {
             try
             {
-                HideMonsterInfoWhenNotInQuest();
-                HidePlayerInfoWhenNotInQuest();
-
                 DataLoader.model.ReloadData();
                 Monster1HPBar.ReloadData();
                 Monster2HPBar.ReloadData();
@@ -477,9 +484,6 @@ namespace MHFZ_Overlay
                 MonsterStunBar.ReloadData();
 
                 CreateDamageNumber();
-
-                discordManager.UpdateDiscordRPC(DataLoader);
-
                 CheckQuestStateForDatabaseLogging();
 
                 // TODO should this be here or somewhere else?
@@ -497,10 +501,6 @@ namespace MHFZ_Overlay
                     showedGameFolderWarning = true;
                 }
 
-                DataLoader.CheckForExternalProcesses();
-
-                CheckIfLocationChanged();
-                CheckIfQuestChanged();
             }
             catch (Exception ex)
             {
@@ -508,6 +508,36 @@ namespace MHFZ_Overlay
                 // the flushing is done automatically according to the docs
             }
         }
+
+        private void Timer1Second_Tick(object? obj, EventArgs e)
+        {
+            try
+            {
+                discordManager.UpdateDiscordRPC(DataLoader);
+                CheckIfLocationChanged();
+                CheckIfQuestChanged();
+            }
+            catch (Exception ex)
+            {
+                LoggingManager.WriteCrashLog(ex);
+            }
+        }
+
+        private void Timer10Seconds_Tick(object? obj, EventArgs e)
+        {
+            try
+            {
+                HideMonsterInfoWhenNotInQuest();
+                HidePlayerInfoWhenNotInQuest();
+                DataLoader.CheckForExternalProcesses();
+                DataLoader.CheckForIllegalModifications();
+            }
+            catch (Exception ex)
+            {
+                LoggingManager.WriteCrashLog(ex);
+            }
+        }
+
         private void CheckIfQuestChanged()
         {
             if (DataLoader.model.previousQuestID != DataLoader.model.QuestID() && DataLoader.model.QuestID() != 0)
@@ -1035,7 +1065,6 @@ namespace MHFZ_Overlay
             DataLoader.model.ShowQuestAttemptsInfo = v && s.QuestAttemptsShown;
             DataLoader.model.ShowPersonalBestTimePercentInfo = v && s.PersonalBestTimePercentShown;
             DataLoader.model.ShowPersonalBestAttemptsInfo = v && s.PersonalBestAttemptsShown;
-
         }
 
         #endregion

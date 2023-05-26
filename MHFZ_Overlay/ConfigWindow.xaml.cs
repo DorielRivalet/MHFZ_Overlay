@@ -1391,6 +1391,7 @@ namespace MHFZ_Overlay
                 MainWindow.DataLoader.model.weaponUsageStormStyle.Clear();
                 MainWindow.DataLoader.model.weaponUsageExtremeStyle.Clear();
 
+                // TODO: is this needed?
                 weaponUsageChart.SyncContext = MainWindow.DataLoader.model.weaponUsageSync;
 
                 SetWeaponUsageChart(weaponUsageChart);

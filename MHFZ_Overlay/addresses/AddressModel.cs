@@ -65,51 +65,47 @@ namespace MHFZ_Overlay.addresses
 
         #region init bool
 
-        public bool ShowMonsterInfos { get; set; } = true;
-        public bool ShowMonsterAtkMult { get; set; } = true;
-        public bool ShowMonsterDefrate { get; set; } = true;
-        public bool ShowMonsterSize { get; set; } = true;
-        public bool ShowMonsterPoison { get; set; } = true;
-        public bool ShowMonsterSleep { get; set; } = true;
-        public bool ShowMonsterPara { get; set; } = true;
-        public bool ShowMonsterBlast { get; set; } = true;
-        public bool ShowMonsterStun { get; set; } = true;
-        public bool ShowPlayerInfos { get; set; } = true;
-        public bool ShowPersonalBestInfo { get; set; } = true;
-        public bool ShowTimerInfo { get; set; } = true;
-        public bool ShowHitCountInfo { get; set; } = true;
-        public bool ShowPlayerAtkInfo { get; set; } = true;
-        public bool ShowPlayerHitsTakenBlockedInfo { get; set; } = true;
-        public bool ShowQuestID { get; set; } = true;
-        public bool ShowQuestAttemptsInfo { get; set; } = true;
-        public bool ShowPersonalBestTimePercentInfo { get; set; } = true;
-        public bool ShowPersonalBestAttemptsInfo { get; set; } = true;
+        public bool ShowMonsterAtkMult { get; set; } = false;
+        public bool ShowMonsterDefrate { get; set; } = false;
+        public bool ShowMonsterSize { get; set; } = false;
+        public bool ShowMonsterPoison { get; set; } = false;
+        public bool ShowMonsterSleep { get; set; } = false;
+        public bool ShowMonsterPara { get; set; } = false;
+        public bool ShowMonsterBlast { get; set; } = false;
+        public bool ShowMonsterStun { get; set; } = false;
+        public bool ShowPersonalBestInfo { get; set; } = false;
+        public bool ShowTimerInfo { get; set; } = false;
+        public bool ShowHitCountInfo { get; set; } = false;
+        public bool ShowPlayerAtkInfo { get; set; } = false;
+        public bool ShowPlayerHitsTakenBlockedInfo { get; set; } = false;
+        public bool ShowQuestID { get; set; } = false;
+        public bool ShowQuestAttemptsInfo { get; set; } = false;
+        public bool ShowPersonalBestTimePercentInfo { get; set; } = false;
+        public bool ShowPersonalBestAttemptsInfo { get; set; } = false;
+        public bool ShowMonster1HPBar { get; set; } = false;
+        public bool ShowMonster2HPBar { get; set; } = false;
+        public bool ShowMonster3HPBar { get; set; } = false;
+        public bool ShowMonster4HPBar { get; set; } = false;
+        public bool ShowSharpness { get; set; } = false;
+        public bool ShowSessionTimeInfo { get; set; } = false;
+        public bool ShowMonsterPartHP { get; set; } = false;
+        public bool ShowKBMLayout { get; set; } = false;
+        public bool ShowAPM { get; set; } = false;
+        public bool ShowControllerLayout { get; set; } = false;
+        public bool ShowMonster1Icon { get; set; } = false;
+        public bool ShowFrameCounter { get; set; } = false;
+        public bool ShowMap { get; set; } = false;
+        public bool ShowPlayerAttackGraph { get; set; } = false;
+        public bool ShowPlayerDPSGraph { get; set; } = false;
+        public bool ShowPlayerAPMGraph { get; set; } = false;
+        public bool ShowPlayerHitsPerSecondGraph { get; set; } = false;
+        public bool ShowDamagePerSecond { get; set; } = false;
+        public bool ShowOverlayModeWatermark { get; set; } = false;
+
+
+        public bool ShowSaveIcon { get; set; } = true;
         public bool ShowLocationTextInfo { get; set; } = true;
         public bool ShowQuestNameInfo { get; set; } = true;
-        public bool ShowMonsterHPBars { get; set; } = true;
-        public bool ShowMonster1HPBar { get; set; } = true;
-        public bool ShowMonster2HPBar { get; set; } = true;
-        public bool ShowMonster3HPBar { get; set; } = true;
-        public bool ShowMonster4HPBar { get; set; } = true;
-        public bool ShowSharpness { get; set; } = true;
-        public bool ShowSessionTimeInfo { get; set; } = true;
-        public bool ShowMonsterPartHP { get; set; } = true;
-        public bool ShowKBMLayout { get; set; } = true;
-        public bool ShowAPM { get; set; } = true;
-        public bool ShowControllerLayout { get; set; } = true;
-        public bool ShowMonster1Icon { get; set; } = true;
-        public bool ShowFrameCounter { get; set; } = true;
-        public bool ShowMap { get; set; } = true;
-        public bool ShowPlayerAttackGraph { get; set; } = true;
-        public bool ShowPlayerDPSGraph { get; set; } = true;
-        public bool ShowPlayerAPMGraph { get; set; } = true;
-        public bool ShowPlayerHitsPerSecondGraph { get; set; } = true;
-        public bool ShowDamagePerSecond { get; set; } = true;
-        public bool ShowProgressBarIcon { get; set; } = true;
-        public bool ShowProgressBarDescription { get; set; } = true;
-        public bool ShowOverlayModeWatermark { get; set; } = true;
-        public bool ShowSaveIcon { get; set; } = true;
-
 
         #endregion
 
@@ -2880,6 +2876,7 @@ namespace MHFZ_Overlay.addresses
             };
         }
 
+        // TODO: EZlion
         /// <summary>
         /// Gets the name of the weapon type.
         /// </summary>
@@ -9268,10 +9265,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         public ObservableCollection<long> weaponUsageStormStyle = new();
         public ObservableCollection<long> weaponUsageExtremeStyle = new();
 
-        public object attackBuffSync { get; } = new();
-        public object damagePerSecondSync { get; } = new();
-        public object actionsPerMinuteSync { get; } = new();
-        public object hitsPerSecondSync { get; } = new();
+        private object attackBuffSync { get; } = new();
+        private object damagePerSecondSync { get; } = new();
+        private object actionsPerMinuteSync { get; } = new();
+        private object hitsPerSecondSync { get; } = new();
         public object weaponUsageSync { get; set; } = new();
 
         public List<ISeries> attackBuffSeries { get; set; } = new();

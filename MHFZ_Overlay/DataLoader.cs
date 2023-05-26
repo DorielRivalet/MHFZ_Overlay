@@ -241,28 +241,38 @@ namespace MHFZ_Overlay
         // TODO: test
         public void CheckForIllegalModifications()
         {
-            // Get the process that is running "mhf.exe"
-            Process[] processes = Process.GetProcessesByName("mhf");
+            if (App.isClowdSquirrelUpdating)
+                return;
 
-            if (processes.Length > 0)
+            try 
             {
-                // Get the location of the first "mhf.exe" process
-                string mhfPath = processes[0].MainModule.FileName;
-                // Get the directory that contains "mhf.exe"
-                string mhfDirectory = Path.GetDirectoryName(mhfPath);
+                // Get the process that is running "mhf.exe"
+                Process[] processes = Process.GetProcessesByName("mhf");
 
-                // Get a list of all files and folders in the game folder
-                string[] files = Directory.GetFiles(mhfDirectory, "*", SearchOption.AllDirectories);
-                string[] folders = Directory.GetDirectories(mhfDirectory, "*", SearchOption.AllDirectories);
-                var isFatal = true;
-                FileManager.CheckIfFileExtensionFolderExists(files, folders, bannedFiles, bannedFileExtensions, bannedFolders, isFatal);
-            }
-            else
+                if (processes.Length > 0)
+                {
+                    // Get the location of the first "mhf.exe" process
+                    string mhfPath = processes[0].MainModule.FileName;
+                    // Get the directory that contains "mhf.exe"
+                    string mhfDirectory = Path.GetDirectoryName(mhfPath);
+
+                    // Get a list of all files and folders in the game folder
+                    string[] files = Directory.GetFiles(mhfDirectory, "*", SearchOption.AllDirectories);
+                    string[] folders = Directory.GetDirectories(mhfDirectory, "*", SearchOption.AllDirectories);
+                    var isFatal = true;
+                    FileManager.CheckIfFileExtensionFolderExists(files, folders, bannedFiles, bannedFileExtensions, bannedFolders, isFatal);
+                }
+                else
+                {
+                    // The "mhf.exe" process was not found
+                    logger.Fatal("mhf.exe not found");
+                    MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    ApplicationManager.HandleShutdown();
+                }
+            } 
+            catch (Exception ex)
             {
-                // The "mhf.exe" process was not found
-                logger.Fatal("mhf.exe not found");
-                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationManager.HandleShutdown();
+                LoggingManager.WriteCrashLog(ex);
             }
         }
 
