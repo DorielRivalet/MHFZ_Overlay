@@ -4,13 +4,6 @@
 
 [![Monster Hunter Frontier Z Overlay v0.21.0 Preview](./demo/youtubepreview1.jpg)](https://www.youtube.com/watch?v=A9ffbRICqZY "Monster Hunter Frontier Z Overlay v0.21.0 Preview")
 
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FDorielRivalet%2Fmhfz-overlay%2Fbadge%3Fref%3Dmain&style=flat)](https://actions-badge.atrox.dev/DorielRivalet/mhfz-overlay/goto?ref=main)
-![CircleCI](https://img.shields.io/circleci/build/github/DorielRivalet/mhfz-overlay?label=CircleCI&style=flat)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DorielRivalet/mhfz-overlay?style=flat)
-![GitHub repo size](https://img.shields.io/github/repo-size/DorielRivalet/mhfz-overlay?style=flat)
-[![LOC](https://tokei.rs/b1/github/DorielRivalet/mhfz-overlay)](https://github.com/XAMPPRocky/tokei)
-[![wakatime](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a.svg)](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a)
-
 <div align = center>
 
 ---
@@ -29,14 +22,6 @@ This project aims to provide a simple, customizable overlay for Monster Hunter F
 The overlay is highly configurable, with a wide range of options available to suit the needs of individual players and speedrunners alike. It is also constantly being updated and improved, so be sure to check back for the latest features and fixes.
 
 We hope you find this overlay useful and enjoyable, and we welcome any feedback or suggestions you may have. Happy hunting!
-
-[This project is directly inspired from the overlay created by *suzaku01*](https://github.com/suzaku01/mhf_displayer)
-
-[The theme and color palette used for the application is *Catppuccin Mocha*](https://github.com/catppuccin/catppuccin)
-
-[The design and icons used in this project are part of the *Material Design Icons* and related components](https://fonts.google.com/icons)
-
-The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
 
 ## Requirements
 
@@ -209,7 +194,36 @@ These images don't show everything, find out what's missing by pressing `Shift+F
 
 ### Damage Calculator
 
-![Config6](./demo/config7.png)
+![Config7](./demo/config7.png)
+
+## Features not yet implemented
+
+- Choose which player to load data from
+- Auto detect which player is playing
+- Selecting monsters for body parts and monster status
+- Fix max HP for Road
+- Allow lock-on to be used to select monsters
+- Add shortcut for saving
+- Automatically set default positions according to screen resolution
+- Global damage number labels
+- Attach user interface to game window option
+- Sound effects
+- Sharpness graph
+- Language options
+- PvP addresses
+- Handle multiple objectives information
+- Zenith information in Road
+- Raviente Support Part Info
+- Detect UL/HC
+- Guild Pugi address
+- Performance improvements
+- Armor Set Website links
+- Sky Corridor
+- Drag and Drop multiple selection
+- Sharpness tables
+- Gear rarity colors in hunter info stats
+
+[Check more possible future features here](https://github.com/DorielRivalet/mhfz-overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 
 ## Bugs
 
@@ -233,36 +247,6 @@ If the HP shows 0/1 then change area for it to load.
 
 [Check more bugs here](https://github.com/DorielRivalet/mhfz-overlay/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
 
-## Features not yet implemented
-
-- Choose which player to load data from
-- Auto detect which player is playing
-- Selecting monsters for body parts and monster status
-- Fix max HP for Road
-- Allow lock-on to be used to select monsters
-- Add shortcut for saving
-- Monster stats import/export
-- Automatically set default positions according to screen resolution
-- Global damage number labels
-- Attach user interface to game window option
-- Sound effects
-- Sharpness graph
-- Language options
-- PvP addresses
-- Handle multiple objectives information
-- Zenith information in Road
-- Raviente Support Part Info
-- Detect UL/HC
-- Guild Pugi address
-- Performance improvements
-- Armor Set Website links
-- Sky Corridor
-- Drag and Drop multiple selection
-- Sharpness tables
-- Gear rarity colors in hunter info stats
-
-[Check more possible future features here](https://github.com/DorielRivalet/mhfz-overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
-
 ## Frequently Asked Questions
 
 [FAQ](https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md)
@@ -279,11 +263,7 @@ If the HP shows 0/1 then change area for it to load.
 
 ## Changelog
 
-[CHANGELOG](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md)
-
-## License
-
-[MIT](https://github.com/DorielRivalet/mhfz-overlay/blob/main/LICENSE.md)
+[Learn about the latest improvements.](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md)
 
 ## Documentation
 
@@ -315,6 +295,29 @@ We recommend consulting the appropriate documentation file based on your needs. 
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
 
+## Repository Overview
+
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FDorielRivalet%2Fmhfz-overlay%2Fbadge%3Fref%3Dmain&style=flat)](https://actions-badge.atrox.dev/DorielRivalet/mhfz-overlay/goto?ref=main)
+![CircleCI](https://img.shields.io/circleci/build/github/DorielRivalet/mhfz-overlay?label=CircleCI&style=flat)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DorielRivalet/mhfz-overlay?style=flat)
+![GitHub repo size](https://img.shields.io/github/repo-size/DorielRivalet/mhfz-overlay?style=flat)
+[![LOC](https://tokei.rs/b1/github/DorielRivalet/mhfz-overlay)](https://github.com/XAMPPRocky/tokei)
+[![wakatime](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a.svg)](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a)
+
 ## Feedback
 
 [Google Forms](https://forms.gle/hrAVWMcYS5HEo1v7A)
+
+## License
+
+[MIT](https://github.com/DorielRivalet/mhfz-overlay/blob/main/LICENSE.md)
+
+## Acknowledgements
+
+[This project is directly inspired from the overlay created by *suzaku01*](https://github.com/suzaku01/mhf_displayer)
+
+[The theme and color palette used for the application is *Catppuccin Mocha*](https://github.com/catppuccin/catppuccin)
+
+[The design and icons used in this project are part of the *Material Design Icons* and related components](https://fonts.google.com/icons)
+
+The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
