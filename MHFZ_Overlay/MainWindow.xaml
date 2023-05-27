@@ -11,7 +11,7 @@
         xmlns:uc="clr-namespace:MHFZ_Overlay.controls"
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         xmlns:local="clr-namespace:MHFZ_Overlay"
-        xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses"
+        xmlns:addresses="clr-namespace:MHFZ_Overlay.Addresses"
         d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
         x:Name="Window"

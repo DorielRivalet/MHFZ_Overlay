@@ -13,7 +13,7 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
-        xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
+        xmlns:local="clr-namespace:MHFZ_Overlay" xmlns:addresses="clr-namespace:MHFZ_Overlay.Addresses" d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         xmlns:localui="clr-namespace:MHFZ_Overlay.UI.Class"
         mc:Ignorable="d"
         x:Name="Config"

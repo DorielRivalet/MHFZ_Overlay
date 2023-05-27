@@ -14,6 +14,7 @@ using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.Discord;
 using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;
+using MHFZ_Overlay.Addresses;
 using Microsoft.Extensions.DependencyModel;
 using Octokit;
 using SkiaSharp;

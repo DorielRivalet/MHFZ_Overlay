@@ -2,9 +2,11 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 using Memory;
+using MHFZ_Overlay;
+
 
 // Most Addresses from https://github.com/suzaku01/ 
-namespace MHFZ_Overlay.addresses
+namespace MHFZ_Overlay.Addresses
 {
     /// <summary>
     /// Inherits from AddressModel and provides the memory address of the hit count value (etc.) when the game is running in HGE mode.

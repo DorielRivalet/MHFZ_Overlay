@@ -27,8 +27,9 @@ using System.Text;
 using System.Windows;
 using System.Windows.Automation;
 using Application = System.Windows.Application;
+using MHFZ_Overlay;
 
-namespace MHFZ_Overlay.addresses
+namespace MHFZ_Overlay.Addresses
 {
     /// <summary>
     /// Abstract class that defines the base properties and methods that are shared between AddressModelNotHGE and AddressModelHGE classes. It has a Mem object, which is used to read and write data from the game's memory. It also has properties that represent the selected monster, the hit count value, and the monster's health points.

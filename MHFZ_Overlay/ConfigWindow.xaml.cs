@@ -13,6 +13,7 @@ using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
+using MHFZ_Overlay.Addresses;
 using Octokit;
 using SkiaSharp;
 using System;

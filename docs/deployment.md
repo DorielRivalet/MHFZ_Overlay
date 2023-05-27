@@ -9,7 +9,7 @@ The following steps outline the process for releasing and deploying the software
 1. Run `git fetch` to check for the latest remote changes. Then switch to the release branch: Run `git switch release` to switch to the release branch.
 2. Pull the latest changes: Run `git pull origin release` to pull the latest changes from the remote release branch.
 3. Make changes: Make the necessary changes to the software, and thoroughly test them in-game. Ideally, add unit tests to cover the changes and fix any new bugs with new commits.
-4. Bump version: Update the version in the CurrentProgramVersion variable, following SemVer's specifications.
+4. Bump version: Update the version in the CurrentProgramVersion variable, following SemVer's specifications. Also bump the Version in csproj. Both version bumps should end up in the same version.
 5. Commit changes: Run `git add .` to stage the changes, then run `git commit -m "Your commit message here"` to commit the changes, following commitlint's specifications.
 6. Update CHANGELOG.md: Run `npm run release` to automatically update the CHANGELOG.md file with the changes made. When prompted for the tag name, follow Semver's specifications and prefix with a `v`. Answer `Yes` to all except the last question ("Create a Release on GitHub?").
 7. Merge release branch into main: **Recommended to send a Pull Request to the main branch**. Otherwise, run `git checkout main` to switch to the main branch and do `git pull origin main` to pull the latest remote changes, then run `git merge release` to merge the release branch into the main branch, and finally `git push origin main`.
