@@ -321,3 +321,8 @@ We recommend consulting the appropriate documentation file based on your needs. 
 [The design and icons used in this project are part of the *Material Design Icons* and related components](https://fonts.google.com/icons)
 
 The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
+
+<a href="https://github.com/suzaku01"><img style="border-radius: 50% !important;" alt="Avatar" src="https://avatars.githubusercontent.com/u/89909040?v=4" width="64px" height="auto" ></a>
+<a href="https://github.com/Imulion"><img style="border-radius: 50% !important;" alt="Avatar" src="https://avatars.githubusercontent.com/u/27354834?v=4" width="64px" height="auto" ></a>
+<a href="https://github.com/Catppuccin"><img style="border-radius: 50% !important;" alt="Avatar" src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/logos/exports/1544x1544_circle.png" width="64px" height="auto" ></a>
+<a href="https://github.com/google/material-design-icons"><img style="background-color:#eff1f5" alt="Avatar" src="https://simpleicons.org/icons/materialdesignicons.svg" width="64px" height="auto" ></a>
