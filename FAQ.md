@@ -146,7 +146,21 @@ This way, there are no lost settings when updating, and you don't have to make t
 
 ## How to check the downloaded file hashes?
 
-Open PowerShell and enter the command `Get-FileHash (drag and drop your file into the terminal)`. Check if the hashes provided by the developer are the same as the hashes provided by PowerShell. If they are the same, the files shouldn't have been tampered with. If the command worked, you should get SHA256 in the `Algorithm` column, and the hash value in the `Hash` column, along with the Path provided.
+### Graphical User Interface
+
+1. Download [DevToys](https://www.microsoft.com/store/apps/9PGCV4V3BK4W).
+2. In *DevToys*: Go to Generators > Checksum.
+3. Enable Uppercase.
+4. Select SHA256 as Hashing Algorithm.
+5. Drag and drop the file.
+6. Copy/Paste into Output Comparer the hash provided by the developer.
+7. You should get the message `The hashes are the same.`.
+
+### Command Line Interface
+
+1. Open PowerShell in the folder where the files are and enter the command `Get-FileHash (drag and drop your file into the terminal)`.
+2. If the command worked, you should get SHA256 in the `Algorithm` column, and the hash value in the `Hash` column, along with the Path provided.
+3. Check if the hashes provided by the developer are the same as the hashes provided by PowerShell. If they are the same, the files shouldn't have been tampered with.
 
 ## What files and folders are affected by the overlay?
 
