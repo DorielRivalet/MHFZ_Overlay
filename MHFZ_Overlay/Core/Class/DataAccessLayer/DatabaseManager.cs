@@ -10,6 +10,7 @@ using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -181,7 +182,7 @@ namespace MHFZ_Overlay.Core.Class.DataAccessLayer
                     CreateDatabaseTables(conn, dataLoader);
                     CreateDatabaseIndexes(conn);
                     CreateDatabaseTriggers(conn);
-                    UpdateDatabaseSchema(conn);
+                    CheckDatabaseVersion(conn);
                 }
 
                 using (var conn = new SQLiteConnection(dataSource))
@@ -10171,7 +10172,7 @@ Disabling Quest Logging.",
         7) program update without database update: did settings save? [?] no error logs? [X] database triggers work? [X]
         8) program update with database update: same as 6)
         */
-        private void UpdateDatabaseSchema(SQLiteConnection connection)
+        private void CheckDatabaseVersion(SQLiteConnection connection)
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
@@ -10195,33 +10196,7 @@ Updating the database structure may take some time, it will transport all of you
                                                          string.Format("MHF-Z Overlay Database Update ({0} to {1})", previousVersion, App.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                         if (result == MessageBoxResult.Yes)
                         {
-                            // Make a backup of the current SQLite file before updating the schema
-
-                            // Get the process that is running "mhf.exe"
-                            Process[] processes = Process.GetProcessesByName("mhf");
-
-                            if (processes.Length > 0)
-                            {
-                                FileManager.CreateDatabaseBackup(connection, BackupFolderName);
-                            }
-                            else
-                            {
-                                // The "mhf.exe" process was not found
-                                logger.Fatal("mhf.exe not found");
-                                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                                ApplicationManager.HandleShutdown();
-                            }
-
-                            MigrateToSchemaFromVersion(connection, currentUserVersion);
-                            var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
-                            FileManager.DeleteFile(referenceSchemaFilePath);
-                            // later on it creates it
-                            // see this comment: Check if the reference schema file exists
-                            //MessageBox.Show("The current version and the previous version aren't the same, however no update was found", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                            //logger.Fatal("The current version and the previous version aren't the same, however no update was found");
-                            //ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
-                            logger.Info("Database update process finished");
-                            MessageBox.Show("Database update process finished", LoggingManager.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                            UpdateDatabaseSchema(connection, currentUserVersion);
                         }
                         else
                         {
@@ -10238,6 +10213,40 @@ Updating the database structure may take some time, it will transport all of you
                     HandleError(transaction, ex);
                 }
             }
+        }
+
+        private void UpdateDatabaseSchema(SQLiteConnection connection, int currentUserVersion)
+        {
+            var splashScreen = new SplashScreen("UI/Icons/png/loading.png");
+            splashScreen.Show(false);
+            // Make a backup of the current SQLite file before updating the schema
+
+            // Get the process that is running "mhf.exe"
+            Process[] processes = Process.GetProcessesByName("mhf");
+
+            if (processes.Length > 0)
+            {
+                FileManager.CreateDatabaseBackup(connection, BackupFolderName);
+            }
+            else
+            {
+                // The "mhf.exe" process was not found
+                logger.Fatal("mhf.exe not found");
+                MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                ApplicationManager.HandleShutdown();
+            }
+
+            MigrateToSchemaFromVersion(connection, currentUserVersion);
+            var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
+            FileManager.DeleteFile(referenceSchemaFilePath);
+            // later on it creates it
+            // see this comment: Check if the reference schema file exists
+            //MessageBox.Show("The current version and the previous version aren't the same, however no update was found", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            //logger.Fatal("The current version and the previous version aren't the same, however no update was found");
+            //ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
+            logger.Info("Database update process finished");
+            splashScreen.Close(TimeSpan.FromSeconds(0.1));
+            MessageBox.Show("Database update process finished", LoggingManager.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // TODO: this is repeating code. also not sure if the data types handling is correct
