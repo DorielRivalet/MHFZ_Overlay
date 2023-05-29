@@ -390,8 +390,11 @@ namespace MHFZ_Overlay
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 if (s.EnableUpdateNotifier)
                 {
-                    System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(String.Format("Detected different version ({0}) from latest ({1}). Do you want to update the overlay?", App.CurrentProgramVersion, latest.TagName), "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No);
                     logger.Info("Detected different overlay version");
+                    System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(String.Format(
+@"Detected different version ({0}) from latest ({1}). Do you want to update the overlay?
+
+The process may take some time, as the program attempts to download from GitHub Releases. You will get a notification once the process is complete.", App.CurrentProgramVersion, latest.TagName), "【MHF-Z】Overlay Update Available", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Asterisk, MessageBoxResult.No);
 
                     if (messageBoxResult.ToString() == "Yes")
                     {
