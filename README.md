@@ -37,6 +37,8 @@ We hope you find this overlay useful and enjoyable, and we welcome any feedback 
 5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
 6. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
 
+**It's recommended to start the overlay when you are done loading into Mezeporta.**
+
 ### DISCLAIMER
 
 If you obtained the mhfz-overlay software from any source other than GitHub releases, please be aware that there are no guarantees that the program has the same code as the version in this repository, nor that it was created by the same individual(s), or that it represents the latest version.
@@ -59,13 +61,21 @@ As an alternative to hotkeys, you can check your system tray options by right-cl
 
 ![System Tray options](./demo/systemtray.png)
 
-**It's recommended to start the overlay when you are done loading into Mezeporta.**
+### Quick Troubleshooting
 
-If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/DorielRivalet/mhfz-overlay/issues).
+- If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/DorielRivalet/mhfz-overlay/issues).
 
-Additionally, if information from the overlay is wrong or inaccurate (e.g. monster parts labels), feel free to send an issue.
+- Additionally, if information from the overlay is wrong or inaccurate (e.g. monster parts labels), feel free to send an issue.
 
-If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If issue still occurs, disable Effective HP, otherwise send a bug report if there isn't already one.
+- If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If issue still occurs, disable Effective HP, otherwise send a bug report if there isn't already one.
+
+- If you want the overlay to use the least memory possible, you can decide to not open the configuration window. If you want to change settings, then open the configuration window, edit settings, click save and restart the overlay.
+
+- Fully reinstalling the game or .NET dependencies may fix some bugs.
+
+- Press `Alt+Enter` twice if your screen resolution got lowered.
+
+- If the HP shows 0/1 then change area for it to load.
 
 ## Features
 
@@ -237,14 +247,6 @@ These images don't show everything, find out what's missing by pressing `Shift+F
 - Damage numbers over 1000 not working
 - Yamas and Berukyurosu information not working
 
-Fully reinstalling the game or .NET dependencies may fix some bugs.
-
-Starting the overlay may take a bit of time because of the dictionaries (*i.e.* **all** in-game gear and items) and other features.
-
-Press `Alt+Enter` twice if your screen resolution got lowered.
-
-If the HP shows 0/1 then change area for it to load.
-
 [Check more bugs here](https://github.com/DorielRivalet/mhfz-overlay/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
 
 ## Frequently Asked Questions
@@ -314,13 +316,10 @@ We recommend consulting the appropriate documentation file based on your needs. 
 
 ## Acknowledgements
 
-[This project is directly inspired from the overlay created by *suzaku01*](https://github.com/suzaku01/mhf_displayer)
-
-[The theme and color palette used for the application is *Catppuccin Mocha*](https://github.com/catppuccin/catppuccin)
-
-[The design and icons used in this project are part of the *Material Design Icons* and related components](https://fonts.google.com/icons)
-
-The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
+- This project is directly inspired from the overlay created by [*suzaku01*](https://github.com/suzaku01/mhf_displayer)
+- The theme and color palette used for the application is [*Catppuccin Mocha*](https://github.com/catppuccin/catppuccin)
+- The design and icons used in this project are part of the [*Material Design Icons* and related components](https://fonts.google.com/icons)
+- The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
 
 <a href="https://github.com/suzaku01"><img style="border-radius: 50% !important;" alt="Avatar" src="https://avatars.githubusercontent.com/u/89909040?v=4" width="64px" height="auto" ></a>
 <a href="https://github.com/Imulion"><img style="border-radius: 50% !important;" alt="Avatar" src="https://avatars.githubusercontent.com/u/27354834?v=4" width="64px" height="auto" ></a>
