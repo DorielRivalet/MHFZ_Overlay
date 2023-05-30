@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace MHFZ_Overlay
+namespace MHFZ_Overlay.UI.Class.Converter
 {
     class XamlIconToViewBoxConverter : IValueConverter
     {

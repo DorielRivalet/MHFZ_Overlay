@@ -4,7 +4,7 @@
 using System;
 using System.Windows.Data;
 
-namespace MHFZ_Overlay
+namespace MHFZ_Overlay.UI.Class.Converter
 {
     /// <summary>
     /// Create a Value Converter to disable the Up & Down Arrow buttons of the scrollbar

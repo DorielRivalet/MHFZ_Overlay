@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace MHFZ_Overlay
+namespace MHFZ_Overlay.UI.Class.Converter
 {
     public class TextFormattingModeConverter : IValueConverter
     {

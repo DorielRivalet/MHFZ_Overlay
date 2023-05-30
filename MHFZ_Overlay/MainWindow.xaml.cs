@@ -46,6 +46,10 @@ using Image = System.Windows.Controls.Image;
 using Label = System.Windows.Controls.Label;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
+using MHFZ_Overlay.UI.CustomControls;
+using MHFZ_Overlay.Core.Class;
+using NotifyIcon = System.Windows.Forms.NotifyIcon;
+using Window = System.Windows.Window;
 
 namespace MHFZ_Overlay
 {

@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace MHFZ_Overlay
+namespace MHFZ_Overlay.UI.Class.Converter
 {
     public class OptionToVisibilityConverter : IValueConverter
     {

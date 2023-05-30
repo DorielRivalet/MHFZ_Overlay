@@ -4,7 +4,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MHFZ_Overlay
+namespace MHFZ_Overlay.UI.Class.Template
 {
     public class OptionTemplateSelector : DataTemplateSelector
     {

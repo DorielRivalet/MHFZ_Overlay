@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 using MHFZ_Overlay;
 using System.Collections.Generic;
+using MHFZ_Overlay.Core.Class;
 
 namespace Dictionary
 {

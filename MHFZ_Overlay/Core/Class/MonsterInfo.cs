@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 using System.Collections.Generic;
 
-namespace MHFZ_Overlay
+namespace MHFZ_Overlay.Core.Class
 {
     /// <summary>
     /// Unaffected by player stats

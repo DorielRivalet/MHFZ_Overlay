@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 
-namespace MHFZ_Overlay
+namespace MHFZ_Overlay.Core.Class
 {
     public class GlobalHotKey : IDisposable
     {

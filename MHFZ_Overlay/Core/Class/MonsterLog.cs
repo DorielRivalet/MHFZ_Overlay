@@ -1,7 +1,8 @@
 ﻿// © 2023 The mhfz-overlay Authors.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-namespace MHFZ_Overlay
+
+namespace MHFZ_Overlay.Core.Class
 {
     /// <summary>
     /// Affected by player stats

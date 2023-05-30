@@ -39,6 +39,7 @@ using ListView = System.Windows.Controls.ListView;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using Window = System.Windows.Window;
+using MHFZ_Overlay.Core.Class;
 
 namespace MHFZ_Overlay
 {

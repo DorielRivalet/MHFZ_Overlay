@@ -6,9 +6,9 @@
     <Application x:Class="MHFZ_Overlay.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:MHFZ_Overlay"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -138,13 +138,7 @@
                 <Setter Property="BorderBrush" Value="#1e1e2e"  />
                 <Setter Property="BorderThickness" Value="0,0,0,1.5"  />
                 <Setter Property="Foreground" Value="#cdd6f4" />
-                <Setter Property="HeaderForeground" Value="#cdd6f4" />
-                <Setter Property="TabForeground" Value="#cdd6f4" />
-                <Setter Property="HeaderBackground" Value="#1e1e2e" />
-                <Setter Property="DropDownBackground" Value="#1e1e2e" />
-                <Setter Property="TabBackground" Value="#1e1e2e" />
                 <Setter Property="Background" Value="#1e1e2e" />
-                <Setter Property="ColorMode" Value="ColorCanvas"/>
             </Style>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
             <FontFamily x:Key="Source Code Pro">pack://application:,,,UI/Fonts/#Source Code Pro</FontFamily>
@@ -159,14 +153,10 @@
             https://stackoverflow.com/questions/3425720/xaml-the-property-resources-is-set-more-than-once#3425956
             -->
             <ResourceDictionary.MergedDictionaries>
-                <materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="#a6e3a1" SecondaryColor="#b4befe" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-
-
-
-                <ResourceDictionary Source="MaterialDesignThemes.Overrides.xaml"/>
+                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ControlsDictionary />
+                <!--<materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="#a6e3a1" SecondaryColor="#b4befe" />-->
+                <!--TODO: replace this with ui once it adds outlinedtextblock/colorpicker components-->
                 <!-- 
                     If you overrides XAML is in a separate assembly you will need to reference it like this:
                     <ResourceDictionary Source="pack://application:,,,/Your.Assembly;component/Themes/MaterialDesignThemes.Overrides.xaml" />

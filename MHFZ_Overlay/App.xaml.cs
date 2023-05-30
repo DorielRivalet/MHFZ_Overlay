@@ -144,6 +144,8 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
         public static async Task UpdateMyApp()
         {
             isClowdSquirrelUpdating = true;
+            var splashScreen = new SplashScreen("UI/Icons/png/loading.png");
+            splashScreen.Show(false);
             try
             {
                 using var mgr = new GithubUpdateManager(@"https://github.com/DorielRivalet/mhfz-overlay");
@@ -154,6 +156,7 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
                 if (newVersion != null)
                 {
                     logger.Info("Overlay has been updated, restarting application");
+                    splashScreen.Close(TimeSpan.FromSeconds(0.1));
                     MessageBox.Show("【MHF-Z】Overlay has been updated, restarting application.", "MHF-Z Overlay Update", MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateManager.RestartApp();
                 }
@@ -161,6 +164,7 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
                 {
                     logger.Error("No updates available.");
                     isClowdSquirrelUpdating = false;
+                    splashScreen.Close(TimeSpan.FromSeconds(0.1));
                     MessageBox.Show("No updates available. If you want to check for updates manually, visit the GitHub repository at https://github.com/DorielRivalet/mhfz-overlay.", "MHF-Z Overlay Update", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
@@ -168,6 +172,7 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
             {
                 logger.Error(ex);
                 isClowdSquirrelUpdating = false;
+                splashScreen.Close(TimeSpan.FromSeconds(0.1));
                 MessageBox.Show("An error has occurred with the update process, see logs.log for more information", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

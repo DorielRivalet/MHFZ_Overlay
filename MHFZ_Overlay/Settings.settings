@@ -770,5 +770,11 @@
     <Setting Name="EnableNationality" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="CatppuccinTheme" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mocha</Value>
+    </Setting>
+    <Setting Name="CatppuccinAccentColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Green</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

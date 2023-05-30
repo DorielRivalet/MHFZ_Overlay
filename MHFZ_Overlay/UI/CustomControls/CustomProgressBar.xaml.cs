@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace MHFZ_Overlay.controls
+namespace MHFZ_Overlay.UI.CustomControls
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml

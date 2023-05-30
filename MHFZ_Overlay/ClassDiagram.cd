@@ -587,7 +587,7 @@
       <FileName>UI\Class\ZenithSkills.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MHFZ_Overlay.controls.CustomProgressBar" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="MHFZ_Overlay.UI.CustomControls.CustomProgressBar" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="21.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gQMEAQAAIiEwAAACkAEAAEQAiAAAQQAAAAAgSIEACAE=</HashCode>
