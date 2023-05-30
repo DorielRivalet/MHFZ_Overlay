@@ -138,7 +138,13 @@
                 <Setter Property="BorderBrush" Value="#1e1e2e"  />
                 <Setter Property="BorderThickness" Value="0,0,0,1.5"  />
                 <Setter Property="Foreground" Value="#cdd6f4" />
+                <Setter Property="HeaderForeground" Value="#cdd6f4" />
+                <Setter Property="TabForeground" Value="#cdd6f4" />
+                <Setter Property="HeaderBackground" Value="#1e1e2e" />
+                <Setter Property="DropDownBackground" Value="#1e1e2e" />
+                <Setter Property="TabBackground" Value="#1e1e2e" />
                 <Setter Property="Background" Value="#1e1e2e" />
+                <Setter Property="ColorMode" Value="ColorCanvas"/>
             </Style>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
             <FontFamily x:Key="Source Code Pro">pack://application:,,,UI/Fonts/#Source Code Pro</FontFamily>
