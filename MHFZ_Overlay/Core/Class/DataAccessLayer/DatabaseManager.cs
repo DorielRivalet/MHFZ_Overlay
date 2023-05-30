@@ -11,6 +11,7 @@ using MHFZ_Overlay.UI.Class.Mapper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Octokit;
+using SharpCompress.Common;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -139,7 +140,7 @@ namespace MHFZ_Overlay.Core.Class.DataAccessLayer
         #region database
 
         private bool isDatabaseSetup = false;
-        private static string previousVersion;
+        private static string previousVersion = "";
 
         public bool SetupLocalDatabase(DataLoader dataLoader)
         {
@@ -151,7 +152,7 @@ namespace MHFZ_Overlay.Core.Class.DataAccessLayer
 
                 CheckIfUserSetDatabasePath();
                 // TODO: test and add semantic versioning regex
-                WritePreviousVersionToFile();
+                CheckPreviousVersionFile();
 
                 try
                 {
@@ -183,6 +184,7 @@ namespace MHFZ_Overlay.Core.Class.DataAccessLayer
                     CreateDatabaseIndexes(conn);
                     CreateDatabaseTriggers(conn);
                     CheckDatabaseVersion(conn);
+                    WriteNewVersionToFile();
                 }
 
                 using (var conn = new SQLiteConnection(dataSource))
@@ -1917,7 +1919,26 @@ namespace MHFZ_Overlay.Core.Class.DataAccessLayer
                             transaction.Rollback();
                         // Handle a SQL exception
                         logger.Error(ex, "An error occurred while accessing the database");
-                        MessageBox.Show("An error occurred while accessing the database: " + ex.SqlState + "\n\n" + ex.HelpLink + "\n\n" + ex.ResultCode + "\n\n" + ex.ErrorCode + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(String.Format(
+@"An error occurred while accessing the database.
+
+Sql State: {0}
+
+Help Link: {1}
+
+Result Code: {2}
+
+Error Code: {3}
+
+Source: {4}
+
+Stack Trace: {5}
+
+Data: {6}
+
+Message: {7}",
+ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace, JsonConvert.SerializeObject(ex.Data), ex.Message),
+                            LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch (IOException ex)
                     {
@@ -2630,7 +2651,26 @@ namespace MHFZ_Overlay.Core.Class.DataAccessLayer
             {
                 // Handle a SQL exception
                 logger.Error(ex, "An error occurred while accessing the database");
-                MessageBox.Show("An error occurred while accessing the database: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(String.Format(
+@"An error occurred while accessing the database.
+
+SQL State: {0}
+
+Help Link: {1}
+
+Result Code: {2}
+
+Error Code: {3}
+
+Source: {4}
+
+Stack Trace: {5}
+
+Data: {6}
+
+Message: {7}",
+ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace, JsonConvert.SerializeObject(ex.Data), ex.Message),
+                    LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (IOException ex)
             {
@@ -3184,7 +3224,7 @@ Disabling Quest Logging.",
                     Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
-                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1,30)) DEFAULT 30,
+                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
                     -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
@@ -10114,16 +10154,18 @@ Disabling Quest Logging.",
                             {
                                 PerformUpdateToVersion_0_23_0(conn);
                                 newVersion++;
-                                logger.Info("Updated schema to version v0.23.0. user_version {0}", newVersion);
-                                break;
-                                //goto case 1;
+                                logger.Info("Updated schema to version v0.23.0. newVersion {0}", newVersion);
+                                goto case 1;
                             }
-                            //case 1://v0.23.0
+                            case 1://v0.25.0
                             //adds support for recent view tracking
                             //sqlite3_exec(db, "ALTER TABLE entries ADD COLUMN touched_at TEXT;", NULL, NULL, NULL);
-                            //{
-                            //PerformUpdateToVersion_0_24_0(conn);
-                            //newVersion++;
+                            {
+                                PerformUpdateToVersion_0_25_0(conn);
+                                newVersion++;
+                                logger.Info("Updated schema to version v0.25.0. newVersion {0}", newVersion);
+                                break;
+                            }
                             //goto case 2;
                             //}
                             //case 2://v0.24.0
@@ -10592,14 +10634,56 @@ Updating the database structure may take some time, it will transport all of you
                     Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
-                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1,30)) DEFAULT 30,
+                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
                     -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
                     )";
 
+            string updateQuery = @"
+        UPDATE new_Quests
+        SET QuestHash = (SELECT QuestHash FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            CreatedAt = (SELECT CreatedAt FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            CreatedBy = (SELECT CreatedBy FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            QuestID = (SELECT QuestID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            TimeLeft = (SELECT TimeLeft FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            FinalTimeValue = (SELECT FinalTimeValue FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            FinalTimeDisplay = (SELECT FinalTimeDisplay FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveImage = (SELECT ObjectiveImage FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveTypeID = (SELECT ObjectiveTypeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveQuantity = (SELECT ObjectiveQuantity FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            StarGrade = (SELECT StarGrade FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            RankName = (SELECT RankName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveName = (SELECT ObjectiveName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Date = (SELECT Date FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            YouTubeID = (SELECT YouTubeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            AttackBuffDictionary = (SELECT AttackBuffDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitCountDictionary = (SELECT HitCountDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitsPerSecondDictionary = (SELECT HitsPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            DamageDealtDictionary = (SELECT DamageDealtDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            DamagePerSecondDictionary = (SELECT DamagePerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            AreaChangesDictionary = (SELECT AreaChangesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            CartsDictionary = (SELECT CartsDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitsTakenBlockedDictionary = (SELECT HitsTakenBlockedDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitsTakenBlockedPerSecondDictionary = (SELECT HitsTakenBlockedPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PlayerHPDictionary = (SELECT PlayerHPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PlayerStaminaDictionary = (SELECT PlayerStaminaDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            KeystrokesDictionary = (SELECT KeystrokesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            MouseInputDictionary = (SELECT MouseInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            GamepadInputDictionary = (SELECT GamepadInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ActionsPerMinuteDictionary = (SELECT ActionsPerMinuteDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            OverlayModeDictionary = (SELECT OverlayModeDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ActualOverlayMode = (SELECT ActualOverlayMode FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PartySize = (SELECT PartySize FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1HPDictionary = (SELECT Monster1HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster2HPDictionary = (SELECT Monster2HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster3HPDictionary = (SELECT Monster3HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster4HPDictionary = (SELECT Monster4HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID)
+            WHERE EXISTS (SELECT 1 FROM Quests WHERE Quests.RunID = new_Quests.RunID)"
+            ;
+
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
-            AlterTableQuests(connection, sql);
+            AlterTableQuests(connection, sql, updateQuery);
 
             sql = @"
                     CREATE TABLE IF NOT EXISTS new_GameFolder (
@@ -10628,8 +10712,66 @@ Updating the database structure may take some time, it will transport all of you
         }
 
         // Define a function that takes a connection string, the name of the table to alter (X), and the new schema for the table (as a SQL string)
-        private void AlterTableQuests(SQLiteConnection connection, string newSchema)
+        private void AlterTableQuests(SQLiteConnection connection, string newSchema, string updateQuery)
         {
+
+            /*
+             *sql = @"CREATE TABLE IF NOT EXISTS new_Quests
+                    (
+                    QuestHash TEXT NOT NULL DEFAULT '',
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
+                    RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    TimeLeft INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeValue INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeDisplay TEXT NOT NULL DEFAULT '', 
+                    ObjectiveImage TEXT NOT NULL DEFAULT '',
+                    ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0) DEFAULT 0, 
+                    ObjectiveQuantity INTEGER NOT NULL DEFAULT 0, 
+                    StarGrade INTEGER NOT NULL DEFAULT 0, 
+                    RankName TEXT NOT NULL DEFAULT '', 
+                    ObjectiveName TEXT NOT NULL DEFAULT '', 
+                    Date TEXT NOT NULL DEFAULT '',
+                    YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
+                    -- DpsData TEXT NOT NULL DEFAULT '',
+                    AttackBuffDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitCountDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamageDealtDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamagePerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    AreaChangesDictionary TEXT NOT NULL DEFAULT '{}',
+                    CartsDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerHPDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerStaminaDictionary TEXT NOT NULL DEFAULT '{}',
+                    KeystrokesDictionary TEXT NOT NULL DEFAULT '{}',
+                    MouseInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    GamepadInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActionsPerMinuteDictionary TEXT NOT NULL DEFAULT '{}',
+                    OverlayModeDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    PartySize INTEGER NOT NULL DEFAULT 0,
+                    Monster1HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster2HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster3HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster4HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1PoisonThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SleepThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
+                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
+                    FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
+                    FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
+                    -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
+                    )";
+             */
             logger.Info("Altering Quests table");
 
             var tableName = "Quests";
@@ -10696,48 +10838,8 @@ Updating the database structure may take some time, it will transport all of you
                     logger.Debug("Inserted default values into new_Quests");
 
                     // Update values from Quests to new_Quests
-                    string updateQuery = @"
-        UPDATE new_Quests
-        SET QuestHash = (SELECT QuestHash FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            CreatedAt = (SELECT CreatedAt FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            CreatedBy = (SELECT CreatedBy FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            QuestID = (SELECT QuestID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            TimeLeft = (SELECT TimeLeft FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            FinalTimeValue = (SELECT FinalTimeValue FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            FinalTimeDisplay = (SELECT FinalTimeDisplay FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ObjectiveImage = (SELECT ObjectiveImage FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ObjectiveTypeID = (SELECT ObjectiveTypeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ObjectiveQuantity = (SELECT ObjectiveQuantity FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            StarGrade = (SELECT StarGrade FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            RankName = (SELECT RankName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ObjectiveName = (SELECT ObjectiveName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Date = (SELECT Date FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            YouTubeID = (SELECT YouTubeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            AttackBuffDictionary = (SELECT AttackBuffDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            HitCountDictionary = (SELECT HitCountDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            HitsPerSecondDictionary = (SELECT HitsPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            DamageDealtDictionary = (SELECT DamageDealtDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            DamagePerSecondDictionary = (SELECT DamagePerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            AreaChangesDictionary = (SELECT AreaChangesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            CartsDictionary = (SELECT CartsDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            HitsTakenBlockedDictionary = (SELECT HitsTakenBlockedDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            HitsTakenBlockedPerSecondDictionary = (SELECT HitsTakenBlockedPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            PlayerHPDictionary = (SELECT PlayerHPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            PlayerStaminaDictionary = (SELECT PlayerStaminaDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            KeystrokesDictionary = (SELECT KeystrokesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            MouseInputDictionary = (SELECT MouseInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            GamepadInputDictionary = (SELECT GamepadInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ActionsPerMinuteDictionary = (SELECT ActionsPerMinuteDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            OverlayModeDictionary = (SELECT OverlayModeDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ActualOverlayMode = (SELECT ActualOverlayMode FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            PartySize = (SELECT PartySize FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Monster1HPDictionary = (SELECT Monster1HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Monster2HPDictionary = (SELECT Monster2HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Monster3HPDictionary = (SELECT Monster3HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Monster4HPDictionary = (SELECT Monster4HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID)
-            WHERE EXISTS (SELECT 1 FROM Quests WHERE Quests.RunID = new_Quests.RunID)"
-                    ;
                     /*
+                     * these are our new fields if going from v0.22
                     Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
                     Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
                     Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
@@ -10747,7 +10849,7 @@ Updating the database structure may take some time, it will transport all of you
                     Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
-                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1,30)) DEFAULT 30,
+                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
                     */
 
                     using (var updateCommand = new SQLiteCommand(updateQuery, connection))
@@ -11302,14 +11404,130 @@ Updating the database structure may take some time, it will transport all of you
             }
         }
 
-        private static void PerformUpdateToVersion_0_24_0(SQLiteConnection connection)
+        //TODO: test from user_version 0 and 1
+        private void PerformUpdateToVersion_0_25_0(SQLiteConnection connection)
         {
-            // Perform database updates for version 0.24.0
+            // Perform database updates for version 0.25.0
             // Add your update logic here
+
+            //Create the Quests table
+            string sql = @"CREATE TABLE IF NOT EXISTS new_Quests 
+                    (
+                    QuestHash TEXT NOT NULL DEFAULT '',
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
+                    RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    TimeLeft INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeValue INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeDisplay TEXT NOT NULL DEFAULT '', 
+                    ObjectiveImage TEXT NOT NULL DEFAULT '',
+                    ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0) DEFAULT 0, 
+                    ObjectiveQuantity INTEGER NOT NULL DEFAULT 0, 
+                    StarGrade INTEGER NOT NULL DEFAULT 0, 
+                    RankName TEXT NOT NULL DEFAULT '', 
+                    ObjectiveName TEXT NOT NULL DEFAULT '', 
+                    Date TEXT NOT NULL DEFAULT '',
+                    YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
+                    -- DpsData TEXT NOT NULL DEFAULT '',
+                    AttackBuffDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitCountDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamageDealtDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamagePerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    AreaChangesDictionary TEXT NOT NULL DEFAULT '{}',
+                    CartsDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerHPDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerStaminaDictionary TEXT NOT NULL DEFAULT '{}',
+                    KeystrokesDictionary TEXT NOT NULL DEFAULT '{}',
+                    MouseInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    GamepadInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActionsPerMinuteDictionary TEXT NOT NULL DEFAULT '{}',
+                    OverlayModeDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    PartySize INTEGER NOT NULL DEFAULT 0,
+                    Monster1HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster2HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster3HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster4HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1PoisonThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SleepThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
+                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
+                    FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
+                    FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
+                    -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
+                    )";
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            string updateQuery = @"
+        UPDATE new_Quests
+        SET QuestHash = (SELECT QuestHash FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            CreatedAt = (SELECT CreatedAt FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            CreatedBy = (SELECT CreatedBy FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            QuestID = (SELECT QuestID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            TimeLeft = (SELECT TimeLeft FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            FinalTimeValue = (SELECT FinalTimeValue FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            FinalTimeDisplay = (SELECT FinalTimeDisplay FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveImage = (SELECT ObjectiveImage FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveTypeID = (SELECT ObjectiveTypeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveQuantity = (SELECT ObjectiveQuantity FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            StarGrade = (SELECT StarGrade FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            RankName = (SELECT RankName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveName = (SELECT ObjectiveName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Date = (SELECT Date FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            YouTubeID = (SELECT YouTubeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            AttackBuffDictionary = (SELECT AttackBuffDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitCountDictionary = (SELECT HitCountDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitsPerSecondDictionary = (SELECT HitsPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            DamageDealtDictionary = (SELECT DamageDealtDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            DamagePerSecondDictionary = (SELECT DamagePerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            AreaChangesDictionary = (SELECT AreaChangesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            CartsDictionary = (SELECT CartsDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitsTakenBlockedDictionary = (SELECT HitsTakenBlockedDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitsTakenBlockedPerSecondDictionary = (SELECT HitsTakenBlockedPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PlayerHPDictionary = (SELECT PlayerHPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PlayerStaminaDictionary = (SELECT PlayerStaminaDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            KeystrokesDictionary = (SELECT KeystrokesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            MouseInputDictionary = (SELECT MouseInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            GamepadInputDictionary = (SELECT GamepadInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ActionsPerMinuteDictionary = (SELECT ActionsPerMinuteDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            OverlayModeDictionary = (SELECT OverlayModeDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ActualOverlayMode = (SELECT ActualOverlayMode FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PartySize = (SELECT PartySize FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1HPDictionary = (SELECT Monster1HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster2HPDictionary = (SELECT Monster2HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster3HPDictionary = (SELECT Monster3HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster4HPDictionary = (SELECT Monster4HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1AttackMultiplierDictionary = (SELECT Monster1AttackMultiplierDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1DefenseRateDictionary = (SELECT Monster1DefenseRateDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1SizeMultiplierDictionary = (SELECT Monster1SizeMultiplierDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1PoisonThresholdDictionary = (SELECT Monster1PoisonThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1SleepThresholdDictionary = (SELECT Monster1SleepThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1ParalysisThresholdDictionary = (SELECT Monster1ParalysisThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1BlastThresholdDictionary = (SELECT Monster1BlastThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1StunThresholdDictionary = (SELECT Monster1StunThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            IsHighGradeEdition = (SELECT IsHighGradeEdition FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            RefreshRate = (SELECT RefreshRate FROM Quests WHERE Quests.RunID = new_Quests.RunID)
+            WHERE EXISTS (SELECT 1 FROM Quests WHERE Quests.RunID = new_Quests.RunID)"
+                   ;
+
+            AlterTableQuests(connection, sql, updateQuery);
         }
 
         // TODO: should i put this in FileManager?
-        private void WritePreviousVersionToFile()
+        private void CheckPreviousVersionFile()
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
             var previousVersionFilePath = s.PreviousVersionFilePath.Trim();
@@ -11321,9 +11539,19 @@ Updating the database structure may take some time, it will transport all of you
             // version, so we are not left with a blank text file).
             try
             {
-                previousVersion = App.CurrentProgramVersion.Trim();
-                File.WriteAllText(previousVersionFilePath, previousVersion);
-                logger.Info("Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
+                if (File.Exists(previousVersionFilePath))
+                {
+                    logger.Info("previousVersionFilePath found, reading version number.");
+                    previousVersion = File.ReadAllText(previousVersionFilePath).Trim();
+                    logger.Info("previousVersionFilePath version number {0}", previousVersion);
+                }
+                else
+                {
+                    logger.Info("previousVersionFilePath does not exist, creating file");
+                    previousVersion = App.CurrentProgramVersion.Trim();
+                    File.WriteAllText(previousVersionFilePath, previousVersion);
+                    logger.Info("Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
+                }
             }
             catch (Exception ex)
             {
@@ -11331,19 +11559,38 @@ Updating the database structure may take some time, it will transport all of you
             }
         }
 
-        private string ReadPreviousVersionFromFile()
+        //TODO: test
+        private void WriteNewVersionToFile()
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
-
-            string version = "";
-            if (File.Exists(s.PreviousVersionFilePath))
+            var previousVersionFilePath = s.PreviousVersionFilePath.Trim();
+            var logMessage = "Error with version file";
+            try
             {
-                using (StreamReader reader = new StreamReader(s.PreviousVersionFilePath))
+                if (File.Exists(previousVersionFilePath))
                 {
-                    version = reader.ReadToEnd();
+                    string versionInFile = File.ReadAllText(previousVersionFilePath).Trim();
+                    if (string.IsNullOrEmpty(versionInFile))
+                    {
+                        logger.Fatal("previousVersionFilePath file is empty");
+                        MessageBox.Show("previous-version.txt is empty.");
+                        LoggingManager.WriteCrashLog(new Exception("previous-version.txt is empty."), logMessage);
+                    }
+                    previousVersion = App.CurrentProgramVersion.Trim();
+                    File.WriteAllText(previousVersionFilePath, previousVersion);
+                    logger.Info("previousVersionFilePath found, writing new version number from {0} to {1}", versionInFile, previousVersion);
+                }
+                else
+                {
+                    logger.Fatal("previousVersionFilePath does not exist");
+                    MessageBox.Show("previous-version.txt not found.");
+                    LoggingManager.WriteCrashLog(new Exception("previous-version.txt not found."), logMessage);
                 }
             }
-            return version;
+            catch (Exception ex)
+            {
+                logger.Error(ex, logMessage);
+            }
         }
 
         #endregion
