@@ -65,7 +65,7 @@ As an alternative to hotkeys, you can check your system tray options by right-cl
 
 - If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/DorielRivalet/mhfz-overlay/issues).
 
-- Additionally, if information from the overlay is wrong or inaccurate (e.g. monster parts labels), feel free to send an issue.
+- Additionally, if information from the overlay is wrong or inaccurate (*e.g.* monster parts labels), feel free to send an issue.
 
 - If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If issue still occurs, disable Effective HP, otherwise send a bug report if there isn't already one.
 
@@ -76,6 +76,8 @@ As an alternative to hotkeys, you can check your system tray options by right-cl
 - Press `Alt+Enter` twice if your screen resolution got lowered.
 
 - If the HP shows 0/1 then change area for it to load.
+
+- If you have screen issues when starting the overlay, first press `Alt+Enter` in-game, load the overlay, then press `Alt+Enter` in-game again. Also make sure that the UAC prompts do not cause issues in your computer, and that you have the correct permissions.
 
 ## Features
 
@@ -255,7 +257,7 @@ These images don't show everything, find out what's missing by pressing `Shift+F
 
 ## How to Manually Update with Update.exe
 
-`update.exe --update https://www.github.com/DorielRivalet/mhfz-overlay/releases/download/ENTER VERSION NUMBER (E.G. v0.6.4)`
+`update.exe --update https://www.github.com/DorielRivalet/mhfz-overlay/releases/download/ENTER VERSION NUMBER (e.g. v0.6.4)`
 
 ## How to Uninstall
 
