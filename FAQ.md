@@ -71,7 +71,7 @@ Use the preset option found in the General tab. Keep reading if you want to know
 
 If you're experiencing a slowdown in your game while recording with OBS and using the overlay, there are a few potential reasons and solutions to consider:
 
-* System resources: Recording gameplay with OBS and running an overlay can be resource-intensive, especially if your computer has limited CPU or GPU resources. Try closing any unnecessary programs, lowering in-game graphics settings, or upgrading your hardware to meet the requirements for recording and overlay usage.
+* System resources: If your computer has limited CPU or GPU resources then recording gameplay with OBS and running an overlay can be resource-intensive. Try closing any unnecessary programs, lowering in-game graphics settings, or upgrading your hardware to meet the requirements for recording and overlay usage.
 
 * Overlay settings: The settings of the overlay can also impact performance. Make sure your overlay settings are optimized for performance, such as using lower resolution and disabling any unnecessary features. Try one of the configuration presets, such as Speedrun, Zen or HP only. Lastly, try reducing the maximum resolution values. As a last resort, try lowering the Refresh Rate, at the cost of stats accuracy.
 
@@ -100,7 +100,7 @@ We use [semantic versioning](https://semver.org/) to number our releases. In sem
 
 Major version zero (0.y.z) is for initial development. Anything MAY change at any time. The public API SHOULD NOT be considered stable.
 
-We provide [release notes](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md) with each new version of the software, which describe the changes that have been made and how they may affect you. If upgrading to a new version requires any special instructions, we will provide these as well.
+We provide [release notes](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md) with each new version of the software, which describe the changes that have been made and how they may affect you. If upgrading to a new version requires any specific instructions, we will provide these as well.
 
 If you have any questions about versioning or how to upgrade your software, please don't hesitate to contact us for support.
 
