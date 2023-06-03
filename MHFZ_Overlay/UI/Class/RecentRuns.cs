@@ -3,18 +3,17 @@
 // found in the LICENSE file.
 using System;
 
-namespace MHFZ_Overlay.UI.Class
+namespace MHFZ_Overlay.UI.Class;
+
+public class RecentRuns
 {
-    public class RecentRuns
-    {
-        public string ObjectiveImage { get; set; }
-        public string QuestName { get; set; }
-        public long RunID { get; set; }
-        public long QuestID { get; set; }
-        public string YoutubeID { get; set; }
-        public string FinalTimeDisplay { get; set; }
-        public DateTime Date { get; set; }
-        public string ActualOverlayMode { get; set; }
-        public long PartySize { get; set; }
-    }
+    public string ObjectiveImage { get; set; }
+    public string QuestName { get; set; }
+    public long RunID { get; set; }
+    public long QuestID { get; set; }
+    public string YoutubeID { get; set; }
+    public string FinalTimeDisplay { get; set; }
+    public DateTime Date { get; set; }
+    public string ActualOverlayMode { get; set; }
+    public long PartySize { get; set; }
 }
