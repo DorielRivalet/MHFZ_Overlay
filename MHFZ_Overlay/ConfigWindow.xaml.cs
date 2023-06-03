@@ -1400,18 +1400,18 @@ public partial class ConfigWindow : Window
         }
     }
 
-    private CartesianChart weaponUsageChart;
-    private Button updateYoutubeLinkButton;
-    private TextBox youtubeLinkTextBox;
-    private ListView mostRecentRunsListView;
-    private ListView top20RunsListView;
-    private TextBlock questLogGearStatsTextBlock;
-    private TextBlock compendiumTextBlock;
-    private CartesianChart graphChart;
-    private TextBlock statsTextTextBlock;
-    private CartesianChart personalBestChart;
-    private PolarChart hunterPerformanceChart;
-    private StackPanel compendiumInformationStackPanel;
+    private CartesianChart? weaponUsageChart;
+    private Button? updateYoutubeLinkButton;
+    private TextBox? youtubeLinkTextBox;
+    private ListView? mostRecentRunsListView;
+    private ListView? top20RunsListView;
+    private TextBlock? questLogGearStatsTextBlock;
+    private TextBlock? compendiumTextBlock;
+    private CartesianChart? graphChart;
+    private TextBlock? statsTextTextBlock;
+    private CartesianChart? personalBestChart;
+    private PolarChart? hunterPerformanceChart;
+    private StackPanel? compendiumInformationStackPanel;
     private string personalBestSelectedWeapon = "";
     private string personalBestSelectedType = "";
 
@@ -1539,13 +1539,13 @@ public partial class ConfigWindow : Window
         compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
     }
 
-    private ISeries[] Series { get; set; }
-    private Axis[] XAxes { get; set; }
-    private Axis[] YAxes { get; set; }
+    private ISeries[]? Series { get; set; }
+    private Axis[]? XAxes { get; set; }
+    private Axis[]? YAxes { get; set; }
 
-    private ISeries[] PersonalBestSeries { get; set; }
-    private Axis[] PersonalBestXAxes { get; set; }
-    private Axis[] PersonalBestYAxes { get; set; }
+    private ISeries[]? PersonalBestSeries { get; set; }
+    private Axis[]? PersonalBestXAxes { get; set; }
+    private Axis[]? PersonalBestYAxes { get; set; }
 
     private void SetColumnSeriesForDictionaryIntInt(Dictionary<int, int> data)
     {

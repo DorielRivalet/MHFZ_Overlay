@@ -1818,7 +1818,7 @@ TreeScope.Children, condition);
     }
 
     private double HighestAttackMult { get; set; } = 0;
-    private decimal LowestMonsterDefrate { get; set; } = 1000;
+    private decimal LowestMonsterDefrate { get; set; } = 1_000;
 
     public string isHighestMonsterAttackMultiplier
     {
@@ -1886,7 +1886,7 @@ TreeScope.Children, condition);
                 HighestAtk = 0;
                 HighestDPS = 0;
                 HighestAttackMult = 0; // i get stackoverflow otherwise
-                LowestMonsterDefrate = 1000; // should be enough
+                LowestMonsterDefrate = 1_000; // should be enough
 
             }
 

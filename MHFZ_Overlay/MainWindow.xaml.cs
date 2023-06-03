@@ -227,7 +227,7 @@ public partial class MainWindow : Window
         Topmost = true;
         DispatcherTimer timer = new();
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        timer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / s.RefreshRate);
+        timer.Interval = new TimeSpan(0, 0, 0, 0, 1_000 / s.RefreshRate);
         //memory leak?
         timer.Tick += Timer_Tick;
         timer.Start();
@@ -698,7 +698,7 @@ The process may take some time, as the program attempts to download from GitHub 
             else if (curNum < 0)
             {
                 // TODO
-                curNum += 1000;
+                curNum += 1_000;
                 CreateDamageNumberLabel(curNum);
                 if (!DataLoader.model.damageDealtDictionary.ContainsKey(DataLoader.model.TimeInt()))
                 {
@@ -994,7 +994,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private void RemoveDamageNumberLabel(OutlinedTextBlock tb)
     {
         DispatcherTimer timer = new();
-        timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+        timer.Interval = new TimeSpan(0, 0, 0, 0, 1_000);
         //memory leak?
         timer.Tick += (o, e) => { DamageNumbers.Children.Remove(tb); };
         timer.Start();

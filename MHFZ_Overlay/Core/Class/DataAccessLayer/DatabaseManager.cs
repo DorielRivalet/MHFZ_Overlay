@@ -5145,7 +5145,7 @@ Disabling Quest Logging.",
                         {
                             // Database is locked, retry after a short delay
                             numRetries++;
-                            Thread.Sleep(1000);
+                            Thread.Sleep(1_000);
                         }
                         else
                         {
@@ -5209,7 +5209,7 @@ Disabling Quest Logging.",
                         {
                             // Database is locked, retry after a short delay
                             numRetries++;
-                            Thread.Sleep(1000);
+                            Thread.Sleep(1_000);
                         }
                         else
                         {

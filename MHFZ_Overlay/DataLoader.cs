@@ -365,7 +365,7 @@ public class DataLoader
         double elapsedTime = totalQuestDuration - timeRemainingInQuest;
 
         // Convert the elapsed time from seconds to milliseconds
-        elapsedTime *= 1000;
+        elapsedTime *= 1_000;
 
         // Convert the elapsed time to a TimeSpan object
         TimeSpan timeSpan = TimeSpan.FromMilliseconds(elapsedTime);
