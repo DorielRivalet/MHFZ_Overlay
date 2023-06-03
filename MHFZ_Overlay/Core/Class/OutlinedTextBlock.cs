@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Markup;
 using System.Windows.Media;
 
+//TODO: move to UI
 namespace MHFZ_Overlay.UI.Class
 {
 

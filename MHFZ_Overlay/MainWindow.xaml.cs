@@ -523,6 +523,8 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             try
             {
+                HideMonsterInfoWhenNotInQuest();
+                HidePlayerInfoWhenNotInQuest();
                 discordManager.UpdateDiscordRPC(DataLoader);
                 CheckIfLocationChanged();
                 CheckIfQuestChanged();
@@ -537,8 +539,6 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             try
             {
-                HideMonsterInfoWhenNotInQuest();
-                HidePlayerInfoWhenNotInQuest();
                 DataLoader.CheckForExternalProcesses();
                 DataLoader.CheckForIllegalModifications();
             }
@@ -1352,8 +1352,6 @@ The process may take some time, as the program attempts to download from GitHub 
 
             try
             {
-                HideMonsterInfoWhenNotInQuest();
-                HidePlayerInfoWhenNotInQuest();
                 DataLoader.CheckForExternalProcesses();
                 DataLoader.CheckForIllegalModifications();
             }
