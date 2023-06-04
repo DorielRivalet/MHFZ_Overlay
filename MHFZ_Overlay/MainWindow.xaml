@@ -13,7 +13,7 @@
         xmlns:local="clr-namespace:MHFZ_Overlay"
         xmlns:addresses="clr-namespace:MHFZ_Overlay.Addresses"
         xmlns:local1="clr-namespace:MHFZ_Overlay.UI.Class.Converter"
-        xmlns:class="clr-namespace:MHFZ_Overlay.UI.Class"
+        xmlns:class="clr-namespace:MHFZ_Overlay.UI.Class" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
         x:Name="Window"
@@ -27,7 +27,26 @@
         <local1:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
         <RoutedUICommand x:Key="ESC" Text="Escape"/>
     </Window.Resources>
-    
+    <Grid>
+    <ui:TitleBar>
+        <ui:TitleBar.Tray>
+                <ui:NotifyIcon
+          FocusOnLeftClick="True"
+          MenuOnRightClick="True"
+          TooltipText="WPF UI"
+                    x:Name="MainWindowNotifyIcon">
+                    <ui:NotifyIcon.Menu>
+                        <ContextMenu>
+                            <ui:MenuItem
+                 Header="Home"
+                 SymbolIcon="Library28"
+                 Tag="home" 
+                                />
+                        </ContextMenu>
+                    </ui:NotifyIcon.Menu>
+                </ui:NotifyIcon>
+            </ui:TitleBar.Tray>
+    </ui:TitleBar>
     <Canvas x:Name="MainGrid" Width="3840 " Height="2160" Background="Transparent" AllowDrop="True" Drop="MainGrid_Drop" DragOver="MainGrid_DragOver"  MouseMove="MainGrid_MouseMove">
         <Grid x:Name="ConfigGrid" Canvas.Top="0" Canvas.Left="0" >
             <!--<Grid.ColumnDefinitions>
@@ -673,8 +692,9 @@
             </Button.Content>
         </Button>
     </Canvas>
+    </Grid>
     <Window.InputBindings>
-        <KeyBinding Key="Esc" Command="{StaticResource ESC}"/>
+    <KeyBinding Key="Esc" Command="{StaticResource ESC}"/>
     </Window.InputBindings>
     <Window.CommandBindings>
         <CommandBinding Command="{StaticResource ESC}" Executed="CommandBinding_Executed"/>

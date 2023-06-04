@@ -161,6 +161,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
+                <ResourceDictionary Source="UI/Themes/CatppuccinMocha.xaml" />
                 <!--<materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="#a6e3a1" SecondaryColor="#b4befe" />-->
                 <!--TODO: replace this with ui once it adds outlinedtextblock/colorpicker components-->
                 <!-- 

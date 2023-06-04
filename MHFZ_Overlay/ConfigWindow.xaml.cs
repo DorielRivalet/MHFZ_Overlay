@@ -40,13 +40,14 @@ using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using Window = System.Windows.Window;
 using MHFZ_Overlay.Core.Class;
+using Wpf.Ui.Controls;
 
 namespace MHFZ_Overlay;
 
 /// <summary>
 /// Interaction logic for ConfigWindow.xaml
 /// </summary>
-public partial class ConfigWindow : Window
+public partial class ConfigWindow : UiWindow
 {
     /// <summary>
     /// Gets or sets the main window.

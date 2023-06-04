@@ -730,4 +730,10 @@
     <Folder Include="Core\Class\Dictionary\Gacha\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="UI\Themes\CatppuccinMocha.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+  </ItemGroup>
+
 </Project>

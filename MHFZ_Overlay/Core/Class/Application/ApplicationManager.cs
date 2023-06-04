@@ -7,6 +7,7 @@ using MHFZ_Overlay.Core.Class.Log;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Windows.Navigation;
 
 namespace MHFZ_Overlay.Core.Class.Application;
 
@@ -36,9 +37,10 @@ internal class ApplicationManager
     /// </summary>
     public static void DisposeNotifyIcon()
     {
-        MainWindow._notifyIcon.Visible = false;
-        MainWindow._notifyIcon.Icon = null;
-        MainWindow._notifyIcon.Dispose();
+        if (MainWindow._mainWindowNotifyIcon == null) return;
+        MainWindow._mainWindowNotifyIcon.Visibility = System.Windows.Visibility.Collapsed;
+        MainWindow._mainWindowNotifyIcon.Icon = null;
+        MainWindow._mainWindowNotifyIcon.Dispose();
         logger.Info("Disposed Notify Icon");
     }
 

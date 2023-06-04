@@ -48,8 +48,9 @@ using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
 using MHFZ_Overlay.UI.CustomControls;
 using MHFZ_Overlay.Core.Class;
-using NotifyIcon = System.Windows.Forms.NotifyIcon;
+using NotifyIcon = Wpf.Ui.Controls.NotifyIcon;
 using Window = System.Windows.Window;
+using Wpf.Ui.Controls;
 
 namespace MHFZ_Overlay;
 
@@ -71,32 +72,24 @@ public partial class MainWindow : Window
 
     #region system tray
 
-    internal static NotifyIcon _notifyIcon = new NotifyIcon();
+    public static NotifyIcon? _mainWindowNotifyIcon { get; set;}
 
     private void CreateSystemTrayIcon()
     {
-        var iconPath = "UI\\Icons\\ico\\mhfzoverlayicon256.ico";
-        var iconStream = Application.GetResourceStream(new Uri(iconPath, UriKind.Relative)).Stream;
-        var icon = new System.Drawing.Icon(iconStream);
-        _notifyIcon.Icon = icon;
-        _notifyIcon.Text = "MHF-Z Overlay";
-        _notifyIcon.Visible = true;
-
-        var contextMenu = new ContextMenuStrip();
-        contextMenu.Items.Add("Settings", null, OptionSettings_Click);
-        contextMenu.Items.Add(new ToolStripSeparator());
-        contextMenu.Items.Add("Help", null, OptionHelp_Click);
-        contextMenu.Items.Add("Documentation", null, OptionDocumentation_Click);
-        contextMenu.Items.Add("Report Bug", null, OptionReportBug_Click);
-        contextMenu.Items.Add("Request Feature", null, OptionRequestFeature_Click);
-        contextMenu.Items.Add("Send Feedback", null, OptionSendFeedback_Click);
-        contextMenu.Items.Add(new ToolStripSeparator());
-        contextMenu.Items.Add("Restart", null, OptionRestart_Click);
-        contextMenu.Items.Add("Exit", null, OptionExit_Click);
-        contextMenu.Items.Add(new ToolStripSeparator());
-        contextMenu.Items.Add("About", null, OptionAbout_Click);
-
-        _notifyIcon.ContextMenuStrip = contextMenu;
+        _mainWindowNotifyIcon = MainWindowNotifyIcon;
+        //var contextMenu = new ContextMenuStrip();
+        //contextMenu.Items.Add("Settings", null, OptionSettings_Click);
+        //contextMenu.Items.Add(new ToolStripSeparator());
+        //contextMenu.Items.Add("Help", null, OptionHelp_Click);
+        //contextMenu.Items.Add("Documentation", null, OptionDocumentation_Click);
+        //contextMenu.Items.Add("Report Bug", null, OptionReportBug_Click);
+        //contextMenu.Items.Add("Request Feature", null, OptionRequestFeature_Click);
+        //contextMenu.Items.Add("Send Feedback", null, OptionSendFeedback_Click);
+        //contextMenu.Items.Add(new ToolStripSeparator());
+        //contextMenu.Items.Add("Restart", null, OptionRestart_Click);
+        //contextMenu.Items.Add("Exit", null, OptionExit_Click);
+        //contextMenu.Items.Add(new ToolStripSeparator());
+        //contextMenu.Items.Add("About", null, OptionAbout_Click);
     }
 
     private void _notifyIcon_Click(object sender, EventArgs e)
