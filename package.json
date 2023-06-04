@@ -48,6 +48,10 @@
               "section": "Bug Fixes"
             },
             {
+              "type": "perf",
+              "section": "Performance Improvements"
+            },
+            {
               "type": "refactor",
               "section": "For Developers"
             },
@@ -65,10 +69,6 @@
             },
             {
               "type": "test",
-              "section": "For Developers"
-            },
-            {
-              "type": "perf",
               "section": "For Developers"
             },
             {
