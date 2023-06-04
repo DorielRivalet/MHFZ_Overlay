@@ -1,6 +1,7 @@
 ﻿// © 2023 The mhfz-overlay Authors.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
+using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
 using Squirrel;
@@ -26,13 +27,43 @@ public partial class App : Application
     /// <summary>
     /// The current program version. TODO: put in env var
     /// </summary>
-    public const string CurrentProgramVersion = "v0.24.1";
+    public static string? CurrentProgramVersion { get; private set; }
+
+    //private string GetAssemblyVersion()
+    //{
+    //    return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? String.Empty;
+    //}
+    private static string GetAssemblyVersion
+    {
+        get
+        {
+            var assemblyVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            var versionString = assemblyVersion != null
+                ? $"{assemblyVersion.Major}.{assemblyVersion.Minor}.{assemblyVersion.Build}"
+                : "0.0.0";
+
+            return versionString;
+        }
+    }
 
     protected override void OnStartup(StartupEventArgs e)
     {
         logger.Info("Started WPF application");
         logger.Trace("Call stack: {0}", new StackTrace().ToString());
         logger.Debug("OS: {0}, is64BitOS: {1}, is64BitProcess: {2}, CLR version: {3}", Environment.OSVersion, Environment.Is64BitOperatingSystem, Environment.Is64BitProcess, Environment.Version);
+
+        // TODO: test if this doesnt conflict with squirrel update
+        CurrentProgramVersion = $"v{GetAssemblyVersion}";
+        if (CurrentProgramVersion == "v0.0.0")
+        {
+            logger.Fatal("Program version not found");
+            MessageBox.Show("Program version not found", LoggingManager.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            LoggingManager.WriteCrashLog(new Exception("Program version not found"));
+        }
+        else
+        {
+            logger.Info("Found program version {0}", CurrentProgramVersion);
+        }
 
         // run Squirrel first, as the app may exit after these run
         SquirrelAwareApp.HandleEvents(
