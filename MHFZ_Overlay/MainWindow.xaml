@@ -21,7 +21,7 @@
         Height="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"
         Width="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" Background="Transparent" AllowsTransparency="True" WindowStyle="None"
         Style="{StaticResource WinAll}"
-        FontFamily="{StaticResource Source Code Pro Bold}"
+        FontFamily="{StaticResource MesloLGM NF}"
         >
     <Window.Resources>
         <local1:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>

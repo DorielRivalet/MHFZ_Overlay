@@ -155,6 +155,8 @@
             <FontFamily x:Key="Monster hunter">pack://application:,,,UI/Fonts/#Monster hunter</FontFamily>
             <FontFamily x:Key="Segoe UI Variable">pack://application:,,,UI/Fonts/#Segoe UI Variable</FontFamily>
             <FontFamily x:Key="Segoe Fluent Icons">pack://application:,,,UI/Fonts/#Segoe Fluent Icons</FontFamily>
+            <FontFamily x:Key="MesloLGM NF">pack://application:,,,UI/Fonts/#MesloLGM NF</FontFamily>
+
             <!--<ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>

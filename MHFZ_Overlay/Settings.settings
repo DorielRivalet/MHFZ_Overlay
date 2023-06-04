@@ -738,7 +738,7 @@
       <Value Profile="(Default)">Bold</Value>
     </Setting>
     <Setting Name="SecondaryFontFamily" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Source Code Pro</Value>
+      <Value Profile="(Default)">MesloLGM NF</Value>
     </Setting>
     <Setting Name="SecondaryFontSize" Type="System.String" Scope="User">
       <Value Profile="(Default)">16</Value>

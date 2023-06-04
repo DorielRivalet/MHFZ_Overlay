@@ -47,6 +47,7 @@
     <None Remove="UI\Background\7.png" />
     <None Remove="UI\Background\8.png" />
     <None Remove="UI\Background\9.png" />
+    <None Remove="UI\Fonts\Meslo LG M Regular Nerd Font Complete Mono Windows Compatible.ttf" />
     <None Remove="UI\Fonts\Monster hunter type 2.ttf" />
     <None Remove="UI\Fonts\OpenSans-Bold.ttf" />
     <None Remove="UI\Fonts\OpenSans-BoldItalic.ttf" />
@@ -314,6 +315,7 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="UI\Fonts\Meslo LG M Regular Nerd Font Complete Mono Windows Compatible.ttf" />
     <Resource Include="UI\Fonts\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

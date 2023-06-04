@@ -2965,7 +2965,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Source Code Pro")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MesloLGM NF")]
         public string SecondaryFontFamily {
             get {
                 return ((string)(this["SecondaryFontFamily"]));
