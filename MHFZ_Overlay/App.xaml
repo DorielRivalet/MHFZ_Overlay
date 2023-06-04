@@ -153,6 +153,8 @@
             <FontFamily x:Key="Open Sans Bold">pack://application:,,,UI/Fonts/#Open Sans Bold</FontFamily>
             <FontFamily x:Key="Open Sans Italic">pack://application:,,,UI/Fonts/#Open Sans Italic</FontFamily>
             <FontFamily x:Key="Monster hunter">pack://application:,,,UI/Fonts/#Monster hunter</FontFamily>
+            <FontFamily x:Key="Segoe UI Variable">pack://application:,,,UI/Fonts/#Segoe UI Variable</FontFamily>
+            <FontFamily x:Key="Segoe Fluent Icons">pack://application:,,,UI/Fonts/#Segoe Fluent Icons</FontFamily>
             <!--<ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>

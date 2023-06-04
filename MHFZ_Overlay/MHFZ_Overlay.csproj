@@ -60,6 +60,8 @@
     <None Remove="UI\Fonts\OpenSans-Regular.ttf" />
     <None Remove="UI\Fonts\OpenSans-SemiBold.ttf" />
     <None Remove="UI\Fonts\OpenSans-SemiBoldItalic.ttf" />
+    <None Remove="UI\Fonts\Segoe Fluent Icons.ttf" />
+    <None Remove="UI\Fonts\SegoeUI-VF.ttf" />
     <None Remove="UI\Fonts\SourceCodePro-Black.ttf" />
     <None Remove="UI\Fonts\SourceCodePro-BlackItalic.ttf" />
     <None Remove="UI\Fonts\SourceCodePro-Bold.ttf" />
@@ -312,6 +314,12 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="UI\Fonts\Segoe Fluent Icons.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="UI\Fonts\SegoeUI-VF.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="UI\Icons\ico\mhfzoverlayicon256.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

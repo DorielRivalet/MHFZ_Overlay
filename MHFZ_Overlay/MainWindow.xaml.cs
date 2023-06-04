@@ -92,52 +92,52 @@ public partial class MainWindow : Window
         //contextMenu.Items.Add("About", null, OptionAbout_Click);
     }
 
-    private void _notifyIcon_Click(object sender, EventArgs e)
+    private void _notifyIcon_Click(object sender, RoutedEventArgs e)
     {
         OpenConfigButton_Key();
     }
 
-    private void OptionSettings_Click(object sender, EventArgs e)
+    private void OptionSettings_Click(object sender, RoutedEventArgs e)
     {
         OpenConfigButton_Key();
     }
 
-    private void OptionHelp_Click(object sender, EventArgs e)
+    private void OptionHelp_Click(object sender, RoutedEventArgs e)
     {
         OpenLink("https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md");
     }
 
-    private void OptionDocumentation_Click(object sender, EventArgs e)
+    private void OptionDocumentation_Click(object sender, RoutedEventArgs e)
     {
         OpenLink("https://github.com/DorielRivalet/mhfz-overlay/tree/main/docs");
     }
 
-    private void OptionReportBug_Click(object sender, EventArgs e)
+    private void OptionReportBug_Click(object sender, RoutedEventArgs e)
     {
         OpenLink("https://github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=bug&projects=&template=BUG-REPORT.yml&title=%5BBUG%5D+-+title");
     }
 
-    private void OptionRequestFeature_Click(object sender, EventArgs e)
+    private void OptionRequestFeature_Click(object sender, RoutedEventArgs e)
     {
         OpenLink("https://github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=question%2Cenhancement&projects=&template=FEATURE-REQUEST.yml&title=%5BREQUEST%5D+-+title");
     }
 
-    private void OptionSendFeedback_Click(object sender, EventArgs e)
+    private void OptionSendFeedback_Click(object sender, RoutedEventArgs e)
     {
         OpenLink("https://forms.gle/hrAVWMcYS5HEo1v7A");
     }
 
-    private void OptionRestart_Click(object sender, EventArgs e)
+    private void OptionRestart_Click(object sender, RoutedEventArgs e)
     {
         ReloadButton_Key();
     }
 
-    private void OptionExit_Click(object sender, EventArgs e)
+    private void OptionExit_Click(object sender, RoutedEventArgs e)
     {
         CloseButton_Key();
     }
 
-    private void OptionAbout_Click(object sender, EventArgs e)
+    private void OptionAbout_Click(object sender, RoutedEventArgs e)
     {
         OpenLink("https://github.com/DorielRivalet/mhfz-overlay");
     }

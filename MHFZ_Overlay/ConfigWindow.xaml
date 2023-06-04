@@ -21,13 +21,13 @@
         x:Name="Config"
         Title="Monster Hunter Frontier Z Overlay"
         Height="720" Width="1280" ResizeMode="CanResize"
-        Foreground="#cdd6f4"
-        Background="#1e1e2e"
+        Foreground="{StaticResource Text}"
+        Background="{StaticResource Base}"
         Closed="Config_Closed"
-        TextElement.Foreground="#cdd6f4"
+        TextElement.Foreground="{StaticResource Text}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
-        FontFamily="Segoe UI"
+        FontFamily="{StaticResource Segoe UI Variable}"
         BorderBrush="#b4befe"
         ExtendsContentIntoTitleBar="True"
         WindowBackdropType="Mica"
@@ -542,7 +542,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ScrollBar}">
-                            <Grid x:Name="GridRoot" Width="8" Background="#11111b">
+                            <Grid x:Name="GridRoot" Width="8" Background="{StaticResource Crust}">
                                 <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="False">
                                     <Track.Thumb>
                                         <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" 
@@ -600,24 +600,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ui:TitleBar
-      Title="Monster Hunter Frontier Z Overlay"
-      Grid.Row="0">
-            <!--<ui:TitleBar.Tray>
-                <ui:NotifyIcon
-          FocusOnLeftClick="True"
-          MenuOnRightClick="True"
-          TooltipText="WPF UI">
-                    <ui:NotifyIcon.Menu>
-                        <ContextMenu>
-                            <ui:MenuItem
-                 Header="Home"
-                 SymbolIcon="Library28"
-                 Tag="home" 
-                                Click="MenuItem_Click"/>
-                        </ContextMenu>
-                    </ui:NotifyIcon.Menu>
-                </ui:NotifyIcon>
-            </ui:TitleBar.Tray>-->
+            Title="Monster Hunter Frontier Z Overlay"
+            Background="{StaticResource Crust}"
+            Grid.Row="0"
+        >
         </ui:TitleBar>
         <TabControl Grid.Row="1" Margin="0" BorderBrush="Transparent" Background="Transparent" SelectionChanged="TabControl_SelectionChanged" x:Name="tabControl">
             <TabControl.Resources>
@@ -678,7 +664,7 @@
             </TabControl.Template>
 
 
-            <TabItem ToolTip="General settings" Background="Transparent" Foreground="#cdd6f4">
+            <TabItem ToolTip="General settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Background="Transparent" Orientation="Horizontal">
                         <Image Name="generalImg" Source="UI/Icons/png/book.png" Width="32" Height="32"/>
@@ -847,14 +833,14 @@
                                 </ComboBox.Resources>
                             </ComboBox>
 
-                            <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="11" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
+                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="11" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="11" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="12" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
+                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="12" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="12" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
 
-                            <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="13" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}" ToolTip="If disabled, information will only be shown in quest runs"/>
+                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="13" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}" ToolTip="If disabled, information will only be shown in quest runs"/>
                             <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="13" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>
-                            <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="14" Text="Always Show Player Info" Style="{StaticResource ConfigTextBox}" ToolTip="If disabled, information will only be shown in quest runs"/>
+                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="14" Text="Always Show Player Info" Style="{StaticResource ConfigTextBox}" ToolTip="If disabled, information will only be shown in quest runs"/>
                             <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="14" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowPlayerInfo}"/>
 
                             <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster 1 Icon"/>
@@ -917,7 +903,7 @@
                 </Grid>
             </TabItem>
             <!--TODO: Make this similar to Hunter Info layout. first tab is Settings, second tab is Quest Records (Read), third tab is Weapon Usage, fourth tab is Youtube, fifth tab could be Run Manager (Create, Update, Delete)-->
-            <TabItem x:Name="questLogsTabItem" ToolTip="Quest Database" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem x:Name="questLogsTabItem" ToolTip="Quest Database" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Resources>
                     <Storyboard x:Key="rainbowAnimation">
                         <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" RepeatBehavior="Forever">
@@ -1010,7 +996,7 @@
 
 
 
-                        <TabItem ToolTip="View Quest Statistics" Background="#11111b" Foreground="#cdd6f4">
+                        <TabItem ToolTip="View Quest Statistics" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/table_chart_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="32" Height="32"/>
@@ -1043,7 +1029,7 @@
                                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" ToolTip="Search Option">
                                             <ToolTipService.ToolTip>
                                                 <StackPanel Background="#FF313244" >
-                                                    <TextBlock Foreground="#cdd6f4">
+                                                    <TextBlock Foreground="{StaticResource Text}">
                                        Time Attack: No Diva Skills Uses Left, No Secret Tech. In overlay: only enabled Timer, Key Logging, Quest Logging, Overlay Mode Watermark and is 1P without NPC except Halk.
                                        <LineBreak/>
                                        Freestyle No Secret Tech: same as Time Attack but with Diva Skills Uses Left of at least 1 or higher.
@@ -1231,11 +1217,11 @@
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
-                        <TabItem ToolTip="Database Settings" Background="#11111b" Foreground="#cdd6f4">
+                        <TabItem ToolTip="Database Settings" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Settings.xaml'}" Width="32" Height="32"/>
-                                    <TextBlock Foreground="#cdd6f4" Text="Settings" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                    <TextBlock Foreground="{StaticResource Text}" Text="Settings" Margin="4,0,0,0" VerticalAlignment="Center" />
                                 </StackPanel>
                             </TabItem.Header>
 
@@ -1398,7 +1384,7 @@
                     </TabControl>
                 </Grid>
             </TabItem>
-            <TabItem ToolTip="Player Settings" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem ToolTip="Player Settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="UI/Icons/png/helm.png" Width="32" Height="32"/>
@@ -1554,7 +1540,7 @@
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Attack Value">
                             <ToolTipService.ToolTip>
                                             <StackPanel Background="#FF313244">
-                                                <TextBlock Foreground="#cdd6f4">
+                                                <TextBlock Foreground="{StaticResource Text}">
                                        Player True Raw
                                        <LineBreak/>
                                        Attack addition is added as either Attack A or Attack B and is before or after Hunting Horn buffs respectively.
@@ -1682,12 +1668,12 @@
 
                             <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="48" Grid.Column="0" ToolTip="Show weapon damage numbers when hitting a monster">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/123_FILL0_wght400_GRAD0_opsz48.xaml'}"/>
-                                <TextBlock Foreground="#cdd6f4" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
+                                <TextBlock Foreground="{StaticResource Text}" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
                             </StackPanel>
                             <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="48" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="49" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="49" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
                             <CheckBox Background="#b4befe" Grid.Column="1" Grid.Row="49" Style="{StaticResource ConfigCheckBox}" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
-                            <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="50" Text="Damage Numbers Color" Style="{StaticResource ConfigTextBox}"/>
+                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="50" Text="Damage Numbers Color" Style="{StaticResource ConfigTextBox}"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="50" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=DamageNumbersColor}"></xctk:ColorPicker>
                             <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="51" Grid.Column="0"  Text="Damage Numbers Area X Coordinate"/>
                             <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="51" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  PreviewTextInput="ValidateNumber"/>
@@ -1801,11 +1787,11 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem ToolTip="Access a wealth of useful information about hunting" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem ToolTip="Access a wealth of useful information about hunting" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="UI/Icons/png/study.png" Width="32" Height="32"/>
-                        <TextBlock Text="Hunter's Notes" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#cdd6f4"/>
+                        <TextBlock Text="Hunter's Notes" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="{StaticResource Text}"/>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid x:Name="HunterNotesContent" Height="Auto"  Width="Auto">
@@ -1870,7 +1856,7 @@
                                     <Button Background="Transparent" Grid.Row="2" x:Name="BtnImageFile" ToolTip="Save gear image to disk and copy to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/image_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="50" Style="{StaticResource ConfigBottomButtons}" Height="50" Click="BtnImageFile_Click"/>
                                     <Button Background="Transparent" Grid.Row="3" x:Name="BtnLogFile" ToolTip="Export hunted monsters log as Comma Separated Values" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/description_FILL0_wght400_GRAD0_opsz48.xaml'}"  Click="BtnLogFile_Click" Width="50" Style="{StaticResource ConfigBottomButtons}" Height="50"/>
                                     <Button Background="Transparent" Grid.Row="4" x:Name="BtnGuildCardFile" ToolTip="Save guild card image to disk and copy to clipboard" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/badge.xaml'}"  Click="BtnGuildCardFile_Click" Width="50" Style="{StaticResource ConfigBottomButtons}" Height="50"/>
-                                    <TextBlock Foreground="#cdd6f4" Text="Reopen config. to update gear" TextWrapping="Wrap" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Foreground="{StaticResource Text}" Text="Reopen config. to update gear" TextWrapping="Wrap" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
 
                                 <TabControl Margin="5" BorderBrush="Transparent" Background="Transparent" Grid.Row="0" Grid.Column="1">
@@ -1928,7 +1914,7 @@
                                         </ControlTemplate>
                                     </TabControl.Template>
 
-                                    <TabItem ToolTip="View Guild Card" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Guild Card" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/favicon-32x32-2.png" Width="32" Height="32"/>
@@ -2036,7 +2022,7 @@
                                         </Grid>
                                     </TabItem>
 
-                                    <TabItem ToolTip="View Image" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Image" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/photo.png" Width="32" Height="32"/>
@@ -2125,7 +2111,7 @@
                                             </Grid>
                                         </ScrollViewer>
                                     </TabItem>
-                                    <TabItem ToolTip="View Text" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Text" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/ticket.png" Width="32" Height="32"/>
@@ -2140,7 +2126,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Hunted Monsters" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Hunted Monsters" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/bone.png" Width="32" Height="32"/>
@@ -2162,12 +2148,12 @@
                                                     <ListView x:Name="MyList" Grid.Row="1" HorizontalAlignment="Stretch" VirtualizingStackPanel.IsVirtualizing="True">
                                                         <!--<ListView.Resources>
                                                         <DataTemplate x:Key="Templ">
-                                                            <TextBlock Text="{Binding}" Foreground="#cdd6f4" Background="Transparent" Width="32"/>
+                                                            <TextBlock Text="{Binding}" Foreground="{StaticResource Text}" Background="Transparent" Width="32"/>
                                                         </DataTemplate>
                                                         <Style x:Key="HeaderStyle" TargetType="GridViewColumnHeader">
                                                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
                                                             <Setter Property="Background" Value="Transparent"/>
-                                                            <Setter Property="Foreground" Value="#cdd6f4"/>
+                                                            <Setter Property="Foreground" Value="{StaticResource Text}"/>
                                                             <Setter Property="BorderBrush" Value="Transparent"/>
                                                             <Setter Property="Width" Value="32"/>
 
@@ -2201,7 +2187,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="Guild information" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="Guild information" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/guild_hall.png" Width="32" Height="32"/>
@@ -2232,7 +2218,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Caravan Skills" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Caravan Skills" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/caravan_skills.png" Width="32" Height="32"/>
@@ -2264,7 +2250,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Road/Duremudira Skills" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Road/Duremudira Skills" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/dure2.png" Width="32" Height="32"/>
@@ -2279,7 +2265,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Armor Skills" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Armor Skills" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/armor_skills.png" Width="32" Height="32"/>
@@ -2323,7 +2309,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Zenith Skills" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Zenith Skills" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/boggers.png" Width="32" Height="32"/>
@@ -2338,7 +2324,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Motion Values" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Motion Values" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/unknown.png" Width="32" Height="32"/>
@@ -2380,7 +2366,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <!--<TabItem ToolTip="View Hunting Horn Songs" Background="#11111b" Foreground="#cdd6f4">
+                                    <!--<TabItem ToolTip="View Hunting Horn Songs" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="UI/Icons/png/note_pink.png" Width="32" Height="32"/>
@@ -2395,7 +2381,7 @@
                                         </DockPanel>
                                     </Grid>
                                 </TabItem>-->
-                                    <TabItem ToolTip="View Weapon Information" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Weapon Information" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/attack.png" Width="32" Height="32"/>
@@ -2447,7 +2433,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Sigils List" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Sigils List" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/sigils.png" Width="32" Height="32"/>
@@ -2462,7 +2448,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Diva Prayer Gems and Questline" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Diva Prayer Gems and Questline" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/diva_prayer_gems.png" Width="32" Height="32"/>
@@ -2477,7 +2463,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Style Rank Upgrades" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Style Rank Upgrades" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="UI/Icons/png/knife.png" Width="32" Height="32"/>
@@ -2492,7 +2478,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Companions" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Companions" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/my_support.png" Width="32" Height="32"/>
@@ -2525,7 +2511,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Item Info" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Item Info" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/item.png" Width="32" Height="32"/>
@@ -2540,7 +2526,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Monster Size Info" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Monster Size Info" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/monster.png" Width="32" Height="32"/>
@@ -2555,7 +2541,7 @@
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
-                                    <TabItem ToolTip="View Rewards Info" Background="#11111b" Foreground="#cdd6f4">
+                                    <TabItem ToolTip="View Rewards Info" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/treasure.png" Width="32" Height="32"/>
@@ -2773,7 +2759,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem ToolTip="Monster HP settings" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem ToolTip="Monster HP settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="UI/Icons/png/monster.png" Width="32" Height="32"/>
@@ -2827,7 +2813,7 @@
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="5,5,5,5" Foreground="#cdd6f4" Grid.Column="0" Grid.Row="0" Text="Monster HP Background Color" Style="{StaticResource ConfigTextBox}"/>
+                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="0" Text="Monster HP Background Color" Style="{StaticResource ConfigTextBox}"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="0" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}"></xctk:ColorPicker>
                             <!--<TextBlock Margin="5,5,5,5" ToolTip="Show Monster Hit Points as Bars" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="HP Bars"/>
                         <ui:ToggleSwitch Grid.Row="1" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=HealthBarsShown}"/>-->
@@ -2911,7 +2897,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem ToolTip="Monster status settings" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem ToolTip="Monster status settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Name="statusImg" Source="UI/Icons/png/poison.png" Width="32" Height="32"/>
@@ -3094,7 +3080,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem ToolTip="Discord settings" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem ToolTip="Discord settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontSize="32" Text="&#xf392;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Margin="4,0,0,0" VerticalAlignment="Center" />
@@ -3132,7 +3118,7 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Foreground="#cdd6f4">
+                            <TextBlock Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Foreground="{StaticResource Text}">
                                        1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
                                        <LineBreak/>
                                        2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
@@ -3146,7 +3132,7 @@
                             <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="(Mandatory) Client/Application ID">
                             <ToolTipService.ToolTip>
                                             <StackPanel Background="#FF313244"  >
-                                                <TextBlock Foreground="#cdd6f4">
+                                                <TextBlock Foreground="{StaticResource Text}">
                                        1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
                                        <LineBreak/>
                                        2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
@@ -3206,7 +3192,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem ToolTip="Monster information" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem ToolTip="Monster information" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Name="monsterinfoimg" Source="UI/Icons/png/monster_info.png" Width="32" Height="32"/>
@@ -3257,7 +3243,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem ToolTip="Game Information" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem ToolTip="Game Information" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/mantle_pink.png" Width="32" Height="32"/>
@@ -3281,7 +3267,7 @@
                     </DockPanel>
                 </Grid>
             </TabItem>
-            <TabItem ToolTip="Damage Calculator" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem ToolTip="Damage Calculator" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/crystal_sapphire.png" Width="32" Height="32"/>
@@ -3307,7 +3293,7 @@
             </TabItem>
 
             <!--TODO: ID Viewer (select id FROM table)-->
-            <TabItem ToolTip="Developers and program information" Background="#11111b" Foreground="#cdd6f4">
+            <TabItem ToolTip="Developers and program information" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xf09b;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Margin="4,0,0,0" VerticalAlignment="Center" FontSize="32"/>
