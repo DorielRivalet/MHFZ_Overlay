@@ -713,9 +713,9 @@
                             <ComboBoxItem>HP Only</ComboBoxItem>
                         </ComboBox>
 
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Max Resolution Width"/>
+                        <TextBlock ToolTip="Recommended to change if your resolution is lower" Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Max Resolution Width"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}"  PreviewTextInput="ValidateNumber"/>
-                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Max Resolution Height"/>
+                        <TextBlock ToolTip="Recommended to change if your resolution is lower" Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Max Resolution Height"/>
                         <TextBox IsUndoEnabled="False" TextAlignment="Center" Background="#585b70" Style="{StaticResource ConfigTextField}" Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"  PreviewTextInput="ValidateNumber"/>
 
                         <TextBlock Text="Refresh Rate (Restart required)" Margin="5,5,5,5" ToolTip="Select the Refresh Rate. Lower values might improve performance at the cost of statistics accuracy (including in database). Recommended to leave at 30 for speedruns." Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"/>
