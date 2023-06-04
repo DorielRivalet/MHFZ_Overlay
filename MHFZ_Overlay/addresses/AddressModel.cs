@@ -1178,6 +1178,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster1Part1();
             return GetPartName(1, LargeMonster1ID()) + currentPartHP.ToString();
         }
@@ -1187,6 +1189,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster1Part2();
             return GetPartName(2, LargeMonster1ID()) + currentPartHP.ToString();
         }
@@ -1196,6 +1200,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster1Part3();
             return GetPartName(3, LargeMonster1ID()) + currentPartHP.ToString();
         }
@@ -1214,6 +1220,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster1Part5();
             return GetPartName(5, LargeMonster1ID()) + currentPartHP.ToString();
         }
@@ -1223,6 +1231,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster1Part6();
             return GetPartName(6, LargeMonster1ID()) + currentPartHP.ToString();
         }
@@ -1232,6 +1242,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster1Part7();
             return GetPartName(7, LargeMonster1ID()) + currentPartHP.ToString();
         }
@@ -1241,6 +1253,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster1Part8();
             return GetPartName(8, LargeMonster1ID()) + currentPartHP.ToString();
         }
@@ -1250,6 +1264,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster1Part9();
             return GetPartName(9, LargeMonster1ID()) + currentPartHP.ToString();
         }
@@ -1259,6 +1275,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster1Part10();
             return GetPartName(10, LargeMonster1ID()) + currentPartHP.ToString();
         }
@@ -1268,6 +1286,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster2Part1();
             return currentPartHP.ToString();
         }
@@ -1277,6 +1297,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster2Part2();
             return currentPartHP.ToString();
         }
@@ -1286,6 +1308,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster2Part3();
             return currentPartHP.ToString();
         }
@@ -1295,6 +1319,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster2Part4();
             return currentPartHP.ToString();
         }
@@ -1304,6 +1330,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster2Part5();
             return currentPartHP.ToString();
         }
@@ -1313,6 +1341,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster2Part6();
             return currentPartHP.ToString();
         }
@@ -1322,6 +1352,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster2Part7();
             return currentPartHP.ToString();
         }
@@ -1331,6 +1363,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster2Part8();
             return currentPartHP.ToString();
         }
@@ -1340,6 +1374,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster2Part9();
             return currentPartHP.ToString();
         }
@@ -1349,6 +1385,8 @@ TreeScope.Children, condition);
     {
         get
         {
+            if (QuestID() == 0) return "None: 0";
+
             int currentPartHP = Monster2Part10();
             return currentPartHP.ToString();
         }
