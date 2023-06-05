@@ -9,6 +9,7 @@
 - [Palette](./palette.md): gives a list of RGB and hexadecimal color values with their corresponding labels that were used in the source code.
 - [Logging](./logging.md): describes our structured logging implementation and goals.
 - [Testing](./testing.md): explains our unit testing implementation and objectives.
+- [Performance](./performance.md): explains the performance characteristics and goals.
 
 ## Type Hierarchy
 
