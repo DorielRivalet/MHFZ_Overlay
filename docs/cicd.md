@@ -1,5 +1,13 @@
 # Continuous Integration and Continuous Deployment (CI/CD) Process
 
+## Table of Contents
+
+- [Continuous Integration and Continuous Deployment (CI/CD) Process](#continuous-integration-and-continuous-deployment-cicd-process)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+    - [CI/CD Steps](#cicd-steps)
+    - [Tools Used](#tools-used)
+
 ## Overview
 
 Our development process follows the best practices of Continuous Integration and Continuous Deployment (CI/CD), which involve automating the building, testing, and deployment of software changes. This allows us to ensure the quality and reliability of our software, and deliver updates to our users quickly and efficiently.

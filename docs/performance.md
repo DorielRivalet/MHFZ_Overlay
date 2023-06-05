@@ -90,11 +90,11 @@ To track and measure performance improvements over time, we can consider the fol
 
 - Implement performance monitoring tools and frameworks that provide insights into key performance metrics. These tools can automatically collect data on metrics like response times, resource utilization, and throughput.
 
-- Set up a performance testing environment where you can run tests periodically to gather performance data.
+- Set up a performance testing environment where we can run tests periodically to gather performance data.
 
 - Use application performance management (APM) tools that offer real-time monitoring and analytics to track performance metrics and identify bottlenecks or areas for improvement.
 
-- Employ logging and instrumentation within your application code to capture relevant performance-related data, such as execution times, database query durations, and network latency.
+- Employ logging and instrumentation within the application code to capture relevant performance-related data, such as execution times, database query durations, and network latency.
 
 ### Reporting
 
@@ -189,14 +189,14 @@ We describe a specific scenario or task for performance evaluation. These scenar
 
 ## Performance Test Process
 
-- Define Performance Metrics: Determine the specific performance metrics you want to measure, such as response time, throughput, memory usage, or CPU utilization. Select metrics that are relevant to your application and align with your performance goals.
+- Define Performance Metrics: Determine the specific performance metrics we want to measure, such as response time, throughput, memory usage, or CPU utilization. Select metrics that are relevant to the application and align with the performance goals.
 
-- Prepare Test Scenarios: Create a set of test scenarios that represent typical usage patterns or critical functionalities of your application. These scenarios should be designed to stress different aspects of your application's performance.
+- Prepare Test Scenarios: Create a set of test scenarios that represent typical usage patterns or critical functionalities of the application. These scenarios should be designed to stress different aspects of the application's performance.
 
-- Conduct Performance Tests: Execute the test scenarios on each version of your application that you want to compare. Measure and record the performance metrics for each test run. You can use benchmarking tools, profiling tools, or custom scripts to automate the test execution and data collection process.
+- Conduct Performance Tests: Execute the test scenarios on each version of the application that we want to compare. Measure and record the performance metrics for each test run. We can use benchmarking tools, profiling tools, or custom scripts to automate the test execution and data collection process.
 
-- Compare Performance Results: Analyze the collected performance data for each version of your application. Compare the performance metrics to identify any performance improvements or regressions between versions. Look for significant differences and trends in the data.
+- Compare Performance Results: Analyze the collected performance data for each version of the application. Compare the performance metrics to identify any performance improvements or regressions between versions. Look for significant differences and trends in the data.
 
 - Document the Findings: Create a performance report or documentation that summarizes the performance results for each version tested. Include details such as the version number, test scenarios used, performance metrics measured, and any relevant observations or insights.
 
-- Interpret the Results: Analyze the performance findings and interpret their implications. Identify areas where performance has improved, potential bottlenecks or regressions, and areas for further optimization. Use the results to guide your decision-making and prioritize performance optimization efforts.
+- Interpret the Results: Analyze the performance findings and interpret their implications. Identify areas where performance has improved, potential bottlenecks or regressions, and areas for further optimization. Use the results to guide the decision-making and prioritize performance optimization efforts.

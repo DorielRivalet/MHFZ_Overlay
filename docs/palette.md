@@ -1,5 +1,14 @@
 # Colors Palette
 
+## Table of Contents
+
+- [Colors Palette](#colors-palette)
+  - [Table of Contents](#table-of-contents)
+  - [Sharpness](#sharpness)
+  - [Rarity](#rarity)
+  - [Codes](#codes)
+  - [Catppuccin Mocha](#catppuccin-mocha)
+
 ## Sharpness
 
 | Red|Green|Blue| Hex|Label|Notes|

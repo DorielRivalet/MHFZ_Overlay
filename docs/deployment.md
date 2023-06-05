@@ -1,5 +1,13 @@
 # Releasifying and Deployment Process
 
+## Table of Contents
+
+- [Releasifying and Deployment Process](#releasifying-and-deployment-process)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+    - [Packaging, Releasifying, Deployment and Distribution Steps](#packaging-releasifying-deployment-and-distribution-steps)
+    - [Merging via command line](#merging-via-command-line)
+
 ## Overview
 
 The following steps outline the process for releasing and deploying the software using clowd.squirrel, after making changes and testing in-game.
