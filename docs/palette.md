@@ -47,97 +47,97 @@ Code labels are prefixed with `~`.
 
 | | Hex| Red|Green|Blue| Label|Notes|
 |-|----|----|-----|----|------|-----|
-|<img src="./res/img/circles/codes_c01.png" width="23" height="23">|323232|50  |50   | 50|C01|     |
-|<img src="./res/img/circles/codes_c02.png" width="23" height="23">|ff435d|255 |67   | 93|C02|also Rare12|
-|<img src="./res/img/circles/codes_c03.png" width="23" height="23">|56ff56|86  |255  | 86|C03|     |
-|<img src="./res/img/circles/codes_c04.png" width="23" height="23">|57ffff|87  |255  |255|C04||
-|<img src="./res/img/circles/codes_c05.png" width="23" height="23">|ffff50|255 |255  | 80|C05||
-|<img src="./res/img/circles/codes_c06.png" width="23" height="23">|ffa461|255 |164  | 97|C06||
-|<img src="./res/img/circles/codes_c07.png" width="23" height="23">|ff84ff|255 |132 |255|C07||
-|<img src="./res/img/circles/codes_c08.png" width="23" height="23">|bf6464|191 |100 |100|C08||
-|<img src="./res/img/circles/codes_c09.png" width="23" height="23">|a0a0a0|160 |160 |160|C09||
-|<img src="./res/img/circles/codes_c10.png" width="23" height="23">|808080|128 |128 |128|C10||
-|<img src="./res/img/circles/codes_c11.png" width="23" height="23">|f08200|240 |130 |  0|C11||
-|<img src="./res/img/circles/codes_c12.png" width="23" height="23">|846b5c|132 |107 | 92|C12||
-|<img src="./res/img/circles/codes_c13.png" width="23" height="23">|80212e|128 | 33 | 46|C13||
-|<img src="./res/img/circles/codes_c14.png" width="23" height="23">|747eff|116 |126 |255|C14||
-|<img src="./res/img/circles/codes_c15.png" width="23" height="23">|ff9eca|255 |158 |202|C15||
-|<img src="./res/img/circles/codes_c16.png" width="23" height="23">|4040ff| 64 | 64 |255|C16||
-|<img src="./res/img/circles/codes_c17.png" width="23" height="23">|202020|32 | 32 | 32|C17||
-|<img src="./res/img/circles/codes_c18.png" width="23" height="23">|602020|96 | 32 | 32|C18||
-|<img src="./res/img/circles/codes_c19.png" width="23" height="23">|32bc64|50 |188 |100|C19||
-|<img src="./res/img/circles/codes_c20.png" width="23" height="23">|001480| 0 | 20 |128|C20||
-|<img src="./res/img/circles/codes_c21.png" width="23" height="23">|3e9dd8|62 |157 |216|C21||
-|<img src="./res/img/circles/codes_c22.png" width="23" height="23">|72d242|114 |210 | 66|C22||
-|<img src="./res/img/circles/codes_c23.png" width="23" height="23">|b4641e|180 |100 | 30|C23||
-|<img src="./res/img/circles/codes_c24.png" width="23" height="23">|32bc64| 50 |188 |100|C24|also C19|
-|<img src="./res/img/circles/codes_c25.png" width="23" height="23">|4040ff| 64 | 64 |255|C25|also C16|
-|<img src="./res/img/circles/codes_c26.png" width="23" height="23">|68ecec|104 |236 |236|C26|also Rare10|
-|<img src="./res/img/circles/codes_c27.png" width="23" height="23">|c8ff6a|200 |255 |106|C27|also Rare9|
-|<img src="./res/img/circles/codes_c28.png" width="23" height="23">|cba6fa|203 |166 |250|C28|also Rare11|
-|<img src="./res/img/circles/codes_c29.png" width="23" height="23">|96b5fd|150 |181 |253|C29|also Rare6|
-|<img src="./res/img/circles/codes_c30.png" width="23" height="23">|808028|128 |128 | 40|C30||
-|<img src="./res/img/circles/codes_c31.png" width="23" height="23">|640011|100 |  0 | 17|C31||
-|<img src="./res/img/circles/codes_c32.png" width="23" height="23">|ffffff|255 |255 |255|C32||
-|<img src="./res/img/circles/codes_c33.png" width="23" height="23">|000000|  0  | 0 |  0|C33||
-|<img src="./res/img/circles/codes_c34.png" width="23" height="23">|ff435d|255  |67 | 93|C34|also C02|
-|<img src="./res/img/circles/codes_c35.png" width="23" height="23">|56ff56| 86 |255 | 86|C35|also C03|
-|<img src="./res/img/circles/codes_c36.png" width="23" height="23">|57ffff| 87 |255 |255|C36|also C04|
-|<img src="./res/img/circles/codes_c37.png" width="23" height="23">|ffff50|255 |255 | 80|C37|Rare8? also C05|
-|<img src="./res/img/circles/codes_c38.png" width="23" height="23">|ffa461|255 |164 | 97|C38|Rare7? also C06|
-|<img src="./res/img/circles/codes_c39.png" width="23" height="23">|ff84ff|255 |132 |255|C39|also C07|
-|<img src="./res/img/circles/codes_c40.png" width="23" height="23">|bf6464|191 |100 |100|C40|also C08|
-|<img src="./res/img/circles/codes_c41.png" width="23" height="23">|a0a0a0|160 |160 |160|C41|also C09|
-|<img src="./res/img/circles/codes_c42.png" width="23" height="23">|808080|128 |128 |128|C42|also C10|
-|<img src="./res/img/circles/codes_c43.png" width="23" height="23">|f08200|240 |130 |  0|C43|also C11|
-|<img src="./res/img/circles/codes_c44.png" width="23" height="23">|846b5c|132 |107 | 92|C44|also C12|
-|<img src="./res/img/circles/codes_c45.png" width="23" height="23">|80212e|128  |33 | 46|C45|also C13|
-|<img src="./res/img/circles/codes_c46.png" width="23" height="23">|2020a0| 32  |32 |160|C46||
-|<img src="./res/img/circles/codes_c47.png" width="23" height="23">|ff9eca|255 |158 |202|C47|also C15|
-|<img src="./res/img/circles/codes_c48.png" width="23" height="23">|4040ff| 64 | 64 |255|C48|also C16|
-|<img src="./res/img/circles/codes_c49.png" width="23" height="23">|202020| 32 | 32 | 32|C49|also C17|
-|<img src="./res/img/circles/codes_c50.png" width="23" height="23">|602020| 96 | 32 | 32|C50|also C18|
-|<img src="./res/img/circles/codes_c51.png" width="23" height="23">|32bc64| 50 |188 |100|C51||
-|<img src="./res/img/circles/codes_c52.png" width="23" height="23">|001480|  0 | 20 |128|C52|also C20|
-|<img src="./res/img/circles/codes_c53.png" width="23" height="23">|3e9dd8| 62 |157 |216|C53|also C21|
-|<img src="./res/img/circles/codes_c54.png" width="23" height="23">|72d242|114 |210 | 66|C54|also C22|
-|<img src="./res/img/circles/codes_c55.png" width="23" height="23">|b4641e|180 |100 | 30|C55|also C23|
-|<img src="./res/img/circles/codes_c56.png" width="23" height="23">|32bc64| 50 |188 |100|C56|also C51|
-|<img src="./res/img/circles/codes_c57.png" width="23" height="23">|4040ff| 64 | 64 |255|C57|also C16|
-|<img src="./res/img/circles/codes_c58.png" width="23" height="23">|68ecec|104 |236 |236|C58|also C26|
-|<img src="./res/img/circles/codes_c59.png" width="23" height="23">|c8ff6a|200 |255 |106|C59|also C27|
-|<img src="./res/img/circles/codes_c60.png" width="23" height="23">|cba6fa|203 |166 |250|C60|also C28|
-|<img src="./res/img/circles/codes_c61.png" width="23" height="23">|96b5fd|150 |181 |253|C61|also C29|
-|<img src="./res/img/circles/codes_c62.png" width="23" height="23">|808028|128 |128 | 40|C62|also C30|
-|<img src="./res/img/circles/codes_c63.png" width="23" height="23">|640011|100 |  0 | 17|C63|also C31|
-|<img src="./res/img/circles/codes_c64.png" width="23" height="23">|684b02|104 | 75 |  2|C64||
-|<img src="./res/img/circles/codes_c65.png" width="23" height="23">|014517|  1 | 69 | 23|C65||
-|<img src="./res/img/circles/codes_c66.png" width="23" height="23">|014066|  1 | 64 |102|C66||
-|<img src="./res/img/circles/codes_c67.png" width="23" height="23">|c25900|194 | 89 |  0|C67||
-|<img src="./res/img/circles/codes_c68.png" width="23" height="23">|4040ff| 64 | 64 |255|C68|also C16|
-|<img src="./res/img/circles/codes_c69.png" width="23" height="23">|1f974f| 31 |151 | 79|C69||
-|<img src="./res/img/circles/codes_c70.png" width="23" height="23">|a3a488|163 |164 |136|C70||
-|<img src="./res/img/circles/codes_c71.png" width="23" height="23">|1c821c| 28 |130 | 28|C71||
-|<img src="./res/img/circles/codes_c72.png" width="23" height="23">|cc5400|204 | 84 |  0|C72||
-|<img src="./res/img/circles/codes_c73.png" width="23" height="23">|660066|102 |  0 |102|C73||
-|<img src="./res/img/circles/codes_c74.png" width="23" height="23">|000000|  0 |  0 |  0|C74|also C33|
-|<img src="./res/img/circles/codes_c75.png" width="23" height="23">|ff84ff|255 |132 |255|C75|also C07|
-|<img src="./res/img/circles/codes_c76.png" width="23" height="23">|bf6464|191 |100 |100|C76|also C08|
-|<img src="./res/img/circles/codes_c77.png" width="23" height="23">|ffff50|255 |255 | 80|C77|also C05|
-|<img src="./res/img/circles/codes_c78.png" width="23" height="23">|56ff56| 86 |255 | 86|C78|also C03|
-|<img src="./res/img/circles/codes_c79.png" width="23" height="23">|ffffff|255 |255 |255|C79|also C32|
-|<img src="./res/img/circles/codes_c80.png" width="23" height="23">|4040ff| 64 | 64 |255|C80|also C16|
-|<img src="./res/img/circles/codes_c81.png" width="23" height="23">|57ffff| 87 |255 |255|C81|also C04|
-|<img src="./res/img/circles/codes_c82.png" width="23" height="23">|ffa461|255 |164 | 97|C82|also C06|
-|<img src="./res/img/circles/codes_c83.png" width="23" height="23">|e37eed|227 |126 |237|C83||
-|<img src="./res/img/circles/codes_c84.png" width="23" height="23">|291c1c| 41 | 28 | 28|C84||
-|<img src="./res/img/circles/codes_c85.png" width="23" height="23">|cc6600|204 |102 |  0|C85||
-|<img src="./res/img/circles/codes_c86.png" width="23" height="23">|cc6600|204 |102 |  0|C86|also C85|
-|<img src="./res/img/circles/codes_c87.png" width="23" height="23">|cc6600|204 |102 |  0|C87|also C85|
-|<img src="./res/img/circles/codes_c88.png" width="23" height="23">|cc6600|204 |102 |  0|C88|also C85|
-|<img src="./res/img/circles/codes_c89.png" width="23" height="23">|cc6600|204 |102 |  0|C89|also C85|
-|<img src="./res/img/circles/codes_c90.png" width="23" height="23">|cc6600|204 |102 |  0|C90|also C85|
-|<img src="./res/img/circles/codes_c91.png" width="23" height="23">|cc6600|204 |102 |  0|C91|also C85|
+|<img src="./res/img/circles/codes_C01.png" width="23" height="23">|323232|50  |50   | 50|C01|     |
+|<img src="./res/img/circles/codes_C02.png" width="23" height="23">|ff435d|255 |67   | 93|C02|also Rare12|
+|<img src="./res/img/circles/codes_C03.png" width="23" height="23">|56ff56|86  |255  | 86|C03|     |
+|<img src="./res/img/circles/codes_C04.png" width="23" height="23">|57ffff|87  |255  |255|C04||
+|<img src="./res/img/circles/codes_C05.png" width="23" height="23">|ffff50|255 |255  | 80|C05||
+|<img src="./res/img/circles/codes_C06.png" width="23" height="23">|ffa461|255 |164  | 97|C06||
+|<img src="./res/img/circles/codes_C07.png" width="23" height="23">|ff84ff|255 |132 |255|C07||
+|<img src="./res/img/circles/codes_C08.png" width="23" height="23">|bf6464|191 |100 |100|C08||
+|<img src="./res/img/circles/codes_C09.png" width="23" height="23">|a0a0a0|160 |160 |160|C09||
+|<img src="./res/img/circles/codes_C10.png" width="23" height="23">|808080|128 |128 |128|C10||
+|<img src="./res/img/circles/codes_C11.png" width="23" height="23">|f08200|240 |130 |  0|C11||
+|<img src="./res/img/circles/codes_C12.png" width="23" height="23">|846b5c|132 |107 | 92|C12||
+|<img src="./res/img/circles/codes_C13.png" width="23" height="23">|80212e|128 | 33 | 46|C13||
+|<img src="./res/img/circles/codes_C14.png" width="23" height="23">|747eff|116 |126 |255|C14||
+|<img src="./res/img/circles/codes_C15.png" width="23" height="23">|ff9eca|255 |158 |202|C15||
+|<img src="./res/img/circles/codes_C16.png" width="23" height="23">|4040ff| 64 | 64 |255|C16||
+|<img src="./res/img/circles/codes_C17.png" width="23" height="23">|202020|32 | 32 | 32|C17||
+|<img src="./res/img/circles/codes_C18.png" width="23" height="23">|602020|96 | 32 | 32|C18||
+|<img src="./res/img/circles/codes_C19.png" width="23" height="23">|32bc64|50 |188 |100|C19||
+|<img src="./res/img/circles/codes_C20.png" width="23" height="23">|001480| 0 | 20 |128|C20||
+|<img src="./res/img/circles/codes_C21.png" width="23" height="23">|3e9dd8|62 |157 |216|C21||
+|<img src="./res/img/circles/codes_C22.png" width="23" height="23">|72d242|114 |210 | 66|C22||
+|<img src="./res/img/circles/codes_C23.png" width="23" height="23">|b4641e|180 |100 | 30|C23||
+|<img src="./res/img/circles/codes_C24.png" width="23" height="23">|32bc64| 50 |188 |100|C24|also C19|
+|<img src="./res/img/circles/codes_C25.png" width="23" height="23">|4040ff| 64 | 64 |255|C25|also C16|
+|<img src="./res/img/circles/codes_C26.png" width="23" height="23">|68ecec|104 |236 |236|C26|also Rare10|
+|<img src="./res/img/circles/codes_C27.png" width="23" height="23">|c8ff6a|200 |255 |106|C27|also Rare9|
+|<img src="./res/img/circles/codes_C28.png" width="23" height="23">|cba6fa|203 |166 |250|C28|also Rare11|
+|<img src="./res/img/circles/codes_C29.png" width="23" height="23">|96b5fd|150 |181 |253|C29|also Rare6|
+|<img src="./res/img/circles/codes_C30.png" width="23" height="23">|808028|128 |128 | 40|C30||
+|<img src="./res/img/circles/codes_C31.png" width="23" height="23">|640011|100 |  0 | 17|C31||
+|<img src="./res/img/circles/codes_C32.png" width="23" height="23">|ffffff|255 |255 |255|C32||
+|<img src="./res/img/circles/codes_C33.png" width="23" height="23">|000000|  0  | 0 |  0|C33||
+|<img src="./res/img/circles/codes_C34.png" width="23" height="23">|ff435d|255  |67 | 93|C34|also C02|
+|<img src="./res/img/circles/codes_C35.png" width="23" height="23">|56ff56| 86 |255 | 86|C35|also C03|
+|<img src="./res/img/circles/codes_C36.png" width="23" height="23">|57ffff| 87 |255 |255|C36|also C04|
+|<img src="./res/img/circles/codes_C37.png" width="23" height="23">|ffff50|255 |255 | 80|C37|Rare8? also C05|
+|<img src="./res/img/circles/codes_C38.png" width="23" height="23">|ffa461|255 |164 | 97|C38|Rare7? also C06|
+|<img src="./res/img/circles/codes_C39.png" width="23" height="23">|ff84ff|255 |132 |255|C39|also C07|
+|<img src="./res/img/circles/codes_C40.png" width="23" height="23">|bf6464|191 |100 |100|C40|also C08|
+|<img src="./res/img/circles/codes_C41.png" width="23" height="23">|a0a0a0|160 |160 |160|C41|also C09|
+|<img src="./res/img/circles/codes_C42.png" width="23" height="23">|808080|128 |128 |128|C42|also C10|
+|<img src="./res/img/circles/codes_C43.png" width="23" height="23">|f08200|240 |130 |  0|C43|also C11|
+|<img src="./res/img/circles/codes_C44.png" width="23" height="23">|846b5c|132 |107 | 92|C44|also C12|
+|<img src="./res/img/circles/codes_C45.png" width="23" height="23">|80212e|128  |33 | 46|C45|also C13|
+|<img src="./res/img/circles/codes_C46.png" width="23" height="23">|2020a0| 32  |32 |160|C46||
+|<img src="./res/img/circles/codes_C47.png" width="23" height="23">|ff9eca|255 |158 |202|C47|also C15|
+|<img src="./res/img/circles/codes_C48.png" width="23" height="23">|4040ff| 64 | 64 |255|C48|also C16|
+|<img src="./res/img/circles/codes_C49.png" width="23" height="23">|202020| 32 | 32 | 32|C49|also C17|
+|<img src="./res/img/circles/codes_C50.png" width="23" height="23">|602020| 96 | 32 | 32|C50|also C18|
+|<img src="./res/img/circles/codes_C51.png" width="23" height="23">|32bc64| 50 |188 |100|C51||
+|<img src="./res/img/circles/codes_C52.png" width="23" height="23">|001480|  0 | 20 |128|C52|also C20|
+|<img src="./res/img/circles/codes_C53.png" width="23" height="23">|3e9dd8| 62 |157 |216|C53|also C21|
+|<img src="./res/img/circles/codes_C54.png" width="23" height="23">|72d242|114 |210 | 66|C54|also C22|
+|<img src="./res/img/circles/codes_C55.png" width="23" height="23">|b4641e|180 |100 | 30|C55|also C23|
+|<img src="./res/img/circles/codes_C56.png" width="23" height="23">|32bc64| 50 |188 |100|C56|also C51|
+|<img src="./res/img/circles/codes_C57.png" width="23" height="23">|4040ff| 64 | 64 |255|C57|also C16|
+|<img src="./res/img/circles/codes_C58.png" width="23" height="23">|68ecec|104 |236 |236|C58|also C26|
+|<img src="./res/img/circles/codes_C59.png" width="23" height="23">|c8ff6a|200 |255 |106|C59|also C27|
+|<img src="./res/img/circles/codes_C60.png" width="23" height="23">|cba6fa|203 |166 |250|C60|also C28|
+|<img src="./res/img/circles/codes_C61.png" width="23" height="23">|96b5fd|150 |181 |253|C61|also C29|
+|<img src="./res/img/circles/codes_C62.png" width="23" height="23">|808028|128 |128 | 40|C62|also C30|
+|<img src="./res/img/circles/codes_C63.png" width="23" height="23">|640011|100 |  0 | 17|C63|also C31|
+|<img src="./res/img/circles/codes_C64.png" width="23" height="23">|684b02|104 | 75 |  2|C64||
+|<img src="./res/img/circles/codes_C65.png" width="23" height="23">|014517|  1 | 69 | 23|C65||
+|<img src="./res/img/circles/codes_C66.png" width="23" height="23">|014066|  1 | 64 |102|C66||
+|<img src="./res/img/circles/codes_C67.png" width="23" height="23">|c25900|194 | 89 |  0|C67||
+|<img src="./res/img/circles/codes_C68.png" width="23" height="23">|4040ff| 64 | 64 |255|C68|also C16|
+|<img src="./res/img/circles/codes_C69.png" width="23" height="23">|1f974f| 31 |151 | 79|C69||
+|<img src="./res/img/circles/codes_C70.png" width="23" height="23">|a3a488|163 |164 |136|C70||
+|<img src="./res/img/circles/codes_C71.png" width="23" height="23">|1c821c| 28 |130 | 28|C71||
+|<img src="./res/img/circles/codes_C72.png" width="23" height="23">|cc5400|204 | 84 |  0|C72||
+|<img src="./res/img/circles/codes_C73.png" width="23" height="23">|660066|102 |  0 |102|C73||
+|<img src="./res/img/circles/codes_C74.png" width="23" height="23">|000000|  0 |  0 |  0|C74|also C33|
+|<img src="./res/img/circles/codes_C75.png" width="23" height="23">|ff84ff|255 |132 |255|C75|also C07|
+|<img src="./res/img/circles/codes_C76.png" width="23" height="23">|bf6464|191 |100 |100|C76|also C08|
+|<img src="./res/img/circles/codes_C77.png" width="23" height="23">|ffff50|255 |255 | 80|C77|also C05|
+|<img src="./res/img/circles/codes_C78.png" width="23" height="23">|56ff56| 86 |255 | 86|C78|also C03|
+|<img src="./res/img/circles/codes_C79.png" width="23" height="23">|ffffff|255 |255 |255|C79|also C32|
+|<img src="./res/img/circles/codes_C80.png" width="23" height="23">|4040ff| 64 | 64 |255|C80|also C16|
+|<img src="./res/img/circles/codes_C81.png" width="23" height="23">|57ffff| 87 |255 |255|C81|also C04|
+|<img src="./res/img/circles/codes_C82.png" width="23" height="23">|ffa461|255 |164 | 97|C82|also C06|
+|<img src="./res/img/circles/codes_C83.png" width="23" height="23">|e37eed|227 |126 |237|C83||
+|<img src="./res/img/circles/codes_C84.png" width="23" height="23">|291c1c| 41 | 28 | 28|C84||
+|<img src="./res/img/circles/codes_C85.png" width="23" height="23">|cc6600|204 |102 |  0|C85||
+|<img src="./res/img/circles/codes_C86.png" width="23" height="23">|cc6600|204 |102 |  0|C86|also C85|
+|<img src="./res/img/circles/codes_C87.png" width="23" height="23">|cc6600|204 |102 |  0|C87|also C85|
+|<img src="./res/img/circles/codes_C88.png" width="23" height="23">|cc6600|204 |102 |  0|C88|also C85|
+|<img src="./res/img/circles/codes_C89.png" width="23" height="23">|cc6600|204 |102 |  0|C89|also C85|
+|<img src="./res/img/circles/codes_C90.png" width="23" height="23">|cc6600|204 |102 |  0|C90|also C85|
+|<img src="./res/img/circles/codes_C91.png" width="23" height="23">|cc6600|204 |102 |  0|C91|also C85|
 
 ## Catppuccin Mocha
 
