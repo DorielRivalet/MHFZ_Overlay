@@ -1617,7 +1617,10 @@ The process may take some time, as the program attempts to download from GitHub 
                 DataLoader.model.PersonalBestLoaded = personalBestTextBlock.Text;
             }
 
-            if (!calculatedQuestAttempts && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0)
+            if (!calculatedQuestAttempts 
+                && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() 
+                && int.Parse(DataLoader.model.ATK) > 0
+                && DataLoader.model.TimeDefInt() - DataLoader.model.TimeInt() >= 30)
             {
                 calculatedQuestAttempts = true;
                 UpdateQuestAttempts();
