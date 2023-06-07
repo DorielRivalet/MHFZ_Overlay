@@ -159,7 +159,7 @@ We describe a specific scenario or task for performance evaluation. These scenar
   1. ConfigWindow ctor Elapsed Time: 849.7549 ms
   2. ConfigWindow ctor Elapsed Time: 180.4346 ms
 
-- Metric 3: Memory usage
+- Metric 2: Memory usage
   - 180 MB (before)
   - 450 MB (after)
   - 410 MB (closed)
