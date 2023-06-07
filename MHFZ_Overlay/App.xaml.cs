@@ -48,6 +48,10 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        // Create a Stopwatch instance
+        Stopwatch stopwatch = new Stopwatch();
+        // Start the stopwatch
+        stopwatch.Start();
         logger.Info("Started WPF application");
         logger.Trace("Call stack: {0}", new StackTrace().ToString());
         logger.Debug("OS: {0}, is64BitOS: {1}, is64BitProcess: {2}, CLR version: {3}", Environment.OSVersion, Environment.Is64BitOperatingSystem, Environment.Is64BitProcess, Environment.Version);
@@ -76,6 +80,13 @@ public partial class App : Application
         RestoreSettings();
         Settings.Default.Reload();
         logger.Info("Reloaded default settings");
+        // Stop the stopwatch
+        stopwatch.Stop();
+        // Get the elapsed time in milliseconds
+        double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
+
+        // Print the elapsed time
+        logger.Debug($"App ctor Elapsed Time: {elapsedTimeMs} ms");
         base.OnStartup(e);
     }
 

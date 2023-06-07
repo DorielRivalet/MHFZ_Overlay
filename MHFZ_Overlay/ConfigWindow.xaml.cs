@@ -494,6 +494,11 @@ public partial class ConfigWindow : UiWindow
     /// <param name="mainWindow">The main window.</param>
     public ConfigWindow(MainWindow mainWindow)
     {
+        // Create a Stopwatch instance
+        Stopwatch stopwatch = new Stopwatch();
+        // Start the stopwatch
+        stopwatch.Start();
+
         InitializeComponent();
 
         logger.Info($"ConfigWindow initialized");
@@ -561,6 +566,13 @@ public partial class ConfigWindow : UiWindow
         replaceAllMonsterInfoFeriasLinks();
 
         weaponUsageData = databaseManager.CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
+        // Stop the stopwatch
+        stopwatch.Stop();
+        // Get the elapsed time in milliseconds
+        double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
+
+        // Print the elapsed time
+        logger.Debug($"ConfigWindow ctor Elapsed Time: {elapsedTimeMs} ms");
     }
 
     private List<WeaponUsageMapper> weaponUsageData = new();

@@ -1039,7 +1039,7 @@ internal class DiscordManager
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
                 case 379://Diva Hall
-                case 445:
+                case 445://Guild Hall (Diva Event)
                     stateString = string.Format("GR: {0} | Diva Skill: {1} ({2} Left) | Diva Bond: {3} | Items Given: {4}", dataLoader.model.GRankNumber(), dataLoader.model.GetDivaSkillNameFromID(dataLoader.model.DivaSkill()), dataLoader.model.DivaSkillUsesLeft(), dataLoader.model.DivaBond(), dataLoader.model.DivaItemsGiven());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;

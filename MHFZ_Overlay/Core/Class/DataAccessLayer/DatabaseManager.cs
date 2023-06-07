@@ -144,6 +144,10 @@ internal class DatabaseManager
 
     public bool SetupLocalDatabase(DataLoader dataLoader)
     {
+        // Create a Stopwatch instance
+        Stopwatch stopwatch = new Stopwatch();
+        // Start the stopwatch
+        stopwatch.Start();
         dataLoader.model.ShowSaveIcon = true;
 
         if (!isDatabaseSetup)
@@ -222,7 +226,13 @@ internal class DatabaseManager
         }
 
         dataLoader.model.ShowSaveIcon = false;
+        // Stop the stopwatch
+        stopwatch.Stop();
+        // Get the elapsed time in milliseconds
+        double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
 
+        // Print the elapsed time
+        logger.Debug($"SetupLocalDatabase Elapsed Time: {elapsedTimeMs} ms");
         return schemaChanged;
     }
 
@@ -10121,6 +10131,10 @@ Disabling Quest Logging.",
      */
     private void MigrateToSchemaFromVersion(SQLiteConnection conn, int fromVersion)
     {
+        // Create a Stopwatch instance
+        Stopwatch stopwatch = new Stopwatch();
+        // Start the stopwatch
+        stopwatch.Start();
         // 1. If foreign key constraints are enabled, disable them using PRAGMA foreign_keys=OFF.
         DisableForeignKeyConstraints(conn);
 
@@ -10199,6 +10213,13 @@ Disabling Quest Logging.",
         // 12. If foreign keys constraints were originally enabled, re-enable them now.
         EnableForeignKeyConstraints(conn);
         //[self endTransaction];
+        // Stop the stopwatch
+        stopwatch.Stop();
+        // Get the elapsed time in milliseconds
+        double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
+
+        // Print the elapsed time
+        logger.Debug($"MigrateToSchemaFromVersion Elapsed Time: {elapsedTimeMs} ms");
     }
 
     /* TODO:

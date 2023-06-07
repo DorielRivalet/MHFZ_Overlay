@@ -51,6 +51,8 @@ using MHFZ_Overlay.Core.Class;
 using NotifyIcon = Wpf.Ui.Controls.NotifyIcon;
 using Window = System.Windows.Window;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Common;
+using System.Windows.Media.Imaging;
 
 namespace MHFZ_Overlay;
 
@@ -206,6 +208,11 @@ public partial class MainWindow : Window
 #pragma warning restore CS8618 // Non-nullable field 'latestRelease' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
 #pragma warning restore CS8618 // Non-nullable property 'Client' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
     {
+        // Create a Stopwatch instance
+        Stopwatch stopwatch = new Stopwatch();
+        // Start the stopwatch
+        stopwatch.Start();
+        
         var splashScreen = new SplashScreen("UI/Icons/png/loading.png");
 
         splashScreen.Show(false);
@@ -323,6 +330,13 @@ public partial class MainWindow : Window
         logger.Info("Loaded MHF-Z Overlay {0}", App.CurrentProgramVersion);
 
         splashScreen.Close(TimeSpan.FromSeconds(0.1));
+        // Stop the stopwatch
+        stopwatch.Stop();
+        // Get the elapsed time in milliseconds
+        double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
+
+        // Print the elapsed time
+        logger.Debug($"MainWindow ctor Elapsed Time: {elapsedTimeMs} ms");
     }
 
     /// <summary>

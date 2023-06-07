@@ -29,6 +29,10 @@ public class DataLoader
     // this loads first before MainWindow constructor is called. meaning this runs twice.
     public DataLoader()
     {
+        // Create a Stopwatch instance
+        Stopwatch stopwatch = new Stopwatch();
+        // Start the stopwatch
+        stopwatch.Start();
         logger.Trace("DataLoader constructor called. Call stack: {0}", new StackTrace().ToString());
 
         logger.Info($"DataLoader initialized");
@@ -79,6 +83,13 @@ public class DataLoader
             System.Windows.MessageBox.Show("Please launch game first", LoggingManager.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
+        // Stop the stopwatch
+        stopwatch.Stop();
+        // Get the elapsed time in milliseconds
+        double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
+
+        // Print the elapsed time
+        logger.Debug($"DataLoader ctor Elapsed Time: {elapsedTimeMs} ms");
     }
 
     private void CheckIfLoadedInMezeporta()
@@ -89,7 +100,7 @@ public class DataLoader
 
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
             if (s.EnableOutsideMezeportaLoadingWarning)
-                System.Windows.MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", LoggingManager.WARNING_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", LoggingManager.WARNING_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
         }
     }
 
