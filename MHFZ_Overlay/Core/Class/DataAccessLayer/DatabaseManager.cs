@@ -24,8 +24,11 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using Wpf.Ui.Controls;
 using Formatting = Newtonsoft.Json.Formatting;
+using MessageBox = System.Windows.MessageBox;
 using Quest = MHFZ_Overlay.UI.Class.Quest;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
@@ -187,7 +190,7 @@ internal class DatabaseManager
                 CreateDatabaseTables(conn, dataLoader);
                 CreateDatabaseIndexes(conn);
                 CreateDatabaseTriggers(conn);
-                CheckDatabaseVersion(conn);
+                CheckDatabaseVersion(conn, dataLoader);
                 WriteNewVersionToFile();
             }
 
@@ -417,6 +420,8 @@ internal class DatabaseManager
                         Monster1ParalysisThresholdDictionary,
                         Monster1BlastThresholdDictionary,
                         Monster1StunThresholdDictionary,
+                        Monster1PartThresholdDictionary,
+                        Monster2PartThresholdDictionary,
                         IsHighGradeEdition,
                         RefreshRate
                         ) VALUES (
@@ -465,6 +470,8 @@ internal class DatabaseManager
                         @Monster1ParalysisThresholdDictionary,
                         @Monster1BlastThresholdDictionary,
                         @Monster1StunThresholdDictionary,
+                        @Monster1PartThresholdDictionary,
+                        @Monster2PartThresholdDictionary,
                         @IsHighGradeEdition,
                         @RefreshRate
                         )";
@@ -587,12 +594,14 @@ internal class DatabaseManager
                         Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = dataLoader.model.monster1ParalysisThresholdDictionary;
                         Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = dataLoader.model.monster1BlastThresholdDictionary;
                         Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = dataLoader.model.monster1StunThresholdDictionary;
+                        Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionary = dataLoader.model.monster1PartThresholdDictionary;
+                        Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionary = dataLoader.model.monster2PartThresholdDictionary;
 
                         int isHighGradeEdition = dataLoader.isHighGradeEdition ? 1 : 0;
                         int refreshRate = s.RefreshRate;
 
                         string questData = string.Format(
-                            "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}",
+                            "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}{47}",
                             runID, createdAt, createdBy, questID, timeLeft,
                             finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
                             starGrade, rankName, objectiveName, date, attackBuffDictionary,
@@ -601,8 +610,8 @@ internal class DatabaseManager
                             keystrokesDictionary, mouseInputDictionary, gamepadInputDictionary, actionsPerMinuteDictionary, overlayModeDictionary,
                             actualOverlayMode, partySize, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary,
                             monster4HPDictionary, monster1AttackMultiplierDictionary, monster1DefenseRateDictionary, monster1SizeMultiplierDictionary, monster1PoisonThresholdDictionary,
-                            monster1SleepThresholdDictionary, monster1ParalysisThresholdDictionary, monster1BlastThresholdDictionary, monster1StunThresholdDictionary, isHighGradeEdition,
-                            refreshRate
+                            monster1SleepThresholdDictionary, monster1ParalysisThresholdDictionary, monster1BlastThresholdDictionary, monster1StunThresholdDictionary, monster1PartThresholdDictionary,
+                            monster2PartThresholdDictionary, isHighGradeEdition, refreshRate
                             );
 
                         // Calculate the hash value for the data in the row
@@ -653,6 +662,8 @@ internal class DatabaseManager
                         cmd.Parameters.AddWithValue("@Monster1ParalysisThresholdDictionary", JsonConvert.SerializeObject(monster1ParalysisThresholdDictionary));
                         cmd.Parameters.AddWithValue("@Monster1BlastThresholdDictionary", JsonConvert.SerializeObject(monster1BlastThresholdDictionary));
                         cmd.Parameters.AddWithValue("@Monster1StunThresholdDictionary", JsonConvert.SerializeObject(monster1StunThresholdDictionary));
+                        cmd.Parameters.AddWithValue("@Monster1PartThresholdDictionary", JsonConvert.SerializeObject(monster1PartThresholdDictionary));
+                        cmd.Parameters.AddWithValue("@Monster2PartThresholdDictionary", JsonConvert.SerializeObject(monster2PartThresholdDictionary));
                         cmd.Parameters.AddWithValue("@IsHighGradeEdition", isHighGradeEdition);
                         cmd.Parameters.AddWithValue("@RefreshRate", refreshRate);
 
@@ -3233,6 +3244,8 @@ Disabling Quest Logging.",
                     Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
                     RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
@@ -10235,7 +10248,7 @@ Disabling Quest Logging.",
     7) program update without database update: did settings save? [?] no error logs? [X] database triggers work? [X]
     8) program update with database update: same as 6)
     */
-    private void CheckDatabaseVersion(SQLiteConnection connection)
+    private void CheckDatabaseVersion(SQLiteConnection connection, DataLoader dataLoader)
     {
         Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
@@ -10259,7 +10272,7 @@ Updating the database structure may take some time, it will transport all of you
                                                      string.Format("MHF-Z Overlay Database Update ({0} to {1})", previousVersion, App.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                     if (result == MessageBoxResult.Yes)
                     {
-                        UpdateDatabaseSchema(connection, currentUserVersion);
+                        UpdateDatabaseSchema(connection, dataLoader, currentUserVersion);
                     }
                     else
                     {
@@ -10278,10 +10291,9 @@ Updating the database structure may take some time, it will transport all of you
         }
     }
 
-    private void UpdateDatabaseSchema(SQLiteConnection connection, int currentUserVersion)
+    private void UpdateDatabaseSchema(SQLiteConnection connection, DataLoader dataLoader, int currentUserVersion)
     {
-        var splashScreen = new SplashScreen("UI/Icons/png/loading.png");
-        splashScreen.Show(false);
+        dataLoader.model.ShowSaveIcon = true;
         // Make a backup of the current SQLite file before updating the schema
 
         // Get the process that is running "mhf.exe"
@@ -10308,7 +10320,7 @@ Updating the database structure may take some time, it will transport all of you
         //logger.Fatal("The current version and the previous version aren't the same, however no update was found");
         //ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
         logger.Info("Database update process finished");
-        splashScreen.Close(TimeSpan.FromSeconds(0.1));
+        dataLoader.model.ShowSaveIcon = false;
         MessageBox.Show("Database update process finished", LoggingManager.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
@@ -10654,6 +10666,8 @@ Updating the database structure may take some time, it will transport all of you
                     Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
                     RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
@@ -10786,6 +10800,8 @@ Updating the database structure may take some time, it will transport all of you
                 Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                 Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                 Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                Monster1PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                 IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
                 RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
                 FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
@@ -10859,8 +10875,9 @@ Updating the database structure may take some time, it will transport all of you
                 logger.Debug("Inserted default values into new_Quests");
 
                 // Update values from Quests to new_Quests
-                /*
-                 * these are our new fields if going from v0.22
+                /* 
+                these are our new fields if going from v0.22 to v0.23
+
                 Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
                 Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
                 Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
@@ -10871,6 +10888,11 @@ Updating the database structure may take some time, it will transport all of you
                 Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                 IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
                 RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
+
+                v0.24 to v0.25 (fixing the refreshrate check is above, but the fix is implemented when i made v0.25)
+
+                Monster1PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                 */
 
                 using (var updateCommand = new SQLiteCommand(updateQuery, connection))
@@ -11481,6 +11503,8 @@ Updating the database structure may take some time, it will transport all of you
                     Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
                     RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
                     FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
@@ -11539,6 +11563,8 @@ Updating the database structure may take some time, it will transport all of you
             Monster1ParalysisThresholdDictionary = (SELECT Monster1ParalysisThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
             Monster1BlastThresholdDictionary = (SELECT Monster1BlastThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
             Monster1StunThresholdDictionary = (SELECT Monster1StunThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1PartThresholdDictionary = (SELECT Monster1PartThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster2PartThresholdDictionary = (SELECT Monster2PartThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
             IsHighGradeEdition = (SELECT IsHighGradeEdition FROM Quests WHERE Quests.RunID = new_Quests.RunID),
             RefreshRate = (SELECT RefreshRate FROM Quests WHERE Quests.RunID = new_Quests.RunID)
             WHERE EXISTS (SELECT 1 FROM Quests WHERE Quests.RunID = new_Quests.RunID)"

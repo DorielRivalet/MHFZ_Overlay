@@ -10086,6 +10086,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
     public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
     public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
+    public Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionary = new Dictionary<int, Dictionary<int, List<int>>>();
+    public Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionary = new Dictionary<int, Dictionary<int, List<int>>>();
     public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionaryDeserealized;
     public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionaryDeserealized;
     public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionaryDeserealized;
@@ -10094,6 +10096,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionaryDeserealized;
     public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionaryDeserealized;
     public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionaryDeserialized;
+    public Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionaryDeserialized;
 
     public int previousTimeInt = 0;
     public int previousAttackBuffInt = 0;
@@ -10126,6 +10130,27 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public int previousMonster1ParalysisThreshold = 0;
     public int previousMonster1BlastThreshold = 0;
     public int previousMonster1StunThreshold = 0;
+    public int previousMonster1Part1Threshold = 0;
+    public int previousMonster1Part2Threshold = 0;
+    public int previousMonster1Part3Threshold = 0;
+    public int previousMonster1Part4Threshold = 0;
+    public int previousMonster1Part5Threshold = 0;
+    public int previousMonster1Part6Threshold = 0;
+    public int previousMonster1Part7Threshold = 0;
+    public int previousMonster1Part8Threshold = 0;
+    public int previousMonster1Part9Threshold = 0;
+    public int previousMonster1Part10Threshold = 0;
+    public int previousMonster2Part1Threshold = 0;
+    public int previousMonster2Part2Threshold = 0;
+    public int previousMonster2Part3Threshold = 0;
+    public int previousMonster2Part4Threshold = 0;
+    public int previousMonster2Part5Threshold = 0;
+    public int previousMonster2Part6Threshold = 0;
+    public int previousMonster2Part7Threshold = 0;
+    public int previousMonster2Part8Threshold = 0;
+    public int previousMonster2Part9Threshold = 0;
+    public int previousMonster2Part10Threshold = 0;
+
 
     public List<Dictionary<int, int>> InsertInventoryDictionaryIntoList(string inventoryType)
     {
@@ -10357,8 +10382,23 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public int previousRoadFloor = 0;
 
+    /// <summary>
+    /// Inserts the quest information into dictionaries. If you want to insert a new dictionary, do the following:
+    /// 1. Create a dictionary as a property of this class.
+    /// 2. Follow the code structure of the current dictionary insertions, 
+    /// but for this particular dictionary structure if modifications are needed.
+    /// 3. Go to DatabaseManager and modify the Quests table for taking into account this new property.
+    /// 4. Copy-paste the query into a new function for updating the database schema (PerformUpdateToVersion_x_y_z), for new_Quests table. 
+    /// See also the 12 steps from SQLite linked for helping update and port data from an old table schema to a new table schema.
+    /// 5. Modify InsertQuestData Quests table insertion section taking into account the new property and table schema.
+    /// 6. Don't forget to add the clear() in the cleanup functions for the dictionaries.
+    /// 7. Complete a quest to see if everything works. Also test the update process.
+    /// </summary>
     public void InsertQuestInfoIntoDictionaries()
     {
+        // TODO: the above update process should be simplified. refactoring might be needed
+        // in many places, not just this function.
+
         int timeInt = TimeInt();
 
         if (IsRoad() && AreaID() == 459) // Hunter's Road Base Camp
@@ -10371,6 +10411,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 resetQuestInfoVariables();
             }
         }
+
+        // TODO: does dure work fine?
 
         if (previousAttackBuffInt != WeaponRaw() && !attackBuffDictionary.ContainsKey(TimeInt()))
         {
@@ -11043,6 +11085,101 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 logger.Warn(ex, "Could not insert into monster1StunThresholdDictionary");
             }
         }
+
+        // TODO: may want to optimize performance/readability
+        if ((previousMonster1Part1Threshold != Monster1Part1() ||
+            previousMonster1Part2Threshold != Monster1Part2() ||
+            previousMonster1Part3Threshold != Monster1Part3() ||
+            previousMonster1Part4Threshold != Monster1Part4() ||
+            previousMonster1Part5Threshold != Monster1Part5() ||
+            previousMonster1Part6Threshold != Monster1Part6() ||
+            previousMonster1Part7Threshold != Monster1Part7() ||
+            previousMonster1Part8Threshold != Monster1Part8() ||
+            previousMonster1Part9Threshold != Monster1Part9() ||
+            previousMonster1Part10Threshold != Monster1Part10()
+            )
+            && !monster1PartThresholdDictionary.ContainsKey(TimeInt()))
+        {
+            try
+            {
+                previousMonster1Part1Threshold = Monster1Part1();
+                previousMonster1Part2Threshold = Monster1Part2();
+                previousMonster1Part3Threshold = Monster1Part3();
+                previousMonster1Part4Threshold = Monster1Part4();
+                previousMonster1Part5Threshold = Monster1Part5();
+                previousMonster1Part6Threshold = Monster1Part6();
+                previousMonster1Part7Threshold = Monster1Part7();
+                previousMonster1Part8Threshold = Monster1Part8();
+                previousMonster1Part9Threshold = Monster1Part9();
+                previousMonster1Part10Threshold = Monster1Part10();
+                Dictionary<int, List<int>> monster1PartThresholdDictionaryMonsterInfo = new Dictionary<int, List<int>>();
+                List<int> partsList = new List<int>() {
+                    Monster1Part1(),
+                    Monster1Part2(),
+                    Monster1Part3(),
+                    Monster1Part4(),
+                    Monster1Part5(),
+                    Monster1Part6(),
+                    Monster1Part7(),
+                    Monster1Part8(),
+                    Monster1Part9(),
+                    Monster1Part10()
+                };
+                monster1PartThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), partsList);
+                monster1PartThresholdDictionary.Add(TimeInt(), monster1PartThresholdDictionaryMonsterInfo);
+            }
+            catch (Exception ex)
+            {
+                logger.Warn(ex, "Could not insert into monster1PartThresholdDictionary");
+            }
+        }
+
+        if ((previousMonster2Part1Threshold != Monster2Part1() ||
+            previousMonster2Part2Threshold != Monster2Part2() ||
+            previousMonster2Part3Threshold != Monster2Part3() ||
+            previousMonster2Part4Threshold != Monster2Part4() ||
+            previousMonster2Part5Threshold != Monster2Part5() ||
+            previousMonster2Part6Threshold != Monster2Part6() ||
+            previousMonster2Part7Threshold != Monster2Part7() ||
+            previousMonster2Part8Threshold != Monster2Part8() ||
+            previousMonster2Part9Threshold != Monster2Part9() ||
+            previousMonster2Part10Threshold != Monster2Part10()
+            )
+            && !monster2PartThresholdDictionary.ContainsKey(TimeInt()))
+        {
+            try
+            {
+                previousMonster2Part1Threshold = Monster2Part1();
+                previousMonster2Part2Threshold = Monster2Part2();
+                previousMonster2Part3Threshold = Monster2Part3();
+                previousMonster2Part4Threshold = Monster2Part4();
+                previousMonster2Part5Threshold = Monster2Part5();
+                previousMonster2Part6Threshold = Monster2Part6();
+                previousMonster2Part7Threshold = Monster2Part7();
+                previousMonster2Part8Threshold = Monster2Part8();
+                previousMonster2Part9Threshold = Monster2Part9();
+                previousMonster2Part10Threshold = Monster2Part10();
+                Dictionary<int, List<int>> monster2PartThresholdDictionaryMonsterInfo = new Dictionary<int, List<int>>();
+                List<int> partsList = new List<int>() {
+                    Monster2Part1(),
+                    Monster2Part2(),
+                    Monster2Part3(),
+                    Monster2Part4(),
+                    Monster2Part5(),
+                    Monster2Part6(),
+                    Monster2Part7(),
+                    Monster2Part8(),
+                    Monster2Part9(),
+                    Monster2Part10()
+                };
+                monster2PartThresholdDictionaryMonsterInfo.Add(LargeMonster2ID(), partsList);
+                monster2PartThresholdDictionary.Add(TimeInt(), monster2PartThresholdDictionaryMonsterInfo);
+            }
+            catch (Exception ex)
+            {
+                logger.Warn(ex, "Could not insert into monster2PartThresholdDictionary");
+            }
+        }
     }
 
     public void resetQuestInfoVariables()
@@ -11159,6 +11296,26 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         previousMonster1ParalysisThreshold = 0;
         previousMonster1BlastThreshold = 0;
         previousMonster1StunThreshold = 0;
+        previousMonster1Part1Threshold = 0;
+        previousMonster1Part2Threshold = 0;
+        previousMonster1Part3Threshold = 0;
+        previousMonster1Part4Threshold = 0;
+        previousMonster1Part5Threshold = 0;
+        previousMonster1Part6Threshold = 0;
+        previousMonster1Part7Threshold = 0;
+        previousMonster1Part8Threshold = 0;
+        previousMonster1Part9Threshold = 0;
+        previousMonster1Part10Threshold = 0;
+        previousMonster2Part1Threshold = 0;
+        previousMonster2Part2Threshold = 0;
+        previousMonster2Part3Threshold = 0;
+        previousMonster2Part4Threshold = 0;
+        previousMonster2Part5Threshold = 0;
+        previousMonster2Part6Threshold = 0;
+        previousMonster2Part7Threshold = 0;
+        previousMonster2Part8Threshold = 0;
+        previousMonster2Part9Threshold = 0;
+        previousMonster2Part10Threshold = 0;
 
     }
 
@@ -11196,7 +11353,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         monster1ParalysisThresholdDictionary.Clear();
         monster1BlastThresholdDictionary.Clear();
         monster1StunThresholdDictionary.Clear();
-
+        monster1PartThresholdDictionary.Clear();
+        monster2PartThresholdDictionary.Clear();
     }
 
     public void clearGraphCollections()

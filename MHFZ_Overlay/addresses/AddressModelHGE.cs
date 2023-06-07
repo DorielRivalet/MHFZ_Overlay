@@ -48,6 +48,7 @@ internal class AddressModelHGE : AddressModel
     {
         return M.ReadByte("mhfo-hd.dll+DCD4498");
     }
+    // TODO monster parts max values
     public string Monster1BP1() => M.Read2Byte("mhfo-hd.dll+0E37DD38,348").ToString();
     public override int Monster1Part1() => M.Read2Byte("mhfo-hd.dll+0E37DD38,348");
     public string Monster1BP2() => M.Read2Byte("mhfo-hd.dll+0E37DD38,350").ToString();
@@ -127,8 +128,6 @@ internal class AddressModelHGE : AddressModel
     public string Monster2RoadBP8() => M.Read2Byte("mhfo-hd.dll+E37DF18,1270").ToString();
     public string Monster2RoadBP9() => M.Read2Byte("mhfo-hd.dll+E37DF18,1278").ToString();
     public string Monster2RoadBP10() => M.Read2Byte("mhfo-hd.dll+E37DF18,1280").ToString();
-
-
 
     public override int Monster1HPInt() => M.Read2Byte("0043C600");
     public override int Monster2HPInt() => M.Read2Byte("0043C604");
