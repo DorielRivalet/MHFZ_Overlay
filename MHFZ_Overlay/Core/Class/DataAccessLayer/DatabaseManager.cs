@@ -10144,6 +10144,21 @@ Disabling Quest Logging.",
      */
     private void MigrateToSchemaFromVersion(SQLiteConnection conn, int fromVersion)
     {
+        // Keep in mind if you manually change the user_version to 0 and then perform the updates to for example v0.25.0, you
+        // will lose the data for the fields that got updated to v0.25.0, because the program assumes that you are in
+        // user_version 1
+        // Or put another way:
+        // PerformUpdateToVersion_0_23_0 updates x y z fields in Quests table.
+        // then PerformUpdateToVersion_0_25_0 updates a b c fields in Quests table taking into account the data
+        // that we now have after doing PerformUpdateToVersion_0_23_0.
+        // This means that, if you do a run with version
+        // v0.25.0, then set user_version to 0, then run MigrateToSchemaFromVersion, it will wipe Refresh Rate/etc
+        // because PerformUpdateToVersion_0_23_0 would put default values on new_Quests and PerformUpdateToVersion_0_25_0
+        // would port those default values instead.
+        // But if you are from v0.25.0 then set user_version to 1 then run MigrateToSchemaFromVersion, your data will stay
+        // because PerformUpdateToVersion_0_25_0 does take into account the Refresh Rate field, and we skip
+        // PerformUpdateToVersion_0_23_0.
+
         // Create a Stopwatch instance
         Stopwatch stopwatch = new Stopwatch();
         // Start the stopwatch

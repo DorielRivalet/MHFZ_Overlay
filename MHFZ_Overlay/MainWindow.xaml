@@ -25,6 +25,7 @@
         >
     <Window.Resources>
         <local1:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
+        <!--TODO: Unused Code?-->
         <RoutedUICommand x:Key="ESC" Text="Escape"/>
     </Window.Resources>
     <Grid>

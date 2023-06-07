@@ -1472,7 +1472,7 @@ public partial class ConfigWindow : UiWindow
         mostRecentRunsListView = (ListView)sender;
         MainWindow.DataLoader.model.RecentRuns = databaseManager.GetRecentRuns();
         mostRecentRunsListView.ItemsSource = MainWindow.DataLoader.model.RecentRuns;
-        mostRecentRunsListView.DataContext = MainWindow.DataLoader.model.RecentRuns;
+        //mostRecentRunsListView.DataContext = MainWindow.DataLoader.model.RecentRuns;
         mostRecentRunsListView.Items.Refresh();
     }
 
