@@ -25,17 +25,17 @@ We hope you find this overlay useful and enjoyable, and we welcome any feedback 
 
 ## Requirements
 
-- [.NET Desktop Runtime 6.0 x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.7-windows-x64-installer)
-- [.NET Desktop Runtime 6.0 x86](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.8-windows-x86-installer)
+- [.NET Desktop Runtime 6.0 x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.7-windows-x64-installer).
+- [.NET Desktop Runtime 6.0 x86](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.8-windows-x86-installer).
 
 ## Installation
 
-1. [Get **ALL** of the requirements](#requirements)
-2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/MHFZ_OverlaySetup.exe)
-3. Make sure *Windows* or your antivirus did not delete the file (because it reads the game's memory, *Windows* might detect it as a trojan, so you might have to get it out of quarantine)
-4. Run `MHFZ_OverlaySetup.exe` **as Administrator**
-5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
-6. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
+1. [Get **ALL** of the requirements](#requirements).
+2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/MHFZ_OverlaySetup.exe).
+3. Make sure *Windows* or your antivirus did not delete the file (because it reads the game's memory, *Windows* might detect it as a trojan, so you might have to get it out of quarantine).
+4. Run `MHFZ_OverlaySetup.exe` **as Administrator**.
+5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif).
+6. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A).
 
 **It's recommended to start the overlay when you are done loading into Mezeporta.**
 
@@ -45,17 +45,17 @@ If you obtained the mhfz-overlay software from any source other than GitHub rele
 
 We strongly recommend that you verify the authenticity and integrity of the software by comparing the SHA-256 checksum we provide against the checksum of the software you have obtained. The SHA-256 checksum can be found in the GitHub release notes and can be used to ensure that the software you are using matches the code in this repository. We assume no responsibility for any issues or problems that may arise from the use of software obtained from other sources.
 
-[How to check the downloaded file hashes](https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md#how-to-check-the-downloaded-file-hashes)
+[How to check the downloaded file hashes](https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md#how-to-check-the-downloaded-file-hashes).
 
-[View CHANGELOG.md](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md)
+[View CHANGELOG.md](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md).
 
-[View Release Statistics](https://somsubhra.github.io/github-release-stats/?username=DorielRivalet&repository=mhfz-overlay&page=1&per_page=30)
+[View Release Statistics](https://somsubhra.github.io/github-release-stats/?username=DorielRivalet&repository=mhfz-overlay&page=1&per_page=30).
 
 ## Hotkeys
 
-- `Shift+F1` Open Configuration
-- `Shift+F5` Restart Overlay
-- `Shift+F6` Exit
+- `Shift+F1` Open Configuration.
+- `Shift+F5` Restart Overlay.
+- `Shift+F6` Exit.
 
 As an alternative to hotkeys, you can check your system tray options by right-clicking the icon.
 
@@ -81,7 +81,7 @@ As an alternative to hotkeys, you can check your system tray options by right-cl
 
 ## Features
 
-- [x] Monster Effective HP Bars (*e.g.* Burning Freezing Elzelion's 1,000,000 HP!)
+- [x] Monster Effective HP Bars (*e.g.* Burning Freezing Elzelion's 1,000,000 HP!).
 
 ![Monster HP Bars 1](./demo/hp1.png)
 ![Monster HP Bars 2](./demo/hp2.png)
@@ -91,14 +91,14 @@ You can also see the monster icons or renders, and there is an option for automa
 ![Monster HP Bars 3](./demo/hp3.png)
 ![Monster HP Bars 4](./demo/hp4.png)
 
-- [x] Sharpness Numbers (colorized by current sharpness tier!)
+- [x] Sharpness Numbers (colorized by current sharpness tier!).
 
 ![Sharpness Numbers 1](./demo/sharpness1.png)
 ![Sharpness Numbers 2](./demo/sharpness2.png)
 ![Sharpness Numbers 3](./demo/sharpness3.png)
 
-- [x] Quest Timer (Two modes: elapsed time and time left. Down to the centiseconds in accuracy!)
-- [x] Hit Count (counts *Reflect*, *Stylish Up*, Heatblade, *Fencing+2* and more!)
+- [x] Quest Timer (Two modes: elapsed time and time left. Down to the centiseconds in accuracy!).
+- [x] Hit Count (counts *Reflect*, *Stylish Up*, Heatblade, *Fencing+2* and more!).
 
 ![Player Stats](./demo/playerstat1.png)
 
@@ -106,38 +106,38 @@ Includes icons!
 
 ![Player Stats Icons](./demo/playerstat2.png)
 
-- [x] Player Input (KBM)
+- [x] Player Input (KBM).
 
 ![Player Input](./demo/kbm.gif)
 
-- [x] Player Stats Graphs (Actions per Minute, Damage Per Second, Hits per Second and True Raw!)
+- [x] Player Stats Graphs (Actions per Minute, Damage Per Second, Hits per Second and True Raw!).
 
 ![Player APM](./demo/apm.gif)
 ![Player Graphs](./demo/graphs.png)
 
-- [x] Player True Raw (currently highest value shown in red!)
+- [x] Player True Raw (currently highest value shown in red!).
 
 ![Player Attack](./demo/playeratk1.png)
 
-- [x] Monster Stats + Icons (attack multiplier, defense rate and size!)
+- [x] Monster Stats + Icons (attack multiplier, defense rate and size!).
 
 ![Monster Stats](./demo/monsterstat1.png)
 ![Monster Stats Icons](./demo/monsterstat2.png)
 
-- [x] Monster Status Ailments + Icons (Poison, Sleep, Paralysis, Blast, Stun!)
+- [x] Monster Status Ailments + Icons (Poison, Sleep, Paralysis, Blast, Stun!).
 
 ![Monster Ailments](./demo/ailments1.png)
 ![Monster Ailments Icons](./demo/ailments2.png)
 
-- [x] Monster Body Parts (up to 10 parts!)
+- [x] Monster Body Parts (up to 10 parts!).
 
 ![Monster Body Parts](./demo/monsterparts1.png)
 
-- [x] Damage Numbers (dynamic colors and size!)
+- [x] Damage Numbers (dynamic colors and size!).
 
 ![Damage Numbers](./demo/hits.gif)
 
-- [x] [Discord Rich Presence](./FAQ.md/#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area, [speedrun mode, zen mode](./FAQ.md/#how-to-enable-speedrun-categories--zen-mode), and more!)
+- [x] [Discord Rich Presence](./FAQ.md/#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area, [speedrun mode, zen mode](./FAQ.md/#how-to-enable-speedrun-categories--zen-mode), and more!).
 
 ![Discord Rich Presence](./demo/discord5.png)
 ![Discord Rich Presence](./demo/discord10.png)
@@ -210,50 +210,50 @@ These images don't show everything, find out what's missing by pressing `Shift+F
 
 ## Features not yet implemented
 
-- Choose which player to load data from
-- Auto detect which player is playing
-- Selecting monsters for body parts and monster status
-- Fix max HP for Road
-- Allow lock-on to be used to select monsters
-- Add shortcut for saving
-- Automatically set default positions according to screen resolution
-- Global damage number labels
-- Attach user interface to game window option
-- Sound effects
-- Sharpness graph
-- Language options
-- PvP addresses
-- Handle multiple objectives information
-- Zenith information in Road
-- Raviente Support Part Info
-- Detect UL/HC
-- Guild Pugi address
-- Performance improvements
-- Armor Set Website links
-- Sky Corridor
-- Drag and Drop multiple selection
-- Sharpness tables
-- Gear rarity colors in hunter info stats
+- Choose which player to load data from.
+- Auto detect which player is playing.
+- Selecting monsters for body parts and monster status.
+- Fix max HP for Road.
+- Allow lock-on to be used to select monsters.
+- Add shortcut for saving.
+- Automatically set default positions according to screen resolution.
+- Global damage number labels.
+- Attach user interface to game window option.
+- Sound effects.
+- Sharpness graph.
+- Language options.
+- PvP addresses.
+- Handle multiple objectives information.
+- Zenith information in Road.
+- Raviente Support Part Info.
+- Detect UL/HC.
+- Guild Pugi address.
+- Performance improvements.
+- Armor Set Website links.
+- Sky Corridor.
+- Drag and Drop multiple selection.
+- Sharpness tables.
+- Gear rarity colors in hunter info stats.
 
-[Check more possible future features here](https://github.com/DorielRivalet/mhfz-overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
+[Check more possible future features here](https://github.com/DorielRivalet/mhfz-overlay/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement).
 
 ## Bugs
 
-- Monster Infos are sometimes outside of the screen (if they don't show at all even if you open the config menu, this is probably your issue)
+- Monster Infos are sometimes outside of the screen (if they don't show at all even if you open the config menu, this is probably your issue).
 - With Monster EHP enabled, if you cart, the max EHP turns into the current EHP, along with some other info max values
-- Sometimes when exiting Drag and Drop the monster HP information disappears
-- Spawning in the same area as the monster doesn't load the information properly. Fix: re-enter area
+- Sometimes when exiting Drag and Drop the monster HP information disappears.
+- Spawning in the same area as the monster doesn't load the information properly. Fix: re-enter area.
 - Duremudira/Road/Raviente HP not showing. Fix: enable *Always Show Monster Info*, load another quest showing the HP bars (not just the numbers), then retry.
-- Monster size values not shown correctly
-- Monster HP values are less than the actual values when not loading properly
-- Damage numbers over 1000 not working
-- Yamas and Berukyurosu information not working
+- Monster size values not shown correctly.
+- Monster HP values are less than the actual values when not loading properly.
+- Damage numbers over 1000 not working.
+- Yamas and Berukyurosu information not working.
 
-[Check more bugs here](https://github.com/DorielRivalet/mhfz-overlay/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
+[Check more bugs here](https://github.com/DorielRivalet/mhfz-overlay/issues?q=is%3Aissue+is%3Aopen+label%3Abug).
 
 ## Frequently Asked Questions
 
-[FAQ](https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md)
+[FAQ](https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md).
 
 ## How to Manually Update with Update.exe
 
@@ -261,13 +261,13 @@ These images don't show everything, find out what's missing by pressing `Shift+F
 
 ## How to Uninstall
 
-1. Go to Apps & Features
-2. Search Monster Hunter Frontier Z Overlay
+1. Go to Apps & Features.
+2. Search Monster Hunter Frontier Z Overlay.
 3. Click Uninstall. You can also delete the Desktop shortcut and Start Menu icon after uninstalling.
 
 ## Changelog
 
-[Learn about the latest improvements.](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md)
+[Learn about the latest improvements](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md).
 
 ## Documentation
 
@@ -281,7 +281,7 @@ We recommend consulting the appropriate documentation file based on your needs. 
 
 ## Project Development
 
-[GitHub Projects](https://github.com/DorielRivalet/mhfz-overlay/projects?query=is%3Aopen)
+[GitHub Projects](https://github.com/DorielRivalet/mhfz-overlay/projects?query=is%3Aopen).
 
 ## Code Analysis
 
@@ -310,20 +310,20 @@ We recommend consulting the appropriate documentation file based on your needs. 
 
 ## Feedback
 
-[Google Forms](https://forms.gle/hrAVWMcYS5HEo1v7A)
+[Google Forms](https://forms.gle/hrAVWMcYS5HEo1v7A).
 
 ## License
 
-[MIT](https://github.com/DorielRivalet/mhfz-overlay/blob/main/LICENSE.md)
+[MIT](https://github.com/DorielRivalet/mhfz-overlay/blob/main/LICENSE.md).
 
 ## Acknowledgements
 
-- This project is directly inspired from the overlay created by [*suzaku01*](https://github.com/suzaku01/mhf_displayer)
-- The theme and color palette used for the application is [*Catppuccin Mocha*](https://github.com/catppuccin/catppuccin)
-- The design and icons used in this project are part of the [*Material Design Icons* and related components](https://fonts.google.com/icons)
-- The fonts used is the in-game one, *MS Gothic*, and Source Code Pro for monospaced. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
+- This project is directly inspired from the overlay created by [*suzaku01*](https://github.com/suzaku01/mhf_displayer).
+- The theme and color palette used for the application is [*Catppuccin Mocha*](https://github.com/catppuccin/catppuccin).
+- The design and icons used in this project are part of [*Segoe Fluent Icons*](https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-fluent-icons-font) and [WPF UI](https://github.com/lepoco/wpfui).
+- The fonts used is the in-game one, *MS Gothic*. For monospaced, the application uses Source Code Pro and MesloLGM NF. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
 
 <a href="https://github.com/suzaku01"><img style="border-radius: 50% !important;" alt="Avatar" src="https://avatars.githubusercontent.com/u/89909040?v=4" width="64px" height="auto" ></a>
 <a href="https://github.com/Imulion"><img style="border-radius: 50% !important;" alt="Avatar" src="https://avatars.githubusercontent.com/u/27354834?v=4" width="64px" height="auto" ></a>
 <a href="https://github.com/Catppuccin"><img style="border-radius: 50% !important;" alt="Avatar" src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/logos/exports/1544x1544_circle.png" width="64px" height="auto" ></a>
-<a href="https://github.com/google/material-design-icons"><img style="background-color:#eff1f5" alt="Avatar" src="https://simpleicons.org/icons/materialdesignicons.svg" width="64px" height="auto" ></a>
+<a href="https://github.com/lepoco/wpfui"><img style="background-color:#eff1f5" alt="Avatar" src="https://avatars.githubusercontent.com/u/87412094?s=200&v=4" width="64px" height="auto" ></a>
