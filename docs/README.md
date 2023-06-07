@@ -13,8 +13,8 @@
 
 ## Type Hierarchy
 
-![Type Hierarchy](./res/img/Type%20Hierarchy.png)
+![Type Hierarchy](./res/img/type-hierarchy.png)
 
 ## Package Structure
 
-![Package Structure](./res/img/Package%20Structure.png)
+![Package Structure](./res/img/package-structure.png)

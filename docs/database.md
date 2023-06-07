@@ -13,6 +13,6 @@ The purpose of this SQLite database is to log various types of in-game informati
 
 ## Entity-Relationship Model (ERM)
 
-Please refer to the [attached ERM diagram](./res/img/er.png) for a visual representation of the database structure.
+Please refer to the [attached ERM diagram](./res/img/entity-relationship-model.png) for a visual representation of the database structure.
 
-![er](./res/img/er.png)
+![er](./res/img/entity-relationship-model.png)
