@@ -28,6 +28,7 @@ using System.Windows;
 using System.Windows.Automation;
 using Application = System.Windows.Application;
 using MHFZ_Overlay;
+using MHFZ_Overlay.Core.Constants;
 
 namespace MHFZ_Overlay.Addresses;
 
@@ -1821,16 +1822,16 @@ TreeScope.Children, condition);
         }
     }
 
-    public string PersonalBestLoaded = "--:--.--";
+    public string PersonalBestLoaded = Messages.TIMER_NOT_LOADED;
 
     public string PersonalBestTimePercent
     {
         get
         {
-            if (PersonalBestLoaded != "--:--.--" && ShowPersonalBestPaceColor())
+            if (PersonalBestLoaded != Messages.TIMER_NOT_LOADED && ShowPersonalBestPaceColor())
             {
                 const int framesPerSecond = 30;
-                int personalBestInFrames = (int)(framesPerSecond * (TimeSpan.ParseExact(PersonalBestLoaded, "mm':'ss'.'ff", CultureInfo.InvariantCulture).TotalSeconds));
+                int personalBestInFrames = (int)(framesPerSecond * (TimeSpan.ParseExact(PersonalBestLoaded, "mm':'ss'.'fff", CultureInfo.InvariantCulture).TotalSeconds));
                 var personalBestTimeFramesElapsed = 0;
                 if (GetTimerMode() == "Time Left")
                     personalBestTimeFramesElapsed = TimeDefInt() - personalBestInFrames;
@@ -6850,10 +6851,10 @@ Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
         totalLargeMonstersHunted,
         totalSmallMonstersHunted,
         totalOverlaySessions,
-        TimeSpan.FromSeconds(sessionDurationHighest).ToString("hh\\:mm\\:ss\\.ff"),
-        TimeSpan.FromSeconds(sessionDurationLowest).ToString("hh\\:mm\\:ss\\.ff"),
-        TimeSpan.FromSeconds(sessionDurationAverage).ToString("hh\\:mm\\:ss\\.ff"),
-        TimeSpan.FromSeconds(sessionDurationMedian).ToString("hh\\:mm\\:ss\\.ff")
+        TimeSpan.FromSeconds(sessionDurationHighest).ToString(TimeFormats.HOURS_MINUTES_SECONDS_MILLISECONDS),
+        TimeSpan.FromSeconds(sessionDurationLowest).ToString(TimeFormats.HOURS_MINUTES_SECONDS_MILLISECONDS),
+        TimeSpan.FromSeconds(sessionDurationAverage).ToString(TimeFormats.HOURS_MINUTES_SECONDS_MILLISECONDS),
+        TimeSpan.FromSeconds(sessionDurationMedian).ToString(TimeFormats.HOURS_MINUTES_SECONDS_MILLISECONDS)
         );
     }
 
@@ -9347,7 +9348,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public string GetMinutesSecondsMillisecondsFromFrames(long frames)
     {
         var elapsedTime = TimeSpan.FromSeconds((double)frames / 30);
-        var elapsedTimeString = elapsedTime.ToString("mm\\:ss\\.ff");
+        var elapsedTimeString = elapsedTime.ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS);
         return elapsedTimeString;
     }
 
@@ -9875,7 +9876,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         if (s.GameFolderPath == "" || s.GameFolderPath == null)
         {
             logger.Warn("Game folder path not found");
-            MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", LoggingManager.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", Messages.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
             s.EnableQuestLogging = false;
             return false;
         }
@@ -9883,7 +9884,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         if (s.DatabaseFilePath == "" || s.DatabaseFilePath == null)
         {
             logger.Warn("Database file path not found");
-            MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", LoggingManager.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", Messages.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
             s.EnableQuestLogging = false;
             return false;
         }
@@ -9906,7 +9907,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             MessageBox.Show("Some required files are missing from the game folder. Please make sure that the game folder contains the following files: "
             + String.Join(", ", findFiles) + "\n" +
             "gameFolderFiles: " + String.Join(", ", gameFolderFiles),
-            LoggingManager.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
+            Messages.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
             logger.Warn("Missing game files");
             s.EnableQuestLogging = false;
             return false;
@@ -11412,36 +11413,38 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     #region personal best times embed
 
+    // TODO: not needed?
+
     public string SelectedQuestName { get; set; } = "Destructive White Winds";
     public string SelectedQuestObjective { get; set; } = "Slay 1 Blinking Nargacuga";
     public string SelectedQuestObjectiveImage { get; set; } = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blinking_nargacuga.png";
-    public string SwordAndShieldPBTime { get; set; } = "--:--";
+    public string SwordAndShieldPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string SwordAndShieldPBRunID { get; set; } = "ID 000001";
-    public string DualSwordsPBTime { get; set; } = "--:--";
+    public string DualSwordsPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string DualSwordsPBRunID { get; set; } = "ID 000002";
-    public string GreatSwordPBTime { get; set; } = "--:--";
+    public string GreatSwordPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string GreatSwordPBRunID { get; set; } = "ID 000003";
-    public string LongSwordPBTime { get; set; } = "--:--";
+    public string LongSwordPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string LongSwordPBRunID { get; set; } = "ID 000004";
-    public string HammerPBTime { get; set; } = "--:--";
+    public string HammerPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string HammerPBRunID { get; set; } = "ID 000005";
-    public string HuntingHornPBTime { get; set; } = "--:--";
+    public string HuntingHornPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string HuntingHornPBRunID { get; set; } = "ID 000006";
-    public string LancePBTime { get; set; } = "--:--";
+    public string LancePBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string LancePBRunID { get; set; } = "ID 000007";
-    public string GunlancePBTime { get; set; } = "--:--";
+    public string GunlancePBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string GunlancePBRunID { get; set; } = "ID 000008";
-    public string TonfaPBTime { get; set; } = "--:--";
+    public string TonfaPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string TonfaPBRunID { get; set; } = "ID 000009";
-    public string SwitchAxeFPBTime { get; set; } = "--:--";
+    public string SwitchAxeFPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string SwitchAxeFPBRunID { get; set; } = "ID 000010";
-    public string MagnetSpikePBTime { get; set; } = "--:--";
+    public string MagnetSpikePBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string MagnetSpikePBRunID { get; set; } = "ID 000011";
-    public string LightBowgunPBTime { get; set; } = "--:--";
+    public string LightBowgunPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string LightBowgunPBRunID { get; set; } = "ID 000012";
-    public string HeavyBowgunPBTime { get; set; } = "--:--";
+    public string HeavyBowgunPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string HeavyBowgunPBRunID { get; set; } = "ID 000013";
-    public string BowPBTime { get; set; } = "--:--";
+    public string BowPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
     public string BowPBRunID { get; set; } = "ID 000014";
     public int SelectedQuestID { get; set; } = 0;
 

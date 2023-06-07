@@ -30,6 +30,7 @@ using Wpf.Ui.Controls;
 using Formatting = Newtonsoft.Json.Formatting;
 using MessageBox = System.Windows.MessageBox;
 using Quest = MHFZ_Overlay.UI.Class.Quest;
+using MHFZ_Overlay.Core.Constants;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay.Core.Class.DataAccessLayer;
@@ -61,7 +62,7 @@ internal class DatabaseManager
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
             logger.Warn("Database structure needs update");
-            MessageBox.Show("Please update the database structure", LoggingManager.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Please update the database structure", Messages.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
             s.EnableQuestLogging = false;
         }
     }
@@ -176,7 +177,7 @@ internal class DatabaseManager
             catch (SQLiteException ex)
             {
                 logger.Error(ex, "Invalid database file");
-                MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(String.Format("Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
 
@@ -223,7 +224,7 @@ internal class DatabaseManager
             if (schemaChanged)
             {
                 logger.Fatal("Outdated database schema");
-                MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         }
@@ -1959,7 +1960,7 @@ Data: {6}
 
 Message: {7}",
 ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace, JsonConvert.SerializeObject(ex.Data), ex.Message),
-                        LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (IOException ex)
                 {
@@ -1967,14 +1968,14 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                         transaction.Rollback();
                     // Handle an I/O exception
                     logger.Error(ex, "An error occurred while accessing a file");
-                    MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (ArgumentException ex)
                 {
                     if (transaction != null)
                         transaction.Rollback();
                     logger.Error(ex, "ArgumentException");
-                    MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (Exception ex)
                 {
@@ -2659,7 +2660,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                         // Commit the transaction
                         transaction.Commit();
 
-                        logger.Info("Stored session time. Duration: {0}", TimeSpan.FromSeconds(sessionDuration).ToString(@"hh\:mm\:ss\.ff"));
+                        logger.Info("Stored session time. Duration: {0}", TimeSpan.FromSeconds(sessionDuration).ToString(TimeFormats.HOURS_MINUTES_SECONDS_MILLISECONDS));
                     }
                     catch (Exception ex)
                     {
@@ -2691,19 +2692,19 @@ Data: {6}
 
 Message: {7}",
 ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace, JsonConvert.SerializeObject(ex.Data), ex.Message),
-                LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
         }
         catch (IOException ex)
         {
             // Handle an I/O exception
             logger.Error(ex, "An error occurred while accessing a file");
-            MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
         }
         catch (Exception ex)
         {
             // Handle any other exception
             logger.Error(ex, "An error occurred");
-            MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
@@ -2961,7 +2962,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
 Please make sure that both MHFZ_Overlay.sqlite (in the game\database directory) and reference_schema.json (in the current overlay directory) don't exist, so that the program can make new ones. 
 
 Disabling Quest Logging.",
-            LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             s.EnableQuestLogging = false;
         }
 
@@ -4869,7 +4870,7 @@ Disabling Quest Logging.",
 
     public string GetPersonalBest(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader)
     {
-        string personalBest = "--:--.--";
+        string personalBest = Messages.TIMER_NOT_LOADED;
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get personal best. dataSource: {0}", dataSource);
@@ -4923,7 +4924,7 @@ Disabling Quest Logging.",
                         }
                         else
                         {
-                            personalBest = "--:--.--";
+                            personalBest = Messages.TIMER_NOT_LOADED;
                         }
                     }
                     transaction.Commit();
@@ -7228,7 +7229,7 @@ Disabling Quest Logging.",
                         {
                             if (!reader.HasRows)
                             {
-                                //MessageBox.Show(String.Format("Runs not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                //MessageBox.Show(String.Format("Runs not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                 return weaponUsageData;
                             }
                             else
@@ -7318,7 +7319,7 @@ Disabling Quest Logging.",
                         {
                             if (!reader.HasRows)
                             {
-                                MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                 return;
                             }
                             else
@@ -7361,7 +7362,7 @@ Disabling Quest Logging.",
                         {
                             if (!reader.HasRows)
                             {
-                                MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                 return;
                             }
                             while (reader.Read())
@@ -10292,7 +10293,7 @@ Updating the database structure may take some time, it will transport all of you
                     else
                     {
                         logger.Fatal("Outdated database schema");
-                        MessageBox.Show("Cannot use the overlay with an outdated database schema", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Cannot use the overlay with an outdated database schema", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         ApplicationManager.HandleShutdown();
                     }
                 }
@@ -10322,7 +10323,7 @@ Updating the database structure may take some time, it will transport all of you
         {
             // The "mhf.exe" process was not found
             logger.Fatal("mhf.exe not found");
-            MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
 
@@ -10331,12 +10332,12 @@ Updating the database structure may take some time, it will transport all of you
         FileManager.DeleteFile(referenceSchemaFilePath);
         // later on it creates it
         // see this comment: Check if the reference schema file exists
-        //MessageBox.Show("The current version and the previous version aren't the same, however no update was found", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        //MessageBox.Show("The current version and the previous version aren't the same, however no update was found", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
         //logger.Fatal("The current version and the previous version aren't the same, however no update was found");
         //ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
         logger.Info("Database update process finished");
         dataLoader.model.ShowSaveIcon = false;
-        MessageBox.Show("Database update process finished", LoggingManager.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+        MessageBox.Show("Database update process finished", Messages.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     // TODO: this is repeating code. also not sure if the data types handling is correct
@@ -11006,7 +11007,7 @@ Updating the database structure may take some time, it will transport all of you
             if (foreignKeysViolations != "")
             {
                 logger.Fatal("Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
-                MessageBox.Show("Foreign keys violations detected, closing program.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Foreign keys violations detected, closing program.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
             else
@@ -11202,7 +11203,7 @@ Updating the database structure may take some time, it will transport all of you
             if (foreignKeysViolations != "")
             {
                 logger.Fatal("Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
-                MessageBox.Show("Foreign keys violations detected, closing program.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Foreign keys violations detected, closing program.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
             else
@@ -11438,7 +11439,7 @@ Updating the database structure may take some time, it will transport all of you
         catch (Exception ex)
         {
             logger.Fatal("Could not toggle foreign key constraints", ex);
-            MessageBox.Show("Could not toggle foreign key constraints", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Could not toggle foreign key constraints", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
     }
@@ -11457,7 +11458,7 @@ Updating the database structure may take some time, it will transport all of you
         catch (Exception ex)
         {
             logger.Fatal("Could not toggle foreign key constraints", ex);
-            MessageBox.Show("Could not toggle foreign key constraints", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Could not toggle foreign key constraints", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
     }

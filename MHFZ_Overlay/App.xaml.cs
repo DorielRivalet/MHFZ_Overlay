@@ -4,6 +4,7 @@
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
+using MHFZ_Overlay.Core.Constants;
 using Squirrel;
 using System;
 using System.Configuration;
@@ -61,7 +62,7 @@ public partial class App : Application
         if (CurrentProgramVersion == "v0.0.0")
         {
             logger.Fatal("Program version not found");
-            MessageBox.Show("Program version not found", LoggingManager.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Program version not found", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             LoggingManager.WriteCrashLog(new Exception("Program version not found"));
         }
         else
@@ -217,7 +218,7 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
             logger.Error(ex);
             isClowdSquirrelUpdating = false;
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
-            MessageBox.Show("An error has occurred with the update process, see logs.log for more information", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("An error has occurred with the update process, see logs.log for more information", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

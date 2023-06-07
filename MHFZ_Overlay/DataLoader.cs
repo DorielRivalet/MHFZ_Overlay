@@ -7,6 +7,7 @@ using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
+using MHFZ_Overlay.Core.Constants;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -52,7 +53,7 @@ public class DataLoader
                 // Imulion's version does not have anything in the catch block.
                 // I'm marking this as error since overlay might interfere with custom shaders.
                 logger.Error(ex, "Could not create code cave");
-                System.Windows.MessageBox.Show("Could not create code cave. ReShade or similar programs might trigger this error. Also make sure you are not loading the overlay when on game launcher.", LoggingManager.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Could not create code cave. ReShade or similar programs might trigger this error. Also make sure you are not loading the overlay when on game launcher.", Messages.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
 
             if (!isHighGradeEdition)
@@ -80,7 +81,7 @@ public class DataLoader
         else
         {
             logger.Fatal("Launch game first");
-            System.Windows.MessageBox.Show("Please launch game first", LoggingManager.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            System.Windows.MessageBox.Show("Please launch game first", Messages.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
         // Stop the stopwatch
@@ -100,7 +101,7 @@ public class DataLoader
 
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
             if (s.EnableOutsideMezeportaLoadingWarning)
-                MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", LoggingManager.WARNING_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", Messages.WARNING_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
         }
     }
 
@@ -109,7 +110,7 @@ public class DataLoader
         if (model.QuestID() != 0)
         {
             logger.Fatal("Loaded overlay inside quest {0}", model.QuestID());
-            System.Windows.MessageBox.Show("Loaded overlay inside quest. Please load the overlay outside quests.", LoggingManager.FATAL_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            System.Windows.MessageBox.Show("Loaded overlay inside quest. Please load the overlay outside quests.", Messages.FATAL_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             LoggingManager.WriteCrashLog(new Exception("Loaded overlay inside quest"));
         }
     }
@@ -156,7 +157,7 @@ public class DataLoader
         {
             // The "mhf.exe" process was not found
             logger.Fatal("mhf.exe not found");
-            MessageBox.Show("The 'mhf.exe' process was not found.", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
     }
@@ -211,7 +212,7 @@ public class DataLoader
             if (process.ProcessName == "GameOverlayUI" && !steamOverlayWarningShown)
             {
                 logger.Warn("Found Steam overlay: {0}", process.ProcessName);
-                var result = MessageBox.Show($"Having Steam Overlay open while MHF-Z Overlay is running may decrease performance. ({process.ProcessName} found)", LoggingManager.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
+                var result = MessageBox.Show($"Having Steam Overlay open while MHF-Z Overlay is running may decrease performance. ({process.ProcessName} found)", Messages.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.OK)
                 {
                     steamOverlayWarningShown = true;
@@ -227,7 +228,7 @@ public class DataLoader
 
                 // processName is a substring of one of the banned process strings
                 logger.Fatal("Found banned process {0}", process.ProcessName);
-                MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", LoggingManager.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
 
                 // Close the overlay program
                 ApplicationManager.HandleShutdown();
@@ -245,7 +246,7 @@ public class DataLoader
         {
             // More than one "MHFZ_Overlay" process is running
             logger.Fatal("Found duplicate overlay");
-            MessageBox.Show("Close other instances of the overlay before opening a new one", LoggingManager.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Close other instances of the overlay before opening a new one", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
 
             // Close the overlay program
             ApplicationManager.HandleShutdown();
@@ -254,7 +255,7 @@ public class DataLoader
         {
             // More than one game process is running
             logger.Fatal("Found duplicate game");
-            MessageBox.Show("Close other instances of the game before opening a new one", LoggingManager.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Close other instances of the game before opening a new one", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
 
             // Close the overlay program
             ApplicationManager.HandleShutdown();
@@ -290,7 +291,7 @@ public class DataLoader
             {
                 // The "mhf.exe" process was not found
                 logger.Fatal("mhf.exe not found");
-                MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", LoggingManager.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         } 
@@ -333,7 +334,7 @@ public class DataLoader
         if (proc == null)
         {
             logger.Fatal("Launch game first");
-            System.Windows.MessageBox.Show("Please launch game first", LoggingManager.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            System.Windows.MessageBox.Show("Please launch game first", Messages.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
             return;
         }
@@ -382,7 +383,7 @@ public class DataLoader
         TimeSpan timeSpan = TimeSpan.FromMilliseconds(elapsedTime);
 
         // Format the TimeSpan object as a string
-        string formattedTime = timeSpan.ToString(@"mm\:ss\.ff");
+        string formattedTime = timeSpan.ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS);
 
         return formattedTime;
     }
@@ -440,7 +441,7 @@ public class DataLoader
             else
             {
                 logger.Fatal("Could not find game dll");
-                MessageBox.Show("Could not find game dll. Make sure you start the overlay inside Mezeporta.", LoggingManager.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Could not find game dll. Make sure you start the overlay inside Mezeporta.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         }

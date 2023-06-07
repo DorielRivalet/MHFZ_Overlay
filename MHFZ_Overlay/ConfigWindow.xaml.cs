@@ -41,6 +41,7 @@ using TextBox = System.Windows.Controls.TextBox;
 using Window = System.Windows.Window;
 using MHFZ_Overlay.Core.Class;
 using Wpf.Ui.Controls;
+using MHFZ_Overlay.Core.Constants;
 
 namespace MHFZ_Overlay;
 
@@ -843,7 +844,7 @@ public partial class ConfigWindow : UiWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void DefaultButton_Click(object sender, RoutedEventArgs e)
     {
-        var result = MessageBox.Show("Resetting settings, are you sure?", LoggingManager.INFO_TITLE, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+        var result = MessageBox.Show("Resetting settings, are you sure?", Messages.INFO_TITLE, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
         if (result == MessageBoxResult.Yes)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -1187,7 +1188,7 @@ public partial class ConfigWindow : UiWindow
         catch (Exception ex)
         {
             logger.Error(ex);
-            MessageBox.Show("Could not open settings folder", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Could not open settings folder", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
@@ -1233,52 +1234,52 @@ public partial class ConfigWindow : UiWindow
     private void SetDefaultInfoInQuestIDWeaponSection()
     {
 
-        SwordAndShieldBestTimeTextBlock.Text = "--:--.--";
-        SwordAndShieldRunIDTextBlock.Text = "Run Not Found";
+        SwordAndShieldBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        SwordAndShieldRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        GreatSwordBestTimeTextBlock.Text = "--:--.--";
-        GreatSwordRunIDTextBlock.Text = "Run Not Found";
+        GreatSwordBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        GreatSwordRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        DualSwordsBestTimeTextBlock.Text = "--:--.--";
-        DualSwordsRunIDTextBlock.Text = "Run Not Found";
+        DualSwordsBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        DualSwordsRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        LongSwordBestTimeTextBlock.Text = "--:--.--";
-        LongSwordRunIDTextBlock.Text = "Run Not Found";
+        LongSwordBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        LongSwordRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        LanceBestTimeTextBlock.Text = "--:--.--";
-        LanceRunIDTextBlock.Text = "Run Not Found";
+        LanceBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        LanceRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        GunlanceBestTimeTextBlock.Text = "--:--.--";
-        GunlanceRunIDTextBlock.Text = "Run Not Found";
+        GunlanceBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        GunlanceRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        HammerBestTimeTextBlock.Text = "--:--.--";
-        HammerRunIDTextBlock.Text = "Run Not Found";
+        HammerBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        HammerRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        HuntingHornBestTimeTextBlock.Text = "--:--.--";
-        HuntingHornRunIDTextBlock.Text = "Run Not Found";
+        HuntingHornBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        HuntingHornRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        TonfaBestTimeTextBlock.Text = "--:--.--";
-        TonfaRunIDTextBlock.Text = "Run Not Found";
+        TonfaBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        TonfaRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        SwitchAxeFBestTimeTextBlock.Text = "--:--.--";
-        SwitchAxeFRunIDTextBlock.Text = "Run Not Found";
+        SwitchAxeFBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        SwitchAxeFRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        MagnetSpikeBestTimeTextBlock.Text = "--:--.--";
-        MagnetSpikeRunIDTextBlock.Text = "Run Not Found";
+        MagnetSpikeBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        MagnetSpikeRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        LightBowgunBestTimeTextBlock.Text = "--:--.--";
-        LightBowgunRunIDTextBlock.Text = "Run Not Found";
+        LightBowgunBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        LightBowgunRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        HeavyBowgunBestTimeTextBlock.Text = "--:--.--";
-        HeavyBowgunRunIDTextBlock.Text = "Run Not Found";
+        HeavyBowgunBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        HeavyBowgunRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
-        BowBestTimeTextBlock.Text = "--:--.--";
-        BowRunIDTextBlock.Text = "Run Not Found";
+        BowBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
+        BowRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
 
         SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri("https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png"));
-        SelectedQuestNameTextBlock.Text = "Quest Not Found";
-        SelectedQuestObjectiveTextBlock.Text = "Invalid Quest";
-        CurrentTimeTextBlock.Text = "N/A";
+        SelectedQuestNameTextBlock.Text = Messages.QUEST_NOT_FOUND;
+        SelectedQuestObjectiveTextBlock.Text = Messages.INVALID_QUEST;
+        CurrentTimeTextBlock.Text = Messages.NOT_A_NUMBER;
 
     }
 
@@ -1436,7 +1437,7 @@ public partial class ConfigWindow : UiWindow
         if (databaseManager.UpdateYoutubeLink(sender, e, runID, youtubeLink))
             MessageBox.Show(String.Format("Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink), "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         else
-            MessageBox.Show(String.Format("Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(String.Format("Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
     private void UpdateYoutubeLink_Loaded(object sender, RoutedEventArgs e)
@@ -1458,7 +1459,7 @@ public partial class ConfigWindow : UiWindow
         }
         else
         {
-            MessageBox.Show("Run not found", LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Run not found", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
@@ -2752,7 +2753,7 @@ public partial class ConfigWindow : UiWindow
         foreach (var entry in inventory)
         {
             int time = entry.Key;
-            string timeString = TimeSpan.FromSeconds((double)time / 30).ToString(@"mm\:ss\.ff");
+            string timeString = TimeSpan.FromSeconds((double)time / 30).ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS);
             var items = entry.Value;
 
             var itemString = "";
@@ -2791,7 +2792,7 @@ public partial class ConfigWindow : UiWindow
         foreach (var entry in areas)
         {
             int time = entry.Key;
-            string timeString = TimeSpan.FromSeconds((double)time / 30).ToString(@"mm\:ss\.ff");
+            string timeString = TimeSpan.FromSeconds((double)time / 30).ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS);
             var area = entry.Value;
             sb.AppendLine(timeString + " ");
 

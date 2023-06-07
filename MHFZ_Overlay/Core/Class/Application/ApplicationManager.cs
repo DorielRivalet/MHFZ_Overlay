@@ -4,6 +4,7 @@
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.Discord;
 using MHFZ_Overlay.Core.Class.Log;
+using MHFZ_Overlay.Core.Constants;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -64,7 +65,7 @@ internal class ApplicationManager
     {
         logger.Info("Closing game");
         KillProcess("mhf");
-        MessageBox.Show("The game was closed due to a fatal overlay error, please report this to the developer", LoggingManager.FATAL_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        MessageBox.Show("The game was closed due to a fatal overlay error, please report this to the developer", Messages.FATAL_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     /// <summary>

@@ -53,6 +53,7 @@ using Window = System.Windows.Window;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Common;
 using System.Windows.Media.Imaging;
+using MHFZ_Overlay.Core.Constants;
 
 namespace MHFZ_Overlay;
 
@@ -74,7 +75,7 @@ public partial class MainWindow : Window
 
     #region system tray
 
-    public static NotifyIcon? _mainWindowNotifyIcon { get; set;}
+    public static NotifyIcon? _mainWindowNotifyIcon { get; set; }
 
     private void CreateSystemTrayIcon()
     {
@@ -212,7 +213,7 @@ public partial class MainWindow : Window
         Stopwatch stopwatch = new Stopwatch();
         // Start the stopwatch
         stopwatch.Start();
-        
+
         var splashScreen = new SplashScreen("UI/Icons/png/loading.png");
 
         splashScreen.Show(false);
@@ -454,7 +455,7 @@ The process may take some time, as the program attempts to download from GitHub 
             if (className == "MHFLAUNCH")
             {
                 logger.Error("Detected game launcher");
-                System.Windows.MessageBox.Show("Detected launcher, please start the overlay when fully loading into Mezeporta. Closing overlay.", LoggingManager.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Detected launcher, please start the overlay when fully loading into Mezeporta. Closing overlay.", Messages.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 DataLoader.model.isInLauncherBool = true;
                 ApplicationManager.HandleShutdown();
             }
@@ -474,7 +475,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 DataLoader.model.closedGame = true;
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 logger.Info("Detected closed game");
-                System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please start the overlay when fully loading into Mezeporta.", LoggingManager.INFO_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please start the overlay when fully loading into Mezeporta.", Messages.INFO_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                 //https://stackoverflow.com/a/9050477/18859245
                 ApplicationManager.HandleShutdown();
             };
@@ -1635,7 +1636,7 @@ The process may take some time, as the program attempts to download from GitHub 
             DataLoader.model.clearGraphCollections();
             DataLoader.model.resetQuestInfoVariables();
             DataLoader.model.previousRoadFloor = 0;
-            personalBestTextBlock.Text = "--:--.--";
+            personalBestTextBlock.Text = Messages.TIMER_NOT_LOADED;
             calculatedPersonalBest = false;
             calculatedQuestAttempts = false;
             return;

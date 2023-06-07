@@ -4,6 +4,7 @@
 using CsvHelper;
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.Log;
+using MHFZ_Overlay.Core.Constants;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
@@ -297,7 +298,7 @@ internal class FileManager
         File.Copy(file, destination, overwrite);
         logger.Info("{0}. Original file: {1}, Destination: {2}", logMessage, file, destination);
         if (showMessageBox)
-            MessageBox.Show(string.Format("{0}. Original file: {1}, Destination: {2}", logMessage, file, destination), LoggingManager.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(string.Format("{0}. Original file: {1}, Destination: {2}", logMessage, file, destination), Messages.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     /// <summary>
@@ -447,7 +448,7 @@ internal class FileManager
             // If there are any banned files or folders, display an error message and exit the application
             string message = string.Format("The following files or folders are not allowed:\n{0}", string.Join("\n", illegalFiles));
             logger.Fatal(message);
-            MessageBox.Show(message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(message, Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
 
@@ -511,7 +512,7 @@ internal class FileManager
         {
             // Handle the exception and show an error message to the user
             logger.Error(ex, "An error occurred while creating a database backup");
-            MessageBox.Show("An error occurred while creating a database backup: " + ex.Message, LoggingManager.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("An error occurred while creating a database backup: " + ex.Message, Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
