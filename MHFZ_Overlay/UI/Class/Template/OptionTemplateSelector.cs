@@ -8,7 +8,7 @@ namespace MHFZ_Overlay.UI.Class.Template;
 
 public class OptionTemplateSelector : DataTemplateSelector
 {
-    public override DataTemplate SelectTemplate(object item, DependencyObject container)
+    public override DataTemplate? SelectTemplate(object item, DependencyObject container)
     {
         var selectedOption = item as string;
         if (selectedOption != null)

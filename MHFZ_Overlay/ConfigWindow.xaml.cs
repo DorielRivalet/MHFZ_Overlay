@@ -1426,8 +1426,8 @@ public partial class ConfigWindow : UiWindow
     private CartesianChart? personalBestChart;
     private PolarChart? hunterPerformanceChart;
     private StackPanel? compendiumInformationStackPanel;
-    private string personalBestSelectedWeapon = "";
-    private string personalBestSelectedType = "";
+    private string personalBestSelectedWeapon = string.Empty;
+    private string personalBestSelectedType = string.Empty;
 
     private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
     {
@@ -3070,6 +3070,11 @@ public partial class ConfigWindow : UiWindow
     {
         var stackPanel = sender as StackPanel;
         compendiumInformationStackPanel = stackPanel;
+    }
+
+    private void CalendarDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+    {
+
     }
 }
 /* LoadConfig on startup

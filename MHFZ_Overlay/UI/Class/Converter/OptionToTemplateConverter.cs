@@ -8,7 +8,7 @@ namespace MHFZ_Overlay.UI.Class.Converter;
 
 public class OptionToTemplateConverter : DataTemplateSelector
 {
-    public override DataTemplate SelectTemplate(object item, DependencyObject container)
+    public override DataTemplate? SelectTemplate(object item, DependencyObject container)
     {
         var option = item as Option;
         if (option == null)
@@ -40,6 +40,8 @@ public class OptionToTemplateConverter : DataTemplateSelector
             return (DataTemplate)((FrameworkElement)container).FindResource("PersonalBestTemplate");
         else if (option.Name == "Compendium")
             return (DataTemplate)((FrameworkElement)container).FindResource("CompendiumTemplate");
+        else if (option.Name == "Calendar")
+            return (DataTemplate)((FrameworkElement)container).FindResource("CalendarTemplate");
         else
             return (DataTemplate)((FrameworkElement)container).FindResource("DefaultTemplate");
     }

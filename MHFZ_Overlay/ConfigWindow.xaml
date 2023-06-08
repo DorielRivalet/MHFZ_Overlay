@@ -53,7 +53,7 @@
                         Please keep in mind that if you update the overlay version or re-install the game, the database file may get overwritten. It is recommended to make a periodic backup of the MHFZ_Overlay.sqlite file, found in the database folder which is inside the game folder.
                         <LineBreak/>
                         <LineBreak/>
-                        Select an option from the Section drop-down menu in order to view these statistics.
+                        Select an option from the Section drop-down menu in order to view these statistics. The compendium section may take some time to load.
                     </TextBlock>
                 </Grid>
             </DataTemplate>
@@ -89,6 +89,38 @@
                         </DockPanel>
                     </Grid>
 
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="CalendarTemplate">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
+
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="{StaticResource Teal}" />
+
+                    <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
+                        <StackPanel Orientation="Horizontal">
+                            <!--<ComboBox Width="330" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16">
+                                <ComboBoxItem>Inventory</ComboBoxItem>
+                                <ComboBoxItem>Ammo</ComboBoxItem>
+                                <ComboBoxItem>Partnya Bag</ComboBoxItem>
+                                <ComboBoxItem>Area Changes</ComboBoxItem>
+                            </ComboBox>-->
+                            <DatePicker Width="Auto" Height="Auto" HorizontalAlignment="Left" SelectedDateChanged="CalendarDatePicker_SelectedDateChanged" />
+                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="View the runs you did on a specific day"/>
+                        </StackPanel>
+                        <!--listview here-->
+                        <TextBlock Text="text" Margin="5" Width="Auto" Height="Auto"/>
+                    </StackPanel>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="GearTemplate">
