@@ -15,4 +15,5 @@ public static class Messages
     public const string WARNING_TITLE = "MHF-Z Overlay Warning";
     public const string INFO_TITLE = "MHF-Z Overlay Info";
     public const string DEBUG_TITLE = "MHF-Z Overlay Debug";
+    public const string MONSTER_PART_NOT_LOADED = "None: 0";
 }
