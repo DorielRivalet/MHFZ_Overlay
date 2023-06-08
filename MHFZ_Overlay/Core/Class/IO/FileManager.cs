@@ -4,7 +4,7 @@
 using CsvHelper;
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.Log;
-using MHFZ_Overlay.Core.Constants;
+using MHFZ_Overlay.Core.Constant;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;

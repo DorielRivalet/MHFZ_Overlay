@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
-using MHFZ_Overlay.Core.Constants;
+using MHFZ_Overlay.Core.Constant;
 using System;
 using System.Diagnostics;
 using System.IO;

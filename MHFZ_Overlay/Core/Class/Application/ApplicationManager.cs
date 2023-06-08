@@ -4,7 +4,7 @@
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.Discord;
 using MHFZ_Overlay.Core.Class.Log;
-using MHFZ_Overlay.Core.Constants;
+using MHFZ_Overlay.Core.Constant;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;

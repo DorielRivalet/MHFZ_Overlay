@@ -30,7 +30,7 @@ using Wpf.Ui.Controls;
 using Formatting = Newtonsoft.Json.Formatting;
 using MessageBox = System.Windows.MessageBox;
 using Quest = MHFZ_Overlay.UI.Class.Quest;
-using MHFZ_Overlay.Core.Constants;
+using MHFZ_Overlay.Core.Constant;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay.Core.Class.DataAccessLayer;

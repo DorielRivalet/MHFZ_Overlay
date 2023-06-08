@@ -28,7 +28,7 @@ using System.Windows;
 using System.Windows.Automation;
 using Application = System.Windows.Application;
 using MHFZ_Overlay;
-using MHFZ_Overlay.Core.Constants;
+using MHFZ_Overlay.Core.Constant;
 
 namespace MHFZ_Overlay.Addresses;
 
@@ -1482,7 +1482,7 @@ TreeScope.Children, condition);
     }
 
     ///<summary>
-    /// Quest time in the format of mm:ss.ff
+    /// Quest time in the format of mm:ss.fff. This should only be used for display purposes.
     ///</summary>
     public string Time
     {
@@ -1519,28 +1519,28 @@ TreeScope.Children, condition);
                 {
                     if ((time / 30) % 60 < 10)
                     {
-                        return string.Format("{0:00}:{1:00}.{2}", (time / 30) / 60, time / 30 % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;//should work fine
+                        return string.Format("{0:00}:{1:00}.{2:000}", (time / 30) / 60, time / 30 % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;//should work fine
                     }
                     else
                     {
-                        return string.Format("{0:00}:{1}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
+                        return string.Format("{0:00}:{1}.{2:000}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
                     }
                 }
                 else
                 {
                     if ((time / 30) % 60 < 10)
                     {
-                        return string.Format("{0}:{1:00}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
+                        return string.Format("{0}:{1:00}.{2:000}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
                     }
                     else
                     {
-                        return string.Format("{0}:{1}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
+                        return string.Format("{0}:{1}.{2:000}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
                     }
                 }
             }
             else
             {
-                return string.Format("{0:00}:{1:00}.{2}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
+                return string.Format("{0:00}:{1:00}.{2:000}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
             }
         }
     }

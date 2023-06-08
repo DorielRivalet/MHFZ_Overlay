@@ -41,7 +41,7 @@ using TextBox = System.Windows.Controls.TextBox;
 using Window = System.Windows.Window;
 using MHFZ_Overlay.Core.Class;
 using Wpf.Ui.Controls;
-using MHFZ_Overlay.Core.Constants;
+using MHFZ_Overlay.Core.Constant;
 
 namespace MHFZ_Overlay;
 

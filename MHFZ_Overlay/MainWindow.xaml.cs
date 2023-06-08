@@ -53,7 +53,7 @@ using Window = System.Windows.Window;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Common;
 using System.Windows.Media.Imaging;
-using MHFZ_Overlay.Core.Constants;
+using MHFZ_Overlay.Core.Constant;
 
 namespace MHFZ_Overlay;
 
