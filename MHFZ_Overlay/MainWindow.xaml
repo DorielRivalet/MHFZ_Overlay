@@ -29,9 +29,9 @@
         <RoutedUICommand x:Key="ESC" Text="Escape"/>
     </Window.Resources>
     <Grid>
-    <ui:TitleBar>
+    <ui:TitleBar Visibility="Hidden">
         <ui:TitleBar.Tray>
-                <ui:NotifyIcon
+                <ui:NotifyIcon Visibility="Visible"
           MenuOnRightClick="True"
           TooltipText="Monster Hunter Frontier Z Overlay"
                     x:Name="MainWindowNotifyIcon">
