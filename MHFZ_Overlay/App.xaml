@@ -74,17 +74,11 @@
                 <Setter Property="Margin" Value="20"/>
                 <Setter Property="Background" Value="#1e1e2e" />
             </Style>
+            <!-- this is also used for textblock-->
             <Style x:Key="ConfigTextBox" TargetType="{x:Type TextBlock}">
                 <Setter Property="HorizontalAlignment" Value="Left" />
                 <Setter Property="VerticalAlignment" Value="Center"  />
                 <Setter Property="FontSize" Value="14"/>
-            </Style>
-            <Style x:Key="ConfigTextField" TargetType="{x:Type TextBox}">
-                <Setter Property="BorderBrush" Value="#1e1e2e"  />
-                <Setter Property="BorderThickness" Value="0,0,0,1.5"  />
-                <Setter Property="Margin" Value="5,8,5,8"  />
-                <Setter Property="Background" Value="#1e1e2e"  />
-                <Setter Property="Foreground" Value="#cdd6f4" />
             </Style>
             <Style x:Key="ConfigBottomButtons" TargetType="{x:Type Button}">
                 <Setter Property="HorizontalAlignment" Value="Left"   />
@@ -127,11 +121,6 @@
                         </Trigger.ExitActions>
                     </Trigger>
                 </Style.Triggers>
-            </Style>
-            <Style x:Key="ConfigCheckBox" TargetType="{x:Type CheckBox}">
-                <Setter Property="HorizontalAlignment" Value="Center"  />
-                <Setter Property="VerticalAlignment" Value="Center"  />
-                <Setter Property="Background" Value="#1e1e2e" />
             </Style>
             <Style x:Key="ConfigColorPicker" TargetType="xctk:ColorPicker">
                 <Setter Property="Margin" Value="5" />
