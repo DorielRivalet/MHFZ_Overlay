@@ -19,7 +19,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         x:Name="Config"
-        Title="Monster Hunter Frontier Z Overlay"
+        Title="Monster Hunter Frontier Z Overlay Settings"
         Height="720" Width="1280" ResizeMode="CanResize"
         Foreground="{StaticResource Text}"
         Background="{StaticResource Base}"
@@ -145,11 +145,11 @@
                             <!--TODO: add the refresh button to the other sections-->
                             <Button Background="Transparent" BorderThickness="0" ToolTip="Refresh" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/Refresh.xaml'}"  Click="RefreshButton_Click" Width="32" Style="{StaticResource ConfigBottomButtons}" Height="32"/>
 
-                            <ComboBox Margin="5,0,0,0" Width="300" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestTypeComboBox_SelectionChanged">
+                            <ComboBox Width="300" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestTypeComboBox_SelectionChanged">
                                 <ComboBoxItem>(Quest ID) Personal Best by Date</ComboBoxItem>
                                 <ComboBoxItem>(Quest ID) Personal Best by Attempts</ComboBoxItem>
                             </ComboBox>
-                            <ComboBox Margin="5,0,0,0"  Width="150" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestWeaponComboBox_SelectionChanged">
+                            <ComboBox Width="150" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestWeaponComboBox_SelectionChanged">
                                 <ComboBoxItem>Sword and Shield</ComboBoxItem>
                                 <ComboBoxItem>Dual Swords</ComboBoxItem>
                                 <ComboBoxItem>Great Sword</ComboBoxItem>
@@ -600,7 +600,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ui:TitleBar
-            Title="Monster Hunter Frontier Z Overlay"
+            Title="Monster Hunter Frontier Z Overlay Settings"
             Background="{StaticResource Crust}"
             Grid.Row="0"
         >
@@ -1050,7 +1050,7 @@
                                             </ToolTipService.ToolTip>
 
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Category"/>
-                                            <ComboBox x:Name="OverlayModeComboBox"  Grid.Column="1" Grid.Row="0" Width="230" Margin="5" SelectedIndex="0">
+                                            <ComboBox x:Name="OverlayModeComboBox"  Grid.Column="1" Grid.Row="0" Width="230" SelectedIndex="0">
                                                 <ComboBoxItem>Time Attack</ComboBoxItem>
                                                 <ComboBoxItem>Freestyle w/ Secret Tech</ComboBoxItem>
                                                 <ComboBoxItem>Freestyle No Secret Tech</ComboBoxItem>
@@ -1060,7 +1060,7 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="3" ToolTip="Search Option">
                                             <TextBlock ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Section"/>
-                                            <ComboBox x:Name="OverlayModeOptionComboBox"  Grid.Column="1" Grid.Row="0" Width="240" Margin="5" ItemsSource="{Binding QuestLogsSearchOption}" SelectedItem="{Binding SelectedOption}" DisplayMemberPath="Name" SelectionChanged="QuestLogsSectionComboBox_SelectionChanged"/>
+                                            <ComboBox x:Name="OverlayModeOptionComboBox"  Grid.Column="1" Grid.Row="0" Width="240" ItemsSource="{Binding QuestLogsSearchOption}" SelectedItem="{Binding SelectedOption}" DisplayMemberPath="Name" SelectionChanged="QuestLogsSectionComboBox_SelectionChanged"/>
                                         </StackPanel>
                                         <Grid x:Name="DiscordEmbedWeaponPersonalBest" Grid.Row="1">
                                             <Grid.RowDefinitions>
@@ -1288,7 +1288,7 @@
                                         </StackPanel>
                                         <ui:ToggleSwitch Grid.Row="6" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableNationality}"/>
                                         <TextBlock Margin="5,5,5,5" ToolTip="Select nationality to display on website for quest records" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Player Nationality"/>
-                                        <ComboBox VirtualizingStackPanel.IsVirtualizing="True" SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Margin="5,5,5,5" Grid.Column="1" Grid.Row="7"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
+                                        <ComboBox VirtualizingStackPanel.IsVirtualizing="True" SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Grid.Column="1" Grid.Row="7"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <VirtualizingStackPanel Orientation="Horizontal">
@@ -2141,10 +2141,16 @@
                                                         <RowDefinition Height="50"/>
                                                         <RowDefinition Height="1*"/>
                                                     </Grid.RowDefinitions>
-                                                    <ComboBox Grid.Row="0" Name="SortBy" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="5,5,5,5"/>
-                                                    <ComboBox Grid.Row="0" Name="SortDir" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="150,5,5,5"/>
-                                                    <ComboBox Grid.Row="0" SelectionChanged="FilterBox_SelectionChanged" Name="FilterBox" SelectedIndex="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="300,5,5,5" >
-                                                    </ComboBox>
+                                                    <Grid Grid.Row="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <ComboBox Grid.Column="0" Name="SortBy" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto"/>
+                                                        <ComboBox Grid.Column="1" Name="SortDir" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto"/>
+                                                        <ComboBox Grid.Column="2" SelectionChanged="FilterBox_SelectionChanged" Name="FilterBox" SelectedIndex="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto"/>
+                                                    </Grid>
                                                     <ListView x:Name="MyList" Grid.Row="1" HorizontalAlignment="Stretch" VirtualizingStackPanel.IsVirtualizing="True">
                                                         <!--<ListView.Resources>
                                                         <DataTemplate x:Key="Templ">
@@ -3213,13 +3219,13 @@
                         </Grid.RowDefinitions>
                         <!--<TextBlock Margin="5,5,5,5" ToolTip="Select option. Image based on cutting damage" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Option"/>-->
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Select option" Grid.Row="0" Grid.Column="0" ToolTip="Select option"/>
-                        <ComboBox SelectedIndex="0" SelectionChanged="MonsterInfoSource_SelectionChanged" Name="MonsterInfoViewOptionComboBox" Margin="5,5,5,5" Grid.Column="1" Grid.Row="0">
+                        <ComboBox SelectedIndex="0" SelectionChanged="MonsterInfoSource_SelectionChanged" Name="MonsterInfoViewOptionComboBox" Grid.Column="1" Grid.Row="0">
                             <ComboBoxItem>Ferias</ComboBoxItem>
                             <ComboBoxItem>Wiki</ComboBoxItem>
                             <ComboBoxItem>YouTube</ComboBoxItem>
                         </ComboBox>
-                        <ComboBox SelectedIndex="0" SelectionChanged="MonsterNameComboBox_SelectionChanged" Name="MonsterNameComboBox" Margin="5,5,5,5" Grid.Column="2" Grid.Row="0"/>
-                        <ComboBox Name="WeaponMatchupComboBox" SelectedIndex="0" SelectionChanged="WeaponMatchupComboBox_SelectionChanged" Margin="5,5,5,5" Grid.Column="3" Grid.Row="0">
+                        <ComboBox SelectedIndex="0" SelectionChanged="MonsterNameComboBox_SelectionChanged" Name="MonsterNameComboBox" Grid.Column="2" Grid.Row="0"/>
+                        <ComboBox Name="WeaponMatchupComboBox" SelectedIndex="0" SelectionChanged="WeaponMatchupComboBox_SelectionChanged" Grid.Column="3" Grid.Row="0">
                             <ComboBoxItem>Sword and Shield</ComboBoxItem>
                             <ComboBoxItem>Dual Swords</ComboBoxItem>
                             <ComboBoxItem>Great Sword</ComboBoxItem>

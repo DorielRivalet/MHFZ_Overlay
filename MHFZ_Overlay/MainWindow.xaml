@@ -17,7 +17,7 @@
         d:DataContext="{d:DesignInstance Type=addresses:AddressModel}"
         mc:Ignorable="d"
         x:Name="Window"
-        Title="MHF-Z Overlay"         
+        Title="Monster Hunter Frontier Z Overlay"         
         Height="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"
         Width="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" Background="Transparent" AllowsTransparency="True" WindowStyle="None"
         Style="{StaticResource WinAll}"
@@ -32,8 +32,8 @@
     <ui:TitleBar Visibility="Hidden">
         <ui:TitleBar.Tray>
                 <ui:NotifyIcon Visibility="Visible"
-          MenuOnRightClick="True"
-          TooltipText="Monster Hunter Frontier Z Overlay"
+                    MenuOnRightClick="True"
+                    TooltipText="Monster Hunter Frontier Z Overlay"
                     x:Name="MainWindowNotifyIcon">
                     <ui:NotifyIcon.Menu>
                         <ContextMenu>
