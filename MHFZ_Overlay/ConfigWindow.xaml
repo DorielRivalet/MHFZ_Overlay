@@ -737,7 +737,7 @@
 
                             <TextBlock Text="Refresh Rate (Restart required)" Margin="5,5,5,5" ToolTip="Select the Refresh Rate. Lower values might improve performance at the cost of statistics accuracy (including in database). Recommended to leave at 30 for speedruns, but for streams you can set it to 1 just fine." Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"/>
                             <DockPanel Grid.Row="4" Grid.Column="1">
-                                <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="40">
+                                <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="80">
                                     <TextBox.Text>
                                         <Binding Path="RefreshRate" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -753,7 +753,7 @@
                             <ComboBox Grid.Column="1" Grid.Row="5" x:Name="PrimaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=PrimaryFontFamily}" />
                             <TextBlock x:Name="PrimaryFontSizeTextBlock" Text="Primary Font Size" Margin="5,5,5,5" ToolTip="Select the Primary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"/>
                             <DockPanel Grid.Row="6" Grid.Column="1">
-                                <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="40">
+                                <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="80">
                                     <TextBox.Text>
                                         <Binding Path="PrimaryFontSize" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -795,7 +795,7 @@
                             <ComboBox Grid.Column="1" Grid.Row="8" x:Name="SecondaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontFamily}" />
                             <TextBlock x:Name="SecondaryFontSizeTextBlock" Text="Secondary Font Size" Margin="5,5,5,5" ToolTip="Select the Secondary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"/>
                             <DockPanel Grid.Row="9" Grid.Column="1">
-                                <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="40">
+                                <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="80">
                                     <TextBox.Text>
                                         <Binding Path="SecondaryFontSize" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
