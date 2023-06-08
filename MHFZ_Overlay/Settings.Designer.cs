@@ -1429,7 +1429,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://dorielrivalet.github.io/mhfz-ferias-english-project/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://xl3lackout.github.io/MHFZ-Ferias-English-Project/")]
         public string FeriasVersionLink {
             get {
                 return ((string)(this["FeriasVersionLink"]));

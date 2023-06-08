@@ -354,7 +354,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="FeriasVersionLink" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://dorielrivalet.github.io/mhfz-ferias-english-project/</Value>
+      <Value Profile="(Default)">https://xl3lackout.github.io/MHFZ-Ferias-English-Project/</Value>
     </Setting>
     <Setting Name="MaxFaintsOverride" Type="System.String" Scope="User">
       <Value Profile="(Default)">Automatic</Value>
