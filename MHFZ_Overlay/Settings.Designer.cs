@@ -3118,5 +3118,17 @@ namespace MHFZ_Overlay {
                 this["CatppuccinAccentColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterEHPDisplayCorrectorEnabled {
+            get {
+                return ((bool)(this["MonsterEHPDisplayCorrectorEnabled"]));
+            }
+            set {
+                this["MonsterEHPDisplayCorrectorEnabled"] = value;
+            }
+        }
     }
 }
