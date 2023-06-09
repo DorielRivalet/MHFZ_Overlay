@@ -37,18 +37,54 @@
                     x:Name="MainWindowNotifyIcon">
                     <ui:NotifyIcon.Menu>
                         <ContextMenu>
-                            <ui:MenuItem ToolTip="Open the configuration window" Foreground="{StaticResource Green}" Header="Settings" SymbolIcon="Settings24" Tag="settings" Click="OptionSettings_Click"/>
-                            <ui:NavigationSeparator/>
-                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to Frequently Asked Questions page" Header="Help" SymbolIcon="Question24" Tag="help" Click="OptionHelp_Click"/>
-                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to documentation page" Header="Documentation" SymbolIcon="Book24" Tag="documentation" Click="OptionDocumentation_Click"/>
-                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to report bug page" Header="Report Bug" SymbolIcon="Bug24" Tag="reportbug" Click="OptionReportBug_Click"/>
-                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to request feature page" Header="Request Feature" SymbolIcon="Lightbulb24" Tag="requestfeature" Click="OptionRequestFeature_Click"/>
-                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to feedback page" Header="Send Feedback" SymbolIcon="Megaphone24" Tag="sendfeedback" Click="OptionSendFeedback_Click"/>
-                            <ui:NavigationSeparator/>
-                            <ui:MenuItem ToolTip="Restart overlay" Foreground="{StaticResource Yellow}" Header="Restart" SymbolIcon="ArrowClockwise24" Tag="restart" Click="OptionRestart_Click"/>
-                            <ui:MenuItem ToolTip="Exit overlay" Foreground="{StaticResource Red}" Header="Exit" SymbolIcon="ArrowExit20" Tag="exit" Click="OptionExit_Click"/>
-                            <ui:NavigationSeparator/>
-                            <ui:MenuItem ToolTip="Go to GitHub repository" Foreground="{StaticResource Blue}" Header="About" SymbolIcon="Info24" Tag="about" Click="OptionAbout_Click"/>
+                            <ui:MenuItem ToolTip="Open the configuration window" Foreground="{StaticResource Green}" Header="Settings" Tag="settings" Click="OptionSettings_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="Settings24" Foreground="{StaticResource Green}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
+                            <ui:NavigationViewItemSeparator/>
+                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to Frequently Asked Questions page" Header="Help" Tag="help" Click="OptionHelp_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="Question24" Foreground="{StaticResource Blue}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
+                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to documentation page" Header="Documentation" Tag="documentation" Click="OptionDocumentation_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="Book24" Foreground="{StaticResource Blue}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
+                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to report bug page" Header="Report Bug" Tag="reportbug" Click="OptionReportBug_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="Bug24" Foreground="{StaticResource Blue}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
+                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to request feature page" Header="Request Feature"  Tag="requestfeature" Click="OptionRequestFeature_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="Lightbulb24" Foreground="{StaticResource Blue}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
+                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to feedback page" Header="Send Feedback" Tag="sendfeedback" Click="OptionSendFeedback_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="Megaphone24" Foreground="{StaticResource Blue}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
+                            <ui:NavigationViewItemSeparator/>
+                            <ui:MenuItem ToolTip="Restart overlay" Foreground="{StaticResource Yellow}" Header="Restart" Tag="restart" Click="OptionRestart_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="ArrowClockwise24" Foreground="{StaticResource Yellow}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
+                            <ui:MenuItem ToolTip="Exit overlay" Foreground="{StaticResource Red}" Header="Exit" Tag="exit" Click="OptionExit_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="ArrowExit20" Foreground="{StaticResource Red}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
+                            <ui:NavigationViewItemSeparator/>
+                            <ui:MenuItem ToolTip="Go to GitHub repository" Foreground="{StaticResource Blue}" Header="About" Tag="about" Click="OptionAbout_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="Info24" Foreground="{StaticResource Blue}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
                         </ContextMenu>
                     </ui:NotifyIcon.Menu>
                 </ui:NotifyIcon>

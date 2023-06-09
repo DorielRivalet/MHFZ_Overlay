@@ -16,4 +16,8 @@ public static class Messages
     public const string INFO_TITLE = "MHF-Z Overlay Info";
     public const string DEBUG_TITLE = "MHF-Z Overlay Debug";
     public const string MONSTER_PART_NOT_LOADED = "None: 0";
+    public const string RICK_ROLL_ID = "dQw4w9WgXcQ";
+    public const string MAXIMUM_TIMER_PLACEHOLDER = "9999:59.999";
+    public const string OVERLAY_MODE_PLACEHOLDER = "Standard";
+    public const string MONSTER_IMAGE_NOT_LOADED = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/none.png";
 }

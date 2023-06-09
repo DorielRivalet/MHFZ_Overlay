@@ -135,6 +135,61 @@
                 <Setter Property="Background" Value="#1e1e2e" />
                 <Setter Property="ColorMode" Value="ColorCanvas"/>
             </Style>
+            <Style x:Key="ColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
+                <Setter Property="Width" Value="8" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Cursor" Value="SizeWE" />
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Thumb}">
+                            <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <!--  Style and template for the DataGridColumnHeader.  -->
+            <Style x:Key="DefaultDataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+                <Setter Property="Padding" Value="12,0,0,0" />
+                <Setter Property="MinHeight" Value="32" />
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="SeparatorBrush" Value="{DynamicResource ControlFillColorDefaultBrush}" />
+                <Setter Property="IsTabStop" Value="False" />
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                            <Grid>
+                                <Border
+                            x:Name="columnHeaderBorder"
+                            Padding="3,0,3,0"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="0,0,1,1">
+                                    <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Border>
+
+                                <Thumb
+                            x:Name="PART_LeftHeaderGripper"
+                            HorizontalAlignment="Left"
+                            Style="{StaticResource ColumnHeaderGripperStyle}" />
+                                <Thumb
+                            x:Name="PART_RightHeaderGripper"
+                            HorizontalAlignment="Right"
+                            Style="{StaticResource ColumnHeaderGripperStyle}" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
             <FontFamily x:Key="Source Code Pro">pack://application:,,,UI/Fonts/#Source Code Pro</FontFamily>
             <FontFamily x:Key="Source Code Pro Bold">pack://application:,,,UI/Fonts/#Source Code Pro Bold</FontFamily>
@@ -145,7 +200,7 @@
             <FontFamily x:Key="Segoe UI Variable">pack://application:,,,UI/Fonts/#Segoe UI Variable</FontFamily>
             <FontFamily x:Key="Segoe Fluent Icons">pack://application:,,,UI/Fonts/#Segoe Fluent Icons</FontFamily>
             <FontFamily x:Key="MesloLGM NF">pack://application:,,,UI/Fonts/#MesloLGM NF</FontFamily>
-
+            
             <!--<ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>

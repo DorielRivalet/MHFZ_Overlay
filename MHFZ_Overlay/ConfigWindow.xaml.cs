@@ -42,13 +42,15 @@ using Window = System.Windows.Window;
 using MHFZ_Overlay.Core.Class;
 using Wpf.Ui.Controls;
 using MHFZ_Overlay.Core.Constant;
+using Wpf.Ui.Controls.Window;
+using DataGrid = Wpf.Ui.Controls.DataGrid;
 
 namespace MHFZ_Overlay;
 
 /// <summary>
 /// Interaction logic for ConfigWindow.xaml
 /// </summary>
-public partial class ConfigWindow : UiWindow
+public partial class ConfigWindow : FluentWindow
 {
     /// <summary>
     /// Gets or sets the main window.
@@ -1418,6 +1420,7 @@ public partial class ConfigWindow : UiWindow
     private Button? updateYoutubeLinkButton;
     private TextBox? youtubeLinkTextBox;
     private ListView? mostRecentRunsListView;
+    private DataGrid? mostRecentRunsDataGrid;
     private ListView? top20RunsListView;
     private TextBlock? questLogGearStatsTextBlock;
     private TextBlock? compendiumTextBlock;
@@ -1470,10 +1473,14 @@ public partial class ConfigWindow : UiWindow
 
     private void MostRecentRuns_ListViewLoaded(object sender, RoutedEventArgs e)
     {
+        //mostRecentRunsListView = (ListView)sender;
+        //MainWindow.DataLoader.model.RecentRuns = databaseManager.GetRecentRuns();
+        //mostRecentRunsListView.ItemsSource = MainWindow.DataLoader.model.RecentRuns;
+        //mostRecentRunsListView.DataContext = MainWindow.DataLoader.model.RecentRuns;
+        //mostRecentRunsListView.Items.Refresh();
         mostRecentRunsListView = (ListView)sender;
         MainWindow.DataLoader.model.RecentRuns = databaseManager.GetRecentRuns();
         mostRecentRunsListView.ItemsSource = MainWindow.DataLoader.model.RecentRuns;
-        //mostRecentRunsListView.DataContext = MainWindow.DataLoader.model.RecentRuns;
         mostRecentRunsListView.Items.Refresh();
     }
 
@@ -3075,6 +3082,14 @@ public partial class ConfigWindow : UiWindow
     private void CalendarDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
 
+    }
+
+    private void MostRecentRuns_DataGridLoaded(object sender, RoutedEventArgs e)
+    {
+        mostRecentRunsDataGrid = (DataGrid)sender;
+        MainWindow.DataLoader.model.RecentRuns = databaseManager.GetRecentRuns();
+        mostRecentRunsDataGrid.ItemsSource = MainWindow.DataLoader.model.RecentRuns;
+        mostRecentRunsDataGrid.Items.Refresh();
     }
 }
 /* LoadConfig on startup

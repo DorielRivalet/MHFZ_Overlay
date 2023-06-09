@@ -31,6 +31,7 @@ using Formatting = Newtonsoft.Json.Formatting;
 using MessageBox = System.Windows.MessageBox;
 using Quest = MHFZ_Overlay.UI.Class.Quest;
 using MHFZ_Overlay.Core.Constant;
+using System.Collections.ObjectModel;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay.Core.Class.DataAccessLayer;
@@ -543,7 +544,7 @@ internal class DatabaseManager
 
                         // TODO
                         //rick roll
-                        string youtubeID = "dQw4w9WgXcQ";
+                        string youtubeID = Messages.RICK_ROLL_ID;
                         Dictionary<int, int> attackBuffDictionary = dataLoader.model.attackBuffDictionary;
                         Dictionary<int, int> hitCountDictionary = dataLoader.model.hitCountDictionary;
                         Dictionary<int, double> hitsPerSecondDictionary = dataLoader.model.hitsPerSecondDictionary;
@@ -7103,9 +7104,9 @@ Disabling Quest Logging.",
         return fastestRuns;
     }
 
-    public List<RecentRuns> GetRecentRuns()
+    public ObservableCollection<RecentRuns> GetRecentRuns()
     {
-        List<RecentRuns> recentRuns = new List<RecentRuns>();
+        ObservableCollection<RecentRuns> recentRuns = new ObservableCollection<RecentRuns>();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get recent runs. dataSource: {0}", dataSource);
