@@ -1422,6 +1422,7 @@ public partial class ConfigWindow : FluentWindow
     private ListView? mostRecentRunsListView;
     private DataGrid? mostRecentRunsDataGrid;
     private ListView? top20RunsListView;
+    private DataGrid? top20RunsDataGrid;
     private TextBlock? questLogGearStatsTextBlock;
     private TextBlock? compendiumTextBlock;
     private CartesianChart? graphChart;
@@ -1493,10 +1494,18 @@ public partial class ConfigWindow : FluentWindow
         top20RunsListView.Items.Refresh();
     }
 
+    private void Top20Runs_DataGridLoaded(object sender, RoutedEventArgs e)
+    {
+        top20RunsDataGrid = (DataGrid)sender;
+        MainWindow.DataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this);
+        top20RunsDataGrid.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
+        top20RunsDataGrid.Items.Refresh();
+    }
+
     private void weaponListTop20RunsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         //top20RunsListView = (ListView)sender;
-        if (top20RunsListView == null)
+        if (top20RunsDataGrid == null)
             return;
         var comboBox = sender as ComboBox;
         var selectedItem = comboBox.SelectedItem;
@@ -1508,9 +1517,8 @@ public partial class ConfigWindow : FluentWindow
         if (selectedWeapon == "")
             return;
         MainWindow.DataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this, selectedWeapon);
-        top20RunsListView.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
-        top20RunsListView.DataContext = MainWindow.DataLoader.model.FastestRuns;
-        top20RunsListView.Items.Refresh();
+        top20RunsDataGrid.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
+        top20RunsDataGrid.Items.Refresh();
     }
 
     private void QuestLogGearStats_Loaded(object sender, RoutedEventArgs e)
