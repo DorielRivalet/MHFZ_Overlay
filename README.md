@@ -67,7 +67,7 @@ As an alternative to hotkeys, you can check your system tray options by right-cl
 
 - Additionally, if information from the overlay is wrong or inaccurate (*e.g.* monster parts labels), feel free to send an issue.
 
-- If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If issue still occurs, disable Effective HP, otherwise send a bug report if there isn't already one.
+- If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If issue still occurs, change the Effective HP Corrector's minimum and maximum thresholds or disable Effective HP, otherwise send a bug report if there isn't already one.
 
 - If you want the overlay to use the least memory possible, you can decide to not open the configuration window. If you want to change settings, then open the configuration window, edit settings, click save and restart the overlay.
 
@@ -241,8 +241,8 @@ These images don't show everything, find out what's missing by pressing `Shift+F
 
 ## Bugs
 
-- Monster Infos are sometimes outside of the screen (if they don't show at all even if you open the config menu, this is probably your issue).
-- With Monster EHP enabled, if you cart, the max EHP turns into the current EHP, along with some other info max values
+- Monster stats are sometimes outside of the screen (if they don't show at all even if you open the config menu, this is probably your issue).
+- With Monster EHP enabled, if you cart, the max EHP turns into the current EHP, along with some other stats max values.
 - Sometimes when exiting Drag and Drop the monster HP information disappears.
 - Spawning in the same area as the monster doesn't load the information properly. Fix: re-enter area.
 - Duremudira/Road/Raviente HP not showing. Fix: enable *Always Show Monster Info*, load another quest showing the HP bars (not just the numbers), then retry.
