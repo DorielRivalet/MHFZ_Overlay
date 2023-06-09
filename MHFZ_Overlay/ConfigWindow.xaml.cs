@@ -3099,22 +3099,59 @@ public partial class ConfigWindow : FluentWindow
         calendarDataGrid = (DataGrid)sender;
     }
 
+    // Declare flags to track event subscription
+    private bool isConfigureButtonClickedSubscribed = false;
+    private bool isDefaultButtonClickedSubscribed = false;
+    private bool isSaveButtonClickedSubscribed = false;
+
     // https://stackoverflow.com/questions/36128148/pass-click-event-of-child-control-to-the-parent-control
     private void MainConfigurationActions_Loaded(object sender, RoutedEventArgs e)
     {
-        //Subscribe for event using designer or in constructor or form load
         var obj = (MainConfigurationActions)sender;
-        obj.SaveButtonClicked += SaveButton_Click;
-        obj.ConfigureButtonClicked += ConfigureButton_Click;
-        obj.DefaultButtonClicked += DefaultButton_Click;
+
+        // Subscribe to events only if not already subscribed
+        if (!isSaveButtonClickedSubscribed)
+        {
+            obj.SaveButtonClicked += SaveButton_Click;
+            isSaveButtonClickedSubscribed = true;
+        }
+
+        if (!isConfigureButtonClickedSubscribed)
+        {
+            obj.ConfigureButtonClicked += ConfigureButton_Click;
+            isConfigureButtonClickedSubscribed = true;
+        }
+
+        if (!isDefaultButtonClickedSubscribed)
+        {
+            obj.DefaultButtonClicked += DefaultButton_Click;
+            isDefaultButtonClickedSubscribed = true;
+        }
     }
 
+    // I do not understand the following function, but I've verified it is required for the above function to work correctly.
     private void MainConfigurationActions_Unloaded(object sender, RoutedEventArgs e)
     {
         var obj = (MainConfigurationActions)sender;
-        obj.SaveButtonClicked -= SaveButton_Click;
-        obj.ConfigureButtonClicked -= ConfigureButton_Click;
-        obj.DefaultButtonClicked -= DefaultButton_Click;
+
+        // Unsubscribe from events and update flags
+        if (isSaveButtonClickedSubscribed)
+        {
+            obj.SaveButtonClicked -= SaveButton_Click;
+            isSaveButtonClickedSubscribed = false;
+        }
+
+        if (isConfigureButtonClickedSubscribed)
+        {
+            obj.ConfigureButtonClicked -= ConfigureButton_Click;
+            isConfigureButtonClickedSubscribed = false;
+        }
+
+        if (isDefaultButtonClickedSubscribed)
+        {
+            obj.DefaultButtonClicked -= DefaultButton_Click;
+            isDefaultButtonClickedSubscribed = false;
+        }
     }
 }
 /* LoadConfig on startup
