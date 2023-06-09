@@ -158,6 +158,8 @@ Includes icons!
 
 ![Compendium of Personal Statistics](./demo/compendium.png)
 
+![Calendar](./demo/calendar.png)
+
 ![Top 20](./demo/databasetop20.png)
 
 ![Gear](./demo/databasegear.png)
