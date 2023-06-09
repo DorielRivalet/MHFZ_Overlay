@@ -45,6 +45,9 @@ Use the preset option found in the General tab. Keep reading if you want to know
 
 * Speedrun Mode Categories: SOLO ONLY. Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
 
+* Time Attack: Do not use diva skills.
+* Freestyle: Use diva skills with/without Secret Technique Style Rank Skill.
+
 **Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located inside the database folder, which is inside your game folder. Don't lose your speedrun records!
 
 ![Discord Rich Presence](./demo/discord8.png)
