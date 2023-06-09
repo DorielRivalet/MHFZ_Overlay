@@ -7175,6 +7175,80 @@ Disabling Quest Logging.",
         return recentRuns;
     }
 
+    public List<RecentRuns> GetCalendarRuns(DateTime? selectedDate)
+    {
+        List<RecentRuns> recentRuns = new List<RecentRuns>();
+        if (dataSource == null || dataSource == "")
+        {
+            logger.Warn("Cannot get calendar runs. dataSource: {0}", dataSource);
+            return recentRuns;
+        }
+        if (selectedDate == null) return recentRuns;
+        using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+        {
+            conn.Open();
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (SQLiteCommand cmd = new SQLiteCommand(
+                    @"SELECT 
+                        ObjectiveImage, 
+                        qn.QuestNameName, 
+                        RunID, 
+                        QuestID, 
+                        YoutubeID, 
+                        FinalTimeDisplay, 
+                        Date, 
+                        ActualOverlayMode, 
+                        PartySize
+                    FROM 
+                        Quests q
+                    JOIN
+                        QuestName qn ON q.QuestID = qn.QuestNameID
+                    WHERE
+                        DATE(Date) = DATE(@SelectedDate)
+                    ORDER BY 
+                        RunID ASC", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@SelectedDate", selectedDate.Value.Date);
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader == null || !reader.HasRows)
+                                return recentRuns;
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    RecentRuns recentRun = new RecentRuns
+                                    {
+                                        ObjectiveImage = (string)reader["ObjectiveImage"],
+                                        QuestName = (string)reader["QuestNameName"],
+                                        RunID = (long)reader["RunID"],
+                                        QuestID = (long)reader["QuestID"],
+                                        YoutubeID = (string)reader["YoutubeID"],
+                                        FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
+                                        Date = DateTime.Parse((string)reader["Date"]),
+                                        ActualOverlayMode = (string)reader["ActualOverlayMode"],
+                                        PartySize = (long)reader["PartySize"]
+                                    };
+                                    recentRuns.Add(recentRun);
+                                }
+                            }
+                        }
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+        return recentRuns;
+    }
+
+
     public List<WeaponUsageMapper> CalculateTotalWeaponUsage(ConfigWindow configWindow, DataLoader dataLoader, bool isByQuestID = false)
     {
         List<WeaponUsageMapper> weaponUsageData = new List<WeaponUsageMapper>();

@@ -108,19 +108,90 @@
 
                     <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="{StaticResource Teal}" />
 
-                    <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <!--<ComboBox Width="330" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16">
-                                <ComboBoxItem>Inventory</ComboBoxItem>
-                                <ComboBoxItem>Ammo</ComboBoxItem>
-                                <ComboBoxItem>Partnya Bag</ComboBoxItem>
-                                <ComboBoxItem>Area Changes</ComboBoxItem>
-                            </ComboBox>-->
                             <DatePicker Width="Auto" Height="Auto" HorizontalAlignment="Left" SelectedDateChanged="CalendarDatePicker_SelectedDateChanged" />
                             <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="View the runs you did on a specific day"/>
                         </StackPanel>
-                        <!--listview here-->
-                        <TextBlock Text="text" Margin="5" Width="Auto" Height="Auto"/>
+                        <ui:DataGrid x:Name="CalendarDataGrid" AutoGenerateColumns="False" Loaded="Calendar_DataGridLoaded" IsReadOnly="True">
+                            <DataGrid.ColumnHeaderStyle>
+                                <StaticResource ResourceKey="DefaultDataGridColumnHeaderStyle"/>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Objective" Width="128">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Source="{Binding ObjectiveImage}" Width="64" Height="64" HorizontalAlignment="Center" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Quest Name" Binding="{Binding QuestName}" Width="250">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Run ID" Binding="{Binding RunID}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Quest ID" Binding="{Binding QuestID}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Youtube ID" Binding="{Binding YoutubeID}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Time Elapsed" Binding="{Binding FinalTimeDisplay}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Category" Binding="{Binding ActualOverlayMode}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Party Size" Binding="{Binding PartySize}" Width="96">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <!-- Add more columns with custom headers as needed -->
+                            </DataGrid.Columns>
+                        </ui:DataGrid>
                     </StackPanel>
                 </Grid>
             </DataTemplate>

@@ -1412,6 +1412,7 @@ public partial class ConfigWindow : FluentWindow
     private StackPanel? compendiumInformationStackPanel;
     private string personalBestSelectedWeapon = string.Empty;
     private string personalBestSelectedType = string.Empty;
+    private DataGrid? calendarDataGrid;
 
     private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
     {
@@ -3069,7 +3070,19 @@ public partial class ConfigWindow : FluentWindow
 
     private void CalendarDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
+        if (calendarDataGrid == null) return;
 
+        var datePicker = sender as DatePicker;
+
+        if (datePicker == null) return;
+
+        var selectedDate = datePicker.SelectedDate;
+
+        if (selectedDate == null) return;
+
+        MainWindow.DataLoader.model.CalendarRuns = databaseManager.GetCalendarRuns(selectedDate);
+        calendarDataGrid.ItemsSource = MainWindow.DataLoader.model.CalendarRuns;
+        calendarDataGrid.Items.Refresh();
     }
 
     private void MostRecentRuns_DataGridLoaded(object sender, RoutedEventArgs e)
@@ -3078,6 +3091,11 @@ public partial class ConfigWindow : FluentWindow
         MainWindow.DataLoader.model.RecentRuns = databaseManager.GetRecentRuns();
         mostRecentRunsDataGrid.ItemsSource = MainWindow.DataLoader.model.RecentRuns;
         mostRecentRunsDataGrid.Items.Refresh();
+    }
+
+    private void Calendar_DataGridLoaded(object sender, RoutedEventArgs e)
+    {
+        calendarDataGrid = (DataGrid)sender;
     }
 }
 /* LoadConfig on startup
