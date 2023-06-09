@@ -54,6 +54,7 @@ using Wpf.Ui.Controls;
 using Wpf.Ui.Common;
 using System.Windows.Media.Imaging;
 using MHFZ_Overlay.Core.Constant;
+using Wpf.Ui.Controls.TitleBarControl;
 
 namespace MHFZ_Overlay;
 
@@ -236,9 +237,6 @@ public partial class MainWindow : Window
         GlobalHotKey.RegisterHotKey("Shift + F1", () => OpenConfigButton_Key());
         GlobalHotKey.RegisterHotKey("Shift + F5", () => ReloadButton_Key());
         GlobalHotKey.RegisterHotKey("Shift + F6", () => CloseButton_Key());
-        OpenConfigButton.Visibility = Visibility.Hidden;
-        ReloadButton.Visibility = Visibility.Hidden;
-        CloseButton.Visibility = Visibility.Hidden;
 
         DiscordManager.InitializeDiscordRPC();
         CheckGameState();
@@ -1435,6 +1433,7 @@ The process may take some time, as the program attempts to download from GitHub 
         PlayerAttackGraphGridBorder.BorderThickness = thickness;
         PlayerDPSGraphGridBorder.BorderThickness = thickness;
         PlayerHitsPerSecondGraphGridBorder.BorderThickness = thickness;
+        TitleBarBorder.BorderThickness = thickness;
     }
 
     private bool ClickThrough = true;
@@ -1478,6 +1477,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void ExitDragAndDrop_Click(object sender, RoutedEventArgs e)
     {
+        e.Handled = true;
         DisableDragAndDrop();
     }
     private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)

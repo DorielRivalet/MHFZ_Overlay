@@ -44,6 +44,7 @@ using Wpf.Ui.Controls;
 using MHFZ_Overlay.Core.Constant;
 using Wpf.Ui.Controls.Window;
 using DataGrid = Wpf.Ui.Controls.DataGrid;
+using MHFZ_Overlay.UI.CustomControls;
 
 namespace MHFZ_Overlay;
 
@@ -3096,6 +3097,24 @@ public partial class ConfigWindow : FluentWindow
     private void Calendar_DataGridLoaded(object sender, RoutedEventArgs e)
     {
         calendarDataGrid = (DataGrid)sender;
+    }
+
+    // https://stackoverflow.com/questions/36128148/pass-click-event-of-child-control-to-the-parent-control
+    private void MainConfigurationActions_Loaded(object sender, RoutedEventArgs e)
+    {
+        //Subscribe for event using designer or in constructor or form load
+        var obj = (MainConfigurationActions)sender;
+        obj.SaveButtonClicked += SaveButton_Click;
+        obj.ConfigureButtonClicked += ConfigureButton_Click;
+        obj.DefaultButtonClicked += DefaultButton_Click;
+    }
+
+    private void MainConfigurationActions_Unloaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (MainConfigurationActions)sender;
+        obj.SaveButtonClicked -= SaveButton_Click;
+        obj.ConfigureButtonClicked -= ConfigureButton_Click;
+        obj.DefaultButtonClicked -= DefaultButton_Click;
     }
 }
 /* LoadConfig on startup
