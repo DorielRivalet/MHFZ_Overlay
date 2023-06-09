@@ -1,637 +1,609 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="MHFZ_Overlay.addresses.AddressModel" Collapsed="true">
-    <Position X="9.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>////9/////v//////////9////////////+///////8=</HashCode>
-      <FileName>addresses\AddressModel.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="MHFZ_Overlay.addresses.AddressModelHGE" Collapsed="true">
-    <Position X="8" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>//3/996//6riv/1/936/W8+3/+//+/f/t/3//f+///U=</HashCode>
-      <FileName>addresses\AddressModelHGE.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MHFZ_Overlay.addresses.AddressModelNotHGE" Collapsed="true">
-    <Position X="10.25" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>//3/996//6qiv/1+t36/W8+3/+//+/f/t/3//f+///U=</HashCode>
-      <FileName>addresses\AddressModelNotHGE.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MHFZ_Overlay.DatabaseManager" Collapsed="true">
-    <Position X="23.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>I4UCkiYLFHIsQiQeAAcbyTYm1ohhAoUMgigGHhJEA2w=</HashCode>
-      <FileName>Core\Class\DataAccessLayer\DatabaseManager.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MHFZ_Overlay.GlobalHotKey" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="18" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ABAAAgAAACAAAAAAAAAAAAAAAAABAAAIAQAAAAAACAA=</HashCode>
-      <FileName>Core\Class\GlobalHotkey.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="MHFZ_Overlay.MonsterInfo" Collapsed="true">
-    <Position X="14.5" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ABAACAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>Core\Class\MonsterInfo.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MHFZ_Overlay.MonsterLog" Collapsed="true">
-    <Position X="19.75" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgQAAAAAAAAQAAEAAAAAQAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\MonsterLog.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MHFZ_Overlay.OptionToTemplateConverter" Collapsed="true">
-    <Position X="16.25" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
-      <FileName>UI\Class\Converter\OptionToTemplateConverter.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MHFZ_Overlay.OptionToVisibilityConverter" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="18" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>UI\Class\Converter\OptionToVisibilityConverter.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="MHFZ_Overlay.XamlIconToViewBoxConverter" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="23.25" Y="8.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>UI\Class\Converter\XamlIconToViewBoxConverter.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="MHFZ_Overlay.OptionTemplateSelector" Collapsed="true">
-    <Position X="14.5" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
-      <FileName>UI\Class\Template\OptionTemplateSelector.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MHFZ_Overlay.Option" Collapsed="true">
-    <Position X="12.75" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAEAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>UI\Class\Option.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MHFZ_Overlay.OutlinedTextBlock" Collapsed="true">
-    <Position X="19.75" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>CgEMMBAAACgAAkgAUIBAAgRwAAgICiAAEIgAKMAAECA=</HashCode>
-      <FileName>UI\Class\OutlinedTextBlock.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MHFZ_Overlay.App" Collapsed="true">
-    <Position X="16.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>App.xaml.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MHFZ_Overlay.ConfigWindow" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="19.75" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>jVh/JawdoYQEkU4jELXNojCV7AEBJhgxjkCQxNUiNBU=</HashCode>
-      <FileName>ConfigWindow.xaml.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="MHFZ_Overlay.DataLoader" Collapsed="true">
-    <Position X="25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AIEAQIAAAAAAAiACRAAAIABAAAAAAAAgAgOCgKAJAAA=</HashCode>
-      <FileName>DataLoader.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MHFZ_Overlay.ScrollLimitConverter" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="12.75" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>MainWindow.xaml.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="MHFZ_Overlay.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="23.25" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>g+UTRVACQ5BBC/BjMKNWPqysWxAyDDEiUwpDtMKOkJ4=</HashCode>
-      <FileName>MainWindow.xaml.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="MHFZ_Overlay.Settings" Collapsed="true">
-    <Position X="16.25" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>cvR+f3QPGiquL17LPdA274pa2rMpZMizgPrPyvc10hA=</HashCode>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Dictionary.BingoMonsterDifficulty" Collapsed="true">
-    <Position X="23.25" Y="1.5" Width="1.5" />
+    <Position X="19.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\Bingo\BingoMonsterDifficulty.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dictionary.AreaIconDictionary" Collapsed="true">
-    <Position X="18" Y="0.5" Width="1.5" />
+    <Position X="12.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\AreaIconDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Dictionary.MapAreaList" Collapsed="true">
-    <Position X="25" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
-      <FileName>Core\Class\Dictionary\AreaNamesDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.ArmorArms" Collapsed="true">
-    <Position X="19.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\ArmorArmsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.ArmorChests" Collapsed="true">
-    <Position X="21.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\ArmorChestsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.ArmorColorList" Collapsed="true">
-    <Position X="23.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\ArmorColorsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.ArmorHeads" Collapsed="true">
-    <Position X="25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\ArmorHeadsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.ArmorLegs" Collapsed="true">
-    <Position X="26.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\ArmorLegsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.ArmorSkillList" Collapsed="true">
-    <Position X="12.75" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\ArmorSkillsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.ArmorSkillPriorityList" Collapsed="true">
-    <Position X="14.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\ArmorSkillsPriorityDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.ArmorWaists" Collapsed="true">
-    <Position X="16.25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\ArmorWaistsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Dictionary.BerserkRavientePracticeTriggerEvents" Collapsed="true">
-    <Position X="19.75" Y="1.5" Width="1.5" />
+    <Position X="15.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\BerserkRavienteTriggerEventsDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dictionary.BerserkRavienteTriggerEvents" Collapsed="true">
-    <Position X="21.5" Y="1.5" Width="1.5" />
+    <Position X="17.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\BerserkRavienteTriggerEventsDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Dictionary.BlademasterWeapons" Collapsed="true">
-    <Position X="25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\BlademasterWeaponsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.CaravanSkillList" Collapsed="true">
-    <Position X="14.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\CaravanSkillsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Dictionary.CatppuccinMochaColorsDictionary" Collapsed="true">
-    <Position X="18" Y="2.5" Width="1.5" />
+    <Position X="10.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Core\Class\Dictionary\CatppuccinMochaColorsDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dictionary.DiscordServersList" Collapsed="true">
-    <Position X="26.75" Y="2.5" Width="1.5" />
+    <Position X="5.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\DiscordServersDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Dictionary.DivaSkillList" Collapsed="true">
-    <Position X="12.75" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\DivaSkillsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Dictionary.GatheringMapDictionary" Collapsed="true">
-    <Position X="16.25" Y="3.5" Width="1.5" />
+    <Position X="10.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\GatheringMapDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Dictionary.GunnerWeapons" Collapsed="true">
-    <Position X="19.75" Y="3.5" Width="1.5" />
+  <Class Name="Dictionary.MezFesMinigame" Collapsed="true">
+    <Position X="7" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\GunnerWeaponsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.Items" Collapsed="true">
-    <Position X="21.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\ItemsDictionary.cs</FileName>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Class\Dictionary\MezFesMinigameDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dictionary.MonsterColorDictionary" Collapsed="true">
-    <Position X="26.75" Y="3.5" Width="1.5" />
+    <Position X="10.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\MonsterColorDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dictionary.MonsterList" Collapsed="true">
-    <Position X="18" Y="4.5" Width="1.5" />
+    <Position X="19.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\MonsterDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dictionary.MonsterImageDictionary" Collapsed="true">
-    <Position X="12.75" Y="4.5" Width="1.5" />
+    <Position X="14" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\MonsterImageDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dictionary.MonsterNameDictionary" Collapsed="true">
-    <Position X="21.5" Y="4.5" Width="1.5" />
+    <Position X="7" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\MonsterNameDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Dictionary.MonsterPartDictionary" Collapsed="true">
-    <Position X="23.25" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\MonsterPartDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Dictionary.MonsterRenderDictionary" Collapsed="true">
-    <Position X="25" Y="4.5" Width="1.5" />
+    <Position X="8.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\MonsterRenderDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Dictionary.ObjectiveTypeList" Collapsed="true">
-    <Position X="26.75" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\ObjectiveTypeDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Dictionary.PlayersList" Collapsed="true">
-    <Position X="12.75" Y="6.5" Width="1.5" />
+    <Position X="15.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\PlayersDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Dictionary.PoogieCostumeList" Collapsed="true">
-    <Position X="14.5" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\PoogieCostumeDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.Quests" Collapsed="true">
-    <Position X="18" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
-      <FileName>Core\Class\Dictionary\QuestsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.RanksBandsList" Collapsed="true">
-    <Position X="19.75" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\RankBandsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Dictionary.RavienteTriggerEvents" Collapsed="true">
-    <Position X="21.5" Y="6.5" Width="1.5" />
+    <Position X="7" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\RavienteTriggerEventsDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Dictionary.RoadDureSkills" Collapsed="true">
-    <Position X="25" Y="6.5" Width="1.5" />
+  <Class Name="Dictionary.SkillFruits" Collapsed="true">
+    <Position X="19.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\RoadDuremudiraSkillsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.SharpnessList" Collapsed="true">
-    <Position X="18" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\SharpnessDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.SigilSkillList" Collapsed="true">
-    <Position X="19.75" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\SigilSkillsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.StyleRankSkillList" Collapsed="true">
-    <Position X="21.5" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\StyleRankSkillsDictionary.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Class\Dictionary\SkillFruitsDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dictionary.ViolentRavienteTriggerEvents" Collapsed="true">
-    <Position X="25" Y="7.5" Width="1.5" />
+    <Position X="10.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\ViolentRavienteTriggerEventsDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dictionary.WeaponAverageHitsPerSecond" Collapsed="true">
-    <Position X="26.75" Y="7.5" Width="1.5" />
+    <Position X="12.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\WeaponAverageHitsPerSecondDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dictionary.WeaponCanUseReflect" Collapsed="true">
-    <Position X="12.75" Y="8.5" Width="1.5" />
+    <Position X="14" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\WeaponCanUseReflectDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Dictionary.WeaponClass" Collapsed="true">
-    <Position X="14.5" Y="8.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\WeaponClassDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Dictionary.WeaponIconsDictionary" Collapsed="true">
-    <Position X="16.25" Y="8.5" Width="1.5" />
+    <Position X="15.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\Dictionary\WeaponIconsDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Dictionary.WeaponStyles" Collapsed="true">
-    <Position X="18" Y="8.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\WeaponStylesDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.WeaponTypes" Collapsed="true">
-    <Position X="19.75" Y="8.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\WeaponTypesDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dictionary.ZenithSkillList" Collapsed="true">
-    <Position X="25" Y="8.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Class\Dictionary\ZenithSkillsDictionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Dictionary.MonsterInfoList" Collapsed="true">
-    <Position X="16.25" Y="4.5" Width="1.5" />
+    <Position X="17.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Class\List\MonsterInfoList.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="MHFZ_Overlay.App" Collapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAEAAJAABAAAAAACAAAAAABAAAABAAAgAAIQAQAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.ConfigWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>jVh/JaxdoYQlkU4nEPXNozCVzIEDJhgAjnGQhFcmtJU=</HashCode>
+      <FileName>ConfigWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHFZ_Overlay.DataLoader" Collapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAQAAAAAAAhiACRAAAIABAAAAAAAAgAwGCgKAJAAA=</HashCode>
+      <FileName>DataLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>g0WTRFMSAoBRC0R3MKMUciwcWBIyDDFmQwhBAIKAAdo=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHFZ_Overlay.Settings" Collapsed="true">
+    <Position X="17.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>cvR+f3QPHiquL17LPdE2745a2rcpZMizgPrP2vc30hA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.Addresses.AddressModel" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>////9/////v//////////9////////////+///////8=</HashCode>
+      <FileName>Addresses\AddressModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MHFZ_Overlay.Addresses.AddressModelHGE" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>//3/996//6riv/1/936/W8+3/+//+/f/t/3//f+///U=</HashCode>
+      <FileName>Addresses\AddressModelHGE.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.Addresses.AddressModelNotHGE" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>//3/996//6qiv/1+t36/W8+3/+//+/f/t/3//f+///U=</HashCode>
+      <FileName>Addresses\AddressModelNotHGE.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.Core.Class.Application.ApplicationManager" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AECAAAAAAAAAAAAGAAAAIAAIAAAAAAAAAAAACAAABAA=</HashCode>
+      <FileName>Core\Class\Application\ApplicationManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.Core.Class.DataAccessLayer.DatabaseManager" Collapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>c5VDliYLFPIs0mdeAAcb/TYu9prgC5UeoyyfHhbGA+0=</HashCode>
+      <FileName>Core\Class\DataAccessLayer\DatabaseManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.Core.Class.Discord.DiscordManager" Collapsed="true">
+    <Position X="19.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAgEQAAAOACIKECJKCAFgBAAAEAEAICtAAGAAA=</HashCode>
+      <FileName>Core\Class\Discord\DiscordManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.Core.Class.IO.FileManager" Collapsed="true">
+    <Position X="8.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAJAAAQAKEAQAAAAAAAAAAAgEBAEQAIAAAAA=</HashCode>
+      <FileName>Core\Class\IO\FileManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.Core.Class.Log.LoggingManager" Collapsed="true">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAgAAACAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Class\Log\LoggingManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.Core.Class.GlobalHotKey" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAgAAACAAAAAAAAAAAAAAAAABAAAIAQAAAAAACAA=</HashCode>
+      <FileName>Core\Class\GlobalHotkey.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHFZ_Overlay.Core.Class.MonsterInfo" Collapsed="true">
+    <Position X="15.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAACAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Core\Class\MonsterInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.Core.Class.MonsterLog" Collapsed="true">
+    <Position X="5.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgQAAAAAAAAQAAEAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Class\MonsterLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="MHFZ_Overlay.Core.Class.Setting" Collapsed="true">
-    <Position X="14.5" Y="7.5" Width="1.5" />
+    <Position X="15.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAABIAAAAAEAAAQAAAAAAAAAABAAAAAAAAiAAAQAAA=</HashCode>
       <FileName>Core\Class\Setting.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MHFZ_Overlay.UI.Class.Mapper.PersonalBestsMapper" Collapsed="true">
-    <Position X="23.25" Y="5.5" Width="1.5" />
+  <Class Name="MHFZ_Overlay.UI.Class.OutlinedTextBlock" Collapsed="true">
+    <Position X="19.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAAAAAAAAAAAAAACAAAAAAAABABAAAAAAAAAEAAEA=</HashCode>
-      <FileName>UI\Class\Mapper\PersonalBestsMapper.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MHFZ_Overlay.UI.Class.Mapper.WeaponUsageMapper" Collapsed="true">
-    <Position X="21.5" Y="8.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AgAAAAAAAgAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
-      <FileName>UI\Class\Mapper\WeaponUsageMapper.cs</FileName>
+      <HashCode>CgEMMBAAACgAAkgAUIBAAgRwAAgICiAAEIgAKMAAECA=</HashCode>
+      <FileName>Core\Class\OutlinedTextBlock.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MHFZ_Overlay.UI.Class.ActiveSkills" Collapsed="true">
-    <Position X="12.75" Y="0.5" Width="1.5" />
+    <Position X="5.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAACAABAAAwD8DAAAAAAAAAAAAAEE=</HashCode>
       <FileName>UI\Class\ActiveSkills.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MHFZ_Overlay.UI.Class.AmmoPouch" Collapsed="true">
-    <Position X="14.5" Y="0.5" Width="1.5" />
+    <Position X="7" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAACAABAAEAAABAAACABABoAAEBAACwCAAAAmAQJAEE=</HashCode>
       <FileName>UI\Class\AmmoPouch.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MHFZ_Overlay.UI.Class.AutomaticSkills" Collapsed="true">
-    <Position X="18" Y="1.5" Width="1.5" />
+    <Position X="14" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAFE=</HashCode>
       <FileName>UI\Class\AutomaticSkills.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MHFZ_Overlay.UI.Class.BrushAnimation" Collapsed="true">
-    <Position X="26.75" Y="1.5" Width="1.5" />
+    <Position X="5.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAAAAEAAAAAAAAAAAAAAAAAEAIAAAAAAAAAABAACA=</HashCode>
       <FileName>UI\Class\BrushAnimation.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MHFZ_Overlay.UI.Class.ButtonPress" Collapsed="true">
-    <Position X="12.75" Y="2.5" Width="1.5" />
+    <Position X="7" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAgAAAAAAAABAAAAAAAAAAgAAAAAAAAEAAAA=</HashCode>
       <FileName>UI\Class\ButtonPress.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MHFZ_Overlay.UI.Class.CaravanSkills" Collapsed="true">
-    <Position X="16.25" Y="2.5" Width="1.5" />
+    <Position X="8.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAAAAAAAACAAAAAAAAAAAAAA4AAAAAAAAEE=</HashCode>
       <FileName>UI\Class\CaravanSkills.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MHFZ_Overlay.UI.Class.FastestRun" Collapsed="true">
-    <Position X="14.5" Y="3.5" Width="1.5" />
+    <Position X="7" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAAAAgAAAAAAAAAAAAAAgABAAAAACAAQEA=</HashCode>
       <FileName>UI\Class\FastestRun.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.GearCompendium" Collapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACBAAAAAAAABAAAAAIAAAAAAAIAAAAAAAQAAAA=</HashCode>
+      <FileName>UI\Class\GearCompendium.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.MezFesCompendium" Collapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAACACAAAABQADAgIAABQAAEBCAgAIAAAgAFgAA=</HashCode>
+      <FileName>UI\Class\MezFesCompendium.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.MiscellaneousCompendium" Collapsed="true">
+    <Position X="8.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAEAgAAAAEAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Class\MiscellaneousCompendium.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.MonsterCompendium" Collapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAFAAEDAAAAgAAAAAEAAAAAgAAAAAgACAAAAAQA=</HashCode>
+      <FileName>UI\Class\MonsterCompendium.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.Option" Collapsed="true">
+    <Position X="12.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Class\Option.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="MHFZ_Overlay.UI.Class.PartnyaBag" Collapsed="true">
-    <Position X="21.5" Y="5.5" Width="1.5" />
+    <Position X="5.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAACAAAAAEAAABAAACABABoAAEBAADwCAAAAmAQJAEE=</HashCode>
       <FileName>UI\Class\PartnyaBag.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.PerformanceCompendium" Collapsed="true">
+    <Position X="7" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUoABsEAgAIEWAAIDAQFQSIAIRBEAACBAkACEEAUAAA=</HashCode>
+      <FileName>UI\Class\PerformanceCompendium.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="MHFZ_Overlay.UI.Class.PlayerGear" Collapsed="true">
-    <Position X="25" Y="5.5" Width="1.5" />
+    <Position X="10.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gGAiBAR2EEAIGAAAECCELMIiCCAAYJgDBAAAAAAEYFE=</HashCode>
       <FileName>UI\Class\PlayerGear.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MHFZ_Overlay.UI.Class.PlayerInventory" Collapsed="true">
-    <Position X="26.75" Y="5.5" Width="1.5" />
+    <Position X="12.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAgCAAAAAEAAABAAACABABoAAEBAACwDAAAAmAQJAEE=</HashCode>
       <FileName>UI\Class\PlayerInventory.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.PlayerInventoryItemIds" Collapsed="true">
+    <Position X="14" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Class\PlayerInventoryItemIDs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="MHFZ_Overlay.UI.Class.Quest" Collapsed="true">
-    <Position X="16.25" Y="6.5" Width="1.5" />
+    <Position X="17.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAGkAgBgAggACAGAAyAAAAKAAABCFoBJAgCCEgAAQEE=</HashCode>
       <FileName>UI\Class\Quest.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.QuestCompendium" Collapsed="true">
+    <Position X="19.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAIAAAUAAAQEABUCIgABABgEAAAAAAAAERAEIAQKAA=</HashCode>
+      <FileName>UI\Class\QuestCompendium.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.RangeValidationRule" Collapsed="true">
+    <Position X="5.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAACAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Class\RangeValidationRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="MHFZ_Overlay.UI.Class.RecentRuns" Collapsed="true">
-    <Position X="23.25" Y="6.5" Width="1.5" />
+    <Position X="8.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAACAgAAAAAAAAAAABAAgABAAAAACAAQEA=</HashCode>
       <FileName>UI\Class\RecentRuns.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MHFZ_Overlay.UI.Class.RoadDureSkills" Collapsed="true">
-    <Position X="26.75" Y="6.5" Width="1.5" />
+    <Position X="10.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAjAgAgAAAAAIAAACAAgAACAAAAQKFQAAAQQEABAkE=</HashCode>
       <FileName>UI\Class\RoadDureSkills.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MHFZ_Overlay.UI.Class.StyleRankSkills" Collapsed="true">
-    <Position X="23.25" Y="7.5" Width="1.5" />
+    <Position X="5.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAEAEE=</HashCode>
       <FileName>UI\Class\StyleRankSkills.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MHFZ_Overlay.UI.Class.ZenithSkills" Collapsed="true">
-    <Position X="26.75" Y="8.5" Width="1.5" />
+    <Position X="14" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAEE=</HashCode>
       <FileName>UI\Class\ZenithSkills.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MHFZ_Overlay.UI.CustomControls.CustomProgressBar" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="21.5" Y="2.5" Width="1.5" />
+  <Class Name="MHFZ_Overlay.Core.Constant.Messages" Collapsed="true">
+    <Position X="19.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gQMEAQAAIiEwAAACkAEAAEQAiAAAQQAAAAAgSIEACAE=</HashCode>
-      <FileName>UI\Controls\CustomProgressBar.xaml.cs</FileName>
+      <HashCode>woAECAAIAAAACAAAAAAAAAAwAAAIAAQAAAAIEAgAAAA=</HashCode>
+      <FileName>Core\Constant\Messages.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.Core.Constant.TimeFormats" Collapsed="true">
+    <Position X="8.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Constant\TimeFormats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.Converter.OptionToTemplateConverter" Collapsed="true">
+    <Position X="15.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Class\Converter\OptionToTemplateConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.Converter.OptionToVisibilityConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Class\Converter\OptionToVisibilityConverter.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.Converter.ScrollLimitConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Class\Converter\ScrollLimitConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.Converter.TextFormattingModeConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Class\Converter\TextFormattingModeConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.Converter.XamlIconToViewBoxConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Class\Converter\XamlIconToViewBoxConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.Mapper.PersonalBestsMapper" Collapsed="true">
+    <Position X="8.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAACAAAAAAAABABAAAAAAAAAEAAEA=</HashCode>
+      <FileName>UI\Class\Mapper\PersonalBestsMapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.Mapper.WeaponUsageMapper" Collapsed="true">
+    <Position X="17.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAgAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>UI\Class\Mapper\WeaponUsageMapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.Class.Template.OptionTemplateSelector" Collapsed="true">
+    <Position X="14" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Class\Template\OptionTemplateSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHFZ_Overlay.UI.CustomControls.CustomProgressBar" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQMEAQAAIiEwAAACkAEAAEQAiAAAQQAAAAAgSIEACAE=</HashCode>
+      <FileName>UI\CustomControls\CustomProgressBar.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ShowMeTheXAML.NiceFormatter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ShowMeTheXAML.Scope" Collapsed="true">
+    <Position X="12.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ShowMeTheXAML.XamlDisplay" Collapsed="true">
+    <Position X="19.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ShowMeTheXAML.XamlFormatter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ShowMeTheXAML.XamlPresenter" Collapsed="true">
+    <Position X="8.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ShowMeTheXAML.XamlResolveEventArgs" Collapsed="true">
+    <Position X="10.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ShowMeTheXAML.XamlResolver" Collapsed="true">
+    <Position X="12.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="ShowMeTheXAML.IXamlFormatter" Collapsed="true">
+    <Position X="5.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
   <Enum Name="MHFZ_Overlay.Core.Enum.WeaponSpecialProperty1" Collapsed="true">
-    <Position X="19.75" Y="9.75" Width="1.5" />
+    <Position X="14" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACAAIEAAAAAAAAAAAAAgEIKAAAAAAAAAAAECAAA=</HashCode>
       <FileName>Core\Enum\Bitfields.cs</FileName>
     </TypeIdentifier>
   </Enum>
+  <Enum Name="MHFZ_Overlay.Core.Enum.GachaCardTypes" Collapsed="true">
+    <Position X="8.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAMAAAAEAAAABAAAAgAAAAAACQA=</HashCode>
+      <FileName>Core\Enum\Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Enum Name="MHFZ_Overlay.Core.Enum.WeaponSpecialProperty2" Collapsed="true">
-    <Position X="21.5" Y="9.75" Width="1.5" />
+    <Position X="15.75" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAACAAEARAAAACAAAABwAhAAMAAAQIAIAAAIEAAAA=</HashCode>
       <FileName>Core\Enum\Bitfields.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="MHFZ_Overlay.Core.Enum.BowgunShots" Collapsed="true">
-    <Position X="14.5" Y="9.75" Width="1.5" />
+    <Position X="7" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>KAAABAUBEAIagAAACCAIgAMAQIAAAAAATAgwAAEANAA=</HashCode>
       <FileName>Core\Enum\Bitfields.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="MHFZ_Overlay.Core.Enum.BowCoatings" Collapsed="true">
-    <Position X="12.75" Y="9.75" Width="1.5" />
+    <Position X="5.25" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAEQACAAAICIDAEAAAAAACEAABAAARAAEAQAA=</HashCode>
       <FileName>Core\Enum\Bitfields.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="MHFZ_Overlay.Core.Enum.GachaCardTypes" Collapsed="true">
-    <Position X="16.25" Y="9.75" Width="1.5" />
+  <Enum Name="MHFZ_Overlay.Core.Enum.QuestState" Collapsed="true">
+    <Position X="10.5" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAAAAAAAAAMAAAAEAAAABAAAAgAAAAAACQA=</HashCode>
-      <FileName>Core\Enum\Enums.cs</FileName>
+      <HashCode>AAAAAIAAAAAAAAAAQAAAfwAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Core\Enum\Bitfields.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="MHFZ_Overlay.Core.Enum.RankTypes" Collapsed="true">
-    <Position X="18" Y="9.75" Width="1.5" />
+    <Position X="12.25" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAACAAAAIAAQAAAAIAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Enum\Enums.cs</FileName>
