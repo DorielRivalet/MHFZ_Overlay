@@ -1199,9 +1199,16 @@ public partial class ConfigWindow : FluentWindow
         try
         {
             string settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
-            string settingsFolder = Path.GetDirectoryName(settingsFile);
+            var settingsFileDirectoryName = Path.GetDirectoryName(settingsFile);
+            if (!Directory.Exists(settingsFileDirectoryName))
+            {
+                logger.Error("Could not open settings folder");
+                ConfigWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+                return;
+            }
+            string settingsFolder = settingsFileDirectoryName;
             // Open file manager at the specified folder
-            Process.Start("explorer.exe", settingsFolder);
+            Process.Start(ApplicationPaths.EXPLORER_PATH, settingsFolder);
         }
         catch (Exception ex)
         {

@@ -3,6 +3,9 @@
 // found in the LICENSE file.
 namespace MHFZ_Overlay.Core.Constant;
 
+/// <summary>
+/// Static messages and placeholder strings.
+/// </summary>
 public static class Messages
 {
     public const string RUN_NOT_FOUND = "Run Not Found";

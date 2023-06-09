@@ -45,8 +45,8 @@ internal class LoggingManager
             // Open the log file using the default application
             try
             {
-                Process.Start("notepad.exe", logFilePath);
-                logger.Info("Opened with notepad the file {0}", logFilePath);
+                Process.Start(ApplicationPaths.NOTEPAD_PATH, logFilePath);
+                logger.Info("Opened with Notepad the file {0}", logFilePath);
             }
             catch (Exception ex)
             {
