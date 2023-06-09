@@ -3122,12 +3122,36 @@ namespace MHFZ_Overlay {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MonsterEHPDisplayCorrectorEnabled {
+        public bool EnableMonsterEHPDisplayCorrector {
             get {
-                return ((bool)(this["MonsterEHPDisplayCorrectorEnabled"]));
+                return ((bool)(this["EnableMonsterEHPDisplayCorrector"]));
             }
             set {
-                this["MonsterEHPDisplayCorrectorEnabled"] = value;
+                this["EnableMonsterEHPDisplayCorrector"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.001")]
+        public decimal MonsterEHPDisplayCorrectorDefrateMinimumThreshold {
+            get {
+                return ((decimal)(this["MonsterEHPDisplayCorrectorDefrateMinimumThreshold"]));
+            }
+            set {
+                this["MonsterEHPDisplayCorrectorDefrateMinimumThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal MonsterEHPDisplayCorrectorDefrateMaximumThreshold {
+            get {
+                return ((decimal)(this["MonsterEHPDisplayCorrectorDefrateMaximumThreshold"]));
+            }
+            set {
+                this["MonsterEHPDisplayCorrectorDefrateMaximumThreshold"] = value;
             }
         }
     }

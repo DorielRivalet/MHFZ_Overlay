@@ -776,8 +776,14 @@
     <Setting Name="CatppuccinAccentColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">Green</Value>
     </Setting>
-    <Setting Name="MonsterEHPDisplayCorrectorEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="EnableMonsterEHPDisplayCorrector" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterEHPDisplayCorrectorDefrateMinimumThreshold" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.001</Value>
+    </Setting>
+    <Setting Name="MonsterEHPDisplayCorrectorDefrateMaximumThreshold" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

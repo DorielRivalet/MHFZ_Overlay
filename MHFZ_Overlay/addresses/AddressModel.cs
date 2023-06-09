@@ -29,6 +29,7 @@ using System.Windows.Automation;
 using Application = System.Windows.Application;
 using MHFZ_Overlay;
 using MHFZ_Overlay.Core.Constant;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace MHFZ_Overlay.Addresses;
 
@@ -113,13 +114,8 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     #region abstract vars
     abstract public bool IsNotRoad();
-
     abstract public int HitCountInt();
     abstract public int DamageDealt();
-
-
-
-
 
     //New addresses
     abstract public int AreaID();
@@ -2134,6 +2130,8 @@ TreeScope.Children, condition);
         }
     }
 
+    private decimal previousMonsterDefrate = decimal.Zero;
+
     /// <summary>
     /// Displays the monster ehp.
     /// </summary>
@@ -2141,24 +2139,66 @@ TreeScope.Children, condition);
     /// <param name="monsterhp">The monsterhp.</param>
     /// <param name="monsterdefrate">The monsterdefrate.</param>
     /// <returns></returns>
-    public int DisplayMonsterEHP(decimal? defrate, int monsterhp, decimal? monsterdefrate)
+    public int DisplayMonsterEHP(decimal monsterDefrate, int monsterHP)
     {
-        // TODO: test
-        if (defrate > 0)
+        if (QuestID() == 0)
         {
-            decimal result = Convert.ToDecimal(monsterhp / monsterdefrate);
+            previousMonsterDefrate = decimal.Zero;
+            return 0;
+        }
+        Settings s = (Settings)Application.Current.TryFindResource("Settings");
+        if (s.EnableMonsterEHPDisplayCorrector)
+        {
+            if (s.MonsterEHPDisplayCorrectorDefrateMinimumThreshold >= s.MonsterEHPDisplayCorrectorDefrateMaximumThreshold)
+                return monsterHP;
 
-            if (result <= int.MaxValue && result >= int.MinValue)
+            // TODO: test
+            if (monsterDefrate > s.MonsterEHPDisplayCorrectorDefrateMinimumThreshold && monsterDefrate < s.MonsterEHPDisplayCorrectorDefrateMaximumThreshold) 
             {
-                return Convert.ToInt32(result);
-            }
+                previousMonsterDefrate = monsterDefrate;
+                decimal result = Convert.ToDecimal(monsterHP / previousMonsterDefrate);
+                if (result <= int.MaxValue && result >= int.MinValue)
+                    return Convert.ToInt32(result);
+                else
+                    return monsterHP;
+            } 
             else
             {
-                return 0;
-                // Handle the case where the result is too large or too small for an int
-                // Return an appropriate value or throw an exception if necessary
+                if (previousMonsterDefrate > 0)
+                {
+                    decimal result = Convert.ToDecimal(monsterHP / previousMonsterDefrate);
+
+                    if (result <= int.MaxValue && result >= int.MinValue)
+                        return Convert.ToInt32(result);
+                    else
+                        return monsterHP;
+                }
+                else
+                {
+                    return monsterHP;
+                }
             }
         }
+        else
+        {
+            // TODO: test
+            if (monsterDefrate > 0)
+            {
+                decimal result = Convert.ToDecimal(monsterHP / monsterDefrate);
+
+                if (result <= int.MaxValue && result >= int.MinValue)
+                {
+                    return Convert.ToInt32(result);
+                }
+                else
+                {
+                    return 0;
+                    // Handle the case where the result is too large or too small for an int
+                    // Return an appropriate value or throw an exception if necessary
+                }
+            }
+        }
+        
         return 0;
     }
 
@@ -2796,7 +2836,27 @@ TreeScope.Children, condition);
 
     #region monster hp
 
-    public string Monster1HP => Configuring ? "0" : ShowMonsterEHP() ? DisplayMonsterEHP(Monster1DefMult(), Monster1HPInt(), Monster1DefMult()).ToString() : Monster1HPInt().ToString();
+    public string Monster1HP
+    {
+        get
+        {
+            if (Configuring)
+            {
+                return "0";
+            }
+            else if (ShowMonsterEHP())
+            {
+                decimal monsterDefMultiplier = Monster1DefMult();
+                int monsterHP = Monster1HPInt();
+                return DisplayMonsterEHP(monsterDefMultiplier, monsterHP).ToString();
+            }
+            else
+            {
+                int monsterHP = Monster1HPInt();
+                return monsterHP.ToString();
+            }
+        }
+    }
 
     public string Monster1MaxHP
     {
@@ -2826,7 +2886,11 @@ TreeScope.Children, condition);
             }
         }
     }
-    public string Monster2HP => Configuring ? "0" : ShowMonsterEHP() ? DisplayMonsterEHP(Monster2DefMult(), Monster2HPInt(), Monster2DefMult()).ToString() : Monster2HPInt().ToString();
+    public string Monster2HP => Configuring ? 
+        "0" : 
+        ShowMonsterEHP() ? 
+            DisplayMonsterEHP(Monster2DefMult(), Monster2HPInt()).ToString() :
+            Monster2HPInt().ToString();
 
     public string Monster2MaxHP
     {
@@ -2847,7 +2911,11 @@ TreeScope.Children, condition);
             return SavedMonster2MaxHP.ToString();
         }
     }
-    public string Monster3HP => Configuring ? "0" : ShowMonsterEHP() ? DisplayMonsterEHP(1, Monster3HPInt(), 1).ToString() : Monster3HPInt().ToString();
+    public string Monster3HP => Configuring ? 
+        "0" : 
+        ShowMonsterEHP() ? 
+            DisplayMonsterEHP(1, Monster3HPInt()).ToString() :
+            Monster3HPInt().ToString();
 
 
     public string Monster3MaxHP
@@ -2861,7 +2929,11 @@ TreeScope.Children, condition);
             return SavedMonster3MaxHP.ToString();
         }
     }
-    public string Monster4HP => Configuring ? "0" : ShowMonsterEHP() ? DisplayMonsterEHP(1, Monster4HPInt(), 1).ToString() : Monster4HPInt().ToString();
+    public string Monster4HP => Configuring ? 
+        "0" : 
+        ShowMonsterEHP() ? 
+            DisplayMonsterEHP(1, Monster4HPInt()).ToString() : 
+            Monster4HPInt().ToString();
 
     public string Monster4MaxHP
     {
@@ -11597,7 +11669,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public int GetMonster1EHP()
     {
-        return DisplayMonsterEHP(Monster1DefMult(), Monster1HPInt(), Monster1DefMult());
+        return DisplayMonsterEHP(Monster1DefMult(), Monster1HPInt());
     }
 
     /// <summary>

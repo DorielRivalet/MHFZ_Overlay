@@ -865,6 +865,31 @@ public partial class ConfigWindow : FluentWindow
             e.Handled = true;
     }
 
+    private void ValidateDecimalNumber(object sender, TextCompositionEventArgs e)
+    {
+        foreach (char ch in e.Text)
+        {
+            if (!char.IsDigit(ch) && ch != '.')
+            {
+                e.Handled = true;
+                return;
+            }
+        }
+
+        var textBox = (TextBox)sender;
+        var newText = textBox.Text.Insert(textBox.SelectionStart, e.Text);
+        var isValidDecimal = decimal.TryParse(newText, out _);
+
+        if (!isValidDecimal)
+        {
+            e.Handled = true;
+        }
+        else if (e.Text == "." && textBox.Text.Contains("."))
+        {
+            e.Handled = true;
+        }
+    }
+
     //https://stackoverflow.com/questions/1051989/regex-for-alphanumeric-but-at-least-one-letter
     //^(?=.*[a-zA-Z].*)([a-zA-Z0-9]{6,12})$
     //([a-zA-Z0-9_\s]+)

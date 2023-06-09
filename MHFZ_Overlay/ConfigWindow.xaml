@@ -2932,6 +2932,9 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="0" Text="Monster HP Background Color" Style="{StaticResource ConfigTextBox}"/>
@@ -2942,67 +2945,73 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMonsterHPBarsAutomaticColor}"/>
                             <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Effective Hit Points (True HP / Defrate) as Bars" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Effective HP"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableEHPNumbers}"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Current HP Percentage over Max HP" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Current HP as Percentage"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCurrentHPPercentage}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Correct EHP when the defrate is not within the set thresholds. If you set the minimum as equal or higher than the maximum, it returns the True HP. Should it be not possible to correct the EHP, it defaults to the True HP. This setting (along with EHP) only affects the display, not the database logs." Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Effective HP Corrector"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMonsterEHPDisplayCorrector}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Effective HP Corrector Minimum Defrate Threshold"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterEHPDisplayCorrectorDefrateMinimumThreshold}"  PreviewTextInput="ValidateDecimalNumber" MaxLength="8"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Effective HP Corrector Maximum Defrate Threshold"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterEHPDisplayCorrectorDefrateMaximumThreshold}"  PreviewTextInput="ValidateDecimalNumber" MaxLength="8"/>
+                            
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Current HP Percentage over Max HP" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Current HP as Percentage"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCurrentHPPercentage}"/>
+                            
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Part Hit Points (reach threshold a 2nd time to break a part)" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Monster 1 Part Threshold"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="7" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PartThresholdShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Monster 1 Part Threshold X Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartX}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Monster 1 Part Threshold Y Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartY}"  PreviewTextInput="ValidateNumber"/>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Part Hit Points (reach threshold a 2nd time to break a part)" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Monster 1 Part Threshold"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PartThresholdShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Monster 1 Part Threshold X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Monster 1 Part Threshold Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartY}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Monster 1 HP Bar"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="10" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster1HealthBarShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0" Text="Monster 1 HP Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="11" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Monster 1 HP Bar X Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1HealthBarX}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster 1 HP Bar Y Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1HealthBarY}"  PreviewTextInput="ValidateNumber"/>
 
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 2 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Monster 2 HP Bar"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="14" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster2HealthBarShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0" Text="Monster 2 HP Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="15" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Monster 2 HP Bar X Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster2HealthBarX}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster 2 HP Bar Y Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster2HealthBarY}"  PreviewTextInput="ValidateNumber"/>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Monster 1 HP Bar"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="7" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster1HealthBarShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0" Text="Monster 1 HP Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="8" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Monster 1 HP Bar X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1HealthBarX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Monster 1 HP Bar Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 3 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Monster 3 HP Bar"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="18" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster3HealthBarShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0" Text="Monster 3 HP Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="19" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Monster 3 HP Bar X Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="20" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster3HealthBarX}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Monster 3 HP Bar Y Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="21" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster3HealthBarY}"  PreviewTextInput="ValidateNumber"/>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 2 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Monster 2 HP Bar"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="11" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster2HealthBarShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0" Text="Monster 2 HP Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="12" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster 2 HP Bar X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster2HealthBarX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Monster 2 HP Bar Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="14" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster2HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 4 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Monster 4 HP Bar"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="22" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster4HealthBarShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0" Text="Monster 4 HP Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="23" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Monster 4 HP Bar X Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="24" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster4HealthBarX}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Monster 4 HP Bar Y Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="25" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster4HealthBarY}"  PreviewTextInput="ValidateNumber"/>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 3 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster 3 HP Bar"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster3HealthBarShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="Monster 3 HP Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="16" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster 3 HP Bar X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster3HealthBarX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Monster 3 HP Bar Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="18" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster3HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Renders instead of Monster Icons" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Monster Renders"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="26" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMonsterRenders}"/>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 4 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Monster 4 HP Bar"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="19" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster4HealthBarShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0" Text="Monster 4 HP Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="20" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Monster 4 HP Bar X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="21" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster4HealthBarX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Monster 4 HP Bar Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="22" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster4HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0" Text="Monster 1 Bar Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="27" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarStrokeColor}"></xctk:ColorPicker>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Renders instead of Monster Icons" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Monster Renders"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="23" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMonsterRenders}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0" Text="Monster 2 Bar Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="28" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarStrokeColor}"></xctk:ColorPicker>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0" Text="Monster 1 Bar Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="24" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarStrokeColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0" Text="Monster 3 Bar Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="29" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarStrokeColor}"></xctk:ColorPicker>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0" Text="Monster 2 Bar Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="25" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarStrokeColor}"></xctk:ColorPicker>
-
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0" Text="Monster 3 Bar Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="26" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarStrokeColor}"></xctk:ColorPicker>
-
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0" Text="Monster 4 Bar Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="27" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarStrokeColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0" Text="Monster 4 Bar Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="30" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarStrokeColor}"></xctk:ColorPicker>
 
                         </Grid>
                     </ScrollViewer>
