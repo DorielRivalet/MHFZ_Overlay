@@ -2191,55 +2191,39 @@
                                                         <RowDefinition Height="50"/>
                                                         <RowDefinition Height="1*"/>
                                                     </Grid.RowDefinitions>
-                                                    <Grid Grid.Row="0">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <ComboBox Grid.Column="0" Name="SortBy" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto"/>
-                                                        <ComboBox Grid.Column="1" Name="SortDir" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto"/>
-                                                        <ComboBox Grid.Column="2" SelectionChanged="FilterBox_SelectionChanged" Name="FilterBox" SelectedIndex="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto"/>
-                                                    </Grid>
-                                                    <ListView x:Name="MyList" Grid.Row="1" HorizontalAlignment="Stretch" VirtualizingStackPanel.IsVirtualizing="True">
-                                                        <!--<ListView.Resources>
-                                                        <DataTemplate x:Key="Templ">
-                                                            <TextBlock Text="{Binding}" Foreground="{StaticResource Text}" Background="Transparent" Width="32"/>
-                                                        </DataTemplate>
-                                                        <Style x:Key="HeaderStyle" TargetType="GridViewColumnHeader">
-                                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                                            <Setter Property="Background" Value="Transparent"/>
-                                                            <Setter Property="Foreground" Value="{StaticResource Text}"/>
-                                                            <Setter Property="BorderBrush" Value="Transparent"/>
-                                                            <Setter Property="Width" Value="32"/>
-
-                                                        </Style>
-                                                    </ListView.Resources>-->
-                                                        <ListView.View>
-                                                            <GridView x:Name="GridViewElement">
-
-                                                                <GridView.Columns>
-                                                                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}"/>
-
-                                                                    <!--https://stackoverflow.com/a/42022875/18859245-->
-                                                                    <GridViewColumn Header="Image">
-                                                                        <GridViewColumn.CellTemplate>
-                                                                            <DataTemplate>
-                                                                                <Image Source="{Binding MonsterImage}" Width="32" Height="32"/>
-                                                                            </DataTemplate>
-                                                                        </GridViewColumn.CellTemplate>
-                                                                    </GridViewColumn>
-
-                                                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                                                                    <GridViewColumn Header="Hunted" DisplayMemberBinding="{Binding Hunted}"/>
-                                                                </GridView.Columns>
-                                                            </GridView>
-                                                        </ListView.View>
-                                                    </ListView>
-
-
+                                                    <ComboBox Width="Auto" SelectionChanged="FilterBox_SelectionChanged" Name="FilterBox" SelectedIndex="0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                                    <ui:DataGrid x:Name="HuntLogDataGrid" Grid.Row="1" HorizontalAlignment="Stretch" AutoGenerateColumns="False" IsReadOnly="True">
+                                                        <DataGrid.ColumnHeaderStyle>
+                                                            <StaticResource ResourceKey="DefaultDataGridColumnHeaderStyle"/>
+                                                        </DataGrid.ColumnHeaderStyle>
+                                                        <DataGrid.Columns>
+                                                            <DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
+                                                            <DataGridTemplateColumn Header="Image">
+                                                                <DataGridTemplateColumn.CellTemplate>
+                                                                    <DataTemplate>
+                                                                        <Image Source="{Binding MonsterImage}" Width="48" Height="48" HorizontalAlignment="Center"/>
+                                                                    </DataTemplate>
+                                                                </DataGridTemplateColumn.CellTemplate>
+                                                            </DataGridTemplateColumn>
+                                                            <DataGridTextColumn Header="Name" Binding="{Binding Name}">
+                                                                <DataGridTextColumn.ElementStyle>
+                                                                    <Style TargetType="TextBlock">
+                                                                        <Setter Property="TextWrapping" Value="Wrap" />
+                                                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                                                    </Style>
+                                                                </DataGridTextColumn.ElementStyle>
+                                                            </DataGridTextColumn>
+                                                            <DataGridTextColumn Header="Hunted" Binding="{Binding Hunted}">
+                                                                <DataGridTextColumn.ElementStyle>
+                                                                    <Style TargetType="TextBlock">
+                                                                        <Setter Property="TextWrapping" Value="Wrap" />
+                                                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                                                    </Style>
+                                                                </DataGridTextColumn.ElementStyle>
+                                                            </DataGridTextColumn>
+                                                        </DataGrid.Columns>
+                                                    </ui:DataGrid>
                                                 </Grid>
-
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>

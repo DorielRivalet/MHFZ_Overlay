@@ -477,18 +477,6 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
-    public void SortList()
-    {
-        var SortProperty = SortBy.SelectedItem.ToString();
-        var SortDirection = SortDir.SelectedItem.ToString() == "Ascending" ? ListSortDirection.Ascending : ListSortDirection.Descending;
-        MyList.Items.SortDescriptions[0] = new SortDescription(SortProperty, SortDirection);
-    }
-
-    private void SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        SortList();
-    }
-
     private IReadOnlyList<MonsterInfo> monsterInfos = Dictionary.MonsterInfoList.MonsterInfoIDs;
 
     /// <summary>
@@ -539,18 +527,10 @@ public partial class ConfigWindow : FluentWindow
             Monsters[i].Hunted = GetHuntedCount(Monsters[i].ID);
         }
 
-        MyList.ItemsSource = Monsters;
-        SortBy.ItemsSource = new string[] { "ID", "Name", "Hunted" };
-        SortDir.ItemsSource = Enum.GetNames<ListSortDirection>();
-
-        SortBy.SelectionChanged += SelectionChanged;
-        SortDir.SelectionChanged += SelectionChanged;
-
-        MyList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-
+        HuntLogDataGrid.ItemsSource = Monsters;
+        HuntLogDataGrid.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         FilterBox.ItemsSource = new string[] { "All", "Large Monster", "Small Monster" };
-
-        MyList.Items.Filter = MonsterFilterAll;
+        HuntLogDataGrid.Items.Filter = MonsterFilterAll;
 
         //// See: https://stackoverflow.com/questions/22285866/why-relaycommand
         //// Or use MVVM Light to obtain RelayCommand.
@@ -984,7 +964,7 @@ public partial class ConfigWindow : FluentWindow
 
     private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        MyList.Items.Filter = GetFilter();
+        HuntLogDataGrid.Items.Filter = GetFilter();
     }
 
     // on generate csv button click
