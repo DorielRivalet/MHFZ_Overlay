@@ -1076,29 +1076,8 @@
                                             <Button BorderThickness="0" Style="{StaticResource ConfigBottomButtons}" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/search_FILL0_wght400_GRAD0_opsz48.xaml'}" Width="40" Height="40" />
                                             <ui:TextBox x:Name="RunIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8"/>
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" ToolTip="Search Option">
-                                            <ToolTipService.ToolTip>
-                                                <StackPanel Background="#FF313244" >
-                                                    <TextBlock Foreground="{StaticResource Text}">
-                                       Time Attack: No Diva Skills Uses Left, No Secret Tech. In overlay: only enabled Timer, Key Logging, Quest Logging, Overlay Mode Watermark and is 1P without NPC except Halk.
-                                       <LineBreak/>
-                                       Freestyle No Secret Tech: same as Time Attack but with Diva Skills Uses Left of at least 1 or higher.
-                                       <LineBreak/>
-                                       Freestyle w/ Secret Tech: same as above but with Secret Tech Style Rank Skill equipped, not necessarily used.
-                                       <LineBreak/>
-                                       Zen: Disable everything except you can optionally have Discord RPC, Monster 1 Icon, KBM Layout and Quest ID.
-                                       <LineBreak/>
-                                       Standard: When it is none of the above.
-                                       <LineBreak/>
-                                       VERY IMPORTANT: None of the categories or rules are set in stone. 
-                                       <LineBreak/>
-                                       Things that are not currently tracked are: Prayer Gems, Login Boost, Halk Pot, Hunter Aid Attack Multiplier, Diva Defense Weapon Boost, Active Feature, etc. 
-                                       <LineBreak/>
-                                       Please make a pull request or send a requested feature issue if you can help track these in the overlay.
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </ToolTipService.ToolTip>
-
+                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" ToolTip="Search Option" 
+                                        ToolTipService.ToolTip="Please view the FAQ to see what the categories are about.&#x0a;VERY IMPORTANT: None of the categories or rules are set in stone.&#x0a;Things that are not currently tracked are: Prayer Gems, Login Boost, Halk Pot, Hunter Aid Attack Multiplier, Diva Defense Weapon Boost, Active Feature, etc.&#x0a;Please make a pull request or send a requested feature issue if you can help track these in the overlay.">
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Category"/>
                                             <ComboBox x:Name="OverlayModeComboBox"  Grid.Column="1" Grid.Row="0" Width="230" SelectedIndex="0">
                                                 <ComboBoxItem>Time Attack</ComboBoxItem>
@@ -1587,21 +1566,8 @@
         		///</summary>-->
                             <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="11" Grid.Column="0" ToolTip="Show Player True Raw">
                                 <Image Source="UI/Icons/png/attack_up.png" Margin="0,0,5,0"/>
-                                <TextBlock Style="{StaticResource ConfigTextBox}" Text="Attack Value">
-                            <ToolTipService.ToolTip>
-                                            <StackPanel Background="#FF313244">
-                                                <TextBlock Foreground="{StaticResource Text}">
-                                       Player True Raw
-                                       <LineBreak/>
-                                       Attack addition is added as either Attack A or Attack B and is before or after Hunting Horn buffs respectively.
-                                       <LineBreak/>
-                                       Values that are known to reside in Attack B are Rush, Stylish Assault, Flash Conversion, Obscurity, Incitement, Rush, Vigorous Up and Partnyaa Attack Buffs.
-                                       <LineBreak/>
-                                        Final True  = ((Weapon True + Attack A) * HH Buff + Attack B) * Multipliers + Additional
-                                    </TextBlock>
-                                </StackPanel>
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
+                                <TextBlock Style="{StaticResource ConfigTextBox}" Text="Attack Value" 
+                                ToolTipService.ToolTip="Player True Raw&#x0a;Attack addition is added as either Attack A or Attack B and is before or after Hunting Horn buffs respectively.&#x0a;Values that are known to reside in Attack B are Rush, Stylish Assault, Flash Conversion, Obscurity, Incitement, Rush, Vigorous Up and Partnyaa Attack Buffs.&#x0a;Final True  = ((Weapon True + Attack A) * HH Buff + Attack B) * Multipliers + Additional"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="11" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAtkShown}"/>
 
@@ -3173,21 +3139,8 @@
                                 IsClosable="False" IsOpen="True" Severity="Informational"/>
                             <TextBlock Margin="5,5,5,5" ToolTip="Enable Discord Rich Presence" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="(Overlay restart required) Rich Presence"/>
                             <CheckBox HorizontalAlignment="Center" BorderBrush="{StaticResource Red}" BorderThickness="2"  Grid.Row="2" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableRichPresence}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="(Mandatory) Client/Application ID">
-                            <ToolTipService.ToolTip>
-                                            <StackPanel Background="#FF313244"  >
-                                                <TextBlock Foreground="{StaticResource Text}">
-                                       1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
-                                       <LineBreak/>
-                                       2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
-                                       <LineBreak/>
-                                       3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID
-                                       <LineBreak/>
-                                       The ID also shows up in OAuth2 section as Client ID
-                                   </TextBlock>
-                               </StackPanel>
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="(Mandatory) Client/Application ID"
+                            ToolTipService.ToolTip="1. My Account -> Activity Privacy -> Check 'Display current activity as a status message'&#x0a;2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it 'MONSTER HUNTER FRONTIER Z'&#x0a;3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID&#x0a;The ID also shows up in OAuth2 section as Client ID"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordClientID}"  PreviewTextInput="ValidateNumber" MaxLength="19"/>
                             <TextBlock Margin="5,5,5,5" ToolTip="The server you play on (e.g. https://discord.gg/y8mF6amH, enter only the ID, not the whole link)" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="(Optional) Discord Server Invite ID"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordServerInvite}"  PreviewTextInput="ValidateName" MaxLength="10"/>
