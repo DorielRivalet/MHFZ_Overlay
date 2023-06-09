@@ -1477,7 +1477,6 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void ExitDragAndDrop_Click(object sender, RoutedEventArgs e)
     {
-        e.Handled = true;
         DisableDragAndDrop();
     }
     private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)

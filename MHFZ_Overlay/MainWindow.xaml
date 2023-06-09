@@ -724,13 +724,7 @@
         <Canvas x:Name="DamageNumbers" Visibility="{Binding Source={StaticResource Settings},Path=EnableDamageNumbers, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}" Height="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}" Canvas.Left="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"/>
         <Border x:Name="DamageNumbersBorder" BorderBrush="{StaticResource Red}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}" Height="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}" Canvas.Left="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"/>
 
-        <Button x:Name="ExitDragAndDrop" Visibility="Hidden" HorizontalAlignment="Left"  Foreground="#f5e0dc"  Style="{StaticResource DefaultButton}"  Click="ExitDragAndDrop_Click" Canvas.Left="850" Canvas.Top="1">
-            <Button.Content>
-                <TextBlock>
-            Exit Drag and Drop<Bold><Underline>(ESC)</Underline></Bold>
-                </TextBlock>
-            </Button.Content>
-        </Button>
+            <Button Content="Press ESC to Exit" x:Name="ExitDragAndDrop" Visibility="Hidden" HorizontalAlignment="Left"  Foreground="#f5e0dc"  Style="{StaticResource DefaultButton}"  Click="ExitDragAndDrop_Click" Canvas.Left="850" Canvas.Top="1"/>
         </Canvas>
     </Grid>
     <Window.InputBindings>

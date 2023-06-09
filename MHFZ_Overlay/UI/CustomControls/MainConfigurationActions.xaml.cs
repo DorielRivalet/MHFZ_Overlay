@@ -9,7 +9,7 @@ using System.Windows.Controls;
 namespace MHFZ_Overlay.UI.CustomControls;
 
 /// <summary>
-/// Interaction logic for MainConfigurationActions.xaml. 
+/// Interaction logic for MainConfigurationActions.xaml. Drag and Drop, Restore and Save.
 /// https://stackoverflow.com/questions/36128148/pass-click-event-of-child-control-to-the-parent-control
 /// </summary>
 public partial class MainConfigurationActions : UserControl

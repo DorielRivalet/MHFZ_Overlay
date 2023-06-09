@@ -29,9 +29,9 @@
                 <Setter Property="TextAlignment" Value="Right"/>
             </Style>
             <Style x:Key="DefaultButton" TargetType="{x:Type Button}">
-                <Setter Property="Background" Value="#1e1e2e"  />
+                <Setter Property="Background" Value="{StaticResource Base}"  />
                 <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="BorderBrush" Value="#cdd6f4" />
+                <Setter Property="BorderBrush" Value="{StaticResource Text}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">

@@ -1501,28 +1501,7 @@
                                         <!--TODO: speedrun mode in overlay takes into account these settings + other things-->
                                     </Grid>
                                 </ScrollViewer>
-                                <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="0" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click">
-                                        <Button.Content>
-                                            <ui:SymbolIcon Symbol="Drag24" FontSize="48" Foreground="{StaticResource Blue}"/>
-                                        </Button.Content>
-                                    </Button>
-                                    <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="1" ToolTip="Restore values to default configuration" Click="DefaultButton_Click" Width="80"  Height="80">
-                                        <Button.Content>
-                                            <ui:SymbolIcon Symbol="ArrowCounterclockwise48" FontSize="48" Foreground="{StaticResource Yellow}"/>
-                                        </Button.Content>
-                                    </Button>
-                                    <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="2" ToolTip="Save settings" Click="SaveButton_Click" Height="80" Width="80">
-                                        <Button.Content>
-                                            <ui:SymbolIcon Symbol="Checkmark48" FontSize="48" Foreground="{StaticResource Green}"/>
-                                        </Button.Content>
-                                    </Button>
-                                </Grid>
+                                <usercontrol:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -1922,28 +1901,8 @@
 
                         </Grid>
                     </ScrollViewer>
-                    <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="0" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="Drag24" FontSize="48" Foreground="{StaticResource Blue}"/>
-                            </Button.Content>
-                        </Button>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="1" ToolTip="Restore values to default configuration" Click="DefaultButton_Click" Width="80"  Height="80">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="ArrowCounterclockwise48" FontSize="48" Foreground="{StaticResource Yellow}"/>
-                            </Button.Content>
-                        </Button>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="2" ToolTip="Save settings" Click="SaveButton_Click" Height="80" Width="80">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="Checkmark48" FontSize="48" Foreground="{StaticResource Green}"/>
-                            </Button.Content>
-                        </Button>
-                    </Grid>
+                    <usercontrol:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
+
                 </Grid>
             </TabItem>
             <TabItem ToolTip="Access a wealth of useful information about hunting" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
@@ -2916,28 +2875,7 @@
 
                         </Grid>
                     </ScrollViewer>
-                    <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="0" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="Drag24" FontSize="48" Foreground="{StaticResource Blue}"/>
-                            </Button.Content>
-                        </Button>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="1" ToolTip="Restore values to default configuration" Click="DefaultButton_Click" Width="80"  Height="80">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="ArrowCounterclockwise48" FontSize="48" Foreground="{StaticResource Yellow}"/>
-                            </Button.Content>
-                        </Button>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="2" ToolTip="Save settings" Click="SaveButton_Click" Height="80" Width="80">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="Checkmark48" FontSize="48" Foreground="{StaticResource Green}"/>
-                            </Button.Content>
-                        </Button>
-                    </Grid>
+                    <usercontrol:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
                 </Grid>
             </TabItem>
             <TabItem ToolTip="Monster HP settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
@@ -3066,28 +3004,7 @@
 
                         </Grid>
                     </ScrollViewer>
-                    <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="0" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="Drag24" FontSize="48" Foreground="{StaticResource Blue}"/>
-                            </Button.Content>
-                        </Button>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="1" ToolTip="Restore values to default configuration" Click="DefaultButton_Click" Width="80"  Height="80">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="ArrowCounterclockwise48" FontSize="48" Foreground="{StaticResource Yellow}"/>
-                            </Button.Content>
-                        </Button>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="2" ToolTip="Save settings" Click="SaveButton_Click" Height="80" Width="80">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="Checkmark48" FontSize="48" Foreground="{StaticResource Green}"/>
-                            </Button.Content>
-                        </Button>
-                    </Grid>
+                    <usercontrol:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
                 </Grid>
             </TabItem>
             <TabItem ToolTip="Monster status settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
@@ -3261,28 +3178,7 @@
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="35" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunStrokeColor}"></xctk:ColorPicker>
                         </Grid>
                     </ScrollViewer>
-                    <Grid Grid.Row="1" Grid.ColumnSpan="1" Background="Transparent">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="0" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="Drag24" FontSize="48" Foreground="{StaticResource Blue}"/>
-                            </Button.Content>
-                        </Button>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="1" ToolTip="Restore values to default configuration" Click="DefaultButton_Click" Width="80"  Height="80">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="ArrowCounterclockwise48" FontSize="48" Foreground="{StaticResource Yellow}"/>
-                            </Button.Content>
-                        </Button>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="2" ToolTip="Save settings" Click="SaveButton_Click" Height="80" Width="80">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="Checkmark48" FontSize="48" Foreground="{StaticResource Green}"/>
-                            </Button.Content>
-                        </Button>
-                    </Grid>
+                    <usercontrol:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
                 </Grid>
             </TabItem>
             <TabItem ToolTip="Discord settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
@@ -3376,28 +3272,7 @@
 
                         </Grid>
                     </ScrollViewer>
-                    <Grid Background="Transparent" Grid.Row="1" Grid.ColumnSpan="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="0" Height="80" Width="80" ToolTip="Drag and drop elements" Click="ConfigureButton_Click">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="Drag24" FontSize="48" Foreground="{StaticResource Blue}"/>
-                            </Button.Content>
-                        </Button>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="1" ToolTip="Restore values to default configuration" Click="DefaultButton_Click" Width="80"  Height="80">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="ArrowCounterclockwise48" FontSize="48" Foreground="{StaticResource Yellow}"/>
-                            </Button.Content>
-                        </Button>
-                        <Button HorizontalAlignment="Center" Background="Transparent" Grid.Column="2" ToolTip="Save settings" Click="SaveButton_Click" Height="80" Width="80">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="Checkmark48" FontSize="48" Foreground="{StaticResource Green}"/>
-                            </Button.Content>
-                        </Button>
-                    </Grid>
+                    <usercontrol:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
                 </Grid>
             </TabItem>
             <TabItem ToolTip="Monster information" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
