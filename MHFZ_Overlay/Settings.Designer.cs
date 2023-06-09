@@ -1969,7 +1969,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3840")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1360")]
         public int MaxResolutionWidth {
             get {
                 return ((int)(this["MaxResolutionWidth"]));
@@ -1981,7 +1981,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2160")]
+        [global::System.Configuration.DefaultSettingValueAttribute("768")]
         public string MaxResolutionHeight {
             get {
                 return ((string)(this["MaxResolutionHeight"]));

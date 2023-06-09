@@ -174,7 +174,7 @@ Press Alt+Enter if your game resolution changed.
 
 The overlay might take some time to start due to databases. The next time you run the program, you may be asked to update the database. 
 
-It's also recommended to change the resolution of the overlay if you are using a resolution other than 4K.
+It's also recommended to change the resolution of the overlay if you are using a resolution other than the default set.
 
 Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
 

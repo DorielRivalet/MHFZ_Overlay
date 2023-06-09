@@ -55,6 +55,10 @@ using Wpf.Ui.Common;
 using System.Windows.Media.Imaging;
 using MHFZ_Overlay.Core.Constant;
 using Wpf.Ui.Controls.TitleBarControl;
+using Wpf.Ui.Contracts;
+using Wpf.Ui.Services;
+using System.Windows.Documents;
+using Wpf.Ui.Controls.IconElements;
 
 namespace MHFZ_Overlay;
 
@@ -327,6 +331,11 @@ public partial class MainWindow : Window
         DataLoader.model.ShowSaveIcon = false;
 
         logger.Info("Loaded MHF-Z Overlay {0}", App.CurrentProgramVersion);
+
+        // In your initialization or setup code
+        ISnackbarService snackbarService = new SnackbarService();
+        // Replace 'snackbarControl' with your actual snackbar control instance
+        snackbarService.SetSnackbarControl(MainWindowSnackBar);
 
         splashScreen.Close(TimeSpan.FromSeconds(0.1));
         // Stop the stopwatch
@@ -1926,6 +1935,11 @@ The process may take some time, as the program attempts to download from GitHub 
 
     #endregion
 
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (DataLoader.loadedOutsideMezeporta)
+            MainWindowSnackBar.ShowAsync(Messages.WARNING_TITLE, "It is not recommended to load the overlay outside of Mezeporta", new SymbolIcon(SymbolRegular.Warning28), ControlAppearance.Caution);
+    }
 }
 /// <TODO>
 /// [] Not Done

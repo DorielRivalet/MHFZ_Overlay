@@ -4803,7 +4803,9 @@ Disabling Quest Logging.",
                 }
                 catch (Exception ex)
                 {
-                    HandleError(transaction, ex);
+                    //HandleError(transaction, ex);
+                    logger.Error(ex, "Could not update youtube link");
+                    success = false;
                 }
             }
         }

@@ -489,10 +489,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="MaxResolutionWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3840</Value>
+      <Value Profile="(Default)">1360</Value>
     </Setting>
     <Setting Name="MaxResolutionHeight" Type="System.String" Scope="User">
-      <Value Profile="(Default)">2160</Value>
+      <Value Profile="(Default)">768</Value>
     </Setting>
     <Setting Name="ActionsPerMinuteShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

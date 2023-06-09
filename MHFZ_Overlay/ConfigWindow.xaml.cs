@@ -45,6 +45,10 @@ using MHFZ_Overlay.Core.Constant;
 using Wpf.Ui.Controls.Window;
 using DataGrid = Wpf.Ui.Controls.DataGrid;
 using MHFZ_Overlay.UI.CustomControls;
+using Wpf.Ui.Controls.IconElements;
+using Wpf.Ui.Common;
+using Wpf.Ui.Contracts;
+using Wpf.Ui.Services;
 
 namespace MHFZ_Overlay;
 
@@ -550,6 +554,12 @@ public partial class ConfigWindow : FluentWindow
         replaceAllMonsterInfoFeriasLinks();
 
         weaponUsageData = databaseManager.CalculateTotalWeaponUsage(this, MainWindow.DataLoader);
+
+        // In your initialization or setup code
+        ISnackbarService snackbarService = new SnackbarService();
+        // Replace 'snackbarControl' with your actual snackbar control instance
+        snackbarService.SetSnackbarControl(ConfigWindowSnackBar); 
+
         // Stop the stopwatch
         stopwatch.Stop();
         // Get the elapsed time in milliseconds
@@ -1196,7 +1206,7 @@ public partial class ConfigWindow : FluentWindow
         catch (Exception ex)
         {
             logger.Error(ex);
-            MessageBox.Show("Could not open settings folder", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            ConfigWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
         }
     }
 
@@ -1440,15 +1450,68 @@ public partial class ConfigWindow : FluentWindow
     private string personalBestSelectedType = string.Empty;
     private DataGrid? calendarDataGrid;
 
+    // TODO: it works. i need to put this somewhere else
+    private async void ShowSequentialSnackbars()
+    {
+        // Show the first snackbar
+        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 1", "Message 1", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Dark);
+
+        // Handle completion of the first snackbar
+        await Task.Delay(TimeSpan.FromSeconds(2)); // Delay for a certain duration
+        MainWindow.MainWindowSnackBar.Hide(); // Hide the first snackbar
+
+        // Show the second snackbar
+        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 2", "Message 2", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Light);
+
+        // Handle completion of the second snackbar
+        await Task.Delay(TimeSpan.FromSeconds(2)); // Delay for a certain duration
+        MainWindow.MainWindowSnackBar.Hide(); // Hide the second snackbar
+
+        // Show the third snackbar
+        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 3", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Primary);
+
+        // Handle completion of the third snackbar
+        await Task.Delay(TimeSpan.FromSeconds(2)); // Delay for a certain duration
+        MainWindow.MainWindowSnackBar.Hide(); // Hide the third snackbar
+
+        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 4", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Secondary);
+        await Task.Delay(TimeSpan.FromSeconds(2));
+        MainWindow.MainWindowSnackBar.Hide();
+
+        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 5", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Success);
+        await Task.Delay(TimeSpan.FromSeconds(2));
+        MainWindow.MainWindowSnackBar.Hide();
+
+        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 6", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Caution);
+        await Task.Delay(TimeSpan.FromSeconds(2));
+        MainWindow.MainWindowSnackBar.Hide();
+
+        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 7", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Danger);
+        await Task.Delay(TimeSpan.FromSeconds(2));
+        MainWindow.MainWindowSnackBar.Hide();
+
+        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 8", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Transparent);
+        await Task.Delay(TimeSpan.FromSeconds(2));
+        MainWindow.MainWindowSnackBar.Hide();
+
+        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 9", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Info);
+        await Task.Delay(TimeSpan.FromSeconds(2));
+        MainWindow.MainWindowSnackBar.Hide();
+    }
+
     private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
     {
         // Get the quest ID and new YouTube link from the textboxes
         long runID = long.Parse(RunIDTextBox.Text.Trim());
         string youtubeLink = youtubeLinkTextBox.Text.Trim();
         if (databaseManager.UpdateYoutubeLink(sender, e, runID, youtubeLink))
-            MessageBox.Show(String.Format("Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink), "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+        {
+            ConfigWindowSnackBar.ShowAsync(Messages.INFO_TITLE, String.Format("Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink), new SymbolIcon(SymbolRegular.Video32), ControlAppearance.Success);
+        }
         else
-            MessageBox.Show(String.Format("Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        {
+            ConfigWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, String.Format("Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), new SymbolIcon(SymbolRegular.Video32), ControlAppearance.Danger);
+        }
     }
 
     private void UpdateYoutubeLink_Loaded(object sender, RoutedEventArgs e)

@@ -19,15 +19,20 @@
         x:Name="Window"
         Title="Monster Hunter Frontier Z Overlay"         
         Height="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"
-        Width="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" Background="Transparent" AllowsTransparency="True" WindowStyle="None"
+        Width="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}"
+        Background="Transparent" 
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Loaded="Window_Loaded"
         Style="{StaticResource WinAll}"
-        FontFamily="{StaticResource MesloLGM NF}"
+        FontFamily="{StaticResource Segoe UI Variable}"
         >
     <Window.Resources>
         <local1:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
         <!--TODO: Unused Code?-->
         <RoutedUICommand x:Key="ESC" Text="Escape"/>
     </Window.Resources>
+    <Grid>
     <Grid>
         <ui:TitleBar Visibility="Hidden" BorderThickness="0" BorderBrush="{StaticResource Red}" x:Name="TitleBarBorder">
             <ui:TitleBar.Tray>
@@ -724,8 +729,14 @@
         <Canvas x:Name="DamageNumbers" Visibility="{Binding Source={StaticResource Settings},Path=EnableDamageNumbers, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}" Height="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}" Canvas.Left="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"/>
         <Border x:Name="DamageNumbersBorder" BorderBrush="{StaticResource Red}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}" Height="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}" Canvas.Left="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"/>
 
-            <Button Content="Press ESC to Exit" x:Name="ExitDragAndDrop" Visibility="Hidden" HorizontalAlignment="Left"  Foreground="#f5e0dc"  Style="{StaticResource DefaultButton}"  Click="ExitDragAndDrop_Click" Canvas.Left="850" Canvas.Top="1"/>
+        <Button Content="Press ESC to Exit" x:Name="ExitDragAndDrop" Visibility="Hidden" HorizontalAlignment="Left"  Foreground="#f5e0dc"  Style="{StaticResource DefaultButton}"  Click="ExitDragAndDrop_Click" Canvas.Left="850" Canvas.Top="1"/>
+
         </Canvas>
+        
+    </Grid>
+        <!--https://stackoverflow.com/questions/5450985/how-to-make-overlay-control-above-all-other-controls-->
+        <ui:Snackbar Grid.ZIndex="2" Timeout="10000" x:Name="MainWindowSnackBar" Style="{StaticResource CatppuccinMochaSnackBar}"/>
+
     </Grid>
     <Window.InputBindings>
     <KeyBinding Key="Esc" Command="{StaticResource ESC}"/>

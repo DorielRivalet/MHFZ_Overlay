@@ -93,6 +93,8 @@ public class DataLoader
         logger.Debug($"DataLoader ctor Elapsed Time: {elapsedTimeMs} ms");
     }
 
+    public static bool loadedOutsideMezeporta = false;
+
     private void CheckIfLoadedInMezeporta()
     {
         if (model.AreaID() != 200)
@@ -101,7 +103,7 @@ public class DataLoader
 
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
             if (s.EnableOutsideMezeportaLoadingWarning)
-                MessageBox.Show("It is not recommended to load the overlay outside of Mezeporta", Messages.WARNING_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                loadedOutsideMezeporta = true;
         }
     }
 

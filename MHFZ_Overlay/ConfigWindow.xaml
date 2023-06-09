@@ -559,8 +559,14 @@
                 <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="5">
                     <TextBlock VerticalAlignment="Center" Text="YouTube ID for the Run ID" Margin="5"/>
                     <ui:TextBox VerticalContentAlignment="Center" Margin="5" ToolTip="Enter the YouTube video ID for the Run ID entered at the top" Width="150" Height="Auto" IsUndoEnabled="False" TextAlignment="Center"  MaxLength="12" Loaded="YoutubeLinkTextBox_Loaded"/>
-                    <ui:Button BorderThickness="0" Foreground="#f38ba8" Background="Transparent" Margin="5" Content="&#xf03d;" ToolTip="Add ID" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Free Solid" Click="UpdateYoutubeLink_ButtonClick" Loaded="UpdateYoutubeLink_Loaded"/>
-                    <ui:Button BorderThickness="0" Foreground="Red" Background="Transparent" Margin="5" Content="&#xf167;" ToolTip="Open Link in Browser" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Click="YoutubeIconButton_Click"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Foreground="{StaticResource Text}" Text="Add ID"/>
+                        <ui:Button BorderThickness="0" Foreground="#f38ba8" Background="Transparent" Margin="5" Content="&#xf03d;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Free Solid" Click="UpdateYoutubeLink_ButtonClick" Loaded="UpdateYoutubeLink_Loaded"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                        <TextBlock VerticalAlignment="Center" Foreground="{StaticResource Text}" Text="Open Link in Browser"/>
+                        <ui:Button BorderThickness="0" Foreground="Red" Background="Transparent" Margin="5" Content="&#xf167;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Click="YoutubeIconButton_Click"/>
+                    </StackPanel>
                 </StackPanel>
                 </Grid>
             </DataTemplate>
@@ -736,6 +742,7 @@
             <Color x:Key="SystemAccentColorSecondary">#f38ba8</Color>
         </ResourceDictionary>
     </Window.Resources>
+    <Grid>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -3489,5 +3496,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                 </Grid>
             </TabItem>
         </TabControl>
+    </Grid>
+        <ui:Snackbar Grid.ZIndex="2" Timeout="10000" x:Name="ConfigWindowSnackBar" Style="{StaticResource CatppuccinMochaSnackBar}"/>
     </Grid>
 </ui:FluentWindow>
