@@ -78,16 +78,16 @@
                         <DockPanel Margin="5,5,5,5">
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="50" ToolTip="Save summary of stats to text file" Click="CompendiumBtnSaveFile_Click">
+                                    <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="50" ToolTip="Save summary of stats to text file" Click="CompendiumBtnSaveFile_Click">
                                         <Button.Content>
                                             <ui:SymbolIcon Symbol="ArrowDownload48" FontSize="48" Foreground="{StaticResource Green}"/>
                                         </Button.Content>
-                                    </Button>
-                                    <Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy compendium to clipboard as image (recommended to maximize configuration window)" Width="50" Height="50" Click="CompendiumBtnCopyFile_Click">
+                                    </ui:Button>
+                                    <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy compendium to clipboard as image (recommended to maximize configuration window)" Width="50" Height="50" Click="CompendiumBtnCopyFile_Click">
                                         <Button.Content>
                                             <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="48"/>
                                         </Button.Content>
-                                    </Button>
+                                    </ui:Button>
                                     <TextBlock Text="Summary of your statistics" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </StackPanel>
 
@@ -224,16 +224,16 @@
                         <DockPanel Margin="5,5,5,5">
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Background="Transparent" Margin="10,0,0,0" x:Name="QuestLogGearBtnSaveFile" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="50" ToolTip="Save gear to text file" Click="QuestLogGearBtnSaveFile_Click">
+                                    <ui:Button Background="Transparent" Margin="10,0,0,0" x:Name="QuestLogGearBtnSaveFile" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="50" ToolTip="Save gear to text file" Click="QuestLogGearBtnSaveFile_Click">
                                         <Button.Content>
                                             <ui:SymbolIcon Symbol="ArrowDownload48" FontSize="48" Foreground="{StaticResource Green}"/>
                                         </Button.Content>
-                                    </Button>
-                                    <Button Background="Transparent" Margin="10,0,0,0" x:Name="QuestLogGearBtnCopyFile" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy gear to clipboard as image (recommended to maximize configuration window)" Width="50"  Height="50" Click="QuestLogGearBtnCopyFile_Click">
+                                    </ui:Button>
+                                    <ui:Button Background="Transparent" Margin="10,0,0,0" x:Name="QuestLogGearBtnCopyFile" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy gear to clipboard as image (recommended to maximize configuration window)" Width="50"  Height="50" Click="QuestLogGearBtnCopyFile_Click">
                                         <Button.Content>
                                             <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="48"/>
                                         </Button.Content>
-                                    </Button>
+                                    </ui:Button>
                                     <TextBlock Text="Gear associated with the Run ID" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </StackPanel>
                             
@@ -264,11 +264,11 @@
                     <StackPanel  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
                             <!--TODO: add the refresh button to the other sections-->
-                            <Button Background="Transparent" BorderThickness="0" ToolTip="Refresh" Click="RefreshButton_Click" Width="32"  Height="32">
+                            <ui:Button Background="Transparent" BorderThickness="0" ToolTip="Refresh" Click="RefreshButton_Click" Width="32"  Height="32">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="ArrowCounterclockwise24" FontSize="24" Foreground="{StaticResource Yellow}"/>
                                 </Button.Content>
-                            </Button>
+                            </ui:Button>
 
                             <ComboBox Width="300" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestTypeComboBox_SelectionChanged">
                                 <ComboBoxItem>(Quest ID) Personal Best by Date</ComboBoxItem>
@@ -559,8 +559,8 @@
                 <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="5">
                     <TextBlock VerticalAlignment="Center" Text="YouTube ID for the Run ID" Margin="5"/>
                     <ui:TextBox VerticalContentAlignment="Center" Margin="5" ToolTip="Enter the YouTube video ID for the Run ID entered at the top" Width="150" Height="Auto" IsUndoEnabled="False" TextAlignment="Center"  MaxLength="12" Loaded="YoutubeLinkTextBox_Loaded"/>
-                    <Button BorderThickness="0" Foreground="#f38ba8" Background="Transparent" Margin="5" Content="&#xf03d;" ToolTip="Add ID" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Free Solid" Click="UpdateYoutubeLink_ButtonClick" Loaded="UpdateYoutubeLink_Loaded"/>
-                    <Button BorderThickness="0" Foreground="Red" Background="Transparent" Margin="5" Content="&#xf167;" ToolTip="Open Link in Browser" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Click="YoutubeIconButton_Click"/>
+                    <ui:Button BorderThickness="0" Foreground="#f38ba8" Background="Transparent" Margin="5" Content="&#xf03d;" ToolTip="Add ID" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Free Solid" Click="UpdateYoutubeLink_ButtonClick" Loaded="UpdateYoutubeLink_Loaded"/>
+                    <ui:Button BorderThickness="0" Foreground="Red" Background="Transparent" Margin="5" Content="&#xf167;" ToolTip="Open Link in Browser" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Click="YoutubeIconButton_Click"/>
                 </StackPanel>
                 </Grid>
             </DataTemplate>
@@ -862,7 +862,7 @@
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
-                            <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Open Settings Folder" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click"/>
+                            <ui:Button Appearance="Primary" Margin="5,0,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Open Settings Folder" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click"/>
 
                             <TextBlock Margin="5,5,5,5" ToolTip="Select a settings preset configuration" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Configuration Preset"/>
                             <ComboBox x:Name="settingsPresetComboBox" Grid.Column="1" Grid.Row="1" SelectedIndex="0" SelectionChanged="settingsPresetComboBox_SelectionChanged">
@@ -1155,20 +1155,20 @@
                                         </Grid.RowDefinitions>
                                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Search by Quest ID">
                                             <TextBlock Padding="10,0,10,0" Text="Quest ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <Button BorderThickness="0"  Background="Transparent" Width="48" Height="40" Click="QuestIDButton_Click">
+                                            <ui:Button BorderThickness="0"  Background="Transparent" Width="48" Height="40" Click="QuestIDButton_Click">
                                                 <Button.Content>
                                                     <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
                                                 </Button.Content>
-                                            </Button>
+                                            </ui:Button>
                                             <ui:TextBox x:Name="QuestIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" ToolTip="Search by Run ID">
                                             <TextBlock Padding="10,0,10,0" Text="Run ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <Button BorderThickness="0"  Background="Transparent" Width="48" Height="40">
+                                            <ui:Button BorderThickness="0"  Background="Transparent" Width="48" Height="40">
                                                 <Button.Content>
                                                     <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
                                                 </Button.Content>
-                                            </Button>
+                                            </ui:Button>
                                             <ui:TextBox x:Name="RunIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" ToolTip="Search Option" 
@@ -2124,13 +2124,13 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                                 <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="3" d:Text="Dainsleif Lv100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding GetWeaponForGuildCard,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
 
                                                 <Image Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/decoration.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                                <TextBlock Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" HorizontalAlignment="Left" Text="{Binding GetWeaponDecos,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0" TextWrapping="Wrap" Width="450"/>
+                                                <TextBlock d:Text="Para Sigil (2B09) | Skill Slots Up Sigil (3918) | Empty" Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" HorizontalAlignment="Left" Text="{Binding GetWeaponDecos,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0" TextWrapping="Wrap" Width="450"/>
 
                                                 <Image Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/helm.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                                <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorHeadNameForGuildCard,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
+                                                <TextBlock d:Text="Alisys ZP Head (3733)" Foreground="#fafa50" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorHeadNameForGuildCard,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
 
                                                 <Image Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/decoration.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                                <TextBlock Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorHeadDecos,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
+                                                <TextBlock d:Text="Lance True· Black, Lance True· Black, Lance True· Black" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorHeadDecos,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
 
                                                 <Image Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/chest.png" Margin="35,0,0,0" Width="20" Height="20"/>
                                                 <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorChestNameForGuildCard,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
@@ -3458,7 +3458,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <MediaElement Grid.Row="5" Grid.Column="2"  MediaEnded="Krill_MediaEnded" x:Name="myKrill" UnloadedBehavior="Manual" Source="https://media.tenor.com/S5IodS2Ms_IAAAAC/krill-issue.gif" LoadedBehavior="Play"/>
                             <Button ToolTip="Thank You!" BorderBrush="Transparent" Background="Transparent" Width="128" Height="128" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="1" Margin="10,0,0,10">
                                 <Button.Content>
-                                    <ui:SymbolIcon Symbol="Heart48" Foreground="{StaticResource Red}" FontSize="128"/>
+                                    <ui:SymbolIcon Symbol="Heart48" Foreground="{StaticResource Red}" FontSize="96"/>
                                 </Button.Content>
                             </Button>
                             <Grid Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="1">
