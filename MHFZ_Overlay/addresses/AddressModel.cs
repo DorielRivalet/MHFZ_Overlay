@@ -1002,7 +1002,7 @@ TreeScope.Children, condition);
             || s.PersonalBestTimePercentShown
             || s.EnablePersonalBestPaceColor) //TODO monster 1 overview? and update README
             return "";
-        else if (s.TimerInfoShown && s.EnableKeyLogging && s.EnableQuestLogging && PartySize() == 1 && s.OverlayModeWatermarkShown) //TODO: update README
+        else if (s.TimerInfoShown && s.EnableKeyLogging && s.EnableQuestLogging && PartySize() == 1 && s.OverlayModeWatermarkShown)
         {
             if (DivaSkillUsesLeft() == 0 && StyleRank1() != 15 && StyleRank2() != 15)
                 return "(Time Attack) ";
@@ -1894,7 +1894,6 @@ TreeScope.Children, condition);
     public string MonsterAttackMultiplierIcon { get; set; } = "UI/Icons/png/dure_attack.png";
     public string MonsterDefrateIcon { get; set; } = "UI/Icons/png/dure_defense.png";
 
-    //TODO
     public string DPSIcon { get; set; } = "UI/Icons/png/burst.png";
     public string QuestTimeIcon { get; set; } = "UI/Icons/png/clock.png";
 
@@ -2152,7 +2151,6 @@ TreeScope.Children, condition);
             if (s.MonsterEHPDisplayCorrectorDefrateMinimumThreshold >= s.MonsterEHPDisplayCorrectorDefrateMaximumThreshold)
                 return monsterHP;
 
-            // TODO: test
             if (monsterDefrate > s.MonsterEHPDisplayCorrectorDefrateMinimumThreshold && monsterDefrate < s.MonsterEHPDisplayCorrectorDefrateMaximumThreshold) 
             {
                 previousMonsterDefrate = monsterDefrate;
@@ -2181,7 +2179,6 @@ TreeScope.Children, condition);
         }
         else
         {
-            // TODO: test
             if (monsterDefrate > 0)
             {
                 decimal result = Convert.ToDecimal(monsterHP / monsterDefrate);
@@ -3904,7 +3901,7 @@ TreeScope.Children, condition);
         bool keyFound = Item.IDName.TryGetValue(id, out DecoName);
 
         if (GetTextFormat() == "Markdown" && IsMetaItem(id) && (DecoName != null && DecoName == "None" && DecoName != "") && keyFound)
-            DecoName = string.Format("**{0}**", DecoName);//TODO: test
+            DecoName = string.Format("**{0}**", DecoName);
 
         if (DecoName == null || DecoName == "None" || DecoName == "")
             DecoName = "Empty";
@@ -9314,7 +9311,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     #region graphs
 
-    // TODO
     public ObservableCollection<ObservablePoint> attackBuffCollection = new();
     public ObservableCollection<ObservablePoint> damagePerSecondCollection = new();
     public ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new();
@@ -9798,7 +9794,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         return DetermineMonsterName(id);
     }
 
-    //TODO cactus quest shows fatalis        
     /// <summary>
     /// Gets the name of the objective1.
     /// </summary>
@@ -10069,8 +10064,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         return totalInputs / (timeElapsedIn30FPS / 1800);
     }
 
-
-    // TODO
     public double CalculateTotalHitsTakenBlockedPerSecond()
     {
         double timeElapsedIn30FPS = TimeDefInt() - TimeInt();
@@ -10486,8 +10479,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 resetQuestInfoVariables();
             }
         }
-
-        // TODO: does dure work fine?
 
         if (previousAttackBuffInt != WeaponRaw() && !attackBuffDictionary.ContainsKey(TimeInt()))
         {
@@ -11483,48 +11474,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return overlayMode;
         }
     }
-    #endregion
-
-    #region personal best times embed
-
-    // TODO: not needed?
-
-    public string SelectedQuestName { get; set; } = "Destructive White Winds";
-    public string SelectedQuestObjective { get; set; } = "Slay 1 Blinking Nargacuga";
-    public string SelectedQuestObjectiveImage { get; set; } = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blinking_nargacuga.png";
-    public string SwordAndShieldPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string SwordAndShieldPBRunID { get; set; } = "ID 000001";
-    public string DualSwordsPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string DualSwordsPBRunID { get; set; } = "ID 000002";
-    public string GreatSwordPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string GreatSwordPBRunID { get; set; } = "ID 000003";
-    public string LongSwordPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string LongSwordPBRunID { get; set; } = "ID 000004";
-    public string HammerPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string HammerPBRunID { get; set; } = "ID 000005";
-    public string HuntingHornPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string HuntingHornPBRunID { get; set; } = "ID 000006";
-    public string LancePBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string LancePBRunID { get; set; } = "ID 000007";
-    public string GunlancePBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string GunlancePBRunID { get; set; } = "ID 000008";
-    public string TonfaPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string TonfaPBRunID { get; set; } = "ID 000009";
-    public string SwitchAxeFPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string SwitchAxeFPBRunID { get; set; } = "ID 000010";
-    public string MagnetSpikePBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string MagnetSpikePBRunID { get; set; } = "ID 000011";
-    public string LightBowgunPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string LightBowgunPBRunID { get; set; } = "ID 000012";
-    public string HeavyBowgunPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string HeavyBowgunPBRunID { get; set; } = "ID 000013";
-    public string BowPBTime { get; set; } = Messages.TIMER_NOT_LOADED;
-    public string BowPBRunID { get; set; } = "ID 000014";
-    public int SelectedQuestID { get; set; } = 0;
-
-    public int SelectedRunID { get; set; } = 0;
-
-
     #endregion
 
     public string QuestIDBind

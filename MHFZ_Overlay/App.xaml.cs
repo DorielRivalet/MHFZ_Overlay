@@ -30,10 +30,6 @@ public partial class App : Application
     /// </summary>
     public static string? CurrentProgramVersion { get; private set; }
 
-    //private string GetAssemblyVersion()
-    //{
-    //    return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? String.Empty;
-    //}
     private static string GetAssemblyVersion
     {
         get
@@ -94,7 +90,7 @@ public partial class App : Application
     // https://github.com/Squirrel/Squirrel.Windows/issues/198#issuecomment-299262613
     // Indeed you can use the methods below to backup your settings,
     // typically just after your update has completed,
-    // so just after your call to await mgr.UpdateApp();
+    // so just after your call to await mgr . UpdateApp();
     // You want to restore them at the very beginning of your program,
     // like just after Squirrel's event handler registration.
     // Don't try doing a restore from the onAppUpdate it won't work.

@@ -32,6 +32,10 @@ using MessageBox = System.Windows.MessageBox;
 using Quest = MHFZ_Overlay.UI.Class.Quest;
 using MHFZ_Overlay.Core.Constant;
 using System.Collections.ObjectModel;
+using Wpf.Ui.Common;
+using Wpf.Ui.Controls.IconElements;
+using System.Transactions;
+using System.Windows.Documents;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay.Core.Class.DataAccessLayer;
@@ -117,28 +121,43 @@ internal class DatabaseManager
     {
         TimeSpan totalTimeSpent = TimeSpan.Zero;
 
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn("Cannot calculate total time spent. dataSource: {0}", dataSource);
             return totalTimeSpent;
         }
 
-        using (var connection = new SQLiteConnection(dataSource))
+        try
         {
-            connection.Open();
-            using (var command = connection.CreateCommand())
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
             {
-                command.CommandText = "SELECT TOTAL(SessionDuration) FROM Session";
-                object result = command.ExecuteScalar();
-                if (result != DBNull.Value)
+                conn.Open();
+
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
                 {
-                    totalTimeSpent = TimeSpan.FromSeconds(Convert.ToInt32(result));
+                    string sql = "SELECT TOTAL(SessionDuration) FROM Session";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn, transaction))
+                    {
+                        object result = cmd.ExecuteScalar();
+                        if (result != DBNull.Value)
+                        {
+                            totalTimeSpent = TimeSpan.FromSeconds(Convert.ToInt32(result));
+                        }
+                    }
+
+                    transaction.Commit();
                 }
             }
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex, "Error calculating total time spent");
         }
 
         return totalTimeSpent;
     }
+
+
 
     #endregion
 
@@ -7396,7 +7415,8 @@ Disabling Quest Logging.",
                         {
                             if (!reader.HasRows)
                             {
-                                MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                string message = String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString());
+                                configWindow.ConfigWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, message, new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
                                 return;
                             }
                             else
@@ -7439,7 +7459,8 @@ Disabling Quest Logging.",
                         {
                             if (!reader.HasRows)
                             {
-                                MessageBox.Show(String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                string message = String.Format("Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString());
+                                configWindow.ConfigWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, message, new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
                                 return;
                             }
                             while (reader.Read())
