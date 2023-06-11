@@ -5,7 +5,7 @@ using MHFZ_Overlay;
 using System.Collections.Generic;
 using MHFZ_Overlay.Core.Class;
 
-namespace Dictionary;
+namespace MHFZ_Overlay.Core.Class.Dictionary;
 
 ///<summary>
 ///The monster info list

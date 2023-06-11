@@ -25,3 +25,12 @@ public enum RankTypes : uint
     G_Rank,
     Zenith_Rank
 }
+
+public enum AchievementRank
+{
+    None,
+    Bronze,
+    Silver,
+    Gold,
+    Platinum
+}

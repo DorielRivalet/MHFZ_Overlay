@@ -1,7 +1,7 @@
 ﻿// © 2023 The mhfz-overlay Authors.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using Dictionary;
+using MHFZ_Overlay.Core.Class.Dictionary;
 using EZlion.Mapper;
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.IO;
@@ -36,6 +36,7 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Controls.IconElements;
 using System.Transactions;
 using System.Windows.Documents;
+using MHFZ_Overlay.Core.Class.Dictionary;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay.Core.Class.DataAccessLayer;
@@ -3019,7 +3020,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             MessageBox.Show(
 @"The database schema got updated in the latest version. 
 
-Please make sure that both MHFZ_Overlay.sqlite (in the game\database directory) and reference_schema.json (in the current overlay directory) don't exist, so that the program can make new ones. 
+Please make sure that reference_schema.json (in the current overlay directory) doesn't exist, so that the program can make a new one. 
 
 Disabling Quest Logging.",
             Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -4307,6 +4308,24 @@ Disabling Quest Logging.",
                         FOREIGN KEY(Run22ID) REFERENCES Quests(RunID),
                         FOREIGN KEY(Run23ID) REFERENCES Quests(RunID)
                     )";
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS Achievements(
+                AchievementsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                CompletionDate TEXT NOT NULL DEFAULT '',
+                IsUnlocked INTEGER NOT NULL CHECK(IsUnlocked IN (0, 1)) DEFAULT 0,
+                Title TEXT NOT NULL DEFAULT '',
+                Description TEXT NOT NULL DEFAULT '',
+                Icon TEXT NOT NULL DEFAULT '',
+                Appearance INTEGER NOT NULL DEFAULT 0,
+                Objective TEXT NOT NULL DEFAULT '',
+                Image TEXT NOT NULL DEFAULT '',
+                IsSecret INTEGER NOT NULL DEFAULT 0,
+                Hint TEXT NOT NULL DEFAULT ''
+                )";
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                 {
                     cmd.ExecuteNonQuery();
@@ -10479,276 +10498,17 @@ Updating the database structure may take some time, it will transport all of you
     }
 
     // TODO: this is repeating code. also not sure if the data types handling is correct
-    // UPDATE: so it turns out, data types are suggestions, not rules.
+    // UPDATE: so it turns out, data types are suggestions, not rules.    
+    /// <summary>
+    /// Performs the update to version 0 23 0. This is only meant to run after CreateDatabaseTables, CreateDatabaseTriggers and CreateDatabaseIndexes.
+    /// </summary>
+    /// <param name="connection">The connection.</param>
     private void PerformUpdateToVersion_0_23_0(SQLiteConnection connection)
     {
         // Perform database updates for version 0.23.0
-        string sql = @"CREATE TABLE IF NOT EXISTS QuestAttempts(
-            QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
-            QuestID INTEGER NOT NULL,
-            WeaponTypeID INTEGER NOT NULL,
-            ActualOverlayMode TEXT NOT NULL,
-            Attempts INTEGER NOT NULL,
-            FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
-            FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-            UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
-            )";
-        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        sql = @"CREATE TABLE IF NOT EXISTS PersonalBestAttempts(
-                    PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    QuestID INTEGER NOT NULL,
-                    WeaponTypeID INTEGER NOT NULL,
-                    ActualOverlayMode TEXT NOT NULL,
-                    Attempts INTEGER NOT NULL,
-                    FOREIGN KEY(QuestID) REFERENCES QuestName(QuestNameID),
-                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
-                    )
-                    ";
-        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        sql = @"CREATE TABLE IF NOT EXISTS ZenithGauntlets(
-                        ZenithGauntletID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        WeaponType TEXT NOT NULL,
-                        Category TEXT NOT NULL,
-                        TotalFramesElapsed INTEGER NOT NULL,
-                        TotalTimeElapsed TEXT NOT NULL,
-                        Run1ID INTEGER NOT NULL,
-                        Run2ID INTEGER NOT NULL,
-                        Run3ID INTEGER NOT NULL,
-                        Run4ID INTEGER NOT NULL,
-                        Run5ID INTEGER NOT NULL,
-                        Run6ID INTEGER NOT NULL,
-                        Run7ID INTEGER NOT NULL,
-                        Run8ID INTEGER NOT NULL,
-                        Run9ID INTEGER NOT NULL,
-                        Run10ID INTEGER NOT NULL,
-                        Run11ID INTEGER NOT NULL,
-                        Run12ID INTEGER NOT NULL,
-                        Run13ID INTEGER NOT NULL,
-                        Run14ID INTEGER NOT NULL,
-                        Run15ID INTEGER NOT NULL,
-                        Run16ID INTEGER NOT NULL,
-                        Run17ID INTEGER NOT NULL,
-                        Run18ID INTEGER NOT NULL,
-                        Run19ID INTEGER NOT NULL,
-                        Run20ID INTEGER NOT NULL,
-                        Run21ID INTEGER NOT NULL,
-                        Run22ID INTEGER NOT NULL,
-                        Run23ID INTEGER NOT NULL,
-                        FOREIGN KEY(Run1ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run2ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run3ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run4ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run5ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run6ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run7ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run8ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run9ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run10ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run11ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run12ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run13ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run14ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run15ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run16ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run17ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run18ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run19ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run20ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run21ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run22ID) REFERENCES Quests(RunID),
-                        FOREIGN KEY(Run23ID) REFERENCES Quests(RunID)
-                    )";
-        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        sql = @"CREATE TABLE IF NOT EXISTS PersonalBests(
-                    PersonalBestsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    RunID INTEGER NOT NULL,
-                    Attempts INTEGER NOT NULL,
-                    FOREIGN KEY(RunID) REFERENCES Quests(RunID))";
-        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        sql = @"CREATE TABLE IF NOT EXISTS Overlay(
-                    OverlayID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Hash TEXT NOT NULL)";
-        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        using (SQLiteCommand cmd = new SQLiteCommand(connection))
-        {
-            cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_overlay_updates
-                        AFTER UPDATE ON Overlay
-                        BEGIN
-                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
-                        END;";
-            cmd.ExecuteNonQuery();
-        }
-
-        using (SQLiteCommand cmd = new SQLiteCommand(connection))
-        {
-            cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_overlay_deletion
-                        AFTER DELETE ON Overlay
-                        BEGIN
-                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
-                        END;";
-            cmd.ExecuteNonQuery();
-        }
-
-        sql = @"CREATE TABLE IF NOT EXISTS Bingo(
-                    BingoID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt TEXT NOT NULL,
-                    CreatedBy TEXT NOT NULL,
-                    Difficulty TEXT NOT NULL,
-                    MonsterList TEXT NOT NULL,
-                    ElapsedTime TEXT NOT NULL,
-                    Score INTEGER NOT NULL
-                    )";
-        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        sql = @"CREATE TABLE IF NOT EXISTS MezFesMinigames(
-                    MezFesMinigameID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    MezFesMinigameName INTEGER NOT NULL
-                    )";
-        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        sql = @"CREATE TABLE IF NOT EXISTS MezFes(
-                    MezFesID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt TEXT NOT NULL,
-                    CreatedBy TEXT NOT NULL,
-                    MinigameID INTEGER NOT NULL,
-                    Score TEXT NOT NULL,
-                    FOREIGN KEY(MinigameID) REFERENCES MezFesMinigames(MezFesMinigameID)
-                    )";
-        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        using (SQLiteCommand cmd = new SQLiteCommand(connection))
-        {
-            cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_bingo_updates
-                        AFTER UPDATE ON Bingo
-                        BEGIN
-                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
-                        END;";
-            cmd.ExecuteNonQuery();
-        }
-
-        using (SQLiteCommand cmd = new SQLiteCommand(connection))
-        {
-            cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_bingo_deletion
-                        AFTER DELETE ON Bingo
-                        BEGIN
-                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
-                        END;";
-            cmd.ExecuteNonQuery();
-        }
-
-        using (SQLiteCommand cmd = new SQLiteCommand(connection))
-        {
-            cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_mezfesminigames_updates
-                        AFTER UPDATE ON MezFesMinigames
-                        BEGIN
-                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
-                        END;";
-            cmd.ExecuteNonQuery();
-        }
-
-        using (SQLiteCommand cmd = new SQLiteCommand(connection))
-        {
-            cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_mezfesminigames_deletion
-                        AFTER DELETE ON MezFesMinigames
-                        BEGIN
-                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
-                        END;";
-            cmd.ExecuteNonQuery();
-        }
-
-        using (SQLiteCommand cmd = new SQLiteCommand(connection))
-        {
-            cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_mezfes_updates
-                        AFTER UPDATE ON MezFes
-                        BEGIN
-                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
-                        END;";
-            cmd.ExecuteNonQuery();
-        }
-
-        using (SQLiteCommand cmd = new SQLiteCommand(connection))
-        {
-            cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_mezfes_deletion
-                        AFTER DELETE ON MezFes
-                        BEGIN
-                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
-                        END;";
-            cmd.ExecuteNonQuery();
-        }
-
-        sql = @"CREATE TABLE IF NOT EXISTS GachaCard(
-                    GachaCardID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    GachaCardTypeID INTEGER NOT NULL,
-                    GachaCardRarityID INTEGER NOT NULL,
-                    GachaCardName INTEGER NOT NULL,
-                    GachaCardFrontImage TEXT NOT NULL,
-                    GachCardBackImage TEXT NOT NULL,
-                    UNIQUE(GachaCardTypeID, GachaCardRarityID, GachaCardName),
-                    FOREIGN KEY(GachaCardTypeID) REFERENCES GachaCardType(GachaCardTypeID),
-                    FOREIGN KEY(GachaCardRarityID) REFERENCES GachaCardRarity(GachaCardRarityID)
-                    )";
-        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        sql = @"CREATE TABLE IF NOT EXISTS GachaCardType(
-                    GachaCardTypeID INTEGER PRIMARY KEY,
-                    GachaCardTypeName TEXT NOT NULL
-                    )";
-        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        sql = @"CREATE TABLE IF NOT EXISTS GachaCardRarity(
-                    GachaCardRarityID INTEGER PRIMARY KEY,
-                    GachaCardRarityName TEXT NOT NULL
-                    )";
-        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        sql = @"CREATE TABLE IF NOT EXISTS GachaCardInventory(
-                    GachaCardInventoryID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    GachaCardID INTEGER NOT NULL,
-                    FOREIGN KEY(GachaCardID) REFERENCES GachaCard(GachaCardID)
-                    )";
-        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
+        // Since we already ran the previous functions as described in the docblock,
+        // we can skip most table creation and only focus on tables/views/indexes that need a modified schema.
+        string sql = "";
 
         //            sql = @"ALTER TABLE Quests
         //                    MODIFY COLUMN Monster1HPDictionary TEXT NOT NULL AFTER PartySize,
@@ -11601,7 +11361,11 @@ Updating the database structure may take some time, it will transport all of you
         }
     }
 
-    //TODO: test from user_version 0 and 1
+    //TODO: test from user_version 0 and 1    
+    /// <summary>
+    /// Performs the update to version 0 25 0.
+    /// </summary>
+    /// <param name="connection">The connection.</param>
     private void PerformUpdateToVersion_0_25_0(SQLiteConnection connection)
     {
         // Perform database updates for version 0.25.0

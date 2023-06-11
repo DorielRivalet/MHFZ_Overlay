@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 using System.Collections.Generic;
 
-namespace Dictionary;
+namespace MHFZ_Overlay.Core.Class.Dictionary;
 
 ///<summary>
 ///The Mezeporta Festival mini-games list

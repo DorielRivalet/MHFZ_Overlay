@@ -1,8 +1,12 @@
-﻿using System;
+﻿using MHFZ_Overlay.Core.Class.Dictionary;
+using MHFZ_Overlay.Core.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.IconElements;
@@ -10,10 +14,49 @@ using Wpf.Ui.Controls.IconElements;
 namespace MHFZ_Overlay.UI.Class;
 
 /// <summary>
-/// TODO: add GHC carve sound when obtaining and displaying snackbar
+/// TODO: add sound when obtaining and displaying snackbar
 /// </summary>
 public class Achievement
 {
+    private static readonly Dictionary<AchievementRank, string> RankColors = new Dictionary<AchievementRank, string>
+    {
+        { AchievementRank.None, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Base"] },        // Black
+        { AchievementRank.Bronze, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Maroon"] },      // Bronze color
+        { AchievementRank.Silver, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Lavender"] },      // Silver color
+        { AchievementRank.Gold, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Yellow"] },        // Gold color
+        { AchievementRank.Platinum, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Teal"] }     // Platinum color
+    };
+
+    /// <summary>
+    /// Gets the color for title and icon from rank.
+    /// </summary>
+    public Brush GetBrushColorFromRank()
+    {
+        var brushConverter = new BrushConverter();
+
+        if (RankColors.TryGetValue(Rank, out string colorString))
+        {
+            var brush = (Brush)brushConverter.ConvertFromString(colorString);
+            return brush;
+        }
+        // Default color if rank is not defined
+        return (Brush)brushConverter.ConvertFromString(CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Base"]); 
+    }
+
+    /// <summary>
+    /// Gets or sets the completion date.
+    /// </summary>
+    /// <value>
+    /// The completion date.
+    /// </value>
+    public DateTime CompletionDate { get; set; } = DateTime.MinValue;
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance is unlocked.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if this instance is unlocked; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsUnlocked { get; set; } = false;
     /// <summary>
     /// Gets or sets the title.
     /// </summary>
@@ -29,26 +72,12 @@ public class Achievement
     /// </value>
     public string Description { get; set; } = string.Empty;
     /// <summary>
-    /// Gets or sets the snackbar icon.
+    /// Gets or sets the achievement rank.
     /// </summary>
     /// <value>
-    /// The icon.
+    /// The achievement rank.
     /// </value>
-    public IconElement Icon { get; set; } = new SymbolIcon(SymbolRegular.Fluent24);
-    /// <summary>
-    /// Gets or sets the appearance.
-    /// </summary>
-    /// <value>
-    /// The appearance.
-    /// </value>
-    public ControlAppearance Appearance { get; set; } = ControlAppearance.Secondary;
-    /// <summary>
-    /// Gets or sets the completion date.
-    /// </summary>
-    /// <value>
-    /// The completion date.
-    /// </value>
-    public DateTime CompletionDate { get; set; } = DateTime.MinValue;
+    public AchievementRank Rank { get; set; } = AchievementRank.None;
     /// <summary>
     /// Gets or sets the objective description to obtain this achievement.
     /// </summary>
@@ -77,12 +106,5 @@ public class Achievement
     /// The hint.
     /// </value>
     public string Hint { get; set; } = string.Empty;
-    /// <summary>
-    /// Gets or sets a value indicating whether this instance is unlocked.
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if this instance is unlocked; otherwise, <c>false</c>.
-    /// </value>
-    public bool IsUnlocked { get; set; } = false;
     // Additional properties or methods related to achievements can be added here
 }

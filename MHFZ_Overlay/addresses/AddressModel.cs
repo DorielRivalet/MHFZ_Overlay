@@ -1,7 +1,7 @@
 ﻿// © 2023 The mhfz-overlay Authors.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using Dictionary;
+using MHFZ_Overlay.Core.Class.Dictionary;
 using EZlion.Mapper;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
@@ -1706,13 +1706,13 @@ TreeScope.Children, condition);
     {
         get
         {
-            bool weaponFound = Dictionary.WeaponCanUseReflect.WeaponTypeID.ContainsKey(WeaponType());
+            bool weaponFound = Core.Class.Dictionary.WeaponCanUseReflect.WeaponTypeID.ContainsKey(WeaponType());
             if (!weaponFound)
                 return "#f5e0dc";
 
             bool hasReflect = false;
 
-            if (Dictionary.WeaponCanUseReflect.WeaponTypeID[WeaponType()])
+            if (Core.Class.Dictionary.WeaponCanUseReflect.WeaponTypeID[WeaponType()])
                 hasReflect = true;
 
             // for speedrunners to get hit by 1 small bomb at least. and 2 perfect guards to get max obscurity.
@@ -1731,20 +1731,20 @@ TreeScope.Children, condition);
 
     public double GetAverageHitsPerSecond(int weaponTypeID)
     {
-        bool weaponFound = Dictionary.WeaponCanUseReflect.WeaponTypeID.ContainsKey(weaponTypeID);
+        bool weaponFound = Core.Class.Dictionary.WeaponCanUseReflect.WeaponTypeID.ContainsKey(weaponTypeID);
         if (!weaponFound)
             return 0;
 
-        bool averageFound = Dictionary.WeaponAverageHitsPerSecond.WeaponAverageHitsPerSecondID.ContainsKey(weaponTypeID);
+        bool averageFound = Core.Class.Dictionary.WeaponAverageHitsPerSecond.WeaponAverageHitsPerSecondID.ContainsKey(weaponTypeID);
         if (!averageFound)
             return 0;
 
         double averageMultiplier = 0.5;
 
-        if (!Dictionary.WeaponCanUseReflect.WeaponTypeID[weaponTypeID])
+        if (!Core.Class.Dictionary.WeaponCanUseReflect.WeaponTypeID[weaponTypeID])
             averageMultiplier = 0.4;
 
-        return Dictionary.WeaponAverageHitsPerSecond.WeaponAverageHitsPerSecondID[weaponTypeID] * averageMultiplier;
+        return Core.Class.Dictionary.WeaponAverageHitsPerSecond.WeaponAverageHitsPerSecondID[weaponTypeID] * averageMultiplier;
     }
 
     public string isOnPace
@@ -2823,7 +2823,7 @@ TreeScope.Children, condition);
             return "Blitzkrieg Bogabadorumu";
         if (id == 0)
             return "";
-        Dictionary.MonsterList.MonsterID.TryGetValue(id, out string? monstername);
+        Core.Class.Dictionary.MonsterList.MonsterID.TryGetValue(id, out string? monstername);
 
         if (monstername != null && monstername != RealMonsterName && isFirstMonster)
             return string.Format("{0}{1}", GetRankName(RankBand()), RealMonsterName);
@@ -3071,9 +3071,9 @@ TreeScope.Children, condition);
 
             if (s.EnableMonsterRenders)
             {
-                bool renderFound = Dictionary.MonsterRenderDictionary.MonsterRender.ContainsKey(monsterIcon);
+                bool renderFound = Core.Class.Dictionary.MonsterRenderDictionary.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
-                    return Dictionary.MonsterRenderDictionary.MonsterRender[monsterIcon];
+                    return Core.Class.Dictionary.MonsterRenderDictionary.MonsterRender[monsterIcon];
                 else
                     return "https://i.imgur.com/3pQEtzw.png";
             }
@@ -3093,9 +3093,9 @@ TreeScope.Children, condition);
 
             if (s.EnableMonsterRenders)
             {
-                bool renderFound = Dictionary.MonsterRenderDictionary.MonsterRender.ContainsKey(monsterIcon);
+                bool renderFound = Core.Class.Dictionary.MonsterRenderDictionary.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
-                    return Dictionary.MonsterRenderDictionary.MonsterRender[monsterIcon];
+                    return Core.Class.Dictionary.MonsterRenderDictionary.MonsterRender[monsterIcon];
                 else
                     return "https://i.imgur.com/3pQEtzw.png";
             }
@@ -3115,9 +3115,9 @@ TreeScope.Children, condition);
 
             if (s.EnableMonsterRenders)
             {
-                bool renderFound = Dictionary.MonsterRenderDictionary.MonsterRender.ContainsKey(monsterIcon);
+                bool renderFound = Core.Class.Dictionary.MonsterRenderDictionary.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
-                    return Dictionary.MonsterRenderDictionary.MonsterRender[monsterIcon];
+                    return Core.Class.Dictionary.MonsterRenderDictionary.MonsterRender[monsterIcon];
                 else
                     return "https://i.imgur.com/3pQEtzw.png";
             }
@@ -3137,9 +3137,9 @@ TreeScope.Children, condition);
 
             if (s.EnableMonsterRenders)
             {
-                bool renderFound = Dictionary.MonsterRenderDictionary.MonsterRender.ContainsKey(monsterIcon);
+                bool renderFound = Core.Class.Dictionary.MonsterRenderDictionary.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
-                    return Dictionary.MonsterRenderDictionary.MonsterRender[monsterIcon];
+                    return Core.Class.Dictionary.MonsterRenderDictionary.MonsterRender[monsterIcon];
                 else
                     return "https://i.imgur.com/3pQEtzw.png";
             }

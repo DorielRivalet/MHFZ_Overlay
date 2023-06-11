@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Dictionary;
+namespace MHFZ_Overlay.Core.Class.Dictionary;
 
 ///<summary>
 ///The players list

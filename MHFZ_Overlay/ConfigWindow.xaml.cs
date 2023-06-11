@@ -49,6 +49,7 @@ using Wpf.Ui.Controls.IconElements;
 using Wpf.Ui.Common;
 using Wpf.Ui.Contracts;
 using Wpf.Ui.Services;
+using MHFZ_Overlay.Core.Class.Dictionary;
 
 namespace MHFZ_Overlay;
 
@@ -482,7 +483,7 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
-    private IReadOnlyList<MonsterInfo> monsterInfos = Dictionary.MonsterInfoList.MonsterInfoIDs;
+    private IReadOnlyList<MonsterInfo> monsterInfos = Core.Class.Dictionary.MonsterInfoList.MonsterInfoIDs;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConfigWindow"/> class.
@@ -619,7 +620,7 @@ public partial class ConfigWindow : FluentWindow
         {
             Name = "Earth Style",
             Values = MainWindow.DataLoader.model.weaponUsageEarthStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(Dictionary.CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]))),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(Core.Class.Dictionary.CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
             //Stroke = null,
@@ -632,7 +633,7 @@ public partial class ConfigWindow : FluentWindow
         {
             Name = "Heaven Style",
             Values = MainWindow.DataLoader.model.weaponUsageHeavenStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(Dictionary.CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]))),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(Core.Class.Dictionary.CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
             //Stroke = null,
@@ -645,7 +646,7 @@ public partial class ConfigWindow : FluentWindow
         {
             Name = "Storm Style",
             Values = MainWindow.DataLoader.model.weaponUsageStormStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(Dictionary.CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]))),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(Core.Class.Dictionary.CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
             //Stroke = null,
@@ -658,7 +659,7 @@ public partial class ConfigWindow : FluentWindow
         {
             Name = "Extreme Style",
             Values = MainWindow.DataLoader.model.weaponUsageExtremeStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(Dictionary.CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]))),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(Core.Class.Dictionary.CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
             //Stroke = null,
@@ -676,7 +677,7 @@ public partial class ConfigWindow : FluentWindow
                     Padding=new LiveChartsCore.Drawing.Padding(0,0,0,0),
                     ShowSeparatorLines=true,
                     IsVisible=false,
-                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(Dictionary.CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(Core.Class.Dictionary.CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]))),
                     //Labels = new string[] { "SnS", "DS", "GS", "LS", "HA", "HH", "LA", "GL", "TO", "SAF", "MS", "LBG", "HBG", "BW" }
                 }
         };
@@ -685,7 +686,7 @@ public partial class ConfigWindow : FluentWindow
                 new Axis
                 {
                     MinStep=1,
-                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(Dictionary.CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal(Core.Class.Dictionary.CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Text"]))),
                     ShowSeparatorLines=true,
                     TextSize=12
                 }
@@ -1460,6 +1461,12 @@ public partial class ConfigWindow : FluentWindow
     // TODO: it works. i need to put this somewhere else
     private async void ShowSequentialSnackbars()
     {
+        // TODO: test the colors for achievements
+
+        //var symbolIcon = new SymbolIcon(SymbolRegular.ErrorCircle24);
+        //BrushConverter brushConverter = new BrushConverter();
+        //symbolIcon.Foreground = (Brush)brushConverter.ConvertFromString(CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Green"]);
+
         // Show the first snackbar
         await MainWindow.MainWindowSnackBar.ShowAsync("Important message 1", "Message 1", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Dark);
 
