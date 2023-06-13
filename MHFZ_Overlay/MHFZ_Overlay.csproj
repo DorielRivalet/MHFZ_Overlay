@@ -127,7 +127,23 @@
     <None Remove="UI\Icons\png\controller_a.png" />
     <None Remove="UI\Icons\png\controller_b.png" />
     <None Remove="UI\Icons\png\controller_dpad.png" />
+    <None Remove="UI\Icons\png\controller_dpad_down.png" />
+    <None Remove="UI\Icons\png\controller_dpad_downleft.png" />
+    <None Remove="UI\Icons\png\controller_dpad_downright.png" />
+    <None Remove="UI\Icons\png\controller_dpad_left.png" />
+    <None Remove="UI\Icons\png\controller_dpad_right.png" />
+    <None Remove="UI\Icons\png\controller_dpad_up.png" />
+    <None Remove="UI\Icons\png\controller_dpad_upleft.png" />
+    <None Remove="UI\Icons\png\controller_dpad_upright.png" />
     <None Remove="UI\Icons\png\controller_joystick.png" />
+    <None Remove="UI\Icons\png\controller_joystick_down.png" />
+    <None Remove="UI\Icons\png\controller_joystick_downleft.png" />
+    <None Remove="UI\Icons\png\controller_joystick_downright.png" />
+    <None Remove="UI\Icons\png\controller_joystick_left.png" />
+    <None Remove="UI\Icons\png\controller_joystick_right.png" />
+    <None Remove="UI\Icons\png\controller_joystick_up.png" />
+    <None Remove="UI\Icons\png\controller_joystick_upleft.png" />
+    <None Remove="UI\Icons\png\controller_joystick_upright.png" />
     <None Remove="UI\Icons\png\controller_l1.png" />
     <None Remove="UI\Icons\png\controller_l2.png" />
     <None Remove="UI\Icons\png\controller_lb.png" />
@@ -347,7 +363,7 @@
     <PackageReference Include="WPF-UI" Version="3.0.0-preview.2" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
     <PackageReference Include="XamlAnimatedGif" Version="2.1.1" />
-    <PackageReference Include="XInput.Wrapper" Version="0.3.1" />
+    <PackageReference Include="XInputium" Version="1.2.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
   </ItemGroup>
 
@@ -502,7 +518,23 @@
     <Resource Include="UI\Icons\png\controller_a.png" />
     <Resource Include="UI\Icons\png\controller_b.png" />
     <Resource Include="UI\Icons\png\controller_dpad.png" />
+    <Resource Include="UI\Icons\png\controller_dpad_down.png" />
+    <Resource Include="UI\Icons\png\controller_dpad_downleft.png" />
+    <Resource Include="UI\Icons\png\controller_dpad_downright.png" />
+    <Resource Include="UI\Icons\png\controller_dpad_left.png" />
+    <Resource Include="UI\Icons\png\controller_dpad_right.png" />
+    <Resource Include="UI\Icons\png\controller_dpad_up.png" />
+    <Resource Include="UI\Icons\png\controller_dpad_upleft.png" />
+    <Resource Include="UI\Icons\png\controller_dpad_upright.png" />
     <Resource Include="UI\Icons\png\controller_joystick.png" />
+    <Resource Include="UI\Icons\png\controller_joystick_down.png" />
+    <Resource Include="UI\Icons\png\controller_joystick_downleft.png" />
+    <Resource Include="UI\Icons\png\controller_joystick_downright.png" />
+    <Resource Include="UI\Icons\png\controller_joystick_left.png" />
+    <Resource Include="UI\Icons\png\controller_joystick_right.png" />
+    <Resource Include="UI\Icons\png\controller_joystick_up.png" />
+    <Resource Include="UI\Icons\png\controller_joystick_upleft.png" />
+    <Resource Include="UI\Icons\png\controller_joystick_upright.png" />
     <Resource Include="UI\Icons\png\controller_l1.png" />
     <Resource Include="UI\Icons\png\controller_l2.png" />
     <Resource Include="UI\Icons\png\controller_lb.png" />
