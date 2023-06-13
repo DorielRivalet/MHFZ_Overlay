@@ -497,7 +497,6 @@ public partial class ConfigWindow : FluentWindow
         stopwatch.Start();
 
         InitializeComponent();
-
         logger.Info($"ConfigWindow initialized");
 
         Topmost = true;

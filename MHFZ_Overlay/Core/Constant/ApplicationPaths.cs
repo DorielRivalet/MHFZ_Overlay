@@ -9,6 +9,12 @@ namespace MHFZ_Overlay.Core.Constant;
 /// </summary>
 public static class ApplicationPaths
 {
+    /// <summary>
+    /// The Notepad path
+    /// </summary>
     public const string NOTEPAD_PATH = @"C:\Windows\System32\notepad.exe";
+    /// <summary>
+    /// The File Explorer path
+    /// </summary>
     public const string EXPLORER_PATH = @"C:\Windows\explorer.exe";
 }

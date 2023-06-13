@@ -4,6 +4,7 @@
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Constant;
+using NLog;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -53,6 +54,27 @@ internal class LoggingManager
                 logger.Error(ex, "Could not open the log file: {0}", logFilePath);
                 System.Windows.MessageBox.Show("Could not open the log file: " + ex.Message, Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+    }
+
+    public static NLog.LogLevel GetLogLevel(string logLevel)
+    {
+        switch (logLevel)
+        {
+            case "Trace":
+                return NLog.LogLevel.Trace;
+            case "Debug":
+                return NLog.LogLevel.Debug;
+            case "Info":
+                return NLog.LogLevel.Info;
+            case "Warn":
+                return NLog.LogLevel.Warn;
+            case "Error":
+                return NLog.LogLevel.Error;
+            case "Fatal":
+                return NLog.LogLevel.Fatal;
+            default:
+                return NLog.LogLevel.Debug;
         }
     }
 }

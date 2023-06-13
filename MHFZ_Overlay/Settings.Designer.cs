@@ -3158,12 +3158,12 @@ namespace MHFZ_Overlay {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Debug")]
-        public string LoggingLevel {
+        public string LogLevel {
             get {
-                return ((string)(this["LoggingLevel"]));
+                return ((string)(this["LogLevel"]));
             }
             set {
-                this["LoggingLevel"] = value;
+                this["LogLevel"] = value;
             }
         }
     }

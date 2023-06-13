@@ -867,6 +867,7 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <ui:Button Appearance="Primary" Margin="5,0,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Open Settings Folder" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click"/>
@@ -1022,6 +1023,15 @@
 
                             <TextBlock Margin="5,5,5,5" ToolTip="Show a warning message box when starting the overlay outside Mezeporta" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0"  Text="Outside Mezeporta Startup Warning"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="29" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableOutsideMezeportaLoadingWarning}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select Logging Level. Each log entry has a level. Specifies the minimum level where that level and higher levels are included. For example, if the minimum level is Info, then Info, Warn, Error and Fatal are logged, but Debug and Trace are ignored." Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0"  Text="Log Level"/>
+                            <ComboBox x:Name="LogLevelComboBox" Grid.Column="1" Grid.Row="30" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=LogLevel}">
+                                <ComboBoxItem>Trace</ComboBoxItem>
+                                <ComboBoxItem>Debug</ComboBoxItem>
+                                <ComboBoxItem>Info</ComboBoxItem>
+                                <ComboBoxItem>Warn</ComboBoxItem>
+                                <ComboBoxItem>Error</ComboBoxItem>
+                                <ComboBoxItem>Fatal</ComboBoxItem>
+                            </ComboBox>
                             <!--<Button Grid.Row="43" Grid.Column="0" Grid.ColumnSpan="2" Content="Import settings" ToolTip="Import user settings from file" Click="ImportUserSettings_Click"/>-->
                         </Grid>
                     </ScrollViewer>

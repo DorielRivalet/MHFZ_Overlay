@@ -49,6 +49,9 @@ public partial class App : Application
         Stopwatch stopwatch = new Stopwatch();
         // Start the stopwatch
         stopwatch.Start();
+        var loggingRules = NLog.LogManager.Configuration.LoggingRules;
+        Settings s = (Settings)Application.Current.TryFindResource("Settings");
+        loggingRules[0].SetLoggingLevels(LoggingManager.GetLogLevel(s.LogLevel), NLog.LogLevel.Fatal);
         logger.Info("Started WPF application");
         logger.Trace("Call stack: {0}", new StackTrace().ToString());
         logger.Debug("OS: {0}, is64BitOS: {1}, is64BitProcess: {2}, CLR version: {3}", Environment.OSVersion, Environment.Is64BitOperatingSystem, Environment.Is64BitProcess, Environment.Version);

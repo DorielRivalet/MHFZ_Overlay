@@ -614,7 +614,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 if (gamepad.IsConnected)
                 {
                     logger.Debug("Gamepad reconnected");
-                    AddgamepadImages();
+                    AddGamepadImages();
                 }
             }
         }
@@ -1985,10 +1985,10 @@ The process may take some time, as the program attempts to download from GitHub 
             return;
         }
 
-        AddgamepadImages();
+        AddGamepadImages();
     }
 
-    private void AddgamepadImages()
+    private void AddGamepadImages()
     {
         _gamepadImages.Add(gamepad.Buttons.A, ButtonA);
         _gamepadImages.Add(gamepad.Buttons.B, ButtonB);
