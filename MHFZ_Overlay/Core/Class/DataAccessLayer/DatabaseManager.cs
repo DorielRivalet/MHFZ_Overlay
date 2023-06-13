@@ -2850,7 +2850,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                                         // Initialize the schema entry for the table if it doesn't exist
                                         if (!schema.ContainsKey(tableName))
                                         {
-                                            schema[tableName] = new Dictionary<string, object>();
+                                            schema[tableName] = new();
                                         }
                                         // Add the list of columns to the schema dictionary
                                         schema[tableName]["columns"] = columns;
@@ -2870,7 +2870,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                                     // Initialize the schema entry for the table if it doesn't exist
                                     if (!schema.ContainsKey(tableName))
                                     {
-                                        schema[tableName] = new Dictionary<string, object>();
+                                        schema[tableName] = new();
                                     }
 
                                     // Add the index information to the schema dictionary
@@ -2893,7 +2893,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                                     // Initialize the schema entry for the table if it doesn't exist
                                     if (!schema.ContainsKey(tableName))
                                     {
-                                        schema[tableName] = new Dictionary<string, object>();
+                                        schema[tableName] = new();
                                     }
 
                                     // Add the trigger information to the schema dictionary
@@ -4319,8 +4319,7 @@ Disabling Quest Logging.",
                 IsUnlocked INTEGER NOT NULL CHECK(IsUnlocked IN (0, 1)) DEFAULT 0,
                 Title TEXT NOT NULL DEFAULT '',
                 Description TEXT NOT NULL DEFAULT '',
-                Icon TEXT NOT NULL DEFAULT '',
-                Appearance INTEGER NOT NULL DEFAULT 0,
+                Rank TEXT NOT NULL DEFAULT '',
                 Objective TEXT NOT NULL DEFAULT '',
                 Image TEXT NOT NULL DEFAULT '',
                 IsSecret INTEGER NOT NULL DEFAULT 0,
@@ -4785,13 +4784,13 @@ Disabling Quest Logging.",
         }
     }
 
-    //TODO put somewhere else
+    //TODO put somewhere else and test
     public string FormatTime(int framesElapsed)
     {
-        int minutes = framesElapsed / (30 * 60);
-        int seconds = (framesElapsed % (30 * 60)) / 30;
-        double milliseconds = ((framesElapsed % (30 * 60)) % 30) / 30.0;
-        return $"{minutes:D2}:{seconds:D2}.{(int)(milliseconds * 100):D2}";
+        int minutes = framesElapsed / (Numbers.FRAMES_PER_SECOND * 60);
+        int seconds = (framesElapsed % (Numbers.FRAMES_PER_SECOND * 60)) / Numbers.FRAMES_PER_SECOND;
+        double milliseconds = ((framesElapsed % (Numbers.FRAMES_PER_SECOND * 60)) % Numbers.FRAMES_PER_SECOND) / 30.0;
+        return $"{minutes:D2}:{seconds:D2}.{(int)(milliseconds * 1000):D3}";
     }
 
     public string GetYoutubeLinkForRunID(long runID)
@@ -5060,7 +5059,7 @@ Disabling Quest Logging.",
                         cmd.Parameters.AddWithValue("@category", category);
 
                         var reader = cmd.ExecuteReader();
-                        Dictionary<DateTime, long> personalBestTimes = new Dictionary<DateTime, long>();
+                        Dictionary<DateTime, long> personalBestTimes = new();
 
                         while (reader.Read())
                         {
@@ -5829,7 +5828,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetAttackBuffDictionary(long runID)
     {
-        Dictionary<int, int> attackBuffDictionary = new Dictionary<int, int>();
+        Dictionary<int, int> attackBuffDictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get attack buff dictionary. dataSource: {0}", dataSource);
@@ -5866,7 +5865,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetHitCountDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new Dictionary<int, int>();
+        Dictionary<int, int> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get hit count dictionary. dataSource: {0}", dataSource);
@@ -5903,7 +5902,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, double> GetHitsPerSecondDictionary(long runID)
     {
-        Dictionary<int, double> dictionary = new Dictionary<int, double>();
+        Dictionary<int, double> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get hits per second dictionary. dataSource: {0}", dataSource);
@@ -5940,7 +5939,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetDamageDealtDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new Dictionary<int, int>();
+        Dictionary<int, int> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get damage dealt dictionary. dataSource: {0}", dataSource);
@@ -5977,7 +5976,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, double> GetDamagePerSecondDictionary(long runID)
     {
-        Dictionary<int, double> dictionary = new Dictionary<int, double>();
+        Dictionary<int, double> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get damage per second dictionary. dataSource: {0}", dataSource);
@@ -6014,7 +6013,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetAreaChangesDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new Dictionary<int, int>();
+        Dictionary<int, int> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get area changes dictionary. dataSource: {0}", dataSource);
@@ -6051,7 +6050,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetCartsDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new Dictionary<int, int>();
+        Dictionary<int, int> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get carts dictionary. dataSource: {0}", dataSource);
@@ -6088,7 +6087,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1HPDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get monster 1 HP dictionary. dataSource: {0}", dataSource);
@@ -6125,7 +6124,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster2HPDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get monster 2 HP dictionary. dataSource: {0}", dataSource);
@@ -6162,7 +6161,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster3HPDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get monster 3 HP dictionary. dataSource: {0}", dataSource);
@@ -6199,7 +6198,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster4HPDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get monster 4 HP dictionary. dataSource: {0}", dataSource);
@@ -6236,7 +6235,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, double>> GetMonster1AttackMultiplierDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, double>> dictionary = new Dictionary<int, Dictionary<int, double>>();
+        Dictionary<int, Dictionary<int, double>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get monster 1 attack multiplier dictionary. dataSource: {0}", dataSource);
@@ -6273,7 +6272,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, double>> GetMonster1DefenseRateDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, double>> dictionary = new Dictionary<int, Dictionary<int, double>>();
+        Dictionary<int, Dictionary<int, double>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get monster 1 defense rate dictionary. dataSource: {0}", dataSource);
@@ -6347,7 +6346,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1SleepThresholdDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get monster 1 sleep threshold dictionary. dataSource: {0}", dataSource);
@@ -6384,7 +6383,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1ParalysisThresholdDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get monster 1 paralysis threshold dictionary. dataSource: {0}", dataSource);
@@ -6421,7 +6420,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1BlastThresholdDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get monster 1 blast threshold dictionary. dataSource: {0}", dataSource);
@@ -6458,7 +6457,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1StunThresholdDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get monster 1 stun threshold dictionary. dataSource: {0}", dataSource);
@@ -6495,7 +6494,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, List<Dictionary<int, int>>> GetPlayerInventoryDictionary(long runID)
     {
-        Dictionary<int, List<Dictionary<int, int>>> dictionary = new Dictionary<int, List<Dictionary<int, int>>>();
+        Dictionary<int, List<Dictionary<int, int>>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get player inventory dictionary. dataSource: {0}", dataSource);
@@ -6532,7 +6531,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, List<Dictionary<int, int>>> GetAmmoDictionary(long runID)
     {
-        Dictionary<int, List<Dictionary<int, int>>> dictionary = new Dictionary<int, List<Dictionary<int, int>>>();
+        Dictionary<int, List<Dictionary<int, int>>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get ammo dictionary. dataSource: {0}", dataSource);
@@ -6569,7 +6568,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, List<Dictionary<int, int>>> GetPartnyaBagDictionary(long runID)
     {
-        Dictionary<int, List<Dictionary<int, int>>> dictionary = new Dictionary<int, List<Dictionary<int, int>>>();
+        Dictionary<int, List<Dictionary<int, int>>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get partnya bag dictionary. dataSource: {0}", dataSource);
@@ -6606,7 +6605,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetHitsTakenBlockedDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new Dictionary<int, Dictionary<int, int>>();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get hits taken/blocked dictionary. dataSource: {0}", dataSource);
@@ -6643,7 +6642,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, double> GetHitsTakenBlockedPerSecondDictionary(long runID)
     {
-        Dictionary<int, double> dictionary = new Dictionary<int, double>();
+        Dictionary<int, double> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get hits taken/blocked per second dictionary. dataSource: {0}", dataSource);
@@ -6680,7 +6679,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetPlayerHPDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new Dictionary<int, int>();
+        Dictionary<int, int> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get player HP dictionary. dataSource: {0}", dataSource);
@@ -6717,7 +6716,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetPlayerStaminaDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new Dictionary<int, int>();
+        Dictionary<int, int> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get player stamina dictionary. dataSource: {0}", dataSource);
@@ -6754,7 +6753,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, string> GetKeystrokesDictionary(long runID)
     {
-        Dictionary<int, string> dictionary = new Dictionary<int, string>();
+        Dictionary<int, string> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get keystrokes dictionary. dataSource: {0}", dataSource);
@@ -6791,7 +6790,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, string> GetMouseInputDictionary(long runID)
     {
-        Dictionary<int, string> dictionary = new Dictionary<int, string>();
+        Dictionary<int, string> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get mouse input dictionary. dataSource: {0}", dataSource);
@@ -6828,7 +6827,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, double> GetActionsPerMinuteDictionary(long runID)
     {
-        Dictionary<int, double> dictionary = new Dictionary<int, double>();
+        Dictionary<int, double> dictionary = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get actions per minute dictionary. dataSource: {0}", dataSource);
@@ -6865,7 +6864,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonCategory()
     {
-        Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+        Dictionary<string, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common category. dataSource: {0}", dataSource);
@@ -7615,7 +7614,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetMostQuestCompletions()
     {
-        Dictionary<int, int> questCompletions = new Dictionary<int, int>();
+        Dictionary<int, int> questCompletions = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most quest completions. dataSource: {0}", dataSource);
@@ -7662,7 +7661,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonObjectiveTypes()
     {
-        Dictionary<string, int> objectiveCounts = new Dictionary<string, int>();
+        Dictionary<string, int> objectiveCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common objective types. dataSource: {0}", dataSource);
@@ -7710,7 +7709,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetMostCommonStarGrades()
     {
-        Dictionary<int, int> fieldCounts = new Dictionary<int, int>();
+        Dictionary<int, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common star grades. dataSource: {0}", dataSource);
@@ -7757,7 +7756,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonHeadPieces()
     {
-        Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+        Dictionary<string, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common head pieces. dataSource: {0}", dataSource);
@@ -7805,7 +7804,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonChestPieces()
     {
-        Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+        Dictionary<string, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common chest pieces. dataSource: {0}", dataSource);
@@ -7853,7 +7852,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonArmsPieces()
     {
-        Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+        Dictionary<string, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common arms pieces. dataSource: {0}", dataSource);
@@ -7901,7 +7900,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonWaistPieces()
     {
-        Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+        Dictionary<string, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common waist pieces. dataSource: {0}", dataSource);
@@ -7949,7 +7948,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonLegsPieces()
     {
-        Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+        Dictionary<string, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common legs pieces. dataSource: {0}", dataSource);
@@ -7997,7 +7996,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonDivaSkill()
     {
-        Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+        Dictionary<string, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common diva skill. dataSource: {0}", dataSource);
@@ -8045,7 +8044,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonGuildFood()
     {
-        Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+        Dictionary<string, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common guild food. dataSource: {0}", dataSource);
@@ -8093,7 +8092,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonRankBands()
     {
-        Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+        Dictionary<string, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common rank bands. dataSource: {0}", dataSource);
@@ -8140,7 +8139,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonObjectives()
     {
-        Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+        Dictionary<string, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common objectives. dataSource: {0}", dataSource);
@@ -8187,7 +8186,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonSetNames()
     {
-        Dictionary<string, int> fieldCounts = new Dictionary<string, int>();
+        Dictionary<string, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common set names. dataSource: {0}", dataSource);
@@ -8234,7 +8233,7 @@ Disabling Quest Logging.",
 
     public Dictionary<DateTime, int> GetQuestsCompletedByDate()
     {
-        Dictionary<DateTime, int> questsCompletedByDate = new Dictionary<DateTime, int>();
+        Dictionary<DateTime, int> questsCompletedByDate = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get quests completed by date. dataSource: {0}", dataSource);
@@ -8281,7 +8280,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonWeaponNames()
     {
-        Dictionary<string, int> weaponCounts = new Dictionary<string, int>();
+        Dictionary<string, int> weaponCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common weapon names. dataSource: {0}", dataSource);
@@ -8342,7 +8341,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonStyleRankSkills()
     {
-        Dictionary<string, int> skillCounts = new Dictionary<string, int>();
+        Dictionary<string, int> skillCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common style rank skills. dataSource: {0}", dataSource);
@@ -8405,7 +8404,7 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonCaravanSkills()
     {
-        Dictionary<string, int> skillCounts = new Dictionary<string, int>();
+        Dictionary<string, int> skillCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common caravan skills. dataSource: {0}", dataSource);
@@ -8476,7 +8475,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetMostCommonPartySize()
     {
-        Dictionary<int, int> fieldCounts = new Dictionary<int, int>();
+        Dictionary<int, int> fieldCounts = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get most common party size. dataSource: {0}", dataSource);
@@ -8523,7 +8522,7 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetTotalTimeSpentInQuests()
     {
-        Dictionary<int, int> questTimeSpent = new Dictionary<int, int>();
+        Dictionary<int, int> questTimeSpent = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get total time spent in quests. dataSource: {0}", dataSource);
@@ -9279,7 +9278,7 @@ Disabling Quest Logging.",
     /// <returns></returns>
     private long GetMostCommonDecorationID(SQLiteConnection conn)
     {
-        Dictionary<long, long> decorationCounts = new Dictionary<long, long>();
+        Dictionary<long, long> decorationCounts = new();
 
         var query = @"
                         SELECT HeadSlot1ID, HeadSlot2ID, HeadSlot3ID, 
@@ -9348,7 +9347,7 @@ Disabling Quest Logging.",
                         FROM ActiveSkills
                         ";
 
-        Dictionary<long, long> skillCounts = new Dictionary<long, long>();
+        Dictionary<long, long> skillCounts = new();
 
         using (var cmd = new SQLiteCommand(query, conn))
         {
@@ -9851,7 +9850,7 @@ Disabling Quest Logging.",
                     questCompendium.TotalCartsInQuest = finalCartValues.Sum();
 
                     // Initialize dictionary to hold the total carts for each quest ID
-                    Dictionary<int, int> questTotalCarts = new Dictionary<int, int>();
+                    Dictionary<int, int> questTotalCarts = new();
 
                     // Query to get carts dictionary for all quests with non-empty carts dictionary
                     query = @"SELECT QuestId, CartsDictionary FROM Quests WHERE CartsDictionary IS NOT NULL AND CartsDictionary != '{}'";
@@ -11135,9 +11134,9 @@ Updating the database structure may take some time, it will transport all of you
             SQLiteCommand rememberFormat = new SQLiteCommand("SELECT type, sql FROM sqlite_schema WHERE tbl_name=@tableName;", connection);
             rememberFormat.Parameters.AddWithValue("@tableName", tableName);
             SQLiteDataReader reader = rememberFormat.ExecuteReader();
-            List<string> indexSqls = new List<string>();
-            List<string> triggerSqls = new List<string>();
-            List<string> viewSqls = new List<string>();
+            List<string> indexSqls = new();
+            List<string> triggerSqls = new();
+            List<string> viewSqls = new();
             while (reader.Read())
             {
                 string type = reader.GetString(0);
@@ -11226,8 +11225,8 @@ Updating the database structure may take some time, it will transport all of you
             // Check if any views refer to table X in a way that is affected by the schema change
             SQLiteCommand findViews = new SQLiteCommand("SELECT name, sql FROM sqlite_master WHERE type='view' AND sql LIKE '% " + tableName + " %';", connection);
             SQLiteDataReader viewReader = findViews.ExecuteReader();
-            List<string> viewNames = new List<string>();
-            List<string> viewSqlsModified = new List<string>();
+            List<string> viewNames = new();
+            List<string> viewSqlsModified = new();
             while (viewReader.Read())
             {
                 viewNames.Add(viewReader.GetString(0));

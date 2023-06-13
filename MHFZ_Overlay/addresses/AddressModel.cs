@@ -1002,7 +1002,7 @@ TreeScope.Children, condition);
             || s.PersonalBestTimePercentShown
             || s.EnablePersonalBestPaceColor) //TODO monster 1 overview? and update README
             return "";
-        else if (s.TimerInfoShown && s.EnableKeyLogging && s.EnableQuestLogging && PartySize() == 1 && s.OverlayModeWatermarkShown)
+        else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && PartySize() == 1 && s.OverlayModeWatermarkShown)
         {
             if (DivaSkillUsesLeft() == 0 && StyleRank1() != 15 && StyleRank2() != 15)
                 return "(Time Attack) ";
@@ -1513,32 +1513,32 @@ TreeScope.Children, condition);
                     TimeLeftPercent = "";
                 }
 
-                if ((time / 30) / 60 < 10)
+                if ((time / Numbers.FRAMES_PER_SECOND) / 60 < 10)
                 {
-                    if ((time / 30) % 60 < 10)
+                    if ((time / Numbers.FRAMES_PER_SECOND) % 60 < 10)
                     {
-                        return string.Format("{0:00}:{1:00}.{2:000}", (time / 30) / 60, time / 30 % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;//should work fine
+                        return string.Format("{0:00}:{1:00}.{2:000}", (time / Numbers.FRAMES_PER_SECOND) / 60, time / Numbers.FRAMES_PER_SECOND % 60, (int)Math.Round((float)((time % Numbers.FRAMES_PER_SECOND) * 100) / 3)) + TimeLeftPercent;//should work fine
                     }
                     else
                     {
-                        return string.Format("{0:00}:{1}.{2:000}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
+                        return string.Format("{0:00}:{1}.{2:000}", (time / Numbers.FRAMES_PER_SECOND) / 60, (time / Numbers.FRAMES_PER_SECOND) % 60, (int)Math.Round((float)((time % Numbers.FRAMES_PER_SECOND) * 100) / 3)) + TimeLeftPercent;
                     }
                 }
                 else
                 {
-                    if ((time / 30) % 60 < 10)
+                    if ((time / Numbers.FRAMES_PER_SECOND) % 60 < 10)
                     {
-                        return string.Format("{0}:{1:00}.{2:000}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
+                        return string.Format("{0}:{1:00}.{2:000}", (time / Numbers.FRAMES_PER_SECOND) / 60, (time / Numbers.FRAMES_PER_SECOND) % 60, (int)Math.Round((float)((time % Numbers.FRAMES_PER_SECOND) * 100) / 3)) + TimeLeftPercent;
                     }
                     else
                     {
-                        return string.Format("{0}:{1}.{2:000}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
+                        return string.Format("{0}:{1}.{2:000}", (time / Numbers.FRAMES_PER_SECOND) / 60, (time / Numbers.FRAMES_PER_SECOND) % 60, (int)Math.Round((float)((time % Numbers.FRAMES_PER_SECOND) * 100) / 3)) + TimeLeftPercent;
                     }
                 }
             }
             else
             {
-                return string.Format("{0:00}:{1:00}.{2:000}", (time / 30) / 60, (time / 30) % 60, (int)Math.Round((float)((time % 30) * 100) / 3)) + TimeLeftPercent;
+                return string.Format("{0:00}:{1:00}.{2:000}", (time / Numbers.FRAMES_PER_SECOND) / 60, (time / Numbers.FRAMES_PER_SECOND) % 60, (int)Math.Round((float)((time % Numbers.FRAMES_PER_SECOND) * 100) / 3)) + TimeLeftPercent;
             }
         }
     }
@@ -9403,7 +9403,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public string GetTimeElapsed(double frames)
     {
-        var elapsedTime = TimeSpan.FromSeconds(frames / 30);
+        var elapsedTime = TimeSpan.FromSeconds(frames / Numbers.FRAMES_PER_SECOND);
         var elapsedTimeString = elapsedTime.ToString("mm\\:ss");
         return elapsedTimeString;
     }
@@ -9417,7 +9417,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public string GetMinutesSecondsMillisecondsFromFrames(long frames)
     {
-        var elapsedTime = TimeSpan.FromSeconds((double)frames / 30);
+        var elapsedTime = TimeSpan.FromSeconds((double)frames / Numbers.FRAMES_PER_SECOND);
         var elapsedTimeString = elapsedTime.ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS);
         return elapsedTimeString;
     }
@@ -9986,16 +9986,16 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     // all dictionaries get a new entry every 1 second. freezes on quest state 1, resets on quest id = 0.
     // use modulo
     //int for timeint() which is current quest time, second int for current attack buff
-    public Dictionary<int, int> attackBuffDictionary = new Dictionary<int, int>();
+    public Dictionary<int, int> attackBuffDictionary = new();
     // the deserealized are used for displays
     public Dictionary<int, int> attackBuffDictionaryDeserealized;
 
     // same for this but second is current hit count
-    public Dictionary<int, int> hitCountDictionary = new Dictionary<int, int>();
+    public Dictionary<int, int> hitCountDictionary = new();
     public Dictionary<int, int> hitCountDictionaryDeserealized;
 
     // same but the second int is the damage dealt when hitting monster.
-    public Dictionary<int, int> damageDealtDictionary = new Dictionary<int, int>();
+    public Dictionary<int, int> damageDealtDictionary = new();
     public Dictionary<int, int> damageDealtDictionaryDeserealized;
 
     // then for DPS i can calculate from the above dictionary and only update the
@@ -10053,7 +10053,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         double timeElapsedIn30FPS = TimeDefInt() - TimeInt();
 
         // Calculate and return the DPS
-        return damageDealt / (timeElapsedIn30FPS / 30);
+        return damageDealt / (timeElapsedIn30FPS / Numbers.FRAMES_PER_SECOND);
     }
 
     public double CalculateAPM()
@@ -10069,7 +10069,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         double timeElapsedIn30FPS = TimeDefInt() - TimeInt();
 
         // Calculate and return the DPS
-        return TotalHitsTakenBlocked / (timeElapsedIn30FPS / 30);
+        return TotalHitsTakenBlocked / (timeElapsedIn30FPS / Numbers.FRAMES_PER_SECOND);
     }
 
     public double CalculateHitsPerSecond()
@@ -10077,25 +10077,25 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         if (!hitCountDictionary.Any())
             return 0;
 
-        return (double)HitCountInt() / ((double)(TimeDefInt() - TimeInt()) / 30);
+        return (double)HitCountInt() / ((double)(TimeDefInt() - TimeInt()) / Numbers.FRAMES_PER_SECOND);
     }
 
 
     // new entry every second during quest (use this for chart?)
-    public Dictionary<int, double> damagePerSecondDictionary = new Dictionary<int, double>();
+    public Dictionary<int, double> damagePerSecondDictionary = new();
     public Dictionary<int, double> damagePerSecondDictionaryDeserealized;
 
-    public Dictionary<int, int> areaChangesDictionary = new Dictionary<int, int>();
+    public Dictionary<int, int> areaChangesDictionary = new();
     public Dictionary<int, int> areaChangesDictionaryDeserealized;
 
-    public Dictionary<int, int> cartsDictionary = new Dictionary<int, int>();
+    public Dictionary<int, int> cartsDictionary = new();
     public Dictionary<int, int> cartsDictionaryDeserealized;
 
     // time <monsterid, monsterhp>
-    public Dictionary<int, Dictionary<int, int>> monster1HPDictionary = new Dictionary<int, Dictionary<int, int>>();
-    public Dictionary<int, Dictionary<int, int>> monster2HPDictionary = new Dictionary<int, Dictionary<int, int>>();
-    public Dictionary<int, Dictionary<int, int>> monster3HPDictionary = new Dictionary<int, Dictionary<int, int>>();
-    public Dictionary<int, Dictionary<int, int>> monster4HPDictionary = new Dictionary<int, Dictionary<int, int>>();
+    public Dictionary<int, Dictionary<int, int>> monster1HPDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster2HPDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster3HPDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster4HPDictionary = new();
     public Dictionary<int, Dictionary<int, int>> monster1HPDictionaryDeserealized;
     public Dictionary<int, Dictionary<int, int>> monster2HPDictionaryDeserealized;
     public Dictionary<int, Dictionary<int, int>> monster3HPDictionaryDeserealized;
@@ -10106,56 +10106,56 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     // this is a dicitonary where the first int is the quest time,
     // the second int is the item id and the third int is the item quantity of that id.
     // meaning that this is a dictionary of quest time and a list of item ids and quantities respectively.
-    public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionary = new Dictionary<int, List<Dictionary<int, int>>>();
+    public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionary = new();
     public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionaryDeserealized;
 
-    public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionary = new Dictionary<int, List<Dictionary<int, int>>>();
+    public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionary = new();
     public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionaryDeserealized;
 
-    public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionary = new Dictionary<int, List<Dictionary<int, int>>>();
+    public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionary = new();
     public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionaryDeserealized;
 
     // time, areaid, hitstakenblocked
     // can calculate total hits by area by checking areaid, or in total by all sum.
-    public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = new Dictionary<int, Dictionary<int, int>>();
-    public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionaryDeserealized = new Dictionary<int, Dictionary<int, int>>();
+    public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionaryDeserealized = new();
 
-    public Dictionary<int, int> playerHPDictionary = new Dictionary<int, int>();
-    public Dictionary<int, int> playerHPDictionaryDeserealized = new Dictionary<int, int>();
+    public Dictionary<int, int> playerHPDictionary = new();
+    public Dictionary<int, int> playerHPDictionaryDeserealized = new();
 
-    public Dictionary<int, int> playerStaminaDictionary = new Dictionary<int, int>();
-    public Dictionary<int, int> playerStaminaDictionaryDeserealized = new Dictionary<int, int>();
+    public Dictionary<int, int> playerStaminaDictionary = new();
+    public Dictionary<int, int> playerStaminaDictionaryDeserealized = new();
 
-    public Dictionary<int, double> hitsPerSecondDictionary = new Dictionary<int, double>();
-    public Dictionary<int, double> hitsPerSecondDictionaryDeserealized = new Dictionary<int, double>();
+    public Dictionary<int, double> hitsPerSecondDictionary = new();
+    public Dictionary<int, double> hitsPerSecondDictionaryDeserealized = new();
 
-    public Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = new Dictionary<int, double>();
-    public Dictionary<int, double> hitsTakenBlockedPerSecondDictionaryDeserealized = new Dictionary<int, double>();
+    public Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = new();
+    public Dictionary<int, double> hitsTakenBlockedPerSecondDictionaryDeserealized = new();
 
-    public Dictionary<int, string> keystrokesDictionary = new Dictionary<int, string>();
-    public Dictionary<int, string> keystrokesDictionaryDeserealized = new Dictionary<int, string>();
+    public Dictionary<int, string> keystrokesDictionary = new();
+    public Dictionary<int, string> keystrokesDictionaryDeserealized = new();
 
-    public Dictionary<int, string> gamepadInputDictionary = new Dictionary<int, string>();
-    public Dictionary<int, string> gamepadInputDictionaryDeserealized = new Dictionary<int, string>();
+    public Dictionary<int, string> gamepadInputDictionary = new();
+    public Dictionary<int, string> gamepadInputDictionaryDeserealized = new();
 
-    public Dictionary<int, string> mouseInputDictionary = new Dictionary<int, string>();
-    public Dictionary<int, string> mouseInputDictionaryDeserealized = new Dictionary<int, string>();
+    public Dictionary<int, string> mouseInputDictionary = new();
+    public Dictionary<int, string> mouseInputDictionaryDeserealized = new();
 
-    public Dictionary<int, double> actionsPerMinuteDictionary = new Dictionary<int, double>();
-    public Dictionary<int, double> actionsPerMinuteDictionaryDeserealized = new Dictionary<int, double>();
+    public Dictionary<int, double> actionsPerMinuteDictionary = new();
+    public Dictionary<int, double> actionsPerMinuteDictionaryDeserealized = new();
 
-    public Dictionary<int, string> overlayModeDictionary = new Dictionary<int, string>();
+    public Dictionary<int, string> overlayModeDictionary = new();
 
-    public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionary = new Dictionary<int, Dictionary<int, double>>();
-    public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionary = new Dictionary<int, Dictionary<int, double>>();
-    public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionary = new Dictionary<int, Dictionary<int, double>>();
-    public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
-    public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
-    public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
-    public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
-    public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = new Dictionary<int, Dictionary<int, int>>();
-    public Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionary = new Dictionary<int, Dictionary<int, List<int>>>();
-    public Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionary = new Dictionary<int, Dictionary<int, List<int>>>();
+    public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionary = new();
+    public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionary = new();
+    public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionary = new();
     public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionaryDeserealized;
     public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionaryDeserealized;
     public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionaryDeserealized;
@@ -10240,7 +10240,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             int itemID = 0;
             int itemQty = 0;
-            Dictionary<int, int> itemIDQuantityDictionary = new Dictionary<int, int>();
+            Dictionary<int, int> itemIDQuantityDictionary = new();
 
             if (inventoryType == "Pouch")
             {
@@ -10445,7 +10445,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         if (TimeDefInt() <= 0)
             return 0;
 
-        return (double)(TimeDefInt() - TimeInt()) / 30;
+        return (double)(TimeDefInt() - TimeInt()) / Numbers.FRAMES_PER_SECOND;
     }
 
     public int previousRoadFloor = 0;
@@ -10564,7 +10564,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1HP = Monster1HPInt();
-                Dictionary<int, int> monster1HPDictionaryMonsterInfo = new Dictionary<int, int>();
+                Dictionary<int, int> monster1HPDictionaryMonsterInfo = new();
                 monster1HPDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1HPInt());
                 monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
             }
@@ -10579,7 +10579,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster2HP = Monster2HPInt();
-                Dictionary<int, int> monster2HPDictionaryMonsterInfo = new Dictionary<int, int>();
+                Dictionary<int, int> monster2HPDictionaryMonsterInfo = new();
                 monster2HPDictionaryMonsterInfo.Add(LargeMonster2ID(), Monster2HPInt());
                 monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
             }
@@ -10594,7 +10594,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster3HP = Monster3HPInt();
-                Dictionary<int, int> monster3HPDictionaryMonsterInfo = new Dictionary<int, int>();
+                Dictionary<int, int> monster3HPDictionaryMonsterInfo = new();
                 monster3HPDictionaryMonsterInfo.Add(LargeMonster3ID(), Monster3HPInt());
                 monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
             }
@@ -10610,7 +10610,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster4HP = Monster4HPInt();
-                Dictionary<int, int> monster4HPDictionaryMonsterInfo = new Dictionary<int, int>();
+                Dictionary<int, int> monster4HPDictionaryMonsterInfo = new();
                 monster4HPDictionaryMonsterInfo.Add(LargeMonster4ID(), Monster4HPInt());
                 monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
             }
@@ -10645,12 +10645,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else if (loadedItemsAtQuestStart && !playerInventoryDictionary.Values.Any())
         {
-            List<Dictionary<int, int>> itemIDsQuantityList = new List<Dictionary<int, int>>();
+            List<Dictionary<int, int>> itemIDsQuantityList = new();
             for (int i = 1; i <= 20; i++)
             {
                 int itemID = 0;
                 int itemQty = 0;
-                Dictionary<int, int> itemIDQuantityDictionary = new Dictionary<int, int>();
+                Dictionary<int, int> itemIDQuantityDictionary = new();
                 switch (i)
                 {
                     case 1:
@@ -10774,12 +10774,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else if (loadedItemsAtQuestStart && !playerAmmoPouchDictionary.Values.Any())
         {
-            List<Dictionary<int, int>> itemIDsQuantityList = new List<Dictionary<int, int>>();
+            List<Dictionary<int, int>> itemIDsQuantityList = new();
             for (int i = 1; i <= 20; i++)
             {
                 int itemID = 0;
                 int itemQty = 0;
-                Dictionary<int, int> itemIDQuantityDictionary = new Dictionary<int, int>();
+                Dictionary<int, int> itemIDQuantityDictionary = new();
                 switch (i)
                 {
                     case 1:
@@ -10862,12 +10862,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else if (loadedItemsAtQuestStart && !partnyaBagDictionary.Values.Any())
         {
-            List<Dictionary<int, int>> itemIDsQuantityList = new List<Dictionary<int, int>>();
+            List<Dictionary<int, int>> itemIDsQuantityList = new();
             for (int i = 1; i <= 20; i++)
             {
                 int itemID = 0;
                 int itemQty = 0;
-                Dictionary<int, int> itemIDQuantityDictionary = new Dictionary<int, int>();
+                Dictionary<int, int> itemIDQuantityDictionary = new();
                 switch (i)
                 {
                     case 1:
@@ -10931,7 +10931,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousHitsTakenBlocked = AreaHitsTakenBlocked();
-                Dictionary<int, int> hitsAreaPairs = new Dictionary<int, int>();
+                Dictionary<int, int> hitsAreaPairs = new();
                 hitsAreaPairs.Add(AreaID(), AreaHitsTakenBlocked());
                 hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
             }
@@ -11037,7 +11037,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1AttackMultiplier = Monster1AttackMultForDictionary();
-                Dictionary<int, double> monster1AttackMultiplierDictionaryMonsterInfo = new Dictionary<int, double>();
+                Dictionary<int, double> monster1AttackMultiplierDictionaryMonsterInfo = new();
                 monster1AttackMultiplierDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1AttackMultForDictionary());
                 monster1AttackMultiplierDictionary.Add(TimeInt(), monster1AttackMultiplierDictionaryMonsterInfo);
             }
@@ -11052,7 +11052,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1DefenseRate = Monster1DefMultForDictionary();
-                Dictionary<int, double> monster1DefenseRateDictionaryMonsterInfo = new Dictionary<int, double>();
+                Dictionary<int, double> monster1DefenseRateDictionaryMonsterInfo = new();
                 monster1DefenseRateDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1DefMultForDictionary());
                 monster1DefenseRateDictionary.Add(TimeInt(), monster1DefenseRateDictionaryMonsterInfo);
             }
@@ -11067,7 +11067,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1SizeMultiplier = Monster1SizeMultForDictionary();
-                Dictionary<int, double> monster1SizeMultiplierDictionaryMonsterInfo = new Dictionary<int, double>();
+                Dictionary<int, double> monster1SizeMultiplierDictionaryMonsterInfo = new();
                 monster1SizeMultiplierDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1SizeMultForDictionary());
                 monster1SizeMultiplierDictionary.Add(TimeInt(), monster1SizeMultiplierDictionaryMonsterInfo);
             }
@@ -11082,7 +11082,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1PoisonThreshold = Monster1PoisonForDictionary();
-                Dictionary<int, int> monster1PoisonThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                Dictionary<int, int> monster1PoisonThresholdDictionaryMonsterInfo = new();
                 monster1PoisonThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1PoisonForDictionary());
                 monster1PoisonThresholdDictionary.Add(TimeInt(), monster1PoisonThresholdDictionaryMonsterInfo);
             }
@@ -11097,7 +11097,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1SleepThreshold = Monster1SleepForDictionary();
-                Dictionary<int, int> monster1SleepThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                Dictionary<int, int> monster1SleepThresholdDictionaryMonsterInfo = new();
                 monster1SleepThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1SleepForDictionary());
                 monster1SleepThresholdDictionary.Add(TimeInt(), monster1SleepThresholdDictionaryMonsterInfo);
             }
@@ -11112,7 +11112,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1ParalysisThreshold = Monster1ParalysisForDictionary();
-                Dictionary<int, int> monster1ParalysisThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                Dictionary<int, int> monster1ParalysisThresholdDictionaryMonsterInfo = new();
                 monster1ParalysisThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1ParalysisForDictionary());
                 monster1ParalysisThresholdDictionary.Add(TimeInt(), monster1ParalysisThresholdDictionaryMonsterInfo);
             }
@@ -11127,7 +11127,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1BlastThreshold = Monster1BlastForDictionary();
-                Dictionary<int, int> monster1BlastThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                Dictionary<int, int> monster1BlastThresholdDictionaryMonsterInfo = new();
                 monster1BlastThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1BlastForDictionary());
                 monster1BlastThresholdDictionary.Add(TimeInt(), monster1BlastThresholdDictionaryMonsterInfo);
             }
@@ -11142,7 +11142,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1StunThreshold = Monster1StunForDictionary();
-                Dictionary<int, int> monster1StunThresholdDictionaryMonsterInfo = new Dictionary<int, int>();
+                Dictionary<int, int> monster1StunThresholdDictionaryMonsterInfo = new();
                 monster1StunThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1StunForDictionary());
                 monster1StunThresholdDictionary.Add(TimeInt(), monster1StunThresholdDictionaryMonsterInfo);
             }
@@ -11178,7 +11178,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 previousMonster1Part8Threshold = Monster1Part8();
                 previousMonster1Part9Threshold = Monster1Part9();
                 previousMonster1Part10Threshold = Monster1Part10();
-                Dictionary<int, List<int>> monster1PartThresholdDictionaryMonsterInfo = new Dictionary<int, List<int>>();
+                Dictionary<int, List<int>> monster1PartThresholdDictionaryMonsterInfo = new();
                 List<int> partsList = new List<int>() {
                     Monster1Part1(),
                     Monster1Part2(),
@@ -11225,7 +11225,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 previousMonster2Part8Threshold = Monster2Part8();
                 previousMonster2Part9Threshold = Monster2Part9();
                 previousMonster2Part10Threshold = Monster2Part10();
-                Dictionary<int, List<int>> monster2PartThresholdDictionaryMonsterInfo = new Dictionary<int, List<int>>();
+                Dictionary<int, List<int>> monster2PartThresholdDictionaryMonsterInfo = new();
                 List<int> partsList = new List<int>() {
                     Monster2Part1(),
                     Monster2Part2(),
@@ -11484,7 +11484,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public ObservableCollection<RecentRuns> RecentRuns { get; set; } = new ObservableCollection<RecentRuns>();
+    public ObservableCollection<RecentRuns> RecentRuns { get; set; } = new();
     // TODO: the plural/singular is inconsistent
     public List<FastestRun> FastestRuns { get; set; } = new();
     public List<RecentRuns> CalendarRuns { get; set; } = new();

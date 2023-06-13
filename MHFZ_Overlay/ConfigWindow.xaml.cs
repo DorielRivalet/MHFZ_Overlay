@@ -1031,9 +1031,9 @@ public partial class ConfigWindow : FluentWindow
         if (webViewMonsterInfo == null)
             return;
 
-        Dictionary<string, string> MonsterFeriasOptionDictionary = new Dictionary<string, string>();
-        Dictionary<string, string> MonsterWikiOptionDictionary = new Dictionary<string, string>();
-        Dictionary<string, string> MonsterVideoLinkOptionDictionary = new Dictionary<string, string>();
+        Dictionary<string, string> MonsterFeriasOptionDictionary = new();
+        Dictionary<string, string> MonsterWikiOptionDictionary = new();
+        Dictionary<string, string> MonsterVideoLinkOptionDictionary = new();
 
         for (int i = 0; i < monsterInfos.Count; i++)
         {
@@ -1232,20 +1232,6 @@ public partial class ConfigWindow : FluentWindow
     {
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         s.PlayerNationalityIndex = CountryComboBox.SelectedIndex;
-    }
-
-    private void ControllerLayoutButton_Click(object sender, RoutedEventArgs e)
-    {
-        System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Feature not yet implemented. Go to issues page?", "【MHF-Z】Overlay Information Missing", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning, MessageBoxResult.No);
-        if (messageBoxResult.ToString() == "Yes")
-        {
-            string issueLink = "https://github.com/DorielRivalet/mhfz-overlay/issues/43";
-            var sInfo = new System.Diagnostics.ProcessStartInfo(issueLink)
-            {
-                UseShellExecute = true,
-            };
-            System.Diagnostics.Process.Start(sInfo);
-        }
     }
 
     private void QuestIDButton_Click(object sender, RoutedEventArgs e)
@@ -1743,7 +1729,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> GetElapsedTime(Dictionary<int, int> timeAttackDict)
     {
-        Dictionary<int, int> elapsedTimeDict = new Dictionary<int, int>();
+        Dictionary<int, int> elapsedTimeDict = new();
         if (timeAttackDict == null || !timeAttackDict.Any())
             return elapsedTimeDict;
 
@@ -1757,7 +1743,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, double> GetElapsedTimeForDictionaryIntDouble(Dictionary<int, double> timeAttackDict)
     {
-        Dictionary<int, double> elapsedTimeDict = new Dictionary<int, double>();
+        Dictionary<int, double> elapsedTimeDict = new();
         if (timeAttackDict == null || !timeAttackDict.Any())
             return elapsedTimeDict;
 
@@ -2381,7 +2367,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> hitsTakenBlocked)
     {
-        Dictionary<int, int> dictionary = new Dictionary<int, int>();
+        Dictionary<int, int> dictionary = new();
 
         int i = 1;
         foreach (var entry in hitsTakenBlocked)
@@ -2397,7 +2383,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> CalculateMonsterHP(Dictionary<int, Dictionary<int, int>> monsterHP)
     {
-        Dictionary<int, int> dictionary = new Dictionary<int, int>();
+        Dictionary<int, int> dictionary = new();
 
         int i = 1;
         foreach (var entry in monsterHP)
@@ -2414,7 +2400,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, double> CalculateMonsterMultiplier(Dictionary<int, Dictionary<int, double>> monsterDictionary)
     {
-        Dictionary<int, double> dictionary = new Dictionary<int, double>();
+        Dictionary<int, double> dictionary = new();
 
         int i = 1;
         foreach (var entry in monsterDictionary)
@@ -2431,7 +2417,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> CalculateMonsterStatusAilmentThresholds(Dictionary<int, Dictionary<int, int>> monsterDictionary)
     {
-        Dictionary<int, int> dictionary = new Dictionary<int, int>();
+        Dictionary<int, int> dictionary = new();
 
         int i = 1;
         foreach (var entry in monsterDictionary)
@@ -2815,7 +2801,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, List<Dictionary<int, int>>> GetElapsedTimeForInventories(Dictionary<int, List<Dictionary<int, int>>> dictionary)
     {
-        Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new Dictionary<int, List<Dictionary<int, int>>>();
+        Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new();
         if (dictionary == null || !dictionary.Any())
             return elapsedTimeDict;
 
@@ -2829,7 +2815,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> GetElapsedTimeForDictionaryIntInt(Dictionary<int, int> dictionary)
     {
-        Dictionary<int, int> elapsedTimeDict = new Dictionary<int, int>();
+        Dictionary<int, int> elapsedTimeDict = new();
 
         if (dictionary == null || !dictionary.Any())
             return elapsedTimeDict;
@@ -2852,7 +2838,7 @@ public partial class ConfigWindow : FluentWindow
         foreach (var entry in inventory)
         {
             int time = entry.Key;
-            string timeString = TimeSpan.FromSeconds((double)time / 30).ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS);
+            string timeString = TimeSpan.FromSeconds((double)time / Numbers.FRAMES_PER_SECOND).ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS);
             var items = entry.Value;
 
             var itemString = "";
@@ -2891,7 +2877,7 @@ public partial class ConfigWindow : FluentWindow
         foreach (var entry in areas)
         {
             int time = entry.Key;
-            string timeString = TimeSpan.FromSeconds((double)time / 30).ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS);
+            string timeString = TimeSpan.FromSeconds((double)time / Numbers.FRAMES_PER_SECOND).ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS);
             var area = entry.Value;
             sb.AppendLine(timeString + " ");
 
@@ -3001,7 +2987,7 @@ public partial class ConfigWindow : FluentWindow
                     s.EnablePersonalBestPaceColor = false;
 
                     s.TimerInfoShown = true;
-                    s.EnableKeyLogging = true;
+                    s.EnableInputLogging = true;
                     s.EnableQuestLogging = true;
                     s.OverlayModeWatermarkShown = true;
 
@@ -3033,7 +3019,7 @@ public partial class ConfigWindow : FluentWindow
                     s.Monster3HealthBarShown = false;
                     s.Monster4HealthBarShown = false;
                     s.TimerInfoShown = false;
-                    s.EnableKeyLogging = false;
+                    s.EnableInputLogging = false;
                     s.EnableMap = false;
 
                     s.OverlayModeWatermarkShown = false;

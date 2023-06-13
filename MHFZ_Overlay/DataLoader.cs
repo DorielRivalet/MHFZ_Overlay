@@ -372,8 +372,8 @@ public class DataLoader
 
     public string GetQuestTimeCompletion()
     {
-        double totalQuestDuration = (double)model.TimeDefInt() / 30; // Total duration of the quest in seconds
-        double timeRemainingInQuest = (double)model.TimeInt() / 30; // Time left in the quest in seconds
+        double totalQuestDuration = (double)model.TimeDefInt() / Numbers.FRAMES_PER_SECOND; // Total duration of the quest in seconds
+        double timeRemainingInQuest = (double)model.TimeInt() / Numbers.FRAMES_PER_SECOND; // Time left in the quest in seconds
 
         // Calculate the elapsed time by subtracting the time left from the total duration
         double elapsedTime = totalQuestDuration - timeRemainingInQuest;

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace MHFZ_Overlay.Core.Class.Dictionary;
 
 /// <summary>
-/// Achievements dictionary
+/// Achievements dictionary. TODO
 /// </summary>
 public static class AchievementsDictionary
 {

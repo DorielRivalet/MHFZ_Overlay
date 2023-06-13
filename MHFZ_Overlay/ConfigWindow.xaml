@@ -1406,7 +1406,7 @@
                                         <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0" Text="(Required for speedrun) Quest Logging" />
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}" Checked="questLoggingToggle_Check"/>
                                         <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of inputs (KBM + Controller) during quests and inserts the information into a local database. WARNING: the runs with this option disabled will not be displayed on leaderboards, in order to prevent cheating." Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="(Required for speedrun) Log Inputs during Quest" />
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableKeyLogging}"/>
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableInputLogging}"/>
                                         <TextBlock Margin="5,5,5,5" ToolTip="Show a watermark that has to be visible at all times during a YouTube video of a quest run in order for the run to be verified" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="(Required for speedrun) Overlay Mode Watermark" />
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayModeWatermarkShown}"/>
 
@@ -1866,15 +1866,15 @@
                             <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="66" Grid.Column="0"  Text="Keyboard and Mouse Layout Y Coordinate"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="66" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutY}"  PreviewTextInput="ValidateNumber"/>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="67" Grid.Column="0" ToolTip="Show Gamepad Layout">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="67" Grid.Column="0" ToolTip="Show Gamepad Layout. See the FAQ if you cannot get this to work.">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="XboxController24" Foreground="{StaticResource Blue}" FontSize="24"/>
                                     </Button.Content>
                                 </Button>
-                                <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Text="(Not Implemented) Controller/Gamepad Layout"/>
+                                <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Text="Controller/Gamepad Layout"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="67" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ControllerLayoutShown}" Checked="ControllerLayoutButton_Click"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="67" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ControllerLayoutShown}"/>
                             <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="68" Grid.Column="0"  Text="Controller/Gamepad Layout X Coordinate"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="68" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ControllerLayoutX}"  PreviewTextInput="ValidateNumber"/>
                             <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="69" Grid.Column="0"  Text="Controller/Gamepad Layout Y Coordinate"/>

@@ -339,6 +339,8 @@
             <Image x:Name="DPad" Opacity="0.2" Source="UI/Icons/png/controller_dpad.png" Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" />
             <Image x:Name="LJoystick" Opacity="0.2" Source="UI/Icons/png/controller_joystick.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2"/>
             <Image x:Name="RJoystick" Opacity="0.2" Source="UI/Icons/png/controller_joystick.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4" Grid.ColumnSpan="2"/>
+            <Image x:Name="LJoystickMovement" Opacity="0.2" Source="UI/Icons/png/controller_joystick_up.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2"/>
+            <Image x:Name="RJoystickMovement" Opacity="0.2" Source="UI/Icons/png/controller_joystick_up.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4" Grid.ColumnSpan="2"/>
             <Image x:Name="ButtonA" Opacity="0.2" Source="UI/Icons/png/controller_a.png" Grid.Row="4" Grid.Column="6"/>
             <Image x:Name="ButtonB" Opacity="0.2" Source="UI/Icons/png/controller_b.png" Grid.Row="3" Grid.Column="7"/>
             <Image x:Name="ButtonX" Opacity="0.2" Source="UI/Icons/png/controller_x.png" Grid.Row="3" Grid.Column="5"/>

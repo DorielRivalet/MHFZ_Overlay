@@ -1958,12 +1958,12 @@ namespace MHFZ_Overlay {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool EnableKeyLogging {
+        public bool EnableInputLogging {
             get {
-                return ((bool)(this["EnableKeyLogging"]));
+                return ((bool)(this["EnableInputLogging"]));
             }
             set {
-                this["EnableKeyLogging"] = value;
+                this["EnableInputLogging"] = value;
             }
         }
         
@@ -3152,6 +3152,18 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["MonsterEHPDisplayCorrectorDefrateMaximumThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Debug")]
+        public string LoggingLevel {
+            get {
+                return ((string)(this["LoggingLevel"]));
+            }
+            set {
+                this["LoggingLevel"] = value;
             }
         }
     }

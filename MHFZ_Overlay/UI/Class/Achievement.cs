@@ -27,6 +27,11 @@ public class Achievement
         { AchievementRank.Platinum, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Teal"] }     // Platinum color
     };
 
+    public void Show() 
+    { 
+        // TODO sound, async, sequence
+    }
+
     /// <summary>
     /// Gets the color for title and icon from rank.
     /// </summary>

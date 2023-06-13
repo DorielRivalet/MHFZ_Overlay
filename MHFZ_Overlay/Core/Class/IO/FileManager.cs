@@ -234,7 +234,7 @@ internal class FileManager
                 Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
                 // Create a dictionary to store the user settings
-                Dictionary<string, Setting> settings = new Dictionary<string, Setting>();
+                Dictionary<string, Setting> settings = new();
 
                 // Get a list of the user settings properties sorted alphabetically by name
                 List<System.Configuration.SettingsProperty> sortedSettings = s.Properties.Cast<System.Configuration.SettingsProperty>().OrderBy(setting => setting.Name).ToList();

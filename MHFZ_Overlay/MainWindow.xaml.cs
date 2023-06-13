@@ -34,7 +34,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-using XInput.Wrapper;
+using XInputium;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
@@ -59,6 +59,13 @@ using Wpf.Ui.Contracts;
 using Wpf.Ui.Services;
 using System.Windows.Documents;
 using Wpf.Ui.Controls.IconElements;
+using XInputium.XInput;
+using XInputium.ModifierFunctions;
+using MHFZ_Overlay.Core.Enum;
+using LiveChartsCore.SkiaSharpView.SKCharts;
+using MHFZ_Overlay.UI.Class.Mapper;
+using HarfBuzzSharp;
+using Direction = MHFZ_Overlay.Core.Enum.Direction;
 
 namespace MHFZ_Overlay;
 
@@ -196,11 +203,15 @@ public partial class MainWindow : Window
     public DateTime ProgramEnd;
 
     // Declare a dictionary to map keys to images
-    private readonly Dictionary<Keys, Image> _keyImages = new Dictionary<Keys, Image>();
+    private readonly Dictionary<Keys, Image> _keyImages = new();
 
-    private readonly Dictionary<MouseButtons, Image> _mouseImages = new Dictionary<MouseButtons, Image>();
+    private readonly Dictionary<MouseButtons, Image> _mouseImages = new();
 
-    private readonly Dictionary<X.Gamepad.GamepadButtons, Image> _controllerImages = new Dictionary<X.Gamepad.GamepadButtons, Image>();
+    // TODO
+    private readonly XGamepad gamepad;
+    private readonly Dictionary<XInputButton, Image> _controllerImages = new();
+    private readonly Dictionary<XInputium.Trigger, Image> _controllerTriggersImages = new();
+    private readonly Dictionary<Joystick, Image> _controllerJoystickImages = new();
 
     //Main entry point?        
     /// <summary>
@@ -269,34 +280,27 @@ public partial class MainWindow : Window
         DataLoader.model.TotalTimeSpent = databaseManager.CalculateTotalTimeSpent();
 
         MapPlayerInputImages();
+        Subscribe();
+        // TODO unsubscribe
 
         // TODO controller
-        Subscribe();
+        gamepad = new();
+        gamepad.ButtonPressed += Gamepad_ButtonPressed;
+        gamepad.LeftJoystickMove += Gamepad_LeftJoystickMove;
+        gamepad.RightJoystickMove += Gamepad_RightJoystickMove;
+        gamepad.LeftTrigger.ToDigitalButton(triggerActivationThreshold).Pressed += Gamepad_LeftTriggerPressed;
+        gamepad.RightTrigger.ToDigitalButton(triggerActivationThreshold).Pressed += Gamepad_RightTriggerPressed;
+        gamepad.ButtonReleased += Gamepad_ButtonReleased;
+        gamepad.LeftTrigger.ToDigitalButton(triggerActivationThreshold).Released += Gamepad_LeftTriggerReleased;
+        gamepad.RightTrigger.ToDigitalButton(triggerActivationThreshold).Released += Gamepad_RightTriggerReleased;
+
+        DispatcherTimer timer1Frame = new();
+        timer1Frame.Interval = new TimeSpan(0, 0, 0, 0, 1_000 / Numbers.FRAMES_PER_SECOND);
+        timer1Frame.Tick += Timer1Frame_Tick;
+        timer1Frame.Start();
 
         SetGraphSeries();
-
-        // Get the dependency context for the current application
-        var context = DependencyContext.Default;
-
-        // Build a string with information about all the dependencies
-        var sb = new StringBuilder();
-        var runtimeTarget = RuntimeInformation.FrameworkDescription;
-        sb.AppendLine($"Target framework: {runtimeTarget}");
-        foreach (var lib in context.RuntimeLibraries)
-        {
-            sb.AppendLine($"Library: {lib.Name} {lib.Version}");
-            sb.AppendLine($"  Type: {lib.Type}");
-            sb.AppendLine($"  Hash: {lib.Hash}");
-            sb.AppendLine($"  Dependencies:");
-            foreach (var dep in lib.Dependencies)
-            {
-                sb.AppendLine($"    {dep.Name} {dep.Version}");
-            }
-        }
-
-        string dependenciesInfo = sb.ToString();
-
-        logger.Trace("Loading dependency data\n{0}", dependenciesInfo);
+        GetDependencies();
 
         // The rendering tier corresponds to the high-order word of the Tier property.
         int renderingTier = (RenderCapability.Tier >> 16);
@@ -345,6 +349,32 @@ public partial class MainWindow : Window
 
         // Print the elapsed time
         logger.Debug($"MainWindow ctor Elapsed Time: {elapsedTimeMs} ms");
+    }
+
+    private void GetDependencies()
+    {
+        // Get the dependency context for the current application
+        var context = DependencyContext.Default;
+
+        // Build a string with information about all the dependencies
+        var sb = new StringBuilder();
+        var runtimeTarget = RuntimeInformation.FrameworkDescription;
+        sb.AppendLine($"Target framework: {runtimeTarget}");
+        foreach (var lib in context.RuntimeLibraries)
+        {
+            sb.AppendLine($"Library: {lib.Name} {lib.Version}");
+            sb.AppendLine($"  Type: {lib.Type}");
+            sb.AppendLine($"  Hash: {lib.Hash}");
+            sb.AppendLine($"  Dependencies:");
+            foreach (var dep in lib.Dependencies)
+            {
+                sb.AppendLine($"    {dep.Name} {dep.Version}");
+            }
+        }
+
+        string dependenciesInfo = sb.ToString();
+
+        logger.Trace("Loading dependency data\n{0}", dependenciesInfo);
     }
 
     /// <summary>
@@ -563,6 +593,38 @@ The process may take some time, as the program attempts to download from GitHub 
         }
     }
 
+    /// <summary>
+    /// 1 frame timer tick. Should contain very few calculations.
+    /// </summary>
+    /// <param name="obj">The object.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    private void Timer1Frame_Tick(object? obj, EventArgs e)
+    {
+        try
+        {
+            gamepad.Update();
+            if (!gamepad.IsConnected)
+            {
+                gamepad.Device = XInputDevice.GetFirstConnectedDevice();
+                if (_controllerImages.Count > 0)
+                    _controllerImages.Clear();
+                if (_controllerTriggersImages.Count > 0)
+                    _controllerTriggersImages.Clear();
+                if (_controllerJoystickImages.Count > 0)
+                    _controllerJoystickImages.Clear();
+                if (gamepad.IsConnected)
+                {
+                    logger.Debug("Gamepad reconnected");
+                    AddControllerImages();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            LoggingManager.WriteCrashLog(ex);
+        }
+    }
+
     private void CheckIfQuestChanged()
     {
         if (DataLoader.model.previousQuestID != DataLoader.model.QuestID() && DataLoader.model.QuestID() != 0)
@@ -679,6 +741,8 @@ The process may take some time, as the program attempts to download from GitHub 
     /// </summary>
     private void CreateDamageNumber()
     {
+        if (DataLoader.model.QuestID() == 0) return;
+
         int damage = 0;
         if (DataLoader.model.HitCountInt() == 0)
         {
@@ -1799,7 +1863,7 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableKeyLogging && !DataLoader.model.mouseInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _mouseImages[e.Button].Opacity == unpressedKeyOpacity)
+            if (s.EnableInputLogging && !DataLoader.model.mouseInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _mouseImages[e.Button].Opacity == unpressedInputOpacity)
             {
                 try
                 {
@@ -1813,7 +1877,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                _mouseImages[e.Button].Opacity = pressedKeyOpacity;
+                _mouseImages[e.Button].Opacity = pressedInputOpacity;
             }));
         }
         // uncommenting the following line will suppress the middle mouse button click
@@ -1826,7 +1890,7 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                _mouseImages[e.Button].Opacity = unpressedKeyOpacity;
+                _mouseImages[e.Button].Opacity = unpressedInputOpacity;
             }));
         }
     }
@@ -1852,7 +1916,7 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableKeyLogging && !DataLoader.model.keystrokesDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _keyImages[e.KeyCode].Opacity == unpressedKeyOpacity)
+            if (s.EnableInputLogging && !DataLoader.model.keystrokesDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _keyImages[e.KeyCode].Opacity == unpressedInputOpacity)
             {
                 try
                 {
@@ -1866,7 +1930,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                _keyImages[e.KeyCode].Opacity = pressedKeyOpacity;
+                _keyImages[e.KeyCode].Opacity = pressedInputOpacity;
             }));
         }
     }
@@ -1877,7 +1941,7 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                _keyImages[e.KeyCode].Opacity = unpressedKeyOpacity;
+                _keyImages[e.KeyCode].Opacity = unpressedInputOpacity;
             }));
         }
     }
@@ -1915,23 +1979,433 @@ The process may take some time, as the program attempts to download from GitHub 
         _mouseImages.Add(MouseButtons.Middle, MouseMiddleClick);
         _mouseImages.Add(MouseButtons.Right, MouseRightClick);
 
-        _controllerImages.Add(X.Gamepad.GamepadButtons.A, ButtonA);
-        _controllerImages.Add(X.Gamepad.GamepadButtons.B, ButtonB);
-        _controllerImages.Add(X.Gamepad.GamepadButtons.X, ButtonX);
-        _controllerImages.Add(X.Gamepad.GamepadButtons.Y, ButtonY);
-        _controllerImages.Add(X.Gamepad.GamepadButtons.Dpad_Up, DPad);
-        _controllerImages.Add(X.Gamepad.GamepadButtons.Dpad_Left, DPad);
-        _controllerImages.Add(X.Gamepad.GamepadButtons.Dpad_Down, DPad);
-        _controllerImages.Add(X.Gamepad.GamepadButtons.Dpad_Right, DPad);
-        _controllerImages.Add(X.Gamepad.GamepadButtons.Start, ButtonStart);
-        _controllerImages.Add(X.Gamepad.GamepadButtons.LeftStick, LJoystick);
-        _controllerImages.Add(X.Gamepad.GamepadButtons.RightStick, RJoystick);
-        _controllerImages.Add(X.Gamepad.GamepadButtons.LBumper, ButtonL1);
-        _controllerImages.Add(X.Gamepad.GamepadButtons.RBumper, ButtonR1);
+        // TODO
+        if (gamepad == null)
+        {
+            logger.Debug("Gamepad not found");
+            return;
+        }
+
+        AddControllerImages();
     }
 
-    double pressedKeyOpacity = 0.5;
-    double unpressedKeyOpacity = 0.2;
+    private void AddControllerImages()
+    {
+        _controllerImages.Add(gamepad.Buttons.A, ButtonA);
+        _controllerImages.Add(gamepad.Buttons.B, ButtonB);
+        _controllerImages.Add(gamepad.Buttons.X, ButtonX);
+        _controllerImages.Add(gamepad.Buttons.Y, ButtonY);
+        _controllerImages.Add(gamepad.Buttons.Start, ButtonStart);
+        _controllerImages.Add(gamepad.Buttons.Back, ButtonSelect);
+        _controllerImages.Add(gamepad.Buttons.LS, LJoystick);
+        _controllerImages.Add(gamepad.Buttons.RS, RJoystick);
+        _controllerImages.Add(gamepad.Buttons.LB, ButtonL1);
+        _controllerImages.Add(gamepad.Buttons.RB, ButtonR1);
+        _controllerTriggersImages.Add(gamepad.LeftTrigger, ButtonL2);
+        _controllerTriggersImages.Add(gamepad.RightTrigger, ButtonR2);
+        _controllerJoystickImages.Add(gamepad.LeftJoystick, LJoystickMovement);
+        _controllerJoystickImages.Add(gamepad.RightJoystick, RJoystickMovement);
+    }
+
+    double pressedInputOpacity = 0.5;
+    double unpressedInputOpacity = 0.2;
+    float triggerActivationThreshold = 0.5f;
+    float joystickThreshold = 0.5f;
+
+    private void Gamepad_RightTriggerReleased(object? sender, EventArgs e)
+    {
+        if (_controllerTriggersImages.ContainsKey(gamepad.RightTrigger))
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _controllerTriggersImages[gamepad.RightTrigger].Opacity = unpressedInputOpacity;
+            }));
+        }
+    }
+
+    private void Gamepad_LeftTriggerReleased(object? sender, EventArgs e)
+    {
+        if (_controllerTriggersImages.ContainsKey(gamepad.LeftTrigger))
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _controllerTriggersImages[gamepad.LeftTrigger].Opacity = unpressedInputOpacity;
+            }));
+        }
+    }
+
+    private void Gamepad_ButtonReleased(object? sender, DigitalButtonEventArgs<XInputButton> e)
+    {
+        if (e.Button == gamepad.Buttons.DPadLeft || e.Button == gamepad.Buttons.DPadUp || e.Button == gamepad.Buttons.DPadRight || e.Button == gamepad.Buttons.DPadDown)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                UpdateDpadImage(unpressedInputOpacity);
+            }));
+        }
+        else if (e.Button == gamepad.Buttons.LS)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                UpdateLeftStickImage(unpressedInputOpacity);
+            }));
+        }
+        else if (e.Button == gamepad.Buttons.RS)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                UpdateRightStickImage(unpressedInputOpacity);
+            }));
+        }
+        else if (_controllerImages.ContainsKey(e.Button))
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _controllerImages[e.Button].Opacity = unpressedInputOpacity;
+            }));
+        }
+    }
+
+    private void Gamepad_RightTriggerPressed(object? sender, EventArgs e)
+    {
+        if (_controllerTriggersImages.ContainsKey(gamepad.RightTrigger))
+        {
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _controllerTriggersImages[gamepad.RightTrigger].Opacity == unpressedInputOpacity)
+            {
+                try
+                {
+                    DataLoader.model.gamepadInputDictionary.Add(DataLoader.model.TimeInt(), gamepad.RightTrigger.ToString());
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "Could not insert into gamepadInputDictionary");
+                }
+            }
+
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _controllerTriggersImages[gamepad.RightTrigger].Opacity = pressedInputOpacity;
+            }));
+        }
+    }
+
+    private void Gamepad_LeftTriggerPressed(object? sender, EventArgs e)
+    {
+        if (_controllerTriggersImages.ContainsKey(gamepad.LeftTrigger))
+        {
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _controllerTriggersImages[gamepad.LeftTrigger].Opacity == unpressedInputOpacity)
+            {
+                try
+                {
+                    DataLoader.model.gamepadInputDictionary.Add(DataLoader.model.TimeInt(), gamepad.LeftTrigger.ToString());
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "Could not insert into gamepadInputDictionary");
+                }
+            }
+
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _controllerTriggersImages[gamepad.LeftTrigger].Opacity = pressedInputOpacity;
+            }));
+        }
+    }
+
+    private void Gamepad_LeftJoystickMove(object? sender, EventArgs e)
+    {
+        UpdateLeftJoystickImage();
+    }
+
+    private void UpdateLeftJoystickImage()
+    {
+        // Get the joystick's X and Y positions
+        float x = gamepad.LeftJoystick.X;
+        float y = gamepad.LeftJoystick.Y;
+        double opacity = pressedInputOpacity;
+
+        // Calculate the joystick direction based on X and Y values
+        Direction direction;
+        if (Math.Abs(x) <= joystickThreshold && Math.Abs(y) <= joystickThreshold)
+        {
+            direction = Direction.None;
+            opacity = unpressedInputOpacity;
+        }
+        else if (Math.Abs(x) <= joystickThreshold && y > joystickThreshold)
+        {
+            direction = Direction.Up;
+        }
+        else if (x > joystickThreshold && y > joystickThreshold)
+        {
+            direction = Direction.UpRight;
+        }
+        else if (x > joystickThreshold && Math.Abs(y) <= joystickThreshold)
+        {
+            direction = Direction.Right;
+        }
+        else if (x > joystickThreshold && y < -joystickThreshold)
+        {
+            direction = Direction.DownRight;
+        }
+        else if (Math.Abs(x) <= joystickThreshold && y < -joystickThreshold)
+        {
+            direction = Direction.Down;
+        }
+        else if (x < -joystickThreshold && y < -joystickThreshold)
+        {
+            direction = Direction.DownLeft;
+        }
+        else if (x < -joystickThreshold && Math.Abs(y) <= joystickThreshold)
+        {
+            direction = Direction.Left;
+        }
+        else if (x < -joystickThreshold && y > joystickThreshold)
+        {
+            direction = Direction.UpLeft;
+        }
+        else
+        {
+            direction = Direction.None;
+            opacity = unpressedInputOpacity;
+        }
+
+        // Get the image path based on the direction
+        string imagePath = JoystickImageMapper.GetImage(direction);
+
+        // Get the current image source of the left joystick
+        var currentImageSource = LJoystickMovement.Source as BitmapImage;
+
+        // Compare the current image path with the new image path
+        if (currentImageSource?.UriSource?.OriginalString != imagePath)
+        {
+            // Set the new image source for the left joystick
+            LJoystickMovement.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
+            LJoystickMovement.Opacity = opacity;
+        }
+    }
+
+    private void Gamepad_RightJoystickMove(object? sender, EventArgs e)
+    {
+        UpdateRightJoystickImage();
+    }
+
+    private void UpdateRightJoystickImage()
+    {
+        // Get the joystick's X and Y positions
+        float x = gamepad.RightJoystick.X;
+        float y = gamepad.RightJoystick.Y;
+        double opacity = pressedInputOpacity;
+
+        // Calculate the joystick direction based on X and Y values
+        Direction direction;
+        if (Math.Abs(x) <= joystickThreshold && Math.Abs(y) <= joystickThreshold)
+        {
+            direction = Direction.None;
+            opacity = unpressedInputOpacity;
+        }
+        else if (Math.Abs(x) <= joystickThreshold && y > joystickThreshold)
+        {
+            direction = Direction.Up;
+        }
+        else if (x > joystickThreshold && y > joystickThreshold)
+        {
+            direction = Direction.UpRight;
+        }
+        else if (x > joystickThreshold && Math.Abs(y) <= joystickThreshold)
+        {
+            direction = Direction.Right;
+        }
+        else if (x > joystickThreshold && y < -joystickThreshold)
+        {
+            direction = Direction.DownRight;
+        }
+        else if (Math.Abs(x) <= joystickThreshold && y < -joystickThreshold)
+        {
+            direction = Direction.Down;
+        }
+        else if (x < -joystickThreshold && y < -joystickThreshold)
+        {
+            direction = Direction.DownLeft;
+        }
+        else if (x < -joystickThreshold && Math.Abs(y) <= joystickThreshold)
+        {
+            direction = Direction.Left;
+        }
+        else if (x < -joystickThreshold && y > joystickThreshold)
+        {
+            direction = Direction.UpLeft;
+        }
+        else
+        {
+            direction = Direction.None;
+            opacity = unpressedInputOpacity;
+        }
+
+        // Get the image path based on the direction
+        string imagePath = JoystickImageMapper.GetImage(direction);
+
+        // Get the current image source of the left joystick
+        var currentImageSource = RJoystickMovement.Source as BitmapImage;
+
+        // Compare the current image path with the new image path
+        if (currentImageSource?.UriSource?.OriginalString != imagePath)
+        {
+            // Set the new image source for the left joystick
+            RJoystickMovement.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
+            RJoystickMovement.Opacity = opacity;
+        }
+    }
+
+    private void Gamepad_DPadPressed(XInputButton button)
+    {
+        Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+        if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && DPad.Opacity == unpressedInputOpacity)
+        {
+            try
+            {
+                DataLoader.model.gamepadInputDictionary.Add(DataLoader.model.TimeInt(), button.ToString());
+            }
+            catch (Exception ex)
+            {
+                logger.Warn(ex, "Could not insert into gamepadInputDictionary (Gamepad_DPadPressed)");
+            }
+        }
+
+        Dispatcher.BeginInvoke(new Action(() =>
+        {
+            UpdateDpadImage(pressedInputOpacity);
+        }));
+    }
+
+    private void Gamepad_ButtonPressed(object? sender, DigitalButtonEventArgs<XInputButton> e)
+    {
+        if (e.Button == gamepad.Buttons.DPadLeft || e.Button == gamepad.Buttons.DPadUp || e.Button == gamepad.Buttons.DPadRight || e.Button == gamepad.Buttons.DPadDown)
+        {
+            Gamepad_DPadPressed(e.Button);
+            return;
+        }
+
+        if (_controllerImages.ContainsKey(e.Button))
+        {
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _controllerImages[e.Button].Opacity == unpressedInputOpacity)
+            {
+                try
+                {
+                    DataLoader.model.gamepadInputDictionary.Add(DataLoader.model.TimeInt(), e.Button.ToString());
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn(ex, "Could not insert into gamepadInputDictionary");
+                }
+            }
+
+            if (e.Button == gamepad.Buttons.LS)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    UpdateLeftStickImage(pressedInputOpacity);
+                }));
+            }
+            else if (e.Button == gamepad.Buttons.RS)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    UpdateRightStickImage(pressedInputOpacity);
+                }));
+            }
+            else 
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _controllerImages[e.Button].Opacity = pressedInputOpacity;
+                }));
+            }
+        }
+    }
+
+    private void UpdateRightStickImage(double opacity)
+    {
+        // Get the image path based on the direction
+        string imagePath = JoystickImageMapper.GetImage(Direction.None);
+
+        // Get the current image source of the D-pad
+        var currentImageSource = RJoystick.Source as BitmapImage;
+
+        // Compare the current image path with the new image path
+        if (currentImageSource?.UriSource?.OriginalString != imagePath)
+        {
+            // Set the new image source for the D-pad
+            RJoystick.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
+        }
+
+        RJoystick.Opacity = opacity;
+    }
+
+    private void UpdateLeftStickImage(double opacity)
+    {
+        // Get the image path based on the direction
+        string imagePath = JoystickImageMapper.GetImage(Direction.None);
+
+        // Get the current image source of the D-pad
+        var currentImageSource = LJoystick.Source as BitmapImage;
+
+        // Compare the current image path with the new image path
+        if (currentImageSource?.UriSource?.OriginalString != imagePath)
+        {
+            // Set the new image source for the D-pad
+            LJoystick.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
+        }
+
+        LJoystick.Opacity = opacity;
+    }
+
+    private void UpdateDpadImage(double opacity)
+    {
+        // Determine the D-pad direction based on the button states
+        Direction direction;
+        if (gamepad.Buttons.DPadUp.IsPressed)
+        {
+            direction = Direction.Up;
+        }
+        else if (gamepad.Buttons.DPadDown.IsPressed)
+        {
+            direction = Direction.Down;
+        }
+        else if (gamepad.Buttons.DPadLeft.IsPressed)
+        {
+            direction = Direction.Left;
+        }
+        else if (gamepad.Buttons.DPadRight.IsPressed)
+        {
+            direction = Direction.Right;
+        }
+        else
+        {
+            direction = Direction.None;
+        }
+
+        // Get the image path based on the direction
+        string imagePath = DPadImageMapper.GetImage(direction);
+
+        // Get the current image source of the D-pad
+        var currentImageSource = DPad.Source as BitmapImage;
+
+        // Compare the current image path with the new image path
+        if (currentImageSource?.UriSource?.OriginalString != imagePath)
+        {
+            // Set the new image source for the D-pad
+            DPad.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
+        }
+
+        DPad.Opacity = opacity;
+    }
 
     #endregion
 

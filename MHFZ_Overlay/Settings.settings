@@ -485,7 +485,7 @@
     <Setting Name="ControllerLayoutY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">550</Value>
     </Setting>
-    <Setting Name="EnableKeyLogging" Type="System.Boolean" Scope="User">
+    <Setting Name="EnableInputLogging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="MaxResolutionWidth" Type="System.Int32" Scope="User">
@@ -784,6 +784,9 @@
     </Setting>
     <Setting Name="MonsterEHPDisplayCorrectorDefrateMaximumThreshold" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="LoggingLevel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Debug</Value>
     </Setting>
   </Settings>
 </SettingsFile>
