@@ -1,4 +1,4 @@
-﻿// Copyright 2023 The mhfz-overlay Authors.
+﻿// Copyright 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 //https://stackoverflow.com/questions/93650/apply-stroke-to-a-textblock-in-wpf

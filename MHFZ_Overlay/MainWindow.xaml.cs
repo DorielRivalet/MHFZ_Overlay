@@ -1,4 +1,4 @@
-﻿// © 2023 The mhfz-overlay Authors.
+﻿// © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 using MHFZ_Overlay.Core.Class.Dictionary;
@@ -1561,8 +1561,6 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private bool calculatedPersonalBest = false;
     private bool calculatedQuestAttempts = false;
-
-    private static object lockObj = new object();
 
     private async void UpdateQuestAttempts()
     {
