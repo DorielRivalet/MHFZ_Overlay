@@ -310,17 +310,17 @@
             <Image x:Name="MouseMiddleClick" Opacity="0.2" Source="UI/Icons/png/middle_click.png" Grid.Row="4" Grid.Column="3"/>
             <Image x:Name="MouseRightClick" Opacity="0.2" Source="UI/Icons/png/right_click.png" Grid.Row="4" Grid.Column="4"/>
         </Grid>
-        <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="GamepadGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=ControllerLayoutX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=ControllerLayoutY}" Width="150" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+        <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="GamepadGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=GamepadX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=GamepadY}" Width="150" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowGamepad, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
-                <ColumnDefinition  Width="1*" />
-                <ColumnDefinition  Width="1*" />
-                <ColumnDefinition  Width="1*" />
-                <ColumnDefinition  Width="1*" />
-                <ColumnDefinition  Width="1*" />
-                <ColumnDefinition  Width="1*" />
-                <ColumnDefinition  Width="1*" />
-                <ColumnDefinition  Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>

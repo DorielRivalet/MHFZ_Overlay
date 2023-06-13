@@ -770,12 +770,6 @@
     <Setting Name="EnableNationality" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="CatppuccinTheme" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Mocha</Value>
-    </Setting>
-    <Setting Name="CatppuccinAccentColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Green</Value>
-    </Setting>
     <Setting Name="EnableMonsterEHPDisplayCorrector" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -787,6 +781,15 @@
     </Setting>
     <Setting Name="LogLevel" Type="System.String" Scope="User">
       <Value Profile="(Default)">Debug</Value>
+    </Setting>
+    <Setting Name="EnableQuestCompletionsCounter" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="GamepadSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="KBMLayoutSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
     </Setting>
   </Settings>
 </SettingsFile>

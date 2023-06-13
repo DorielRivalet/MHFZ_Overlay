@@ -3097,30 +3097,6 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Mocha")]
-        public string CatppuccinTheme {
-            get {
-                return ((string)(this["CatppuccinTheme"]));
-            }
-            set {
-                this["CatppuccinTheme"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Green")]
-        public string CatppuccinAccentColor {
-            get {
-                return ((string)(this["CatppuccinAccentColor"]));
-            }
-            set {
-                this["CatppuccinAccentColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool EnableMonsterEHPDisplayCorrector {
             get {
@@ -3164,6 +3140,42 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["LogLevel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableQuestCompletionsCounter {
+            get {
+                return ((bool)(this["EnableQuestCompletionsCounter"]));
+            }
+            set {
+                this["EnableQuestCompletionsCounter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double GamepadSize {
+            get {
+                return ((double)(this["GamepadSize"]));
+            }
+            set {
+                this["GamepadSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double KBMLayoutSize {
+            get {
+                return ((double)(this["KBMLayoutSize"]));
+            }
+            set {
+                this["KBMLayoutSize"] = value;
             }
         }
     }

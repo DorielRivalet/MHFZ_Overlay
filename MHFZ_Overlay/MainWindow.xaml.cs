@@ -1571,10 +1571,14 @@ The process may take some time, as the program attempts to download from GitHub 
         long questID = DataLoader.model.QuestID();
 
         int attempts = await Task.Run(() => databaseManager.UpsertQuestAttempts(questID, weaponType, category));
+        Settings s = (Settings)Application.Current.TryFindResource("Settings");
+        string completions = "";
+        if (s.EnableQuestCompletionsCounter)
+            completions = databaseManager.GetQuestCompletions(questID, category, weaponType) + "/";
 
         await Dispatcher.BeginInvoke(new Action(() =>
         {
-            questAttemptsTextBlock.Text = attempts.ToString();
+            questAttemptsTextBlock.Text = $"{completions}{attempts}";
         }));
     }
 
@@ -1820,7 +1824,7 @@ The process may take some time, as the program attempts to download from GitHub 
             DataLoader.model.questCleared = true;
             DataLoader.model.loadedItemsAtQuestStart = false;
             if (s.EnableQuestLogging)
-                databaseManager.InsertQuestData(DataLoader, int.Parse(questAttemptsTextBlock.Text));
+                databaseManager.InsertQuestData(DataLoader, (int)databaseManager.GetQuestAttempts((long)DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text));
         }
     }
 

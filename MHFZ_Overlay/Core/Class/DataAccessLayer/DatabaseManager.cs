@@ -5328,6 +5328,7 @@ Disabling Quest Logging.",
         return attempts;
     }
 
+    // TODO test
     public long GetQuestAttempts(long questID, int weaponTypeID, string category)
     {
         long attempts = 0;
@@ -7645,6 +7646,57 @@ Disabling Quest Logging.",
                                 int questID = reader.GetInt32(0);
                                 int completions = reader.GetInt32(1);
                                 questCompletions.Add(questID, completions);
+                            }
+                        }
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+        return questCompletions;
+    }
+
+    public string GetQuestCompletions(long questID, string actualOverlayMode, int weaponTypeID)
+    {
+        string questCompletions = "0";
+        if (dataSource == null || dataSource == "")
+        {
+            logger.Warn("Cannot get quest completions. dataSource: {0}", dataSource);
+            return questCompletions;
+        }
+        using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    string sql =
+                        @"SELECT 
+                            COUNT(*) AS CompletionCount
+                        FROM 
+                            Quests q
+                        JOIN 
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        WHERE 
+                            q.QuestID = @QuestID
+                        AND q.ActualOverlayMode = @ActualOverlayMode
+                        AND pg.WeaponTypeID = @WeaponTypeID";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuestID", questID);
+                        cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+                        cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                questCompletions = Convert.ToInt64(reader["CompletionCount"]).ToString();
                             }
                         }
                     }
