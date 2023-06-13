@@ -27,7 +27,7 @@ The following steps outline the process for releasing and deploying the software
     - `Squirrel.exe pack --packId "MHFZ_Overlay" --packDirectory "ABSOLUTE_PATH\MHFZ_Overlay\MHFZ_Overlay\bin\Release\net6.0-windows\win-x86\publish" --framework net6.0-x86 --packTitle="Monster Hunter Frontier Z Overlay" --packAuthors="DorielRivalet" --splashImage="ABSOLUTE_PATH\MHFZ_Overlay\splash.png" --icon="ABSOLUTE_PATH\MHFZ_Overlay\img\icon\mhfzoverlayicon256.ico" --appIcon="ABSOLUTE_PATH\MHFZ_Overlay\img\icon\mhfzoverlayicon256.ico" --packVersion "0.13.0"`
 11. Add to GitHub Releases: Create a new release on GitHub with the appropriate version number, release notes, and documentation. Lastly, attach all of the files in the generated Releases folder separately.
 
-By following these steps, the software can be releasified and deployed using clowd.squirrel, ensuring that the latest changes are packaged and released to users efficiently and reliably.
+By following these steps, the software can be releasified and deployed using clowd.squirrel, ensuring that the latest changes are packaged and released to users efficiently and reliably. Also, you are allowed to make feature branches and merge them into the release branch.
 
 ### Merging via command line
 
