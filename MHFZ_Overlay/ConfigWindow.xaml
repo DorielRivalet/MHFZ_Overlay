@@ -1613,6 +1613,8 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Show Timer">
@@ -1856,8 +1858,9 @@
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="65" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutX}"  PreviewTextInput="ValidateNumber"/>
                             <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="66" Grid.Column="0"  Text="Keyboard and Mouse Layout Y Coordinate"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="66" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutY}"  PreviewTextInput="ValidateNumber"/>
-
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="67" Grid.Column="0" ToolTip="Show Gamepad Layout. See the FAQ if you cannot get this to work.">
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="67" Grid.Column="0"  Text="Keyboard and Mouse Layout Size"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="67" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutSize}"  PreviewTextInput="ValidateNumber"/>
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="68" Grid.Column="0" ToolTip="Show Gamepad Layout. See the FAQ if you cannot get this to work.">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="XboxController24" Foreground="{StaticResource Blue}" FontSize="24"/>
@@ -1865,25 +1868,26 @@
                                 </Button>
                                 <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Text="Controller/Gamepad Layout"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="67" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=GamepadShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="68" Grid.Column="0"  Text="Controller/Gamepad Layout X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="68" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="69" Grid.Column="0"  Text="Controller/Gamepad Layout Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="69" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadY}"  PreviewTextInput="ValidateNumber"/>
-
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="70" Grid.Column="0" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and gamepad inputs)">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="68" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=GamepadShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="69" Grid.Column="0"  Text="Controller/Gamepad Layout X Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="69" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadX}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="70" Grid.Column="0"  Text="Controller/Gamepad Layout Y Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="70" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadY}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="71" Grid.Column="0"  Text="Controller/Gamepad Layout Size"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="71" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadSize}"  PreviewTextInput="ValidateNumber"/>
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="72" Grid.Column="0" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and gamepad inputs)">
                                 <Image Source="UI/Icons/png/flame_ul.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Actions per Minute"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="70" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="71" Grid.Column="0"  Text="Actions per Minute X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="71" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="72" Grid.Column="0"  Text="Actions per Minute Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="72" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="73" Grid.Column="0"  Text="Average Actions per Minute Color"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="73" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="72" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="73" Grid.Column="0"  Text="Actions per Minute X Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="73" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="74" Grid.Column="0"  Text="Actions per Minute Y Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="74" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="75" Grid.Column="0"  Text="Average Actions per Minute Color"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="75" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
 
-                            <StackPanel Margin="5,5,5,5" ToolTip="Show Current Session Time" Grid.Row="74" Grid.Column="0" Orientation="Horizontal">
+                            <StackPanel Margin="5,5,5,5" ToolTip="Show Current Session Time" Grid.Row="76" Grid.Column="0" Orientation="Horizontal">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="Timer24" Foreground="{StaticResource Rosewater}" FontSize="24"/>
@@ -1891,11 +1895,11 @@
                                 </Button>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Current Session Time"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="74" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=SessionTimeShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="75" Grid.Column="0"  Text="Current Session Time X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="75" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SessionTimeX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="76" Grid.Column="0"  Text="Current Session Time Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="76" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SessionTimeY}"  PreviewTextInput="ValidateNumber"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="76" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=SessionTimeShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="77" Grid.Column="0"  Text="Current Session Time X Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="77" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SessionTimeX}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="78" Grid.Column="0"  Text="Current Session Time Y Coordinate"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="78" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SessionTimeY}"  PreviewTextInput="ValidateNumber"/>
 
                         </Grid>
                     </ScrollViewer>

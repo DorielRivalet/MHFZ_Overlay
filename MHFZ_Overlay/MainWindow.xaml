@@ -266,7 +266,7 @@
             <class:OutlinedTextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part9Number}" Grid.Column="3" Grid.Row="1"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
             <class:OutlinedTextBlock Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DataLoader.model.Monster1Part10Number}" Grid.Column="4" Grid.Row="1"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="#f5e0dc" />
         </Grid>
-        <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="KBMLayoutGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=KBMLayoutX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=KBMLayoutY}" Width="150" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+                <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="KBMLayoutGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=KBMLayoutX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=KBMLayoutY}" Width="{Binding Path=KBMLayoutSize, Source={StaticResource Settings}}" Height="{Binding Path=KBMLayoutSize, Source={StaticResource Settings}}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowKBMLayout, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="1*" />
@@ -310,7 +310,7 @@
             <Image x:Name="MouseMiddleClick" Opacity="0.2" Source="UI/Icons/png/middle_click.png" Grid.Row="4" Grid.Column="3"/>
             <Image x:Name="MouseRightClick" Opacity="0.2" Source="UI/Icons/png/right_click.png" Grid.Row="4" Grid.Column="4"/>
         </Grid>
-        <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="GamepadGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=GamepadX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=GamepadY}" Width="150" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+                <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="GamepadGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=GamepadX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=GamepadY}" Width="{Binding Path=GamepadSize, Source={StaticResource Settings}}" Height="{Binding Path=GamepadSize, Source={StaticResource Settings}}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowGamepad, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition Width="1*" />
@@ -724,7 +724,7 @@
             </Grid.RowDefinitions>
                 <Button BorderThickness="0"  Background="Transparent" Grid.Column="0" Grid.Row="0">
                     <Button.Content>
-                        <ui:SymbolIcon Symbol="Save28" Foreground="{StaticResource Green}"/>
+                        <ui:SymbolIcon Symbol="Save28" Foreground="{StaticResource Green}" FontSize="28"/>
                     </Button.Content>
                 </Button>
             </Grid>
