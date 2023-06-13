@@ -4789,7 +4789,7 @@ Disabling Quest Logging.",
     {
         int minutes = framesElapsed / (Numbers.FRAMES_PER_SECOND * 60);
         int seconds = (framesElapsed % (Numbers.FRAMES_PER_SECOND * 60)) / Numbers.FRAMES_PER_SECOND;
-        double milliseconds = ((framesElapsed % (Numbers.FRAMES_PER_SECOND * 60)) % Numbers.FRAMES_PER_SECOND) / 30.0;
+        double milliseconds = ((framesElapsed % (Numbers.FRAMES_PER_SECOND * 60)) % Numbers.FRAMES_PER_SECOND) / Double.Parse(Numbers.FRAMES_PER_SECOND.ToString());
         return $"{minutes:D2}:{seconds:D2}.{(int)(milliseconds * 1000):D3}";
     }
 

@@ -64,7 +64,6 @@ using XInputium.ModifierFunctions;
 using MHFZ_Overlay.Core.Enum;
 using LiveChartsCore.SkiaSharpView.SKCharts;
 using MHFZ_Overlay.UI.Class.Mapper;
-using HarfBuzzSharp;
 using Direction = MHFZ_Overlay.Core.Enum.Direction;
 
 namespace MHFZ_Overlay;

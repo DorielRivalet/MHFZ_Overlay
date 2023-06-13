@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 using DiscordRPC;
 using EZlion.Mapper;
+using MHFZ_Overlay.Core.Constant;
 using System;
 using System.Diagnostics;
 
@@ -1089,10 +1090,10 @@ internal class DiscordManager
             {
                 presenceTemplate.Timestamps = GetDiscordTimerMode() switch
                 {
-                    "Time Left" => Timestamps.FromTimeSpan((double)dataLoader.model.TimeDefInt() / 30.0),
+                    "Time Left" => Timestamps.FromTimeSpan((double)dataLoader.model.TimeDefInt() / Double.Parse(Numbers.FRAMES_PER_SECOND.ToString())),
                     "Time Elapsed" => Timestamps.Now,
                     //dure doorway too
-                    _ => Timestamps.FromTimeSpan((double)dataLoader.model.TimeDefInt() / 30.0),
+                    _ => Timestamps.FromTimeSpan((double)dataLoader.model.TimeDefInt() / Double.Parse(Numbers.FRAMES_PER_SECOND.ToString())),
                 };
             }
 
@@ -1116,9 +1117,9 @@ internal class DiscordManager
                                 //dataLoader.model.previousRoadFloor = dataLoader.model.RoadFloor() + 1;
                                 presenceTemplate.Timestamps = GetDiscordTimerMode() switch
                                 {
-                                    "Time Left" => Timestamps.FromTimeSpan((double)dataLoader.model.TimeInt() / 30.0),
+                                    "Time Left" => Timestamps.FromTimeSpan((double)dataLoader.model.TimeInt() / Double.Parse(Numbers.FRAMES_PER_SECOND.ToString())),
                                     "Time Elapsed" => Timestamps.Now,
-                                    _ => Timestamps.FromTimeSpan((double)dataLoader.model.TimeInt() / 30.0),
+                                    _ => Timestamps.FromTimeSpan((double)dataLoader.model.TimeInt() / Double.Parse(Numbers.FRAMES_PER_SECOND.ToString())),
                                 };
                             }
                             break;

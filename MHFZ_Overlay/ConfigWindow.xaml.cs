@@ -2332,8 +2332,8 @@ public partial class ConfigWindow : FluentWindow
                 DataLabelsPosition = DataLabelsPosition.Middle,
                 DataLabelsSize = 6,
                 //DataLabelsPadding = 2,
-                TooltipLabelFormatter = value => questDuration.Key.ToString() + " " + TimeSpan.FromSeconds(value.PrimaryValue / 30.0).ToString(@"hh\:mm\:ss"),
-                DataLabelsFormatter = value => TimeSpan.FromSeconds(value.PrimaryValue / 30.0).ToString(@"hh\:mm\:ss")
+                TooltipLabelFormatter = value => questDuration.Key.ToString() + " " + TimeSpan.FromSeconds(value.PrimaryValue / Double.Parse(Numbers.FRAMES_PER_SECOND.ToString())).ToString(@"hh\:mm\:ss"),
+                DataLabelsFormatter = value => TimeSpan.FromSeconds(value.PrimaryValue / Double.Parse(Numbers.FRAMES_PER_SECOND.ToString())).ToString(@"hh\:mm\:ss")
             });
         }
 
@@ -2342,7 +2342,7 @@ public partial class ConfigWindow : FluentWindow
         {
             new Axis
             {
-                Labeler = (value) => TimeSpan.FromSeconds(value / 30.0).ToString(@"hh\:mm\:ss"),
+                Labeler = (value) => TimeSpan.FromSeconds(value / Double.Parse(Numbers.FRAMES_PER_SECOND.ToString())).ToString(@"hh\:mm\:ss"),
                 LabelsRotation = 0,
                 NamePaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.DataLoader.model.HexColorToDecimal("#a6adc8"))),

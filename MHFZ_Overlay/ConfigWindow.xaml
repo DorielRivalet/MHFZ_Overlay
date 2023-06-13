@@ -899,8 +899,14 @@
                             </DockPanel>
 
                             <TextBlock Margin="5,5,5,5" ToolTip="Select the Primary Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Primary Font Family"/>
-                            <ComboBox Grid.Column="1" Grid.Row="5" x:Name="PrimaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=PrimaryFontFamily}" />
-                            <TextBlock x:Name="PrimaryFontSizeTextBlock" Text="Primary Font Size" Margin="5,5,5,5" ToolTip="Select the Primary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"/>
+                                <ComboBox Grid.Column="1" Grid.Row="5" x:Name="PrimaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=PrimaryFontFamily}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock FontFamily="{Binding}" Text="{Binding}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBlock x:Name="PrimaryFontSizeTextBlock" Text="Primary Font Size" Margin="5,5,5,5" ToolTip="Select the Primary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"/>
                             <DockPanel Grid.Row="6" Grid.Column="1">
                                 <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="80">
                                     <TextBox.Text>
@@ -925,24 +931,17 @@
                                 <ComboBoxItem Content="Bold" FontWeight="Bold" />
                                 <ComboBoxItem Content="ExtraBold" FontWeight="ExtraBold" />
                                 <ComboBoxItem Content="Black" FontWeight="Black" />
-                                <ComboBox.Resources>
-                                    <Style TargetType="ComboBoxItem">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ComboBoxItem">
-                                                    <Grid>
-                                                        <TextBlock Text="{Binding Content}" FontWeight="{Binding FontWeight}" />
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ComboBox.Resources>
                             </ComboBox>
 
                             <TextBlock Margin="5,5,5,5" ToolTip="Select the Secondary Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Secondary Font Family"/>
-                            <ComboBox Grid.Column="1" Grid.Row="8" x:Name="SecondaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontFamily}" />
-                            <TextBlock x:Name="SecondaryFontSizeTextBlock" Text="Secondary Font Size" Margin="5,5,5,5" ToolTip="Select the Secondary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"/>
+                                <ComboBox Grid.Column="1" Grid.Row="8" x:Name="SecondaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontFamily}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock FontFamily="{Binding}" Text="{Binding}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBlock x:Name="SecondaryFontSizeTextBlock" Text="Secondary Font Size" Margin="5,5,5,5" ToolTip="Select the Secondary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"/>
                             <DockPanel Grid.Row="9" Grid.Column="1">
                                 <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="80">
                                     <TextBox.Text>
@@ -967,19 +966,6 @@
                                 <ComboBoxItem Content="Bold" FontWeight="Bold" />
                                 <ComboBoxItem Content="ExtraBold" FontWeight="ExtraBold" />
                                 <ComboBoxItem Content="Black" FontWeight="Black" />
-                                <ComboBox.Resources>
-                                    <Style TargetType="ComboBoxItem">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ComboBoxItem">
-                                                    <Grid>
-                                                        <TextBlock Text="{Binding Content}" FontWeight="{Binding FontWeight}" />
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ComboBox.Resources>
                             </ComboBox>
 
                             <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="11" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
@@ -1805,8 +1791,14 @@
                             <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="54" Grid.Column="0"  Text="Damage Numbers Area Height"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="54" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}"  PreviewTextInput="ValidateNumber"/>
                             <TextBlock Margin="5,5,5,5" ToolTip="Select the Damage Numbers Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="55" Grid.Column="0"  Text="Damage Numbers Font Family"/>
-                            <ComboBox Grid.Column="1" Grid.Row="55" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=DamageNumbersFontFamily}" />
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Damage Numbers Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="56" Grid.Column="0"  Text="Damage Numbers Font Weight"/>
+                                <ComboBox Grid.Column="1" Grid.Row="55" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=DamageNumbersFontFamily}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock FontFamily="{Binding}" Text="{Binding}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBlock Margin="5,5,5,5" ToolTip="Select the Damage Numbers Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="56" Grid.Column="0"  Text="Damage Numbers Font Weight"/>
                             <ComboBox Grid.Row="56" Grid.Column="1"
                             SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DamageNumbersFontWeight}">
                                 <ComboBoxItem Content="Normal" FontWeight="Normal" />
@@ -1818,19 +1810,6 @@
                                 <ComboBoxItem Content="Bold" FontWeight="Bold" />
                                 <ComboBoxItem Content="ExtraBold" FontWeight="ExtraBold" />
                                 <ComboBoxItem Content="Black" FontWeight="Black" />
-                                <ComboBox.Resources>
-                                    <Style TargetType="ComboBoxItem">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ComboBoxItem">
-                                                    <Grid>
-                                                        <TextBlock Text="{Binding Content}" FontWeight="{Binding FontWeight}" />
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ComboBox.Resources>
                             </ComboBox>
 
                             <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers size effect" Style="{StaticResource ConfigTextBox}" Grid.Row="57" Grid.Column="0"  Text="Damage Numbers Size Effect"/>
