@@ -1922,36 +1922,36 @@ namespace MHFZ_Overlay {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ControllerLayoutShown {
+        public bool GamepadShown {
             get {
-                return ((bool)(this["ControllerLayoutShown"]));
+                return ((bool)(this["GamepadShown"]));
             }
             set {
-                this["ControllerLayoutShown"] = value;
+                this["GamepadShown"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("160")]
-        public double ControllerLayoutX {
+        public double GamepadX {
             get {
-                return ((double)(this["ControllerLayoutX"]));
+                return ((double)(this["GamepadX"]));
             }
             set {
-                this["ControllerLayoutX"] = value;
+                this["GamepadX"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("550")]
-        public double ControllerLayoutY {
+        public double GamepadY {
             get {
-                return ((double)(this["ControllerLayoutY"]));
+                return ((double)(this["GamepadY"]));
             }
             set {
-                this["ControllerLayoutY"] = value;
+                this["GamepadY"] = value;
             }
         }
         

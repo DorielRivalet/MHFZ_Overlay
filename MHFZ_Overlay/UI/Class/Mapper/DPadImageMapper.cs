@@ -12,15 +12,15 @@ public static class DPadImageMapper
 {
     public static readonly Dictionary<Direction, string> imagePaths = new Dictionary<Direction, string>
     {
-        { Direction.None, "UI/Icons/png/controller_dpad.png" },
-        { Direction.Up, "UI/Icons/png/controller_dpad_up.png" },
-        { Direction.UpRight, "UI/Icons/png/controller_dpad_upright.png" },
-        { Direction.Right, "UI/Icons/png/controller_dpad_right.png" },
-        { Direction.DownRight, "UI/Icons/png/controller_dpad_downright.png" },
-        { Direction.Down, "UI/Icons/png/controller_dpad_down.png" },
-        { Direction.DownLeft, "UI/Icons/png/controller_dpad_downleft.png" },
-        { Direction.Left, "UI/Icons/png/controller_dpad_left.png" },
-        { Direction.UpLeft, "UI/Icons/png/controller_dpad_upleft.png" }
+        { Direction.None, "UI/Icons/png/gamepad_dpad.png" },
+        { Direction.Up, "UI/Icons/png/gamepad_dpad_up.png" },
+        { Direction.UpRight, "UI/Icons/png/gamepad_dpad_upright.png" },
+        { Direction.Right, "UI/Icons/png/gamepad_dpad_right.png" },
+        { Direction.DownRight, "UI/Icons/png/gamepad_dpad_downright.png" },
+        { Direction.Down, "UI/Icons/png/gamepad_dpad_down.png" },
+        { Direction.DownLeft, "UI/Icons/png/gamepad_dpad_downleft.png" },
+        { Direction.Left, "UI/Icons/png/gamepad_dpad_left.png" },
+        { Direction.UpLeft, "UI/Icons/png/gamepad_dpad_upleft.png" }
     };
 
     public static string GetImage(Direction direction)
@@ -31,6 +31,6 @@ public static class DPadImageMapper
         }
 
         // Return a default image path or handle the case where direction is not found
-        return "UI/Icons/png/controller_dpad.png";
+        return "UI/Icons/png/gamepad_dpad.png";
     }
 }

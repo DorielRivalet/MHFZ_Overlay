@@ -310,8 +310,8 @@
             <Image x:Name="MouseMiddleClick" Opacity="0.2" Source="UI/Icons/png/middle_click.png" Grid.Row="4" Grid.Column="3"/>
             <Image x:Name="MouseRightClick" Opacity="0.2" Source="UI/Icons/png/right_click.png" Grid.Row="4" Grid.Column="4"/>
         </Grid>
-        <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="ControllerLayoutGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=ControllerLayoutX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=ControllerLayoutY}" Width="150" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
-              Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowControllerLayout, Converter={StaticResource BoolToVis}}">
+        <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="GamepadGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=ControllerLayoutX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=ControllerLayoutY}" Width="150" Height="150" MouseLeftButtonDown="ElementMouseLeftButtonDown"
+              Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowGamepad, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="1*" />
                 <ColumnDefinition  Width="1*" />
@@ -330,23 +330,23 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Border x:Name="ControllerLayoutGridBorder" BorderBrush="{StaticResource Red}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Grid.RowSpan="10" BorderThickness="0"/>
+            <Border x:Name="GamepadGridBorder" BorderBrush="{StaticResource Red}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Grid.RowSpan="10" BorderThickness="0"/>
 
-            <Image x:Name="ButtonL2" Opacity="0.2" Source="UI/Icons/png/controller_l2.png" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Stretch="Fill"/>
-            <Image x:Name="ButtonR2" Opacity="0.2" Source="UI/Icons/png/controller_r2.png" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" Stretch="Fill"/>
-            <Image x:Name="ButtonL1" Opacity="0.2" Source="UI/Icons/png/controller_l1.png" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Stretch="Fill"/>
-            <Image x:Name="ButtonR1" Opacity="0.2" Source="UI/Icons/png/controller_r1.png" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" Stretch="Fill"/>
-            <Image x:Name="DPad" Opacity="0.2" Source="UI/Icons/png/controller_dpad.png" Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" />
-            <Image x:Name="LJoystick" Opacity="0.2" Source="UI/Icons/png/controller_joystick.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2"/>
-            <Image x:Name="RJoystick" Opacity="0.2" Source="UI/Icons/png/controller_joystick.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4" Grid.ColumnSpan="2"/>
-            <Image x:Name="LJoystickMovement" Opacity="0.2" Source="UI/Icons/png/controller_joystick_up.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2"/>
-            <Image x:Name="RJoystickMovement" Opacity="0.2" Source="UI/Icons/png/controller_joystick_up.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4" Grid.ColumnSpan="2"/>
-            <Image x:Name="ButtonA" Opacity="0.2" Source="UI/Icons/png/controller_a.png" Grid.Row="4" Grid.Column="6"/>
-            <Image x:Name="ButtonB" Opacity="0.2" Source="UI/Icons/png/controller_b.png" Grid.Row="3" Grid.Column="7"/>
-            <Image x:Name="ButtonX" Opacity="0.2" Source="UI/Icons/png/controller_x.png" Grid.Row="3" Grid.Column="5"/>
-            <Image x:Name="ButtonY" Opacity="0.2" Source="UI/Icons/png/controller_y.png" Grid.Row="2" Grid.Column="6"/>
-            <Image x:Name="ButtonSelect" Opacity="0.2" Source="UI/Icons/png/controller_select.png" Grid.Row="3" Grid.Column="3"/>
-            <Image x:Name="ButtonStart" Opacity="0.2" Source="UI/Icons/png/controller_start.png" Grid.Row="3" Grid.Column="4"/>
+            <Image x:Name="ButtonL2" Opacity="0.2" Source="UI/Icons/png/gamepad_l2.png" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image x:Name="ButtonR2" Opacity="0.2" Source="UI/Icons/png/gamepad_r2.png" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image x:Name="ButtonL1" Opacity="0.2" Source="UI/Icons/png/gamepad_l1.png" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image x:Name="ButtonR1" Opacity="0.2" Source="UI/Icons/png/gamepad_r1.png" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image x:Name="DPad" Opacity="0.2" Source="UI/Icons/png/gamepad_dpad.png" Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" />
+            <Image x:Name="LJoystick" Opacity="0.2" Source="UI/Icons/png/gamepad_joystick.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2"/>
+            <Image x:Name="RJoystick" Opacity="0.2" Source="UI/Icons/png/gamepad_joystick.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4" Grid.ColumnSpan="2"/>
+            <Image x:Name="LJoystickMovement" Opacity="0.2" Source="UI/Icons/png/gamepad_joystick_up.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2"/>
+            <Image x:Name="RJoystickMovement" Opacity="0.2" Source="UI/Icons/png/gamepad_joystick_up.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4" Grid.ColumnSpan="2"/>
+            <Image x:Name="ButtonA" Opacity="0.2" Source="UI/Icons/png/gamepad_a.png" Grid.Row="4" Grid.Column="6"/>
+            <Image x:Name="ButtonB" Opacity="0.2" Source="UI/Icons/png/gamepad_b.png" Grid.Row="3" Grid.Column="7"/>
+            <Image x:Name="ButtonX" Opacity="0.2" Source="UI/Icons/png/gamepad_x.png" Grid.Row="3" Grid.Column="5"/>
+            <Image x:Name="ButtonY" Opacity="0.2" Source="UI/Icons/png/gamepad_y.png" Grid.Row="2" Grid.Column="6"/>
+            <Image x:Name="ButtonSelect" Opacity="0.2" Source="UI/Icons/png/gamepad_select.png" Grid.Row="3" Grid.Column="3"/>
+            <Image x:Name="ButtonStart" Opacity="0.2" Source="UI/Icons/png/gamepad_start.png" Grid.Row="3" Grid.Column="4"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster1HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster1HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster1HealthBarY}" Width="500" Height="40" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.model.ShowMonster1HPBar, Converter={StaticResource BoolToVis}}">

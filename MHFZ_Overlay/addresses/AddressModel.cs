@@ -94,7 +94,7 @@ public abstract class AddressModel : INotifyPropertyChanged
     public bool ShowMonsterPartHP { get; set; } = false;
     public bool ShowKBMLayout { get; set; } = false;
     public bool ShowAPM { get; set; } = false;
-    public bool ShowControllerLayout { get; set; } = false;
+    public bool ShowGamepadLayout { get; set; } = false;
     public bool ShowMonster1Icon { get; set; } = false;
     public bool ShowFrameCounter { get; set; } = false;
     public bool ShowMap { get; set; } = false;

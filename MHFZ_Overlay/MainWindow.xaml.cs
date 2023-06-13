@@ -208,9 +208,9 @@ public partial class MainWindow : Window
 
     // TODO
     private readonly XGamepad gamepad;
-    private readonly Dictionary<XInputButton, Image> _controllerImages = new();
-    private readonly Dictionary<XInputium.Trigger, Image> _controllerTriggersImages = new();
-    private readonly Dictionary<Joystick, Image> _controllerJoystickImages = new();
+    private readonly Dictionary<XInputButton, Image> _gamepadImages = new();
+    private readonly Dictionary<XInputium.Trigger, Image> _gamepadTriggersImages = new();
+    private readonly Dictionary<Joystick, Image> _gamepadJoystickImages = new();
 
     //Main entry point?        
     /// <summary>
@@ -282,7 +282,7 @@ public partial class MainWindow : Window
         Subscribe();
         // TODO unsubscribe
 
-        // TODO controller
+        // TODO gamepad
         gamepad = new();
         gamepad.ButtonPressed += Gamepad_ButtonPressed;
         gamepad.LeftJoystickMove += Gamepad_LeftJoystickMove;
@@ -605,16 +605,16 @@ The process may take some time, as the program attempts to download from GitHub 
             if (!gamepad.IsConnected)
             {
                 gamepad.Device = XInputDevice.GetFirstConnectedDevice();
-                if (_controllerImages.Count > 0)
-                    _controllerImages.Clear();
-                if (_controllerTriggersImages.Count > 0)
-                    _controllerTriggersImages.Clear();
-                if (_controllerJoystickImages.Count > 0)
-                    _controllerJoystickImages.Clear();
+                if (_gamepadImages.Count > 0)
+                    _gamepadImages.Clear();
+                if (_gamepadTriggersImages.Count > 0)
+                    _gamepadTriggersImages.Clear();
+                if (_gamepadJoystickImages.Count > 0)
+                    _gamepadJoystickImages.Clear();
                 if (gamepad.IsConnected)
                 {
                     logger.Debug("Gamepad reconnected");
-                    AddControllerImages();
+                    AddgamepadImages();
                 }
             }
         }
@@ -1144,7 +1144,7 @@ The process may take some time, as the program attempts to download from GitHub 
         DataLoader.model.ShowDamagePerSecond = v && s.DamagePerSecondShown;
 
         DataLoader.model.ShowKBMLayout = v && s.KBMLayoutShown;
-        DataLoader.model.ShowControllerLayout = v && s.ControllerLayoutShown;
+        DataLoader.model.ShowGamepadLayout = v && s.GamepadShown;
         DataLoader.model.ShowAPM = v && s.ActionsPerMinuteShown;
         DataLoader.model.ShowOverlayModeWatermark = v && s.OverlayModeWatermarkShown;
         DataLoader.model.ShowQuestID = v && s.QuestIDShown;
@@ -1232,9 +1232,9 @@ The process may take some time, as the program attempts to download from GitHub 
                 s.KBMLayoutX = (double)(pos.X - XOffset);
                 s.KBMLayoutY = (double)(pos.Y - XOffset);
                 break;
-            case "ControllerLayoutGrid":
-                s.ControllerLayoutX = (double)(pos.X - XOffset);
-                s.ControllerLayoutY = (double)(pos.Y - XOffset);
+            case "GamepadGrid":
+                s.GamepadX = (double)(pos.X - XOffset);
+                s.GamepadY = (double)(pos.Y - XOffset);
                 break;
             case "ActionsPerMinuteInfo":
                 s.ActionsPerMinuteX = (double)(pos.X - XOffset);
@@ -1491,7 +1491,7 @@ The process may take some time, as the program attempts to download from GitHub 
         SessionTimeInfoBorder.BorderThickness = thickness;
         SharpnessInfoBorder.BorderThickness = thickness;
         TimerInfoBorder.BorderThickness = thickness;
-        ControllerLayoutGridBorder.BorderThickness = thickness;
+        GamepadGridBorder.BorderThickness = thickness;
         KBMLayoutGridBorder.BorderThickness = thickness;
         QuestIDGridBorder.BorderThickness = thickness;
         OverlayModeWatermarkBorder.BorderThickness = thickness;
@@ -1985,25 +1985,25 @@ The process may take some time, as the program attempts to download from GitHub 
             return;
         }
 
-        AddControllerImages();
+        AddgamepadImages();
     }
 
-    private void AddControllerImages()
+    private void AddgamepadImages()
     {
-        _controllerImages.Add(gamepad.Buttons.A, ButtonA);
-        _controllerImages.Add(gamepad.Buttons.B, ButtonB);
-        _controllerImages.Add(gamepad.Buttons.X, ButtonX);
-        _controllerImages.Add(gamepad.Buttons.Y, ButtonY);
-        _controllerImages.Add(gamepad.Buttons.Start, ButtonStart);
-        _controllerImages.Add(gamepad.Buttons.Back, ButtonSelect);
-        _controllerImages.Add(gamepad.Buttons.LS, LJoystick);
-        _controllerImages.Add(gamepad.Buttons.RS, RJoystick);
-        _controllerImages.Add(gamepad.Buttons.LB, ButtonL1);
-        _controllerImages.Add(gamepad.Buttons.RB, ButtonR1);
-        _controllerTriggersImages.Add(gamepad.LeftTrigger, ButtonL2);
-        _controllerTriggersImages.Add(gamepad.RightTrigger, ButtonR2);
-        _controllerJoystickImages.Add(gamepad.LeftJoystick, LJoystickMovement);
-        _controllerJoystickImages.Add(gamepad.RightJoystick, RJoystickMovement);
+        _gamepadImages.Add(gamepad.Buttons.A, ButtonA);
+        _gamepadImages.Add(gamepad.Buttons.B, ButtonB);
+        _gamepadImages.Add(gamepad.Buttons.X, ButtonX);
+        _gamepadImages.Add(gamepad.Buttons.Y, ButtonY);
+        _gamepadImages.Add(gamepad.Buttons.Start, ButtonStart);
+        _gamepadImages.Add(gamepad.Buttons.Back, ButtonSelect);
+        _gamepadImages.Add(gamepad.Buttons.LS, LJoystick);
+        _gamepadImages.Add(gamepad.Buttons.RS, RJoystick);
+        _gamepadImages.Add(gamepad.Buttons.LB, ButtonL1);
+        _gamepadImages.Add(gamepad.Buttons.RB, ButtonR1);
+        _gamepadTriggersImages.Add(gamepad.LeftTrigger, ButtonL2);
+        _gamepadTriggersImages.Add(gamepad.RightTrigger, ButtonR2);
+        _gamepadJoystickImages.Add(gamepad.LeftJoystick, LJoystickMovement);
+        _gamepadJoystickImages.Add(gamepad.RightJoystick, RJoystickMovement);
     }
 
     double pressedInputOpacity = 0.5;
@@ -2013,22 +2013,22 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void Gamepad_RightTriggerReleased(object? sender, EventArgs e)
     {
-        if (_controllerTriggersImages.ContainsKey(gamepad.RightTrigger))
+        if (_gamepadTriggersImages.ContainsKey(gamepad.RightTrigger))
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                _controllerTriggersImages[gamepad.RightTrigger].Opacity = unpressedInputOpacity;
+                _gamepadTriggersImages[gamepad.RightTrigger].Opacity = unpressedInputOpacity;
             }));
         }
     }
 
     private void Gamepad_LeftTriggerReleased(object? sender, EventArgs e)
     {
-        if (_controllerTriggersImages.ContainsKey(gamepad.LeftTrigger))
+        if (_gamepadTriggersImages.ContainsKey(gamepad.LeftTrigger))
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                _controllerTriggersImages[gamepad.LeftTrigger].Opacity = unpressedInputOpacity;
+                _gamepadTriggersImages[gamepad.LeftTrigger].Opacity = unpressedInputOpacity;
             }));
         }
     }
@@ -2056,22 +2056,22 @@ The process may take some time, as the program attempts to download from GitHub 
                 UpdateRightStickImage(unpressedInputOpacity);
             }));
         }
-        else if (_controllerImages.ContainsKey(e.Button))
+        else if (_gamepadImages.ContainsKey(e.Button))
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                _controllerImages[e.Button].Opacity = unpressedInputOpacity;
+                _gamepadImages[e.Button].Opacity = unpressedInputOpacity;
             }));
         }
     }
 
     private void Gamepad_RightTriggerPressed(object? sender, EventArgs e)
     {
-        if (_controllerTriggersImages.ContainsKey(gamepad.RightTrigger))
+        if (_gamepadTriggersImages.ContainsKey(gamepad.RightTrigger))
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _controllerTriggersImages[gamepad.RightTrigger].Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _gamepadTriggersImages[gamepad.RightTrigger].Opacity == unpressedInputOpacity)
             {
                 try
                 {
@@ -2085,18 +2085,18 @@ The process may take some time, as the program attempts to download from GitHub 
 
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                _controllerTriggersImages[gamepad.RightTrigger].Opacity = pressedInputOpacity;
+                _gamepadTriggersImages[gamepad.RightTrigger].Opacity = pressedInputOpacity;
             }));
         }
     }
 
     private void Gamepad_LeftTriggerPressed(object? sender, EventArgs e)
     {
-        if (_controllerTriggersImages.ContainsKey(gamepad.LeftTrigger))
+        if (_gamepadTriggersImages.ContainsKey(gamepad.LeftTrigger))
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _controllerTriggersImages[gamepad.LeftTrigger].Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _gamepadTriggersImages[gamepad.LeftTrigger].Opacity == unpressedInputOpacity)
             {
                 try
                 {
@@ -2110,7 +2110,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                _controllerTriggersImages[gamepad.LeftTrigger].Opacity = pressedInputOpacity;
+                _gamepadTriggersImages[gamepad.LeftTrigger].Opacity = pressedInputOpacity;
             }));
         }
     }
@@ -2289,11 +2289,11 @@ The process may take some time, as the program attempts to download from GitHub 
             return;
         }
 
-        if (_controllerImages.ContainsKey(e.Button))
+        if (_gamepadImages.ContainsKey(e.Button))
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _controllerImages[e.Button].Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _gamepadImages[e.Button].Opacity == unpressedInputOpacity)
             {
                 try
                 {
@@ -2323,7 +2323,7 @@ The process may take some time, as the program attempts to download from GitHub 
             {
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    _controllerImages[e.Button].Opacity = pressedInputOpacity;
+                    _gamepadImages[e.Button].Opacity = pressedInputOpacity;
                 }));
             }
         }

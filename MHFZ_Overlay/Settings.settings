@@ -476,13 +476,13 @@
     <Setting Name="KBMLayoutY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">610</Value>
     </Setting>
-    <Setting Name="ControllerLayoutShown" Type="System.Boolean" Scope="User">
+    <Setting Name="GamepadShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ControllerLayoutX" Type="System.Double" Scope="User">
+    <Setting Name="GamepadX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">160</Value>
     </Setting>
-    <Setting Name="ControllerLayoutY" Type="System.Double" Scope="User">
+    <Setting Name="GamepadY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">550</Value>
     </Setting>
     <Setting Name="EnableInputLogging" Type="System.Boolean" Scope="User">
