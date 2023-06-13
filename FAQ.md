@@ -1,39 +1,41 @@
 # Frequently Asked Questions
 
-## Table of Contents
-
-* 1. [How to Enable Discord Rich Presence](#how-to-enable-discord-rich-presence)
-* 2. [How to Enable Speedrun Categories & Zen Mode](#how-to-enable-speedrun-categories--zen-mode)
-* 3. [How to Record Videos with the Overlay](#how-to-record-videos-with-the-overlay)
-* 4. [My game slows down when recording with the Overlay](#my-game-slows-down-when-recording-with-the-overlay-what-should-i-do)
-* 5. [How to Enable Quest Logging](#how-to-enable-quest-logging)
-* 6. [What does the version numbers mean](#what-does-the-version-numbers-mean)
-* 7. [Where do I find my logs or crash files](#where-do-i-find-my-logs-or-crash-files)
-* 8. [Does this software support other operating systems](#does-this-software-support-other-operating-systems)
-* 9. [The software messed up my computer or game](#the-software-messed-up-my-computer-or-my-game-what-should-i-do)
-* 10. [I would like to send a review](#i-would-like-to-send-a-review-or-feedback-for-the-overlay-where-do-i-send-it)
-* 11. [How to prevent the overlay from changing the game's resolution when launching it](#how-can-i-prevent-the-overlay-from-changing-the-games-resolution-when-launching-it)
-* 12. [I cannot run the setup executable](#i-cannot-run-the-setup-executable-what-should-i-do)
-* 13. [How to import/export settings from the overlay](#how-to-importexport-settings-from-the-overlay)
-* 14. [How to check the downloaded file hashes](#how-to-check-the-downloaded-file-hashes)
-* 15. [What files and folders are affected by the overlay](#what-files-and-folders-are-affected-by-the-overlay)
-* 16. [My question isn't answered here](#my-question-isnt-answered-here-how-can-i-contact-the-developers)
+- [Frequently Asked Questions](#frequently-asked-questions)
+  - [How to Enable Discord Rich Presence?](#how-to-enable-discord-rich-presence)
+  - [How to Enable Speedrun Categories \& Zen Mode?](#how-to-enable-speedrun-categories--zen-mode)
+  - [How to Record Videos with the Overlay?](#how-to-record-videos-with-the-overlay)
+  - [My game slows down when recording with the Overlay, what should I do?](#my-game-slows-down-when-recording-with-the-overlay-what-should-i-do)
+  - [How to Enable Quest Logging?](#how-to-enable-quest-logging)
+  - [What does the version numbers mean?](#what-does-the-version-numbers-mean)
+  - [Where do I find my logs or crash files?](#where-do-i-find-my-logs-or-crash-files)
+  - [Does this software support other operating systems?](#does-this-software-support-other-operating-systems)
+  - [The software messed up my computer or my game, what should I do?](#the-software-messed-up-my-computer-or-my-game-what-should-i-do)
+  - [I would like to send a review or feedback for the overlay, where do I send it?](#i-would-like-to-send-a-review-or-feedback-for-the-overlay-where-do-i-send-it)
+  - [How can I prevent the overlay from changing the game's resolution when launching it?](#how-can-i-prevent-the-overlay-from-changing-the-games-resolution-when-launching-it)
+  - [I cannot run the setup executable, what should I do?](#i-cannot-run-the-setup-executable-what-should-i-do)
+  - [How to import/export settings from the overlay?](#how-to-importexport-settings-from-the-overlay)
+  - [How to check the downloaded file hashes?](#how-to-check-the-downloaded-file-hashes)
+    - [Graphical User Interface](#graphical-user-interface)
+    - [Command Line Interface](#command-line-interface)
+  - [What files and folders are affected by the overlay?](#what-files-and-folders-are-affected-by-the-overlay)
+  - [How do I set up my controller/gamepad for the overlay program?](#how-do-i-set-up-my-controllergamepad-for-the-overlay-program)
+  - [My question isn't answered here, how can I contact the developers?](#my-question-isnt-answered-here-how-can-i-contact-the-developers)
 
 ## How to Enable Discord Rich Presence?
 
-* In Discord, My Account -> Activity Privacy -> Check "Display current activity as a status message"
+- In Discord, My Account -> Activity Privacy -> Check "Display current activity as a status message"
 
 ![Discord](./demo/discord1.png)
 
-* [Discord Developer Portal](https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
+- [Discord Developer Portal](https://discord.com/developers/applications) -> New Application -> Name it "MONSTER HUNTER FRONTIER Z"
 
 ![Discord](./demo/discord2.png)
 
-* In Developer Portal, General Information -> Copy Application ID
+- In Developer Portal, General Information -> Copy Application ID
 
 ![Discord](./demo/discord3.png)
 
-* In Overlay Settings, Paste into Overlay Settings Discord Rich Presence Application/Client ID (The ID also shows up in OAuth2 section as Client ID)
+- In Overlay Settings, Paste into Overlay Settings Discord Rich Presence Application/Client ID (The ID also shows up in OAuth2 section as Client ID)
 
 ![Discord](./demo/discord4.png)
 
@@ -43,16 +45,16 @@
 
 Use the preset option found in the General tab. Keep reading if you want to know how to do it manually.
 
-* Speedrun Mode Categories: SOLO ONLY. Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
+- Speedrun Mode Categories: SOLO ONLY. Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
 
-* Time Attack: Do not use diva skills.
-* Freestyle: Use diva skills with/without Secret Technique Style Rank Skill.
+- Time Attack: Do not use diva skills.
+- Freestyle: Use diva skills with/without Secret Technique Style Rank Skill.
 
 **Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located inside the database folder, which is inside your game folder. Don't lose your speedrun records!
 
 ![Discord Rich Presence](./demo/discord8.png)
 
-* Zen Mode: Disable **everything** (Monster Icon and Discord Rich Presence optional)
+- Zen Mode: Disable **everything** (Monster Icon and Discord Rich Presence optional)
 
 ![Discord Rich Presence](./demo/discord11.png)
 
@@ -74,13 +76,13 @@ Use the preset option found in the General tab. Keep reading if you want to know
 
 If you're experiencing a slowdown in your game while recording with OBS and using the overlay, there are a few potential reasons and solutions to consider:
 
-* System resources: If your computer has limited CPU or GPU resources then recording gameplay with OBS and running an overlay can be resource-intensive. Try closing any unnecessary programs, lowering in-game graphics settings, or upgrading your hardware to meet the requirements for recording and overlay usage.
+- System resources: If your computer has limited CPU or GPU resources then recording gameplay with OBS and running an overlay can be resource-intensive. Try closing any unnecessary programs, lowering in-game graphics settings, or upgrading your hardware to meet the requirements for recording and overlay usage.
 
-* Overlay settings: The settings of the overlay can also impact performance. Make sure your overlay settings are optimized for performance, such as using lower resolution and disabling any unnecessary features. Try one of the configuration presets, such as Speedrun, Zen or HP only. Lastly, try reducing the maximum resolution values. As a last resort, try lowering the Refresh Rate, at the cost of stats accuracy.
+- Overlay settings: The settings of the overlay can also impact performance. Make sure your overlay settings are optimized for performance, such as using lower resolution and disabling any unnecessary features. Try one of the configuration presets, such as Speedrun, Zen or HP only. Lastly, try reducing the maximum resolution values. As a last resort, try lowering the Refresh Rate, at the cost of stats accuracy.
 
-* OBS settings: Review your OBS settings to ensure they are optimized for recording. Adjusting bitrate, resolution, and frame rate settings in OBS can help improve performance while recording with an overlay.
+- OBS settings: Review your OBS settings to ensure they are optimized for recording. Adjusting bitrate, resolution, and frame rate settings in OBS can help improve performance while recording with an overlay.
 
-* Test on different hardware: Test your overlay program and OBS on different hardware configurations to determine if the issue persists across different systems, which can help identify if it's a hardware-specific issue.
+- Test on different hardware: Test your overlay program and OBS on different hardware configurations to determine if the issue persists across different systems, which can help identify if it's a hardware-specific issue.
 
 ## How to Enable Quest Logging?
 
@@ -95,11 +97,11 @@ If you're experiencing a slowdown in your game while recording with OBS and usin
 
 We use [semantic versioning](https://semver.org/) to number our releases. In semantic versioning, versions are represented as "major.minor.patch" numbers, such as "1.2.3". Here's what each number signifies:
 
-* **Major version**: A change in the major version number indicates a significant change that may require you to upgrade your software. This typically includes breaking changes that are not backwards-compatible.
+- **Major version**: A change in the major version number indicates a significant change that may require you to upgrade your software. This typically includes breaking changes that are not backwards-compatible.
 
-* **Minor version**: A change in the minor version number indicates new features or enhancements that have been added to the software.
+- **Minor version**: A change in the minor version number indicates new features or enhancements that have been added to the software.
 
-* **Patch version**: A change in the patch version number indicates bug fixes and small improvements.
+- **Patch version**: A change in the patch version number indicates bug fixes and small improvements.
 
 Major version zero (0.y.z) is for initial development. Anything MAY change at any time. The public API SHOULD NOT be considered stable.
 
@@ -171,9 +173,9 @@ This way, there are no lost settings when updating, and you don't have to make t
 
 Upon first usage, a `database` folder is made on the location of your current `mhf.exe` process. Inside the `database` folder are the following:
 
-* `MHFZ_Overlay.sqlite`: the database file where all your past quest logs and other information is stored. Keep this backed up.
+- `MHFZ_Overlay.sqlite`: the database file where all your past quest logs and other information is stored. Keep this backed up.
 
-* `previous-version.txt`: used by the program to keep track of previous versions. **Do not edit this** unless told to by the developer or if you really know what you are doing.
+- `previous-version.txt`: used by the program to keep track of previous versions. **Do not edit this** unless told to by the developer or if you really know what you are doing.
 
 If you ever update the database from the program, an additional folder gets made inside the `database` folder, called `backups`. This is where database backups are stored.
 
@@ -182,6 +184,14 @@ Additionally, in the overlay folder a file called `reference_schema.json` is mad
 If you are using multiple `mhf.exe` files, then the overlay would make a database folder in each of their directories upon usage (it checks the current directory location of the current `mhf.exe` running, at database initialization).
 
 For debugging purposes, the overlay also includes a log file called `logs.log`, see more information [here](#where-do-i-find-my-logs-or-crash-files).
+
+## How do I set up my controller/gamepad for the overlay program?
+
+If you are using an XBox controller or similar, you only need to enable the controller layout option in the overlay settings. However, if you are using DS4 or similar, you may need additional steps in order for the overlay to be able to detect your inputs:
+
+1. Follow the instructions in the README [here](https://github.com/Ryochan7/DS4Windows).
+2. You want to look for the Output Controller option and select Xbox 360.
+3. Apply changes and restart overlay.
 
 ## My question isn't answered here, how can I contact the developers?
 
