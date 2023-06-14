@@ -208,7 +208,7 @@ If you are using an XBox controller or similar, you only need to enable the cont
 |Monster Defense|✔️|✔️|✔️|
 |Monster Size|✔️|✔️|✔️|
 |Monster Ailments|✔️|✔️|✔️|
-|Timer Options|✔️|❌|❌|
+|Timer Options|✔️|❌|✔️|
 |Sharpness Number|✔️|❌|❌|
 |Damage Numbers|✔️|✔️|✔️|
 |Damage Numbers Options|✔️|❌|❌|
@@ -245,18 +245,18 @@ If you are using an XBox controller or similar, you only need to enable the cont
 |Session Time|✔️|❌|❌|
 |Gear Info|✔️|❌|❌|
 |Map Info|✔️|❌|❌|
-|Font Options|✔️|❌|❌|
+|Font Options|✔️|✔️|✔️|
 |Localization|❌|❌|❌|
 |System Tray|✔️|❌|❌|
 |Auto-Close|✔️|❌|❌|
 |Performance Options|✔️|❌|❌|
 |Auto-Update|✔️|❌|❌|
 |Hotkeys|✔️|✔️|✔️|
-|Auto-Hide|✔️|❌|❌|
-|Drag and Drop|✔️|❌|❌|
+|Auto-Hide|✔️|✔️|✔️|
+|Drag and Drop|✔️|✔️|❌|
 |Logging|✔️|❌|❌|
 |Logging Options|✔️|❌|❌|
-|Color Options|✔️|❌|❌|
+|Color Options|✔️|✔️|✔️|
 |Buff Icons |❌|❌|❌
 |Debuff Icons |❌|❌|❌|
 |Hub Activities|❌|❌|❌|
