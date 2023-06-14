@@ -322,6 +322,7 @@ As an added bonus:
 |Multiplayer Stats|❌|✔️|
 |Quest Runs Database|✔️|✔️|
 |Database Backups|✔️ Local|✔️ Account-based|
+|Past Runs Info|✔️|$5 for full feature|
 |Achievements|✔️|❌|
 |Show Quest Change|✔️|❌|
 |Show Area Change|✔️|❌|
