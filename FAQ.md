@@ -362,7 +362,7 @@ As an added bonus:
 |GitHub Milestones|✔️|✔️|
 |GitHub Projects|✔️|✔️|
 |Code Analysis|✔️ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)|Private|
-|Code Size|![img](https://img.shields.io/github/languages/code-size/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/languages/code-size/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/languages/code-size/hunterpie/hunterpie)|
+|Code Size|![img](https://img.shields.io/github/languages/code-size/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/languages/code-size/hunterpie/hunterpie)|
 |#1 Contributor Commits|DorielRivalet 593 (+523,769 -460,614)|Haato3o 935 (+168,934  -105,956)|
 |Contributors|4|17|
 |Commits|![img](https://img.shields.io/github/commit-activity/y/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/commit-activity/y/hunterpie/hunterpie)|
