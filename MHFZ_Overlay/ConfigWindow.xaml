@@ -865,9 +865,6 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <ui:Button Appearance="Primary" Margin="5,0,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Open Settings Folder" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click"/>
@@ -880,13 +877,14 @@
                                 <ComboBoxItem>HP Only</ComboBoxItem>
                             </ComboBox>
 
-                            <TextBlock ToolTip="Recommended to change if your resolution is lower" Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Max Resolution Width"/>
-                            <ui:TextBox PlaceholderText="Enter Max Resolution Width" IsUndoEnabled="False" TextAlignment="Center" Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" PreviewTextInput="ValidateNumber"/>
-                            <TextBlock ToolTip="Recommended to change if your resolution is lower" Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Max Resolution Height"/>
-                            <ui:TextBox PlaceholderText="Enter Max Resolution Height" IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock ToolTip="Recommended to change if your resolution is lower" Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Resolution"/>
+                             <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox PlaceholderText="Enter Max Resolution Width" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox Margin="5,0,0,0" x:Name="ResolutionHeightTextBox" PlaceholderText="Enter Max Resolution Height" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
 
-                            <TextBlock Text="Refresh Rate (Restart required)" Margin="5,5,5,5" ToolTip="Select the Refresh Rate. Lower values might improve performance at the cost of statistics accuracy (including in database). Recommended to leave at 30 for speedruns, but for streams you can set it to 1 just fine." Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"/>
-                            <DockPanel Grid.Row="4" Grid.Column="1">
+                            <TextBlock Text="Refresh Rate (Restart required)" Margin="5,5,5,5" ToolTip="Select the Refresh Rate. Lower values might improve performance at the cost of statistics accuracy (including in database). Recommended to leave at 30 for speedruns, but for streams you can set it to 1 just fine." Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"/>
+                            <DockPanel Grid.Row="3" Grid.Column="1">
                                 <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="80">
                                     <TextBox.Text>
                                         <Binding Path="RefreshRate" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
@@ -899,16 +897,16 @@
                                 <Slider IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="Both" Minimum="1" Maximum="30" Value="{Binding Path=RefreshRate, Source={StaticResource Settings}}"  />
                             </DockPanel>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Primary Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Primary Font Family"/>
-                                <ComboBox Grid.Column="1" Grid.Row="5" x:Name="PrimaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=PrimaryFontFamily}">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock FontFamily="{Binding}" Text="{Binding}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                                <TextBlock x:Name="PrimaryFontSizeTextBlock" Text="Primary Font Size" Margin="5,5,5,5" ToolTip="Select the Primary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"/>
-                            <DockPanel Grid.Row="6" Grid.Column="1">
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Primary Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Primary Font Family"/>
+                            <ComboBox Grid.Column="1" Grid.Row="4" x:Name="PrimaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=PrimaryFontFamily}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontFamily="{Binding}" Text="{Binding}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock x:Name="PrimaryFontSizeTextBlock" Text="Primary Font Size" Margin="5,5,5,5" ToolTip="Select the Primary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"/>
+                            <DockPanel Grid.Row="5" Grid.Column="1">
                                 <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="80">
                                     <TextBox.Text>
                                         <Binding Path="PrimaryFontSize" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
@@ -920,8 +918,8 @@
                                 </ui:TextBox>
                                 <Slider x:Name="PrimaryFontSizeSlider" IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="Both" Minimum="8" Maximum="36" Value="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}"  />
                             </DockPanel>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Primary Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Primary Font Weight"/>
-                            <ComboBox Grid.Row="7" Grid.Column="1" x:Name="PrimaryFontWeightComboBox"
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Primary Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Primary Font Weight"/>
+                            <ComboBox Grid.Row="6" Grid.Column="1" x:Name="PrimaryFontWeightComboBox"
                             SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=PrimaryFontWeight}">
                                 <ComboBoxItem Content="Normal" FontWeight="Normal" />
                                 <ComboBoxItem Content="Thin" FontWeight="Thin" />
@@ -934,16 +932,16 @@
                                 <ComboBoxItem Content="Black" FontWeight="Black" />
                             </ComboBox>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Secondary Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Secondary Font Family"/>
-                                <ComboBox Grid.Column="1" Grid.Row="8" x:Name="SecondaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontFamily}">
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Secondary Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Secondary Font Family"/>
+                                <ComboBox Grid.Column="1" Grid.Row="7" x:Name="SecondaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontFamily}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock FontFamily="{Binding}" Text="{Binding}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <TextBlock x:Name="SecondaryFontSizeTextBlock" Text="Secondary Font Size" Margin="5,5,5,5" ToolTip="Select the Secondary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"/>
-                            <DockPanel Grid.Row="9" Grid.Column="1">
+                                <TextBlock x:Name="SecondaryFontSizeTextBlock" Text="Secondary Font Size" Margin="5,5,5,5" ToolTip="Select the Secondary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"/>
+                            <DockPanel Grid.Row="8" Grid.Column="1">
                                 <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="80">
                                     <TextBox.Text>
                                         <Binding Path="SecondaryFontSize" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
@@ -955,8 +953,8 @@
                                 </ui:TextBox>
                                 <Slider x:Name="SecondaryFontSizeSlider" IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="Both" Minimum="8" Maximum="36" Value="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}"  />
                             </DockPanel>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Secondary Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Secondary Font Weight"/>
-                            <ComboBox Grid.Row="10" Grid.Column="1" x:Name="SecondaryFontWeightComboBox"
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Secondary Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Secondary Font Weight"/>
+                            <ComboBox Grid.Row="9" Grid.Column="1" x:Name="SecondaryFontWeightComboBox"
                             SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontWeight}">
                                 <ComboBoxItem Content="Normal" FontWeight="Normal" />
                                 <ComboBoxItem Content="Thin" FontWeight="Thin" />
@@ -969,11 +967,16 @@
                                 <ComboBoxItem Content="Black" FontWeight="Black" />
                             </ComboBox>
 
-                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="11" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="11" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="12" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="12" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
-
+                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="10" Text="Text Background Color" Style="{StaticResource ConfigTextBox}"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="10" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="11" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="11" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
+                            <!-- TODO: add requires restart notices -->
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select the rendering mode. Hardware: The WPF rendering is in hardware, if possible; software otherwise. Software: The WPF rendering is in software only." Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Rendering Mode"/>
+                            <ComboBox Grid.Column="1" Grid.Row="12" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=RenderingMode}">
+                                <ComboBoxItem>Hardware</ComboBoxItem>
+                                <ComboBoxItem>Software</ComboBoxItem>
+                            </ComboBox>
                             <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="13" Text="Always Show Monster Info" Style="{StaticResource ConfigTextBox}" ToolTip="If disabled, information will only be shown in quest runs"/>
                             <CheckBox HorizontalAlignment="Center" BorderBrush="{StaticResource Red}" BorderThickness="2" Grid.Column="1" Grid.Row="13"  IsChecked="{Binding Source={StaticResource Settings}, Path=AlwaysShowMonsterInfo}"/>
                             <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="14" Text="Always Show Player Info" Style="{StaticResource ConfigTextBox}" ToolTip="If disabled, information will only be shown in quest runs"/>
@@ -981,50 +984,51 @@
 
                             <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster 1 Icon"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=Monster1IconShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Monster 1 Icon X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster 1 Icon Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan, Pioneer, Raviente, Cities, Guild Hall, Tavern, Interception or Daily quests to display the correct information. You may have to do a normal quest first in order to load the correct values." Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Caravan/Pioneer/Raviente/Interception/Cities/Tavern/Guild Hall/Daily Quest Override"/>
-                            <ComboBox Grid.Column="1" Grid.Row="18" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}">
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Monster 1 Icon Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="16" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox PlaceholderText="X" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=Monster1IconX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox PlaceholderText="Y" Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=Monster1IconY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Toggle on when doing Caravan, Pioneer, Raviente, Cities, Guild Hall, Tavern, Interception or Daily quests to display the correct information. You may have to do a normal quest first in order to load the correct values. Might make some custom quests work better." Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Caravan/Pioneer/Raviente/Interception/Cities/Tavern/Guild Hall/Daily Quest Override"/>
+                            <ComboBox Grid.Column="1" Grid.Row="17" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=EnableCaravanOverride}">
                                 <ComboBoxItem>Automatic</ComboBoxItem>
                                 <ComboBoxItem>Enabled</ComboBoxItem>
                                 <ComboBoxItem>Disabled</ComboBoxItem>
                             </ComboBox>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Enable Update Notifier" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Show Update Notifier at Startup"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="19" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableUpdateNotifier}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Enable Update Notifier" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Show Update Notifier at Startup"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="18" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableUpdateNotifier}"/>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select ferias version (re-open configuration window)" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Ferias Version"/>
-                            <ComboBox Grid.Column="1" Grid.Row="20" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=FeriasVersionLink}">
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select ferias version (re-open configuration window)" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Ferias Version"/>
+                            <ComboBox Grid.Column="1" Grid.Row="19" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=FeriasVersionLink}">
                                 <ComboBoxItem>https://dorielrivalet.github.io/mhfz-ferias-english-project/</ComboBoxItem>
                                 <ComboBoxItem>https://xl3lackout.github.io/MHFZ-Ferias-English-Project/</ComboBoxItem>
                             </ComboBox>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show progress bar icons" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Progress Bar Icons"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="21" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ProgressBarIconsShown}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show progress bar icons" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Progress Bar Icons"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="20" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ProgressBarIconsShown}"/>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show overlay stats icons (you may have to reposition the cut-off stat text description)" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Overlay Stats Icons"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="22" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayStatIconShown}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show overlay stats icons (you may have to reposition the cut-off stat text description)" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Overlay Stats Icons"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="21" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayStatIconShown}"/>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Location Name when switching location" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Location Name"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="23" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=LocationTextShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Location Name X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="24" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=LocationTextX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Location Name Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="25" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=LocationTextY}"  PreviewTextInput="ValidateNumber"/>
-
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Name when entering quests" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Quest Name"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="26" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=QuestNameShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Quest Name X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="27" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestNameX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0"  Text="Quest Name Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="28" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestNameY}"  PreviewTextInput="ValidateNumber"/>
-
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show a warning message box when starting the overlay outside Mezeporta" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0"  Text="Outside Mezeporta Startup Warning"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="29" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableOutsideMezeportaLoadingWarning}"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select Logging Level. Each log entry has a level. Specifies the minimum level where that level and higher levels are included. For example, if the minimum level is Info, then Info, Warn, Error and Fatal are logged, but Debug and Trace are ignored." Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0"  Text="Log Level"/>
-                            <ComboBox x:Name="LogLevelComboBox" Grid.Column="1" Grid.Row="30" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=LogLevel}">
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Location Name when switching location" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Location Name"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="22" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=LocationTextShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Location Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="23" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox PlaceholderText="X" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=LocationTextX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox Margin="5,0,0,0" PlaceholderText="Y" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=LocationTextY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Name when entering quests" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Quest Name"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="24" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=QuestNameShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Quest Name Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="25" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" PlaceholderText="X" TextAlignment="Center"  Text="{Binding Source={StaticResource Settings},Path=QuestNameX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox Margin="5,0,0,0" PlaceholderText="Y" IsUndoEnabled="False" TextAlignment="Center"  Text="{Binding Source={StaticResource Settings},Path=QuestNameY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show a warning message box when starting the overlay outside Mezeporta" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Outside Mezeporta Startup Warning"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="26" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableOutsideMezeportaLoadingWarning}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select Logging Level. Each log entry has a level. Specifies the minimum level where that level and higher levels are included. For example, if the minimum level is Info, then Info, Warn, Error and Fatal are logged, but Debug and Trace are ignored." Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Log Level"/>
+                            <ComboBox x:Name="LogLevelComboBox" Grid.Column="1" Grid.Row="27" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=LogLevel}">
                                 <ComboBoxItem>Trace</ComboBoxItem>
                                 <ComboBoxItem>Debug</ComboBoxItem>
                                 <ComboBoxItem>Info</ComboBoxItem>
