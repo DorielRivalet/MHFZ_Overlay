@@ -234,6 +234,7 @@ If you are using an XBox controller or similar, you only need to enable the cont
 |Multiplayer Stats|❌|❌|❌|
 |Quest Runs Database|✔️|❌|❌|
 |Database Backups|✔️ Local|❌|❌|
+|Past Quests Info|✔️|❌|❌|
 |Achievements|✔️|❌|❌|
 |Show Quest Change|✔️|❌|❌
 |Show Area Change|✔️|❌|❌|
@@ -322,7 +323,7 @@ As an added bonus:
 |Multiplayer Stats|❌|✔️|
 |Quest Runs Database|✔️|✔️|
 |Database Backups|✔️ Local|✔️ Account-based|
-|Past Runs Info|✔️|$5 for full feature|
+|Past Quests Info|✔️|$5 for full feature|
 |Achievements|✔️|❌|
 |Show Quest Change|✔️|❌|
 |Show Area Change|✔️|❌|
