@@ -19,6 +19,7 @@
     - [Command Line Interface](#command-line-interface)
   - [What files and folders are affected by the overlay?](#what-files-and-folders-are-affected-by-the-overlay)
   - [How do I set up my controller/gamepad for the overlay program?](#how-do-i-set-up-my-controllergamepad-for-the-overlay-program)
+  - [How does this overlay compare to other Monster Hunter overlays?](#how-does-this-overlay-compare-to-other-monster-hunter-overlays)
   - [My question isn't answered here, how can I contact the developers?](#my-question-isnt-answered-here-how-can-i-contact-the-developers)
 
 ## How to Enable Discord Rich Presence?
@@ -192,6 +193,182 @@ If you are using an XBox controller or similar, you only need to enable the cont
 1. Follow the instructions in the README [here](https://github.com/Ryochan7/DS4Windows).
 2. You want to look for the Output Controller option and select Xbox 360.
 3. Apply changes and restart overlay.
+
+## How does this overlay compare to other Monster Hunter overlays?
+
+|    | mhf-z overlay v0.25.0 (DorielRivalet) | MHFZ_Overlay v0.1.0 (Imulion) | mhf_displayer v1.6.2 (suzaku01) |
+|:----------|:---------:|:---------:|:---------:|
+|Discord Rich Presence|✔️|❌|❌|
+|Rich Presence Quest Name|✔️|❌|❌|
+|Rich Presence Hunter Stats|✔️ Hit Count, etc.|❌|❌|
+|Monster HP|✔️|✔️|✔️|
+|Monster Effective HP|✔️|❌|❌|
+|Monster Parts|✔️|❌|✔️|
+|Monster Attack|✔️|✔️|✔️|
+|Monster Defense|✔️|✔️|✔️|
+|Monster Size|✔️|✔️|✔️|
+|Monster Ailments|✔️|✔️|✔️|
+|Timer Options|✔️|❌|❌|
+|Sharpness Number|✔️|❌|❌|
+|Damage Numbers|✔️|✔️|✔️|
+|Damage Numbers Options|✔️|❌|❌|
+|DPS Graph|✔️|❌|❌|
+|Actions per Minute Graph|✔️|❌|❌|
+|True Raw Graph|✔️|❌|❌|
+|Hits/s Graph|✔️|❌|❌|
+|Hit Count|✔️|✔️|✔️|
+|Hits/s|✔️|❌|❌|
+|Block Count|✔️|❌|❌|
+|Blocks/s|✔️|❌|❌|
+|True Raw|✔️|✔️|✔️|
+|Actions per Minute|✔️|❌|❌|
+|Attempts Counter|✔️|❌|❌|
+|Quest Runs Youtube Link|✔️|❌|❌|
+|Personal Best Time|✔️|❌|❌|
+|Personal Best Attempts|✔️|❌|❌|
+|Completions Counter|✔️|❌|❌|
+|Run Pace|✔️ Color|❌|❌|
+|Settings Save on Update|✔️|❌|❌|
+|Save Stats to File|✔️|❌|❌|
+|Copy Stats to Clipboard|✔️|❌|❌|
+|Multiplayer Stats|❌|❌|❌|
+|Quest Runs Database|✔️|❌|❌|
+|Database Backups|✔️ Local|❌|❌|
+|Achievements|✔️|❌|❌|
+|Show Quest Change|✔️|❌|❌
+|Show Area Change|✔️|❌|❌|
+|KBM Layout|✔️|❌|❌
+|Gamepad Layout|✔️|❌|❌|
+|Input Logs|✔️|❌|❌|
+|Quest ID|✔️|❌|❌|
+|Session Time|✔️|❌|❌|
+|Gear Info|✔️|❌|❌|
+|Map Info|✔️|❌|❌|
+|Font Options|✔️|❌|❌|
+|Localization|❌|❌|❌|
+|System Tray|✔️|❌|❌|
+|Auto-Close|✔️|❌|❌|
+|Performance Options|✔️|❌|❌|
+|Auto-Update|✔️|❌|❌|
+|Hotkeys|✔️|✔️|✔️|
+|Auto-Hide|✔️|❌|❌|
+|Drag and Drop|✔️|❌|❌|
+|Logging|✔️|❌|❌|
+|Logging Options|✔️|❌|❌|
+|Color Options|✔️|❌|❌|
+|Buff Icons |❌|❌|❌
+|Debuff Icons |❌|❌|❌|
+|Hub Activities|❌|❌|❌|
+|Settings Search|❌|❌|❌|
+|Website|❌|❌|❌|
+|Branding|❌ WIP|❌|❌|
+|End-User Documentation|✔️|❌|❌|
+|Technical Documentation|Incomplete|❌|❌|
+|License File|✔️ MIT|❌ |✔️ MIT |
+|Unit Testing|❌ WIP|❌|❌|
+|Changelog|✔️|❌|❌|
+|GitHub Actions|✔️|❌|❌|
+|Issue Template|✔️|❌|❌|
+|Pull Request Template|✔️|❌|❌|
+|Contributing File|❌|❌|❌|
+|GitHub Milestones|✔️|❌|❌|
+|GitHub Projects|✔️|❌|❌|
+|Code Analysis|✔️ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)|❌|❌|
+|Code Size|![img](https://img.shields.io/github/languages/code-size/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/languages/code-size/imulion/mhfz_overlay)|![img](https://img.shields.io/github/languages/code-size/suzaku01/mhf_displayer)|
+|#1 Contributor Commits|DorielRivalet 593 (+523,769 -460,614)|Imulion 14 (+3,427 -5)|suzaku01 68 (+9,745 -6,084)|
+|Contributors|4|1|1|
+|Commits|![img](https://img.shields.io/github/commit-activity/y/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/commit-activity/y/imulion/mhfz_overlay)|![img](https://img.shields.io/github/commit-activity/y/suzaku01/mhf_displayer)|
+|Last Commit|![img](https://img.shields.io/github/last-commit/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/last-commit/imulion/mhfz_overlay)|![img](https://img.shields.io/github/last-commit/suzaku01/mhf_displayer)|
+|Lines of Code|74405|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/imulion/mhfz_overlay)|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/suzaku01/mhf_displayer)|
+|Comments|4187|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/imulion/mhfz_overlay?category=comments)|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/suzaku01/mhf_displayer?category=comments)|
+
+As an added bonus:
+
+|    | mhf-z overlay v0.25.0 (DorielRivalet) | HunterPie v2.8.0 (HunterPie) |
+|:----------|:---------:|:---------:|
+|Discord Rich Presence|✔️|✔️|
+|Rich Presence Quest Name|✔️|❌|
+|Rich Presence Hunter Stats|✔️ Hit Count, etc.|✔️ Rank Only|
+|Monster HP|✔️|✔️|
+|Monster Effective HP|✔️|✔️|
+|Monster Parts|✔️|✔️|
+|Monster Attack|✔️|❌|
+|Monster Defense|✔️|❌|
+|Monster Size|✔️|✔️ Crown Icon|
+|Monster Ailments|✔️|✔️|
+|Timer Options|✔️|❌|
+|Sharpness Number|✔️|✔️|
+|Damage Numbers|✔️|❌ Not in World, Built-in in Rise|
+|Damage Numbers Options|✔️|❌|
+|DPS Graph|✔️|✔️ Multiplayer|
+|Actions per Minute Graph|✔️|❌|
+|True Raw Graph|✔️|❌|
+|Hits/s Graph|✔️|❌|
+|Hit Count|✔️|❌|
+|Hits/s|✔️|❌|
+|Block Count|✔️|❌|
+|Blocks/s|✔️|❌|
+|True Raw|✔️|✔️|
+|Actions per Minute|✔️|❌|
+|Attempts Counter|✔️|❌|
+|Quest Runs Youtube Link|✔️|❌|
+|Personal Best Time|✔️|❌|
+|Personal Best Attempts|✔️|❌|
+|Completions Counter|✔️|❌|
+|Run Pace|✔️ Color|❌|
+|Settings Save on Update|✔️|✔️|
+|Save Stats to File|✔️|❌|
+|Copy Stats to Clipboard|✔️|❌|
+|Multiplayer Stats|❌|✔️|
+|Quest Runs Database|✔️|✔️|
+|Database Backups|✔️ Local|✔️ Account-based|
+|Achievements|✔️|❌|
+|Show Quest Change|✔️|❌|
+|Show Area Change|✔️|❌|
+|KBM Layout|✔️|❌|
+|Gamepad Layout|✔️|❌|
+|Input Logs|✔️|❌|
+|Quest ID|✔️|❌|
+|Session Time|✔️|❌|
+|Gear Info|✔️ Guild Card|❌|
+|Map Info|✔️|Built-in by Game|
+|Font Options|✔️|❌|
+|Localization|❌|✔️|
+|System Tray|✔️|✔️|
+|Auto-Close|✔️|✔️|
+|Performance Options|✔️|✔️|
+|Auto-Update|✔️|✔️|
+|Hotkeys|✔️|✔️|
+|Auto-Hide|✔️|✔️ Unfocused option|
+|Drag and Drop|✔️|✔️ Designer Mode|
+|Logging|✔️ File|✔️ Console|
+|Logging Options|✔️|❌|
+|Color Options|✔️|❌|
+|Buff Icons |❌|✔️|
+|Debuff Icons |❌|✔️|
+|Hub Activities|❌|✔️|
+|Settings Search|❌|✔️ by Section|
+|Website|❌|✔️|
+|Branding|❌ WIP|✔️|
+|End-User Documentation|✔️|✔️|
+|Technical Documentation|Incomplete|Incomplete|
+|License File|✔️ MIT|✔️ MIT |
+|Unit Testing|❌WIP|✔️|
+|Changelog|✔️|✔️|
+|GitHub Actions|✔️|✔️|
+|Issue Template|✔️|❌|
+|Pull Request Template|✔️|❌|
+|Contributing File|❌|❌|
+|GitHub Milestones|✔️|✔️|
+|GitHub Projects|✔️|✔️|
+|Code Analysis|✔️ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)|Private|
+|Code Size|![img](https://img.shields.io/github/languages/code-size/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/languages/code-size/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/languages/code-size/hunterpie/hunterpie)|
+|#1 Contributor Commits|DorielRivalet 593 (+523,769 -460,614)|Haato3o 935 (+168,934  -105,956)|
+|Contributors|4|17|
+|Commits|![img](https://img.shields.io/github/commit-activity/y/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/commit-activity/y/hunterpie/hunterpie)|
+|Last Commit|![img](https://img.shields.io/github/last-commit/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/last-commit/hunterpie/hunterpie)|
+|Lines of Code|74405|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/hunterpie/hunterpie)|
+|Comments|4187|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/hunterpie/hunterpie?category=comments)|
 
 ## My question isn't answered here, how can I contact the developers?
 

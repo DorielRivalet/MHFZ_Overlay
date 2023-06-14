@@ -11,6 +11,30 @@
 - [Testing](./testing.md): explains our unit testing implementation and objectives.
 - [Performance](./performance.md): explains the performance characteristics and goals.
 
+## scc
+
+| Language    | Files | Lines | Blanks | Comments | Code  | Complexity |
+|-------------|-------|-------|--------|----------|-------|------------|
+| C#          | 86    | 42828 | 3784   | 3669     | 35375 | 4030       |
+| XAML        | 69    | 9277  | 297    | 418      | 8562  | 1          |
+| Markdown    | 18    | 2629  | 662    | 0        | 1967  | 0          |
+| YAML        | 13    | 414   | 27     | 46       | 341   | 0          |
+| Plain Text  | 4     | 390   | 46     | 0        | 344   | 0          |
+| JSON        | 2     | 17595 | 0      | 0        | 17595 | 0          |
+| MSBuild     | 2     | 731   | 14     | 1        | 716   | 1          |
+| CSV         | 1     | 178   | 0      | 0        | 178   | 0          |
+| JavaScript  | 1     | 135   | 0      | 0        | 135   | 0          |
+| Shell       | 1     | 4     | 1      | 1        | 2     | 0          |
+| gitignore   | 1     | 224   | 43     | 52       | 129   | 0          |
+| Total       | 198   | 74405 | 4874   | 4187     | 65344 | 4032       |
+
+|||
+|-|-|
+| Estimated Cost to Develop (organic)       | $2,175,511            |
+| Estimated Schedule Effort (organic)      | 18.48 months          |
+| Estimated People Required (organic)      | 10.46                 |
+| Processed                                |4129039 bytes, 4.129 megabytes (SI)|
+
 ## Type Hierarchy
 
 ![Type Hierarchy](./res/img/type-hierarchy.png)
