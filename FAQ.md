@@ -261,6 +261,8 @@ If you are using an XBox controller or similar, you only need to enable the cont
 |Debuff Icons |❌|❌|❌|
 |Hub Activities|❌|❌|❌|
 |Settings Search|❌|❌|❌|
+|Settings Presets|✔️|❌|❌|
+|Overlay Watermark|✔️|❌|❌|
 |Website|❌|❌|❌|
 |Branding|❌ WIP|❌|❌|
 |End-User Documentation|✔️|❌|❌|
@@ -350,6 +352,8 @@ As an added bonus:
 |Debuff Icons |❌|✔️|
 |Hub Activities|❌|✔️|
 |Settings Search|❌|✔️ by Section|
+|Settings Presets|✔️|Uses Widgets instead|
+|Overlay Watermark|✔️|❌|
 |Website|❌|✔️|
 |Branding|❌ WIP|✔️|
 |End-User Documentation|✔️|✔️|
