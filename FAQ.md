@@ -78,7 +78,7 @@ If you're experiencing a slowdown in your game while recording with OBS and usin
 
 - System resources: If your computer has limited CPU or GPU resources then recording gameplay with OBS and running an overlay can be resource-intensive. Try closing any unnecessary programs, lowering in-game graphics settings, or upgrading your hardware to meet the requirements for recording and overlay usage.
 
-- Overlay settings: The settings of the overlay can also impact performance. Make sure your overlay settings are optimized for performance, such as using lower resolution and disabling any unnecessary features. Try one of the configuration presets, such as Speedrun, Zen or HP only. Lastly, try reducing the maximum resolution values. As a last resort, try lowering the Refresh Rate, at the cost of stats accuracy.
+- Overlay settings: The settings of the overlay can also impact performance. Make sure your overlay settings are optimized for performance, such as using lower resolution and disabling any unnecessary features. Try one of the configuration presets, such as Speedrun, Zen or HP only. Try setting Rendering Mode to either Software or Hardware. As a last resort, try lowering the Refresh Rate, at the cost of stats accuracy.
 
 - OBS settings: Review your OBS settings to ensure they are optimized for recording. Adjusting bitrate, resolution, and frame rate settings in OBS can help improve performance while recording with an overlay.
 
