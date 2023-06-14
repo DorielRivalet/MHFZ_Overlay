@@ -3178,5 +3178,113 @@ namespace MHFZ_Overlay {
                 this["KBMLayoutSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double PlayerAttackGraphWidth {
+            get {
+                return ((double)(this["PlayerAttackGraphWidth"]));
+            }
+            set {
+                this["PlayerAttackGraphWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double PlayerDPSGraphWidth {
+            get {
+                return ((double)(this["PlayerDPSGraphWidth"]));
+            }
+            set {
+                this["PlayerDPSGraphWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double PlayerHitsPerSecondGraphWidth {
+            get {
+                return ((double)(this["PlayerHitsPerSecondGraphWidth"]));
+            }
+            set {
+                this["PlayerHitsPerSecondGraphWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double PlayerAPMGraphWidth {
+            get {
+                return ((double)(this["PlayerAPMGraphWidth"]));
+            }
+            set {
+                this["PlayerAPMGraphWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double PlayerAttackGraphHeight {
+            get {
+                return ((double)(this["PlayerAttackGraphHeight"]));
+            }
+            set {
+                this["PlayerAttackGraphHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double PlayerDPSGraphHeight {
+            get {
+                return ((double)(this["PlayerDPSGraphHeight"]));
+            }
+            set {
+                this["PlayerDPSGraphHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double PlayerHitsPerSecondGraphHeight {
+            get {
+                return ((double)(this["PlayerHitsPerSecondGraphHeight"]));
+            }
+            set {
+                this["PlayerHitsPerSecondGraphHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double PlayerAPMGraphHeight {
+            get {
+                return ((double)(this["PlayerAPMGraphHeight"]));
+            }
+            set {
+                this["PlayerAPMGraphHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Hardware")]
+        public string RenderingMode {
+            get {
+                return ((string)(this["RenderingMode"]));
+            }
+            set {
+                this["RenderingMode"] = value;
+            }
+        }
     }
 }

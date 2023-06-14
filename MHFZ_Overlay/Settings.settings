@@ -791,5 +791,32 @@
     <Setting Name="KBMLayoutSize" Type="System.Double" Scope="User">
       <Value Profile="(Default)">150</Value>
     </Setting>
+    <Setting Name="PlayerAttackGraphWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="PlayerDPSGraphWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="PlayerHitsPerSecondGraphWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="PlayerAPMGraphWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="PlayerAttackGraphHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="PlayerDPSGraphHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="PlayerHitsPerSecondGraphHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="PlayerAPMGraphHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="RenderingMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Hardware</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

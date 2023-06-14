@@ -13,6 +13,8 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
 
 // TODO: all of this needs testing
 namespace MHFZ_Overlay;
@@ -85,9 +87,18 @@ public partial class App : Application
         // Get the elapsed time in milliseconds
         double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
 
+        base.OnStartup(e);
+        SetRenderingMode(s.RenderingMode);
         // Print the elapsed time
         logger.Debug($"App ctor Elapsed Time: {elapsedTimeMs} ms");
-        base.OnStartup(e);
+    }
+
+    private static void SetRenderingMode(string renderingMode)
+    {
+        RenderOptions.ProcessRenderMode = renderingMode == "Hardware"
+            ? RenderMode.Default
+            : RenderMode.SoftwareOnly;
+        logger.Info($"Rendering mode: {renderingMode}");
     }
 
     // https://github.com/Squirrel/Squirrel.Windows/issues/198#issuecomment-299262613

@@ -226,6 +226,7 @@
     <None Remove="UI\Icons\study.png" />
     <None Remove="UI\Icons\stun.png" />
     <None Remove="UI\Icons\unknown.png" />
+    <None Remove="UI\Sounds\victory.wav" />
   </ItemGroup>
 
   <ItemGroup>
@@ -665,6 +666,9 @@
     <Resource Include="UI\Icons\Webbing_Icon_White.xaml" />
     <Resource Include="UI\Icons\Wing_Icon_White.xaml" />
     <Resource Include="UI\Icons\Wood_Icon_White.xaml" />
+    <Content Include="UI\Sounds\victory.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

@@ -2413,7 +2413,15 @@ The process may take some time, as the program attempts to download from GitHub 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         if (DataLoader.loadedOutsideMezeporta)
+        {
             MainWindowSnackBar.ShowAsync(Messages.WARNING_TITLE, "It is not recommended to load the overlay outside of Mezeporta", new SymbolIcon(SymbolRegular.Warning28), ControlAppearance.Caution);
+            victoryMediaElement.Play();
+        }
+    }
+
+    private void victoryMediaElement_MediaEnded(object sender, RoutedEventArgs e)
+    {
+        victoryMediaElement.Stop();
     }
 }
 /// <TODO>
