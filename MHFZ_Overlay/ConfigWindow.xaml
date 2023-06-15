@@ -797,22 +797,20 @@
                         </Grid.RowDefinitions>
                         <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Hidden" >
                             <TabPanel x:Name="HeaderPanel"
-                          Panel.ZIndex ="1" 
-                          KeyboardNavigation.TabIndex="1"
-                          Grid.Column="0"
-                          Grid.Row="0"
-                          Margin="2,2,2,0"
-                          IsItemsHost="true"/>
+                        Panel.ZIndex ="1" 
+                        KeyboardNavigation.TabIndex="1"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Margin="2,2,2,0"
+                        IsItemsHost="true"/>
                         </ScrollViewer>
                         <ContentPresenter x:Name="PART_SelectedContentHost"
-                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                      Margin="{TemplateBinding Padding}"
-                                      ContentSource="SelectedContent" Grid.Row="1"/>
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    Margin="{TemplateBinding Padding}"
+                                    ContentSource="SelectedContent" Grid.Row="1"/>
                     </Grid>
                 </ControlTemplate>
             </TabControl.Template>
-
-
             <TabItem ToolTip="General settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Background="Transparent" Orientation="Horizontal">
@@ -878,7 +876,7 @@
                             </ComboBox>
 
                             <TextBlock ToolTip="Recommended to change if your resolution is lower" Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Resolution"/>
-                             <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox PlaceholderText="Enter Max Resolution Width" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox Margin="5,0,0,0" x:Name="ResolutionHeightTextBox" PlaceholderText="Enter Max Resolution Height" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
@@ -920,7 +918,7 @@
                             </DockPanel>
                             <TextBlock Margin="5,5,5,5" ToolTip="Select the Primary Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Primary Font Weight"/>
                             <ComboBox Grid.Row="6" Grid.Column="1" x:Name="PrimaryFontWeightComboBox"
-                            SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=PrimaryFontWeight}">
+                        SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=PrimaryFontWeight}">
                                 <ComboBoxItem Content="Normal" FontWeight="Normal" />
                                 <ComboBoxItem Content="Thin" FontWeight="Thin" />
                                 <ComboBoxItem Content="ExtraLight" FontWeight="ExtraLight" />
@@ -933,14 +931,14 @@
                             </ComboBox>
 
                             <TextBlock Margin="5,5,5,5" ToolTip="Select the Secondary Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Secondary Font Family"/>
-                                <ComboBox Grid.Column="1" Grid.Row="7" x:Name="SecondaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontFamily}">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock FontFamily="{Binding}" Text="{Binding}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                                <TextBlock x:Name="SecondaryFontSizeTextBlock" Text="Secondary Font Size" Margin="5,5,5,5" ToolTip="Select the Secondary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"/>
+                            <ComboBox Grid.Column="1" Grid.Row="7" x:Name="SecondaryFontFamilyComboBox" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontFamily}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontFamily="{Binding}" Text="{Binding}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock x:Name="SecondaryFontSizeTextBlock" Text="Secondary Font Size" Margin="5,5,5,5" ToolTip="Select the Secondary Font Size" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"/>
                             <DockPanel Grid.Row="8" Grid.Column="1">
                                 <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="80">
                                     <TextBox.Text>
@@ -955,7 +953,7 @@
                             </DockPanel>
                             <TextBlock Margin="5,5,5,5" ToolTip="Select the Secondary Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Secondary Font Weight"/>
                             <ComboBox Grid.Row="9" Grid.Column="1" x:Name="SecondaryFontWeightComboBox"
-                            SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontWeight}">
+                        SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=SecondaryFontWeight}">
                                 <ComboBoxItem Content="Normal" FontWeight="Normal" />
                                 <ComboBoxItem Content="Thin" FontWeight="Thin" />
                                 <ComboBoxItem Content="ExtraLight" FontWeight="ExtraLight" />
@@ -1042,7 +1040,7 @@
                     <usercontrol:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
                 </Grid>
             </TabItem>
-            <!--TODO: Make this similar to Hunter Info layout. first tab is Settings, second tab is Quest Records (Read), third tab is Weapon Usage, fourth tab is Youtube, fifth tab could be Run Manager (Create, Update, Delete)-->
+                <!--TODO: Make this similar to Hunter Info layout. first tab is Settings, second tab is Quest Records (Read), third tab is Weapon Usage, fourth tab is Youtube, fifth tab could be Run Manager (Create, Update, Delete)-->
             <TabItem x:Name="questLogsTabItem" ToolTip="Quest Database" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Resources>
                     <Storyboard x:Key="rainbowAnimation">
@@ -1397,10 +1395,6 @@
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=GameFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Grid.ColumnSpan="2" Text="Hover to view game folder path (automatically set by checking the folder location of the current mhf.exe at overlay startup)"/>
                                         <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=DatabaseFilePath}" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Hover to view database file path"/>
@@ -1443,25 +1437,25 @@
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest ID" />
                                         </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="8" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestIDShown}"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Quest ID X Coordinate"/>
-                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestIDX}"  PreviewTextInput="ValidateNumber"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Quest ID Y Coordinate"/>
-                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestIDY}"  PreviewTextInput="ValidateNumber"/>
-
-                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="11" Grid.Column="0" ToolTip="Show the personal best of the selected quest with the selected weapon type and overlay mode">
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Quest ID Position"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Center">
+                                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=QuestIDX}"  PreviewTextInput="ValidateNumber"/>
+                                            <ui:TextBox Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=QuestIDY}"  PreviewTextInput="ValidateNumber"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="10" Grid.Column="0" ToolTip="Show the personal best of the selected quest with the selected weapon type and overlay mode">
                                             <Image Source="UI/Icons/png/quest_clock.png" Margin="0,0,5,0"/>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best"/>
                                         </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="11" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestShown}"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Personal Best X Coordinate"/>
-                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestX}"  PreviewTextInput="ValidateNumber"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Personal Best Y Coordinate"/>
-                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestY}"  PreviewTextInput="ValidateNumber"/>
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="10" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestShown}"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Personal Best Position"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Center">
+                                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PersonalBestX}"  PreviewTextInput="ValidateNumber"/>
+                                            <ui:TextBox Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=PersonalBestY}"  PreviewTextInput="ValidateNumber"/>
+                                        </StackPanel>
+                                        <TextBlock Margin="5,5,5,5" Grid.Row="12" Grid.Column="0" Style="{StaticResource ConfigTextBox}" Text="Personal Best Pace Color" ToolTip="Mark PB time as red if the current pace is greater than the personal best pace (approximation)" />
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="12" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnablePersonalBestPaceColor}"/>
 
-                                        <TextBlock Margin="5,5,5,5" Grid.Row="14" Grid.Column="0" Style="{StaticResource ConfigTextBox}" Text="Personal Best Pace Color" ToolTip="Mark PB time as red if the current pace is greater than the personal best pace (approximation)" />
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="14" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnablePersonalBestPaceColor}"/>
-
-                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="15" Grid.Column="0" ToolTip="Show Personal Best Time Percent">
+                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="13" Grid.Column="0" ToolTip="Show Personal Best Time Percent">
                                             <Image Margin="0,0,5,0">
                                                 <Image.Source>
                                                     <DrawingImage>
@@ -1480,33 +1474,34 @@
                                             </Image>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best Time Percent" />
                                         </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestTimePercentShown}"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Personal Best Time Percent X Coordinate"/>
-                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentX}"  PreviewTextInput="ValidateNumber"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Personal Best Time Percent Y Coordinate"/>
-                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentY}"  PreviewTextInput="ValidateNumber"/>
-
-                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="18" Grid.Column="0" ToolTip="Show Personal Best Attempts divided by overlay mode and weapon type. Resets to 0 if a new Personal Best is achieved.">
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="13" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestTimePercentShown}"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Personal Best Time Percent Position"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="14" Grid.Column="1" HorizontalAlignment="Center">
+                                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentX}"  PreviewTextInput="ValidateNumber"/>
+                                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentY}"  PreviewTextInput="ValidateNumber"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="15" Grid.Column="0" ToolTip="Show Personal Best Attempts divided by overlay mode and weapon type. Resets to 0 if a new Personal Best is achieved.">
                                             <Image Source="UI/Icons/png/quest_1.png" Margin="0,0,5,0"/>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="(Quest Logging required) Personal Best Attempts" />
                                         </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="18" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestAttemptsShown}"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Personal Best Attempts X Coordinate"/>
-                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="19" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsX}"  PreviewTextInput="ValidateNumber"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Personal Best Attempts Y Coordinate"/>
-                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="20" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsY}"  PreviewTextInput="ValidateNumber"/>
-
-                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="21" Grid.Column="0" ToolTip="Show Quest Attempts divided by overlay mode and weapon type">
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestAttemptsShown}"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Personal Best Attempts Position"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="16" Grid.Column="1" HorizontalAlignment="Center">
+                                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsX}"  PreviewTextInput="ValidateNumber"/>
+                                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsY}"  PreviewTextInput="ValidateNumber"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="17" Grid.Column="0" ToolTip="Show Quest Attempts divided by overlay mode and weapon type">
                                             <Image Source="UI/Icons/png/ticket.png" Margin="0,0,5,0"/>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest Attempts" />
                                         </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="21" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestAttemptsShown}"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Quest Attempts X Coordinate"/>
-                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="22" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestAttemptsX}"  PreviewTextInput="ValidateNumber"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Quest Attempts Y Coordinate"/>
-                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="23" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=QuestAttemptsY}"  PreviewTextInput="ValidateNumber"/>
-                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Quest Completions Counter" ToolTip="Show quest completions next to the attempts"/>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="24" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestCompletionsCounter}"/>
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="17" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestAttemptsShown}"/>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Quest Attempts Position"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="18" Grid.Column="1" HorizontalAlignment="Center">
+                                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=QuestAttemptsX}"  PreviewTextInput="ValidateNumber"/>
+                                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=QuestAttemptsY}"  PreviewTextInput="ValidateNumber"/>
+                                        </StackPanel>
+                                        <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Quest Completions Counter" ToolTip="Show quest completions next to the attempts"/>
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="19" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestCompletionsCounter}"/>
                                         <!--TODO: speedrun mode in overlay takes into account these settings + other things-->
                                     </Grid>
                                 </ScrollViewer>
@@ -1602,23 +1597,6 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Show Timer">
@@ -1627,167 +1605,168 @@
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=TimerInfoShown}"/>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Quest Timer X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=TimerX}"  PreviewTextInput="ValidateNumber"/>
-
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Quest Timer Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=TimerY}"  PreviewTextInput="ValidateNumber"/>
-
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select Timing Mode (In-Game Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Timing Mode"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Quest Timer Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=TimerX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=TimerY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select Timing Mode (In-Game Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Timing Mode"/>
                             <!--https://stackoverflow.com/questions/43807345/binding-wpf-combobox-to-a-user-settings-property-->
-                            <ComboBox Grid.Column="1" Grid.Row="3" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=TimerMode}">
+                            <ComboBox Grid.Column="1" Grid.Row="2" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=TimerMode}">
                                 <ComboBoxItem>Time Left</ComboBoxItem>
                                 <ComboBoxItem>Time Elapsed</ComboBoxItem>
                             </ComboBox>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Time Left as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Time Left as Percentage"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableTimeLeftPercentage}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Time Left as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Time Left as Percentage"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableTimeLeftPercentage}"/>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Pace color when the time left percent is higher or equal to the first monster health percent" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Quest Pace Color"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestPaceColor}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Quest Pace color when the time left percent is higher or equal to the first monster health percent" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Quest Pace Color"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestPaceColor}"/>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="6" Grid.Column="0" ToolTip="Show Hit Count (doesn't count Ice Age hits)">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="5" Grid.Column="0" ToolTip="Show Hit Count (doesn't count Ice Age hits)">
                                 <Image Source="UI/Icons/png/blue_soul.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Hit Count (doesn't count Ice Age hits)"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=HitCountShown}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=HitCountShown}"/>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Hit Count X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HitCountX}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Hit Count Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=HitCountX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=HitCountY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Hits per Second" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Hits per Second"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="7" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=HitsPerSecondShown}"/>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Hit Count Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HitCountY}"  PreviewTextInput="ValidateNumber"/>
-
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Hits per Second" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Hits per Second"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="9" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=HitsPerSecondShown}"/>
-
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show colored numbers when surpassing the average hits per second for the common combo of the weapon used" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Hits per Second Average Color"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="10" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageHitsPerSecondColor}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show colored numbers when surpassing the average hits per second for the common combo of the weapon used" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Hits per Second Average Color"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="8" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageHitsPerSecondColor}"/>
                             <!--        ///<summary>
         		///<para>Player true raw</para>
         		///<br>Attack addition is added as either Attack A or Attack B and is before or after Hunting Horn buffs respectively.</br>
         		///<br>Values that are known to reside in Attack B are Rush, Stylish Assault, Flash Conversion, Obscurity, Incitement, Rush, Vigorous Up and Partnyaa Attack Buffs.</br>
         		///<para>Final True  = ((Weapon True + Attack A) * HH Buff + Attack B) * Multipliers + Additional</para>
         		///</summary>-->
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="11" Grid.Column="0" ToolTip="Show Player True Raw">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="9" Grid.Column="0" ToolTip="Show Player True Raw">
                                 <Image Source="UI/Icons/png/attack_up.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Attack Value" 
                                 ToolTipService.ToolTip="Player True Raw&#x0a;Attack addition is added as either Attack A or Attack B and is before or after Hunting Horn buffs respectively.&#x0a;Values that are known to reside in Attack B are Rush, Stylish Assault, Flash Conversion, Obscurity, Incitement, Rush, Vigorous Up and Partnyaa Attack Buffs.&#x0a;Final True  = ((Weapon True + Attack A) * HH Buff + Attack B) * Multipliers + Additional"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="11" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAtkShown}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="9" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAtkShown}"/>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Attack X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAtkX}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Attack Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PlayerAtkX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PlayerAtkY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Highest Attack Color (resets per quest)" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Highest Attack Color"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="11" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestAtkColor}"/>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Attack Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAtkY}"  PreviewTextInput="ValidateNumber"/>
-
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Highest Attack Color (resets per quest)" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Highest Attack Color"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="14" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestAtkColor}"/>
-
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="15" Grid.Column="0" ToolTip="Show DPS (resets per quest and doesn't calculate hit values over 1000)">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="12" Grid.Column="0" ToolTip="Show DPS (resets per quest and doesn't calculate hit values over 1000)">
                                 <Image Source="UI/Icons/png/burst.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}"  Text="DPS Value"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=DamagePerSecondShown}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="12" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=DamagePerSecondShown}"/>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="DPS X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSX}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="DPS Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="13" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Highest DPS Color (resets per quest, counts the highest 10)" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Highest DPS Color"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="14" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestDPSColor}"/>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="DPS Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSY}"  PreviewTextInput="ValidateNumber"/>
-
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Highest DPS Color (resets per quest, counts the highest 10)" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Highest DPS Color"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="18" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestDPSColor}"/>
-
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="19" Grid.Column="0" ToolTip="Show Total Current Sharpness Values">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="15" Grid.Column="0" ToolTip="Show Total Current Sharpness Values">
                                 <Image Source="UI/Icons/png/whetstone.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Total Sharpness"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="19" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Total Sharpness Info X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="20" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Total Sharpness Info Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="21" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Current Sharpness as Percentage"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="22" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Total Sharpness Info Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="16" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Current Sharpness as Percentage" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Current Sharpness as Percentage"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="17" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="23" Grid.Column="0" ToolTip="Show Total Hits Taken/Blocked">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="18" Grid.Column="0" ToolTip="Show Total Hits Taken/Blocked">
                                 <Image Source="UI/Icons/png/defense_up.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Hits Taken/Blocked"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="23" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=TotalHitsTakenBlockedShown}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="18" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=TotalHitsTakenBlockedShown}"/>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Hits Taken/Blocked X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="24" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=TotalHitsTakenBlockedX}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Hits Taken/Blocked Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="19" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=TotalHitsTakenBlockedX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=TotalHitsTakenBlockedY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Hits Taken/Blocked per Second" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Hits Taken/Blocked per Second"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="20" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=TotalHitsTakenBlockedPerSecondShown}"/>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Hits Taken/Blocked Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="25" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=TotalHitsTakenBlockedY}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show color if a hit was not received and you are using a weapon that cannot utilize Reflect" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="No Hit Color"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="21" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableTotalHitsTakenBlockedColor}"/>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Hits Taken/Blocked per Second" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Hits Taken/Blocked per Second"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="26" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=TotalHitsTakenBlockedPerSecondShown}"/>
-
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show color if a hit was not received and you are using a weapon that cannot utilize Reflect" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="No Hit Color"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="27" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableTotalHitsTakenBlockedColor}"/>
-
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="28" Grid.Column="0" ToolTip="Show Player Attack Graph">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="22" Grid.Column="0" ToolTip="Show Player Attack Graph">
                                 <Image Source="UI/Icons/png/attack_up_red.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Player Attack Graph"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="28" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAttackGraphShown}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="22" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAttackGraphShown}"/>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0"  Text="Player Attack Graph X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="29" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0"  Text="Player Attack Graph Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="30" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="31" Grid.Column="0" Text="Player Attack Graph Line Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="31" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphColor}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0" Text="Player Attack Graph Background Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="32" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphBackground}"/>
-
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="33" Grid.Column="0" ToolTip="Show Player DPS Graph">
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0"  Text="Player Attack Graph Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="23" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Player Attack Graph Size"/>
+                            <ui:TextBox Grid.Row="24" Grid.Column="1" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphSize}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0" Text="Player Attack Graph Line Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="25" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphColor}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0" Text="Player Attack Graph Background Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="26" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphBackground}"/>
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="27" Grid.Column="0" ToolTip="Show Player DPS Graph">
                                 <Image Source="UI/Icons/png/burst_red.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Player DPS Graph"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="33" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerDPSGraphShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0"  Text="Player DPS Graph X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="34" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0"  Text="Player DPS Graph Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="35" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0" Text="Player DPS Graph Line Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="36" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphColor}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="37" Grid.Column="0" Text="Player DPS Graph Background Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="37" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphBackground}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="27" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerDPSGraphShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0"  Text="Player DPS Graph Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="28" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0" Text="Player DPS Graph Line Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="29" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphColor}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0" Text="Player DPS Graph Background Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="30" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphBackground}"/>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="38" Grid.Column="0" ToolTip="Show Player Hits per Second Graph">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="31" Grid.Column="0" ToolTip="Show Player Hits per Second Graph">
                                 <Image Source="UI/Icons/png/red_soul.png" Margin="0,0,5,0"/>
                                 <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Text="Player Hits Per Second Graph"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="38" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerHitsPerSecondGraphShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="39" Grid.Column="0"  Text="Player Hits per Second Graph X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="39" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="40" Grid.Column="0"  Text="Player Hits per Second Graph Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="40" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="41" Grid.Column="0" Text="Player Hits per Second Graph Line Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="41" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphColor}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="42" Grid.Column="0" Text="Player Hits per Second Graph Background Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="42" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphBackground}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="31" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerHitsPerSecondGraphShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0"  Text="Player Hits per Second Graph Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="32" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0" Text="Player Hits per Second Graph Line Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="33" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphColor}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0" Text="Player Hits per Second Graph Background Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="34" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphBackground}"/>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="43" Grid.Column="0" ToolTip="Show Player Actions per Minute Graph">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="35" Grid.Column="0" ToolTip="Show Player Actions per Minute Graph">
                                 <Image Source="UI/Icons/png/flame_hc.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Player Actions per Minute Graph"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="43" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAPMGraphShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="44" Grid.Column="0"  Text="Player Actions per Minute Graph X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="44" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="45" Grid.Column="0"  Text="Player Actions per Minute Graph Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="45" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="46" Grid.Column="0" Text="Player Actions per Minute Graph Line Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="46" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphColor}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="47" Grid.Column="0" Text="Player Actions per Minute Graph Background Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="47" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphBackground}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="35" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAPMGraphShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0"  Text="Player Actions per Minute Graph Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="36" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="37" Grid.Column="0" Text="Player Actions per Minute Graph Line Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="37" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphColor}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="38" Grid.Column="0" Text="Player Actions per Minute Graph Background Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="38" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphBackground}"/>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="48" Grid.Column="0" ToolTip="Show weapon damage numbers when hitting a monster">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="39" Grid.Column="0" ToolTip="Show weapon damage numbers when hitting a monster">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="NumberSymbol24" Foreground="{StaticResource Text}" FontSize="24"/>
@@ -1795,29 +1774,31 @@
                                 </Button>
                                 <TextBlock Foreground="{StaticResource Text}" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
                             </StackPanel>
-                            <CheckBox HorizontalAlignment="Center" BorderBrush="{StaticResource Red}" BorderThickness="2" Grid.Column="1" Grid.Row="48"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="49" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
-                            <CheckBox HorizontalAlignment="Center" BorderBrush="{StaticResource Red}" BorderThickness="2" Grid.Column="1" Grid.Row="49"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
-                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="50" Text="Damage Numbers Color" Style="{StaticResource ConfigTextBox}"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="50" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=DamageNumbersColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="51" Grid.Column="0"  Text="Damage Numbers Area X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="51" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="52" Grid.Column="0"  Text="Damage Numbers Area Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="52" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="53" Grid.Column="0"  Text="Damage Numbers Area Width"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="53" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="54" Grid.Column="0"  Text="Damage Numbers Area Height"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="54" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Damage Numbers Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="55" Grid.Column="0"  Text="Damage Numbers Font Family"/>
-                                <ComboBox Grid.Column="1" Grid.Row="55" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=DamageNumbersFontFamily}">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock FontFamily="{Binding}" Text="{Binding}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                                <TextBlock Margin="5,5,5,5" ToolTip="Select the Damage Numbers Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="56" Grid.Column="0"  Text="Damage Numbers Font Weight"/>
-                            <ComboBox Grid.Row="56" Grid.Column="1"
+                            <CheckBox HorizontalAlignment="Center" BorderBrush="{StaticResource Red}" BorderThickness="2" Grid.Column="1" Grid.Row="39"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="40" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
+                            <CheckBox HorizontalAlignment="Center" BorderBrush="{StaticResource Red}" BorderThickness="2" Grid.Column="1" Grid.Row="40"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
+                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="41" Text="Damage Numbers Color" Style="{StaticResource ConfigTextBox}"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="41" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=DamageNumbersColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="42" Grid.Column="0"  Text="Damage Numbers Area Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="42" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="43" Grid.Column="0"  Text="Damage Numbers Area Size"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="43" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Width" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Height" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Damage Numbers Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="44" Grid.Column="0"  Text="Damage Numbers Font Family"/>
+                            <ComboBox Grid.Column="1" Grid.Row="44" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=DamageNumbersFontFamily}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontFamily="{Binding}" Text="{Binding}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Damage Numbers Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="45" Grid.Column="0"  Text="Damage Numbers Font Weight"/>
+                            <ComboBox Grid.Row="45" Grid.Column="1"
                             SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DamageNumbersFontWeight}">
                                 <ComboBoxItem Content="Normal" FontWeight="Normal" />
                                 <ComboBoxItem Content="Thin" FontWeight="Thin" />
@@ -1830,26 +1811,27 @@
                                 <ComboBoxItem Content="Black" FontWeight="Black" />
                             </ComboBox>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers size effect" Style="{StaticResource ConfigTextBox}" Grid.Row="57" Grid.Column="0"  Text="Damage Numbers Size Effect"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="57" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersSize}"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers flash effect" Style="{StaticResource ConfigTextBox}" Grid.Row="58" Grid.Column="0"  Text="Damage Numbers Flash Effect"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="58" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersFlash}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers size effect" Style="{StaticResource ConfigTextBox}" Grid.Row="46" Grid.Column="0"  Text="Damage Numbers Size Effect"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="46" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersSize}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers flash effect" Style="{StaticResource ConfigTextBox}" Grid.Row="47" Grid.Column="0"  Text="Damage Numbers Flash Effect"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="47" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersFlash}"/>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="59" Grid.Column="0" ToolTip="Show Map">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="48" Grid.Column="0" ToolTip="Show Map">
                                 <Image Source="UI/Icons/png/world.png" Margin="0,0,5,0"/>
                                 <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}"  Text="Location Map"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="59" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMap}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="60" Grid.Column="0"  Text="Map X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="60" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="61" Grid.Column="0"  Text="Map Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="61" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="62" Grid.Column="0"  Text="Map Area Width"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="62" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaWidth}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="63" Grid.Column="0"  Text="Map Area Height"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="63" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MapAreaHeight}"  PreviewTextInput="ValidateNumber"/>
-
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="64" Grid.Column="0" ToolTip="Show KBM Layout">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="48" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMap}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="49" Grid.Column="0"  Text="Map Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="49" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=MapX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MapY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="50" Grid.Column="0"  Text="Map Area Size"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="50" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Text="{Binding Source={StaticResource Settings},Path=MapAreaWidth}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Text="{Binding Source={StaticResource Settings},Path=MapAreaHeight}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="51" Grid.Column="0" ToolTip="Show KBM Layout">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="Keyboard24" Foreground="{StaticResource Blue}" FontSize="24"/>
@@ -1857,14 +1839,15 @@
                                 </Button>
                                 <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Text="Keyboard and Mouse Layout"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="64" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=KBMLayoutShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="65" Grid.Column="0"  Text="Keyboard and Mouse Layout X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="65" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="66" Grid.Column="0"  Text="Keyboard and Mouse Layout Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="66" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="67" Grid.Column="0"  Text="Keyboard and Mouse Layout Size"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="67" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutSize}"  PreviewTextInput="ValidateNumber"/>
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="68" Grid.Column="0" ToolTip="Show Gamepad Layout. See the FAQ if you cannot get this to work.">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="51" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=KBMLayoutShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="52" Grid.Column="0"  Text="Keyboard and Mouse Layout Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="52" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="53" Grid.Column="0"  Text="Keyboard and Mouse Layout Size"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="53" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutSize}"  PreviewTextInput="ValidateNumber"/>
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="54" Grid.Column="0" ToolTip="Show Gamepad Layout. See the FAQ if you cannot get this to work.">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="XboxController24" Foreground="{StaticResource Blue}" FontSize="24"/>
@@ -1872,26 +1855,28 @@
                                 </Button>
                                 <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Text="Controller/Gamepad Layout"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="68" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=GamepadShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="69" Grid.Column="0"  Text="Controller/Gamepad Layout X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="69" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="70" Grid.Column="0"  Text="Controller/Gamepad Layout Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="70" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="71" Grid.Column="0"  Text="Controller/Gamepad Layout Size"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="71" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadSize}"  PreviewTextInput="ValidateNumber"/>
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="72" Grid.Column="0" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and gamepad inputs)">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="54" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=GamepadShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="55" Grid.Column="0"  Text="Controller/Gamepad Layout Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="55" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=GamepadX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=GamepadY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="56" Grid.Column="0"  Text="Controller/Gamepad Layout Size"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="56" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadSize}"  PreviewTextInput="ValidateNumber"/>
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="57" Grid.Column="0" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and gamepad inputs)">
                                 <Image Source="UI/Icons/png/flame_ul.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Actions per Minute"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="72" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="73" Grid.Column="0"  Text="Actions per Minute X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="73" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="74" Grid.Column="0"  Text="Actions per Minute Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="74" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="75" Grid.Column="0"  Text="Average Actions per Minute Color"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="75" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="57" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="58" Grid.Column="0"  Text="Actions per Minute Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="58" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="59" Grid.Column="0"  Text="Average Actions per Minute Color"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="59" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
 
-                            <StackPanel Margin="5,5,5,5" ToolTip="Show Current Session Time" Grid.Row="76" Grid.Column="0" Orientation="Horizontal">
+                            <StackPanel Margin="5,5,5,5" ToolTip="Show Current Session Time" Grid.Row="60" Grid.Column="0" Orientation="Horizontal">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="Timer24" Foreground="{StaticResource Rosewater}" FontSize="24"/>
@@ -1899,12 +1884,12 @@
                                 </Button>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Current Session Time"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="76" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=SessionTimeShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="77" Grid.Column="0"  Text="Current Session Time X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="77" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SessionTimeX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="78" Grid.Column="0"  Text="Current Session Time Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="78" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=SessionTimeY}"  PreviewTextInput="ValidateNumber"/>
-
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="60" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=SessionTimeShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="61" Grid.Column="0"  Text="Current Session Time Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="61" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=SessionTimeX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=SessionTimeY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
                         </Grid>
                     </ScrollViewer>
                     <usercontrol:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
@@ -2936,11 +2921,6 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="0" Text="Monster HP Background Color" Style="{StaticResource ConfigTextBox}"/>
@@ -2963,61 +2943,61 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             
                             <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 Part Hit Points (reach threshold a 2nd time to break a part)" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Monster 1 Part Threshold"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="7" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PartThresholdShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Monster 1 Part Threshold X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="8" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Monster 1 Part Threshold Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1PartY}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Monster 1 Part Threshold Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=Monster1PartX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=Monster1PartY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Monster 1 HP Bar"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="9" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster1HealthBarShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0" Text="Monster 1 HP Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="10" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Monster 1 HP Bar Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=Monster1HealthBarX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=Monster1HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 2 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Monster 2 HP Bar"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="12" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster2HealthBarShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0" Text="Monster 2 HP Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="13" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Monster 2 HP Bar Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="14" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=Monster2HealthBarX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=Monster2HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 3 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster 3 HP Bar"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=Monster3HealthBarShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="Monster 3 HP Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="16" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster 3 HP Bar Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="17" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=Monster3HealthBarX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=Monster3HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 4 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Monster 4 HP Bar"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="18" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster4HealthBarShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0" Text="Monster 4 HP Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="19" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Monster 4 HP Bar Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="20" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=Monster4HealthBarX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=Monster4HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Renders instead of Monster Icons" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Monster Renders"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="21" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMonsterRenders}"/>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 1 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Monster 1 HP Bar"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="10" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster1HealthBarShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0" Text="Monster 1 HP Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="11" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Monster 1 HP Bar X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1HealthBarX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster 1 HP Bar Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster1HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0" Text="Monster 1 Bar Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="22" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarStrokeColor}"></xctk:ColorPicker>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 2 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Monster 2 HP Bar"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="14" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster2HealthBarShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0" Text="Monster 2 HP Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="15" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Monster 2 HP Bar X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster2HealthBarX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster 2 HP Bar Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster2HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0" Text="Monster 2 Bar Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="23" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarStrokeColor}"></xctk:ColorPicker>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 3 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Monster 3 HP Bar"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="18" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster3HealthBarShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0" Text="Monster 3 HP Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="19" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Monster 3 HP Bar X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="20" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster3HealthBarX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Monster 3 HP Bar Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="21" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster3HealthBarY}"  PreviewTextInput="ValidateNumber"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0" Text="Monster 3 Bar Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="24" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarStrokeColor}"></xctk:ColorPicker>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster 4 HP Bar" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0"  Text="Monster 4 HP Bar"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="22" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=Monster4HealthBarShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0" Text="Monster 4 HP Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="23" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Monster 4 HP Bar X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="24" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster4HealthBarX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Monster 4 HP Bar Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="25" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=Monster4HealthBarY}"  PreviewTextInput="ValidateNumber"/>
-
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Monster Renders instead of Monster Icons" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Monster Renders"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="26" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMonsterRenders}"/>
-
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0" Text="Monster 1 Bar Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="27" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarStrokeColor}"></xctk:ColorPicker>
-
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0" Text="Monster 2 Bar Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="28" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarStrokeColor}"></xctk:ColorPicker>
-
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0" Text="Monster 3 Bar Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="29" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarStrokeColor}"></xctk:ColorPicker>
-
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0" Text="Monster 4 Bar Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="30" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarStrokeColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0" Text="Monster 4 Bar Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="25" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarStrokeColor}"></xctk:ColorPicker>
 
                         </Grid>
                     </ScrollViewer>
@@ -3075,124 +3055,123 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Show Monster Attack Multiplier">
                                 <Image Source="UI/Icons/png/dure_attack.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Attack Multiplier"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterAtkMultShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Monster Attack Multiplier X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Monster Attack Multiplier Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Highest Monster Attack Color (resets per quest and also changes the icon color)" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Highest Monster Attack Multiplier Color"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestMonsterAttackMultiplierColor}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Monster Attack Multiplier Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Highest Monster Attack Color (resets per quest and also changes the icon color)" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Highest Monster Attack Multiplier Color"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestMonsterAttackMultiplierColor}"/>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="4" Grid.Column="0" ToolTip="Show Monster Defense Rate (lower = tankier)">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="3" Grid.Column="0" ToolTip="Show Monster Defense Rate (lower = tankier)">
                                 <Image Source="UI/Icons/png/dure_defense.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Defense Rate"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterDefrateShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Monster Defense Rate X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterDefrateX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Monster Defense Rate Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterDefrateY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show Lowest Monster Defrate Color (resets per quest and also changes the icon color)" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Lowest Monster Defrate Color"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="7" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableLowestMonsterDefrateColor}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterDefrateShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Monster Defense Rate Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=MonsterDefrateX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MonsterDefrateY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show Lowest Monster Defrate Color (resets per quest and also changes the icon color)" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Lowest Monster Defrate Color"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableLowestMonsterDefrateColor}"/>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="8" Grid.Column="0" ToolTip="Show Monster Size">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="6" Grid.Column="0" ToolTip="Show Monster Size">
                                 <Image Source="UI/Icons/png/study.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Size"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="8" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSizeShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Monster Size X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="9" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Monster Size Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeY}"  PreviewTextInput="ValidateNumber"/>
-
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="11" Grid.Column="0" ToolTip="Show Monster Poison Threshold">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSizeShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Monster Size Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="8" Grid.Column="0" ToolTip="Show Monster Poison Threshold">
                                 <Image Source="UI/Icons/png/poison.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Poison Threshold"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="11" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterPoisonShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Monster Poison Threshold X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="12" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterPoisonX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster Poison Threshold Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="13" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterPoisonY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0" Text="Poison Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="14" Style="{StaticResource ConfigColorPicker}" 
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="8" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterPoisonShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Monster Poison Threshold Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=MonsterPoisonX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MonsterPoisonY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0" Text="Poison Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="10" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonBarColor}"></xctk:ColorPicker>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="15" Grid.Column="0" ToolTip="Show Monster Sleep Threshold">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="11" Grid.Column="0" ToolTip="Show Monster Sleep Threshold">
                                 <Image Source="UI/Icons/png/sleep.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Sleep Threshold"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSleepShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Monster Sleep Threshold X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="16" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Monster Sleep Threshold Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="17" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0" Text="Sleep Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="18" Style="{StaticResource ConfigColorPicker}" 
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="11" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSleepShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Monster Sleep Threshold Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0" Text="Sleep Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="13" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarColor}"></xctk:ColorPicker>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="19" Grid.Column="0" ToolTip="Show Monster Paralysis Threshold">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="14" Grid.Column="0" ToolTip="Show Monster Paralysis Threshold">
                                 <Image Source="UI/Icons/png/paralysis.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Paralysis Threshold"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="19" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterParaShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Monster Paralysis Threshold X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="20" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterParaX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Monster Paralysis Threshold Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="21" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterParaY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0" Text="Para Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="22" Style="{StaticResource ConfigColorPicker}" 
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="14" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterParaShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Monster Paralysis Threshold Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="15" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=MonsterParaX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterParaY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0" Text="Para Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="16" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}"></xctk:ColorPicker>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="23" Grid.Column="0" ToolTip="Show Monster Blast Threshold">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="17" Grid.Column="0" ToolTip="Show Monster Blast Threshold">
                                 <Image Source="UI/Icons/png/blast.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Blast Threshold"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="23" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBlastShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0"  Text="Monster Blast Threshold X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="24" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0"  Text="Monster Blast Threshold Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="25" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0" Text="Blast Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="26" Style="{StaticResource ConfigColorPicker}" 
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="17" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBlastShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Monster Blast Threshold Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="18" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0" Text="Blast Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="19" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarColor}"></xctk:ColorPicker>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="27" Grid.Column="0" ToolTip="Show Monster Stun Threshold">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="20" Grid.Column="0" ToolTip="Show Monster Stun Threshold">
                                 <Image Source="UI/Icons/png/stun.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Stun Threshold"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="27" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStunShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="28" Grid.Column="0"  Text="Monster Stun Threshold X Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="28" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStunX}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="29" Grid.Column="0"  Text="Monster Stun Threshold Y Coordinate"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="29" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterStunY}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="30" Grid.Column="0" Text="Stun Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="30" Style="{StaticResource ConfigColorPicker}" 
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="20" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStunShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Monster Stun Threshold Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="21" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=MonsterStunX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MonsterStunY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0" Text="Stun Bar Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="22" Style="{StaticResource ConfigColorPicker}" 
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}"></xctk:ColorPicker>
 
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="31" Grid.Column="0" Text="Monster Poison Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="31" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonStrokeColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0" Text="Monster Sleep Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="32" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterSleepStrokeColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0" Text="Monster Paralysis Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="33" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterParaStrokeColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0" Text="Monster Blast Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="34" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterBlastStrokeColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0" Text="Monster Stun Stroke Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="35" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunStrokeColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0" Text="Monster Poison Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="23" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonStrokeColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="24" Grid.Column="0" Text="Monster Sleep Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="24" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterSleepStrokeColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="25" Grid.Column="0" Text="Monster Paralysis Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="25" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterParaStrokeColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0" Text="Monster Blast Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="26" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterBlastStrokeColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0" Text="Monster Stun Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="27" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunStrokeColor}"></xctk:ColorPicker>
                         </Grid>
                     </ScrollViewer>
                     <usercontrol:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>

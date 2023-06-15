@@ -477,7 +477,7 @@
       <Value Profile="(Default)">610</Value>
     </Setting>
     <Setting Name="GamepadShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="GamepadX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">160</Value>
