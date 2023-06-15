@@ -118,6 +118,7 @@ internal class DatabaseManager
 
     // Calculate the total time spent using the program
     // TODO: add transaction. check if others also need transaction.
+    // TODO: test
     public TimeSpan CalculateTotalTimeSpent()
     {
         TimeSpan totalTimeSpent = TimeSpan.Zero;
@@ -6803,6 +6804,43 @@ Disabling Quest Logging.",
                 try
                 {
                     using (SQLiteCommand cmd = new SQLiteCommand("SELECT MouseInputDictionary FROM Quests WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        var result = cmd.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, string>>((string)result);
+                        }
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+        return dictionary;
+    }
+
+    public Dictionary<int, string> GetGamepadInputDictionary(long runID)
+    {
+        Dictionary<int, string> dictionary = new();
+        if (dataSource == null || dataSource == "")
+        {
+            logger.Warn("Cannot get gamepad input dictionary. dataSource: {0}", dataSource);
+            return dictionary;
+        }
+        using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+        {
+            conn.Open();
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (SQLiteCommand cmd = new SQLiteCommand("SELECT GamepadInputDictionary FROM Quests WHERE RunID = @runID", conn))
                     {
                         cmd.Parameters.AddWithValue("@runID", runID);
 

@@ -2351,11 +2351,15 @@ public partial class ConfigWindow : FluentWindow
         };
     }
 
+    // TODO: gamepad test
     private Dictionary<string, int> GetMostCommonInputs(long runID)
     {
         var keystrokesDictionary = databaseManager.GetKeystrokesDictionary(runID);
         var mouseInputDictionary = databaseManager.GetMouseInputDictionary(runID);
-        var combinedDictionary = keystrokesDictionary.Concat(mouseInputDictionary)
+        var gamepadInputDictionary = databaseManager.GetGamepadInputDictionary(runID);
+        var combinedDictionary = keystrokesDictionary
+            .Union(mouseInputDictionary)
+            .Union(gamepadInputDictionary)
             .GroupBy(kvp => kvp.Value)
             .ToDictionary(g => g.Key, g => g.Count());
 

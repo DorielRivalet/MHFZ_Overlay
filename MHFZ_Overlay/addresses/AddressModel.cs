@@ -10056,6 +10056,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         return damageDealt / (timeElapsedIn30FPS / Numbers.FRAMES_PER_SECOND);
     }
 
+    // TODO: gamepad
     public double CalculateAPM()
     {
         double totalInputs = gamepadInputDictionary.Count + keystrokesDictionary.Count + mouseInputDictionary.Count;
