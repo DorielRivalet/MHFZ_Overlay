@@ -880,8 +880,10 @@
                                 <ui:TextBox PlaceholderText="Enter Max Resolution Width" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox Margin="5,0,0,0" x:Name="ResolutionHeightTextBox" PlaceholderText="Enter Max Resolution Height" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-
-                            <TextBlock Text="Refresh Rate (Restart required)" Margin="5,5,5,5" ToolTip="Select the Refresh Rate. Lower values might improve performance at the cost of statistics accuracy (including in database). Recommended to leave at 30 for speedruns, but for streams you can set it to 1 just fine." Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"/>
+                            <StackPanel Grid.Row="3" Grid.Column="0" Margin="5,5,5,5" Orientation="Horizontal">
+                                <ui:SymbolIcon Margin="0,0,5,0" Symbol="Info28" Foreground="{StaticResource Yellow}" FontSize="28" ToolTip="Overlay Restart Required"/>
+                                <TextBlock Text="Refresh Rate"  ToolTip="Select the Refresh Rate. Lower values might improve performance at the cost of statistics accuracy (including in database). Recommended to leave at 30 for speedruns, but for streams you can set it to 1 just fine." Style="{StaticResource ConfigTextBox}" />
+                            </StackPanel>
                             <DockPanel Grid.Row="3" Grid.Column="1">
                                 <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="80">
                                     <TextBox.Text>
@@ -969,8 +971,10 @@
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="10" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"></xctk:ColorPicker>
                             <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="11" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="11" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
-                            <!-- TODO: add requires restart notices -->
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select the rendering mode. Hardware: The WPF rendering is in hardware, if possible; software otherwise. Software: The WPF rendering is in software only." Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Rendering Mode"/>
+                            <StackPanel Grid.Row="12" Grid.Column="0" Margin="5,5,5,5" Orientation="Horizontal">
+                                <ui:SymbolIcon Margin="0,0,5,0" Symbol="Info28" Foreground="{StaticResource Yellow}" FontSize="28" ToolTip="Overlay Restart Required"/>
+                                <TextBlock Margin="5,5,5,5" ToolTip="Select the rendering mode. Hardware: The WPF rendering is in hardware, if possible; software otherwise. Software: The WPF rendering is in software only." Style="{StaticResource ConfigTextBox}" Text="Rendering Mode"/>
+                            </StackPanel>
                             <ComboBox Grid.Column="1" Grid.Row="12" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=RenderingMode}">
                                 <ComboBoxItem>Hardware</ComboBoxItem>
                                 <ComboBoxItem>Software</ComboBoxItem>
@@ -1025,7 +1029,10 @@
                             </StackPanel>
                             <TextBlock Margin="5,5,5,5" ToolTip="Show a warning message box when starting the overlay outside Mezeporta" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Outside Mezeporta Startup Warning"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="26" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableOutsideMezeportaLoadingWarning}"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select Logging Level. Each log entry has a level. Specifies the minimum level where that level and higher levels are included. For example, if the minimum level is Info, then Info, Warn, Error and Fatal are logged, but Debug and Trace are ignored." Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Log Level"/>
+                            <StackPanel Grid.Row="27" Grid.Column="0" Margin="5,5,5,5" Orientation="Horizontal">
+                                <ui:SymbolIcon Margin="0,0,5,0" Symbol="Info28" Foreground="{StaticResource Yellow}" FontSize="28" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Select Logging Level. Each log entry has a level. Specifies the minimum level where that level and higher levels are included. For example, if the minimum level is Info, then Info, Warn, Error and Fatal are logged, but Debug and Trace are ignored." Style="{StaticResource ConfigTextBox}" Text="Log Level"/>
+                            </StackPanel>
                             <ComboBox x:Name="LogLevelComboBox" Grid.Column="1" Grid.Row="27" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=LogLevel}">
                                 <ComboBoxItem>Trace</ComboBoxItem>
                                 <ComboBoxItem>Debug</ComboBoxItem>
@@ -1398,11 +1405,20 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=GameFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Grid.ColumnSpan="2" Text="Hover to view game folder path (automatically set by checking the folder location of the current mhf.exe at overlay startup)"/>
                                         <TextBlock Margin="5,5,5,5" ToolTip="{Binding Source={StaticResource Settings}, Path=DatabaseFilePath}" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Hover to view database file path"/>
-                                        <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0" Text="(Required for speedrun) Quest Logging" />
+                                        <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="2" Grid.Column="0" >
+                                            <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Blue}" Margin="0,0,5,0" ToolTip="Required for Speedrun Modes"/>
+                                            <TextBlock  ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Text="Quest Logging" />
+                                        </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}" Checked="questLoggingToggle_Check"/>
-                                        <TextBlock Margin="5,5,5,5" ToolTip="Enable logging of inputs (KBM + Gamepad) during quests and inserts the information into a local database. WARNING: the runs with this option disabled will not be displayed on leaderboards, in order to prevent cheating." Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="(Required for speedrun) Log Inputs during Quest" />
+                                        <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="3" Grid.Column="0" >
+                                            <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Blue}" Margin="0,0,5,0" ToolTip="Required for Speedrun Modes"/>
+                                            <TextBlock ToolTip="Enable logging of inputs (KBM + Gamepad) during quests and inserts the information into a local database. WARNING: the runs with this option disabled will not be displayed on leaderboards, in order to prevent cheating." Style="{StaticResource ConfigTextBox}"  Text="Log Inputs during Quest" />
+                                        </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableInputLogging}"/>
-                                        <TextBlock Margin="5,5,5,5" ToolTip="Show a watermark that has to be visible at all times during a YouTube video of a quest run in order for the run to be verified" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="(Required for speedrun) Overlay Mode Watermark" />
+                                        <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="4" Grid.Column="0" >
+                                            <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Blue}" Margin="0,0,5,0" ToolTip="Required for Speedrun Modes"/>
+                                            <TextBlock ToolTip="Show a watermark that has to be visible at all times during a YouTube video of a quest run in order for the run to be verified" Style="{StaticResource ConfigTextBox}" Text="Overlay Mode Watermark" />
+                                        </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayModeWatermarkShown}"/>
 
                                         <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
@@ -3228,18 +3244,24 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <ui:InfoBar Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="How to enable Discord Rich Presence" 
                                 Message="1. My Account -> Activity Privacy -> Check 'Display current activity as a status message'&#x0a;2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it 'MONSTER HUNTER FRONTIER Z'&#x0a;3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID&#x0a;The ID also shows up in OAuth2 section as Client ID" 
                                 IsClosable="False" IsOpen="True" Severity="Informational"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Enable Discord Rich Presence" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="(Overlay restart required) Rich Presence"/>
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="2" Grid.Column="0" >
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Enable Discord Rich Presence" Style="{StaticResource ConfigTextBox}" Text="Discord Rich Presence"/>
+                            </StackPanel>
                             <CheckBox HorizontalAlignment="Center" BorderBrush="{StaticResource Red}" BorderThickness="2"  Grid.Row="2" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableRichPresence}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="(Mandatory) Client/Application ID"
-                            ToolTipService.ToolTip="1. My Account -> Activity Privacy -> Check 'Display current activity as a status message'&#x0a;2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it 'MONSTER HUNTER FRONTIER Z'&#x0a;3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID&#x0a;The ID also shows up in OAuth2 section as Client ID"/>
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="3" Grid.Column="0" >
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Red}" Margin="0,0,5,0" ToolTip="To use Discord Rich Presence, you must provide a value here"/>
+                                <TextBlock Style="{StaticResource ConfigTextBox}" Text="Client/Application ID"
+                                ToolTipService.ToolTip="1. My Account -> Activity Privacy -> Check 'Display current activity as a status message'&#x0a;2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it 'MONSTER HUNTER FRONTIER Z'&#x0a;3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID&#x0a;The ID also shows up in OAuth2 section as Client ID"/>
+                            </StackPanel>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordClientID}"  PreviewTextInput="ValidateNumber" MaxLength="19"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="The server you play on (e.g. https://discord.gg/y8mF6amH, enter only the ID, not the whole link)" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="(Optional) Discord Server Invite ID"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="The server you play on (e.g. https://discord.gg/y8mF6amH, enter only the ID, not the whole link)" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Discord Server Invite ID"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordServerInvite}"  PreviewTextInput="ValidateName" MaxLength="10"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Your hunter name to display on. Gets logged on database along with the other names." Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="(Optional) Hunter Name"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Your hunter name to display on. Gets logged on database along with the other names." Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Hunter Name"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HunterName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Your guild (in-game) name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="(Optional) Guild Name"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Your guild (in-game) name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Guild Name"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GuildName}"  PreviewTextInput="ValidateName" MaxLength="16"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="The Discord Server ID that you play on. (Enable Developer Mode in Discord Advanced settings, right click server icon and select Copy ID). This is used to get the server name and store the ID in leaderboards. Put 0 for Local server." Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="(Optional) Discord Server ID"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="The Discord Server ID that you play on. (Enable Developer Mode in Discord Advanced settings, right click server icon and select Copy ID). This is used to get the server name and store the ID in leaderboards. Put 0 for Local server." Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Discord Server ID"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordServerID}"  PreviewTextInput="ValidateNumber"/>
                             <TextBlock Margin="5,5,5,5" ToolTip="Select Quest Timing Mode (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Quest Timing Mode"/>
                             <ComboBox Grid.Column="1" Grid.Row="8" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordTimerMode}">
@@ -3405,9 +3427,9 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <RowDefinition Height="128"/>
                                 <RowDefinition Height="128"/>
                             </Grid.RowDefinitions>
-                            <TextBlock FontSize="32" Foreground="#89dceb" Margin="10,0,0,10" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="Imulion"  HorizontalAlignment="Center"/>
-                            <TextBlock FontSize="32" Foreground="#89b4fa" Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="suzaku01"   HorizontalAlignment="Center"/>
-                            <TextBlock FontSize="32" Foreground="#f38ba8" Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="Doriel Rivalet"   HorizontalAlignment="Center"/>
+                            <TextBlock FontSize="32" Foreground="{StaticResource Sky}" Margin="10,0,0,10" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="Imulion"  HorizontalAlignment="Center"/>
+                            <TextBlock FontSize="32" Foreground="{StaticResource Blue}" Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="suzaku01"   HorizontalAlignment="Center"/>
+                            <TextBlock FontSize="32" Foreground="{StaticResource Red}" Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="Doriel Rivalet"   HorizontalAlignment="Center"/>
                             <Image Width="128" Height="128" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" x:Name="myImg" Source="https://avatars.githubusercontent.com/u/27354834?v=4" Margin="10,0,0,10"/>
                             <Image Width="128" Height="128" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" x:Name="myImg3"  Source="https://avatars.githubusercontent.com/u/89909040?v=4" Margin="10,0,0,10"/>
                             <Image Width="128" Height="128" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" x:Name="myImg2" Source="https://avatars.githubusercontent.com/u/100863878?v=4" Margin="10,0,0,10"/>
@@ -3436,7 +3458,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <Button ToolTip="Stargazers" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='UI/Icons/star.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
                             <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1">
                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True">
-                                    <TextBlock ToolTip="View Stargazers" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="#89b4fa" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/stargazers" RequestNavigate="lnkImg_RequestNavigate">View Stargazers</Hyperlink></TextBlock>
+                                    <TextBlock ToolTip="View Stargazers" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/stargazers" RequestNavigate="lnkImg_RequestNavigate">View Stargazers</Hyperlink></TextBlock>
                                 </ScrollViewer>
                             </Grid>
                             <MediaElement Grid.Row="3" Grid.Column="2"  MediaEnded="Stars_MediaEnded" x:Name="myAnime" UnloadedBehavior="Manual" Source="https://media.tenor.com/uMRSXoUOwpYAAAAC/anime-girl.gif" LoadedBehavior="Play"/>
@@ -3464,11 +3486,10 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <TextBlock TextWrapping="Wrap" Grid.RowSpan="2" Grid.Row="7" FontSize="32" Grid.ColumnSpan="3" Text="Loading..." x:Name="OctokitInfo"/>
 
                             <!--https://stackoverflow.com/questions/10238694/example-using-hyperlink-in-wpf-->
-                            <TextBlock ToolTip="View Changelog" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="#89b4fa" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md" RequestNavigate="lnkImg_RequestNavigate">View Changelog</Hyperlink></TextBlock>
-                            <TextBlock ToolTip="View Releases Statistics (Put DorielRivalet as GitHub Username and MHFZ_Overlay as Repository Name)" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="#89b4fa" NavigateUri="https://somsubhra.github.io/github-release-stats/" RequestNavigate="lnkImg_RequestNavigate">View Releases Statistics</Hyperlink></TextBlock>
-                            <TextBlock ToolTip="Download latest version as 7z file" Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="#89b4fa" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/releases/latest" RequestNavigate="lnkImg_RequestNavigate">Get latest version</Hyperlink></TextBlock>
+                            <TextBlock ToolTip="View Changelog" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md" RequestNavigate="lnkImg_RequestNavigate">View Changelog</Hyperlink></TextBlock>
+                            <TextBlock ToolTip="View Releases Statistics (Put DorielRivalet as GitHub Username and MHFZ_Overlay as Repository Name)" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://somsubhra.github.io/github-release-stats/" RequestNavigate="lnkImg_RequestNavigate">View Releases Statistics</Hyperlink></TextBlock>
+                            <TextBlock ToolTip="Download latest version as 7z file" Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/releases/latest" RequestNavigate="lnkImg_RequestNavigate">Get latest version</Hyperlink></TextBlock>
                             <TextBlock ToolTip="Total Program Usage Time" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Text="{Binding TotalTimeSpent, StringFormat=hh\\:mm\\:ss, Mode=OneTime}"/>
-
                         </Grid>
                     </ScrollViewer>
                 </Grid>
