@@ -1632,6 +1632,83 @@ public partial class ConfigWindow : FluentWindow
         compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
     }
 
+    private void CalendarButtonSaveFile_Click(object sender, RoutedEventArgs e)
+    {
+        //if (compendiumTextBlock == null) return;
+        //string textToSave = compendiumTextBlock.Text;
+        //textToSave = string.Format("```text\n{0}\n```", textToSave);
+
+        //FileManager.SaveTextFile(textToSave, "Compendium");
+    }
+
+    private void CalendarButtonCopyFile_Click(object sender, RoutedEventArgs e)
+    {
+        //if (compendiumInformationStackPanel == null) return;
+        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        //FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
+        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+    }
+
+    private void PersonalBestButtonSaveFile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void PersonalBestButtonCopyFile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void Top20ButtonSaveFile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void Top20ButtonCopyFile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void WeaponStatsButtonSaveFile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void WeaponStatsButtonCopyFile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void MostRecentButtonSaveFile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void MostRecentButtonCopyFile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void StatsGraphsButtonSaveFile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void StatsGraphsButtonCopyFile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void StatsTextButtonSaveFile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void StatsTextButtonCopyFile_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
     private ISeries[]? Series { get; set; }
     private Axis[]? XAxes { get; set; }
     private Axis[]? YAxes { get; set; }

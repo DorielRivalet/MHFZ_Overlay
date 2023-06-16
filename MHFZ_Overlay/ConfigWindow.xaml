@@ -78,21 +78,20 @@
                         <DockPanel Margin="5,5,5,5">
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
-                                    <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Width="Auto" ToolTip="Save summary of stats to text file" Click="CompendiumBtnSaveFile_Click">
+                                    <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="CompendiumBtnSaveFile_Click">
                                         <Button.Content>
                                             <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
                                         </Button.Content>
                                     </ui:Button>
-                                    <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy compendium to clipboard as image (recommended to maximize configuration window)" Width="Auto" Height="Auto" Click="CompendiumBtnCopyFile_Click">
+                                    <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy stats to clipboard as image (recommended to maximize configuration window)" Click="CompendiumBtnCopyFile_Click">
                                         <Button.Content>
                                             <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
                                         </Button.Content>
                                     </ui:Button>
-                                    <TextBlock Text="Summary of your statistics" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Vertical" Margin="0,10,0,0" Loaded="CompendiumInformationStackPanel_Loaded">
-                                    <TextBlock TextWrapping="Wrap" Loaded="Compendium_Loaded"/>
+                                    <TextBlock TextWrapping="Wrap" Loaded="Compendium_Loaded" ToolTip="Summary of your statistics"/>
                                     <lvc:PolarChart ToolTip="Percentage is calculated by dividing the median with the highest registered value" Loaded="HunterPerformancePolarChart_Loaded" Width="500" Height="500" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                                 </StackPanel>
                             </StackPanel>
@@ -119,8 +118,17 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <DatePicker Width="Auto" Height="Auto" HorizontalAlignment="Left" SelectedDateChanged="CalendarDatePicker_SelectedDateChanged" />
-                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="View the runs you did on a specific day"/>
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="CalendarButtonSaveFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy stats to clipboard as image (recommended to maximize configuration window)" Click="CalendarButtonCopyFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <DatePicker Width="Auto" Height="Auto" HorizontalAlignment="Left" SelectedDateChanged="CalendarDatePicker_SelectedDateChanged" ToolTip="View the runs you did on a specific day"/>
                         </StackPanel>
                         <ui:DataGrid x:Name="CalendarDataGrid" AutoGenerateColumns="False" Loaded="Calendar_DataGridLoaded" IsReadOnly="True">
                             <DataGrid.ColumnHeaderStyle>
@@ -234,10 +242,9 @@
                                             <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
                                         </Button.Content>
                                     </ui:Button>
-                                    <TextBlock Text="Gear associated with the Run ID" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </StackPanel>
-                            
-                                <TextBlock Margin="0,10,0,0" ToolTip="Gear Info" Name="QuestLogGearStats" TextWrapping="Wrap" Loaded="QuestLogGearStats_Loaded"/>
+
+                                <TextBlock Margin="0,10,0,0" ToolTip="Gear associated with the Run ID" Name="QuestLogGearStats" TextWrapping="Wrap" Loaded="QuestLogGearStats_Loaded"/>
                             </StackPanel>
                         </DockPanel>
                     </Grid>
@@ -264,6 +271,16 @@
                     <StackPanel  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
                             <!--TODO: add the refresh button to the other sections-->
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="PersonalBestButtonSaveFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy stats to clipboard as image (recommended to maximize configuration window)" Click="PersonalBestButtonCopyFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
+                                </Button.Content>
+                            </ui:Button>
                             <ui:Button Background="Transparent" BorderThickness="0" ToolTip="Refresh" Click="RefreshButton_Click">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="ArrowCounterclockwise24" FontSize="24" Foreground="{StaticResource Yellow}"/>
@@ -316,7 +333,17 @@
                     <!--listview here-->
                     <StackPanel  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <ComboBox x:Name="weaponListTop20RunsComboBox" Width="150" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="weaponListTop20RunsComboBox_SelectionChanged">
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="Top20ButtonSaveFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy stats to clipboard as image (recommended to maximize configuration window)" Click="Top20ButtonCopyFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ComboBox x:Name="weaponListTop20RunsComboBox" ToolTip="Top 20 fastest solo runs of quest ID by category" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="weaponListTop20RunsComboBox_SelectionChanged">
                                 <ComboBoxItem>All Weapons</ComboBoxItem>
                                 <ComboBoxItem>Sword and Shield</ComboBoxItem>
                                 <ComboBoxItem>Dual Swords</ComboBoxItem>
@@ -418,10 +445,22 @@
                     <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#cba6f7" />
 
                     <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
-                        <ComboBox x:Name="weaponUsageGraphComboBox" Width="250" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="WeaponUsageGraphComboBox_SelectionChanged">
-                            <ComboBoxItem>(General) Weapon Usage</ComboBoxItem>
-                            <ComboBoxItem>(Quest ID) Weapon Usage</ComboBoxItem>
-                        </ComboBox>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="WeaponStatsButtonSaveFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy stats to clipboard as image (recommended to maximize configuration window)" Click="WeaponStatsButtonCopyFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ComboBox x:Name="weaponUsageGraphComboBox" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="WeaponUsageGraphComboBox_SelectionChanged">
+                                <ComboBoxItem>(General) Weapon Usage</ComboBoxItem>
+                                <ComboBoxItem>(Quest ID) Weapon Usage</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
 
                         <lvc:CartesianChart Loaded="weaponUsageChart_Loaded" Grid.Column="1" Grid.Row="1" x:Name="weaponUsageChart" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
@@ -460,114 +499,127 @@
                     <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
 
                     <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#a6e3a1" />
-
-                    <ui:DataGrid x:Name="RecentRunsDataGrid" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" Loaded="MostRecentRuns_DataGridLoaded" IsReadOnly="True">
-                        <DataGrid.ColumnHeaderStyle>
-                            <StaticResource ResourceKey="DefaultDataGridColumnHeaderStyle"/>
-                        </DataGrid.ColumnHeaderStyle>
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Objective" Width="128">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Image Source="{Binding ObjectiveImage}" Width="64" Height="64" HorizontalAlignment="Center" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Quest Name" Binding="{Binding QuestName}" Width="250">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="TextWrapping" Value="Wrap" />
-                                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Run ID" Binding="{Binding RunID}" Width="128">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="TextWrapping" Value="Wrap" />
-                                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Quest ID" Binding="{Binding QuestID}" Width="128">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="TextWrapping" Value="Wrap" />
-                                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Youtube ID" Binding="{Binding YoutubeID}" Width="128">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="TextWrapping" Value="Wrap" />
-                                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Time Elapsed" Binding="{Binding FinalTimeDisplay}" Width="128">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="TextWrapping" Value="Wrap" />
-                                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="128">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="TextWrapping" Value="Wrap" />
-                                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Category" Binding="{Binding ActualOverlayMode}" Width="128">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="TextWrapping" Value="Wrap" />
-                                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Party Size" Binding="{Binding PartySize}" Width="96">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="TextWrapping" Value="Wrap" />
-                                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <!-- Add more columns with custom headers as needed -->
-                        </DataGrid.Columns>
-                    </ui:DataGrid>
+                    <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="5">
+                        <StackPanel Orientation="Horizontal">
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="MostRecentButtonSaveFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy stats to clipboard as image (recommended to maximize configuration window)" Click="MostRecentButtonCopyFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
+                                </Button.Content>
+                            </ui:Button>
+                        </StackPanel>
+                        <ui:DataGrid x:Name="RecentRunsDataGrid" AutoGenerateColumns="False" Loaded="MostRecentRuns_DataGridLoaded" IsReadOnly="True">
+                            <DataGrid.ColumnHeaderStyle>
+                                <StaticResource ResourceKey="DefaultDataGridColumnHeaderStyle"/>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Objective" Width="128">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Source="{Binding ObjectiveImage}" Width="64" Height="64" HorizontalAlignment="Center" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Quest Name" Binding="{Binding QuestName}" Width="250">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Run ID" Binding="{Binding RunID}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Quest ID" Binding="{Binding QuestID}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Youtube ID" Binding="{Binding YoutubeID}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Time Elapsed" Binding="{Binding FinalTimeDisplay}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Category" Binding="{Binding ActualOverlayMode}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Party Size" Binding="{Binding PartySize}" Width="96">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <!-- Add more columns with custom headers as needed -->
+                            </DataGrid.Columns>
+                        </ui:DataGrid>
+                    </StackPanel>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="YouTubeTemplate">
                 <!-- Grid structure for the "YouTube" option -->
                 <Grid>
                     <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
+                    <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
 
-                <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
 
-                <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="5">
-                    <TextBlock VerticalAlignment="Center" Text="YouTube ID for the Run ID" Margin="5"/>
-                    <ui:TextBox VerticalContentAlignment="Center" Margin="5" ToolTip="Enter the YouTube video ID for the Run ID entered at the top" Width="150" Height="Auto" IsUndoEnabled="False" TextAlignment="Center"  MaxLength="12" Loaded="YoutubeLinkTextBox_Loaded"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" Foreground="{StaticResource Text}" Text="Add ID"/>
-                        <ui:Button BorderThickness="0" Foreground="#f38ba8" Background="Transparent" Margin="5" Content="&#xf03d;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Free Solid" Click="UpdateYoutubeLink_ButtonClick"/>
+                    <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="5">
+                        <TextBlock VerticalAlignment="Center" Text="YouTube ID for the Run ID" Margin="5"/>
+                        <ui:TextBox VerticalContentAlignment="Center" Margin="5" ToolTip="Enter the YouTube video ID for the Run ID entered at the top" PlaceholderText="YouTube video ID" MinWidth="20" IsUndoEnabled="False" TextAlignment="Center"  MaxLength="12" Loaded="YoutubeLinkTextBox_Loaded"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Foreground="{StaticResource Text}" Text="Add ID"/>
+                            <ui:Button BorderThickness="0" Foreground="#f38ba8" Background="Transparent" Margin="5" Content="&#xf03d;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Free Solid" Click="UpdateYoutubeLink_ButtonClick"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                            <TextBlock VerticalAlignment="Center" Foreground="{StaticResource Text}" Text="Open Link in Browser"/>
+                            <ui:Button BorderThickness="0" Foreground="Red" Background="Transparent" Margin="5" Content="&#xf167;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Click="YoutubeIconButton_Click"/>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                        <TextBlock VerticalAlignment="Center" Foreground="{StaticResource Text}" Text="Open Link in Browser"/>
-                        <ui:Button BorderThickness="0" Foreground="Red" Background="Transparent" Margin="5" Content="&#xf167;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Click="YoutubeIconButton_Click"/>
-                    </StackPanel>
-                </StackPanel>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="StatsGraphsTemplate">
@@ -585,9 +637,19 @@
 
                     <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#89b4fa" />
 
-                    <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <ComboBox Width="350" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="StatsGraphsButtonSaveFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy stats to clipboard as image (recommended to maximize configuration window)" Click="StatsGraphsButtonCopyFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ComboBox ToolTip="Multiplayer runs may not display the correct data" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
                                 <ComboBoxItem>(General) Most Quest Completions</ComboBoxItem>
                                 <ComboBoxItem>(General) Quest Durations</ComboBoxItem>
                                 <ComboBoxItem>(General) Most Common Objective Types</ComboBoxItem>
@@ -624,7 +686,6 @@
                                 <ComboBoxItem>(Run ID) Monster Defense Rate</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Monster Status Ailments Thresholds</ComboBoxItem>
                             </ComboBox>
-                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Multiplayer runs may not display the correct data"/>
                         </StackPanel>
                         <lvc:CartesianChart Loaded="GraphsChart_Loaded" Grid.Column="1" Grid.Row="1" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </StackPanel>
@@ -647,13 +708,22 @@
 
                     <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <ComboBox Width="330" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="StatsTextComboBox_SelectionChanged">
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="StatsTextButtonSaveFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy stats to clipboard as image (recommended to maximize configuration window)" Click="StatsTextButtonCopyFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ComboBox SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="StatsTextComboBox_SelectionChanged" ToolTip="Enter a Run ID beforehand. Multiplayer runs may not display the correct data">
                                 <ComboBoxItem>Inventory</ComboBoxItem>
                                 <ComboBoxItem>Ammo</ComboBoxItem>
                                 <ComboBoxItem>Partnya Bag</ComboBoxItem>
                                 <ComboBoxItem>Area Changes</ComboBoxItem>
                             </ComboBox>
-                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Enter a Run ID beforehand. Multiplayer runs may not display the correct data"/>
                         </StackPanel>
                         <TextBlock Loaded="StatsTextTextBlock_Loaded" Text="" Margin="5" Width="Auto" Height="Auto"/>
                     </StackPanel>
