@@ -2373,7 +2373,6 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                         </TabItem.Header>
                                         <Grid>
                                             <DockPanel Margin="5,5,5,5">
-
                                                 <Grid x:Name="HuntedLogGrid">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="50"/>

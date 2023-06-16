@@ -967,7 +967,7 @@ public partial class ConfigWindow : FluentWindow
     }
 
     /// <summary>
-    /// Copy to clipboard
+    /// Copy to clipboard. TODO: change function name, its too generic
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -981,20 +981,22 @@ public partial class ConfigWindow : FluentWindow
             textToSave = MainWindow.DataLoader.model.MarkdownSavedGearStats;
         else if (GetTextFormatMode() == "Image")
         {
+            var previousBackground = GearTextGrid.Background;
             GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-            FileManager.CopyUIElementToClipboard(GearTextGrid);
-            GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+            FileManager.CopyUIElementToClipboard(GearTextGrid, ConfigWindowSnackBar);
+            GearTextGrid.Background = previousBackground;
             return;
         }
 
         //https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
         Clipboard.SetText(textToSave);
+        ConfigWindowSnackBar.Show(Messages.INFO_TITLE, "Copied text to clipboard", new SymbolIcon(SymbolRegular.Clipboard32), ControlAppearance.Success);
     }
 
     private void BtnImageFile_Click(object sender, RoutedEventArgs e)
     {
         var fileName = "HunterSet";
-        FileManager.SaveElementAsImageFile(GearImageGrid, fileName);
+        FileManager.SaveElementAsImageFile(GearImageGrid, fileName, ConfigWindowSnackBar);
     }
 
 
@@ -1023,7 +1025,7 @@ public partial class ConfigWindow : FluentWindow
     private void BtnGuildCardFile_Click(object sender, RoutedEventArgs e)
     {
         var fileName = "GuildCard";
-        FileManager.SaveElementAsImageFile(GuildCardGrid, fileName);
+        FileManager.SaveElementAsImageFile(GuildCardGrid, fileName, ConfigWindowSnackBar);
     }
 
     private void ChangeMonsterInfo()
@@ -1607,7 +1609,7 @@ public partial class ConfigWindow : FluentWindow
         if (questLogGearStatsTextBlock == null) return;
         var previousBackground = questLogGearStatsTextBlock.Background;
         questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(questLogGearStatsTextBlock);
+        FileManager.CopyUIElementToClipboard(questLogGearStatsTextBlock, ConfigWindowSnackBar);
         questLogGearStatsTextBlock.Background = previousBackground;
     }
 
@@ -1631,28 +1633,29 @@ public partial class ConfigWindow : FluentWindow
     private void CompendiumBtnCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (compendiumInformationStackPanel == null) return;
+        var previousBackground = compendiumInformationStackPanel.Background;
         compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
-        compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel, ConfigWindowSnackBar);
+        compendiumInformationStackPanel.Background = previousBackground;
     }
 
-    // TODO: dictories paths should be in a static class
+    // TODO: put in file manager class?
     private void CalendarButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         try
         {
             var data = MainWindow.DataLoader.model.CalendarRuns;
             if (data == null) return;
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
             saveFileDialog.Title = "Save Calendar Runs as CSV";
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
             saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
             string dateTime = DateTime.Now.ToString();
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
-            saveFileDialog.FileName = string.Format("CalendarRuns_{0}", datePickerDate.ToString("yy/MM/dd").Replace("/","-"));
+            saveFileDialog.FileName = string.Format("CalendarRuns-{0}", datePickerDate.ToString("yy/MM/dd").Replace("/","-"));
             if (saveFileDialog.ShowDialog() == true)
             {
                 string filePath = saveFileDialog.FileName;
@@ -1692,7 +1695,7 @@ public partial class ConfigWindow : FluentWindow
         if (calendarDataGrid == null) return;
         var previousBackground = calendarDataGrid.Background;
         calendarDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(calendarDataGrid);
+        FileManager.CopyUIElementToClipboard(calendarDataGrid, ConfigWindowSnackBar);
         calendarDataGrid.Background = previousBackground;
     }
 

@@ -15,8 +15,16 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Wpf.Ui.Common;
+using Wpf.Ui.Controls;
+using Wpf.Ui.Controls.IconElements;
+using Wpf.Ui.Controls.Window;
+using Clipboard = System.Windows.Clipboard;
+using MessageBox = System.Windows.MessageBox;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace MHFZ_Overlay.Core.Class.IO;
 
@@ -32,7 +40,6 @@ internal class FileManager
     /// </summary>
     /// <param name="textToSave">The text to save.</param>
     /// <param name="fileName">Name of the file.</param>
-    /// <param name="initialDirectory">The initial directory.</param>
     /// <param name="beginningFileName">Name of the beginning file.</param>
     /// <param name="beginningText">The beginning text.</param>
     public static void SaveTextFile(string textToSave, string fileName, string beginningFileName = "", string beginningText = "")
@@ -67,8 +74,7 @@ internal class FileManager
     /// </summary>
     /// <param name="gridToSave">The grid to save.</param>
     /// <param name="fileName">Name of the file.</param>
-    /// <param name="initialDirectory">The initial directory.</param>
-    public static void SaveElementAsImageFile(Grid gridToSave, string fileName, string initialDirectory = @"USERDATA\HunterInfo\")
+    public static void SaveElementAsImageFile(Grid gridToSave, string fileName, Snackbar snackbar)
     {
         try
         {
@@ -79,13 +85,14 @@ internal class FileManager
             dateTime = dateTime.Replace(":", "-");
             savefile.FileName = string.Format("{0}-{1}.png", fileName, dateTime);
             savefile.Filter = "PNG files (*.png)|*.png";
-            savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + initialDirectory;
-
+            savefile.Title = "Save Image";
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+            savefile.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
             if (savefile.ShowDialog() == true)
             {
                 gridToSave.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
                 CreateBitmapFromVisual(gridToSave, savefile.FileName);
-                CopyUIElementToClipboard(gridToSave);
+                CopyUIElementToClipboard(gridToSave, snackbar);
                 gridToSave.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
                 logger.Info("Saved image {0}", savefile.FileName);
             }
@@ -100,7 +107,7 @@ internal class FileManager
     /// Copies a UI element to the clipboard as an image.
     /// </summary>
     /// <param name="element">The element to copy.</param>
-    public static void CopyUIElementToClipboard(FrameworkElement element)
+    public static void CopyUIElementToClipboard(FrameworkElement element, Snackbar snackbar)
     {
         try
         {
@@ -122,6 +129,7 @@ internal class FileManager
             }
             bmpCopied.Render(dv);
             Clipboard.SetImage(bmpCopied);
+            snackbar.Show(Messages.INFO_TITLE, "Copied image to clipboard", new SymbolIcon(SymbolRegular.Clipboard32), ControlAppearance.Success);
         }
         catch (Exception ex)
         {
@@ -193,7 +201,9 @@ internal class FileManager
             dateTime = dateTime.Replace(":", "-");
             savefile.FileName = "HuntedLog-" + dateTime + ".csv";
             savefile.Filter = "CSV files (*.csv)|*.csv";
-            savefile.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + @"USERDATA\HuntedLogs\";
+            savefile.Title = "Save Monster Log Records as CSV";
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+            savefile.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
 
             //https://stackoverflow.com/questions/11776781/savefiledialog-make-problems-with-streamwriter-in-c-sharp
             if (savefile.ShowDialog() == true)
