@@ -54,6 +54,7 @@ using System.Windows.Markup;
 using CsvHelper.Configuration;
 using CsvHelper;
 using Microsoft.Win32;
+using SharpCompress.Common;
 
 namespace MHFZ_Overlay;
 
@@ -1700,6 +1701,24 @@ public partial class ConfigWindow : FluentWindow
         File.WriteAllText(filePath, sb.ToString());
     }
 
+    public void SaveCSVFromWeaponUsage(List<WeaponUsageMapper> weaponUsageData, string filePath)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Weapon Type,Style,Run Count");
+
+        foreach (var WeaponUsageMapper in weaponUsageData)
+        {
+            string weaponType = WeaponUsageMapper.WeaponType.Replace(",", "");
+            string style = WeaponUsageMapper.Style.Replace(",", "");
+            string runCount = WeaponUsageMapper.RunCount.ToString().Replace(",", "");
+
+            string line = $"{weaponType},{style},{runCount}";
+            sb.AppendLine(line);
+        }
+
+        File.WriteAllText(filePath, sb.ToString());
+    }
+
     public void SaveCSVFromListOfRecentRuns(ObservableCollection<RecentRuns> recentRuns, string filePath)
     {
         StringBuilder sb = new StringBuilder();
@@ -1805,9 +1824,32 @@ public partial class ConfigWindow : FluentWindow
 
     private void WeaponStatsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (weaponUsageChartGrid == null || weaponUsageChart == null) return;
-        var fileName = "WeaponUsage";
-        FileManager.SaveElementAsImageFile(weaponUsageChartGrid, fileName, ConfigWindowSnackBar, false);
+        if (weaponUsageChartGrid == null || weaponUsageChart == null || weaponUsageData == null) return;
+        try
+        {
+            var data = MainWindow.DataLoader.model.CalendarRuns;
+            if (data == null) return;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            saveFileDialog.Title = "Save Weapon Stats as CSV";
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
+            string dateTime = DateTime.UtcNow.ToString();
+            dateTime = dateTime.Replace("/", "-");
+            dateTime = dateTime.Replace(" ", "_");
+            dateTime = dateTime.Replace(":", "-");
+            saveFileDialog.FileName = string.Format("WeaponUsage-{0}", dateTime);
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string filePath = saveFileDialog.FileName;
+                SaveCSVFromWeaponUsage(weaponUsageData, filePath);
+                logger.Info("Saved text {0}", saveFileDialog.FileName);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex, "Could not save text file");
+        }
     }
 
     private void WeaponStatsButtonCopyFile_Click(object sender, RoutedEventArgs e)
