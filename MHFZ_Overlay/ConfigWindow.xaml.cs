@@ -50,6 +50,10 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Contracts;
 using Wpf.Ui.Services;
 using MHFZ_Overlay.Core.Class.Dictionary;
+using System.Windows.Markup;
+using CsvHelper.Configuration;
+using CsvHelper;
+using Microsoft.Win32;
 
 namespace MHFZ_Overlay;
 
@@ -1003,7 +1007,7 @@ public partial class ConfigWindow : FluentWindow
     // on generate csv button click
     protected void BtnLogFile_Click(object sender, EventArgs e)
     {
-        FileManager.SaveClassRecordsAsCSVFile(Monsters);
+        FileManager.SaveMonsterLogRecordsAsCSVFile(Monsters);
     }
 
 
@@ -1601,10 +1605,10 @@ public partial class ConfigWindow : FluentWindow
     private void QuestLogGearBtnCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (questLogGearStatsTextBlock == null) return;
-
+        var previousBackground = questLogGearStatsTextBlock.Background;
         questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(questLogGearStatsTextBlock);
-        questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+        questLogGearStatsTextBlock.Background = previousBackground;
     }
 
     private void Compendium_Loaded(object sender, RoutedEventArgs e)
@@ -1632,16 +1636,75 @@ public partial class ConfigWindow : FluentWindow
         compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
     }
 
+    // TODO: dictories paths should be in a static class
     private void CalendarButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        //if (compendiumTextBlock == null) return;
-        //string textToSave = compendiumTextBlock.Text;
-        //textToSave = string.Format("```text\n{0}\n```", textToSave);
+        try
+        {
+            var data = MainWindow.DataLoader.model.CalendarRuns;
+            if (data == null) return;
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            saveFileDialog.Title = "Save Calendar Runs as CSV";
+            saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
+            string dateTime = DateTime.Now.ToString();
+            dateTime = dateTime.Replace("/", "-");
+            dateTime = dateTime.Replace(" ", "_");
+            dateTime = dateTime.Replace(":", "-");
+            saveFileDialog.FileName = string.Format("CalendarRuns_{0}", datePickerDate.ToString("yy/MM/dd").Replace("/","-"));
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string filePath = saveFileDialog.FileName;
+                SaveCSVFromListOfRecentRuns(data, filePath);
+                logger.Info("Saved text {0}", saveFileDialog.FileName);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex, "Could not save text file");
+        }
+    }
 
-        //FileManager.SaveTextFile(textToSave, "Compendium");
+    // TODO to another class
+    public void SaveCSVFromListOfRecentRuns(List<RecentRuns> recentRuns, string filePath)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Date,Actual Overlay Mode,Party Size");
+
+        foreach (var run in recentRuns)
+        {
+            string objectiveImage = run.ObjectiveImage.Replace(",", "");
+            string questName = run.QuestName.Replace(",", "");
+            string youtubeID = run.YoutubeID.Replace(",", "");
+            string finalTimeDisplay = run.FinalTimeDisplay.Replace(",", "");
+            string actualOverlayMode = run.ActualOverlayMode.Replace(",", "");
+
+            string line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date},{actualOverlayMode},{run.PartySize}";
+            sb.AppendLine(line);
+        }
+
+        File.WriteAllText(filePath, sb.ToString());
     }
 
     private void CalendarButtonCopyFile_Click(object sender, RoutedEventArgs e)
+    {
+        if (calendarDataGrid == null) return;
+        var previousBackground = calendarDataGrid.Background;
+        calendarDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(calendarDataGrid);
+        calendarDataGrid.Background = previousBackground;
+    }
+
+    private void PersonalBestButtonSaveFile_Click(object sender, RoutedEventArgs e)
+    {
+        if (personalBestChart == null) return;
+        var data = personalBestChart.Series;
+        if (data == null) return;
+        //SavePersonalBestCSV(data);
+    }
+
+    private void PersonalBestButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         //if (compendiumInformationStackPanel == null) return;
         //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
@@ -1649,64 +1712,81 @@ public partial class ConfigWindow : FluentWindow
         //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
     }
 
-    private void PersonalBestButtonSaveFile_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    private void PersonalBestButtonCopyFile_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
     private void Top20ButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
+        var data = MainWindow.DataLoader.model.FastestRuns;
+        if (data == null) return;
+        //SaveCSVFromListOfFastestRuns(data);
 
     }
 
     private void Top20ButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-
+        //if (compendiumInformationStackPanel == null) return;
+        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        //FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
+        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
     }
 
     private void WeaponStatsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-
+        var data = MainWindow.DataLoader.model.weaponUsageSeries;
+        if (data == null) return;
+        //SaveWeaponUsageCSV(data);
     }
 
     private void WeaponStatsButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-
+        //if (compendiumInformationStackPanel == null) return;
+        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        //FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
+        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
     }
 
     private void MostRecentButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-
+        var data = MainWindow.DataLoader.model.RecentRuns;
+        if (data == null) return;
+        //SaveWeaponUsageCSV(data);
     }
 
     private void MostRecentButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-
+        //if (compendiumInformationStackPanel == null) return;
+        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        //FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
+        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
     }
 
     private void StatsGraphsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-
+        if (graphChart == null) return;
+        var data = graphChart.Series;
+        if (data == null) return;
+        //SaveWeaponUsageCSV(data);
     }
 
     private void StatsGraphsButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-
+        //if (compendiumInformationStackPanel == null) return;
+        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        //FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
+        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
     }
 
     private void StatsTextButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-
+        if (statsTextTextBlock == null) return;
+        var data = statsTextTextBlock.Text;
+        //SaveStatsText(data);
     }
 
     private void StatsTextButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-
+        //if (compendiumInformationStackPanel == null) return;
+        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        //FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
+        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
     }
 
     private ISeries[]? Series { get; set; }
@@ -3251,18 +3331,20 @@ public partial class ConfigWindow : FluentWindow
         compendiumInformationStackPanel = stackPanel;
     }
 
+    private DateTime datePickerDate = DateTime.UtcNow;
+
     private void CalendarDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (calendarDataGrid == null) return;
+        if (calendarDataGrid == null || sender == null) return;
 
-        var datePicker = sender as DatePicker;
+        DatePicker datePicker = sender as DatePicker;
 
         if (datePicker == null) return;
 
         var selectedDate = datePicker.SelectedDate;
 
         if (selectedDate == null) return;
-
+        datePickerDate = (DateTime)selectedDate;
         MainWindow.DataLoader.model.CalendarRuns = databaseManager.GetCalendarRuns(selectedDate);
         calendarDataGrid.ItemsSource = MainWindow.DataLoader.model.CalendarRuns;
         calendarDataGrid.Items.Refresh();

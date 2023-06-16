@@ -35,13 +35,14 @@ internal class FileManager
     /// <param name="initialDirectory">The initial directory.</param>
     /// <param name="beginningFileName">Name of the beginning file.</param>
     /// <param name="beginningText">The beginning text.</param>
-    public static void SaveTextFile(string textToSave, string fileName, string initialDirectory = @"USERDATA\HunterInfo\", string beginningFileName = "", string beginningText = "")
+    public static void SaveTextFile(string textToSave, string fileName, string beginningFileName = "", string beginningText = "")
     {
         try
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
-            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory + initialDirectory;
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+            saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
             string dateTime = DateTime.Now.ToString();
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
@@ -181,7 +182,7 @@ internal class FileManager
     /// Saves the class records as CSV file.
     /// </summary>
     /// <param name="Monsters">The monsters.</param>
-    public static void SaveClassRecordsAsCSVFile(MonsterLog[] Monsters)
+    public static void SaveMonsterLogRecordsAsCSVFile(MonsterLog[] Monsters)
     {
         try
         {
