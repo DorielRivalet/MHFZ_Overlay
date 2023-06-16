@@ -74,6 +74,22 @@
                                 </ui:MenuItem.Icon>
                             </ui:MenuItem>
                             <ui:NavigationViewItemSeparator/>
+                            <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open settings folder" Header="Settings Folder" Tag="settingsfolder" Click="OptionSettingsFolder_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="Settings24" Foreground="{StaticResource Rosewater}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
+                            <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open logs folder" Header="Logs Folder" Tag="logsfolder" Click="OptionLogsFolder_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="Document24" Foreground="{StaticResource Rosewater}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
+                            <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open database folder" Header="Database Folder" Tag="databasefolder" Click="OptionDatabaseFolder_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="Database24" Foreground="{StaticResource Rosewater}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
+                            <ui:NavigationViewItemSeparator/>
                             <ui:MenuItem ToolTip="Restart overlay" Foreground="{StaticResource Yellow}" Header="Restart" Tag="restart" Click="OptionRestart_Click">
                                 <ui:MenuItem.Icon>
                                     <ui:SymbolIcon Symbol="ArrowClockwise24" Foreground="{StaticResource Yellow}"/>

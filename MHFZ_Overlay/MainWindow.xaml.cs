@@ -65,6 +65,9 @@ using MHFZ_Overlay.Core.Enum;
 using LiveChartsCore.SkiaSharpView.SKCharts;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Direction = MHFZ_Overlay.Core.Enum.Direction;
+using System.Configuration;
+using System.IO;
+using System.Reflection;
 
 namespace MHFZ_Overlay;
 
@@ -139,6 +142,77 @@ public partial class MainWindow : Window
     private void OptionSendFeedback_Click(object sender, RoutedEventArgs e)
     {
         OpenLink("https://forms.gle/hrAVWMcYS5HEo1v7A");
+    }
+
+    private void OptionSettingsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            string settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+            var settingsFileDirectoryName = Path.GetDirectoryName(settingsFile);
+            if (!Directory.Exists(settingsFileDirectoryName))
+            {
+                logger.Error("Could not open settings folder");
+                MainWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+                return;
+            }
+            string settingsFolder = settingsFileDirectoryName;
+            // Open file manager at the specified folder
+            Process.Start(ApplicationPaths.EXPLORER_PATH, settingsFolder);
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex);
+            MainWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+        }
+    }
+
+    private void OptionLogsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        var directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        if (directoryName == null) return;
+        var logFilePath = Path.Combine(directoryName, "logs", "logs.log");
+
+        if (!File.Exists(logFilePath))
+        {
+            logger.Error("Could not find the log file: {0}", logFilePath);
+            System.Windows.MessageBox.Show(string.Format("Could not find the log file: {0}", logFilePath), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        // Open the log file using the default application
+        try
+        {
+            var logFilePathDirectory = Path.GetDirectoryName(logFilePath); 
+            if (logFilePathDirectory == null) return;
+            Process.Start(ApplicationPaths.EXPLORER_PATH, logFilePathDirectory);
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex);
+        }
+    }
+
+    private void OptionDatabaseFolder_Click(object sender, RoutedEventArgs e)
+    {
+        Settings s = (Settings)Application.Current.TryFindResource("Settings");
+        var directoryName = Path.GetDirectoryName(s.DatabaseFilePath);
+        if (directoryName == null) return;
+
+        if (!File.Exists(s.DatabaseFilePath))
+        {
+            logger.Error("Could not find the database file: {0}", s.DatabaseFilePath);
+            System.Windows.MessageBox.Show(string.Format("Could not find the database file: {0}", s.DatabaseFilePath), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        // Open the log file using the default application
+        try
+        {
+            Process.Start(ApplicationPaths.EXPLORER_PATH, directoryName);
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex);
+        }
     }
 
     private void OptionRestart_Click(object sender, RoutedEventArgs e)

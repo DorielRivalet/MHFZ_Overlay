@@ -55,6 +55,7 @@ using CsvHelper.Configuration;
 using CsvHelper;
 using Microsoft.Win32;
 using SharpCompress.Common;
+using System.Reflection;
 
 namespace MHFZ_Overlay;
 
@@ -1216,6 +1217,68 @@ public partial class ConfigWindow : FluentWindow
         {
             logger.Error(ex);
             ConfigWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+        }
+    }
+
+    private void OpenLogsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            if (directoryName == null) return;
+            var logFilePath = Path.Combine(directoryName, "logs", "logs.log");
+
+            if (!File.Exists(logFilePath))
+            {
+                logger.Error("Could not find the log file: {0}", logFilePath);
+                System.Windows.MessageBox.Show(string.Format("Could not find the log file: {0}", logFilePath), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            // Open the log file using the default application
+            try
+            {
+                var logFilePathDirectory = Path.GetDirectoryName(logFilePath);
+                if (logFilePathDirectory == null) return;
+                Process.Start(ApplicationPaths.EXPLORER_PATH, logFilePathDirectory);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex);
+        }
+    }
+
+    private void OpenDatabaseFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            var directoryName = Path.GetDirectoryName(s.DatabaseFilePath);
+            if (directoryName == null) return;
+
+            if (!File.Exists(s.DatabaseFilePath))
+            {
+                logger.Error("Could not find the database file: {0}", s.DatabaseFilePath);
+                System.Windows.MessageBox.Show(string.Format("Could not find the database file: {0}", s.DatabaseFilePath), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            // Open the log file using the default application
+            try
+            {
+                Process.Start(ApplicationPaths.EXPLORER_PATH, directoryName);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex);
         }
     }
 
