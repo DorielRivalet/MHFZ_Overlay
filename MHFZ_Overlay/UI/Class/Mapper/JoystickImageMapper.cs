@@ -10,7 +10,7 @@ namespace MHFZ_Overlay.UI.Class.Mapper;
 
 public static class JoystickImageMapper
 {
-    public static readonly Dictionary<Direction, string> imagePaths = new Dictionary<Direction, string>
+    public static IReadOnlyDictionary<Direction, string> imagePaths = new Dictionary<Direction, string>
     {
         { Direction.None, "UI/Icons/png/gamepad_joystick.png" },
         { Direction.Up, "UI/Icons/png/gamepad_joystick_up.png" },
