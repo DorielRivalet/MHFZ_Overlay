@@ -78,14 +78,14 @@
                         <DockPanel Margin="5,5,5,5">
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
-                                    <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="50" ToolTip="Save summary of stats to text file" Click="CompendiumBtnSaveFile_Click">
+                                    <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Width="Auto" ToolTip="Save summary of stats to text file" Click="CompendiumBtnSaveFile_Click">
                                         <Button.Content>
-                                            <ui:SymbolIcon Symbol="ArrowDownload48" FontSize="48" Foreground="{StaticResource Green}"/>
+                                            <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
                                         </Button.Content>
                                     </ui:Button>
-                                    <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy compendium to clipboard as image (recommended to maximize configuration window)" Width="50" Height="50" Click="CompendiumBtnCopyFile_Click">
+                                    <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy compendium to clipboard as image (recommended to maximize configuration window)" Width="Auto" Height="Auto" Click="CompendiumBtnCopyFile_Click">
                                         <Button.Content>
-                                            <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="48"/>
+                                            <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
                                         </Button.Content>
                                     </ui:Button>
                                     <TextBlock Text="Summary of your statistics" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -224,14 +224,14 @@
                         <DockPanel Margin="5,5,5,5">
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
-                                    <ui:Button Background="Transparent" Margin="10,0,0,0" x:Name="QuestLogGearBtnSaveFile" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="50" ToolTip="Save gear to text file" Click="QuestLogGearBtnSaveFile_Click">
+                                    <ui:Button Background="Transparent" Margin="10,0,0,0" x:Name="QuestLogGearBtnSaveFile" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save gear to text file" Click="QuestLogGearBtnSaveFile_Click">
                                         <Button.Content>
-                                            <ui:SymbolIcon Symbol="ArrowDownload48" FontSize="48" Foreground="{StaticResource Green}"/>
+                                            <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
                                         </Button.Content>
                                     </ui:Button>
-                                    <ui:Button Background="Transparent" Margin="10,0,0,0" x:Name="QuestLogGearBtnCopyFile" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy gear to clipboard as image (recommended to maximize configuration window)" Width="50"  Height="50" Click="QuestLogGearBtnCopyFile_Click">
+                                    <ui:Button Background="Transparent" Margin="10,0,0,0" x:Name="QuestLogGearBtnCopyFile" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy gear to clipboard as image (recommended to maximize configuration window)" Click="QuestLogGearBtnCopyFile_Click">
                                         <Button.Content>
-                                            <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="48"/>
+                                            <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
                                         </Button.Content>
                                     </ui:Button>
                                     <TextBlock Text="Gear associated with the Run ID" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -264,17 +264,17 @@
                     <StackPanel  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
                             <!--TODO: add the refresh button to the other sections-->
-                            <ui:Button Background="Transparent" BorderThickness="0" ToolTip="Refresh" Click="RefreshButton_Click" Width="32"  Height="32">
+                            <ui:Button Background="Transparent" BorderThickness="0" ToolTip="Refresh" Click="RefreshButton_Click">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="ArrowCounterclockwise24" FontSize="24" Foreground="{StaticResource Yellow}"/>
                                 </Button.Content>
                             </ui:Button>
 
-                            <ComboBox Width="300" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestTypeComboBox_SelectionChanged">
+                            <ComboBox SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestTypeComboBox_SelectionChanged">
                                 <ComboBoxItem>(Quest ID) Personal Best by Date</ComboBoxItem>
                                 <ComboBoxItem>(Quest ID) Personal Best by Attempts</ComboBoxItem>
                             </ComboBox>
-                            <ComboBox Width="150" Height="Auto" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestWeaponComboBox_SelectionChanged">
+                            <ComboBox SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="PersonalBestWeaponComboBox_SelectionChanged">
                                 <ComboBoxItem>Sword and Shield</ComboBoxItem>
                                 <ComboBoxItem>Dual Swords</ComboBoxItem>
                                 <ComboBoxItem>Great Sword</ComboBoxItem>
