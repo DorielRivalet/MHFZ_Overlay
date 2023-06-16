@@ -1447,6 +1447,8 @@ public partial class ConfigWindow : FluentWindow
     private Grid? weaponUsageChartGrid;
     private ComboBox? statsGraphsComboBox;
     private Grid? statsGraphsGrid;
+    private TextBlock? personalBestDescriptionTextBlock;
+    private TextBlock? top20RunsDescriptionTextblock;
 
 
     // TODO: it works. i need to put this somewhere else
@@ -3609,6 +3611,51 @@ public partial class ConfigWindow : FluentWindow
         var obj = (Grid)sender;
         if (obj != null)
             statsGraphsGrid = obj;
+    }
+
+    private void QuestIDTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (personalBestDescriptionTextBlock != null)
+        {
+            personalBestDescriptionTextBlock.Text = $"Personal best of solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
+        }
+        if (top20RunsDescriptionTextblock != null)
+        {
+            top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
+        }
+    }
+
+    private void PersonalBestDescriptionTextBlock_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (TextBlock)sender;
+        if (obj != null)
+            personalBestDescriptionTextBlock = obj;
+    }
+
+    private void Top20RunsDescriptionTextBlock_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (TextBlock)sender;
+        if (obj != null)
+            top20RunsDescriptionTextblock = obj;
+    }
+
+    // seems kinda buggy
+    private void OverlayModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        ComboBox comboBox = (ComboBox)sender;
+        if (comboBox == null) return;
+        ComboBoxItem? selectedItem = comboBox.SelectedItem as ComboBoxItem;
+        if (selectedItem == null) return;
+        string? selectedOption = selectedItem.Content.ToString();
+        if (selectedOption == null) return;
+        if (personalBestDescriptionTextBlock != null)
+        {
+            personalBestDescriptionTextBlock.Text = $"Personal best of solo runs of quest ID {QuestIDTextBox.Text} by category {selectedOption}";
+        }
+        if (top20RunsDescriptionTextblock != null)
+        {
+            top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {QuestIDTextBox.Text} by category {selectedOption}";
+        }
     }
 }
 /* LoadConfig on startup

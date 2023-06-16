@@ -307,7 +307,7 @@
                                 <ComboBoxItem>Heavy Bowgun</ComboBoxItem>
                                 <ComboBoxItem>Bow</ComboBoxItem>
                             </ComboBox>
-                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Personal Best of solo runs of quest ID by category"/>
+                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Personal Best of solo runs of quest ID by category" Loaded="PersonalBestDescriptionTextBlock_Loaded"/>
                         </StackPanel>
                         <Grid x:Name="personalBestChartGrid" Loaded="personalBestChartGrid_Loaded">
                             <lvc:CartesianChart Loaded="personalBest_Loaded" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -362,7 +362,7 @@
                                 <ComboBoxItem>Heavy Bowgun</ComboBoxItem>
                                 <ComboBoxItem>Bow</ComboBoxItem>
                             </ComboBox>
-                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Top 20 fastest solo runs of quest ID by category"/>
+                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Top 20 fastest solo runs of quest ID by category" Loaded="Top20RunsDescriptionTextBlock_Loaded"/>
                         </StackPanel>
                         <ui:DataGrid x:Name="Top20RunsDataGrid" AutoGenerateColumns="False" Loaded="Top20Runs_DataGridLoaded" IsReadOnly="True">
                             <DataGrid.ColumnHeaderStyle>
@@ -1246,7 +1246,7 @@
                                                     <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:TextBox x:Name="QuestIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8"/>
+                                            <ui:TextBox x:Name="QuestIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8" TextChanged="QuestIDTextBox_TextChanged"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" ToolTip="Search by Run ID">
                                             <TextBlock Padding="10,0,10,0" Text="Run ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -1260,7 +1260,7 @@
                                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" ToolTip="Search Option" 
                                         ToolTipService.ToolTip="Please view the FAQ to see what the categories are about.&#x0a;VERY IMPORTANT: None of the categories or rules are set in stone.&#x0a;Things that are not currently tracked are: Prayer Gems, Login Boost, Halk Pot, Hunter Aid Attack Multiplier, Diva Defense Weapon Boost, Active Feature, etc.&#x0a;Please make a pull request or send a requested feature issue if you can help track these in the overlay.">
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Category"/>
-                                            <ComboBox x:Name="OverlayModeComboBox"  Grid.Column="1" Grid.Row="0" Width="230" SelectedIndex="0">
+                                            <ComboBox x:Name="OverlayModeComboBox"  Grid.Column="1" Grid.Row="0" Width="230" SelectedIndex="0" SelectionChanged="OverlayModeComboBox_SelectionChanged">
                                                 <ComboBoxItem>Time Attack</ComboBoxItem>
                                                 <ComboBoxItem>Freestyle w/ Secret Tech</ComboBoxItem>
                                                 <ComboBoxItem>Freestyle No Secret Tech</ComboBoxItem>
