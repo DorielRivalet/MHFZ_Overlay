@@ -3286,5 +3286,221 @@ namespace MHFZ_Overlay {
                 this["RenderingMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ZenithGauntletMonstersShown {
+            get {
+                return ((bool)(this["ZenithGauntletMonstersShown"]));
+            }
+            set {
+                this["ZenithGauntletMonstersShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ZenithGauntletMonstersX {
+            get {
+                return ((double)(this["ZenithGauntletMonstersX"]));
+            }
+            set {
+                this["ZenithGauntletMonstersX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ZenithGauntletMonstersY {
+            get {
+                return ((double)(this["ZenithGauntletMonstersY"]));
+            }
+            set {
+                this["ZenithGauntletMonstersY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ZenithGauntletMonstersWidth {
+            get {
+                return ((double)(this["ZenithGauntletMonstersWidth"]));
+            }
+            set {
+                this["ZenithGauntletMonstersWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ZenithGauntletMonstersHeight {
+            get {
+                return ((double)(this["ZenithGauntletMonstersHeight"]));
+            }
+            set {
+                this["ZenithGauntletMonstersHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ZenithGauntletOrder {
+            get {
+                return ((string)(this["ZenithGauntletOrder"]));
+            }
+            set {
+                this["ZenithGauntletOrder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MusouGauntletMonstersShown {
+            get {
+                return ((bool)(this["MusouGauntletMonstersShown"]));
+            }
+            set {
+                this["MusouGauntletMonstersShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double MusouGauntletMonstersX {
+            get {
+                return ((double)(this["MusouGauntletMonstersX"]));
+            }
+            set {
+                this["MusouGauntletMonstersX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double MusouGauntletMonstersY {
+            get {
+                return ((double)(this["MusouGauntletMonstersY"]));
+            }
+            set {
+                this["MusouGauntletMonstersY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double MusouGauntletMonstersWidth {
+            get {
+                return ((double)(this["MusouGauntletMonstersWidth"]));
+            }
+            set {
+                this["MusouGauntletMonstersWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double MusouGauntletMonstersHeight {
+            get {
+                return ((double)(this["MusouGauntletMonstersHeight"]));
+            }
+            set {
+                this["MusouGauntletMonstersHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MusouGauntletOrder {
+            get {
+                return ((string)(this["MusouGauntletOrder"]));
+            }
+            set {
+                this["MusouGauntletOrder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SolsticeGauntletMonstersShown {
+            get {
+                return ((bool)(this["SolsticeGauntletMonstersShown"]));
+            }
+            set {
+                this["SolsticeGauntletMonstersShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double SolsticeGauntletMonstersX {
+            get {
+                return ((double)(this["SolsticeGauntletMonstersX"]));
+            }
+            set {
+                this["SolsticeGauntletMonstersX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double SolsticeGauntletMonstersY {
+            get {
+                return ((double)(this["SolsticeGauntletMonstersY"]));
+            }
+            set {
+                this["SolsticeGauntletMonstersY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double SolsticeGauntletMonstersWidth {
+            get {
+                return ((double)(this["SolsticeGauntletMonstersWidth"]));
+            }
+            set {
+                this["SolsticeGauntletMonstersWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double SolsticeGauntletMonstersHeight {
+            get {
+                return ((double)(this["SolsticeGauntletMonstersHeight"]));
+            }
+            set {
+                this["SolsticeGauntletMonstersHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SolsticeGauntletOrder {
+            get {
+                return ((string)(this["SolsticeGauntletOrder"]));
+            }
+            set {
+                this["SolsticeGauntletOrder"] = value;
+            }
+        }
     }
 }
