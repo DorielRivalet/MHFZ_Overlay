@@ -198,7 +198,6 @@ public partial class MainWindow : Window
     #region main
 
     public DateTime ProgramStart;
-    public static DateTime ProgramStartStatic;
     public DateTime ProgramEnd;
 
     // Declare a dictionary to map keys to images
@@ -273,7 +272,6 @@ public partial class MainWindow : Window
 
         // When the program starts
         ProgramStart = DateTime.Now;
-        ProgramStartStatic = DateTime.Now;
 
         // Calculate the total time spent and update the TotalTimeSpent property
         DataLoader.model.TotalTimeSpent = databaseManager.CalculateTotalTimeSpent();
@@ -354,7 +352,7 @@ public partial class MainWindow : Window
     {
         // Get the dependency context for the current application
         var context = DependencyContext.Default;
-
+        if (context == null) return;
         // Build a string with information about all the dependencies
         var sb = new StringBuilder();
         var runtimeTarget = RuntimeInformation.FrameworkDescription;
@@ -645,6 +643,7 @@ The process may take some time, as the program attempts to download from GitHub 
             return;
 
         EZlion.Mapper.Quest.IDName.TryGetValue(DataLoader.model.previousQuestID, out string? previousQuestID);
+        if (previousQuestID == null) return;
         questNameTextBlock.Text = previousQuestID;
         Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         Brush peachBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x87));
@@ -716,10 +715,10 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-        if (s == null || !s.LocationTextShown)
-            return;
+        if (s == null || !s.LocationTextShown) return;
 
         Location.IDName.TryGetValue(DataLoader.model.previousGlobalAreaID, out string? previousGlobalAreaID);
+        if (previousGlobalAreaID == null) return;
         locationTextBlock.Text = previousGlobalAreaID;
         Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         Brush blueBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));

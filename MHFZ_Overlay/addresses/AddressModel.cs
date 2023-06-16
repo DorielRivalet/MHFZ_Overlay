@@ -3679,7 +3679,7 @@ TreeScope.Children, condition);
                 {
                     itemName = "None";
                 }
-                itemNames[i] = itemName;
+                itemNames[i] = itemName == null ? "None" : itemName;
             }
 
             string itemPouch = "";
@@ -3706,7 +3706,7 @@ TreeScope.Children, condition);
         for (int i = 0; i < items.Length; i++)
         {
             int id = items[i];
-            if (Item.IDName.TryGetValue(id, out string value))
+            if (Item.IDName.TryGetValue(id, out string? value))
             {
                 if (value != "None" && value != "")
                 {
@@ -3737,7 +3737,7 @@ TreeScope.Children, condition);
         for (int i = 0; i < skills.Length; i++)
         {
             int id = skills[i];
-            if (SkillRoadTower.IDName.TryGetValue(id, out string value) && value != "None" && value != "")
+            if (SkillRoadTower.IDName.TryGetValue(id, out string? value) && value != "None" && value != "")
             {
                 name += value;
                 if (i != skills.Length - 1)
@@ -4132,7 +4132,7 @@ TreeScope.Children, condition);
         for (int i = 0; i < skills.Length; i++)
         {
             int skillId = skills[i];
-            if (SkillCaravan.IDName.TryGetValue(skillId, out string skillName)
+            if (SkillCaravan.IDName.TryGetValue(skillId, out string? skillName)
                 && skillName != "None" && skillName != "")
             {
                 SkillName += skillName;
@@ -4481,9 +4481,9 @@ TreeScope.Children, condition);
             {
                 int skillNum = i + 1;
                 int skillID = (int)this.GetType().GetMethod($"ZenithSkill{skillNum}").Invoke(this, null);
-                if (SkillZenith.IDName.TryGetValue(skillID, out string skillName))
+                if (SkillZenith.IDName.TryGetValue(skillID, out string? skillName))
                 {
-                    if (IsMaxZenithSkill(skillID) && skillName != "None" && skillName != "")
+                    if (IsMaxZenithSkill(skillID) && skillName != "None" && !string.IsNullOrEmpty(skillName))
                     {
                         skillName = "**" + skillName + "**";
                     }
@@ -4516,7 +4516,7 @@ TreeScope.Children, condition);
         for (int i = 0; i < skills.Length; i++)
         {
             int skillId = skills[i];
-            if (SkillZenith.IDName.TryGetValue(skillId, out string skillName))
+            if (SkillZenith.IDName.TryGetValue(skillId, out string? skillName))
             {
                 if (skillName != "None" && skillName != "")
                 {
@@ -4593,7 +4593,7 @@ TreeScope.Children, condition);
         for (int i = 0; i < skills.Length; i++)
         {
             int skillId = skills[i];
-            if (SkillArmor.IDName.TryGetValue(skillId, out string skillName))
+            if (SkillArmor.IDName.TryGetValue(skillId, out string? skillName))
             {
                 if (skillName != "None" && skillName != "")
                 {
@@ -4847,7 +4847,7 @@ TreeScope.Children, condition);
         for (int i = 0; i < skills.Length; i++)
         {
             int skillId = skills[i];
-            if (SkillArmor.IDName.TryGetValue(skillId, out string skillName))
+            if (SkillArmor.IDName.TryGetValue(skillId, out string? skillName))
             {
                 if (skillName != "None" && skillName != "")
                 {
@@ -4991,7 +4991,7 @@ TreeScope.Children, condition);
         for (int i = 0; i < skills.Length; i++)
         {
             int skillId = skills[i];
-            if (SkillStyleRank.IDName.TryGetValue(skillId, out string skillName))
+            if (SkillStyleRank.IDName.TryGetValue(skillId, out string? skillName))
             {
                 if (skillName != "None" && skillName != "")
                 {
@@ -6239,6 +6239,8 @@ TreeScope.Children, condition);
         else
         {
             ActiveSkills activeSkills = databaseManager.GetActiveSkills((long)runID);
+            if (string.IsNullOrEmpty(activeSkills.CreatedBy))
+                return "Run Not Found.\n\nReload the section.";
             AmmoPouch ammoPouch = databaseManager.GetAmmoPouch((long)runID);
             AutomaticSkills automaticSkills = databaseManager.GetAutomaticSkills((long)runID);
             CaravanSkills caravanSkills = databaseManager.GetCaravanSkills((long)runID);
@@ -6250,15 +6252,18 @@ TreeScope.Children, condition);
             MHFZ_Overlay.UI.Class.Quest quest = databaseManager.GetQuest((long)runID);
 
             var createdBy = playerGear.CreatedBy;
-            if (createdBy == null)
-                return "Run Not Found.\n\nReload the section.";
             var weaponClass = GetWeaponClass((int?)playerGear.WeaponClassID);
             var gender = GetGender();
             var metadata = GetMetadata;
             var gearName = playerGear.GearName;
             var weaponName = GetWeaponNameFromType((int)playerGear.WeaponTypeID);
-            long weaponID = (long)(playerGear.BlademasterWeaponID == null ? playerGear.GunnerWeaponID : playerGear.BlademasterWeaponID);
-            var realweaponName = GetRealWeaponNameForRunID(GetWeaponClass((int?)playerGear.WeaponClassID), GetWeaponNameFromType((int)playerGear.WeaponTypeID), playerGear.StyleID, weaponID, playerGear.WeaponSlot1, playerGear.WeaponSlot2, playerGear.WeaponSlot3);
+            long weaponID = (long)(
+                playerGear.BlademasterWeaponID == null ? 
+                    playerGear.GunnerWeaponID == null ?
+                        0 
+                        : playerGear.GunnerWeaponID 
+                    : playerGear.BlademasterWeaponID);
+            var realweaponName = GetRealWeaponNameForRunID(GetWeaponClass((int)playerGear.WeaponClassID), GetWeaponNameFromType((int)playerGear.WeaponTypeID), (long)playerGear.StyleID, weaponID, playerGear.WeaponSlot1, playerGear.WeaponSlot2, playerGear.WeaponSlot3);
             var head = GetArmorHeadNameForRunID((int)playerGear.HeadID, (int)playerGear.HeadSlot1ID, (int)playerGear.HeadSlot2ID, (int)playerGear.HeadSlot3ID);
             var chest = GetArmorChestNameForRunID((int)playerGear.ChestID, (int)playerGear.ChestSlot1ID, (int)playerGear.ChestSlot2ID, (int)playerGear.ChestSlot3ID);
             var arms = GetArmorArmNameForRunID((int)playerGear.ArmsID, (int)playerGear.ArmsSlot1ID, (int)playerGear.ArmsSlot2ID, (int)playerGear.ArmsSlot3ID);
@@ -6279,8 +6284,8 @@ TreeScope.Children, condition);
             var ammo = GetItemsForRunID(new int[] { (int)ammoPouch.Item1ID, (int)ammoPouch.Item2ID, (int)ammoPouch.Item3ID, (int)ammoPouch.Item4ID, (int)ammoPouch.Item5ID, (int)ammoPouch.Item6ID, (int)ammoPouch.Item7ID, (int)ammoPouch.Item8ID, (int)ammoPouch.Item9ID, (int)ammoPouch.Item10ID });
             var poogieItem = GetItemName((int)playerGear.PoogieItemID);
             var roadDureSkillsList = GetRoadDureSkillsForRunID(new int[] { (int)roadDureSkills.RoadDureSkill1ID, (int)roadDureSkills.RoadDureSkill2ID, (int)roadDureSkills.RoadDureSkill3ID, (int)roadDureSkills.RoadDureSkill4ID, (int)roadDureSkills.RoadDureSkill5ID, (int)roadDureSkills.RoadDureSkill6ID, (int)roadDureSkills.RoadDureSkill7ID, (int)roadDureSkills.RoadDureSkill8ID, (int)roadDureSkills.RoadDureSkill9ID, (int)roadDureSkills.RoadDureSkill10ID, (int)roadDureSkills.RoadDureSkill11ID, (int)roadDureSkills.RoadDureSkill12ID, (int)roadDureSkills.RoadDureSkill13ID, (int)roadDureSkills.RoadDureSkill14ID, (int)roadDureSkills.RoadDureSkill15ID, (int)roadDureSkills.RoadDureSkill16ID });
-            var questName = EZlion.Mapper.Quest.IDName[(int)quest.QuestID];
-            var questObjectiveType = EZlion.Mapper.ObjectiveType.IDName[(int)quest.ObjectiveTypeID];
+            var questName = EZlion.Mapper.Quest.IDName[(int)(quest.QuestID == null ? 1 : quest.QuestID)];
+            var questObjectiveType = EZlion.Mapper.ObjectiveType.IDName[(int)(quest.ObjectiveTypeID == null ? 0 : quest.ObjectiveTypeID)];
             var questObjectiveQuantity = quest.ObjectiveQuantity;
             var questObjectiveName = quest.ObjectiveName;
             var questCategory = quest.ActualOverlayMode;
@@ -9989,15 +9994,15 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     //int for timeint() which is current quest time, second int for current attack buff
     public Dictionary<int, int> attackBuffDictionary = new();
     // the deserealized are used for displays
-    public Dictionary<int, int> attackBuffDictionaryDeserealized;
+    public Dictionary<int, int>? attackBuffDictionaryDeserealized;
 
     // same for this but second is current hit count
     public Dictionary<int, int> hitCountDictionary = new();
-    public Dictionary<int, int> hitCountDictionaryDeserealized;
+    public Dictionary<int, int>? hitCountDictionaryDeserealized;
 
     // same but the second int is the damage dealt when hitting monster.
     public Dictionary<int, int> damageDealtDictionary = new();
-    public Dictionary<int, int> damageDealtDictionaryDeserealized;
+    public Dictionary<int, int>? damageDealtDictionaryDeserealized;
 
     // then for DPS i can calculate from the above dictionary and only update the
     // DPS value every time you register a new hit (new entry in damageDealtDictionary), which means its accurate but
@@ -10085,23 +10090,23 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     // new entry every second during quest (use this for chart?)
     public Dictionary<int, double> damagePerSecondDictionary = new();
-    public Dictionary<int, double> damagePerSecondDictionaryDeserealized;
+    public Dictionary<int, double>? damagePerSecondDictionaryDeserealized;
 
     public Dictionary<int, int> areaChangesDictionary = new();
-    public Dictionary<int, int> areaChangesDictionaryDeserealized;
+    public Dictionary<int, int>? areaChangesDictionaryDeserealized;
 
     public Dictionary<int, int> cartsDictionary = new();
-    public Dictionary<int, int> cartsDictionaryDeserealized;
+    public Dictionary<int, int>? cartsDictionaryDeserealized;
 
     // time <monsterid, monsterhp>
     public Dictionary<int, Dictionary<int, int>> monster1HPDictionary = new();
     public Dictionary<int, Dictionary<int, int>> monster2HPDictionary = new();
     public Dictionary<int, Dictionary<int, int>> monster3HPDictionary = new();
     public Dictionary<int, Dictionary<int, int>> monster4HPDictionary = new();
-    public Dictionary<int, Dictionary<int, int>> monster1HPDictionaryDeserealized;
-    public Dictionary<int, Dictionary<int, int>> monster2HPDictionaryDeserealized;
-    public Dictionary<int, Dictionary<int, int>> monster3HPDictionaryDeserealized;
-    public Dictionary<int, Dictionary<int, int>> monster4HPDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster1HPDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster2HPDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster3HPDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster4HPDictionaryDeserealized;
 
     // time, itemid, itemquantity
     // can calculate itemuse by counting rows
@@ -10109,42 +10114,42 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     // the second int is the item id and the third int is the item quantity of that id.
     // meaning that this is a dictionary of quest time and a list of item ids and quantities respectively.
     public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionary = new();
-    public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionaryDeserealized;
+    public Dictionary<int, List<Dictionary<int, int>>>? playerInventoryDictionaryDeserealized;
 
     public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionary = new();
-    public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionaryDeserealized;
+    public Dictionary<int, List<Dictionary<int, int>>>? playerAmmoPouchDictionaryDeserealized;
 
     public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionary = new();
-    public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionaryDeserealized;
+    public Dictionary<int, List<Dictionary<int, int>>>? partnyaBagDictionaryDeserealized;
 
     // time, areaid, hitstakenblocked
     // can calculate total hits by area by checking areaid, or in total by all sum.
     public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = new();
-    public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionaryDeserealized = new();
+    public Dictionary<int, Dictionary<int, int>>? hitsTakenBlockedDictionaryDeserealized = new();
 
     public Dictionary<int, int> playerHPDictionary = new();
-    public Dictionary<int, int> playerHPDictionaryDeserealized = new();
+    public Dictionary<int, int>? playerHPDictionaryDeserealized = new();
 
     public Dictionary<int, int> playerStaminaDictionary = new();
-    public Dictionary<int, int> playerStaminaDictionaryDeserealized = new();
+    public Dictionary<int, int>? playerStaminaDictionaryDeserealized = new();
 
     public Dictionary<int, double> hitsPerSecondDictionary = new();
-    public Dictionary<int, double> hitsPerSecondDictionaryDeserealized = new();
+    public Dictionary<int, double>? hitsPerSecondDictionaryDeserealized = new();
 
     public Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = new();
-    public Dictionary<int, double> hitsTakenBlockedPerSecondDictionaryDeserealized = new();
+    public Dictionary<int, double>? hitsTakenBlockedPerSecondDictionaryDeserealized = new();
 
     public Dictionary<int, string> keystrokesDictionary = new();
-    public Dictionary<int, string> keystrokesDictionaryDeserealized = new();
+    public Dictionary<int, string>? keystrokesDictionaryDeserealized = new();
 
     public Dictionary<int, string> gamepadInputDictionary = new();
-    public Dictionary<int, string> gamepadInputDictionaryDeserealized = new();
+    public Dictionary<int, string>? gamepadInputDictionaryDeserealized = new();
 
     public Dictionary<int, string> mouseInputDictionary = new();
-    public Dictionary<int, string> mouseInputDictionaryDeserealized = new();
+    public Dictionary<int, string>? mouseInputDictionaryDeserealized = new();
 
     public Dictionary<int, double> actionsPerMinuteDictionary = new();
-    public Dictionary<int, double> actionsPerMinuteDictionaryDeserealized = new();
+    public Dictionary<int, double>? actionsPerMinuteDictionaryDeserealized = new();
 
     public Dictionary<int, string> overlayModeDictionary = new();
 
@@ -10158,16 +10163,16 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = new();
     public Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionary = new();
     public Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionary = new();
-    public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionaryDeserealized;
-    public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionaryDeserealized;
-    public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionaryDeserealized;
-    public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionaryDeserealized;
-    public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionaryDeserealized;
-    public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionaryDeserealized;
-    public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionaryDeserealized;
-    public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionaryDeserealized;
-    public Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionaryDeserialized;
-    public Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionaryDeserialized;
+    public Dictionary<int, Dictionary<int, double>>? monster1AttackMultiplierDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, double>>? monster1DefenseRateDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, double>>? monster1SizeMultiplierDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster1PoisonThresholdDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster1SleepThresholdDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster1ParalysisThresholdDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster1BlastThresholdDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster1StunThresholdDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, List<int>>>? monster1PartThresholdDictionaryDeserialized;
+    public Dictionary<int, Dictionary<int, List<int>>>? monster2PartThresholdDictionaryDeserialized;
 
     public int previousTimeInt = 0;
     public int previousAttackBuffInt = 0;

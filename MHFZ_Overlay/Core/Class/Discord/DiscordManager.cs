@@ -17,7 +17,7 @@ internal class DiscordManager
 
     #region constructor
 
-    private static DiscordManager instance;
+    private static DiscordManager? instance;
     private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
     private static bool StartedRoadElapsedTime = false;
     private static bool inDuremudiraArena = false;
@@ -54,7 +54,7 @@ internal class DiscordManager
     /// <value>
     /// The client.
     /// </value>
-    private static DiscordRpcClient discordRPCClient;
+    private static DiscordRpcClient? discordRPCClient;
 
     //Called when your application first starts.
     //For example, just before your main loop, on OnEnable for unity.
@@ -175,7 +175,7 @@ internal class DiscordManager
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
             bool serverNameFound = Dictionary.DiscordServersList.DiscordServerID.TryGetValue(s.DiscordServerID, out string? value);
-            if (serverNameFound)
+            if (serverNameFound && value != null)
                 return value;
             else
                 return "Unknown Server";
@@ -248,6 +248,7 @@ internal class DiscordManager
                 };
             }
 
+            if (discordRPCClient == null) return;
             discordRPCClient.SetPresence(presenceTemplate);
             isDiscordRPCRunning = true;
             logger.Info("Discord RPC is now running");

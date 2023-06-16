@@ -35,17 +35,19 @@ public class Achievement
     /// <summary>
     /// Gets the color for title and icon from rank.
     /// </summary>
-    public Brush GetBrushColorFromRank()
+    public Brush? GetBrushColorFromRank()
     {
         var brushConverter = new BrushConverter();
 
-        if (RankColors.TryGetValue(Rank, out string colorString))
+        if (RankColors.TryGetValue(Rank, out string? colorString))
         {
-            var brush = (Brush)brushConverter.ConvertFromString(colorString);
+            if (colorString == null)
+                colorString = CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Base"];
+            var brush = (Brush?)brushConverter.ConvertFromString(colorString);
             return brush;
         }
         // Default color if rank is not defined
-        return (Brush)brushConverter.ConvertFromString(CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Base"]); 
+        return (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Base"]); 
     }
 
     /// <summary>

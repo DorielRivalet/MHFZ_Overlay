@@ -28,8 +28,8 @@ public class BrushAnimation : AnimationTimeline
                                defaultDestinationValue as Brush,
                                animationClock);
     }
-    public object GetCurrentValue(Brush defaultOriginValue,
-                                  Brush defaultDestinationValue,
+    public object GetCurrentValue(Brush? defaultOriginValue,
+                                  Brush? defaultDestinationValue,
                                   AnimationClock animationClock)
     {
         if (!animationClock.CurrentProgress.HasValue)
@@ -40,9 +40,9 @@ public class BrushAnimation : AnimationTimeline
         defaultOriginValue = this.From ?? defaultOriginValue;
         defaultDestinationValue = this.To ?? defaultDestinationValue;
 
-        if (animationClock.CurrentProgress.Value == 0)
+        if (animationClock.CurrentProgress.Value == 0 && defaultOriginValue != null)
             return defaultOriginValue;
-        if (animationClock.CurrentProgress.Value == 1)
+        if (animationClock.CurrentProgress.Value == 1 && defaultDestinationValue != null)
             return defaultDestinationValue;
 
         return new VisualBrush(new Border()

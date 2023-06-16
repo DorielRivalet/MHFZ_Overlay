@@ -8,10 +8,10 @@ namespace MHFZ_Overlay.UI.Class;
 //TODO: ORM
 public class PlayerInventory
 {
-    public DateTime CreatedAt { get; set; }
-    public string CreatedBy { get; set; }
-    public long PlayerInventoryID { get; set; }
-    public long RunID { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public string? CreatedBy { get; set; } = string.Empty;
+    public long? PlayerInventoryID { get; set; }
+    public long? RunID { get; set; }
     public long Item1ID { get; set; }
     public long Item1Quantity { get; set; }
 

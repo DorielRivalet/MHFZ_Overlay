@@ -38,6 +38,7 @@ using System.Transactions;
 using System.Windows.Documents;
 using System.Threading.Tasks;
 using System.Data.Common;
+using System.Diagnostics.Eventing.Reader;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay.Core.Class.DataAccessLayer;
@@ -47,9 +48,9 @@ namespace MHFZ_Overlay.Core.Class.DataAccessLayer;
 /// </summary>
 internal class DatabaseManager
 {
-    private string _connectionString;
+    private string? _connectionString;
 
-    private static DatabaseManager instance;
+    private static DatabaseManager? instance;
 
     private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -60,8 +61,8 @@ internal class DatabaseManager
         logger.Info($"DatabaseManager initialized");
     }
 
-    private string _customDatabasePath;
-    private string dataSource;
+    private string? _customDatabasePath;
+    private string? dataSource;
 
     public void CheckIfSchemaChanged(DataLoader mainWindowDataLoader)
     {
@@ -2628,15 +2629,21 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         // Find the path of the first found process with the name "MHFZ_Overlay.exe"
         string exeName = "MHFZ_Overlay.exe";
         Process[] processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(exeName));
-        string exePath = "";
+        string? exePath = "";
         if (processes.Length > 0)
         {
-            exePath = processes[0].MainModule.FileName;
+            var module = processes[0].MainModule;
+            if (module == null)
+                return "";
+            else
+                exePath = module.FileName;
         }
         else
         {
             exePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
         }
+
+        if (exePath == null) return "";
 
         // Calculate the SHA256 hash of the executable
         using (var sha256 = SHA256.Create())
@@ -2850,12 +2857,15 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                                         }
 
                                         // Initialize the schema entry for the table if it doesn't exist
-                                        if (!schema.ContainsKey(tableName))
+                                        if (tableName != null && !schema.ContainsKey(tableName))
                                         {
                                             schema[tableName] = new();
                                         }
-                                        // Add the list of columns to the schema dictionary
-                                        schema[tableName]["columns"] = columns;
+                                        if (tableName != null)
+                                        {
+                                            // Add the list of columns to the schema dictionary
+                                            schema[tableName]["columns"] = columns;
+                                        }
                                     }
                                 }
                             }
@@ -2870,16 +2880,18 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                                     var tableName = cmd2.ExecuteScalar().ToString();
 
                                     // Initialize the schema entry for the table if it doesn't exist
-                                    if (!schema.ContainsKey(tableName))
+                                    if (tableName != null && !schema.ContainsKey(tableName))
                                     {
                                         schema[tableName] = new();
                                     }
-
-                                    // Add the index information to the schema dictionary
-                                    schema[tableName]["indexes"] = schema[tableName].ContainsKey("indexes")
-                                        ? schema[tableName]["indexes"]
-                                    : new List<object>();
-                                    ((List<object>)schema[tableName]["indexes"]).Add(new { name = objectName, sql = reader["sql"].ToString() });
+                                    if (tableName != null)
+                                    {
+                                        // Add the index information to the schema dictionary
+                                        schema[tableName]["indexes"] = schema[tableName].ContainsKey("indexes")
+                                            ? schema[tableName]["indexes"]
+                                        : new List<object>();
+                                        ((List<object>)schema[tableName]["indexes"]).Add(new { name = objectName, sql = reader["sql"].ToString() });
+                                    }
                                 }
                             }
                             else if (objectType == "trigger")
@@ -2893,17 +2905,19 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                                     var tableName = cmd3.ExecuteScalar().ToString();
 
                                     // Initialize the schema entry for the table if it doesn't exist
-                                    if (!schema.ContainsKey(tableName))
+                                    if (tableName != null && !schema.ContainsKey(tableName))
                                     {
                                         schema[tableName] = new();
                                     }
+                                    if (tableName != null)
+                                    {
+                                        // Add the trigger information to the schema dictionary
+                                        schema[tableName]["triggers"] = schema[tableName].ContainsKey("triggers")
+                                            ? schema[tableName]["triggers"] as List<object>
+                                            : new List<object>();
 
-                                    // Add the trigger information to the schema dictionary
-                                    schema[tableName]["triggers"] = schema[tableName].ContainsKey("triggers")
-                                        ? schema[tableName]["triggers"] as List<object>
-                                        : new List<object>();
-
-                                    (schema[tableName]["triggers"] as List<object>).Add(new { name = objectName, sql = reader["sql"].ToString() });
+                                        (schema[tableName]["triggers"] as List<object>).Add(new { name = objectName, sql = reader["sql"].ToString() });
+                                    }
                                 }
                             }
                         }
@@ -3006,9 +3020,9 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
     /// <param name="referenceSchema">The reference schema.</param>
     /// <param name="currentSchema">The current schema.</param>
     /// <returns></returns>
-    private bool CompareDatabaseSchemas(Dictionary<string, Dictionary<string, object>> referenceSchema, Dictionary<string, Dictionary<string, object>> currentSchema)
+    private bool CompareDatabaseSchemas(Dictionary<string, Dictionary<string, object>>? referenceSchema, Dictionary<string, Dictionary<string, object>> currentSchema)
     {
-
+        if (referenceSchema == null) return false;
         if (!CompareDictionaries(referenceSchema, currentSchema))
         {
             schemaChanged = true;
@@ -6107,7 +6121,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            attackBuffDictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            Dictionary<int, int>? obj = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            if (obj == null) return attackBuffDictionary;
+                            attackBuffDictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6144,7 +6160,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            Dictionary<int, int>? obj = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6181,7 +6199,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, double>>((string)result);
+                            Dictionary<int, double>? obj = JsonConvert.DeserializeObject<Dictionary<int, double>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6218,7 +6238,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6255,7 +6277,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, double>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, double>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6292,7 +6316,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6329,7 +6355,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6366,7 +6394,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6403,7 +6433,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6440,7 +6472,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6477,7 +6511,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6514,7 +6550,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6551,7 +6589,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6588,7 +6628,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6625,7 +6667,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6662,7 +6706,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6699,7 +6745,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6736,7 +6784,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6773,7 +6823,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6810,7 +6862,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6847,7 +6901,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6884,7 +6940,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6921,7 +6979,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, double>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, double>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6958,7 +7018,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -6995,7 +7057,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -7032,7 +7096,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, string>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, string>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -7069,7 +7135,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, string>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, string>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -7106,7 +7174,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, string>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, string>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -7143,7 +7213,9 @@ Disabling Quest Logging.",
 
                         if (result != null)
                         {
-                            dictionary = JsonConvert.DeserializeObject<Dictionary<int, double>>((string)result);
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, double>>((string)result);
+                            if (obj == null) return dictionary;
+                            dictionary = obj;
                         }
                     }
                     transaction.Commit();
@@ -7432,9 +7504,9 @@ Disabling Quest Logging.",
 
                         using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                         {
-                            string selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
+                            string? selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
                             // idk if this is needed
-                            if (selectedOverlayMode == "" || selectedOverlayMode == null)
+                            if (string.IsNullOrEmpty(selectedOverlayMode))
                                 selectedOverlayMode = "Standard";
 
                             cmd.Parameters.AddWithValue("@questID", questID);
@@ -7730,9 +7802,9 @@ Disabling Quest Logging.",
         }
         // Execute query with only Quest ID
         int questID = int.Parse(configWindow.QuestIDTextBox.Text);
-        string selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
+        string? selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
         // idk if this is needed
-        if (selectedOverlayMode == "" || selectedOverlayMode == null)
+        if (string.IsNullOrEmpty(selectedOverlayMode))
             selectedOverlayMode = "Standard";
 
         using (SQLiteConnection conn = new SQLiteConnection(dataSource))
@@ -8040,7 +8112,7 @@ Disabling Quest Logging.",
 
                         using (DbDataReader reader = await cmd.ExecuteReaderAsync())
                         {
-                            SQLiteDataReader sqliteReader = reader as SQLiteDataReader;
+                            SQLiteDataReader? sqliteReader = reader as SQLiteDataReader;
                             if (sqliteReader != null && await sqliteReader.ReadAsync())
                             {
                                 questCompletions = Convert.ToInt64(sqliteReader["CompletionCount"]).ToString();
@@ -9073,6 +9145,8 @@ Disabling Quest Logging.",
                     var valueDictionary = JObject.Parse(valueDictionaryString)
                         .ToObject<Dictionary<double, double>>();
 
+                    if (valueDictionary == null) return sumOfValues;
+
                     double averageOfValueValues = valueDictionary.Values.Average();
                     sumOfValues += averageOfValueValues;
                     numberOfEntries++;
@@ -9108,6 +9182,7 @@ Disabling Quest Logging.",
                     if (string.IsNullOrEmpty(valueDictionaryString) || valueDictionaryString == "{}")
                         continue;
                     var valueDictionary = JObject.Parse(valueDictionaryString).ToObject<Dictionary<double, double>>();
+                    if (valueDictionary == null) return medianValue;
                     valueList.AddRange(valueDictionary.Values);
                 }
             }
@@ -9132,6 +9207,8 @@ Disabling Quest Logging.",
     /// <returns></returns>
     private double GetModeOfDictionaryField(string tableName, string fieldName, SQLiteConnection conn)
     {
+        double modeValue = 0;
+        int maxCount = 0;
         var query = $"SELECT {fieldName} FROM {tableName}";
         var valueDictionary = new Dictionary<double, int>();
 
@@ -9147,6 +9224,7 @@ Disabling Quest Logging.",
                         continue;
 
                     var dict = JObject.Parse(valueDictionaryString).ToObject<Dictionary<double, double>>();
+                    if (dict == null) return modeValue;
 
                     foreach (var value in dict.Values)
                     {
@@ -9158,9 +9236,6 @@ Disabling Quest Logging.",
                 }
             }
         }
-
-        double modeValue = 0;
-        int maxCount = 0;
 
         foreach (var kvp in valueDictionary)
         {
@@ -9203,6 +9278,8 @@ Disabling Quest Logging.",
                     var valueDictionary = JObject.Parse(valueDictionaryString)
                         .ToObject<Dictionary<double, double>>();
 
+                    if (valueDictionary == null) return (highestValue, highestValueRunID);
+
                     double maxValueInField = valueDictionary.Values.Max();
 
                     if (maxValueInField > highestValue)
@@ -9242,7 +9319,7 @@ Disabling Quest Logging.",
 
                     var hitsTakenBlocked = JObject.Parse(hitsTakenBlockedDictionaryString)
 .ToObject<Dictionary<double, Dictionary<double, double>>>();
-
+                    if (hitsTakenBlocked == null) return (0.0, 0);
                     int hitsTakenBlockedCount = hitsTakenBlocked.Count;
                     if (hitsTakenBlockedCount > highestHitsTakenBlockedCount)
                     {
@@ -9286,6 +9363,7 @@ Disabling Quest Logging.",
 
                     var hitsTakenBlocked = JObject.Parse(hitsTakenBlockedDictionaryString)
                         .ToObject<Dictionary<double, Dictionary<double, double>>>();
+                    if (hitsTakenBlocked == null) return 0;
 
                     int hitsTakenBlockedCount = hitsTakenBlocked.Count;
                     sumOfHitsTakenBlockedCount += hitsTakenBlockedCount;
@@ -9306,6 +9384,7 @@ Disabling Quest Logging.",
     {
         var hitsTakenBlockedCountQuery = "SELECT HitsTakenBlockedDictionary FROM Quests";
         var hitsTakenBlockedCountList = new List<int>();
+        double medianHitsTakenBlockedCount = 0.0;
 
         using (SQLiteCommand cmd = new SQLiteCommand(hitsTakenBlockedCountQuery, conn))
         {
@@ -9321,6 +9400,8 @@ Disabling Quest Logging.",
                     var hitsTakenBlocked = JObject.Parse(hitsTakenBlockedDictionaryString)
                         .ToObject<Dictionary<double, Dictionary<double, double>>>();
 
+                    if (hitsTakenBlocked == null) return medianHitsTakenBlockedCount;
+
                     int hitsTakenBlockedCount = hitsTakenBlocked.Count;
                     hitsTakenBlockedCountList.Add(hitsTakenBlockedCount);
                 }
@@ -9328,8 +9409,6 @@ Disabling Quest Logging.",
         }
 
         hitsTakenBlockedCountList.Sort();
-
-        double medianHitsTakenBlockedCount = 0.0;
         int count = hitsTakenBlockedCountList.Count;
 
         if (count > 0)
@@ -9377,18 +9456,21 @@ Disabling Quest Logging.",
                     {
                         var dictionary = JObject.Parse(valueDictionaryString)
                         .ToObject<Dictionary<double, Dictionary<double, double>>>();
+                        if (dictionary == null) return totalCount;
                         totalCount += dictionary.Count;
                     }
                     else if (table == "Quests" && (field == "KeystrokesDictionary" || field == "MouseInputDictionary" || field == "GamepadInputDictionary"))
                     {
                         var dictionary = JObject.Parse(valueDictionaryString)
                         .ToObject<Dictionary<double, string>>();
+                        if (dictionary == null) return totalCount;
                         totalCount += dictionary.Count;
                     }
                     else
                     {
                         var dictionary = JObject.Parse(valueDictionaryString)
                         .ToObject<Dictionary<double, double>>();
+                        if (dictionary == null) return totalCount;
                         totalCount += dictionary.Count;
                     }
                 }
@@ -9887,6 +9969,7 @@ Disabling Quest Logging.",
 
                     var fieldValue = JObject.Parse(fieldValueString)
                                             .ToObject<Dictionary<double, Dictionary<double, double>>>();
+                    if (fieldValue == null) return (highestValue, highestValueRunID);
 
                     double fieldValueMax = fieldValue.Max(kv1 => kv1.Value.Max(kv2 => kv2.Value));
                     if (fieldValueMax > highestValue)
@@ -9928,6 +10011,7 @@ Disabling Quest Logging.",
 
                     var fieldValue = JObject.Parse(fieldValueString)
                                             .ToObject<Dictionary<double, Dictionary<double, double>>>();
+                    if (fieldValue == null) return (lowestValue, lowestValueRunID);
 
                     double value = fieldValue.Min(kv1 => kv1.Value.Min(kv2 => kv2.Value));
                     if (value < lowestValue)
@@ -10221,13 +10305,16 @@ Disabling Quest Logging.",
                                 if (!string.IsNullOrEmpty(cartsDictionaryJson) && cartsDictionaryJson != "{}")
                                 {
                                     // Deserialize the carts dictionary JSON string
-                                    Dictionary<int, int> cartsDictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartsDictionaryJson);
+                                    Dictionary<int, int>? cartsDictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartsDictionaryJson);
 
-                                    // Get the last cart value from the dictionary
-                                    int finalCartValue = cartsDictionary.Values.LastOrDefault();
+                                    if (cartsDictionary != null)
+                                    {
+                                        // Get the last cart value from the dictionary
+                                        int finalCartValue = cartsDictionary.Values.LastOrDefault();
 
-                                    // Add the final cart value to the list
-                                    finalCartValues.Add(finalCartValue);
+                                        // Add the final cart value to the list
+                                        finalCartValues.Add(finalCartValue);
+                                    }
                                 }
                             }
                         }
@@ -10264,11 +10351,14 @@ Disabling Quest Logging.",
                                 string cartsDictionaryJson = reader.GetString(1);
 
                                 // Deserialize carts dictionary JSON string
-                                Dictionary<int, int> cartsDictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartsDictionaryJson);
+                                Dictionary<int, int>? cartsDictionary = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartsDictionaryJson);
 
-                                // Add total carts for this quest to the questTotalCarts dictionary
-                                int totalCarts = cartsDictionary.Values.Sum();
-                                questTotalCarts[questId] = totalCarts;
+                                if (cartsDictionary != null)
+                                {
+                                    // Add total carts for this quest to the questTotalCarts dictionary
+                                    int totalCarts = cartsDictionary.Values.Sum();
+                                    questTotalCarts[questId] = totalCarts;
+                                }
                             }
                         }
                     }
@@ -11911,6 +12001,7 @@ Updating the database structure may take some time, it will transport all of you
             else
             {
                 logger.Info("previousVersionFilePath does not exist, creating file");
+                if (App.CurrentProgramVersion == null) return;
                 previousVersion = App.CurrentProgramVersion.Trim();
                 File.WriteAllText(previousVersionFilePath, previousVersion);
                 logger.Info("Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
@@ -11938,6 +12029,13 @@ Updating the database structure may take some time, it will transport all of you
                     logger.Fatal("previousVersionFilePath file is empty");
                     MessageBox.Show("previous-version.txt is empty.");
                     LoggingManager.WriteCrashLog(new Exception("previous-version.txt is empty."), logMessage);
+                }
+                if (App.CurrentProgramVersion == null)
+                {
+                    logger.Fatal("CurrentProgramVersion does not exist");
+                    MessageBox.Show("Current Program Version not found.");
+                    LoggingManager.WriteCrashLog(new Exception("CurrentProgramVersion not found."), logMessage);
+                    return;
                 }
                 previousVersion = App.CurrentProgramVersion.Trim();
                 File.WriteAllText(previousVersionFilePath, previousVersion);

@@ -9,7 +9,7 @@ namespace MHFZ_Overlay.UI.Class;
 public class ZenithSkills
 {
     public DateTime CreatedAt { get; set; }
-    public string CreatedBy { get; set; }
+    public string CreatedBy { get; set; } = string.Empty;
     public long ZenithSkillsID { get; set; }
     public long RunID { get; set; }
     public long ZenithSkill1ID { get; set; }

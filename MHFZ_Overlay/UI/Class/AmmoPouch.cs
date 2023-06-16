@@ -9,7 +9,7 @@ namespace MHFZ_Overlay.UI.Class;
 public class AmmoPouch
 {
     public DateTime CreatedAt { get; set; }
-    public string CreatedBy { get; set; }
+    public string? CreatedBy { get; set; } = string.Empty;
     public long AmmoPouchID { get; set; }
     public long RunID { get; set; }
     public long Item1ID { get; set; }

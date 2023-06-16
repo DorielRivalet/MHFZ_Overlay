@@ -9,7 +9,7 @@ namespace MHFZ_Overlay.UI.Class;
 public class CaravanSkills
 {
     public DateTime CreatedAt { get; set; }
-    public string CreatedBy { get; set; }
+    public string CreatedBy { get; set; } = string.Empty;
     public long CaravanSkillsID { get; set; }
     public long RunID { get; set; }
     public long CaravanSkill1ID { get; set; }

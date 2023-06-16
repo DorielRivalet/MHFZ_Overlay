@@ -9,5 +9,5 @@ namespace MHFZ_Overlay.UI.Class;
 public class PlayerInventoryItemIds
 {
     public long PlayerInventoryID { get; set; }
-    public List<long> ItemIds { get; set; }
+    public List<long>? ItemIds { get; set; }
 }

@@ -93,7 +93,7 @@ public class DataLoader
         logger.Debug($"DataLoader ctor Elapsed Time: {elapsedTimeMs} ms");
     }
 
-    public static bool loadedOutsideMezeporta = false;
+    public bool loadedOutsideMezeporta = false;
 
     private void CheckIfLoadedInMezeporta()
     {
@@ -126,10 +126,28 @@ public class DataLoader
 
         if (processes.Length > 0)
         {
+            var module = processes[0].MainModule;
+            if (module == null)
+            {
+                // The "mhf.exe" process was not found
+                logger.Fatal("mhf.exe not found");
+                MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                ApplicationManager.HandleShutdown();
+                return;
+            }
             // Get the location of the first "mhf.exe" process
-            string mhfPath = processes[0].MainModule.FileName;
+            string? mhfPath = module.FileName;
             // Get the directory that contains "mhf.exe"
-            string mhfDirectory = Path.GetDirectoryName(mhfPath);
+            string? mhfDirectory = Path.GetDirectoryName(mhfPath);
+
+            if (mhfDirectory == null)
+            {
+                // The "mhf.exe" process was not found
+                logger.Fatal("mhf.exe not found");
+                MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                ApplicationManager.HandleShutdown();
+                return;
+            }
             // Save the directory to the program's settings
             // (Assuming you have a "settings" object that can store strings)
             s.GameFolderPath = mhfDirectory;
@@ -278,10 +296,30 @@ public class DataLoader
 
             if (processes.Length > 0)
             {
+                var module = processes[0].MainModule;
+
+                if (module == null)
+                {
+                    // The "mhf.exe" process was not found
+                    logger.Fatal("mhf.exe not found");
+                    MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    ApplicationManager.HandleShutdown();
+                    return;
+                }
+
                 // Get the location of the first "mhf.exe" process
-                string mhfPath = processes[0].MainModule.FileName;
+                string? mhfPath = module.FileName;
                 // Get the directory that contains "mhf.exe"
-                string mhfDirectory = Path.GetDirectoryName(mhfPath);
+                string? mhfDirectory = Path.GetDirectoryName(mhfPath);
+
+                if (string.IsNullOrEmpty(mhfDirectory))
+                {
+                    // The "mhf.exe" process was not found
+                    logger.Fatal("mhf.exe not found");
+                    MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    ApplicationManager.HandleShutdown();
+                    return;
+                }
 
                 // Get a list of all files and folders in the game folder
                 string[] files = Directory.GetFiles(mhfDirectory, "*", SearchOption.AllDirectories);
@@ -319,7 +357,7 @@ public class DataLoader
     /// <value>
     /// The model.
     /// </value>
-    public AddressModel model { get; }
+    public AddressModel model { get; } //TODO: fix null warning
 
     #endregion
 

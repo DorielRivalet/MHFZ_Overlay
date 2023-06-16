@@ -5,6 +5,6 @@ namespace MHFZ_Overlay.UI.Class;
 
 public class Option
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     public bool IsSelected { get; set; }
 }

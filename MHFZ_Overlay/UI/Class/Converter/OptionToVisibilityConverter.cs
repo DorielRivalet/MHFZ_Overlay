@@ -12,8 +12,8 @@ public class OptionToVisibilityConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        string selectedOption = value as string;
-        string targetOption = parameter as string;
+        string? selectedOption = value as string;
+        string? targetOption = parameter as string;
 
         if (selectedOption == targetOption)
         {

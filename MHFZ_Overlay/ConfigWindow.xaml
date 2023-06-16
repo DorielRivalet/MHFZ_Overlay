@@ -561,7 +561,7 @@
                     <ui:TextBox VerticalContentAlignment="Center" Margin="5" ToolTip="Enter the YouTube video ID for the Run ID entered at the top" Width="150" Height="Auto" IsUndoEnabled="False" TextAlignment="Center"  MaxLength="12" Loaded="YoutubeLinkTextBox_Loaded"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Foreground="{StaticResource Text}" Text="Add ID"/>
-                        <ui:Button BorderThickness="0" Foreground="#f38ba8" Background="Transparent" Margin="5" Content="&#xf03d;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Free Solid" Click="UpdateYoutubeLink_ButtonClick" Loaded="UpdateYoutubeLink_Loaded"/>
+                        <ui:Button BorderThickness="0" Foreground="#f38ba8" Background="Transparent" Margin="5" Content="&#xf03d;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Free Solid" Click="UpdateYoutubeLink_ButtonClick"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
                         <TextBlock VerticalAlignment="Center" Foreground="{StaticResource Text}" Text="Open Link in Browser"/>

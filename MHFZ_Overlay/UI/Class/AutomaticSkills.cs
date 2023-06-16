@@ -9,7 +9,7 @@ namespace MHFZ_Overlay.UI.Class;
 public class AutomaticSkills
 {
     public DateTime CreatedAt { get; set; }
-    public string CreatedBy { get; set; }
+    public string CreatedBy { get; set; } = string.Empty;
     public long AutomaticSkillsID { get; set; }
     public long RunID { get; set; }
     public long AutomaticSkill1ID { get; set; }

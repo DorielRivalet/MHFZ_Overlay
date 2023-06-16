@@ -132,9 +132,9 @@ public class OutlinedTextBlock : FrameworkElement
   typeof(OutlinedTextBlock),
   new FrameworkPropertyMetadata(TextWrapping.NoWrap, OnFormattedTextUpdated));
 
-    private FormattedText _FormattedText;
-    private Geometry _TextGeometry;
-    private Pen _Pen;
+    private FormattedText? _FormattedText;
+    private Geometry? _TextGeometry;
+    private Pen? _Pen;
     /// <summary>
     /// Gets or sets the fill.
     /// </summary>

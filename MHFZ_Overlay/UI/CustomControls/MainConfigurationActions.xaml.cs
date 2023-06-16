@@ -14,9 +14,9 @@ namespace MHFZ_Overlay.UI.CustomControls;
 /// </summary>
 public partial class MainConfigurationActions : UserControl
 {
-    public event RoutedEventHandler ConfigureButtonClicked;
-    public event RoutedEventHandler DefaultButtonClicked;
-    public event RoutedEventHandler SaveButtonClicked;
+    public event RoutedEventHandler? ConfigureButtonClicked;
+    public event RoutedEventHandler? DefaultButtonClicked;
+    public event RoutedEventHandler? SaveButtonClicked;
 
     public MainConfigurationActions()
     {

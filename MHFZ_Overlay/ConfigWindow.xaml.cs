@@ -574,9 +574,6 @@ public partial class ConfigWindow : FluentWindow
     private void SetWeaponUsageChart(CartesianChart weaponUsageChart)
     {
         MainWindow.DataLoader.model.weaponUsageSeries.Clear();
-
-        //List<WeaponUsageData> weaponUsageSeries = new List<WeaponUsageData>();
-
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
         var weaponStyles = new[] { "Earth Style", "Heaven Style", "Storm Style", "Extreme Style" };
@@ -1045,14 +1042,12 @@ public partial class ConfigWindow : FluentWindow
             MonsterFeriasOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].FeriasLink);
         }
 
-        //TODO can be handled more elegantly
         //see this
         //string selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
-        string selectedName = MonsterNameComboBox.SelectedItem.ToString() + "";
-        selectedName = selectedName.Replace("System.Windows.Controls.ComboBoxItem: ", "");
-
-        string selectedMatchup = WeaponMatchupComboBox.SelectedItem.ToString() + " " + MonsterNameComboBox.SelectedItem.ToString();
-        selectedMatchup = selectedMatchup.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+        string? selectedName = MonsterNameComboBox.SelectedItem.ToString();
+        if (string.IsNullOrEmpty(selectedName))
+            selectedName = string.Empty;
+        string selectedMatchup = $"{((ComboBoxItem)WeaponMatchupComboBox.SelectedItem).Content} {selectedName}";
 
         if (!MonsterFeriasOptionDictionary.TryGetValue(selectedName, out string? val1) || !MonsterWikiOptionDictionary.TryGetValue(selectedName, out string? val2))
             return;
@@ -1304,19 +1299,19 @@ public partial class ConfigWindow : FluentWindow
         // nothing
     }
 
-    private T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
+    private T? FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
     {
         // Confirm parent and childName are valid. 
         if (parent == null) return null;
 
-        T foundChild = null;
+        T? foundChild = null;
 
         int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
         for (int i = 0; i < childrenCount; i++)
         {
             var child = VisualTreeHelper.GetChild(parent, i);
             // If the child is not of the request child type child
-            T childType = child as T;
+            T? childType = child as T;
             if (childType == null)
             {
                 // recursively drill down the tree
@@ -1426,7 +1421,6 @@ public partial class ConfigWindow : FluentWindow
     }
 
     private CartesianChart? weaponUsageChart;
-    private Button? updateYoutubeLinkButton;
     private TextBox? youtubeLinkTextBox;
     private ListView? mostRecentRunsListView;
     private DataGrid? mostRecentRunsDataGrid;
@@ -1444,7 +1438,7 @@ public partial class ConfigWindow : FluentWindow
     private DataGrid? calendarDataGrid;
 
     // TODO: it works. i need to put this somewhere else
-    private async void ShowSequentialSnackbars()
+    private async Task ShowSequentialSnackbars()
     {
         // TODO: test the colors for achievements
 
@@ -1502,6 +1496,7 @@ public partial class ConfigWindow : FluentWindow
     {
         // Get the quest ID and new YouTube link from the textboxes
         long runID = long.Parse(RunIDTextBox.Text.Trim());
+        if (youtubeLinkTextBox == null) return;
         string youtubeLink = youtubeLinkTextBox.Text.Trim();
         if (databaseManager.UpdateYoutubeLink(sender, e, runID, youtubeLink))
         {
@@ -1511,11 +1506,6 @@ public partial class ConfigWindow : FluentWindow
         {
             ConfigWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, String.Format("Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), new SymbolIcon(SymbolRegular.Video32), ControlAppearance.Danger);
         }
-    }
-
-    private void UpdateYoutubeLink_Loaded(object sender, RoutedEventArgs e)
-    {
-        updateYoutubeLinkButton = (Button)sender;
     }
 
     private void YoutubeIconButton_Click(object sender, RoutedEventArgs e)
@@ -1574,17 +1564,14 @@ public partial class ConfigWindow : FluentWindow
     private void weaponListTop20RunsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         //top20RunsListView = (ListView)sender;
-        if (top20RunsDataGrid == null)
-            return;
+        if (top20RunsDataGrid == null) return;
         var comboBox = sender as ComboBox;
+        if (comboBox == null) return;
         var selectedItem = comboBox.SelectedItem;
-        if (selectedItem == null)
-            return;
+        if (selectedItem == null) return;
         // You can now use the selectedItem variable to get the data or value of the selected option
-        string selectedWeapon = selectedItem.ToString();
-        selectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ", "");
-        if (selectedWeapon == "")
-            return;
+        string? selectedWeapon = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+        if (string.IsNullOrEmpty(selectedWeapon)) return;
         MainWindow.DataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this, selectedWeapon);
         top20RunsDataGrid.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
         top20RunsDataGrid.Items.Refresh();
@@ -1593,6 +1580,8 @@ public partial class ConfigWindow : FluentWindow
     private void QuestLogGearStats_Loaded(object sender, RoutedEventArgs e)
     {
         var textBlock = sender as TextBlock;
+        if (textBlock == null) return;
+
         long runID = long.Parse(RunIDTextBox.Text.Trim());
         textBlock.Text = MainWindow.DataLoader.model.GenerateGearStats(runID);
         questLogGearStatsTextBlock = textBlock;
@@ -1600,6 +1589,7 @@ public partial class ConfigWindow : FluentWindow
 
     private void QuestLogGearBtnSaveFile_Click(object sender, RoutedEventArgs e)
     {
+        if (questLogGearStatsTextBlock == null) return;
         string textToSave = questLogGearStatsTextBlock.Text;
         textToSave = string.Format("```text\n{0}\n```", textToSave);
         var fileName = "Set";
@@ -1610,6 +1600,8 @@ public partial class ConfigWindow : FluentWindow
 
     private void QuestLogGearBtnCopyFile_Click(object sender, RoutedEventArgs e)
     {
+        if (questLogGearStatsTextBlock == null) return;
+
         questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(questLogGearStatsTextBlock);
         questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
@@ -1618,12 +1610,14 @@ public partial class ConfigWindow : FluentWindow
     private void Compendium_Loaded(object sender, RoutedEventArgs e)
     {
         var textBlock = sender as TextBlock;
+        if (textBlock == null) return;
         textBlock.Text = MainWindow.DataLoader.model.GenerateCompendium(MainWindow.DataLoader);
         compendiumTextBlock = textBlock;
     }
 
     private void CompendiumBtnSaveFile_Click(object sender, RoutedEventArgs e)
     {
+        if (compendiumTextBlock == null) return;
         string textToSave = compendiumTextBlock.Text;
         textToSave = string.Format("```text\n{0}\n```", textToSave);
 
@@ -1632,6 +1626,7 @@ public partial class ConfigWindow : FluentWindow
 
     private void CompendiumBtnCopyFile_Click(object sender, RoutedEventArgs e)
     {
+        if (compendiumInformationStackPanel == null) return;
         compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
         compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
@@ -1756,6 +1751,8 @@ public partial class ConfigWindow : FluentWindow
 
     private void SetLineSeriesForDictionaryIntInt(Dictionary<int, int> data)
     {
+        if (graphChart == null) return;
+
         List<ISeries> series = new();
         ObservableCollection<ObservablePoint> collection = new();
 
@@ -1805,6 +1802,8 @@ public partial class ConfigWindow : FluentWindow
 
     private void SetLineSeriesForDictionaryIntDouble(Dictionary<int, double> data)
     {
+        if (graphChart == null) return;
+
         List<ISeries> series = new();
         ObservableCollection<ObservablePoint> collection = new();
 
@@ -1854,6 +1853,8 @@ public partial class ConfigWindow : FluentWindow
 
     private void SetStepLineSeriesForPersonalBestByAttempts(Dictionary<long, long> data)
     {
+        if (personalBestChart == null) return;
+
         List<ISeries> series = new();
         ObservableCollection<ObservablePoint> collection = new();
 
@@ -1905,6 +1906,8 @@ public partial class ConfigWindow : FluentWindow
 
     private void SetStepLineSeriesForPersonalBestByDate(Dictionary<DateTime, long> data)
     {
+        if (personalBestChart == null) return;
+
         List<ISeries> series = new();
 
         ObservableCollection<DateTimePoint> collection = new();
@@ -1918,7 +1921,7 @@ public partial class ConfigWindow : FluentWindow
             var time = entry.Value;
 
             // Fill in missing dates with the last known personal best time
-            if (prevDate != null && date > prevDate.Value.AddDays(1))
+            if (prevDate != null && prevTime != null && date > prevDate.Value.AddDays(1))
             {
                 collection.Add(new DateTimePoint(prevDate.Value.AddDays(1), prevTime.Value));
             }
@@ -1985,6 +1988,8 @@ public partial class ConfigWindow : FluentWindow
 
     private void SetHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> data)
     {
+        if (graphChart == null) return;
+
         List<ISeries> series = new();
         ObservableCollection<ObservablePoint> collection = new();
 
@@ -2036,6 +2041,8 @@ public partial class ConfigWindow : FluentWindow
 
     public void SetPlayerHealthStamina(Dictionary<int, int> hp, Dictionary<int, int> stamina)
     {
+        if (graphChart == null) return;
+
         List<ISeries> series = new();
         ObservableCollection<ObservablePoint> healthCollection = new();
         ObservableCollection<ObservablePoint> staminaCollection = new();
@@ -2105,6 +2112,7 @@ public partial class ConfigWindow : FluentWindow
 
     public void SetMonsterAttackMultiplier(Dictionary<int, double> attack)
     {
+        if (graphChart == null) return;
         List<ISeries> series = new();
         ObservableCollection<ObservablePoint> attackCollection = new();
 
@@ -2153,6 +2161,8 @@ public partial class ConfigWindow : FluentWindow
 
     public void SetMonsterDefenseRate(Dictionary<int, double> defense)
     {
+        if (graphChart == null) return;
+
         List<ISeries> series = new();
         ObservableCollection<ObservablePoint> defenseCollection = new();
 
@@ -2201,6 +2211,8 @@ public partial class ConfigWindow : FluentWindow
 
     private void SetMonsterStatusAilmentsThresholds(Dictionary<int, int> poison, Dictionary<int, int> sleep, Dictionary<int, int> para, Dictionary<int, int> blast, Dictionary<int, int> stun)
     {
+        if (graphChart == null) return;
+
         List<ISeries> series = new();
         ObservableCollection<ObservablePoint> poisonCollection = new();
         ObservableCollection<ObservablePoint> sleepCollection = new();
@@ -2437,6 +2449,8 @@ public partial class ConfigWindow : FluentWindow
 
     private void SetMonsterHP(Dictionary<int, int> monster1, Dictionary<int, int> monster2, Dictionary<int, int> monster3, Dictionary<int, int> monster4)
     {
+        if (graphChart == null) return;
+
         List<ISeries> series = new();
         ObservableCollection<ObservablePoint> monster1Collection = new();
         ObservableCollection<ObservablePoint> monster2Collection = new();
@@ -2555,6 +2569,8 @@ public partial class ConfigWindow : FluentWindow
 
     private void SetPolarLineSeriesForHunterPerformance(PerformanceCompendium performanceCompendium)
     {
+        if (hunterPerformanceChart == null) return;
+
         List<ISeries> series = new();
         ObservableCollection<double> performanceCollection = new();
 
@@ -2636,13 +2652,11 @@ public partial class ConfigWindow : FluentWindow
 
         var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
-        if (selectedItem == null)
-            return;
+        if (selectedItem == null) return;
 
-        string selectedOption = selectedItem.Content.ToString();
+        string? selectedOption = selectedItem.Content.ToString();
 
-        if (graphChart == null || selectedOption == null || selectedOption == "")
-            return;
+        if (graphChart == null || selectedOption == null || string.IsNullOrEmpty(selectedOption)) return;
 
         Series = null;
         XAxes = new Axis[]
@@ -2787,6 +2801,8 @@ public partial class ConfigWindow : FluentWindow
                 return;
         }
 
+        if (Series == null) return;
+
         graphChart.Series = Series;
         graphChart.XAxes = XAxes;
         graphChart.YAxes = YAxes;
@@ -2833,7 +2849,6 @@ public partial class ConfigWindow : FluentWindow
 
     private string FormatInventory(Dictionary<int, List<Dictionary<int, int>>> inventory)
     {
-        var formattedInventory = "";
         inventory = GetElapsedTimeForInventories(inventory);
 
         StringBuilder sb = new StringBuilder();
@@ -2843,8 +2858,6 @@ public partial class ConfigWindow : FluentWindow
             int time = entry.Key;
             string timeString = TimeSpan.FromSeconds((double)time / Numbers.FRAMES_PER_SECOND).ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS);
             var items = entry.Value;
-
-            var itemString = "";
             int count = 0;
             sb.AppendLine(timeString + " ");
             foreach (var item in items)
@@ -2872,7 +2885,6 @@ public partial class ConfigWindow : FluentWindow
 
     private string DisplayAreaChanges(Dictionary<int, int> areas)
     {
-        var formatteAreas = "";
         areas = GetElapsedTimeForDictionaryIntInt(areas);
 
         StringBuilder sb = new StringBuilder();
@@ -2895,7 +2907,8 @@ public partial class ConfigWindow : FluentWindow
     private string GetItemName(int itemID)
     {
         // implement code to get item name based on itemID
-        Item.IDName.TryGetValue(itemID, out string value);
+        Item.IDName.TryGetValue(itemID, out string? value);
+        if (value == null) return "";
         return value;
     }
 
@@ -2908,9 +2921,9 @@ public partial class ConfigWindow : FluentWindow
         if (selectedItem == null || statsTextTextBlock == null)
             return;
 
-        string selectedOption = selectedItem.Content.ToString();
+        string? selectedOption = selectedItem.Content.ToString();
 
-        if (statsTextTextBlock == null || selectedOption == null || selectedOption == "")
+        if (statsTextTextBlock == null || selectedOption == null || string.IsNullOrEmpty(selectedOption))
             return;
 
         statsTextTextBlock.Text = "";
@@ -2943,13 +2956,11 @@ public partial class ConfigWindow : FluentWindow
 
         var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
-        if (selectedItem == null)
-            return;
+        if (selectedItem == null) return;
 
-        string selectedOption = selectedItem.Content.ToString();
+        string? selectedOption = selectedItem.Content.ToString();
 
-        if (selectedOption == null || selectedOption == "")
-            return;
+        if (string.IsNullOrEmpty(selectedOption)) return;
 
         if (s != null)
         {
@@ -3079,27 +3090,30 @@ public partial class ConfigWindow : FluentWindow
             return;
 
         var comboBox = sender as ComboBox;
+        if (comboBox == null) return;
+
         var selectedItem = comboBox.SelectedItem;
 
         if (selectedItem == null)
             return;
 
-        string selectedType = selectedItem.ToString();
+        string? selectedType = selectedItem.ToString();
+        if (string.IsNullOrEmpty(selectedType)) return;
         personalBestSelectedType = selectedType.Replace("System.Windows.Controls.ComboBoxItem: ", "");
     }
 
     private void PersonalBestWeaponComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (personalBestChart == null)
-            return;
+        if (personalBestChart == null) return;
 
         var comboBox = sender as ComboBox;
+        if (comboBox == null) return;
         var selectedItem = comboBox.SelectedItem;
 
-        if (selectedItem == null)
-            return;
+        if (selectedItem == null) return;
 
-        string selectedWeapon = selectedItem.ToString();
+        string? selectedWeapon = selectedItem.ToString();
+        if (string.IsNullOrEmpty(selectedWeapon)) return;
         personalBestSelectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ", "");
     }
 

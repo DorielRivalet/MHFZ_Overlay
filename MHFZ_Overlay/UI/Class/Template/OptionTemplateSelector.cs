@@ -13,7 +13,7 @@ public class OptionTemplateSelector : DataTemplateSelector
         var selectedOption = item as string;
         if (selectedOption != null)
         {
-            FrameworkElement element = container as FrameworkElement;
+            FrameworkElement? element = container as FrameworkElement;
             if (element != null)
             {
                 return element.FindResource(selectedOption) as DataTemplate;

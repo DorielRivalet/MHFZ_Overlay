@@ -243,14 +243,14 @@ internal class FileManager
                 foreach (System.Configuration.SettingsProperty setting in sortedSettings)
                 {
                     string settingName = setting.Name;
-                    string settingDefaultValue = setting.DefaultValue.ToString();
+                    string? settingDefaultValue = setting.DefaultValue.ToString();
                     string settingPropertyType = setting.PropertyType.ToString();
                     string settingIsReadOnly = setting.IsReadOnly.ToString();
-                    string settingProvider = setting.Provider.ToString();
+                    string? settingProvider = setting.Provider.ToString();
                     string settingProviderApplicationName = setting.Provider.ApplicationName;
                     string settingProviderDescription = setting.Provider.Description;
                     string settingProviderName = setting.Provider.Name;
-                    string settingValue = s[settingName].ToString();
+                    string? settingValue = s[settingName].ToString();
 
                     // Create a new Setting object and set its properties
                     Setting settingObject = new Setting
@@ -320,7 +320,12 @@ internal class FileManager
         try
         {
             logger.Info("Creating directory if it doesn't exist: {0}", Path.GetDirectoryName(destFile));
-            Directory.CreateDirectory(Path.GetDirectoryName(destFile));
+            var destFileDirectoryName = Path.GetDirectoryName(destFile);
+            if (destFileDirectoryName == null)
+            {
+                throw new Exception($"Did not make directory for {destFileDirectoryName}");
+            }    
+            Directory.CreateDirectory(destFileDirectoryName);
 
         }
         catch (Exception ex)
@@ -488,25 +493,33 @@ internal class FileManager
             string databaseFilePath = connection.FileName;
 
             // Get the directory path where the database file is located
-            string databaseDirectoryPath = Path.GetDirectoryName(databaseFilePath);
+            string? databaseDirectoryPath = Path.GetDirectoryName(databaseFilePath);
 
-            // Create the backups folder if it does not exist
-            string backupsFolderPath = Path.Combine(databaseDirectoryPath, BackupFolderName);
-            if (!Directory.Exists(backupsFolderPath))
+            if (!string.IsNullOrEmpty(databaseDirectoryPath)) 
             {
-                Directory.CreateDirectory(backupsFolderPath);
+                // Create the backups folder if it does not exist
+                string backupsFolderPath = Path.Combine(databaseDirectoryPath, BackupFolderName);
+                if (!Directory.Exists(backupsFolderPath))
+                {
+                    Directory.CreateDirectory(backupsFolderPath);
+                }
+
+                // Create the backup file name with a timestamp
+                string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+                string backupFileName = $"database_backup_{timestamp}.sqlite";
+
+                // Create the full path for the backup file
+                string backupFilePath = Path.Combine(backupsFolderPath, backupFileName);
+
+                logger.Info("Making database backup. Database file path: {0}. Backup file path: {1}", databaseFilePath, backupFilePath);
+                // Create a backup of the database file
+                File.Copy(databaseFilePath, backupFilePath, true);
             }
-
-            // Create the backup file name with a timestamp
-            string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
-            string backupFileName = $"database_backup_{timestamp}.sqlite";
-
-            // Create the full path for the backup file
-            string backupFilePath = Path.Combine(backupsFolderPath, backupFileName);
-
-            logger.Info("Making database backup. Database file path: {0}. Backup file path: {1}", databaseFilePath, backupFilePath);
-            // Create a backup of the database file
-            File.Copy(databaseFilePath, backupFilePath, true);
+            else
+            {
+                logger.Error($"Database directory path not found: {databaseDirectoryPath}");
+                throw new Exception($"Database directory path not found: {databaseDirectoryPath}");
+            }
         }
         catch (Exception ex)
         {

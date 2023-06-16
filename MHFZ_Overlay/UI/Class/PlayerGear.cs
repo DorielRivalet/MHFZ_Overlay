@@ -8,13 +8,13 @@ namespace MHFZ_Overlay.UI.Class;
 //TODO: ORM
 public class PlayerGear
 {
-    public string PlayerGearHash { get; set; }
+    public string PlayerGearHash { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
-    public string CreatedBy { get; set; }
+    public string CreatedBy { get; set; } = string.Empty;
     public long PlayerGearID { get; set; }
     public long RunID { get; set; }
     public long PlayerID { get; set; }
-    public string GearName { get; set; }
+    public string GearName { get; set; } = string.Empty;
     public long StyleID { get; set; }
     public long WeaponIconID { get; set; }
     public long WeaponClassID { get; set; }
@@ -23,9 +23,9 @@ public class PlayerGear
     public long? BlademasterWeaponID { get; set; }
     public long? GunnerWeaponID { get; set; }
 
-    public string WeaponSlot1 { get; set; }
-    public string WeaponSlot2 { get; set; }
-    public string WeaponSlot3 { get; set; }
+    public string WeaponSlot1 { get; set; } = string.Empty;
+    public string WeaponSlot2 { get; set; } = string.Empty;
+    public string WeaponSlot3 { get; set; } = string.Empty;
 
     public long HeadID { get; set; }
     public long HeadSlot1ID { get; set; }
@@ -68,8 +68,8 @@ public class PlayerGear
     public long RoadDureSkillsID { get; set; }
 
     //idk how to show these
-    public string PlayerInventoryDictionary { get; set; }
-    public string PlayerAmmoPouchDictionary { get; set; }
-    public string PartnyaBagDictionary { get; set; }
+    public string PlayerInventoryDictionary { get; set; } = string.Empty;
+    public string PlayerAmmoPouchDictionary { get; set; } = string.Empty;
+    public string PartnyaBagDictionary { get; set; } = string.Empty;
 
 }

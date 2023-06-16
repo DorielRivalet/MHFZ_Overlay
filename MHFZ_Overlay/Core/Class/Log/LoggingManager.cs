@@ -31,7 +31,9 @@ internal class LoggingManager
 
     private static void PromptForOpeningLogs()
     {
-        var logFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "logs", "logs.log");
+        var directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        if (directoryName == null) return;
+        var logFilePath = Path.Combine(directoryName, "logs", "logs.log");
 
         if (!File.Exists(logFilePath))
         {
