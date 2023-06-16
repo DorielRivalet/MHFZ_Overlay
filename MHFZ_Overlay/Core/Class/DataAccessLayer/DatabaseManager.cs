@@ -36,6 +36,8 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Controls.IconElements;
 using System.Transactions;
 using System.Windows.Documents;
+using System.Threading.Tasks;
+using System.Data.Common;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay.Core.Class.DataAccessLayer;
@@ -5076,6 +5078,78 @@ Disabling Quest Logging.",
         return personalBest;
     }
 
+    public async Task<string> GetPersonalBestAsync(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader)
+    {
+        string personalBest = Messages.TIMER_NOT_LOADED;
+        if (dataSource == null || dataSource == "")
+        {
+            logger.Warn("Cannot get personal best. dataSource: {0}", dataSource);
+            return personalBest;
+        }
+
+        using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+        {
+            await conn.OpenAsync();
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (SQLiteCommand cmd = new SQLiteCommand(
+                        @"SELECT 
+                            TimeLeft, 
+                            FinalTimeValue,
+                            FinalTimeDisplay,
+                            ActualOverlayMode,
+                            pg.WeaponTypeID
+                        FROM 
+                            Quests q
+                        JOIN
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        WHERE 
+                            QuestID = @questID
+                            AND pg.WeaponTypeID = @weaponTypeID
+                            AND ActualOverlayMode = @category
+                            AND PartySize = 1
+                        ORDER BY 
+                            FinalTimeValue ASC
+                        LIMIT 1", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@questID", questID);
+                        cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                        cmd.Parameters.AddWithValue("@category", category);
+
+                        var reader = await cmd.ExecuteReaderAsync();
+                        if (await reader.ReadAsync())
+                        {
+                            long time = 0;
+                            if (timerMode == "Elapsed")
+                            {
+                                time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                            }
+                            else
+                            {
+                                time = reader.GetInt64(reader.GetOrdinal("TimeLeft"));
+                            }
+                            personalBest = dataLoader.model.GetMinutesSecondsMillisecondsFromFrames(time);
+                        }
+                        else
+                        {
+                            personalBest = Messages.TIMER_NOT_LOADED;
+                        }
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return personalBest;
+    }
+
+
     public Dictionary<DateTime, long> GetPersonalBestsByDate(long questID, int weaponTypeID, string category)
     {
         Dictionary<DateTime, long> personalBests = new();
@@ -5369,6 +5443,134 @@ Disabling Quest Logging.",
                             // Database is locked, retry after a short delay
                             numRetries++;
                             Thread.Sleep(1_000);
+                        }
+                        else
+                        {
+                            // Some other error occurred, abort the transaction
+                            HandleError(transaction, ex);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return attempts;
+    }
+
+    public async Task<int> UpsertQuestAttemptsAsync(long questID, int weaponTypeID, string category)
+    {
+        int attempts = 0;
+        if (dataSource == null || dataSource == "")
+        {
+            logger.Warn("Cannot upsert quest attempts. dataSource: {0}", dataSource);
+            return attempts;
+        }
+        using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+        {
+            await conn.OpenAsync();
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                int numRetries = 0;
+                bool success = false;
+                while (!success && numRetries < 3)
+                {
+                    try
+                    {
+                        using (SQLiteCommand command = new SQLiteCommand(conn))
+                        {
+                            command.CommandText =
+                                @"INSERT INTO 
+                        QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
+                    VALUES 
+                        (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1)
+                    ON CONFLICT 
+                        (QuestID, WeaponTypeID, ActualOverlayMode) 
+                    DO UPDATE
+                    SET 
+                        Attempts = Attempts + 1
+                    RETURNING 
+                        Attempts;";
+
+                            command.Parameters.AddWithValue("@QuestID", questID);
+                            command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+                            command.Parameters.AddWithValue("@ActualOverlayMode", category);
+
+                            attempts = Convert.ToInt32(await command.ExecuteScalarAsync());
+                        }
+                        transaction.Commit();
+                        success = true;
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        if (ex.ResultCode == SQLiteErrorCode.Locked || ex.ResultCode == SQLiteErrorCode.Busy)
+                        {
+                            // Database is locked, retry after a short delay
+                            numRetries++;
+                            await Task.Delay(1_000);
+                        }
+                        else
+                        {
+                            // Some other error occurred, abort the transaction
+                            HandleError(transaction, ex);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return attempts;
+    }
+
+    public async Task<int> UpsertPersonalBestAttemptsAsync(long questID, int weaponTypeID, string category)
+    {
+        int attempts = 0;
+        if (dataSource == null || dataSource == "")
+        {
+            logger.Warn("Cannot upsert personal best attempts. dataSource: {0}", dataSource);
+            return attempts;
+        }
+        using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+        {
+            await conn.OpenAsync();
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                int numRetries = 0;
+                bool success = false;
+                while (!success && numRetries < 3)
+                {
+                    try
+                    {
+                        using (SQLiteCommand command = new SQLiteCommand(conn))
+                        {
+                            command.CommandText =
+                                @"INSERT INTO 
+                        PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
+                    VALUES 
+                        (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1)
+                    ON CONFLICT 
+                        (QuestID, WeaponTypeID, ActualOverlayMode) 
+                    DO UPDATE
+                    SET 
+                        Attempts = Attempts + 1
+                    RETURNING 
+                        Attempts;";
+
+                            command.Parameters.AddWithValue("@QuestID", questID);
+                            command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+                            command.Parameters.AddWithValue("@ActualOverlayMode", category);
+
+                            attempts = Convert.ToInt32(await command.ExecuteScalarAsync());
+                        }
+                        transaction.Commit();
+                        success = true;
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        if (ex.ResultCode == SQLiteErrorCode.Locked || ex.ResultCode == SQLiteErrorCode.Busy)
+                        {
+                            // Database is locked, retry after a short delay
+                            numRetries++;
+                            await Task.Delay(1_000);
                         }
                         else
                         {
@@ -7789,6 +7991,59 @@ Disabling Quest Logging.",
                             if (reader.Read())
                             {
                                 questCompletions = Convert.ToInt64(reader["CompletionCount"]).ToString();
+                            }
+                        }
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+        return questCompletions;
+    }
+
+    public async Task<string> GetQuestCompletionsAsync(long questID, string actualOverlayMode, int weaponTypeID)
+    {
+        string questCompletions = "0";
+        if (dataSource == null || dataSource == "")
+        {
+            logger.Warn("Cannot get quest completions. dataSource: {0}", dataSource);
+            return questCompletions;
+        }
+
+        using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+        {
+            await conn.OpenAsync();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    string sql =
+                        @"SELECT 
+                        COUNT(*) AS CompletionCount
+                    FROM 
+                        Quests q
+                    JOIN 
+                        PlayerGear pg ON q.RunID = pg.RunID
+                    WHERE 
+                        q.QuestID = @QuestID
+                    AND q.ActualOverlayMode = @ActualOverlayMode
+                    AND pg.WeaponTypeID = @WeaponTypeID";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuestID", questID);
+                        cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+                        cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+
+                        using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            SQLiteDataReader sqliteReader = reader as SQLiteDataReader;
+                            if (sqliteReader != null && await sqliteReader.ReadAsync())
+                            {
+                                questCompletions = Convert.ToInt64(sqliteReader["CompletionCount"]).ToString();
                             }
                         }
                     }

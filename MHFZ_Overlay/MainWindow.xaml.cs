@@ -522,7 +522,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private bool showedGameFolderWarning = false;
 
     // TODO: optimization
-    private void Timer_Tick(object? obj, EventArgs e)
+    private async void Timer_Tick(object? obj, EventArgs e)
     {
         try
         {
@@ -538,7 +538,7 @@ The process may take some time, as the program attempts to download from GitHub 
             MonsterStunBar.ReloadData();
 
             CreateDamageNumber();
-            CheckQuestStateForDatabaseLogging();
+            await CheckQuestStateForDatabaseLogging();
 
             // TODO should this be here or somewhere else?
             // this is also for database logging
@@ -1562,36 +1562,29 @@ The process may take some time, as the program attempts to download from GitHub 
     private bool calculatedPersonalBest = false;
     private bool calculatedQuestAttempts = false;
 
-    private async void UpdateQuestAttempts()
+    private async Task UpdateQuestAttempts()
     {
         string category = OverlayModeWatermarkTextBlock.Text;
         int weaponType = DataLoader.model.WeaponType();
         long questID = DataLoader.model.QuestID();
 
-        int attempts = await Task.Run(() => databaseManager.UpsertQuestAttempts(questID, weaponType, category));
+        int attempts = await databaseManager.UpsertQuestAttemptsAsync(questID, weaponType, category);
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         string completions = "";
         if (s.EnableQuestCompletionsCounter)
-            completions = databaseManager.GetQuestCompletions(questID, category, weaponType) + "/";
+            completions = await databaseManager.GetQuestCompletionsAsync(questID, category, weaponType) + "/";
 
-        await Dispatcher.BeginInvoke(new Action(() =>
-        {
-            questAttemptsTextBlock.Text = $"{completions}{attempts}";
-        }));
+        questAttemptsTextBlock.Text = $"{completions}{attempts}";
     }
 
-    private async void UpdatePersonalBestAttempts()
+    private async Task UpdatePersonalBestAttempts()
     {
         string category = OverlayModeWatermarkTextBlock.Text;
         int weaponType = DataLoader.model.WeaponType();
         long questID = DataLoader.model.QuestID();
 
-        int attempts = await Task.Run(() => databaseManager.UpsertPersonalBestAttempts(questID, weaponType, category));
-
-        await Dispatcher.BeginInvoke(new Action(() =>
-        {
-            personalBestAttemptsTextBlock.Text = attempts.ToString();
-        }));
+        int attempts = await databaseManager.UpsertPersonalBestAttemptsAsync(questID, weaponType, category);
+        personalBestAttemptsTextBlock.Text = attempts.ToString();
     }
 
     /// <summary>
@@ -1669,7 +1662,7 @@ The process may take some time, as the program attempts to download from GitHub 
     }
 
     //TODO: optimization
-    private void CheckQuestStateForDatabaseLogging()
+    private async Task CheckQuestStateForDatabaseLogging()
     {
         Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
@@ -1687,7 +1680,7 @@ The process may take some time, as the program attempts to download from GitHub 
             if (!calculatedPersonalBest && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0)
             {
                 calculatedPersonalBest = true;
-                personalBestTextBlock.Text = databaseManager.GetPersonalBest(DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text, DataLoader.model.QuestTimeMode, DataLoader);
+                personalBestTextBlock.Text = await databaseManager.GetPersonalBestAsync(DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text, DataLoader.model.QuestTimeMode, DataLoader);
                 DataLoader.model.PersonalBestLoaded = personalBestTextBlock.Text;
             }
 
@@ -1697,8 +1690,8 @@ The process may take some time, as the program attempts to download from GitHub 
                 && DataLoader.model.TimeDefInt() - DataLoader.model.TimeInt() >= 30)
             {
                 calculatedQuestAttempts = true;
-                UpdateQuestAttempts();
-                UpdatePersonalBestAttempts();
+                await UpdateQuestAttempts();
+                await UpdatePersonalBestAttempts();
             }
         }
 
