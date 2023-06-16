@@ -281,7 +281,7 @@
                                     <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
                                 </Button.Content>
                             </ui:Button>
-                            <ui:Button Background="Transparent" BorderThickness="0" ToolTip="Refresh" Click="RefreshButton_Click">
+                            <ui:Button Background="Transparent" BorderThickness="0" ToolTip="Refresh" Click="PersonalBestRefreshButton_Click">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="ArrowCounterclockwise24" FontSize="24" Foreground="{StaticResource Yellow}"/>
                                 </Button.Content>
@@ -1246,7 +1246,7 @@
                                                     <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:TextBox x:Name="QuestIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8" TextChanged="QuestIDTextBox_TextChanged"/>
+                                            <ui:TextBox x:Name="QuestIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" ToolTip="Search by Run ID">
                                             <TextBlock Padding="10,0,10,0" Text="Run ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -1260,7 +1260,7 @@
                                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" ToolTip="Search Option" 
                                         ToolTipService.ToolTip="Please view the FAQ to see what the categories are about.&#x0a;VERY IMPORTANT: None of the categories or rules are set in stone.&#x0a;Things that are not currently tracked are: Prayer Gems, Login Boost, Halk Pot, Hunter Aid Attack Multiplier, Diva Defense Weapon Boost, Active Feature, etc.&#x0a;Please make a pull request or send a requested feature issue if you can help track these in the overlay.">
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Category"/>
-                                            <ComboBox x:Name="OverlayModeComboBox"  Grid.Column="1" Grid.Row="0" Width="230" SelectedIndex="0" SelectionChanged="OverlayModeComboBox_SelectionChanged">
+                                            <ComboBox x:Name="OverlayModeComboBox"  Grid.Column="1" Grid.Row="0" Width="230" SelectedIndex="0">
                                                 <ComboBoxItem>Time Attack</ComboBoxItem>
                                                 <ComboBoxItem>Freestyle w/ Secret Tech</ComboBoxItem>
                                                 <ComboBoxItem>Freestyle No Secret Tech</ComboBoxItem>

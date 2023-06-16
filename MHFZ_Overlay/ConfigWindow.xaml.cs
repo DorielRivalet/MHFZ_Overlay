@@ -1600,6 +1600,10 @@ public partial class ConfigWindow : FluentWindow
         MainWindow.DataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this, selectedWeapon);
         top20RunsDataGrid.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
         top20RunsDataGrid.Items.Refresh();
+        if (top20RunsDescriptionTextblock != null)
+        {
+            top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
+        }
     }
 
     private void QuestLogGearStats_Loaded(object sender, RoutedEventArgs e)
@@ -3446,7 +3450,7 @@ public partial class ConfigWindow : FluentWindow
         personalBestSelectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ", "");
     }
 
-    private void RefreshButton_Click(object sender, RoutedEventArgs e)
+    private void PersonalBestRefreshButton_Click(object sender, RoutedEventArgs e)
     {
         if (personalBestChart == null || personalBestSelectedWeapon == "" || personalBestSelectedType == "")
             return;
@@ -3487,6 +3491,11 @@ public partial class ConfigWindow : FluentWindow
                 personalBestChart.XAxes = PersonalBestXAxes;
                 personalBestChart.YAxes = PersonalBestYAxes;
                 break;
+        }
+
+        if (personalBestDescriptionTextBlock != null)
+        {
+            personalBestDescriptionTextBlock.Text = $"Personal best of solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
         }
     }
 
@@ -3635,18 +3644,6 @@ public partial class ConfigWindow : FluentWindow
             statsGraphsGrid = obj;
     }
 
-    private void QuestIDTextBox_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        if (personalBestDescriptionTextBlock != null)
-        {
-            personalBestDescriptionTextBlock.Text = $"Personal best of solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
-        }
-        if (top20RunsDescriptionTextblock != null)
-        {
-            top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
-        }
-    }
-
     private void PersonalBestDescriptionTextBlock_Loaded(object sender, RoutedEventArgs e)
     {
         var obj = (TextBlock)sender;
@@ -3659,25 +3656,6 @@ public partial class ConfigWindow : FluentWindow
         var obj = (TextBlock)sender;
         if (obj != null)
             top20RunsDescriptionTextblock = obj;
-    }
-
-    // seems kinda buggy
-    private void OverlayModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        ComboBox comboBox = (ComboBox)sender;
-        if (comboBox == null) return;
-        ComboBoxItem? selectedItem = comboBox.SelectedItem as ComboBoxItem;
-        if (selectedItem == null) return;
-        string? selectedOption = selectedItem.Content.ToString();
-        if (selectedOption == null) return;
-        if (personalBestDescriptionTextBlock != null)
-        {
-            personalBestDescriptionTextBlock.Text = $"Personal best of solo runs of quest ID {QuestIDTextBox.Text} by category {selectedOption}";
-        }
-        if (top20RunsDescriptionTextblock != null)
-        {
-            top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {QuestIDTextBox.Text} by category {selectedOption}";
-        }
     }
 
     private void PersonalBestMainGridLoaded(object sender, RoutedEventArgs e)
