@@ -595,7 +595,6 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Border x:Name="PlayerDPSGraphGridBorder" BorderBrush="{StaticResource Red}" BorderThickness="0" Grid.Column="0" Grid.Row="0"/>
-
             <lvc:CartesianChart Background="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphBackground}" Series="{Binding damagePerSecondSeries}" SyncContext="{Binding damagePerSecondSync}" XAxes="{Binding XAxes}" YAxes="{Binding damagePerSecondYAxes}"/>
         </Grid>
         <Grid x:Name="PlayerAPMGraphGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphY}" Width="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphWidth}" Height="{Binding Source={StaticResource Settings},Path=PlayerAPMGraphHeight}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -738,7 +737,7 @@
     </Grid>
         <!--https://stackoverflow.com/questions/5450985/how-to-make-overlay-control-above-all-other-controls-->
         <ui:Snackbar Grid.ZIndex="2" Timeout="10000" x:Name="MainWindowSnackBar" Style="{StaticResource CatppuccinMochaSnackBar}"/>
-        <MediaElement Source="UI/Sounds/victory.wav" x:Name="victoryMediaElement" LoadedBehavior="Manual" MediaEnded="victoryMediaElement_MediaEnded"/>
+        <MediaElement Visibility="Hidden" Source="UI/Sounds/victory.wav" x:Name="victoryMediaElement" LoadedBehavior="Manual" MediaEnded="victoryMediaElement_MediaEnded"/>
     </Grid>
     <Window.InputBindings>
     <KeyBinding Key="Esc" Command="{StaticResource ESC}"/>

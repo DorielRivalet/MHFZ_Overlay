@@ -98,10 +98,6 @@ public abstract class AddressModel : INotifyPropertyChanged
     public bool ShowMonster1Icon { get; set; } = false;
     public bool ShowFrameCounter { get; set; } = false;
     public bool ShowMap { get; set; } = false;
-    public bool ShowPlayerAttackGraph { get; set; } = false;
-    public bool ShowPlayerDPSGraph { get; set; } = false;
-    public bool ShowPlayerAPMGraph { get; set; } = false;
-    public bool ShowPlayerHitsPerSecondGraph { get; set; } = false;
     public bool ShowDamagePerSecond { get; set; } = false;
     public bool ShowOverlayModeWatermark { get; set; } = false;
 
@@ -109,6 +105,11 @@ public abstract class AddressModel : INotifyPropertyChanged
     public bool ShowSaveIcon { get; set; } = true;
     public bool ShowLocationTextInfo { get; set; } = true;
     public bool ShowQuestNameInfo { get; set; } = true;
+    public bool ShowPlayerAttackGraph { get; set; } = true;
+    public bool ShowPlayerDPSGraph { get; set; } = true;
+    public bool ShowPlayerAPMGraph { get; set; } = true;
+    public bool ShowPlayerHitsPerSecondGraph { get; set; } = true;
+
 
     #endregion
 
