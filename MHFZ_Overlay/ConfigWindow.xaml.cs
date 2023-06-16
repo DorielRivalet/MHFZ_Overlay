@@ -1449,6 +1449,10 @@ public partial class ConfigWindow : FluentWindow
     private Grid? statsGraphsGrid;
     private TextBlock? personalBestDescriptionTextBlock;
     private TextBlock? top20RunsDescriptionTextblock;
+    private Grid? personalBestMainGrid;
+    private Grid? top20MainGrid;
+    private Grid? weaponStatsMainGrid;
+
 
 
     // TODO: it works. i need to put this somewhere else
@@ -1771,18 +1775,18 @@ public partial class ConfigWindow : FluentWindow
 
     private void PersonalBestButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (personalBestChart == null || personalBestChartGrid == null) return;
+        if (personalBestChart == null || personalBestChartGrid == null || personalBestMainGrid == null) return;
         var fileName = $"PersonalBest-Quest_{QuestIDTextBox.Text}-{OverlayModeComboBox.Text}-{personalBestSelectedType}-{personalBestSelectedWeapon}".Trim().Replace(" ","_");
-        FileManager.SaveElementAsImageFile(personalBestChartGrid, fileName, ConfigWindowSnackBar, false);
+        FileManager.SaveElementAsImageFile(personalBestMainGrid, fileName, ConfigWindowSnackBar, false);
     }
 
     private void PersonalBestButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (personalBestChartGrid == null) return;
-        var previousBackground = personalBestChartGrid.Background;
-        personalBestChartGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(personalBestChartGrid, ConfigWindowSnackBar);
-        personalBestChartGrid.Background = previousBackground;
+        if (personalBestChartGrid == null || personalBestMainGrid == null) return;
+        var previousBackground = personalBestMainGrid.Background;
+        personalBestMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(personalBestMainGrid, ConfigWindowSnackBar);
+        personalBestMainGrid.Background = previousBackground;
     }
 
     private void Top20ButtonSaveFile_Click(object sender, RoutedEventArgs e)
@@ -1817,16 +1821,16 @@ public partial class ConfigWindow : FluentWindow
 
     private void Top20ButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (top20RunsDataGrid == null) return;
-        var previousBackground = top20RunsDataGrid.Background;
-        top20RunsDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(top20RunsDataGrid, ConfigWindowSnackBar);
-        top20RunsDataGrid.Background = previousBackground;
+        if (top20RunsDataGrid == null || top20MainGrid == null) return;
+        var previousBackground = top20MainGrid.Background;
+        top20MainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(top20MainGrid, ConfigWindowSnackBar);
+        top20MainGrid.Background = previousBackground;
     }
 
     private void WeaponStatsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (weaponUsageChartGrid == null || weaponUsageChart == null || weaponUsageData == null) return;
+        if (weaponUsageChartGrid == null || weaponUsageChart == null || weaponUsageData == null || weaponStatsMainGrid == null) return;
         try
         {
             var data = MainWindow.DataLoader.model.CalendarRuns;
@@ -1856,11 +1860,11 @@ public partial class ConfigWindow : FluentWindow
 
     private void WeaponStatsButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (weaponUsageChartGrid == null) return;
-        var previousBackground = weaponUsageChartGrid.Background;
-        weaponUsageChartGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(weaponUsageChartGrid, ConfigWindowSnackBar);
-        weaponUsageChartGrid.Background = previousBackground;
+        if (weaponUsageChartGrid == null || weaponStatsMainGrid == null) return;
+        var previousBackground = weaponStatsMainGrid.Background;
+        weaponStatsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(weaponStatsMainGrid, ConfigWindowSnackBar);
+        weaponStatsMainGrid.Background = previousBackground;
     }
 
     private void MostRecentButtonSaveFile_Click(object sender, RoutedEventArgs e)
@@ -1932,6 +1936,22 @@ public partial class ConfigWindow : FluentWindow
         statsTextTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(statsTextTextBlock, ConfigWindowSnackBar);
         statsTextTextBlock.Background = previousBackground;
+    }
+
+    private void PersonalBestsOverviewButtonSaveFile_Click(object sender, RoutedEventArgs e)
+    {
+        if (DiscordEmbedWeaponPersonalBest == null || QuestIDTextBox == null) return;
+        var fileName = $"PersonalBestsOverview-Quest_{QuestIDTextBox.Text}-{DateTime.UtcNow.ToString("yy/MM/dd").Replace("/","-")}";
+        FileManager.SaveElementAsImageFile(DiscordEmbedWeaponPersonalBest, fileName, ConfigWindowSnackBar, false);
+    }
+
+    private void PersonalBestsOverviewButtonCopyFile_Click(object sender, RoutedEventArgs e)
+    {
+        if (DiscordEmbedWeaponPersonalBest == null) return;
+        var previousBackground = DiscordEmbedWeaponPersonalBest.Background;
+        DiscordEmbedWeaponPersonalBest.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(DiscordEmbedWeaponPersonalBest, ConfigWindowSnackBar);
+        DiscordEmbedWeaponPersonalBest.Background = previousBackground;
     }
 
     private ISeries[]? Series { get; set; }
@@ -3487,7 +3507,7 @@ public partial class ConfigWindow : FluentWindow
     {
         if (calendarDataGrid == null || sender == null) return;
 
-        DatePicker datePicker = sender as DatePicker;
+        DatePicker? datePicker = sender as DatePicker;
 
         if (datePicker == null) return;
 
@@ -3656,6 +3676,27 @@ public partial class ConfigWindow : FluentWindow
         {
             top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {QuestIDTextBox.Text} by category {selectedOption}";
         }
+    }
+
+    private void PersonalBestMainGridLoaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (Grid)sender;
+        if (obj != null)
+            personalBestMainGrid = obj;
+    }
+
+    private void Top20MainGridLoaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (Grid)sender;
+        if (obj != null)
+            top20MainGrid = obj;
+    }
+
+    private void WeaponStatsMainGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (Grid)sender;
+        if (obj != null)
+            weaponStatsMainGrid = obj;
     }
 }
 /* LoadConfig on startup

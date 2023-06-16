@@ -253,7 +253,7 @@
             </DataTemplate>
             <DataTemplate x:Key="PersonalBestTemplate">
                 <!-- Grid structure for the "Personal Best" option -->
-                <Grid>
+                <Grid Loaded="PersonalBestMainGridLoaded">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -317,7 +317,7 @@
             </DataTemplate>
             <DataTemplate x:Key="Top20Template">
                 <!-- Grid structure for the "Top 20" option -->
-                <Grid>
+                <Grid Loaded="Top20MainGridLoaded">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -432,7 +432,7 @@
             </DataTemplate>
             <DataTemplate x:Key="WeaponStatsTemplate">
                 <!-- Grid structure for the "Weapon Stats" option -->
-                <Grid>
+                <Grid Loaded="WeaponStatsMainGrid_Loaded">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -1285,7 +1285,7 @@
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
-
+                                                <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -1293,7 +1293,7 @@
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
 
-                                            <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
+                                            <Grid Grid.RowSpan="12" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
 
                                             <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
 
@@ -1421,7 +1421,19 @@
                                                 <TextBlock FontSize="12" x:Name="SpeedrunnerInfoTextBlock" Text="Personal bests by you ·" FontFamily="{StaticResource Open Sans}" Margin="0,0,5,0"/>
                                                 <TextBlock FontSize="12" x:Name="CurrentTimeTextBlock" Text="2019/12/25 00:00" FontFamily="{StaticResource Open Sans}" Margin="0,0,5,0"/>
                                             </StackPanel>
-                                        </Grid>
+                                            <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Margin="5">
+                                                <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="PersonalBestsOverviewButtonSaveFile_Click">
+                                                    <Button.Content>
+                                                        <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
+                                                    </Button.Content>
+                                                </ui:Button>
+                                                    <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy stats to clipboard as image (recommended to maximize configuration window)" Click="PersonalBestsOverviewButtonCopyFile_Click">
+                                                    <Button.Content>
+                                                        <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
+                                                    </Button.Content>
+                                                </ui:Button>
+                                            </StackPanel>
+                                            </Grid>
                                         <ContentControl x:Name="QuestLogsContentControl" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Content="{Binding SelectedOption}" ContentTemplateSelector="{StaticResource OptionToTemplateConverter}" />
                                     </Grid>
                                 </Grid>
