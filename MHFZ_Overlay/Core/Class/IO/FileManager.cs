@@ -50,13 +50,13 @@ internal class FileManager
             saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
             saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
-            string dateTime = DateTime.Now.ToString();
+            string dateTime = DateTime.UtcNow.ToString();
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
             beginningFileName = beginningFileName != "" ? beginningFileName + "-" : "";
             beginningText = beginningText != "" ? beginningText + "-" : "";
-            saveFileDialog.FileName = string.Format("{0}{1}{2}{3}", beginningFileName, beginningText, fileName, dateTime);
+            saveFileDialog.FileName = string.Format("{0}{1}{2}-{3}", beginningFileName, beginningText, fileName, dateTime);
             if (saveFileDialog.ShowDialog() == true)
             {
                 File.WriteAllText(saveFileDialog.FileName, textToSave);
@@ -74,12 +74,12 @@ internal class FileManager
     /// </summary>
     /// <param name="gridToSave">The grid to save.</param>
     /// <param name="fileName">Name of the file.</param>
-    public static void SaveElementAsImageFile(Grid gridToSave, string fileName, Snackbar snackbar)
+    public static void SaveElementAsImageFile(Grid gridToSave, string fileName, Snackbar snackbar, bool copyToClipboard = true)
     {
         try
         {
             SaveFileDialog savefile = new SaveFileDialog();
-            string dateTime = DateTime.Now.ToString();
+            string dateTime = DateTime.UtcNow.ToString();
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
@@ -90,10 +90,14 @@ internal class FileManager
             savefile.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
             if (savefile.ShowDialog() == true)
             {
+                var previousBackground = gridToSave.Background;
                 gridToSave.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
                 CreateBitmapFromVisual(gridToSave, savefile.FileName);
-                CopyUIElementToClipboard(gridToSave, snackbar);
-                gridToSave.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+                if (copyToClipboard)
+                {
+                    CopyUIElementToClipboard(gridToSave, snackbar);
+                }
+                gridToSave.Background = previousBackground;
                 logger.Info("Saved image {0}", savefile.FileName);
             }
         }
@@ -195,7 +199,7 @@ internal class FileManager
         try
         {
             SaveFileDialog savefile = new SaveFileDialog();
-            string dateTime = DateTime.Now.ToString();
+            string dateTime = DateTime.UtcNow.ToString();
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
@@ -516,7 +520,7 @@ internal class FileManager
                 }
 
                 // Create the backup file name with a timestamp
-                string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+                string timestamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
                 string backupFileName = $"database_backup_{timestamp}.sqlite";
 
                 // Create the full path for the backup file

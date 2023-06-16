@@ -16,6 +16,6 @@ public static class PlayersList
         // No Player
         {0, new List<string>{DateTime.UnixEpoch.Date.ToString(), "None","NoGuild","0","Unknown","Japan"}},
         // Local Player
-        {1, new List<string>{DateTime.Now.Date.ToString(), "HunterName","GuildName","0","Unknown","Japan"}},
+        {1, new List<string>{DateTime.UtcNow.Date.ToString(), "HunterName","GuildName","0","Unknown","Japan"}},
     };
 };

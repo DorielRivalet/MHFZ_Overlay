@@ -1442,6 +1442,11 @@ public partial class ConfigWindow : FluentWindow
     private string personalBestSelectedWeapon = string.Empty;
     private string personalBestSelectedType = string.Empty;
     private DataGrid? calendarDataGrid;
+    private Grid? personalBestChartGrid;
+    private Grid? weaponUsageChartGrid;
+    private ComboBox? statsGraphsComboBox;
+    private Grid? statsGraphsGrid;
+
 
     // TODO: it works. i need to put this somewhere else
     private async Task ShowSequentialSnackbars()
@@ -1567,6 +1572,10 @@ public partial class ConfigWindow : FluentWindow
         top20RunsDataGrid.Items.Refresh();
     }
 
+    private string top20RunsSelectedWeapon = string.Empty;
+    private string statsGraphsSelectedOption = string.Empty;
+    private string statsTextSelectedOption = string.Empty;
+
     private void weaponListTop20RunsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         //top20RunsListView = (ListView)sender;
@@ -1578,6 +1587,7 @@ public partial class ConfigWindow : FluentWindow
         // You can now use the selectedItem variable to get the data or value of the selected option
         string? selectedWeapon = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "");
         if (string.IsNullOrEmpty(selectedWeapon)) return;
+        top20RunsSelectedWeapon = selectedWeapon;
         MainWindow.DataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this, selectedWeapon);
         top20RunsDataGrid.ItemsSource = MainWindow.DataLoader.model.FastestRuns;
         top20RunsDataGrid.Items.Refresh();
@@ -1651,7 +1661,7 @@ public partial class ConfigWindow : FluentWindow
             saveFileDialog.Title = "Save Calendar Runs as CSV";
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
-            string dateTime = DateTime.Now.ToString();
+            string dateTime = DateTime.UtcNow.ToString();
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
@@ -1690,6 +1700,45 @@ public partial class ConfigWindow : FluentWindow
         File.WriteAllText(filePath, sb.ToString());
     }
 
+    public void SaveCSVFromListOfRecentRuns(ObservableCollection<RecentRuns> recentRuns, string filePath)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Date,Actual Overlay Mode,Party Size");
+
+        foreach (var run in recentRuns)
+        {
+            string objectiveImage = run.ObjectiveImage.Replace(",", "");
+            string questName = run.QuestName.Replace(",", "");
+            string youtubeID = run.YoutubeID.Replace(",", "");
+            string finalTimeDisplay = run.FinalTimeDisplay.Replace(",", "");
+            string actualOverlayMode = run.ActualOverlayMode.Replace(",", "");
+
+            string line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date},{actualOverlayMode},{run.PartySize}";
+            sb.AppendLine(line);
+        }
+
+        File.WriteAllText(filePath, sb.ToString());
+    }
+
+    public void SaveCSVFromListOfFastestRuns(List<FastestRun> fastestRuns, string filePath)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Date");
+
+        foreach (var run in fastestRuns)
+        {
+            string objectiveImage = run.ObjectiveImage.Replace(",", "");
+            string questName = run.QuestName.Replace(",", "");
+            string youtubeID = run.YoutubeID.Replace(",", "");
+            string finalTimeDisplay = run.FinalTimeDisplay.Replace(",", "");
+
+            string line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date}";
+            sb.AppendLine(line);
+        }
+
+        File.WriteAllText(filePath, sb.ToString());
+    }
+
     private void CalendarButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (calendarDataGrid == null) return;
@@ -1701,95 +1750,144 @@ public partial class ConfigWindow : FluentWindow
 
     private void PersonalBestButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (personalBestChart == null) return;
-        var data = personalBestChart.Series;
-        if (data == null) return;
-        //SavePersonalBestCSV(data);
+        if (personalBestChart == null || personalBestChartGrid == null) return;
+        var fileName = $"PersonalBest-Quest_{QuestIDTextBox.Text}-{OverlayModeComboBox.Text}-{personalBestSelectedType}-{personalBestSelectedWeapon}".Trim().Replace(" ","_");
+        FileManager.SaveElementAsImageFile(personalBestChartGrid, fileName, ConfigWindowSnackBar, false);
     }
 
     private void PersonalBestButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        //if (compendiumInformationStackPanel == null) return;
-        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        //FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
-        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+        if (personalBestChartGrid == null) return;
+        var previousBackground = personalBestChartGrid.Background;
+        personalBestChartGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(personalBestChartGrid, ConfigWindowSnackBar);
+        personalBestChartGrid.Background = previousBackground;
     }
 
     private void Top20ButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        var data = MainWindow.DataLoader.model.FastestRuns;
-        if (data == null) return;
-        //SaveCSVFromListOfFastestRuns(data);
+        try
+        {
+            var data = MainWindow.DataLoader.model.FastestRuns;
+            if (data == null) return;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            saveFileDialog.Title = "Save Fastest Runs as CSV";
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
+            string dateTime = DateTime.UtcNow.ToString();
+            dateTime = dateTime.Replace("/", "-");
+            dateTime = dateTime.Replace(" ", "_");
+            dateTime = dateTime.Replace(":", "-");
+            saveFileDialog.FileName = string.Format("FastestRuns-Quest_{0}-{1}-{2}-{3}", QuestIDTextBox.Text, OverlayModeComboBox.Text, top20RunsSelectedWeapon, DateTime.UtcNow.ToString("yy/MM/dd").Replace("/", "-"));
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string filePath = saveFileDialog.FileName;
+                SaveCSVFromListOfFastestRuns(data, filePath);
+                logger.Info("Saved text {0}", saveFileDialog.FileName);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex, "Could not save text file");
+        }
 
     }
 
     private void Top20ButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        //if (compendiumInformationStackPanel == null) return;
-        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        //FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
-        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+        if (top20RunsDataGrid == null) return;
+        var previousBackground = top20RunsDataGrid.Background;
+        top20RunsDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(top20RunsDataGrid, ConfigWindowSnackBar);
+        top20RunsDataGrid.Background = previousBackground;
     }
 
     private void WeaponStatsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        var data = MainWindow.DataLoader.model.weaponUsageSeries;
-        if (data == null) return;
-        //SaveWeaponUsageCSV(data);
+        if (weaponUsageChartGrid == null || weaponUsageChart == null) return;
+        var fileName = "WeaponUsage";
+        FileManager.SaveElementAsImageFile(weaponUsageChartGrid, fileName, ConfigWindowSnackBar, false);
     }
 
     private void WeaponStatsButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        //if (compendiumInformationStackPanel == null) return;
-        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        //FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
-        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+        if (weaponUsageChartGrid == null) return;
+        var previousBackground = weaponUsageChartGrid.Background;
+        weaponUsageChartGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(weaponUsageChartGrid, ConfigWindowSnackBar);
+        weaponUsageChartGrid.Background = previousBackground;
     }
 
     private void MostRecentButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        var data = MainWindow.DataLoader.model.RecentRuns;
-        if (data == null) return;
-        //SaveWeaponUsageCSV(data);
+        try
+        {
+            var data = MainWindow.DataLoader.model.RecentRuns;
+            if (data == null) return;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            saveFileDialog.Title = "Save Recent Runs as CSV";
+            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
+            string dateTime = DateTime.UtcNow.ToString();
+            dateTime = dateTime.Replace("/", "-");
+            dateTime = dateTime.Replace(" ", "_");
+            dateTime = dateTime.Replace(":", "-");
+            saveFileDialog.FileName = string.Format("RecentRuns-{0}", dateTime);
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string filePath = saveFileDialog.FileName;
+                SaveCSVFromListOfRecentRuns(data, filePath);
+                logger.Info("Saved text {0}", saveFileDialog.FileName);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex, "Could not save text file");
+        }
     }
 
     private void MostRecentButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        //if (compendiumInformationStackPanel == null) return;
-        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        //FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
-        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+        if (mostRecentRunsDataGrid == null) return;
+        var previousBackground = mostRecentRunsDataGrid.Background;
+        mostRecentRunsDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(mostRecentRunsDataGrid, ConfigWindowSnackBar);
+        mostRecentRunsDataGrid.Background = previousBackground;
     }
 
     private void StatsGraphsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (graphChart == null) return;
-        var data = graphChart.Series;
-        if (data == null) return;
-        //SaveWeaponUsageCSV(data);
+        if (statsGraphsGrid == null) return;
+        var fileName = $"StatsGraphs-{statsGraphsSelectedOption}";
+        FileManager.SaveElementAsImageFile(statsGraphsGrid, fileName, ConfigWindowSnackBar, false);
     }
 
     private void StatsGraphsButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        //if (compendiumInformationStackPanel == null) return;
-        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        //FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
-        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+        if (statsGraphsGrid == null) return;
+        var previousBackground = statsGraphsGrid.Background;
+        statsGraphsGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(statsGraphsGrid, ConfigWindowSnackBar);
+        statsGraphsGrid.Background = previousBackground;
     }
 
     private void StatsTextButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (statsTextTextBlock == null) return;
-        var data = statsTextTextBlock.Text;
-        //SaveStatsText(data);
+        string textToSave = statsTextTextBlock.Text;
+        textToSave = string.Format("```text\n{0}\n```", textToSave);
+        FileManager.SaveTextFile(textToSave, $"StatsText-Run_{RunIDTextBox.Text}-{statsTextSelectedOption}");
     }
 
     private void StatsTextButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        //if (compendiumInformationStackPanel == null) return;
-        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        //FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel);
-        //compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+        if (statsTextTextBlock == null) return;
+        var previousBackground = statsTextTextBlock.Background;
+        statsTextTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(statsTextTextBlock, ConfigWindowSnackBar);
+        statsTextTextBlock.Background = previousBackground;
     }
 
     private ISeries[]? Series { get; set; }
@@ -2961,6 +3059,8 @@ public partial class ConfigWindow : FluentWindow
                 return;
         }
 
+        statsGraphsSelectedOption = selectedOption.Trim().Replace(" ", "_");
+
         if (Series == null) return;
 
         graphChart.Series = Series;
@@ -3105,6 +3205,9 @@ public partial class ConfigWindow : FluentWindow
                 statsTextTextBlock.Text = DisplayAreaChanges(databaseManager.GetAreaChangesDictionary(runID));
                 break;
         }
+
+        statsTextSelectedOption = selectedOption.Trim().Replace(" ", "_");
+
     }
 
     // TODO: double-check the settings and the conditionals in the other code
@@ -3419,6 +3522,51 @@ public partial class ConfigWindow : FluentWindow
             obj.DefaultButtonClicked -= DefaultButton_Click;
             isDefaultButtonClickedSubscribed = false;
         }
+    }
+
+    private void personalBestChartGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (Grid)sender;
+        if (obj != null)
+            personalBestChartGrid = obj;
+    }
+
+    private void WeaponUsageChartGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (Grid)sender;
+        if (obj != null)
+           weaponUsageChartGrid = obj;
+    }
+
+    private void StatsGraphsComboBox_Loaded(object sender, RoutedEventArgs e)
+    {
+        var comboBox = (ComboBox)sender;
+        if (comboBox == null) return;
+        var selectedItem = comboBox.SelectedItem;
+        if (selectedItem == null) return;
+        // You can now use the selectedItem variable to get the data or value of the selected option
+        string? selectedOption = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim().Replace(" ","_");
+        if (string.IsNullOrEmpty(selectedOption)) return;
+        statsGraphsSelectedOption = selectedOption;
+    }
+
+    private void StatsTextComboBox_Loaded(object sender, RoutedEventArgs e)
+    {
+        var comboBox = (ComboBox)sender;
+        if (comboBox == null) return;
+        var selectedItem = comboBox.SelectedItem;
+        if (selectedItem == null) return;
+        // You can now use the selectedItem variable to get the data or value of the selected option
+        string? selectedOption = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim().Replace(" ", "_");
+        if (string.IsNullOrEmpty(selectedOption)) return;
+        statsTextSelectedOption = selectedOption;
+    }
+
+    private void GraphsChartGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (Grid)sender;
+        if (obj != null)
+            statsGraphsGrid = obj;
     }
 }
 /* LoadConfig on startup

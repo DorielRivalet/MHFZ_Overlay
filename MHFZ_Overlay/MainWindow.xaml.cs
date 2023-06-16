@@ -271,7 +271,7 @@ public partial class MainWindow : Window
 
 
         // When the program starts
-        ProgramStart = DateTime.Now;
+        ProgramStart = DateTime.UtcNow;
 
         // Calculate the total time spent and update the TotalTimeSpent property
         DataLoader.model.TotalTimeSpent = databaseManager.CalculateTotalTimeSpent();

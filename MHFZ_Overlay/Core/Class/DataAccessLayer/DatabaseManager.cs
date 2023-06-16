@@ -380,7 +380,7 @@ internal class DatabaseManager
             conn.Open();
             var model = dataLoader.model;
             string sql;
-            DateTime createdAt = DateTime.Now;
+            DateTime createdAt = DateTime.UtcNow;
             string createdBy = dataLoader.model.GetFullCurrentProgramVersion();
             int playerID = 1;
 
@@ -563,7 +563,7 @@ internal class DatabaseManager
                         else
                             objectiveName = model.GetRealMonsterName(model.CurrentMonster1Icon, true);
 
-                        DateTime date = DateTime.Now;
+                        DateTime date = DateTime.UtcNow;
 
                         // TODO
                         //rick roll
@@ -2686,7 +2686,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
 
     #region session time
 
-    public DateTime DatabaseStartTime = DateTime.Now;
+    public DateTime DatabaseStartTime = DateTime.UtcNow;
 
     /// <summary>
     /// Stores the session time.
@@ -2702,7 +2702,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
 
         try
         {
-            DateTime ProgramEnd = DateTime.Now;
+            DateTime ProgramEnd = DateTime.UtcNow;
             TimeSpan duration = ProgramEnd - ProgramStart;
             int sessionDuration = (int)duration.TotalSeconds;
 
@@ -3114,7 +3114,7 @@ Disabling Quest Logging.",
                         string nationality = playerInfo[5];
 
                         if (playerID == 1 && (startTime == DateTime.UnixEpoch || startTime == DateTime.MinValue))
-                            creationDate = DateTime.Now.Date.ToString();
+                            creationDate = DateTime.UtcNow.Date.ToString();
                         else
                             creationDate = startTime.Date.ToString();
 
@@ -7850,7 +7850,7 @@ Disabling Quest Logging.",
                                 configWindow.SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri(reader["ObjectiveImage"].ToString()));
                                 configWindow.SelectedQuestNameTextBlock.Text = reader["QuestNameName"].ToString();
                                 configWindow.SelectedQuestObjectiveTextBlock.Text = string.Format("{0} {1} {2}", ObjectiveType.IDName[int.Parse(reader["ObjectiveTypeID"].ToString())], reader["ObjectiveQuantity"], reader["ObjectiveName"]);
-                                configWindow.CurrentTimeTextBlock.Text = DateTime.Now.ToString();
+                                configWindow.CurrentTimeTextBlock.Text = DateTime.UtcNow.ToString();
 
                             }
                         }
@@ -9072,7 +9072,7 @@ Disabling Quest Logging.",
 
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                     {
-                        DateTime createdAt = DateTime.Now;
+                        DateTime createdAt = DateTime.UtcNow;
                         string createdBy = dataLoader.model.GetFullCurrentProgramVersion();
 
                         cmd.Parameters.AddWithValue("@CreatedAt", createdAt);

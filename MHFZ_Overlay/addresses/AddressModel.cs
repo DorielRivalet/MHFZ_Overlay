@@ -5435,7 +5435,7 @@ TreeScope.Children, condition);
             string guildName;
             string hunterName;
 
-            string DateAndTime = DateTime.Now.ToString();
+            string DateAndTime = DateTime.UtcNow.ToString();
 
             if (s.GuildName.Length >= 1)
                 guildName = s.GuildName;
@@ -8761,7 +8761,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             {
                 string guildName;
                 string hunterName;
-                string DateAndTime = DateTime.Now.ToString();
+                string DateAndTime = DateTime.UtcNow.ToString();
 
                 if (s.GuildName.Length >= 1)
                     guildName = s.GuildName;
@@ -11574,13 +11574,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public Option SelectedOption { get; set; } = new Option { Name = "Default", IsSelected = true };
 
-    private DateTime ProgramStart = DateTime.Now;
+    private DateTime ProgramStart = DateTime.UtcNow;
 
     public TimeSpan CurrentSessionTime
     {
         get
         {
-            DateTime ProgramEnd = DateTime.Now;
+            DateTime ProgramEnd = DateTime.UtcNow;
             TimeSpan duration = ProgramEnd - ProgramStart;
             return duration;
         }

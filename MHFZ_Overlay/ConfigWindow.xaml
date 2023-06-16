@@ -271,7 +271,7 @@
                     <StackPanel  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
                             <!--TODO: add the refresh button to the other sections-->
-                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="PersonalBestButtonSaveFile_Click">
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to image file" Click="PersonalBestButtonSaveFile_Click">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
                                 </Button.Content>
@@ -309,7 +309,9 @@
                             </ComboBox>
                             <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Personal Best of solo runs of quest ID by category"/>
                         </StackPanel>
-                        <lvc:CartesianChart Loaded="personalBest_Loaded" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Grid x:Name="personalBestChartGrid" Loaded="personalBestChartGrid_Loaded">
+                            <lvc:CartesianChart Loaded="personalBest_Loaded" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        </Grid>
                     </StackPanel>
                 </Grid>
             </DataTemplate>
@@ -461,9 +463,9 @@
                                 <ComboBoxItem>(Quest ID) Weapon Usage</ComboBoxItem>
                             </ComboBox>
                         </StackPanel>
-
-                        <lvc:CartesianChart Loaded="weaponUsageChart_Loaded" Grid.Column="1" Grid.Row="1" x:Name="weaponUsageChart" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-
+                        <Grid x:Name="WeaponUsageChartGrid" Loaded="WeaponUsageChartGrid_Loaded">
+                            <lvc:CartesianChart Loaded="weaponUsageChart_Loaded" Grid.Column="1" Grid.Row="1" x:Name="weaponUsageChart" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        </Grid>
                         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" >
                             <Image Margin="38,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/sns.png"/>
                             <Image Margin="24,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/ds.png"/>
@@ -639,7 +641,7 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="StatsGraphsButtonSaveFile_Click">
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to image file" Click="StatsGraphsButtonSaveFile_Click">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
                                 </Button.Content>
@@ -649,7 +651,7 @@
                                     <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
                                 </Button.Content>
                             </ui:Button>
-                            <ComboBox ToolTip="Multiplayer runs may not display the correct data" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
+                            <ComboBox Loaded="StatsGraphsComboBox_Loaded" ToolTip="Multiplayer runs may not display the correct data" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
                                 <ComboBoxItem>(General) Most Quest Completions</ComboBoxItem>
                                 <ComboBoxItem>(General) Quest Durations</ComboBoxItem>
                                 <ComboBoxItem>(General) Most Common Objective Types</ComboBoxItem>
@@ -687,7 +689,9 @@
                                 <ComboBoxItem>(Run ID) Monster Status Ailments Thresholds</ComboBoxItem>
                             </ComboBox>
                         </StackPanel>
-                        <lvc:CartesianChart Loaded="GraphsChart_Loaded" Grid.Column="1" Grid.Row="1" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Grid x:Name="GraphsChartGrid" Loaded="GraphsChartGrid_Loaded" Grid.Column="1" Grid.Row="1" Margin="5">
+                            <lvc:CartesianChart Loaded="GraphsChart_Loaded" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        </Grid>
                     </StackPanel>
                 </Grid>
             </DataTemplate>
@@ -718,7 +722,7 @@
                                     <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
                                 </Button.Content>
                             </ui:Button>
-                            <ComboBox SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="StatsTextComboBox_SelectionChanged" ToolTip="Enter a Run ID beforehand. Multiplayer runs may not display the correct data">
+                            <ComboBox Loaded="StatsTextComboBox_Loaded" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="StatsTextComboBox_SelectionChanged" ToolTip="Enter a Run ID beforehand. Multiplayer runs may not display the correct data">
                                 <ComboBoxItem>Inventory</ComboBoxItem>
                                 <ComboBoxItem>Ammo</ComboBoxItem>
                                 <ComboBoxItem>Partnya Bag</ComboBoxItem>
