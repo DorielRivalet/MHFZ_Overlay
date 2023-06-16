@@ -1452,6 +1452,8 @@ public partial class ConfigWindow : FluentWindow
     private Grid? personalBestMainGrid;
     private Grid? top20MainGrid;
     private Grid? weaponStatsMainGrid;
+    private Grid? statsGraphsMainGrid;
+    private Grid? statsTextMainGrid;
 
 
 
@@ -1907,23 +1909,23 @@ public partial class ConfigWindow : FluentWindow
 
     private void StatsGraphsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (statsGraphsGrid == null) return;
+        if (statsGraphsGrid == null || statsGraphsMainGrid == null) return;
         var fileName = $"StatsGraphs-{statsGraphsSelectedOption}";
-        FileManager.SaveElementAsImageFile(statsGraphsGrid, fileName, ConfigWindowSnackBar, false);
+        FileManager.SaveElementAsImageFile(statsGraphsMainGrid, fileName, ConfigWindowSnackBar, false);
     }
 
     private void StatsGraphsButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (statsGraphsGrid == null) return;
-        var previousBackground = statsGraphsGrid.Background;
-        statsGraphsGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(statsGraphsGrid, ConfigWindowSnackBar);
-        statsGraphsGrid.Background = previousBackground;
+        if (statsGraphsGrid == null || statsGraphsMainGrid == null) return;
+        var previousBackground = statsGraphsMainGrid.Background;
+        statsGraphsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        FileManager.CopyUIElementToClipboard(statsGraphsMainGrid, ConfigWindowSnackBar);
+        statsGraphsMainGrid.Background = previousBackground;
     }
 
     private void StatsTextButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (statsTextTextBlock == null) return;
+        if (statsTextTextBlock == null || statsTextMainGrid == null) return;
         string textToSave = statsTextTextBlock.Text;
         textToSave = string.Format("```text\n{0}\n```", textToSave);
         FileManager.SaveTextFile(textToSave, $"StatsText-Run_{RunIDTextBox.Text}-{statsTextSelectedOption}");
@@ -1931,7 +1933,7 @@ public partial class ConfigWindow : FluentWindow
 
     private void StatsTextButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (statsTextTextBlock == null) return;
+        if (statsTextTextBlock == null || statsTextMainGrid == null) return;
         var previousBackground = statsTextTextBlock.Background;
         statsTextTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(statsTextTextBlock, ConfigWindowSnackBar);
@@ -3257,16 +3259,16 @@ public partial class ConfigWindow : FluentWindow
         switch (selectedOption)
         {
             case "Inventory":
-                statsTextTextBlock.Text = FormatInventory(databaseManager.GetPlayerInventoryDictionary(runID));
+                statsTextTextBlock.Text = string.Format("Inventory\n\n{0}",FormatInventory(databaseManager.GetPlayerInventoryDictionary(runID)));
                 break;
             case "Ammo":
-                statsTextTextBlock.Text = FormatInventory(databaseManager.GetAmmoDictionary(runID));
+                statsTextTextBlock.Text = string.Format("Ammo\n\n{0}", FormatInventory(databaseManager.GetAmmoDictionary(runID)));
                 break;
             case "Partnya Bag":
-                statsTextTextBlock.Text = FormatInventory(databaseManager.GetPartnyaBagDictionary(runID));
+                statsTextTextBlock.Text = string.Format("Partnya Bag\n\n{0}", FormatInventory(databaseManager.GetPartnyaBagDictionary(runID)));
                 break;
             case "Area Changes":
-                statsTextTextBlock.Text = DisplayAreaChanges(databaseManager.GetAreaChangesDictionary(runID));
+                statsTextTextBlock.Text = string.Format("Area Changes\n\n{0}", DisplayAreaChanges(databaseManager.GetAreaChangesDictionary(runID)));
                 break;
         }
 
@@ -3697,6 +3699,20 @@ public partial class ConfigWindow : FluentWindow
         var obj = (Grid)sender;
         if (obj != null)
             weaponStatsMainGrid = obj;
+    }
+
+    private void StatsGraphsMainGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (Grid)sender;
+        if (obj != null)
+            statsGraphsMainGrid = obj;
+    }
+
+    private void StatsTextMainGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (Grid)sender;
+        if (obj != null)
+            statsTextMainGrid = obj;
     }
 }
 /* LoadConfig on startup

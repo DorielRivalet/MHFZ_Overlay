@@ -625,7 +625,7 @@
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="StatsGraphsTemplate">
-                <Grid>
+                <Grid Loaded="StatsGraphsMainGrid_Loaded">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -696,7 +696,7 @@
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="StatsTextTemplate">
-                <Grid>
+                <Grid Loaded="StatsTextMainGrid_Loaded">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
