@@ -13,13 +13,13 @@ public class Quest
     public DateTime? CreatedAt { get; set; }
     public string? CreatedBy { get; set; } = string.Empty;
     public long? RunID { get; set; }
-    public long? QuestID { get; set; }
+    public long QuestID { get; set; }
     public long? TimeLeft { get; set; }
     public long? FinalTimeValue { get; set; }
     public string? FinalTimeDisplay { get; set; } = string.Empty;
     public string? ObjectiveImage { get; set; } = string.Empty;
 
-    public long? ObjectiveTypeID { get; set; }
+    public long ObjectiveTypeID { get; set; }
     public long? ObjectiveQuantity { get; set; }
     public long? StarGrade { get; set; }
 

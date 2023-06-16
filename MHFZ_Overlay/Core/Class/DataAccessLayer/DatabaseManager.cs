@@ -12001,7 +12001,13 @@ Updating the database structure may take some time, it will transport all of you
             else
             {
                 logger.Info("previousVersionFilePath does not exist, creating file");
-                if (App.CurrentProgramVersion == null) return;
+                if (App.CurrentProgramVersion == null)
+                {
+                    logger.Fatal("CurrentProgramVersion does not exist");
+                    MessageBox.Show("Current Program Version not found.");
+                    LoggingManager.WriteCrashLog(new Exception("CurrentProgramVersion not found."), logMessage);
+                    return;
+                }
                 previousVersion = App.CurrentProgramVersion.Trim();
                 File.WriteAllText(previousVersionFilePath, previousVersion);
                 logger.Info("Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
