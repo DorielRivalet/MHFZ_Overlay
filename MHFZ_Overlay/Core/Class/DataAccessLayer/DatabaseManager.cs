@@ -36,7 +36,6 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Controls.IconElements;
 using System.Transactions;
 using System.Windows.Documents;
-using MHFZ_Overlay.Core.Class.Dictionary;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay.Core.Class.DataAccessLayer;
@@ -3026,6 +3025,7 @@ Please make sure that reference_schema.json (in the current overlay directory) d
 Disabling Quest Logging.",
             Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             s.EnableQuestLogging = false;
+            s.Save();
         }
 
         return schemaChanged;
@@ -4326,6 +4326,62 @@ Disabling Quest Logging.",
                 IsSecret INTEGER NOT NULL DEFAULT 0,
                 Hint TEXT NOT NULL DEFAULT ''
                 )";
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS MusouGauntlets(
+                        MusouGauntletID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        WeaponType TEXT NOT NULL,
+                        Category TEXT NOT NULL,
+                        TotalFramesElapsed INTEGER NOT NULL,
+                        TotalTimeElapsed TEXT NOT NULL,
+                        Run1ID INTEGER NOT NULL,
+                        Run2ID INTEGER NOT NULL,
+                        Run3ID INTEGER NOT NULL,
+                        Run4ID INTEGER NOT NULL,
+                        Run5ID INTEGER NOT NULL,
+                        Run6ID INTEGER NOT NULL,
+                        Run7ID INTEGER NOT NULL,
+                        Run8ID INTEGER NOT NULL,
+                        Run9ID INTEGER NOT NULL,
+                        Run10ID INTEGER NOT NULL,
+                        FOREIGN KEY(Run1ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run2ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run3ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run4ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run5ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run6ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run7ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run8ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run9ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run10ID) REFERENCES Quests(RunID)
+                    )";
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS SolsticeGauntlets(
+                        SolsticeGauntletID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        WeaponType TEXT NOT NULL,
+                        Category TEXT NOT NULL,
+                        TotalFramesElapsed INTEGER NOT NULL,
+                        TotalTimeElapsed TEXT NOT NULL,
+                        Run1ID INTEGER NOT NULL,
+                        Run2ID INTEGER NOT NULL,
+                        Run3ID INTEGER NOT NULL,
+                        Run4ID INTEGER NOT NULL,
+                        Run5ID INTEGER NOT NULL,
+                        Run6ID INTEGER NOT NULL,
+                        FOREIGN KEY(Run1ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run2ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run3ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run4ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run5ID) REFERENCES Quests(RunID),
+                        FOREIGN KEY(Run6ID) REFERENCES Quests(RunID)
+                    )";
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                 {
                     cmd.ExecuteNonQuery();
