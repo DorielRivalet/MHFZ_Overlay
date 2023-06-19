@@ -12,11 +12,11 @@
 
 ## Did you find a bug?
 
-- For reporting security vulnerabilities, please go [here](https://github.com/DorielRivalet/mhfz-overlay/security/advisories/new)
-
 - **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/dorielrivalet/mhfz-overlay/issues).
 
 - If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=bug&template=BUG-REPORT.yml&title=%5BBUG%5D+-+%3Ctitle%3E). Be sure to include a **title and clear description**, as much relevant information as possible, and a **reproducible test case** demonstrating the expected behavior that is not occurring.
+
+- For reporting security vulnerabilities, please go [here](https://github.com/DorielRivalet/mhfz-overlay/security/advisories/new)
 
 Alternatively, send an issue [here](https://github.com/DorielRivalet/mhfz-overlay/issues/new) detailing your inquiry about the program.
 
