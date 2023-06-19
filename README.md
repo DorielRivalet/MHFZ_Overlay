@@ -15,6 +15,39 @@
 ---
 </div>
 
+- [Monster Hunter Frontier Z Overlay](#monster-hunter-frontier-z-overlay)
+  - [About](#about)
+  - [Requirements](#requirements)
+  - [System Requirements](#system-requirements)
+    - [Minimum](#minimum)
+    - [Recommended](#recommended)
+  - [Installation](#installation)
+    - [DISCLAIMER](#disclaimer)
+  - [Hotkeys](#hotkeys)
+    - [Quick Troubleshooting](#quick-troubleshooting)
+  - [Features](#features)
+  - [Configuration Preview](#configuration-preview)
+    - [Hunter Sets (Text)](#hunter-sets-text)
+    - [Hunted Logs](#hunted-logs)
+    - [Monster Speedruns, Hitzones and Wiki](#monster-speedruns-hitzones-and-wiki)
+    - [Ferias](#ferias)
+    - [Guild Card](#guild-card)
+    - [Hunter Sets (Image)](#hunter-sets-image)
+    - [Damage Calculator](#damage-calculator)
+  - [Features not yet implemented](#features-not-yet-implemented)
+  - [Bugs](#bugs)
+  - [Frequently Asked Questions](#frequently-asked-questions)
+  - [How to Manually Update with Update.exe](#how-to-manually-update-with-updateexe)
+  - [How to Uninstall](#how-to-uninstall)
+  - [Changelog](#changelog)
+  - [Documentation](#documentation)
+  - [Project Development](#project-development)
+  - [Code Analysis](#code-analysis)
+  - [Repository Overview](#repository-overview)
+  - [Feedback](#feedback)
+  - [License](#license)
+  - [Acknowledgements](#acknowledgements)
+
 ## About
 
 This project aims to provide a simple, customizable overlay for Monster Hunter Frontier Z on Windows, with the added bonus of Discord Rich Presence integration. The overlay allows players to keep track of their in-game stats and progress, as well as providing a convenient way to access various tools and resources.
@@ -27,6 +60,28 @@ We hope you find this overlay useful and enjoyable, and we welcome any feedback 
 
 - [.NET Desktop Runtime 6.0 x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.7-windows-x64-installer).
 - [.NET Desktop Runtime 6.0 x86](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.8-windows-x86-installer).
+
+## System Requirements
+
+### Minimum
+
+- OS: Windows 10 (64-bit)
+- Processor:  Intel® Core™ i3-4130 or Core™ i5-3470
+- Memory: 8 GB RAM
+- Storage: 500 MB available space
+- Additional Notes: 1080p/30fps when refresh rate is set to 1. System requirements subject to change during software development.
+
+### Recommended
+
+- OS: Windows 10 (64-bit)
+- Processor: Intel® Core™ i5-4460 or better
+- Memory: 8 GB RAM
+- Storage: 500 MB available space
+- Additional Notes: 1080p/30fps when refresh rate is set to 30. System requirements subject to change during software development.
+
+Please note that these system requirements are estimates and may vary based on your specific hardware configuration. If you encounter any performance issues or have different hardware specifications, please provide feedback or send an issue for assistance. We appreciate your input in helping us improve the overlay's compatibility with a wider range of hardware setups.
+
+If you record and/or stream with the overlay, the recommended RAM is 16 GB and the recommended processor is Intel® Core™ i7 or better.
 
 ## Installation
 
@@ -309,7 +364,6 @@ We recommend consulting the appropriate documentation file based on your needs. 
 ![CircleCI](https://img.shields.io/circleci/build/github/DorielRivalet/mhfz-overlay?label=CircleCI&style=flat)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DorielRivalet/mhfz-overlay?style=flat)
 ![GitHub repo size](https://img.shields.io/github/repo-size/DorielRivalet/mhfz-overlay?style=flat)
-[![LOC](https://tokei.rs/b1/github/DorielRivalet/mhfz-overlay)](https://github.com/XAMPPRocky/tokei)
 [![wakatime](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a.svg)](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a)
 
 ## Feedback
