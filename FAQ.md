@@ -273,7 +273,7 @@ If you are using an XBox controller or similar, you only need to enable the cont
 |GitHub Actions|✔️|❌|❌|
 |Issue Template|✔️|❌|❌|
 |Pull Request Template|✔️|❌|❌|
-|Contributing File|❌|❌|❌|
+|Contributing File|✔️|❌|❌|
 |GitHub Milestones|✔️|❌|❌|
 |GitHub Projects|✔️|❌|❌|
 |Code Analysis|✔️ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)|❌|❌|
@@ -364,7 +364,7 @@ As an added bonus:
 |GitHub Actions|✔️|✔️|
 |Issue Template|✔️|❌|
 |Pull Request Template|✔️|❌|
-|Contributing File|❌|❌|
+|Contributing File|✔️|❌|
 |GitHub Milestones|✔️|✔️|
 |GitHub Projects|✔️|✔️|
 |Code Analysis|✔️ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)|Private|
