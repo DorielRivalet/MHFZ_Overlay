@@ -4112,7 +4112,7 @@ public static class AchievementsDictionary
             Title = "Yummy",
             Description = string.Empty,
             Rank = Enum.AchievementRank.Bronze,
-			Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/meat.jpg",
+			Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/plate.png",
             Objective = "Complete 50 quests with Guild Food",
             
             IsSecret = false,
@@ -4163,6 +4163,17 @@ public static class AchievementsDictionary
 			Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/book_weapon.jpg",
             Objective = "Have a total hunt time of 100 hours.",
             
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {348, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "20% more damage for 99% more effort",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/berserk_raviente.jpg",
+            Objective = "Obtain a Z100 weapon.",
             IsSecret = false,
             Hint = string.Empty
             }

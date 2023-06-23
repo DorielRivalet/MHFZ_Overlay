@@ -2336,8 +2336,8 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
 
                 using (SQLiteCommand cmd = new SQLiteCommand(conn))
                 {
-                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_achievements_updates
-                        AFTER UPDATE ON Achievements
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_playerachievements_updates
+                        AFTER UPDATE ON PlayerAchievements
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
                         END;";
@@ -2346,8 +2346,8 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
 
                 using (SQLiteCommand cmd = new SQLiteCommand(conn))
                 {
-                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_achievements_deletion
-                        AFTER DELETE ON Achievements
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_playerachievements_deletion
+                        AFTER DELETE ON PlayerAchievements
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
                         END;";
