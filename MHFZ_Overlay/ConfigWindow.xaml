@@ -1438,7 +1438,7 @@
                                                 <TextBlock FontSize="12" x:Name="CurrentTimeTextBlock" Text="2019/12/25 00:00" FontFamily="{StaticResource Open Sans}" Margin="0,0,5,0"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Margin="5">
-                                                <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="PersonalBestsOverviewButtonSaveFile_Click">
+                                                <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to image file" Click="PersonalBestsOverviewButtonSaveFile_Click">
                                                     <Button.Content>
                                                         <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
                                                     </Button.Content>
@@ -1718,6 +1718,7 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Show Timer">
@@ -1914,30 +1915,36 @@
                                 <TextBlock Foreground="{StaticResource Text}" Text="Damage Numbers" Style="{StaticResource ConfigTextBox}"/>
                             </StackPanel>
                             <CheckBox HorizontalAlignment="Center" BorderBrush="{StaticResource Red}" BorderThickness="2" Grid.Column="1" Grid.Row="42"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbers}"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="43" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
-                            <CheckBox HorizontalAlignment="Center" BorderBrush="{StaticResource Red}" BorderThickness="2" Grid.Column="1" Grid.Row="43"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
-                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="44" Text="Damage Numbers Color" Style="{StaticResource ConfigTextBox}"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="44" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=DamageNumbersColor}"></xctk:ColorPicker>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="45" Grid.Column="0"  Text="Damage Numbers Area Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="45" Grid.Column="1" HorizontalAlignment="Center">
+                            <TextBlock Margin="5" ToolTip="Select the mode for the damage numbers. Automatic: displays effective damage if monster effective HP is enabled, otherwise show true damage. The effective damage is calculated based on the defense rate of the first monster only. These bloated numbers only affect the display, not the database." Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="43" Text="Damage Numbers Mode" Style="{StaticResource ConfigTextBox}"/>
+                            <ComboBox Grid.Column="1" Grid.Row="43" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DamageNumbersMode}">
+                                <ComboBoxItem>Automatic</ComboBoxItem>
+                                <ComboBoxItem>Effective Damage</ComboBoxItem>
+                                <ComboBoxItem>True Damage</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Show different colors for weapon damage numbers when hitting a monster" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="44" Text="Damage Numbers Multicolor" Style="{StaticResource ConfigTextBox}"/>
+                            <CheckBox HorizontalAlignment="Center" BorderBrush="{StaticResource Red}" BorderThickness="2" Grid.Column="1" Grid.Row="44" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersMulticolor}"/>
+                            <TextBlock Margin="5,5,5,5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="45" Text="Damage Numbers Color" Style="{StaticResource ConfigTextBox}"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="45" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=DamageNumbersColor}"></xctk:ColorPicker>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="46" Grid.Column="0"  Text="Damage Numbers Area Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="46" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="46" Grid.Column="0"  Text="Damage Numbers Area Size"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="46" Grid.Column="1" HorizontalAlignment="Center">
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="47" Grid.Column="0"  Text="Damage Numbers Area Size"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="47" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Width" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaWidth}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Height" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=DamageNumbersAreaHeight}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Damage Numbers Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="47" Grid.Column="0"  Text="Damage Numbers Font Family"/>
-                            <ComboBox Grid.Column="1" Grid.Row="47" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=DamageNumbersFontFamily}">
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Damage Numbers Font Family" Style="{StaticResource ConfigTextBox}" Grid.Row="48" Grid.Column="0"  Text="Damage Numbers Font Family"/>
+                            <ComboBox Grid.Column="1" Grid.Row="48" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" SelectedValuePath="Source" SelectedValue="{Binding Source={StaticResource Settings}, Path=DamageNumbersFontFamily}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock FontFamily="{Binding}" Text="{Binding}" />
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Damage Numbers Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="48" Grid.Column="0"  Text="Damage Numbers Font Weight"/>
-                            <ComboBox Grid.Row="48" Grid.Column="1"
+                            <TextBlock Margin="5,5,5,5" ToolTip="Select the Damage Numbers Font Weight" Style="{StaticResource ConfigTextBox}" Grid.Row="49" Grid.Column="0"  Text="Damage Numbers Font Weight"/>
+                            <ComboBox Grid.Row="49" Grid.Column="1"
                             SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DamageNumbersFontWeight}">
                                 <ComboBoxItem Content="Normal" FontWeight="Normal" />
                                 <ComboBoxItem Content="Thin" FontWeight="Thin" />
@@ -1950,27 +1957,27 @@
                                 <ComboBoxItem Content="Black" FontWeight="Black" />
                             </ComboBox>
 
-                            <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers size effect" Style="{StaticResource ConfigTextBox}" Grid.Row="49" Grid.Column="0"  Text="Damage Numbers Size Effect"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="49" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersSize}"/>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers flash effect" Style="{StaticResource ConfigTextBox}" Grid.Row="50" Grid.Column="0"  Text="Damage Numbers Flash Effect"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="50" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersFlash}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers size effect" Style="{StaticResource ConfigTextBox}" Grid.Row="50" Grid.Column="0"  Text="Damage Numbers Size Effect"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="50" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersSize}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Enable damage numbers flash effect" Style="{StaticResource ConfigTextBox}" Grid.Row="51" Grid.Column="0"  Text="Damage Numbers Flash Effect"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="51" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersFlash}"/>
 
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="51" Grid.Column="0" ToolTip="Show Map">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="52" Grid.Column="0" ToolTip="Show Map">
                                 <Image Source="UI/Icons/png/world.png" Margin="0,0,5,0"/>
                                 <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}"  Text="Location Map"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="51" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMap}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="52" Grid.Column="0"  Text="Map Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="52" Grid.Column="1" HorizontalAlignment="Center">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="52" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMap}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="53" Grid.Column="0"  Text="Map Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="53" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=MapX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MapY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="53" Grid.Column="0"  Text="Map Area Size"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="53" Grid.Column="1" HorizontalAlignment="Center">
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="54" Grid.Column="0"  Text="Map Area Size"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="54" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Text="{Binding Source={StaticResource Settings},Path=MapAreaWidth}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Text="{Binding Source={StaticResource Settings},Path=MapAreaHeight}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="54" Grid.Column="0" ToolTip="Show KBM Layout">
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="55" Grid.Column="0" ToolTip="Show KBM Layout">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="Keyboard24" Foreground="{StaticResource Blue}" FontSize="24"/>
@@ -1978,15 +1985,15 @@
                                 </Button>
                                 <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Text="Keyboard and Mouse Layout"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="54" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=KBMLayoutShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="55" Grid.Column="0"  Text="Keyboard and Mouse Layout Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="55" Grid.Column="1" HorizontalAlignment="Center">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="55" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=KBMLayoutShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="56" Grid.Column="0"  Text="Keyboard and Mouse Layout Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="56" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="56" Grid.Column="0"  Text="Keyboard and Mouse Layout Size"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="56" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutSize}"  PreviewTextInput="ValidateNumber"/>
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="57" Grid.Column="0" ToolTip="Show Gamepad Layout. See the FAQ if you cannot get this to work.">
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="57" Grid.Column="0"  Text="Keyboard and Mouse Layout Size"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="57" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutSize}"  PreviewTextInput="ValidateNumber"/>
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="58" Grid.Column="0" ToolTip="Show Gamepad Layout. See the FAQ if you cannot get this to work.">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="XboxController24" Foreground="{StaticResource Blue}" FontSize="24"/>
@@ -1994,28 +2001,28 @@
                                 </Button>
                                 <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Text="Controller/Gamepad Layout"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="57" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=GamepadShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="58" Grid.Column="0"  Text="Controller/Gamepad Layout Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="58" Grid.Column="1" HorizontalAlignment="Center">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="58" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=GamepadShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="59" Grid.Column="0"  Text="Controller/Gamepad Layout Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="59" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=GamepadX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=GamepadY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="59" Grid.Column="0"  Text="Controller/Gamepad Layout Size"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="59" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadSize}"  PreviewTextInput="ValidateNumber"/>
-                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="60" Grid.Column="0" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and gamepad inputs)">
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="60" Grid.Column="0"  Text="Controller/Gamepad Layout Size"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="60" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadSize}"  PreviewTextInput="ValidateNumber"/>
+                            <StackPanel Margin="5,5,5,5" Orientation="Horizontal" Grid.Row="61" Grid.Column="0" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and gamepad inputs)">
                                 <Image Source="UI/Icons/png/flame_ul.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Actions per Minute"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="60" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="61" Grid.Column="0"  Text="Actions per Minute Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="61" Grid.Column="1" HorizontalAlignment="Center">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="61" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="62" Grid.Column="0"  Text="Actions per Minute Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="62" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <TextBlock Margin="5,5,5,5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="62" Grid.Column="0"  Text="Average Actions per Minute Color"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="62" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
+                            <TextBlock Margin="5,5,5,5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="63" Grid.Column="0"  Text="Average Actions per Minute Color"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="63" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
 
-                            <StackPanel Margin="5,5,5,5" ToolTip="Show Current Session Time" Grid.Row="63" Grid.Column="0" Orientation="Horizontal">
+                            <StackPanel Margin="5,5,5,5" ToolTip="Show Current Session Time" Grid.Row="64" Grid.Column="0" Orientation="Horizontal">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="Timer24" Foreground="{StaticResource Rosewater}" FontSize="24"/>
@@ -2023,16 +2030,15 @@
                                 </Button>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Current Session Time"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="63" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=SessionTimeShown}"/>
-                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="64" Grid.Column="0"  Text="Current Session Time Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="64" Grid.Column="1" HorizontalAlignment="Center">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="64" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=SessionTimeShown}"/>
+                            <TextBlock Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="65" Grid.Column="0"  Text="Current Session Time Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="65" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=SessionTimeX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=SessionTimeY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
                         </Grid>
                     </ScrollViewer>
                     <usercontrol:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
-
                 </Grid>
             </TabItem>
             <TabItem ToolTip="Access a wealth of useful information about hunting" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">

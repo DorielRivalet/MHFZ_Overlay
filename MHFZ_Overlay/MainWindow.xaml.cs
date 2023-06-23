@@ -94,19 +94,6 @@ public partial class MainWindow : Window
     private void CreateSystemTrayIcon()
     {
         _mainWindowNotifyIcon = MainWindowNotifyIcon;
-        //var contextMenu = new ContextMenuStrip();
-        //contextMenu.Items.Add("Settings", null, OptionSettings_Click);
-        //contextMenu.Items.Add(new ToolStripSeparator());
-        //contextMenu.Items.Add("Help", null, OptionHelp_Click);
-        //contextMenu.Items.Add("Documentation", null, OptionDocumentation_Click);
-        //contextMenu.Items.Add("Report Bug", null, OptionReportBug_Click);
-        //contextMenu.Items.Add("Request Feature", null, OptionRequestFeature_Click);
-        //contextMenu.Items.Add("Send Feedback", null, OptionSendFeedback_Click);
-        //contextMenu.Items.Add(new ToolStripSeparator());
-        //contextMenu.Items.Add("Restart", null, OptionRestart_Click);
-        //contextMenu.Items.Add("Exit", null, OptionExit_Click);
-        //contextMenu.Items.Add(new ToolStripSeparator());
-        //contextMenu.Items.Add("About", null, OptionAbout_Click);
     }
 
     private void _notifyIcon_Click(object sender, RoutedEventArgs e)
@@ -917,7 +904,6 @@ The process may take some time, as the program attempts to download from GitHub 
         OutlinedTextBlock damageOutlinedTextBlock = new OutlinedTextBlock();
 
         // Set the properties of the OutlinedTextBlock instance.
-        damageOutlinedTextBlock.Text = damage.ToString();
         damageOutlinedTextBlock.FontFamily = new System.Windows.Media.FontFamily(s.DamageNumbersFontFamily);
         damageOutlinedTextBlock.FontWeight = (FontWeight)new FontWeightConverter().ConvertFromString(s.DamageNumbersFontWeight);
         damageOutlinedTextBlock.FontSize = 21;
@@ -926,6 +912,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
         //does not alter actual number displayed, only the text style
         double damageModifier = damage / (DataLoader.model.CurrentWeaponMultiplier / 2);
+        string exclamations = string.Empty;
 
         switch (damageModifier)
         {
@@ -956,17 +943,44 @@ The process may take some time, as the program attempts to download from GitHub 
             case < 350.0:
                 damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x97));
                 damageOutlinedTextBlock.FontSize = 24;
-                damageOutlinedTextBlock.Text += "!";
+                exclamations += "!";
                 break;
             case < 500.0:
                 damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xEB, 0xA0, 0xAC));
                 damageOutlinedTextBlock.FontSize = 26;
-                damageOutlinedTextBlock.Text += "!!";
+                exclamations += "!!";
                 break;
             default:
                 damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0x8B, 0xA8));
                 damageOutlinedTextBlock.FontSize = 30;
-                damageOutlinedTextBlock.Text += "!!!";
+                exclamations += "!!!";
+                break;
+        }
+
+        var defenseMultiplier = Double.Parse(DataLoader.model.DefMult);
+        if (defenseMultiplier <= 0) 
+            defenseMultiplier = 1;
+        var effectiveDamage = damage / defenseMultiplier;
+
+        switch (s.DamageNumbersMode)
+        {
+            case "Automatic":
+                if (!s.EnableEHPNumbers)
+                {
+                    damageOutlinedTextBlock.Text = damage.ToString();
+                    damageOutlinedTextBlock.Text += exclamations;
+                    break;
+                }
+                damageOutlinedTextBlock.Text = effectiveDamage.ToString("F0");
+                damageOutlinedTextBlock.Text += exclamations;
+                break;
+            case "Effective Damage":
+                damageOutlinedTextBlock.Text = effectiveDamage.ToString("F0");
+                damageOutlinedTextBlock.Text += exclamations;
+                break;
+            default: // or True Damage
+                damageOutlinedTextBlock.Text = damage.ToString();
+                damageOutlinedTextBlock.Text += exclamations;
                 break;
         }
 
@@ -1126,7 +1140,6 @@ The process may take some time, as the program attempts to download from GitHub 
 
             fadeOutStoryboard.Children.Add(fadeOutAnimation);
             fadeOutStoryboard.Children.Add(translateUpwardsAnimation);
-
 
             // Set up event handlers to start the next animation in the sequence
             fadeInIncreaseSizeFlashColorStoryboard.Completed += (s, e) => decreaseSizeShowColorStoryboard.Begin();

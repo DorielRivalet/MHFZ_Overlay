@@ -3502,5 +3502,17 @@ namespace MHFZ_Overlay {
                 this["SolsticeGauntletOrder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Automatic")]
+        public string DamageNumbersMode {
+            get {
+                return ((string)(this["DamageNumbersMode"]));
+            }
+            set {
+                this["DamageNumbersMode"] = value;
+            }
+        }
     }
 }

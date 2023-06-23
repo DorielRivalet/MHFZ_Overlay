@@ -872,5 +872,8 @@
     <Setting Name="SolsticeGauntletOrder" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="DamageNumbersMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Automatic</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
