@@ -39,6 +39,7 @@ using System.Windows.Documents;
 using System.Threading.Tasks;
 using System.Data.Common;
 using System.Diagnostics.Eventing.Reader;
+using System.Collections;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay.Core.Class.DataAccessLayer;
@@ -3242,6 +3243,113 @@ Disabling Quest Logging.",
         }
     }
 
+    private void InsertAchievementsDataIntoTable(SQLiteConnection conn)
+    {
+        // Start a transaction
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                if (conn == null)
+                {
+                    throw new ArgumentException("Invalid connection");
+                }
+                if (conn.State != ConnectionState.Open)
+                {
+                    throw new InvalidOperationException("Connection is not open");
+                }
+
+                // Create a command that will be used to insert multiple rows in a batch
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    // Set the command text to insert a single row
+                    cmd.CommandText = @"INSERT OR REPLACE INTO AllAchievements (
+                    AchievementID,
+                    Title,
+                    Description,
+                    Rank,
+                    Objective,
+                    Image,
+                    IsSecret,
+                    Hint) VALUES (
+                    @AchievementID,
+                    @Title,
+                    @Description,
+                    @Rank,
+                    @Objective,
+                    @Image,
+                    @IsSecret,
+                    @Hint)";
+
+                    // Create a parameter for the value to be inserted
+                    var achievementID = cmd.CreateParameter();
+                    achievementID.ParameterName = "@AchievementID";
+                    cmd.Parameters.Add(achievementID);
+
+                    // Create a parameter for the ID to be inserted
+                    var title = cmd.CreateParameter();
+                    title.ParameterName = "@Title";
+                    cmd.Parameters.Add(title);
+
+                    // Create a parameter for the ID to be inserted
+                    var description = cmd.CreateParameter();
+                    description.ParameterName = "@Description";
+                    cmd.Parameters.Add(description);
+
+                    // Create a parameter for the ID to be inserted
+                    var rank = cmd.CreateParameter();
+                    rank.ParameterName = "@Rank";
+                    cmd.Parameters.Add(rank);
+
+                    // Create a parameter for the ID to be inserted
+                    var objective = cmd.CreateParameter();
+                    objective.ParameterName = "@Objective";
+                    cmd.Parameters.Add(objective);
+
+                    // Create a parameter for the ID to be inserted
+                    var image = cmd.CreateParameter();
+                    image.ParameterName = "@Image";
+                    cmd.Parameters.Add(image);
+
+                    // Create a parameter for the ID to be inserted
+                    var isSecret = cmd.CreateParameter();
+                    isSecret.ParameterName = "@IsSecret";
+                    cmd.Parameters.Add(isSecret);
+
+                    // Create a parameter for the ID to be inserted
+                    var hint = cmd.CreateParameter();
+                    hint.ParameterName = "@Hint";
+                    cmd.Parameters.Add(hint);
+
+                    // Insert each row in the dictionary
+                    foreach (var pair in Dictionary.AchievementsDictionary.IDAchievement)
+                    {
+                        // Set the values of the parameters
+                        achievementID.Value = pair.Key;
+                        var achievement = pair.Value;
+                        title.Value = achievement.Title;
+                        description.Value = achievement.Description;
+                        rank.Value = achievement.Rank;
+                        objective.Value = achievement.Objective;
+                        image.Value = achievement.Image;
+                        isSecret.Value = achievement.IsSecret;
+                        hint.Value = achievement.Hint;
+
+                        // Execute the command to insert the row
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Commit the transaction
+                    transaction.Commit();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+    }
+
     private void CreateDatabaseTables(SQLiteConnection conn, DataLoader dataLoader)
     {
         using (SQLiteTransaction transaction = conn.BeginTransaction())
@@ -4330,17 +4438,28 @@ Disabling Quest Logging.",
                     cmd.ExecuteNonQuery();
                 }
 
-                sql = @"CREATE TABLE IF NOT EXISTS Achievements(
-                AchievementsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                CompletionDate TEXT NOT NULL DEFAULT '',
-                IsUnlocked INTEGER NOT NULL CHECK(IsUnlocked IN (0, 1)) DEFAULT 0,
-                Title TEXT NOT NULL DEFAULT '',
-                Description TEXT NOT NULL DEFAULT '',
-                Rank TEXT NOT NULL DEFAULT '',
-                Objective TEXT NOT NULL DEFAULT '',
-                Image TEXT NOT NULL DEFAULT '',
-                IsSecret INTEGER NOT NULL DEFAULT 0,
-                Hint TEXT NOT NULL DEFAULT ''
+                sql = @"CREATE TABLE IF NOT EXISTS AllAchievements(
+                    AchievementID INTEGER PRIMARY KEY,
+                    Title TEXT NOT NULL DEFAULT '',
+                    Description TEXT NOT NULL DEFAULT '',
+                    Rank TEXT NOT NULL DEFAULT '',
+                    Objective TEXT NOT NULL DEFAULT '',
+                    Image TEXT NOT NULL DEFAULT '',
+                    IsSecret INTEGER NOT NULL CHECK (IsSecret IN (0, 1)) DEFAULT 0,
+                    Hint TEXT NOT NULL DEFAULT ''
+                )";
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                InsertAchievementsDataIntoTable(conn);
+
+                sql = @"CREATE TABLE IF NOT EXISTS PlayerAchievements(
+                PlayerAchievementsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                CompletionDate TEXT NOT NULL,
+                AchievementID INTEGER NOT NULL,
+                FOREIGN KEY(AchievementID) REFERENCES AllAchievements(AchievementID)
                 )";
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                 {

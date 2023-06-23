@@ -56,21 +56,14 @@ public class Achievement
     /// <value>
     /// The completion date.
     /// </value>
-    public DateTime CompletionDate { get; set; } = DateTime.MinValue;
-    /// <summary>
-    /// Gets or sets a value indicating whether this instance is unlocked.
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if this instance is unlocked; otherwise, <c>false</c>.
-    /// </value>
-    public bool IsUnlocked { get; set; } = false;
+    public DateTime CompletionDate { get; set; } = DateTime.UnixEpoch;
     /// <summary>
     /// Gets or sets the title.
     /// </summary>
     /// <value>
     /// The title.
     /// </value>
-    public string Title { get; set; } = string.Empty;
+    public string Title { get; set; } = "Achievement Obtained!";
     /// <summary>
     /// Gets or sets the description of the snackbar.
     /// </summary>
