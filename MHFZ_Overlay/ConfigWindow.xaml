@@ -3609,7 +3609,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <TextBlock FontSize="32" Text="Thanks for using the overlay!" x:Name="ThankYouTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Grid>
                             <!--https://stackoverflow.com/questions/19694640/animating-gif-in-wpf-->
-                            <MediaElement MediaEnded="Fumo_MediaEnded" Grid.Row="6" Grid.Column="2" x:Name="myFumo" Width="Auto" Height="Auto" UnloadedBehavior="Manual"     Source="https://cdn.discordapp.com/attachments/324875367418429441/1032217078750531584/zenith_fumo.gif" LoadedBehavior="Play"/>
+                            <MediaElement MouseLeftButtonDown="FumoImage_MouseLeftButtonDown" MediaEnded="Fumo_MediaEnded"  Grid.Row="6" Grid.Column="2" x:Name="myFumo" Width="Auto" Height="Auto" UnloadedBehavior="Manual"     Source="https://cdn.discordapp.com/attachments/324875367418429441/1032217078750531584/zenith_fumo.gif" LoadedBehavior="Play"/>
 
                             <TextBlock TextWrapping="Wrap" Grid.RowSpan="2" Grid.Row="7" FontSize="32" Grid.ColumnSpan="3" Text="Loading..." x:Name="OctokitInfo"/>
 

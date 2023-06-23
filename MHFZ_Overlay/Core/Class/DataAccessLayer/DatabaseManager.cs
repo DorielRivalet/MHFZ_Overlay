@@ -3350,6 +3350,160 @@ Disabling Quest Logging.",
         }
     }
 
+    public List<int> GetPlayerAchievementIDList()
+    {
+        List<int> achievementIDList = new List<int>();
+
+        if (dataSource == null || dataSource == "")
+        {
+            logger.Warn("Cannot get player achievements list. dataSource: {0}", dataSource);
+            return achievementIDList;
+        }
+
+        using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+        {
+            conn.Open();
+
+            // Start a transaction
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = "SELECT AchievementID FROM PlayerAchievements";
+
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int achievementID = reader.GetInt32(0);
+                                achievementIDList.Add(achievementID);
+                            }
+                        }
+                    }
+
+                    // Commit the transaction
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+        return achievementIDList;
+    }
+
+    public void StoreAchievements(List<int> achievementsID)
+    {
+        if (dataSource == null || dataSource == "")
+        {
+            logger.Warn("Cannot reward achievement. dataSource: {0}", dataSource);
+            return;
+        }
+
+        using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+        {
+            conn.Open();
+
+            // Start a transaction
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand(conn))
+                    {
+                        // Prepare the SQL statement
+                        cmd.CommandText = @"INSERT INTO PlayerAchievements (CompletionDate, AchievementID) 
+                                        VALUES (@CompletionDate, @AchievementID)";
+
+                        // Create parameters for the values to be inserted
+                        var completionDateParam = cmd.CreateParameter();
+                        completionDateParam.ParameterName = "@CompletionDate";
+                        cmd.Parameters.Add(completionDateParam);
+
+                        var achievementIDParam = cmd.CreateParameter();
+                        achievementIDParam.ParameterName = "@AchievementID";
+                        cmd.Parameters.Add(achievementIDParam);
+
+                        // Insert each achievement into the PlayerAchievements table
+                        foreach (int achievementID in achievementsID)
+                        {
+                            // Set the parameter values
+                            completionDateParam.Value = DateTime.UtcNow;
+                            achievementIDParam.Value = achievementID;
+
+                            // Execute the SQL statement to insert the achievement
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    // Commit the transaction
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+    }
+
+    public void StoreAchievement(int achievementID)
+    {
+        logger.Debug("Storing achievement ID {0}", achievementID);
+
+        if (dataSource == null || dataSource == "")
+        {
+            logger.Warn("Cannot store achievement. dataSource: {0}", dataSource);
+            return;
+        }
+
+        using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+        {
+            conn.Open();
+
+            // Start a transaction
+            using (SQLiteTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand(conn))
+                    {
+                        // Prepare the SQL statement
+                        cmd.CommandText = @"INSERT INTO PlayerAchievements (CompletionDate, AchievementID) 
+                                        VALUES (@CompletionDate, @AchievementID)";
+
+                        // Create parameters for the values to be inserted
+                        var completionDateParam = cmd.CreateParameter();
+                        completionDateParam.ParameterName = "@CompletionDate";
+                        cmd.Parameters.Add(completionDateParam);
+
+                        var achievementIDParam = cmd.CreateParameter();
+                        achievementIDParam.ParameterName = "@AchievementID";
+                        cmd.Parameters.Add(achievementIDParam);
+
+                        // Set the parameter values
+                        completionDateParam.Value = DateTime.UtcNow;
+                        achievementIDParam.Value = achievementID;
+
+                        // Execute the SQL statement to insert the achievement
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Commit the transaction
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+    }
+
+
     private void CreateDatabaseTables(SQLiteConnection conn, DataLoader dataLoader)
     {
         using (SQLiteTransaction transaction = conn.BeginTransaction())
@@ -4459,6 +4613,7 @@ Disabling Quest Logging.",
                 PlayerAchievementsID INTEGER PRIMARY KEY AUTOINCREMENT,
                 CompletionDate TEXT NOT NULL,
                 AchievementID INTEGER NOT NULL,
+                UNIQUE(AchievementID) ON CONFLICT IGNORE,
                 FOREIGN KEY(AchievementID) REFERENCES AllAchievements(AchievementID)
                 )";
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
@@ -4920,6 +5075,7 @@ Disabling Quest Logging.",
                     cmd.ExecuteNonQuery();
                 }
 
+                // TODO: update to add the ON CONFLICT IGNORE on the UNIQUE constraint. Just remove the table and add it back.
                 sql = @"CREATE TABLE IF NOT EXISTS GachaCard(
                     GachaCardID INTEGER PRIMARY KEY AUTOINCREMENT,
                     GachaCardTypeID INTEGER NOT NULL,
@@ -4927,7 +5083,7 @@ Disabling Quest Logging.",
                     GachaCardName INTEGER NOT NULL,
                     GachaCardFrontImage TEXT NOT NULL,
                     GachCardBackImage TEXT NOT NULL,
-                    UNIQUE(GachaCardTypeID, GachaCardRarityID, GachaCardName),
+                    UNIQUE(GachaCardTypeID, GachaCardRarityID, GachaCardName) ON CONFLICT IGNORE,
                     FOREIGN KEY(GachaCardTypeID) REFERENCES GachaCardType(GachaCardTypeID),
                     FOREIGN KEY(GachaCardRarityID) REFERENCES GachaCardRarity(GachaCardRarityID)
                     )";

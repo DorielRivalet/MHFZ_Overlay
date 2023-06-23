@@ -1,4 +1,5 @@
 ﻿using MHFZ_Overlay.Core.Class.Dictionary;
+using MHFZ_Overlay.Core.Constant;
 using MHFZ_Overlay.Core.Enum;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using Wpf.Ui.Controls.IconElements;
 namespace MHFZ_Overlay.UI.Class;
 
 /// <summary>
-/// TODO: add sound when obtaining and displaying snackbar
+/// The achievements of the player.
 /// </summary>
 public class Achievement
 {
@@ -27,9 +28,35 @@ public class Achievement
         { AchievementRank.Platinum, CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Teal"] }     // Platinum color
     };
 
-    public void Show() 
-    { 
-        // TODO sound, async, sequence
+    public async Task Show(Snackbar snackbar)
+    {
+        var brushColor = GetBrushColorFromRank();
+        if (brushColor == null) brushColor = Brushes.Black;
+        snackbar.Title = this.Title;
+        snackbar.Message = this.Objective;
+        snackbar.Icon = new SymbolIcon(SymbolRegular.Trophy32);
+        snackbar.Icon.Foreground = brushColor;
+        snackbar.Appearance = ControlAppearance.Secondary;
+        if (MainWindow.victoryMediaSound != null)
+        {
+            MainWindow.victoryMediaSound.Play();
+        }
+        await snackbar.ShowAsync();
+        await Task.Delay(TimeSpan.FromSeconds(1)); // Delay for a certain duration
+        snackbar.Hide(); // Hide the snackbar
+    }
+
+    public static async Task ShowMany(Snackbar snackbar, List<int> achievementsID)
+    {
+        foreach (int achievementID in achievementsID)
+        {
+            if (AchievementsDictionary.IDAchievement.TryGetValue(achievementID, out MHFZ_Overlay.UI.Class.Achievement? achievement))
+            {
+                if (achievement == null) return;
+                await achievement.Show(snackbar);
+                await Task.Delay(TimeSpan.FromSeconds(2)); // Delay between each achievement
+            }
+        }
     }
 
     /// <summary>
@@ -39,7 +66,7 @@ public class Achievement
     {
         var brushConverter = new BrushConverter();
 
-        if (RankColors.TryGetValue(Rank, out string? colorString))
+        if (RankColors.TryGetValue(this.Rank, out string? colorString))
         {
             if (colorString == null)
                 colorString = CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Base"];
@@ -65,7 +92,7 @@ public class Achievement
     /// </value>
     public string Title { get; set; } = "Achievement Obtained!";
     /// <summary>
-    /// Gets or sets the description of the snackbar.
+    /// Gets or sets the description of the achivement (flavor text).
     /// </summary>
     /// <value>
     /// The description.

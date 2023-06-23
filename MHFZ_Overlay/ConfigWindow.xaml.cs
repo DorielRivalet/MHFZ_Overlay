@@ -56,6 +56,7 @@ using CsvHelper;
 using Microsoft.Win32;
 using SharpCompress.Common;
 using System.Reflection;
+using MHFZ_Overlay.Core.Class.Achievements;
 
 namespace MHFZ_Overlay;
 
@@ -77,6 +78,7 @@ public partial class ConfigWindow : FluentWindow
     private static string randomMonsterImage = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png";
 
     private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
+    private static readonly AchievementManager achievementManager = AchievementManager.GetInstance();
 
     public static Uri MonsterInfoLink
     {
@@ -3755,6 +3757,12 @@ public partial class ConfigWindow : FluentWindow
         if (obj != null)
             statsTextMainGrid = obj;
     }
+
+    private async void FumoImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        await achievementManager.RewardAchievement(225, ConfigWindowSnackBar);
+    }
+
 }
 /* LoadConfig on startup
  * Load Config on window open to have extra copy

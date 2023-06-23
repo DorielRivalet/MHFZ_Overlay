@@ -747,7 +747,7 @@
     </Grid>
         <!--https://stackoverflow.com/questions/5450985/how-to-make-overlay-control-above-all-other-controls-->
         <ui:Snackbar Grid.ZIndex="2" Timeout="10000" x:Name="MainWindowSnackBar" Style="{StaticResource CatppuccinMochaSnackBar}"/>
-        <MediaElement Visibility="Hidden" Source="UI/Sounds/victory.wav" x:Name="victoryMediaElement" LoadedBehavior="Manual" MediaEnded="victoryMediaElement_MediaEnded"/>
+        <MediaElement Loaded="victoryMediaElement_Loaded" Visibility="Hidden" Source="UI/Sounds/victory.wav" x:Name="victoryMediaElement" LoadedBehavior="Manual" MediaEnded="victoryMediaElement_MediaEnded"/>
     </Grid>
     <Window.InputBindings>
     <KeyBinding Key="Esc" Command="{StaticResource ESC}"/>
