@@ -2337,7 +2337,7 @@ public static class AchievementsDictionary
             Description = string.Empty,
             Rank = Enum.AchievementRank.Bronze,
 			Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/monster_red2.jpg",
-            Objective = "Complete a Thirsty Pariapuria quest with a Serious Drink in your inventory.",
+            Objective = "Complete a Thirsty Pariapuria quest with a Serious Drink Affinity in your inventory.",
             
             IsSecret = true,
             Hint = "I wish I had something to drink...seriously!"
@@ -2361,7 +2361,7 @@ public static class AchievementsDictionary
             Description = string.Empty,
             Rank = Enum.AchievementRank.Bronze,
 			Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/monster_red2.jpg",
-            Objective = "Complete a Shifting Mi Ru quest while having pressed Shift at least once.",
+            Objective = "Complete a Shifting Mi Ru quest while having pressed Shift at the start.",
             
             IsSecret = true,
             Hint = "What if the hunter is also shifting?"
@@ -2613,7 +2613,7 @@ public static class AchievementsDictionary
             Description = string.Empty,
             Rank = Enum.AchievementRank.Gold,
 			Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/tower.jpg",
-            Objective = "Get to Road Floor 50.",
+            Objective = "Get to Multiplayer Road Floor 50.",
             
             IsSecret = true,
             Hint = "A long road ahead..."
@@ -2625,7 +2625,7 @@ public static class AchievementsDictionary
             Description = string.Empty,
             Rank = Enum.AchievementRank.Platinum,
 			Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/tower.jpg",
-            Objective = "Get to road Floor 100.",
+            Objective = "Get to Multiplayer Road Floor 100.",
             
             IsSecret = true,
             Hint = "End of the road?"
@@ -2696,7 +2696,7 @@ public static class AchievementsDictionary
             Title = "Fumo",
             Description = string.Empty,
             Rank = Enum.AchievementRank.Bronze,
-			Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/unknown_black.jpg",
+			Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/unknown_red.jpg",
             Objective = "Click a Fumo.",
             
             IsSecret = true,
@@ -2712,7 +2712,7 @@ public static class AchievementsDictionary
             Objective = "Defeat the Twinhead Rajangs.",
             
             IsSecret = true,
-            Hint = "You will need to go even further beyond."
+            Hint = "You will need to go even further beyond in order to beat this quest."
             }
         },
         {227, new Achievement(){
@@ -4173,7 +4173,579 @@ public static class AchievementsDictionary
             Description = string.Empty,
             Rank = Enum.AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/berserk_raviente.jpg",
-            Objective = "Obtain a Z100 weapon.",
+            Objective = "Complete a quest with a Z100 weapon.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {349, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Mosswine's Revenge",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/unknown_white.jpg",
+            Objective = "Find a very peculiar mosswine.",
+            IsSecret = true,
+            Hint = "I have no gear and I'm hunting a White Fatalis?!"
+            }
+        },
+        {350, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Jungle Puzzle",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/unknown_white.jpg",
+            Objective = "Complete the Jungle Puzzle quest.",
+            IsSecret = true,
+            Hint = "I found some rocks in this jungle, I wonder what they are for..."
+            }
+        },
+        {351, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Poogie's Best Friend",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/poogie.jpg",
+            Objective = "Complete 100 quests having used a Poogie item",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {352, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Gypceros' Judgment",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/unknown_white.jpg",
+            Objective = "Defeat Nuclear Gypceros",
+            IsSecret = true,
+            Hint = "Can you survive the nuclear explosion?"
+            }
+        },
+        {353, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Mosswine's Rage",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/unknown_white.jpg",
+            Objective = "Defeat Mosswine in an arena",
+            IsSecret = true,
+            Hint = "This mosswine wants a duel."
+            }
+        },
+        {354, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Mosswine's Last Stand",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/unknown_black.jpg",
+            Objective = "Defeat the mosswine on the top of tower",
+            IsSecret = true,
+            Hint = "You escaped from the White Fatalis, but can you reach the top back in time?"
+            }
+        },
+        {355, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Winter General",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete the Halloween Speedster quest",
+            IsSecret = true,
+            Hint = "Can you place the guild flags on this snowy mountain fast enough?"
+            }
+        },
+        {356, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Perfect Bingo",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain 1000 Bingo points or more in 1 bingo card completion.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {357, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Bingo Beginner",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Complete a bingo card.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {358, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Bingo Enthusiast",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Complete 10 bingo cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {359, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Bingo Expert",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Complete 25 bingo cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {360, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Bingo Maniac",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Complete 50 bingo cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {361, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Gacha Beginner",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/zenny.jpg",
+            Objective = "Generate 1 gacha pull.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {362, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Gacha Enthusiast",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/zenny.jpg",
+            Objective = "Generate 10 gacha pulls.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {363, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Gacha Expert",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/zenny.jpg",
+            Objective = "Generate 100 gacha pulls.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {364, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Gacha Maniac",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/zenny.jpg",
+            Objective = "Generate 1000 gacha pulls.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {365, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Gacha God",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/zenny.jpg",
+            Objective = "Generate 10000 gacha pulls.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {366, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "B O N U S",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/zenny.jpg",
+            Objective = "Generate a gacha pull using gacha bonus coins.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {367, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Shimmering Coins",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/zenny.jpg",
+            Objective = "Generate a gacha pull using gacha prismatic coins.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {368, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The First Generation",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all gacha cards from MH1, MH1G and MHF1.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {369, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Second Generation",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all gacha cards from MH2, MHF2 and MHFU.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {370, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Third Generation",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all gacha cards from MH3, MHP3 and MH3U.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {371, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Fourth Generation",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all gacha cards from MH4, MH4U, MHG and MHGU.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {372, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Fifth Generation",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all gacha cards from MHW, MHWI, MHR and MHRS.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {373, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Spinoffs",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all gacha cards from MHXR, MHST and MHST2.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {374, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Online",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all gacha cards from Monster Hunter Online.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {375, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "In search of a new frontier",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all gacha cards from Monster Hunter Frontier",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {376, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "PRI",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain a ★1 gacha card.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {377, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "DUO",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain 2 ★2 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {378, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "TRI",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain 3 ★3 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {379, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "TET",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain 4 ★4 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {380, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "PEN",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain 5 ★5 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {381, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "HEX",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain 6 ★6 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {382, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "HEP",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain 7 ★7 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {383, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "OCT",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain 8 ★8 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {384, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "NON",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain 9 ★9 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {385, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "DEC",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain 10 ★10 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {386, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "UND",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain 11 ★11 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {387, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "DOD",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain 12 ★12 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {388, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "One star to rule them all",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all ★1 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {389, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Two stars make a supernova",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all ★2 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {390, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Alpha Centauri",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all ★3 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {391, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Cosmic Tesseract",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all ★4 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {392, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "A 5-Star collection",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all ★5 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {393, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Gacha Hexagram",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all ★6 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {394, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "777",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all ★7 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {395, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Gacha Octagram",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all ★8 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {396, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Gacha Enneagram",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all ★9 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {397, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Ten",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all ★10 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {398, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Gacha up to eleven",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all ★11 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {399, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "12",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/stamp.jpg",
+            Objective = "Obtain all ★12 gacha cards.",
+            IsSecret = false,
+            Hint = string.Empty
+            }
+        },
+        {400, new Achievement(){
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Gacha Bonus",
+            Description = string.Empty,
+            Rank = Enum.AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/UI/Icons/achievement/zenny.jpg",
+            Objective = "Complete a gacha bonus quest.",
             IsSecret = false,
             Hint = string.Empty
             }

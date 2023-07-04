@@ -6397,7 +6397,7 @@ Party Size: {32}",
         }
     }
 
-    private int CalculateTotalLargeMonstersHunted()
+    public int CalculateTotalLargeMonstersHunted()
     {
         return RoadFatalisSlain() +
             FirstDistrictDuremudiraSlays() +
@@ -6533,7 +6533,7 @@ Party Size: {32}",
             KingShakalakaHunted();
     }
 
-    private int CalculateTotalSmallMonstersHunted()
+    public int CalculateTotalSmallMonstersHunted()
     {
         return KelbiHunted() +
         MosswineHunted() +
@@ -9929,7 +9929,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public TimeSpan TotalTimeSpent { get; set; }
 
-    public bool questCleared = false;
+    public bool questCleared = false; // quest state 1
+    public bool questRewardsGiven = false; // quest state 129
 
     #region dictionaries for graphs and database
 

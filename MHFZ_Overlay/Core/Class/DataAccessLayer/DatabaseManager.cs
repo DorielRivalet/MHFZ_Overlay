@@ -40,6 +40,9 @@ using System.Threading.Tasks;
 using System.Data.Common;
 using System.Diagnostics.Eventing.Reader;
 using System.Collections;
+using System.Net.NetworkInformation;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using MHFZ_Overlay.Core.Class.Achievements;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay.Core.Class.DataAccessLayer;
@@ -47,15 +50,30 @@ namespace MHFZ_Overlay.Core.Class.DataAccessLayer;
 /// <summary>
 /// Handles the SQLite database, MHFZ_Overlay.sqlite. A singleton.
 /// </summary>
-internal class DatabaseManager
+public class DatabaseManager
 {
     private string? _connectionString;
 
     private static DatabaseManager? instance;
 
     private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+    private static readonly AchievementManager achievementManager = AchievementManager.GetInstance();
 
     private const string BackupFolderName = "backups";
+
+    public HashSet<Quest> allQuests = new();
+    public HashSet<MezFes> allMezFes = new();
+    public HashSet<Bingo> allBingo = new();
+    public HashSet<ZenithGauntlet> allZenithGauntlets = new();
+    public HashSet<SolsticeGauntlet> allSolsticeGauntlets = new();
+    public HashSet<MusouGauntlet> allMusouGauntlets = new();
+    public HashSet<PersonalBestAttempts> allPersonalBestAttempts = new();
+    public HashSet<PlayerGear> allPlayerGear = new();
+    public HashSet<ActiveSkills> allActiveSkills = new();
+    public HashSet<StyleRankSkills> allStyleRankSkills = new();
+    public HashSet<QuestAttempts> allQuestAttempts = new();
+    public HashSet<GachaCardInventory> allGachaCards = new();
+    public HashSet<PlayerInventory> allPlayerInventories = new();
 
     private DatabaseManager()
     {
@@ -2007,10 +2025,111 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                     HandleError(transaction, ex);
                 }
             }
+
+            UpdateHashSets(conn);
         }
 
         dataLoader.model.ShowSaveIcon = false;
         return runID;
+    }
+
+    /// <summary>
+    /// Updates the hash sets. This should always run after and in conjunction with database updates related to the hash sets.
+    /// </summary>
+    /// <param name="conn"></param>
+    private void UpdateHashSets(SQLiteConnection conn)
+    {
+        var lastQuest = GetLastQuest(conn);
+        var lastMezFes = GetLastMezFes(conn);
+        var lastBingo = GetLastBingo(conn);
+        var lastZenithGauntlet = GetLastZenithGauntlet(conn);
+        var lastSolsticeGauntlet = GetLastSolsticeGauntlet(conn);
+        var lastMusouGauntlet = GetLastMusouGauntlet(conn);
+        var lastPersonalBestAttempt = GetLastPersonalBestAttempt(conn);
+        var lastPlayerGear = GetLastPlayerGear(conn);
+        var lastActiveSkills = GetLastActiveSkills(conn);
+        var lastStyleRankSkills = GetLastStyleRankSkills(conn);
+        var lastQuestAttempts = GetLastQuestAttempt(conn);
+        var lastGachaCard = GetLastGachaCard(conn);
+        var lastPlayerInventory = GetLastPlayerInventory(conn);
+
+        if (lastQuest.RunID != 0)
+        {
+            var questAdded = allQuests.Add(lastQuest);
+            if (!questAdded) logger.Warn("Last quest already found in hash set");
+        }
+
+        if (lastMezFes.MezFesID != 0)
+        {
+            var mezfesAdded = allMezFes.Add(lastMezFes);
+            if (!mezfesAdded) logger.Warn("Last mezfes already found in hash set");
+        }
+
+        if (lastBingo.BingoID != 0)
+        {
+            var bingoAdded = allBingo.Add(lastBingo);
+            if (!bingoAdded) logger.Warn("Last bingo already found in hash set");
+        }
+
+        if (lastZenithGauntlet.ZenithGauntletID != 0)
+        {
+            var zenithGauntletAdded = allZenithGauntlets.Add(lastZenithGauntlet);
+            if (!zenithGauntletAdded) logger.Warn("Last zenith gauntlet already found in hash set");
+        }
+
+        if (lastSolsticeGauntlet.SolsticeGauntletID != 0)
+        {
+            var solsticeGauntletAdded = allSolsticeGauntlets.Add(lastSolsticeGauntlet);
+            if (!solsticeGauntletAdded) logger.Warn("Last solstice gauntlet already found in hash set");
+        }
+
+        if (lastMusouGauntlet.MusouGauntletID != 0)
+        {
+            var musouGauntletAdded = allMusouGauntlets.Add(lastMusouGauntlet);
+            if (!musouGauntletAdded) logger.Warn("Last musou gauntlet already found in hash set");
+        }
+
+        if (lastPersonalBestAttempt.PersonalBestAttemptsID != 0)
+        {
+            var personalBestAttemptAdded = allPersonalBestAttempts.Add(lastPersonalBestAttempt);
+            if (!personalBestAttemptAdded) logger.Warn("Last personal best attempt already found in hash set");
+        }
+
+        if (lastPlayerGear.PlayerGearID != 0)
+        {
+            var playerGearAdded = allPlayerGear.Add(lastPlayerGear);
+            if (!playerGearAdded) logger.Warn("Last player gear already found in hash set");
+        }
+
+        if (lastActiveSkills.ActiveSkillsID != 0)
+        {
+            var activeSkillsAdded = allActiveSkills.Add(lastActiveSkills);
+            if (!activeSkillsAdded) logger.Warn("Last active skills already found in hash set");
+        }
+
+        if (lastStyleRankSkills.StyleRankSkillsID != 0)
+        {
+            var stylerankSkillsAdded = allStyleRankSkills.Add(lastStyleRankSkills);
+            if (!stylerankSkillsAdded) logger.Warn("Last style rank skills already found in hash set");
+        }
+
+        if (lastQuestAttempts.QuestAttemptsID != 0)
+        {
+            var questAttemptAdded = allQuestAttempts.Add(lastQuestAttempts);
+            if (!questAttemptAdded) logger.Warn("Last quest attempt already found in hash set");
+        }
+
+        if (lastGachaCard.GachaCardInventoryID != 0)
+        {
+            var gachaCardAdded = allGachaCards.Add(lastGachaCard);
+            if (!gachaCardAdded) logger.Warn("Last gacha card already found in hash set");
+        }
+
+        if (lastPlayerInventory.PlayerInventoryID != 0)
+        {
+            var playerInventoryAdded = allPlayerInventories.Add(lastPlayerInventory);
+            if (!playerInventoryAdded) logger.Warn("Last player inventory already found in hash set");
+        }
     }
 
     private void CreateDatabaseTriggers(SQLiteConnection conn)
@@ -4482,12 +4601,15 @@ Disabling Quest Logging.",
 
                 sql = @"CREATE TABLE IF NOT EXISTS Bingo(
                     BingoID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CreatedAt TEXT NOT NULL,
-                    CreatedBy TEXT NOT NULL,
-                    Difficulty TEXT NOT NULL,
-                    MonsterList TEXT NOT NULL,
-                    ElapsedTime TEXT NOT NULL,
-                    Score INTEGER NOT NULL
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
+                    Difficulty INTEGER NOT NULL DEFAULT 0,
+                    MonsterList TEXT NOT NULL DEFAULT '{}',
+                    WeaponType TEXT NOT NULL,
+                    Category TEXT NOT NULL,
+                    TotalFramesElapsed INTEGER NOT NULL,
+                    TotalTimeElapsed TEXT NOT NULL,
+                    Score INTEGER NOT NULL DEFAULT 0
                     )";
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                 {
@@ -4596,7 +4718,7 @@ Disabling Quest Logging.",
                     AchievementID INTEGER PRIMARY KEY,
                     Title TEXT NOT NULL DEFAULT '',
                     Description TEXT NOT NULL DEFAULT '',
-                    Rank TEXT NOT NULL DEFAULT '',
+                    Rank INTEGER NOT NULL DEFAULT 0,
                     Objective TEXT NOT NULL DEFAULT '',
                     Image TEXT NOT NULL DEFAULT '',
                     IsSecret INTEGER NOT NULL CHECK (IsSecret IN (0, 1)) DEFAULT 0,
@@ -4671,6 +4793,19 @@ Disabling Quest Logging.",
                         FOREIGN KEY(Run4ID) REFERENCES Quests(RunID),
                         FOREIGN KEY(Run5ID) REFERENCES Quests(RunID),
                         FOREIGN KEY(Run6ID) REFERENCES Quests(RunID)
+                    )";
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                // The time starts the moment the last quest is completed (before rewards) and the time ends when current quest is completed (before rewards).
+                // This can be used for gauntlets/gacha/bingo
+                sql = @"CREATE TABLE IF NOT EXISTS RealTimeAttackQuests(
+                        RealTimeAttackQuestID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        TotalTimeElapsed TEXT NOT NULL,
+                        RunID INTEGER NOT NULL,
+                        FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                     )";
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                 {
@@ -5075,7 +5210,6 @@ Disabling Quest Logging.",
                     cmd.ExecuteNonQuery();
                 }
 
-                // TODO: update to add the ON CONFLICT IGNORE on the UNIQUE constraint. Just remove the table and add it back.
                 sql = @"CREATE TABLE IF NOT EXISTS GachaCard(
                     GachaCardID INTEGER PRIMARY KEY AUTOINCREMENT,
                     GachaCardTypeID INTEGER NOT NULL,
@@ -6065,9 +6199,657 @@ Disabling Quest Logging.",
         return playerInventory;
     }
 
+    private Quest GetLastQuest(SQLiteConnection conn)
+    {
+        Quest quest = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM Quests ORDER BY RunID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            quest = new Quest
+                            {
+                                QuestHash = reader["QuestHash"].ToString(),
+                                CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
+                                CreatedBy = reader["CreatedBy"].ToString(),
+                                RunID = long.Parse(reader["RunID"].ToString()),
+                                QuestID = long.Parse(reader["QuestID"].ToString()),
+                                TimeLeft = long.Parse(reader["TimeLeft"].ToString()),
+                                FinalTimeValue = long.Parse(reader["FinalTimeValue"].ToString()),
+                                FinalTimeDisplay = reader["FinalTimeDisplay"].ToString(),
+                                ObjectiveImage = reader["ObjectiveImage"].ToString(),
+                                ObjectiveTypeID = long.Parse(reader["ObjectiveTypeID"].ToString()),
+                                ObjectiveQuantity = long.Parse(reader["ObjectiveQuantity"].ToString()),
+                                StarGrade = long.Parse(reader["StarGrade"].ToString()),
+                                RankName = reader["RankName"].ToString(),
+                                ObjectiveName = reader["ObjectiveName"].ToString(),
+                                Date = DateTime.Parse(reader["Date"].ToString()),
+                                YouTubeID = reader["YouTubeID"].ToString(),
+                                AttackBuffDictionary = reader["AttackBuffDictionary"].ToString(),
+                                HitCountDictionary = reader["HitCountDictionary"].ToString(),
+                                HitsPerSecondDictionary = reader["HitsPerSecondDictionary"].ToString(),
+                                DamageDealtDictionary = reader["DamageDealtDictionary"].ToString(),
+                                DamagePerSecondDictionary = reader["DamagePerSecondDictionary"].ToString(),
+                                AreaChangesDictionary = reader["AreaChangesDictionary"].ToString(),
+                                CartsDictionary = reader["CartsDictionary"].ToString(),
+                                Monster1HPDictionary = reader["Monster1HPDictionary"].ToString(),
+                                Monster2HPDictionary = reader["Monster2HPDictionary"].ToString(),
+                                Monster3HPDictionary = reader["Monster3HPDictionary"].ToString(),
+                                Monster4HPDictionary = reader["Monster4HPDictionary"].ToString(),
+                                HitsTakenBlockedDictionary = reader["HitsTakenBlockedDictionary"].ToString(),
+                                HitsTakenBlockedPerSecondDictionary = reader["HitsTakenBlockedPerSecondDictionary"].ToString(),
+                                PlayerHPDictionary = reader["PlayerHPDictionary"].ToString(),
+                                PlayerStaminaDictionary = reader["PlayerStaminaDictionary"].ToString(),
+                                KeyStrokesDictionary = reader["KeyStrokesDictionary"].ToString(),
+                                MouseInputDictionary = reader["MouseInputDictionary"].ToString(),
+                                GamepadInputDictionary = reader["GamepadInputDictionary"].ToString(),
+                                ActionsPerMinuteDictionary = reader["ActionsPerMinuteDictionary"].ToString(),
+                                OverlayModeDictionary = reader["OverlayModeDictionary"].ToString(),
+                                ActualOverlayMode = reader["ActualOverlayMode"].ToString(),
+                                PartySize = long.Parse(reader["PartySize"].ToString())
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return quest;
+    }
+
+    private MezFes GetLastMezFes(SQLiteConnection conn)
+    {
+        MezFes last = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM MezFes ORDER BY MezFesID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new MezFes
+                            {
+                                MezFesID = long.Parse(reader["MezFesID"].ToString()),
+                                CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
+                                CreatedBy = reader["CreatedBy"].ToString(),
+                                MezFesMinigameID = long.Parse(reader["MezFesMinigameID"].ToString()),
+                                Score = long.Parse(reader["Score"].ToString())
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private Bingo GetLastBingo(SQLiteConnection conn)
+    {
+        Bingo last = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM Bingo ORDER BY BingoID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new Bingo
+                            {
+                                BingoID = long.Parse(reader["BingoID"].ToString()),
+                                CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
+                                CreatedBy = reader["CreatedBy"].ToString(),
+                                Difficulty = (Enum.Difficulty)long.Parse(reader["Difficulty"].ToString()),
+                                Score = long.Parse(reader["Score"].ToString()),
+                                MonsterList = JsonConvert.DeserializeObject<List<int>>(reader["MonsterList"].ToString()),
+                                WeaponType = reader["WeaponType"].ToString(),
+                                Category = reader["Category"].ToString(),
+                                TotalFramesElapsed = long.Parse(reader["TotalFramesElapsed"].ToString()),
+                                TotalTimeElapsed = reader["TotalTimeElapsed"].ToString()
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private ZenithGauntlet GetLastZenithGauntlet(SQLiteConnection conn)
+    {
+        ZenithGauntlet last = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM ZenithGauntlets ORDER BY ZenithGauntletID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new ZenithGauntlet
+                            {
+                                ZenithGauntletID = long.Parse(reader["ZenithGauntletID"].ToString()),
+                                WeaponType = reader["WeaponType"].ToString(),
+                                Category = reader["Category"].ToString(),
+                                TotalFramesElapsed = long.Parse(reader["TotalFramesElapsed"].ToString()),
+                                TotalTimeElapsed = reader["TotalTimeElapsed"].ToString(),
+                                Run1ID = long.Parse(reader["Run1ID"].ToString()),
+                                Run2ID = long.Parse(reader["Run2ID"].ToString()),
+                                Run3ID = long.Parse(reader["Run3ID"].ToString()),
+                                Run4ID = long.Parse(reader["Run4ID"].ToString()),
+                                Run5ID = long.Parse(reader["Run5ID"].ToString()),
+                                Run6ID = long.Parse(reader["Run6ID"].ToString()),
+                                Run7ID = long.Parse(reader["Run7ID"].ToString()),
+                                Run8ID = long.Parse(reader["Run8ID"].ToString()),
+                                Run9ID = long.Parse(reader["Run9ID"].ToString()),
+                                Run10ID = long.Parse(reader["Run10ID"].ToString()),
+                                Run11ID = long.Parse(reader["Run11ID"].ToString()),
+                                Run12ID = long.Parse(reader["Run12ID"].ToString()),
+                                Run13ID = long.Parse(reader["Run13ID"].ToString()),
+                                Run14ID = long.Parse(reader["Run14ID"].ToString()),
+                                Run15ID = long.Parse(reader["Run15ID"].ToString()),
+                                Run16ID = long.Parse(reader["Run16ID"].ToString()),
+                                Run17ID = long.Parse(reader["Run17ID"].ToString()),
+                                Run18ID = long.Parse(reader["Run18ID"].ToString()),
+                                Run19ID = long.Parse(reader["Run19ID"].ToString()),
+                                Run20ID = long.Parse(reader["Run20ID"].ToString()),
+                                Run21ID = long.Parse(reader["Run21ID"].ToString()),
+                                Run22ID = long.Parse(reader["Run22ID"].ToString()),
+                                Run23ID = long.Parse(reader["Run23ID"].ToString())
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private SolsticeGauntlet GetLastSolsticeGauntlet(SQLiteConnection conn)
+    {
+        SolsticeGauntlet last = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM SolsticeGauntlets ORDER BY SolsticeGauntletID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new SolsticeGauntlet
+                            {
+                                SolsticeGauntletID = long.Parse(reader["SolsticeGauntletID"].ToString()),
+                                WeaponType = reader["WeaponType"].ToString(),
+                                Category = reader["Category"].ToString(),
+                                TotalFramesElapsed = long.Parse(reader["TotalFramesElapsed"].ToString()),
+                                TotalTimeElapsed = reader["TotalTimeElapsed"].ToString(),
+                                Run1ID = long.Parse(reader["Run1ID"].ToString()),
+                                Run2ID = long.Parse(reader["Run2ID"].ToString()),
+                                Run3ID = long.Parse(reader["Run3ID"].ToString()),
+                                Run4ID = long.Parse(reader["Run4ID"].ToString()),
+                                Run5ID = long.Parse(reader["Run5ID"].ToString()),
+                                Run6ID = long.Parse(reader["Run6ID"].ToString())
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private MusouGauntlet GetLastMusouGauntlet(SQLiteConnection conn)
+    {
+        MusouGauntlet last = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM MusouGauntlets ORDER BY MusouGauntletID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new MusouGauntlet
+                            {
+                                MusouGauntletID = long.Parse(reader["MusouGauntletID"].ToString()),
+                                WeaponType = reader["WeaponType"].ToString(),
+                                Category = reader["Category"].ToString(),
+                                TotalFramesElapsed = long.Parse(reader["TotalFramesElapsed"].ToString()),
+                                TotalTimeElapsed = reader["TotalTimeElapsed"].ToString(),
+                                Run1ID = long.Parse(reader["Run1ID"].ToString()),
+                                Run2ID = long.Parse(reader["Run2ID"].ToString()),
+                                Run3ID = long.Parse(reader["Run3ID"].ToString()),
+                                Run4ID = long.Parse(reader["Run4ID"].ToString()),
+                                Run5ID = long.Parse(reader["Run5ID"].ToString()),
+                                Run6ID = long.Parse(reader["Run6ID"].ToString()),
+                                Run7ID = long.Parse(reader["Run7ID"].ToString()),
+                                Run8ID = long.Parse(reader["Run8ID"].ToString()),
+                                Run9ID = long.Parse(reader["Run9ID"].ToString()),
+                                Run10ID = long.Parse(reader["Run10ID"].ToString())
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private PersonalBestAttempts GetLastPersonalBestAttempt(SQLiteConnection conn)
+    {
+        PersonalBestAttempts last = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM PersonalBestAttempts ORDER BY PersonalBestAttemptsID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new PersonalBestAttempts
+                            {
+                                PersonalBestAttemptsID = long.Parse(reader["PersonalBestAttemptsID"].ToString()),
+                                QuestID = long.Parse(reader["QuestID"].ToString()),
+                                WeaponTypeID = long.Parse(reader["WeaponTypeID"].ToString()),
+                                ActualOverlayMode = reader["ActualOverlayMode"].ToString(),
+                                Attempts = long.Parse(reader["Attempts"].ToString())
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private QuestAttempts GetLastQuestAttempt(SQLiteConnection conn)
+    {
+        QuestAttempts last = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM QuestAttempts ORDER BY QuestAttemptsID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new QuestAttempts
+                            {
+                                QuestAttemptsID = long.Parse(reader["QuestAttemptsID"].ToString()),
+                                QuestID = long.Parse(reader["QuestID"].ToString()),
+                                WeaponTypeID = long.Parse(reader["WeaponTypeID"].ToString()),
+                                ActualOverlayMode = reader["ActualOverlayMode"].ToString(),
+                                Attempts = long.Parse(reader["Attempts"].ToString())
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private PlayerGear GetLastPlayerGear(SQLiteConnection conn)
+    {
+        PlayerGear last = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM PlayerGear ORDER BY PlayerGearID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new PlayerGear
+                            {
+                                PlayerGearHash = reader["PlayerGearHash"].ToString(),
+                                CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
+                                CreatedBy = reader["CreatedBy"].ToString(),
+                                PlayerGearID = long.Parse(reader["PlayerGearID"].ToString()),
+                                RunID = long.Parse(reader["RunID"].ToString()),
+                                PlayerID = long.Parse(reader["PlayerID"].ToString()),
+                                GearName = reader["GearName"].ToString(),
+                                StyleID = long.Parse(reader["StyleID"].ToString()),
+                                WeaponIconID = long.Parse(reader["WeaponIconID"].ToString()),
+                                WeaponClassID = long.Parse(reader["WeaponClassID"].ToString()),
+                                WeaponTypeID = long.Parse(reader["WeaponTypeID"].ToString()),
+                                BlademasterWeaponID = reader["BlademasterWeaponID"] == DBNull.Value ? null : (long?)long.Parse(reader["BlademasterWeaponID"].ToString()),
+                                GunnerWeaponID = reader["GunnerWeaponID"] == DBNull.Value ? null : (long?)long.Parse(reader["GunnerWeaponID"].ToString()),
+                                WeaponSlot1 = reader["WeaponSlot1"].ToString(),
+                                WeaponSlot2 = reader["WeaponSlot2"].ToString(),
+                                WeaponSlot3 = reader["WeaponSlot3"].ToString(),
+                                HeadID = long.Parse(reader["HeadID"].ToString()),
+                                HeadSlot1ID = long.Parse(reader["HeadSlot1ID"].ToString()),
+                                HeadSlot2ID = long.Parse(reader["HeadSlot2ID"].ToString()),
+                                HeadSlot3ID = long.Parse(reader["HeadSlot3ID"].ToString()),
+                                ChestID = long.Parse(reader["ChestID"].ToString()),
+                                ChestSlot1ID = long.Parse(reader["ChestSlot1ID"].ToString()),
+                                ChestSlot2ID = long.Parse(reader["ChestSlot2ID"].ToString()),
+                                ChestSlot3ID = long.Parse(reader["ChestSlot3ID"].ToString()),
+                                ArmsID = long.Parse(reader["ArmsID"].ToString()),
+                                ArmsSlot1ID = long.Parse(reader["ArmsSlot1ID"].ToString()),
+                                ArmsSlot2ID = long.Parse(reader["ArmsSlot2ID"].ToString()),
+                                ArmsSlot3ID = long.Parse(reader["ArmsSlot3ID"].ToString()),
+                                WaistID = long.Parse(reader["WaistID"].ToString()),
+                                WaistSlot1ID = long.Parse(reader["WaistSlot1ID"].ToString()),
+                                WaistSlot2ID = long.Parse(reader["WaistSlot2ID"].ToString()),
+                                WaistSlot3ID = long.Parse(reader["WaistSlot3ID"].ToString()),
+                                LegsID = long.Parse(reader["LegsID"].ToString()),
+                                LegsSlot1ID = long.Parse(reader["LegsSlot1ID"].ToString()),
+                                LegsSlot2ID = long.Parse(reader["LegsSlot2ID"].ToString()),
+                                LegsSlot3ID = long.Parse(reader["LegsSlot3ID"].ToString()),
+                                Cuff1ID = long.Parse(reader["Cuff1ID"].ToString()),
+                                Cuff2ID = long.Parse(reader["Cuff2ID"].ToString()),
+                                ZenithSkillsID = long.Parse(reader["ZenithSkillsID"].ToString()),
+                                AutomaticSkillsID = long.Parse(reader["AutomaticSkillsID"].ToString()),
+                                ActiveSkillsID = long.Parse(reader["ActiveSkillsID"].ToString()),
+                                CaravanSkillsID = long.Parse(reader["CaravanSkillsID"].ToString()),
+                                DivaSkillID = long.Parse(reader["DivaSkillID"].ToString()),
+                                GuildFoodID = long.Parse(reader["GuildFoodID"].ToString()),
+                                StyleRankSkillsID = long.Parse(reader["StyleRankSkillsID"].ToString()),
+                                PlayerInventoryID = long.Parse(reader["PlayerInventoryID"].ToString()),
+                                AmmoPouchID = long.Parse(reader["AmmoPouchID"].ToString()),
+                                PartnyaBagID = long.Parse(reader["PartnyaBagID"].ToString()),
+                                PoogieItemID = long.Parse(reader["PoogieItemID"].ToString()),
+                                RoadDureSkillsID = long.Parse(reader["RoadDureSkillsID"].ToString()),
+                                PlayerInventoryDictionary = reader["PlayerInventoryDictionary"].ToString(),
+                                PlayerAmmoPouchDictionary = reader["PlayerAmmoPouchDictionary"].ToString(),
+                                PartnyaBagDictionary = reader["PartnyaBagDictionary"].ToString()
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private ActiveSkills GetLastActiveSkills(SQLiteConnection conn)
+    {
+        ActiveSkills last = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM ActiveSkills ORDER BY ActiveSkillsID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new ActiveSkills
+                            {
+                                CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
+                                CreatedBy = reader["CreatedBy"].ToString(),
+                                ActiveSkillsID = long.Parse(reader["ActiveSkillsID"].ToString()),
+                                RunID = long.Parse(reader["RunID"].ToString()),
+                                ActiveSkill1ID = long.Parse(reader["ActiveSkill1ID"].ToString()),
+                                ActiveSkill2ID = long.Parse(reader["ActiveSkill2ID"].ToString()),
+                                ActiveSkill3ID = long.Parse(reader["ActiveSkill3ID"].ToString()),
+                                ActiveSkill4ID = long.Parse(reader["ActiveSkill4ID"].ToString()),
+                                ActiveSkill5ID = long.Parse(reader["ActiveSkill5ID"].ToString()),
+                                ActiveSkill6ID = long.Parse(reader["ActiveSkill6ID"].ToString()),
+                                ActiveSkill7ID = long.Parse(reader["ActiveSkill7ID"].ToString()),
+                                ActiveSkill8ID = long.Parse(reader["ActiveSkill8ID"].ToString()),
+                                ActiveSkill9ID = long.Parse(reader["ActiveSkill9ID"].ToString()),
+                                ActiveSkill10ID = long.Parse(reader["ActiveSkill10ID"].ToString()),
+                                ActiveSkill11ID = long.Parse(reader["ActiveSkill11ID"].ToString()),
+                                ActiveSkill12ID = long.Parse(reader["ActiveSkill12ID"].ToString()),
+                                ActiveSkill13ID = long.Parse(reader["ActiveSkill13ID"].ToString()),
+                                ActiveSkill14ID = long.Parse(reader["ActiveSkill14ID"].ToString()),
+                                ActiveSkill15ID = long.Parse(reader["ActiveSkill15ID"].ToString()),
+                                ActiveSkill16ID = long.Parse(reader["ActiveSkill16ID"].ToString()),
+                                ActiveSkill17ID = long.Parse(reader["ActiveSkill17ID"].ToString()),
+                                ActiveSkill18ID = long.Parse(reader["ActiveSkill18ID"].ToString()),
+                                ActiveSkill19ID = long.Parse(reader["ActiveSkill19ID"].ToString())
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private StyleRankSkills GetLastStyleRankSkills(SQLiteConnection conn)
+    {
+        StyleRankSkills last = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM StyleRankSkills ORDER BY StyleRankSkillsID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new StyleRankSkills
+                            {
+                                CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
+                                CreatedBy = reader["CreatedBy"].ToString(),
+                                StyleRankSkillsID = long.Parse(reader["StyleRankSkillsID"].ToString()),
+                                RunID = long.Parse(reader["RunID"].ToString()),
+                                StyleRankSkill1ID = long.Parse(reader["StyleRankSkill1ID"].ToString()),
+                                StyleRankSkill2ID = long.Parse(reader["StyleRankSkill2ID"].ToString())
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private GachaCardInventory GetLastGachaCard(SQLiteConnection conn)
+    {
+        GachaCardInventory last = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM GachaCardInventory ORDER BY GachaCardInventoryID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new GachaCardInventory
+                            {
+                                GachaCardInventoryID = long.Parse(reader["GachaCardInventoryID"].ToString()),
+                                GachaCardID = long.Parse(reader["GachaCardID"].ToString())
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private PlayerInventory GetLastPlayerInventory(SQLiteConnection conn)
+    {
+        PlayerInventory last = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM PlayerInventory ORDER BY PlayerInventoryID DESC LIMIT 1", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new PlayerInventory
+                            {
+                                CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
+                                CreatedBy = reader["CreatedBy"].ToString(),
+                                PlayerInventoryID = long.Parse(reader["PlayerInventoryID"].ToString()),
+                                RunID = long.Parse(reader["RunID"].ToString()),
+                                Item1ID = long.Parse(reader["Item1ID"].ToString()),
+                                Item2ID = long.Parse(reader["Item2ID"].ToString()),
+                                Item3ID = long.Parse(reader["Item3ID"].ToString()),
+                                Item4ID = long.Parse(reader["Item4ID"].ToString()),
+                                Item5ID = long.Parse(reader["Item5ID"].ToString()),
+                                Item6ID = long.Parse(reader["Item6ID"].ToString()),
+                                Item7ID = long.Parse(reader["Item7ID"].ToString()),
+                                Item8ID = long.Parse(reader["Item8ID"].ToString()),
+                                Item9ID = long.Parse(reader["Item9ID"].ToString()),
+                                Item10ID = long.Parse(reader["Item10ID"].ToString()),
+                                Item11ID = long.Parse(reader["Item11ID"].ToString()),
+                                Item12ID = long.Parse(reader["Item12ID"].ToString()),
+                                Item13ID = long.Parse(reader["Item13ID"].ToString()),
+                                Item14ID = long.Parse(reader["Item14ID"].ToString()),
+                                Item15ID = long.Parse(reader["Item15ID"].ToString()),
+                                Item16ID = long.Parse(reader["Item16ID"].ToString()),
+                                Item17ID = long.Parse(reader["Item17ID"].ToString()),
+                                Item18ID = long.Parse(reader["Item18ID"].ToString()),
+                                Item19ID = long.Parse(reader["Item19ID"].ToString()),
+                                Item20ID = long.Parse(reader["Item20ID"].ToString()),
+                                Item1Quantity = long.Parse(reader["Item1Quantity"].ToString()),
+                                Item2Quantity = long.Parse(reader["Item2Quantity"].ToString()),
+                                Item3Quantity = long.Parse(reader["Item3Quantity"].ToString()),
+                                Item4Quantity = long.Parse(reader["Item4Quantity"].ToString()),
+                                Item5Quantity = long.Parse(reader["Item5Quantity"].ToString()),
+                                Item6Quantity = long.Parse(reader["Item6Quantity"].ToString()),
+                                Item7Quantity = long.Parse(reader["Item7Quantity"].ToString()),
+                                Item8Quantity = long.Parse(reader["Item8Quantity"].ToString()),
+                                Item9Quantity = long.Parse(reader["Item9Quantity"].ToString()),
+                                Item10Quantity = long.Parse(reader["Item10Quantity"].ToString()),
+                                Item11Quantity = long.Parse(reader["Item11Quantity"].ToString()),
+                                Item12Quantity = long.Parse(reader["Item12Quantity"].ToString()),
+                                Item13Quantity = long.Parse(reader["Item13Quantity"].ToString()),
+                                Item14Quantity = long.Parse(reader["Item14Quantity"].ToString()),
+                                Item15Quantity = long.Parse(reader["Item15Quantity"].ToString()),
+                                Item16Quantity = long.Parse(reader["Item16Quantity"].ToString()),
+                                Item17Quantity = long.Parse(reader["Item17Quantity"].ToString()),
+                                Item18Quantity = long.Parse(reader["Item18Quantity"].ToString()),
+                                Item19Quantity = long.Parse(reader["Item19Quantity"].ToString()),
+                                Item20Quantity = long.Parse(reader["Item20Quantity"].ToString())
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
     public Quest GetQuest(long runID)
     {
-        Quest quest = new Quest();
+        Quest quest = new();
         if (dataSource == null || dataSource == "")
         {
             logger.Warn("Cannot get quest. dataSource: {0}", dataSource);
@@ -6142,6 +6924,690 @@ Disabling Quest Logging.",
             }
         }
         return quest;
+    }
+
+    /// <summary>
+    /// Loads the database data into hash sets. This is used to avoid querying the database when checking for achievement unlocks. 
+    /// When inserting into these hashsets, the database must also be updated, and viceversa.
+    /// </summary>
+    /// <param name="saveIconGrid">The save icon grid.</param>
+    public void LoadDatabaseDataIntoHashSets(Grid saveIconGrid, DataLoader dataLoader)
+    {
+        dataLoader.model.ShowSaveIcon = true;
+
+        if (dataSource == null || dataSource == "")
+        {
+            logger.Fatal("Cannot run LoadDatabaseDataIntoHashSets. dataSource: {0}", dataSource);
+            LoggingManager.WriteCrashLog(new Exception("Cannot run LoadDatabaseDataIntoHashSets."));
+        }
+        try
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+                allQuests = GetAllQuests(conn);
+                allMezFes = GetAllMezFes(conn);
+                allBingo = GetAllBingo(conn);
+                allZenithGauntlets = GetAllZenithGauntlets(conn);
+                allSolsticeGauntlets = GetAllSolsticeGauntlets(conn);
+                allMusouGauntlets = GetAllMusouGauntlets(conn);
+                allPersonalBestAttempts = GetAllPersonalBestAttempts(conn);
+                allPlayerGear = GetAllPlayerGear(conn);
+                allActiveSkills = GetAllActiveSkills(conn);
+                allStyleRankSkills = GetAllStyleRankSkills(conn);
+                allQuestAttempts = GetAllQuestAttempts(conn);
+                allGachaCards = GetAllGachaCards(conn);
+                allPlayerInventories = GetAllPlayerInventories(conn);
+            }
+        } 
+        catch (Exception ex)
+        {
+            LoggingManager.WriteCrashLog(ex);
+        }
+
+        dataLoader.model.ShowSaveIcon = false;
+
+    }
+
+    private HashSet<PlayerInventory> GetAllPlayerInventories(SQLiteConnection conn)
+    {
+        HashSet<PlayerInventory> hashSet = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(@"SELECT * FROM PlayerInventory", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PlayerInventory data = new();
+                            data.PlayerInventoryID = long.Parse(reader["PlayerInventoryID"].ToString());
+                            data.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                            data.CreatedBy = reader["CreatedBy"].ToString();
+                            data.RunID = long.Parse(reader["RunID"].ToString());
+                            data.Item1ID  = long.Parse(reader["Item1ID"].ToString());
+                            data.Item1Quantity  = long.Parse(reader["Item1Quantity"].ToString());
+                            data.Item2ID  = long.Parse(reader["Item2ID"].ToString());
+                            data.Item2Quantity  = long.Parse(reader["Item2Quantity"].ToString());
+                            data.Item3ID  = long.Parse(reader["Item3ID"].ToString());
+                            data.Item3Quantity  = long.Parse(reader["Item3Quantity"].ToString());
+                            data.Item4ID  = long.Parse(reader["Item4ID"].ToString());
+                            data.Item4Quantity  = long.Parse(reader["Item4Quantity"].ToString());
+                            data.Item5ID  = long.Parse(reader["Item5ID"].ToString());
+                            data.Item5Quantity  = long.Parse(reader["Item5Quantity"].ToString());
+                            data.Item6ID  = long.Parse(reader["Item6ID"].ToString());
+                            data.Item6Quantity  = long.Parse(reader["Item6Quantity"].ToString());
+                            data.Item7ID  = long.Parse(reader["Item7ID"].ToString());
+                            data.Item7Quantity  = long.Parse(reader["Item7Quantity"].ToString());
+                            data.Item8ID  = long.Parse(reader["Item8ID"].ToString());
+                            data.Item8Quantity  = long.Parse(reader["Item8Quantity"].ToString());
+                            data.Item9ID  = long.Parse(reader["Item9ID"].ToString());
+                            data.Item9Quantity  = long.Parse(reader["Item9Quantity"].ToString());
+                            data.Item10ID  = long.Parse(reader["Item10ID"].ToString());
+                            data.Item10Quantity  = long.Parse(reader["Item10Quantity"].ToString());
+                            data.Item11ID  = long.Parse(reader["Item11ID"].ToString());
+                            data.Item11Quantity  = long.Parse(reader["Item11Quantity"].ToString());
+                            data.Item12ID  = long.Parse(reader["Item12ID"].ToString());
+                            data.Item12Quantity  = long.Parse(reader["Item12Quantity"].ToString());
+                            data.Item13ID  = long.Parse(reader["Item13ID"].ToString());
+                            data.Item13Quantity  = long.Parse(reader["Item13Quantity"].ToString());
+                            data.Item14ID  = long.Parse(reader["Item14ID"].ToString());
+                            data.Item14Quantity  = long.Parse(reader["Item14Quantity"].ToString());
+                            data.Item15ID  = long.Parse(reader["Item15ID"].ToString());
+                            data.Item15Quantity  = long.Parse(reader["Item15Quantity"].ToString());
+                            data.Item16ID  = long.Parse(reader["Item16ID"].ToString());
+                            data.Item16Quantity  = long.Parse(reader["Item16Quantity"].ToString());
+                            data.Item17ID  = long.Parse(reader["Item17ID"].ToString());
+                            data.Item17Quantity  = long.Parse(reader["Item17Quantity"].ToString());
+                            data.Item18ID  = long.Parse(reader["Item18ID"].ToString());
+                            data.Item18Quantity  = long.Parse(reader["Item18Quantity"].ToString());
+                            data.Item19ID  = long.Parse(reader["Item19ID"].ToString());
+                            data.Item19Quantity  = long.Parse(reader["Item19Quantity"].ToString());
+                            data.Item20ID  = long.Parse(reader["Item20ID"].ToString());
+                            data.Item20Quantity = long.Parse(reader["Item20Quantity"].ToString());
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return hashSet;
+    }
+
+    private HashSet<GachaCardInventory> GetAllGachaCards(SQLiteConnection conn)
+    {
+        HashSet<GachaCardInventory> hashSet = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(@"SELECT * FROM GachaCardInventory", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            GachaCardInventory data = new();
+
+                            data.GachaCardInventoryID = long.Parse(reader["GachaCardInventoryID"].ToString());
+                            data.GachaCardID = long.Parse(reader["GachaCardID"].ToString());
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return hashSet;
+    }
+
+    private HashSet<QuestAttempts> GetAllQuestAttempts(SQLiteConnection conn)
+    {
+        HashSet<QuestAttempts> hashSet = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(@"SELECT * FROM QuestAttempts", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            QuestAttempts data = new();
+
+                            data.QuestAttemptsID = long.Parse(reader["QuestAttemptsID"].ToString());
+                            data.QuestID = long.Parse(reader["QuestID"].ToString());
+                            data.WeaponTypeID = long.Parse(reader["WeaponTypeID"].ToString());
+                            data.ActualOverlayMode = reader["ActualOverlayMode"].ToString();
+                            data.Attempts = long.Parse(reader["Attempts"].ToString());
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return hashSet;
+    }
+
+    private HashSet<PlayerGear> GetAllPlayerGear(SQLiteConnection conn)
+    {
+        HashSet<PlayerGear> hashSet = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(@"SELECT * FROM PlayerGear", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PlayerGear data = new();
+
+                            data.PlayerGearHash = reader["PlayerGearHash"].ToString();
+                            data.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                            data.CreatedBy = reader["CreatedBy"].ToString();
+                            data.PlayerGearID = long.Parse(reader["PlayerGearID"].ToString());
+                            data.RunID = long.Parse(reader["RunID"].ToString());
+                            data.PlayerID = long.Parse(reader["PlayerID"].ToString());
+                            data.GearName = reader["GearName"].ToString();
+                            data.StyleID = long.Parse(reader["StyleID"].ToString());
+                            data.WeaponIconID = long.Parse(reader["WeaponIconID"].ToString());
+                            data.WeaponClassID = long.Parse(reader["WeaponClassID"].ToString());
+                            data.WeaponTypeID = long.Parse(reader["WeaponTypeID"].ToString());
+                            data.BlademasterWeaponID = reader["BlademasterWeaponID"] == DBNull.Value ? null : (long?)long.Parse(reader["BlademasterWeaponID"].ToString());
+                            data.GunnerWeaponID = reader["GunnerWeaponID"] == DBNull.Value ? null : (long?)long.Parse(reader["GunnerWeaponID"].ToString());
+                            data.WeaponSlot1 = reader["WeaponSlot1"].ToString();
+                            data.WeaponSlot2 = reader["WeaponSlot2"].ToString();
+                            data.WeaponSlot3 = reader["WeaponSlot3"].ToString();
+
+                            data.HeadID = long.Parse(reader["HeadID"].ToString());
+                            data.HeadSlot1ID = long.Parse(reader["HeadSlot1ID"].ToString());
+                            data.HeadSlot2ID = long.Parse(reader["HeadSlot2ID"].ToString());
+                            data.HeadSlot3ID = long.Parse(reader["HeadSlot3ID"].ToString());
+
+                            data.ChestID = long.Parse(reader["ChestID"].ToString());
+                            data.ChestSlot1ID = long.Parse(reader["ChestSlot1ID"].ToString());
+                            data.ChestSlot2ID = long.Parse(reader["ChestSlot2ID"].ToString());
+                            data.ChestSlot3ID = long.Parse(reader["ChestSlot3ID"].ToString());
+
+                            data.ArmsID = long.Parse(reader["ArmsID"].ToString());
+                            data.ArmsSlot1ID = long.Parse(reader["ArmsSlot1ID"].ToString());
+                            data.ArmsSlot2ID = long.Parse(reader["ArmsSlot2ID"].ToString());
+                            data.ArmsSlot3ID = long.Parse(reader["ArmsSlot3ID"].ToString());
+
+                            data.WaistID = long.Parse(reader["WaistID"].ToString());
+                            data.WaistSlot1ID = long.Parse(reader["WaistSlot1ID"].ToString());
+                            data.WaistSlot2ID = long.Parse(reader["WaistSlot2ID"].ToString());
+                            data.WaistSlot3ID = long.Parse(reader["WaistSlot3ID"].ToString());
+
+                            data.LegsID = long.Parse(reader["LegsID"].ToString());
+                            data.LegsSlot1ID = long.Parse(reader["LegsSlot1ID"].ToString());
+                            data.LegsSlot2ID = long.Parse(reader["LegsSlot2ID"].ToString());
+                            data.LegsSlot3ID = long.Parse(reader["LegsSlot3ID"].ToString());
+
+                            data.Cuff1ID = long.Parse(reader["Cuff1ID"].ToString());
+                            data.Cuff2ID = long.Parse(reader["Cuff2ID"].ToString());
+                            data.ZenithSkillsID = long.Parse(reader["ZenithSkillsID"].ToString());
+                            data.AutomaticSkillsID = long.Parse(reader["AutomaticSkillsID"].ToString());
+                            data.ActiveSkillsID = long.Parse(reader["ActiveSkillsID"].ToString());
+                            data.CaravanSkillsID = long.Parse(reader["CaravanSkillsID"].ToString());
+                            data.DivaSkillID = long.Parse(reader["DivaSkillID"].ToString());
+                            data.GuildFoodID = long.Parse(reader["GuildFoodID"].ToString());
+                            data.StyleRankSkillsID = long.Parse(reader["StyleRankSkillsID"].ToString());
+                            data.PlayerInventoryID = long.Parse(reader["PlayerInventoryID"].ToString());
+                            data.AmmoPouchID = long.Parse(reader["AmmoPouchID"].ToString());
+                            data.PartnyaBagID = long.Parse(reader["PartnyaBagID"].ToString());
+                            data.PoogieItemID = long.Parse(reader["PoogieItemID"].ToString());
+                            data.RoadDureSkillsID = long.Parse(reader["RoadDureSkillsID"].ToString());
+                            data.PlayerInventoryDictionary = reader["PlayerInventoryDictionary"].ToString();
+                            data.PlayerAmmoPouchDictionary = reader["PlayerAmmoPouchDictionary"].ToString();
+                            data.PartnyaBagDictionary = reader["PartnyaBagDictionary"].ToString();
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return hashSet;
+    }
+
+    private HashSet<ActiveSkills> GetAllActiveSkills(SQLiteConnection conn)
+    {
+        HashSet<ActiveSkills> hashSet = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(@"SELECT * FROM ActiveSkills", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ActiveSkills data = new();
+
+                            data.ActiveSkillsID = long.Parse(reader["ActiveSkillsID"].ToString());
+                            data.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                            data.CreatedBy = reader["CreatedBy"].ToString();
+                            data.RunID = long.Parse(reader["RunID"].ToString());
+                            data.ActiveSkill1ID = long.Parse(reader["ActiveSkill1ID"].ToString());
+                            data.ActiveSkill2ID = long.Parse(reader["ActiveSkill2ID"].ToString());
+                            data.ActiveSkill3ID = long.Parse(reader["ActiveSkill3ID"].ToString());
+                            data.ActiveSkill4ID = long.Parse(reader["ActiveSkill4ID"].ToString());
+                            data.ActiveSkill5ID = long.Parse(reader["ActiveSkill5ID"].ToString());
+                            data.ActiveSkill6ID = long.Parse(reader["ActiveSkill6ID"].ToString());
+                            data.ActiveSkill7ID = long.Parse(reader["ActiveSkill7ID"].ToString());
+                            data.ActiveSkill8ID = long.Parse(reader["ActiveSkill8ID"].ToString());
+                            data.ActiveSkill9ID = long.Parse(reader["ActiveSkill9ID"].ToString());
+                            data.ActiveSkill10ID = long.Parse(reader["ActiveSkill10ID"].ToString());
+                            data.ActiveSkill11ID = long.Parse(reader["ActiveSkill11ID"].ToString());
+                            data.ActiveSkill12ID = long.Parse(reader["ActiveSkill12ID"].ToString());
+                            data.ActiveSkill13ID = long.Parse(reader["ActiveSkill13ID"].ToString());
+                            data.ActiveSkill14ID = long.Parse(reader["ActiveSkill14ID"].ToString());
+                            data.ActiveSkill15ID = long.Parse(reader["ActiveSkill15ID"].ToString());
+                            data.ActiveSkill16ID = long.Parse(reader["ActiveSkill16ID"].ToString());
+                            data.ActiveSkill17ID = long.Parse(reader["ActiveSkill17ID"].ToString());
+                            data.ActiveSkill18ID = long.Parse(reader["ActiveSkill18ID"].ToString());
+                            data.ActiveSkill19ID = long.Parse(reader["ActiveSkill19ID"].ToString());
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return hashSet;
+    }
+
+    private HashSet<StyleRankSkills> GetAllStyleRankSkills(SQLiteConnection conn)
+    {
+        HashSet<StyleRankSkills> hashSet = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(@"SELECT * FROM StyleRankSkills", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            StyleRankSkills data = new();
+
+                            data.StyleRankSkillsID = long.Parse(reader["StyleRankSkillsID"].ToString());
+                            data.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                            data.CreatedBy = reader["CreatedBy"].ToString();
+                            data.RunID = long.Parse(reader["RunID"].ToString());
+                            data.StyleRankSkill1ID = long.Parse(reader["StyleRankSkill1ID"].ToString());
+                            data.StyleRankSkill2ID = long.Parse(reader["StyleRankSkill2ID"].ToString());
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return hashSet;
+    }
+
+    private HashSet<PersonalBestAttempts> GetAllPersonalBestAttempts(SQLiteConnection conn)
+    {
+        HashSet<PersonalBestAttempts> hashSet = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(@"SELECT * FROM PersonalBestAttempts", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PersonalBestAttempts data = new();
+
+                            data.PersonalBestAttemptsID = long.Parse(reader["PersonalBestAttemptsID"].ToString());
+                            data.QuestID = long.Parse(reader["QuestID"].ToString());
+                            data.WeaponTypeID = long.Parse(reader["WeaponTypeID"].ToString());
+                            data.ActualOverlayMode = reader["ActualOverlayMode"].ToString();
+                            data.Attempts = long.Parse(reader["Attempts"].ToString());
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return hashSet;
+    }
+
+    private HashSet<MusouGauntlet> GetAllMusouGauntlets(SQLiteConnection conn)
+    {
+        HashSet<MusouGauntlet> hashSet = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(@"SELECT * FROM MusouGauntlets", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            MusouGauntlet data = new();
+                            data.MusouGauntletID = long.Parse(reader["MusouGauntletID"].ToString());
+                            data.WeaponType = reader["WeaponType"].ToString();
+                            data.Category = reader["Category"].ToString();
+                            data.TotalFramesElapsed = long.Parse(reader["TotalFramesElapsed"].ToString());
+                            data.TotalTimeElapsed = reader["TotalTimeElapsed"].ToString();
+                            data.Run1ID = long.Parse(reader["Run1ID"].ToString());
+                            data.Run2ID = long.Parse(reader["Run2ID"].ToString());
+                            data.Run3ID = long.Parse(reader["Run3ID"].ToString());
+                            data.Run4ID = long.Parse(reader["Run4ID"].ToString());
+                            data.Run5ID = long.Parse(reader["Run5ID"].ToString());
+                            data.Run6ID = long.Parse(reader["Run6ID"].ToString());
+                            data.Run7ID = long.Parse(reader["Run7ID"].ToString());
+                            data.Run8ID = long.Parse(reader["Run8ID"].ToString());
+                            data.Run9ID = long.Parse(reader["Run9ID"].ToString());
+                            data.Run10ID = long.Parse(reader["Run10ID"].ToString());
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return hashSet;
+    }
+
+    private HashSet<SolsticeGauntlet> GetAllSolsticeGauntlets(SQLiteConnection conn)
+    {
+        HashSet<SolsticeGauntlet> hashSet = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(@"SELECT * FROM SolsticeGauntlets", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            SolsticeGauntlet data = new();
+                            data.SolsticeGauntletID = long.Parse(reader["SolsticeGauntletID"].ToString());
+                            data.WeaponType = reader["WeaponType"].ToString();
+                            data.Category = reader["Category"].ToString();
+                            data.TotalFramesElapsed = long.Parse(reader["TotalFramesElapsed"].ToString());
+                            data.TotalTimeElapsed = reader["TotalTimeElapsed"].ToString();
+                            data.Run1ID = long.Parse(reader["Run1ID"].ToString());
+                            data.Run2ID = long.Parse(reader["Run2ID"].ToString());
+                            data.Run3ID = long.Parse(reader["Run3ID"].ToString());
+                            data.Run4ID = long.Parse(reader["Run4ID"].ToString());
+                            data.Run5ID = long.Parse(reader["Run5ID"].ToString());
+                            data.Run6ID = long.Parse(reader["Run6ID"].ToString());
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return hashSet;
+    }
+
+    private HashSet<ZenithGauntlet> GetAllZenithGauntlets(SQLiteConnection conn)
+    {
+        HashSet<ZenithGauntlet> hashSet = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(@"SELECT * FROM ZenithGauntlets", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ZenithGauntlet data = new();
+
+                            data.ZenithGauntletID = long.Parse(reader["ZenithGauntletID"].ToString());
+                            data.WeaponType = reader["WeaponType"].ToString();
+                            data.Category = reader["Category"].ToString();
+                            data.TotalFramesElapsed = long.Parse(reader["TotalFramesElapsed"].ToString());
+                            data.TotalTimeElapsed = reader["TotalTimeElapsed"].ToString();
+                            data.Run1ID = long.Parse(reader["Run1ID"].ToString());
+                            data.Run2ID = long.Parse(reader["Run2ID"].ToString());
+                            data.Run3ID = long.Parse(reader["Run3ID"].ToString());
+                            data.Run4ID = long.Parse(reader["Run4ID"].ToString());
+                            data.Run5ID = long.Parse(reader["Run5ID"].ToString());
+                            data.Run6ID = long.Parse(reader["Run6ID"].ToString());
+                            data.Run7ID = long.Parse(reader["Run7ID"].ToString());
+                            data.Run8ID = long.Parse(reader["Run8ID"].ToString());
+                            data.Run9ID = long.Parse(reader["Run9ID"].ToString());
+                            data.Run10ID = long.Parse(reader["Run10ID"].ToString());
+                            data.Run11ID = long.Parse(reader["Run11ID"].ToString());
+                            data.Run12ID = long.Parse(reader["Run12ID"].ToString());
+                            data.Run13ID = long.Parse(reader["Run13ID"].ToString());
+                            data.Run14ID = long.Parse(reader["Run14ID"].ToString());
+                            data.Run15ID = long.Parse(reader["Run15ID"].ToString());
+                            data.Run16ID = long.Parse(reader["Run16ID"].ToString());
+                            data.Run17ID = long.Parse(reader["Run17ID"].ToString());
+                            data.Run18ID = long.Parse(reader["Run18ID"].ToString());
+                            data.Run19ID = long.Parse(reader["Run19ID"].ToString());
+                            data.Run20ID = long.Parse(reader["Run20ID"].ToString());
+                            data.Run21ID = long.Parse(reader["Run21ID"].ToString());
+                            data.Run22ID = long.Parse(reader["Run22ID"].ToString());
+                            data.Run23ID = long.Parse(reader["Run23ID"].ToString());
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return hashSet;
+    }
+
+    private HashSet<Bingo> GetAllBingo(SQLiteConnection conn)
+    {
+        HashSet<Bingo> hashSet = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM Bingo", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Bingo data = new();
+
+                            data.BingoID = long.Parse(reader["BingoID"].ToString());
+                            data.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                            data.CreatedBy = reader["CreatedBy"].ToString();
+                            data.Difficulty = (Enum.Difficulty)long.Parse(reader["Difficulty"].ToString());
+                            data.MonsterList = JsonConvert.DeserializeObject<List<int>>(reader["MonsterList"].ToString());
+                            data.WeaponType = reader["WeaponType"].ToString();
+                            data.Category = reader["Category"].ToString();
+                            data.TotalFramesElapsed = long.Parse(reader["TotalFramesElapsed"].ToString());
+                            data.TotalTimeElapsed = reader["TotalTimeElapsed"].ToString();
+                            data.Score = long.Parse(reader["Score"].ToString());
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return hashSet;
+    }
+
+    private HashSet<MezFes> GetAllMezFes(SQLiteConnection conn)
+    {
+        HashSet<MezFes> hashSet = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM MezFes", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            MezFes data = new();
+
+                            data.MezFesID = long.Parse(reader["MezFesID"].ToString());
+                            data.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                            data.CreatedBy = reader["CreatedBy"].ToString();
+                            data.MezFesMinigameID = long.Parse(reader["MezFesMinigameID"].ToString());
+                            data.Score = long.Parse(reader["Score"].ToString());
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return hashSet;
+    }
+
+    private HashSet<Quest> GetAllQuests(SQLiteConnection conn)
+    {
+        HashSet<Quest> quests = new();
+        using (SQLiteTransaction transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM Quests", conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Quest quest = new Quest();
+
+                            quest.QuestHash = reader["QuestHash"].ToString();
+                            quest.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                            quest.CreatedBy = reader["CreatedBy"].ToString();
+                            quest.RunID = long.Parse(reader["RunID"].ToString());
+                            quest.QuestID = long.Parse(reader["QuestID"].ToString());
+                            quest.TimeLeft = long.Parse(reader["TimeLeft"].ToString());
+                            quest.FinalTimeValue = long.Parse(reader["FinalTimeValue"].ToString());
+                            quest.FinalTimeDisplay = reader["FinalTimeDisplay"].ToString();
+                            quest.ObjectiveImage = reader["ObjectiveImage"].ToString();
+                            quest.ObjectiveTypeID = long.Parse(reader["ObjectiveTypeID"].ToString());
+                            quest.ObjectiveQuantity = long.Parse(reader["ObjectiveQuantity"].ToString());
+                            quest.StarGrade = long.Parse(reader["StarGrade"].ToString());
+                            quest.RankName = reader["RankName"].ToString();
+                            quest.ObjectiveName = reader["ObjectiveName"].ToString();
+                            quest.Date = DateTime.Parse(reader["Date"].ToString());
+                            quest.YouTubeID = reader["YouTubeID"].ToString();
+                            quest.AttackBuffDictionary = reader["AttackBuffDictionary"].ToString();
+                            quest.HitCountDictionary = reader["HitCountDictionary"].ToString();
+                            quest.HitsPerSecondDictionary = reader["HitsPerSecondDictionary"].ToString();
+                            quest.DamageDealtDictionary = reader["DamageDealtDictionary"].ToString();
+                            quest.DamagePerSecondDictionary = reader["DamagePerSecondDictionary"].ToString();
+                            quest.AreaChangesDictionary = reader["AreaChangesDictionary"].ToString();
+                            quest.CartsDictionary = reader["CartsDictionary"].ToString();
+
+                            quest.Monster1HPDictionary = reader["Monster1HPDictionary"].ToString();
+                            quest.Monster2HPDictionary = reader["Monster2HPDictionary"].ToString();
+                            quest.Monster3HPDictionary = reader["Monster3HPDictionary"].ToString();
+                            quest.Monster4HPDictionary = reader["Monster4HPDictionary"].ToString();
+
+                            quest.HitsTakenBlockedDictionary = reader["HitsTakenBlockedDictionary"].ToString();
+                            quest.HitsTakenBlockedPerSecondDictionary = reader["HitsTakenBlockedPerSecondDictionary"].ToString();
+                            quest.PlayerHPDictionary = reader["PlayerHPDictionary"].ToString();
+                            quest.PlayerStaminaDictionary = reader["PlayerStaminaDictionary"].ToString();
+                            quest.KeyStrokesDictionary = reader["KeyStrokesDictionary"].ToString();
+                            quest.MouseInputDictionary = reader["MouseInputDictionary"].ToString();
+                            quest.GamepadInputDictionary = reader["GamepadInputDictionary"].ToString();
+
+                            quest.ActionsPerMinuteDictionary = reader["ActionsPerMinuteDictionary"].ToString();
+                            quest.OverlayModeDictionary = reader["OverlayModeDictionary"].ToString();
+                            quest.ActualOverlayMode = reader["ActualOverlayMode"].ToString();
+                            quest.PartySize = long.Parse(reader["PartySize"].ToString());
+
+                            quests.Add(quest);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+        return quests;
     }
 
     public UI.Class.RoadDureSkills GetRoadDureSkills(long runID)
@@ -9266,6 +10732,10 @@ Disabling Quest Logging.",
         return fieldCounts;
     }
 
+    /// <summary>
+    /// Gets the total time spent in quests in descending order.
+    /// </summary>
+    /// <returns></returns>
     public Dictionary<int, int> GetTotalTimeSpentInQuests()
     {
         Dictionary<int, int> questTimeSpent = new();
@@ -9365,6 +10835,52 @@ Disabling Quest Logging.",
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Gets the total quest time elapsed in frames.
+    /// </summary>
+    /// <param name="conn">The connection.</param>
+    /// <returns></returns>
+    public long GetTotalQuestTimeElapsed()
+    {
+        long totalTimeElapsed = 0;
+
+        if (dataSource == null || dataSource == "")
+        {
+            logger.Warn("Cannot get total frames elapsed in quests. dataSource: {0}", dataSource);
+            return totalTimeElapsed;
+        }
+        using (SQLiteConnection conn = new SQLiteConnection(dataSource))
+        {
+            conn.Open();
+
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var query = @"SELECT TOTAL(FinalTimeValue) AS TotalTimeElapsed FROM Quests";
+
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                totalTimeElapsed = Convert.ToInt64(reader["TotalTimeElapsed"]);
+                            }
+                        }
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return totalTimeElapsed;
     }
 
     // TODO: i still need to reorganize all regions. ideally i put in separate classes/files. maybe a DatabaseHelper class?
@@ -12252,6 +13768,57 @@ Updating the database structure may take some time, it will transport all of you
                ;
 
         AlterTableQuests(connection, sql, updateQuery);
+
+        sql = @"DROP TABLE GachaCard";
+        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        sql = @"CREATE TABLE GachaCard(
+                    GachaCardID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    GachaCardTypeID INTEGER NOT NULL,
+                    GachaCardRarityID INTEGER NOT NULL,
+                    GachaCardName INTEGER NOT NULL,
+                    GachaCardFrontImage TEXT NOT NULL,
+                    GachCardBackImage TEXT NOT NULL,
+                    UNIQUE(GachaCardTypeID, GachaCardRarityID, GachaCardName) ON CONFLICT IGNORE,
+                    FOREIGN KEY(GachaCardTypeID) REFERENCES GachaCardType(GachaCardTypeID),
+                    FOREIGN KEY(GachaCardRarityID) REFERENCES GachaCardRarity(GachaCardRarityID)
+                    )";
+        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        logger.Debug("Recreated GachaCard table");
+
+        sql = @"DROP TABLE Bingo";
+        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        sql = @"CREATE TABLE Bingo(
+                    BingoID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
+                    Difficulty INTEGER NOT NULL DEFAULT 0,
+                    MonsterList TEXT NOT NULL DEFAULT '{}',
+                    WeaponType TEXT NOT NULL,
+                    Category TEXT NOT NULL,
+                    TotalFramesElapsed INTEGER NOT NULL,
+                    TotalTimeElapsed TEXT NOT NULL,
+                    Score INTEGER NOT NULL DEFAULT 0
+                    )";
+        using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        logger.Debug("Recreated Bingo table");
+
+
     }
 
     // TODO: should i put this in FileManager?

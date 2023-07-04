@@ -1,19 +1,22 @@
 ﻿// © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
+using MHFZ_Overlay.Core.Enum;
 using System.Collections.Generic;
 
 namespace MHFZ_Overlay.Core.Class.Dictionary;
 
 ///<summary>
-///The area icon list
+///The bingo monster difficulty list
 ///</summary>
 public static class BingoMonsterDifficulty
 {
-    public static IReadOnlyDictionary<string, List<string>> BingoMonsterDifficultyDictionary { get; } = new Dictionary<string, List<string>>
+    public static IReadOnlyDictionary<Difficulty, List<string>> BingoMonsterDifficultyDictionary { get; } = new Dictionary<Difficulty, List<string>>
     {
         // TODO make a function with input monster name and output dictionary<int, int> monsterID rankbandID
-        {"Easy", new List<string>{
+        // TODO i should use questid instead and use monster names as comments
+        // Extreme difficulty is same as hard difficulty but the bingo board is twice as big.
+        {Difficulty.Easy, new List<string>{
             "Elzelion",
             "Zenaserisu",
             "Zinogre",
@@ -97,7 +100,7 @@ public static class BingoMonsterDifficulty
             "Zenith★2 Bogabadorumu",
             }
         },
-        {"Medium", new List<string>{
+        {Difficulty.Medium, new List<string>{
             "Zenith★3 Espinas",
             "Zenith★3 Hypnoc",
             "Zenith★3 Khezu",
@@ -131,7 +134,7 @@ public static class BingoMonsterDifficulty
             "2nd District Duremudira"
             }
         },
-        {"Hard", new List<string>{
+        {Difficulty.Hard, new List<string>{
             "Zenith★4 Espinas",
             "Zenith★4 Hypnoc",
             "Zenith★4 Khezu",

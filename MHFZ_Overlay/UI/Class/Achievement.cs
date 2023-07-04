@@ -52,7 +52,7 @@ public class Achievement
         {
             if (AchievementsDictionary.IDAchievement.TryGetValue(achievementID, out MHFZ_Overlay.UI.Class.Achievement? achievement))
             {
-                if (achievement == null) return;
+                if (achievement == null) continue;
                 await achievement.Show(snackbar);
                 await Task.Delay(TimeSpan.FromSeconds(2)); // Delay between each achievement
             }

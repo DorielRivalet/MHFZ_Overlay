@@ -47,3 +47,12 @@ public enum Direction
     DownLeft,
     DownRight
 }
+
+public enum Difficulty
+{
+    Unknown,
+    Easy,
+    Medium,
+    Hard,
+    Extreme
+}

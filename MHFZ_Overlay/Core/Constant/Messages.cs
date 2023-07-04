@@ -23,4 +23,5 @@ public static class Messages
     public const string MAXIMUM_TIMER_PLACEHOLDER = "9999:59.999";
     public const string OVERLAY_MODE_PLACEHOLDER = "Standard";
     public const string MONSTER_IMAGE_NOT_LOADED = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/none.png";
+    public const string SECRET_ACHIEVEMENT = "???";
 }

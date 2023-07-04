@@ -80,7 +80,7 @@ public partial class MainWindow : Window
     /// <summary>
     /// DataLoader
     /// </summary>
-    public DataLoader DataLoader { get; set; }
+    public DataLoader dataLoader { get; set; }
 
     private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
     private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
@@ -295,7 +295,7 @@ public partial class MainWindow : Window
         var splashScreen = new SplashScreen("UI/Icons/png/loading.png");
 
         splashScreen.Show(false);
-        DataLoader = new DataLoader();
+        dataLoader = new DataLoader();
         InitializeComponent();
 
         logger.Info($"MainWindow initialized");
@@ -310,7 +310,7 @@ public partial class MainWindow : Window
         //memory leak?
         timer.Tick += Timer_Tick;
         timer.Start();
-        DataContext = DataLoader.model;
+        DataContext = dataLoader.model;
         GlobalHotKey.RegisterHotKey("Shift + F1", () => OpenConfigButton_Key());
         GlobalHotKey.RegisterHotKey("Shift + F5", () => ReloadButton_Key());
         GlobalHotKey.RegisterHotKey("Shift + F6", () => CloseButton_Key());
@@ -338,7 +338,7 @@ public partial class MainWindow : Window
         ProgramStart = DateTime.UtcNow;
 
         // Calculate the total time spent and update the TotalTimeSpent property
-        DataLoader.model.TotalTimeSpent = databaseManager.CalculateTotalTimeSpent();
+        dataLoader.model.TotalTimeSpent = databaseManager.CalculateTotalTimeSpent();
 
         MapPlayerInputImages();
         Subscribe();
@@ -380,8 +380,8 @@ public partial class MainWindow : Window
         {
             HideMonsterInfoWhenNotInQuest();
             HidePlayerInfoWhenNotInQuest();
-            DataLoader.CheckForExternalProcesses();
-            DataLoader.CheckForIllegalModifications();
+            dataLoader.CheckForExternalProcesses();
+            dataLoader.CheckForIllegalModifications();
         }
         catch (Exception ex)
         {
@@ -393,7 +393,7 @@ public partial class MainWindow : Window
         timer10Seconds.Tick += Timer10Seconds_Tick;
         timer10Seconds.Start();
 
-        DataLoader.model.ShowSaveIcon = false;
+        dataLoader.model.ShowSaveIcon = false;
 
         logger.Info("Loaded MHF-Z Overlay {0}", App.CurrentProgramVersion);
 
@@ -448,40 +448,40 @@ public partial class MainWindow : Window
         //inspired by HunterPie
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-        DataLoader.model.attackBuffSeries.Add(new LineSeries<ObservablePoint>
+        dataLoader.model.attackBuffSeries.Add(new LineSeries<ObservablePoint>
         {
-            Values = DataLoader.model.attackBuffCollection,
+            Values = dataLoader.model.attackBuffCollection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "7f")), new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Stroke = new SolidColorPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "7f")), new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
         });
 
-        DataLoader.model.damagePerSecondSeries.Add(new LineSeries<ObservablePoint>
+        dataLoader.model.damagePerSecondSeries.Add(new LineSeries<ObservablePoint>
         {
-            Values = DataLoader.model.damagePerSecondCollection,
+            Values = dataLoader.model.damagePerSecondCollection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "7f")), new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Stroke = new SolidColorPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "7f")), new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
         });
 
-        DataLoader.model.actionsPerMinuteSeries.Add(new LineSeries<ObservablePoint>
+        dataLoader.model.actionsPerMinuteSeries.Add(new LineSeries<ObservablePoint>
         {
-            Values = DataLoader.model.actionsPerMinuteCollection,
+            Values = dataLoader.model.actionsPerMinuteCollection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "7f")), new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Stroke = new SolidColorPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "7f")), new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
         });
 
-        DataLoader.model.hitsPerSecondSeries.Add(new LineSeries<ObservablePoint>
+        dataLoader.model.hitsPerSecondSeries.Add(new LineSeries<ObservablePoint>
         {
-            Values = DataLoader.model.hitsPerSecondCollection,
+            Values = dataLoader.model.hitsPerSecondCollection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(DataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Stroke = new SolidColorPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
         });
     }
 
@@ -554,12 +554,12 @@ The process may take some time, as the program attempts to download from GitHub 
             {
                 logger.Error("Detected game launcher");
                 System.Windows.MessageBox.Show("Detected launcher, please start the overlay when fully loading into Mezeporta. Closing overlay.", Messages.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                DataLoader.model.isInLauncherBool = true;
+                dataLoader.model.isInLauncherBool = true;
                 ApplicationManager.HandleShutdown();
             }
             else
             {
-                DataLoader.model.isInLauncherBool = false;
+                dataLoader.model.isInLauncherBool = false;
             }
 
             //https://stackoverflow.com/questions/51148/how-do-i-find-out-if-a-process-is-already-running-using-c
@@ -570,7 +570,7 @@ The process may take some time, as the program attempts to download from GitHub 
             mhfProcess.Exited += (sender, e) =>
             {
 
-                DataLoader.model.closedGame = true;
+                dataLoader.model.closedGame = true;
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 logger.Info("Detected closed game");
                 System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please start the overlay when fully loading into Mezeporta.", Messages.INFO_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
@@ -588,7 +588,7 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         try
         {
-            DataLoader.model.ReloadData();
+            dataLoader.model.ReloadData();
             Monster1HPBar.ReloadData();
             Monster2HPBar.ReloadData();
             Monster3HPBar.ReloadData();
@@ -606,14 +606,14 @@ The process may take some time, as the program attempts to download from GitHub 
             // this is also for database logging
             CheckMezFesScore();
 
-            if (DataLoader.model.isInLauncher() == "NULL" && !showedNullError)
+            if (dataLoader.model.isInLauncher() == "NULL" && !showedNullError)
             {
                 showedNullError = true;
             }
 
             if (!showedGameFolderWarning)
             {
-                DataLoader.model.ValidateGameFolder();
+                dataLoader.model.ValidateGameFolder();
                 showedGameFolderWarning = true;
             }
 
@@ -631,7 +631,7 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             HideMonsterInfoWhenNotInQuest();
             HidePlayerInfoWhenNotInQuest();
-            discordManager.UpdateDiscordRPC(DataLoader);
+            discordManager.UpdateDiscordRPC(dataLoader);
             CheckIfLocationChanged();
             CheckIfQuestChanged();
         }
@@ -645,8 +645,8 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         try
         {
-            DataLoader.CheckForExternalProcesses();
-            DataLoader.CheckForIllegalModifications();
+            dataLoader.CheckForExternalProcesses();
+            dataLoader.CheckForIllegalModifications();
         }
         catch (Exception ex)
         {
@@ -688,14 +688,14 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void CheckIfQuestChanged()
     {
-        if (DataLoader.model.previousQuestID != DataLoader.model.QuestID() && DataLoader.model.QuestID() != 0)
+        if (dataLoader.model.previousQuestID != dataLoader.model.QuestID() && dataLoader.model.QuestID() != 0)
         {
-            DataLoader.model.previousQuestID = DataLoader.model.QuestID();
+            dataLoader.model.previousQuestID = dataLoader.model.QuestID();
             ShowQuestName();
         }
-        else if (DataLoader.model.QuestID() == 0 && DataLoader.model.previousQuestID != 0)
+        else if (dataLoader.model.QuestID() == 0 && dataLoader.model.previousQuestID != 0)
         {
-            DataLoader.model.previousQuestID = DataLoader.model.QuestID();
+            dataLoader.model.previousQuestID = dataLoader.model.QuestID();
         }
     }
 
@@ -706,7 +706,7 @@ The process may take some time, as the program attempts to download from GitHub 
         if (s == null || !s.QuestNameShown)
             return;
 
-        EZlion.Mapper.Quest.IDName.TryGetValue(DataLoader.model.previousQuestID, out string? previousQuestID);
+        EZlion.Mapper.Quest.IDName.TryGetValue(dataLoader.model.previousQuestID, out string? previousQuestID);
         if (previousQuestID == null) return;
         questNameTextBlock.Text = previousQuestID;
         Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
@@ -768,9 +768,9 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void CheckIfLocationChanged()
     {
-        if (DataLoader.model.previousGlobalAreaID != DataLoader.model.AreaID() && DataLoader.model.AreaID() != 0)
+        if (dataLoader.model.previousGlobalAreaID != dataLoader.model.AreaID() && dataLoader.model.AreaID() != 0)
         {
-            DataLoader.model.previousGlobalAreaID = DataLoader.model.AreaID();
+            dataLoader.model.previousGlobalAreaID = dataLoader.model.AreaID();
             ShowLocationName();
         }
     }
@@ -781,7 +781,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
         if (s == null || !s.LocationTextShown) return;
 
-        Location.IDName.TryGetValue(DataLoader.model.previousGlobalAreaID, out string? previousGlobalAreaID);
+        Location.IDName.TryGetValue(dataLoader.model.previousGlobalAreaID, out string? previousGlobalAreaID);
         if (previousGlobalAreaID == null) return;
         locationTextBlock.Text = previousGlobalAreaID;
         Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
@@ -803,10 +803,10 @@ The process may take some time, as the program attempts to download from GitHub 
     /// </summary>
     private void CreateDamageNumber()
     {
-        if (DataLoader.model.QuestID() == 0) return;
+        if (dataLoader.model.QuestID() == 0) return;
 
         int damage = 0;
-        if (DataLoader.model.HitCountInt() == 0)
+        if (dataLoader.model.HitCountInt() == 0)
         {
             curNum = 0;
             prevNum = 0;
@@ -814,7 +814,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
         else
         {
-            damage = DataLoader.model.DamageDealt();
+            damage = dataLoader.model.DamageDealt();
         }
 
         if (prevNum != damage)
@@ -824,11 +824,11 @@ The process may take some time, as the program attempts to download from GitHub 
             {
                 isFirstAttack = false;
                 CreateDamageNumberLabel(damage);
-                if (!DataLoader.model.damageDealtDictionary.ContainsKey(DataLoader.model.TimeInt()))
+                if (!dataLoader.model.damageDealtDictionary.ContainsKey(dataLoader.model.TimeInt()))
                 {
                     try
                     {
-                        DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), damage);
+                        dataLoader.model.damageDealtDictionary.Add(dataLoader.model.TimeInt(), damage);
                     }
                     catch (Exception ex)
                     {
@@ -841,11 +841,11 @@ The process may take some time, as the program attempts to download from GitHub 
                 // TODO
                 curNum += 1_000;
                 CreateDamageNumberLabel(curNum);
-                if (!DataLoader.model.damageDealtDictionary.ContainsKey(DataLoader.model.TimeInt()))
+                if (!dataLoader.model.damageDealtDictionary.ContainsKey(dataLoader.model.TimeInt()))
                 {
                     try
                     {
-                        DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
+                        dataLoader.model.damageDealtDictionary.Add(dataLoader.model.TimeInt(), curNum);
 
                     }
                     catch (Exception ex)
@@ -859,11 +859,11 @@ The process may take some time, as the program attempts to download from GitHub 
                 if (curNum != damage)
                 {
                     CreateDamageNumberLabel(curNum);
-                    if (!DataLoader.model.damageDealtDictionary.ContainsKey(DataLoader.model.TimeInt()))
+                    if (!dataLoader.model.damageDealtDictionary.ContainsKey(dataLoader.model.TimeInt()))
                     {
                         try
                         {
-                            DataLoader.model.damageDealtDictionary.Add(DataLoader.model.TimeInt(), curNum);
+                            dataLoader.model.damageDealtDictionary.Add(dataLoader.model.TimeInt(), curNum);
                         }
                         catch
                         (Exception ex)
@@ -914,7 +914,7 @@ The process may take some time, as the program attempts to download from GitHub 
         damageOutlinedTextBlock.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
 
         //does not alter actual number displayed, only the text style
-        double damageModifier = damage / (DataLoader.model.CurrentWeaponMultiplier / 2);
+        double damageModifier = damage / (dataLoader.model.CurrentWeaponMultiplier / 2);
         string exclamations = string.Empty;
 
         switch (damageModifier)
@@ -960,7 +960,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 break;
         }
 
-        var defenseMultiplier = Double.Parse(DataLoader.model.DefMult);
+        var defenseMultiplier = Double.Parse(dataLoader.model.DefMult);
         if (defenseMultiplier <= 0) 
             defenseMultiplier = 1;
         var effectiveDamage = damage / defenseMultiplier;
@@ -1179,28 +1179,28 @@ The process may take some time, as the program attempts to download from GitHub 
     private void HideMonsterInfoWhenNotInQuest()
     {
         Settings s = (Settings)Application.Current.FindResource("Settings");
-        bool v = s.AlwaysShowMonsterInfo || DataLoader.model.Configuring || DataLoader.model.QuestID() != 0;
+        bool v = s.AlwaysShowMonsterInfo || dataLoader.model.Configuring || dataLoader.model.QuestID() != 0;
         SetMonsterStatsVisibility(v, s);
     }
 
     private void SetMonsterStatsVisibility(bool v, Settings s)
     {
-        DataLoader.model.ShowMonsterAtkMult = v && s.MonsterAtkMultShown;
-        DataLoader.model.ShowMonsterDefrate = v && s.MonsterDefrateShown;
-        DataLoader.model.ShowMonsterSize = v && s.MonsterSizeShown;
-        DataLoader.model.ShowMonsterPoison = v && s.MonsterPoisonShown;
-        DataLoader.model.ShowMonsterSleep = v && s.MonsterSleepShown;
-        DataLoader.model.ShowMonsterPara = v && s.MonsterParaShown;
-        DataLoader.model.ShowMonsterBlast = v && s.MonsterBlastShown;
-        DataLoader.model.ShowMonsterStun = v && s.MonsterStunShown;
+        dataLoader.model.ShowMonsterAtkMult = v && s.MonsterAtkMultShown;
+        dataLoader.model.ShowMonsterDefrate = v && s.MonsterDefrateShown;
+        dataLoader.model.ShowMonsterSize = v && s.MonsterSizeShown;
+        dataLoader.model.ShowMonsterPoison = v && s.MonsterPoisonShown;
+        dataLoader.model.ShowMonsterSleep = v && s.MonsterSleepShown;
+        dataLoader.model.ShowMonsterPara = v && s.MonsterParaShown;
+        dataLoader.model.ShowMonsterBlast = v && s.MonsterBlastShown;
+        dataLoader.model.ShowMonsterStun = v && s.MonsterStunShown;
 
-        DataLoader.model.ShowMonster1HPBar = v && s.Monster1HealthBarShown;
-        DataLoader.model.ShowMonster2HPBar = v && s.Monster2HealthBarShown;
-        DataLoader.model.ShowMonster3HPBar = v && s.Monster3HealthBarShown;
-        DataLoader.model.ShowMonster4HPBar = v && s.Monster4HealthBarShown;
+        dataLoader.model.ShowMonster1HPBar = v && s.Monster1HealthBarShown;
+        dataLoader.model.ShowMonster2HPBar = v && s.Monster2HealthBarShown;
+        dataLoader.model.ShowMonster3HPBar = v && s.Monster3HealthBarShown;
+        dataLoader.model.ShowMonster4HPBar = v && s.Monster4HealthBarShown;
 
-        DataLoader.model.ShowMonsterPartHP = v && s.PartThresholdShown;
-        DataLoader.model.ShowMonster1Icon = v && s.Monster1IconShown;
+        dataLoader.model.ShowMonsterPartHP = v && s.PartThresholdShown;
+        dataLoader.model.ShowMonster1Icon = v && s.Monster1IconShown;
     }
 
     /// <summary>
@@ -1209,39 +1209,39 @@ The process may take some time, as the program attempts to download from GitHub 
     private void HidePlayerInfoWhenNotInQuest()
     {
         Settings s = (Settings)Application.Current.FindResource("Settings");
-        bool v = s.AlwaysShowPlayerInfo || DataLoader.model.Configuring || DataLoader.model.QuestID() != 0;
+        bool v = s.AlwaysShowPlayerInfo || dataLoader.model.Configuring || dataLoader.model.QuestID() != 0;
         SetPlayerStatsVisibility(v, s);
     }
 
     private void SetPlayerStatsVisibility(bool v, Settings s)
     {
         //DL.m.?.Visibility = v && s.?.IsChecked
-        DataLoader.model.ShowTimerInfo = v && s.TimerInfoShown;
-        DataLoader.model.ShowHitCountInfo = v && s.HitCountShown;
-        DataLoader.model.ShowPlayerAtkInfo = v && s.PlayerAtkShown;
-        DataLoader.model.ShowPlayerHitsTakenBlockedInfo = v && s.TotalHitsTakenBlockedShown;
-        DataLoader.model.ShowSharpness = v && s.EnableSharpness;
-        DataLoader.model.ShowSessionTimeInfo = v && s.SessionTimeShown;
+        dataLoader.model.ShowTimerInfo = v && s.TimerInfoShown;
+        dataLoader.model.ShowHitCountInfo = v && s.HitCountShown;
+        dataLoader.model.ShowPlayerAtkInfo = v && s.PlayerAtkShown;
+        dataLoader.model.ShowPlayerHitsTakenBlockedInfo = v && s.TotalHitsTakenBlockedShown;
+        dataLoader.model.ShowSharpness = v && s.EnableSharpness;
+        dataLoader.model.ShowSessionTimeInfo = v && s.SessionTimeShown;
 
-        DataLoader.model.ShowMap = v && s.EnableMap;
-        DataLoader.model.ShowFrameCounter = v && s.FrameCounterShown;
-        DataLoader.model.ShowPlayerAttackGraph = v && s.PlayerAttackGraphShown;
-        DataLoader.model.ShowPlayerDPSGraph = v && s.PlayerDPSGraphShown;
-        DataLoader.model.ShowPlayerAPMGraph = v && s.PlayerAPMGraphShown;
-        DataLoader.model.ShowPlayerHitsPerSecondGraph = v && s.PlayerHitsPerSecondGraphShown;
+        dataLoader.model.ShowMap = v && s.EnableMap;
+        dataLoader.model.ShowFrameCounter = v && s.FrameCounterShown;
+        dataLoader.model.ShowPlayerAttackGraph = v && s.PlayerAttackGraphShown;
+        dataLoader.model.ShowPlayerDPSGraph = v && s.PlayerDPSGraphShown;
+        dataLoader.model.ShowPlayerAPMGraph = v && s.PlayerAPMGraphShown;
+        dataLoader.model.ShowPlayerHitsPerSecondGraph = v && s.PlayerHitsPerSecondGraphShown;
 
-        DataLoader.model.ShowDamagePerSecond = v && s.DamagePerSecondShown;
+        dataLoader.model.ShowDamagePerSecond = v && s.DamagePerSecondShown;
 
-        DataLoader.model.ShowKBMLayout = v && s.KBMLayoutShown;
-        DataLoader.model.ShowGamepadLayout = v && s.GamepadShown;
-        DataLoader.model.ShowAPM = v && s.ActionsPerMinuteShown;
-        DataLoader.model.ShowOverlayModeWatermark = v && s.OverlayModeWatermarkShown;
-        DataLoader.model.ShowQuestID = v && s.QuestIDShown;
+        dataLoader.model.ShowKBMLayout = v && s.KBMLayoutShown;
+        dataLoader.model.ShowGamepadLayout = v && s.GamepadShown;
+        dataLoader.model.ShowAPM = v && s.ActionsPerMinuteShown;
+        dataLoader.model.ShowOverlayModeWatermark = v && s.OverlayModeWatermarkShown;
+        dataLoader.model.ShowQuestID = v && s.QuestIDShown;
 
-        DataLoader.model.ShowPersonalBestInfo = v && s.PersonalBestShown;
-        DataLoader.model.ShowQuestAttemptsInfo = v && s.QuestAttemptsShown;
-        DataLoader.model.ShowPersonalBestTimePercentInfo = v && s.PersonalBestTimePercentShown;
-        DataLoader.model.ShowPersonalBestAttemptsInfo = v && s.PersonalBestAttemptsShown;
+        dataLoader.model.ShowPersonalBestInfo = v && s.PersonalBestShown;
+        dataLoader.model.ShowQuestAttemptsInfo = v && s.QuestAttemptsShown;
+        dataLoader.model.ShowPersonalBestTimePercentInfo = v && s.PersonalBestTimePercentShown;
+        dataLoader.model.ShowPersonalBestAttemptsInfo = v && s.PersonalBestAttemptsShown;
     }
 
     #endregion
@@ -1481,7 +1481,7 @@ The process may take some time, as the program attempts to download from GitHub 
         if (configWindow == null || !configWindow.IsLoaded)
             configWindow = new(this);
         configWindow.Show();
-        DataLoader.model.Configuring = true;
+        dataLoader.model.Configuring = true;
     }
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -1499,7 +1499,7 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         if (IsDragConfigure) return;
 
-        if (DataLoader.model.isInLauncherBool)
+        if (dataLoader.model.isInLauncherBool)
         {
             System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
             logger.Info("Detected game launcher while using configuration menu");
@@ -1510,7 +1510,7 @@ The process may take some time, as the program attempts to download from GitHub 
         try
         {
             configWindow.Show();// TODO: memory error?
-            DataLoader.model.Configuring = true;
+            dataLoader.model.Configuring = true;
         }
         catch (Exception ex)
         {
@@ -1519,8 +1519,8 @@ The process may take some time, as the program attempts to download from GitHub 
 
         try
         {
-            DataLoader.CheckForExternalProcesses();
-            DataLoader.CheckForIllegalModifications();
+            dataLoader.CheckForExternalProcesses();
+            dataLoader.CheckForIllegalModifications();
         }
         catch (Exception ex)
         {
@@ -1654,8 +1654,8 @@ The process may take some time, as the program attempts to download from GitHub 
     private async Task UpdateQuestAttempts()
     {
         string category = OverlayModeWatermarkTextBlock.Text;
-        int weaponType = DataLoader.model.WeaponType();
-        long questID = DataLoader.model.QuestID();
+        int weaponType = dataLoader.model.WeaponType();
+        long questID = dataLoader.model.QuestID();
 
         int attempts = await databaseManager.UpsertQuestAttemptsAsync(questID, weaponType, category);
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -1669,8 +1669,8 @@ The process may take some time, as the program attempts to download from GitHub 
     private async Task UpdatePersonalBestAttempts()
     {
         string category = OverlayModeWatermarkTextBlock.Text;
-        int weaponType = DataLoader.model.WeaponType();
-        long questID = DataLoader.model.QuestID();
+        int weaponType = dataLoader.model.WeaponType();
+        long questID = dataLoader.model.QuestID();
 
         int attempts = await databaseManager.UpsertPersonalBestAttemptsAsync(questID, weaponType, category);
         personalBestAttemptsTextBlock.Text = attempts.ToString();
@@ -1688,19 +1688,19 @@ The process may take some time, as the program attempts to download from GitHub 
         switch (areaID)
         {
             case 464: // Uruki Pachinko
-                score = DataLoader.model.UrukiPachinkoScore() + DataLoader.model.UrukiPachinkoBonusScore();
+                score = dataLoader.model.UrukiPachinkoScore() + dataLoader.model.UrukiPachinkoBonusScore();
                 break;
             case 467: // Nyanrendo
-                score = DataLoader.model.NyanrendoScore();
+                score = dataLoader.model.NyanrendoScore();
                 break;
             case 469: // Dokkan Battle Cats
-                score = DataLoader.model.DokkanBattleCatsScore();
+                score = dataLoader.model.DokkanBattleCatsScore();
                 break;
             case 466: // Guuku Scoop
-                score = DataLoader.model.GuukuScoopScore();
+                score = dataLoader.model.GuukuScoopScore();
                 break;
             case 468: // Panic Honey
-                score = DataLoader.model.PanicHoneyScore();
+                score = dataLoader.model.PanicHoneyScore();
                 break;
         }
         return score;
@@ -1714,39 +1714,39 @@ The process may take some time, as the program attempts to download from GitHub 
     /// </summary>
     private void CheckMezFesScore()
     {
-        if (DataLoader.model.QuestID() != 0 || !(DataLoader.model.AreaID() == 462 || MezFesMinigame.ID.ContainsKey(DataLoader.model.AreaID())))
+        if (dataLoader.model.QuestID() != 0 || !(dataLoader.model.AreaID() == 462 || MezFesMinigame.ID.ContainsKey(dataLoader.model.AreaID())))
             return;
 
-        int areaID = DataLoader.model.AreaID();
+        int areaID = dataLoader.model.AreaID();
 
         // Check if player is in a minigame area
         if (MezFesMinigame.ID.ContainsKey(areaID))
         {
             // Check if the player has entered a new minigame area
-            if (areaID != DataLoader.model.previousMezFesArea)
+            if (areaID != dataLoader.model.previousMezFesArea)
             {
-                DataLoader.model.previousMezFesArea = areaID;
-                DataLoader.model.previousMezFesScore = 0;
+                dataLoader.model.previousMezFesArea = areaID;
+                dataLoader.model.previousMezFesScore = 0;
             }
 
             // Read player score from corresponding memory address based on current area ID
             int score = GetMezFesMinigameScore(areaID);
 
             // Update current score with new score if it's greater and doesn't surpass the UI limit
-            if (score > DataLoader.model.previousMezFesScore && score <= 999999)
+            if (score > dataLoader.model.previousMezFesScore && score <= 999999)
             {
-                DataLoader.model.previousMezFesScore = score;
+                dataLoader.model.previousMezFesScore = score;
             }
         }
         // Check if the player has exited a minigame area and the score is 0
-        else if (DataLoader.model.previousMezFesArea != -1 && areaID == 462)
+        else if (dataLoader.model.previousMezFesArea != -1 && areaID == 462)
         {
             // Save current score and minigame area ID to database
-            databaseManager.InsertMezFesMinigameScore(DataLoader, DataLoader.model.previousMezFesArea, DataLoader.model.previousMezFesScore);
+            databaseManager.InsertMezFesMinigameScore(dataLoader, dataLoader.model.previousMezFesArea, dataLoader.model.previousMezFesScore);
 
             // Reset previousMezFesArea and previousMezFesScore
-            DataLoader.model.previousMezFesArea = -1;
-            DataLoader.model.previousMezFesScore = 0;
+            dataLoader.model.previousMezFesArea = -1;
+            dataLoader.model.previousMezFesScore = 0;
         }
     }
 
@@ -1756,27 +1756,27 @@ The process may take some time, as the program attempts to download from GitHub 
         Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
         // Check if in quest and timer is NOT frozen
-        if (DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt())
+        if (dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt())
         {
-            DataLoader.model.previousTimeInt = DataLoader.model.TimeInt();
-            DataLoader.model.TotalHitsTakenBlockedPerSecond = DataLoader.model.CalculateTotalHitsTakenBlockedPerSecond();
-            DataLoader.model.HitsPerSecond = DataLoader.model.CalculateHitsPerSecond();
-            DataLoader.model.DPS = DataLoader.model.CalculateDPS();
-            DataLoader.model.APM = DataLoader.model.CalculateAPM();
-            DataLoader.model.InsertQuestInfoIntoDictionaries();
+            dataLoader.model.previousTimeInt = dataLoader.model.TimeInt();
+            dataLoader.model.TotalHitsTakenBlockedPerSecond = dataLoader.model.CalculateTotalHitsTakenBlockedPerSecond();
+            dataLoader.model.HitsPerSecond = dataLoader.model.CalculateHitsPerSecond();
+            dataLoader.model.DPS = dataLoader.model.CalculateDPS();
+            dataLoader.model.APM = dataLoader.model.CalculateAPM();
+            dataLoader.model.InsertQuestInfoIntoDictionaries();
 
             //TODO: test on dure/etc
-            if (!calculatedPersonalBest && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() && int.Parse(DataLoader.model.ATK) > 0)
+            if (!calculatedPersonalBest && dataLoader.model.TimeDefInt() > dataLoader.model.TimeInt() && int.Parse(dataLoader.model.ATK) > 0)
             {
                 calculatedPersonalBest = true;
-                personalBestTextBlock.Text = await databaseManager.GetPersonalBestAsync(DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text, DataLoader.model.QuestTimeMode, DataLoader);
-                DataLoader.model.PersonalBestLoaded = personalBestTextBlock.Text;
+                personalBestTextBlock.Text = await databaseManager.GetPersonalBestAsync(dataLoader.model.QuestID(), dataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text, dataLoader.model.QuestTimeMode, dataLoader);
+                dataLoader.model.PersonalBestLoaded = personalBestTextBlock.Text;
             }
 
             if (!calculatedQuestAttempts 
-                && DataLoader.model.TimeDefInt() > DataLoader.model.TimeInt() 
-                && int.Parse(DataLoader.model.ATK) > 0
-                && DataLoader.model.TimeDefInt() - DataLoader.model.TimeInt() >= 30)
+                && dataLoader.model.TimeDefInt() > dataLoader.model.TimeInt() 
+                && int.Parse(dataLoader.model.ATK) > 0
+                && dataLoader.model.TimeDefInt() - dataLoader.model.TimeInt() >= 30)
             {
                 calculatedQuestAttempts = true;
                 await UpdateQuestAttempts();
@@ -1784,127 +1784,137 @@ The process may take some time, as the program attempts to download from GitHub 
             }
         }
 
-        if ((DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() == 0))
+        if ((dataLoader.model.QuestState() == 0 && dataLoader.model.QuestID() == 0))
         {
-            DataLoader.model.questCleared = false;
-            DataLoader.model.clearQuestInfoDictionaries();
-            DataLoader.model.clearGraphCollections();
-            DataLoader.model.resetQuestInfoVariables();
-            DataLoader.model.previousRoadFloor = 0;
+            dataLoader.model.questCleared = false;
+            dataLoader.model.questRewardsGiven = false;
+            dataLoader.model.clearQuestInfoDictionaries();
+            dataLoader.model.clearGraphCollections();
+            dataLoader.model.resetQuestInfoVariables();
+            dataLoader.model.previousRoadFloor = 0;
             personalBestTextBlock.Text = Messages.TIMER_NOT_LOADED;
             calculatedPersonalBest = false;
             calculatedQuestAttempts = false;
             return;
         }
-        else if (!DataLoader.model.loadedItemsAtQuestStart && DataLoader.model.QuestState() == 0 && DataLoader.model.QuestID() != 0)
+        else if (!dataLoader.model.loadedItemsAtQuestStart && dataLoader.model.QuestState() == 0 && dataLoader.model.QuestID() != 0)
         {
-            DataLoader.model.loadedItemsAtQuestStart = true;
-            DataLoader.model.PouchItem1IDAtQuestStart = DataLoader.model.PouchItem1ID();
-            DataLoader.model.PouchItem2IDAtQuestStart = DataLoader.model.PouchItem2ID();
-            DataLoader.model.PouchItem3IDAtQuestStart = DataLoader.model.PouchItem3ID();
-            DataLoader.model.PouchItem4IDAtQuestStart = DataLoader.model.PouchItem4ID();
-            DataLoader.model.PouchItem5IDAtQuestStart = DataLoader.model.PouchItem5ID();
-            DataLoader.model.PouchItem6IDAtQuestStart = DataLoader.model.PouchItem6ID();
-            DataLoader.model.PouchItem7IDAtQuestStart = DataLoader.model.PouchItem7ID();
-            DataLoader.model.PouchItem8IDAtQuestStart = DataLoader.model.PouchItem8ID();
-            DataLoader.model.PouchItem9IDAtQuestStart = DataLoader.model.PouchItem9ID();
-            DataLoader.model.PouchItem10IDAtQuestStart = DataLoader.model.PouchItem10ID();
-            DataLoader.model.PouchItem11IDAtQuestStart = DataLoader.model.PouchItem11ID();
-            DataLoader.model.PouchItem12IDAtQuestStart = DataLoader.model.PouchItem12ID();
-            DataLoader.model.PouchItem13IDAtQuestStart = DataLoader.model.PouchItem13ID();
-            DataLoader.model.PouchItem14IDAtQuestStart = DataLoader.model.PouchItem14ID();
-            DataLoader.model.PouchItem15IDAtQuestStart = DataLoader.model.PouchItem15ID();
-            DataLoader.model.PouchItem16IDAtQuestStart = DataLoader.model.PouchItem16ID();
-            DataLoader.model.PouchItem17IDAtQuestStart = DataLoader.model.PouchItem17ID();
-            DataLoader.model.PouchItem18IDAtQuestStart = DataLoader.model.PouchItem18ID();
-            DataLoader.model.PouchItem19IDAtQuestStart = DataLoader.model.PouchItem19ID();
-            DataLoader.model.PouchItem20IDAtQuestStart = DataLoader.model.PouchItem20ID();
-            DataLoader.model.PouchItem1QuantityAtQuestStart = DataLoader.model.PouchItem1Qty();
-            DataLoader.model.PouchItem2QuantityAtQuestStart = DataLoader.model.PouchItem2Qty();
-            DataLoader.model.PouchItem3QuantityAtQuestStart = DataLoader.model.PouchItem3Qty();
-            DataLoader.model.PouchItem4QuantityAtQuestStart = DataLoader.model.PouchItem4Qty();
-            DataLoader.model.PouchItem5QuantityAtQuestStart = DataLoader.model.PouchItem5Qty();
-            DataLoader.model.PouchItem6QuantityAtQuestStart = DataLoader.model.PouchItem6Qty();
-            DataLoader.model.PouchItem7QuantityAtQuestStart = DataLoader.model.PouchItem7Qty();
-            DataLoader.model.PouchItem8QuantityAtQuestStart = DataLoader.model.PouchItem8Qty();
-            DataLoader.model.PouchItem9QuantityAtQuestStart = DataLoader.model.PouchItem9Qty();
-            DataLoader.model.PouchItem10QuantityAtQuestStart = DataLoader.model.PouchItem10Qty();
-            DataLoader.model.PouchItem11QuantityAtQuestStart = DataLoader.model.PouchItem11Qty();
-            DataLoader.model.PouchItem12QuantityAtQuestStart = DataLoader.model.PouchItem12Qty();
-            DataLoader.model.PouchItem13QuantityAtQuestStart = DataLoader.model.PouchItem13Qty();
-            DataLoader.model.PouchItem14QuantityAtQuestStart = DataLoader.model.PouchItem14Qty();
-            DataLoader.model.PouchItem15QuantityAtQuestStart = DataLoader.model.PouchItem15Qty();
-            DataLoader.model.PouchItem16QuantityAtQuestStart = DataLoader.model.PouchItem16Qty();
-            DataLoader.model.PouchItem17QuantityAtQuestStart = DataLoader.model.PouchItem17Qty();
-            DataLoader.model.PouchItem18QuantityAtQuestStart = DataLoader.model.PouchItem18Qty();
-            DataLoader.model.PouchItem19QuantityAtQuestStart = DataLoader.model.PouchItem19Qty();
-            DataLoader.model.PouchItem20QuantityAtQuestStart = DataLoader.model.PouchItem20Qty();
+            dataLoader.model.loadedItemsAtQuestStart = true;
+            dataLoader.model.PouchItem1IDAtQuestStart = dataLoader.model.PouchItem1ID();
+            dataLoader.model.PouchItem2IDAtQuestStart = dataLoader.model.PouchItem2ID();
+            dataLoader.model.PouchItem3IDAtQuestStart = dataLoader.model.PouchItem3ID();
+            dataLoader.model.PouchItem4IDAtQuestStart = dataLoader.model.PouchItem4ID();
+            dataLoader.model.PouchItem5IDAtQuestStart = dataLoader.model.PouchItem5ID();
+            dataLoader.model.PouchItem6IDAtQuestStart = dataLoader.model.PouchItem6ID();
+            dataLoader.model.PouchItem7IDAtQuestStart = dataLoader.model.PouchItem7ID();
+            dataLoader.model.PouchItem8IDAtQuestStart = dataLoader.model.PouchItem8ID();
+            dataLoader.model.PouchItem9IDAtQuestStart = dataLoader.model.PouchItem9ID();
+            dataLoader.model.PouchItem10IDAtQuestStart = dataLoader.model.PouchItem10ID();
+            dataLoader.model.PouchItem11IDAtQuestStart = dataLoader.model.PouchItem11ID();
+            dataLoader.model.PouchItem12IDAtQuestStart = dataLoader.model.PouchItem12ID();
+            dataLoader.model.PouchItem13IDAtQuestStart = dataLoader.model.PouchItem13ID();
+            dataLoader.model.PouchItem14IDAtQuestStart = dataLoader.model.PouchItem14ID();
+            dataLoader.model.PouchItem15IDAtQuestStart = dataLoader.model.PouchItem15ID();
+            dataLoader.model.PouchItem16IDAtQuestStart = dataLoader.model.PouchItem16ID();
+            dataLoader.model.PouchItem17IDAtQuestStart = dataLoader.model.PouchItem17ID();
+            dataLoader.model.PouchItem18IDAtQuestStart = dataLoader.model.PouchItem18ID();
+            dataLoader.model.PouchItem19IDAtQuestStart = dataLoader.model.PouchItem19ID();
+            dataLoader.model.PouchItem20IDAtQuestStart = dataLoader.model.PouchItem20ID();
+            dataLoader.model.PouchItem1QuantityAtQuestStart = dataLoader.model.PouchItem1Qty();
+            dataLoader.model.PouchItem2QuantityAtQuestStart = dataLoader.model.PouchItem2Qty();
+            dataLoader.model.PouchItem3QuantityAtQuestStart = dataLoader.model.PouchItem3Qty();
+            dataLoader.model.PouchItem4QuantityAtQuestStart = dataLoader.model.PouchItem4Qty();
+            dataLoader.model.PouchItem5QuantityAtQuestStart = dataLoader.model.PouchItem5Qty();
+            dataLoader.model.PouchItem6QuantityAtQuestStart = dataLoader.model.PouchItem6Qty();
+            dataLoader.model.PouchItem7QuantityAtQuestStart = dataLoader.model.PouchItem7Qty();
+            dataLoader.model.PouchItem8QuantityAtQuestStart = dataLoader.model.PouchItem8Qty();
+            dataLoader.model.PouchItem9QuantityAtQuestStart = dataLoader.model.PouchItem9Qty();
+            dataLoader.model.PouchItem10QuantityAtQuestStart = dataLoader.model.PouchItem10Qty();
+            dataLoader.model.PouchItem11QuantityAtQuestStart = dataLoader.model.PouchItem11Qty();
+            dataLoader.model.PouchItem12QuantityAtQuestStart = dataLoader.model.PouchItem12Qty();
+            dataLoader.model.PouchItem13QuantityAtQuestStart = dataLoader.model.PouchItem13Qty();
+            dataLoader.model.PouchItem14QuantityAtQuestStart = dataLoader.model.PouchItem14Qty();
+            dataLoader.model.PouchItem15QuantityAtQuestStart = dataLoader.model.PouchItem15Qty();
+            dataLoader.model.PouchItem16QuantityAtQuestStart = dataLoader.model.PouchItem16Qty();
+            dataLoader.model.PouchItem17QuantityAtQuestStart = dataLoader.model.PouchItem17Qty();
+            dataLoader.model.PouchItem18QuantityAtQuestStart = dataLoader.model.PouchItem18Qty();
+            dataLoader.model.PouchItem19QuantityAtQuestStart = dataLoader.model.PouchItem19Qty();
+            dataLoader.model.PouchItem20QuantityAtQuestStart = dataLoader.model.PouchItem20Qty();
 
-            DataLoader.model.AmmoPouchItem1IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
-            DataLoader.model.AmmoPouchItem2IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
-            DataLoader.model.AmmoPouchItem3IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
-            DataLoader.model.AmmoPouchItem4IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
-            DataLoader.model.AmmoPouchItem5IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
-            DataLoader.model.AmmoPouchItem6IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
-            DataLoader.model.AmmoPouchItem7IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
-            DataLoader.model.AmmoPouchItem8IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
-            DataLoader.model.AmmoPouchItem9IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
-            DataLoader.model.AmmoPouchItem10IDAtQuestStart = DataLoader.model.AmmoPouchItem1ID();
-            DataLoader.model.AmmoPouchItem1QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
-            DataLoader.model.AmmoPouchItem2QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
-            DataLoader.model.AmmoPouchItem3QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
-            DataLoader.model.AmmoPouchItem4QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
-            DataLoader.model.AmmoPouchItem5QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
-            DataLoader.model.AmmoPouchItem6QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
-            DataLoader.model.AmmoPouchItem7QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
-            DataLoader.model.AmmoPouchItem8QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
-            DataLoader.model.AmmoPouchItem9QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
-            DataLoader.model.AmmoPouchItem10QuantityAtQuestStart = DataLoader.model.AmmoPouchItem1Qty();
+            dataLoader.model.AmmoPouchItem1IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
+            dataLoader.model.AmmoPouchItem2IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
+            dataLoader.model.AmmoPouchItem3IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
+            dataLoader.model.AmmoPouchItem4IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
+            dataLoader.model.AmmoPouchItem5IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
+            dataLoader.model.AmmoPouchItem6IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
+            dataLoader.model.AmmoPouchItem7IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
+            dataLoader.model.AmmoPouchItem8IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
+            dataLoader.model.AmmoPouchItem9IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
+            dataLoader.model.AmmoPouchItem10IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
+            dataLoader.model.AmmoPouchItem1QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
+            dataLoader.model.AmmoPouchItem2QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
+            dataLoader.model.AmmoPouchItem3QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
+            dataLoader.model.AmmoPouchItem4QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
+            dataLoader.model.AmmoPouchItem5QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
+            dataLoader.model.AmmoPouchItem6QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
+            dataLoader.model.AmmoPouchItem7QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
+            dataLoader.model.AmmoPouchItem8QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
+            dataLoader.model.AmmoPouchItem9QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
+            dataLoader.model.AmmoPouchItem10QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
 
-            DataLoader.model.PartnyaBagItem1IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
-            DataLoader.model.PartnyaBagItem2IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
-            DataLoader.model.PartnyaBagItem3IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
-            DataLoader.model.PartnyaBagItem4IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
-            DataLoader.model.PartnyaBagItem5IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
-            DataLoader.model.PartnyaBagItem6IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
-            DataLoader.model.PartnyaBagItem7IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
-            DataLoader.model.PartnyaBagItem8IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
-            DataLoader.model.PartnyaBagItem9IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
-            DataLoader.model.PartnyaBagItem10IDAtQuestStart = DataLoader.model.PartnyaBagItem1ID();
-            DataLoader.model.PartnyaBagItem1QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
-            DataLoader.model.PartnyaBagItem2QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
-            DataLoader.model.PartnyaBagItem3QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
-            DataLoader.model.PartnyaBagItem4QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
-            DataLoader.model.PartnyaBagItem5QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
-            DataLoader.model.PartnyaBagItem6QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
-            DataLoader.model.PartnyaBagItem7QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
-            DataLoader.model.PartnyaBagItem8QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
-            DataLoader.model.PartnyaBagItem9QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
-            DataLoader.model.PartnyaBagItem10QuantityAtQuestStart = DataLoader.model.PartnyaBagItem1Qty();
+            dataLoader.model.PartnyaBagItem1IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
+            dataLoader.model.PartnyaBagItem2IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
+            dataLoader.model.PartnyaBagItem3IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
+            dataLoader.model.PartnyaBagItem4IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
+            dataLoader.model.PartnyaBagItem5IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
+            dataLoader.model.PartnyaBagItem6IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
+            dataLoader.model.PartnyaBagItem7IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
+            dataLoader.model.PartnyaBagItem8IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
+            dataLoader.model.PartnyaBagItem9IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
+            dataLoader.model.PartnyaBagItem10IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
+            dataLoader.model.PartnyaBagItem1QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
+            dataLoader.model.PartnyaBagItem2QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
+            dataLoader.model.PartnyaBagItem3QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
+            dataLoader.model.PartnyaBagItem4QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
+            dataLoader.model.PartnyaBagItem5QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
+            dataLoader.model.PartnyaBagItem6QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
+            dataLoader.model.PartnyaBagItem7QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
+            dataLoader.model.PartnyaBagItem8QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
+            dataLoader.model.PartnyaBagItem9QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
+            dataLoader.model.PartnyaBagItem10QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
 
         }
 
-        if (DataLoader.model.QuestState() == 0)
+        if (dataLoader.model.QuestState() == 0)
             return;
 
         // check if quest clear 
-        if (DataLoader.model.QuestState() == 1 && !DataLoader.model.questCleared)
+        if (dataLoader.model.QuestState() == 1 && !dataLoader.model.questCleared)
         {
             // TODO test on dure/road/etc
             // If this code is ever reached, it is not known if the cause is from the overlay interacting with the server,
-            // or just the overlay itself.
+            // the server itself, or just the overlay itself.
             // The overlay does NOT write to memory addresses.
-            if (DataLoader.model.TimeDefInt() - DataLoader.model.TimeInt() == 0)
+            if (dataLoader.model.TimeDefInt() - dataLoader.model.TimeInt() == 0)
             {
-                logger.Fatal("Illegal quest completion time [ID {0}]", DataLoader.model.QuestID());
+                logger.Fatal("Illegal quest completion time [ID {0}]", dataLoader.model.QuestID());
                 ApplicationManager.HandleGameShutdown();
-                LoggingManager.WriteCrashLog(new Exception($"Illegal quest completion time [ID {DataLoader.model.QuestID()}]"));
+                LoggingManager.WriteCrashLog(new Exception($"Illegal quest completion time [ID {dataLoader.model.QuestID()}]"));
             }
 
-            DataLoader.model.questCleared = true;
-            DataLoader.model.loadedItemsAtQuestStart = false;
+            dataLoader.model.questCleared = true;
+            dataLoader.model.loadedItemsAtQuestStart = false;
             if (s.EnableQuestLogging)
-                databaseManager.InsertQuestData(DataLoader, (int)databaseManager.GetQuestAttempts((long)DataLoader.model.QuestID(), DataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text));
+                databaseManager.InsertQuestData(dataLoader, (int)databaseManager.GetQuestAttempts((long)dataLoader.model.QuestID(), dataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text));
+        }
+
+        // check if rewards given
+        if (dataLoader.model.QuestState() == 129 && !dataLoader.model.questRewardsGiven)
+        {
+            dataLoader.model.questRewardsGiven = true;
+            // TODO: add logging check requirement in case the user needs the hash sets.
+            // We await since we are dealing with database
+            await achievementManager.CheckForAchievementsAsync(MainWindowSnackBar, dataLoader, databaseManager, s);
         }
     }
 
@@ -1946,11 +1956,11 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !DataLoader.model.mouseInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _mouseImages[e.Button].Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !dataLoader.model.mouseInputDictionary.ContainsKey(dataLoader.model.TimeInt()) && dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt() && _mouseImages[e.Button].Opacity == unpressedInputOpacity)
             {
                 try
                 {
-                    DataLoader.model.mouseInputDictionary.Add(DataLoader.model.TimeInt(), e.Button.ToString());
+                    dataLoader.model.mouseInputDictionary.Add(dataLoader.model.TimeInt(), e.Button.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -1999,11 +2009,11 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !DataLoader.model.keystrokesDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _keyImages[e.KeyCode].Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !dataLoader.model.keystrokesDictionary.ContainsKey(dataLoader.model.TimeInt()) && dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt() && _keyImages[e.KeyCode].Opacity == unpressedInputOpacity)
             {
                 try
                 {
-                    DataLoader.model.keystrokesDictionary.Add(DataLoader.model.TimeInt(), e.KeyCode.ToString());
+                    dataLoader.model.keystrokesDictionary.Add(dataLoader.model.TimeInt(), e.KeyCode.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -2155,11 +2165,11 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _gamepadTriggersImages[gamepad.RightTrigger].Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !dataLoader.model.gamepadInputDictionary.ContainsKey(dataLoader.model.TimeInt()) && dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt() && _gamepadTriggersImages[gamepad.RightTrigger].Opacity == unpressedInputOpacity)
             {
                 try
                 {
-                    DataLoader.model.gamepadInputDictionary.Add(DataLoader.model.TimeInt(), gamepad.RightTrigger.ToString());
+                    dataLoader.model.gamepadInputDictionary.Add(dataLoader.model.TimeInt(), gamepad.RightTrigger.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -2180,11 +2190,11 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _gamepadTriggersImages[gamepad.LeftTrigger].Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !dataLoader.model.gamepadInputDictionary.ContainsKey(dataLoader.model.TimeInt()) && dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt() && _gamepadTriggersImages[gamepad.LeftTrigger].Opacity == unpressedInputOpacity)
             {
                 try
                 {
-                    DataLoader.model.gamepadInputDictionary.Add(DataLoader.model.TimeInt(), gamepad.LeftTrigger.ToString());
+                    dataLoader.model.gamepadInputDictionary.Add(dataLoader.model.TimeInt(), gamepad.LeftTrigger.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -2347,11 +2357,11 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-        if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && DPad.Opacity == unpressedInputOpacity)
+        if (s.EnableInputLogging && !dataLoader.model.gamepadInputDictionary.ContainsKey(dataLoader.model.TimeInt()) && dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt() && DPad.Opacity == unpressedInputOpacity)
         {
             try
             {
-                DataLoader.model.gamepadInputDictionary.Add(DataLoader.model.TimeInt(), button.ToString());
+                dataLoader.model.gamepadInputDictionary.Add(dataLoader.model.TimeInt(), button.ToString());
             }
             catch (Exception ex)
             {
@@ -2377,11 +2387,11 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !DataLoader.model.gamepadInputDictionary.ContainsKey(DataLoader.model.TimeInt()) && DataLoader.model.QuestID() != 0 && DataLoader.model.TimeInt() != DataLoader.model.TimeDefInt() && DataLoader.model.QuestState() == 0 && DataLoader.model.previousTimeInt != DataLoader.model.TimeInt() && _gamepadImages[e.Button].Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !dataLoader.model.gamepadInputDictionary.ContainsKey(dataLoader.model.TimeInt()) && dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt() && _gamepadImages[e.Button].Opacity == unpressedInputOpacity)
             {
                 try
                 {
-                    DataLoader.model.gamepadInputDictionary.Add(DataLoader.model.TimeInt(), e.Button.ToString());
+                    dataLoader.model.gamepadInputDictionary.Add(dataLoader.model.TimeInt(), e.Button.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -2494,10 +2504,11 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-        if (DataLoader.loadedOutsideMezeporta)
+        if (dataLoader.loadedOutsideMezeporta)
         {
             MainWindowSnackBar.ShowAsync(Messages.WARNING_TITLE, "It is not recommended to load the overlay outside of Mezeporta", new SymbolIcon(SymbolRegular.Warning28), ControlAppearance.Caution);
         }
+        databaseManager.LoadDatabaseDataIntoHashSets(SaveIconGrid, dataLoader);
         achievementManager.LoadPlayerAchievements();
     }
 

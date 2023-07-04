@@ -124,6 +124,7 @@
     <None Remove="UI\Icons\achievement\monster_yellow.jpg" />
     <None Remove="UI\Icons\achievement\plate.png" />
     <None Remove="UI\Icons\achievement\points.jpg" />
+    <None Remove="UI\Icons\achievement\poogie.jpg" />
     <None Remove="UI\Icons\achievement\scroll.jpg" />
     <None Remove="UI\Icons\achievement\stamp.jpg" />
     <None Remove="UI\Icons\achievement\switch_axe_f.jpg" />
@@ -369,6 +370,7 @@
     <Resource Include="UI\Fonts\SegoeUI-VF.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="UI\Icons\achievement\poogie.jpg" />
     <Resource Include="UI\Icons\achievement\berserk_raviente.jpg" />
     <Resource Include="UI\Icons\achievement\award_bronze.png" />
     <Resource Include="UI\Icons\achievement\award_gold.png" />
