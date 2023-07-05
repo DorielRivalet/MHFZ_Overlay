@@ -6,7 +6,7 @@ using MHFZ_Overlay.Core.Class.Discord;
 using MHFZ_Overlay.Core.Constant;
 using System;
 using System.Diagnostics;
-using System.Windows.Forms;
+using System.Windows;
 
 namespace MHFZ_Overlay.Core.Class.Application;
 
@@ -37,10 +37,13 @@ internal class ApplicationManager
     public static void DisposeNotifyIcon()
     {
         if (MainWindow._mainWindowNotifyIcon == null) return;
-        MainWindow._mainWindowNotifyIcon.Visibility = System.Windows.Visibility.Collapsed;
-        MainWindow._mainWindowNotifyIcon.Icon = null;
-        MainWindow._mainWindowNotifyIcon.Dispose();
-        logger.Info("Disposed Notify Icon");
+        MainWindow._mainWindowNotifyIcon.Dispatcher.Invoke(() =>
+        {
+            MainWindow._mainWindowNotifyIcon.Visibility = Visibility.Collapsed;
+            MainWindow._mainWindowNotifyIcon.Icon = null;
+            MainWindow._mainWindowNotifyIcon.Dispose();
+            logger.Info("Disposed Notify Icon");
+        });
     }
 
     /// <summary>
@@ -63,7 +66,7 @@ internal class ApplicationManager
     {
         logger.Info("Closing game");
         KillProcess("mhf");
-        MessageBox.Show("The game was closed due to a fatal overlay error, please report this to the developer", Messages.FATAL_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        MessageBox.Show("The game was closed due to a fatal overlay error, please report this to the developer", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
     /// <summary>

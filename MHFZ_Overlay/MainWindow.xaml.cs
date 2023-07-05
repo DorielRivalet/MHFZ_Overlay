@@ -34,6 +34,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -957,6 +958,8 @@ The process may take some time, as the program attempts to download from GitHub 
         if (defenseMultiplier <= 0)
             defenseMultiplier = 1;
         var effectiveDamage = damage / defenseMultiplier;
+        // If the defense rate is so high the effective damage is essentially 0, show the true damage instead.
+        if (effectiveDamage == 0) effectiveDamage = damage;
 
         switch (s.DamageNumbersMode)
         {
