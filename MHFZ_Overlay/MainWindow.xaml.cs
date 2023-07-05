@@ -15,8 +15,10 @@ using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.Dictionary;
 using MHFZ_Overlay.Core.Class.Discord;
 using MHFZ_Overlay.Core.Class.Log;
+using MHFZ_Overlay.Core.Class.OverlaySettings;
 using MHFZ_Overlay.Core.Constant;
 using MHFZ_Overlay.UI.Class;
+using MHFZ_Overlay.UI.Class.Converter;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Microsoft.Extensions.DependencyModel;
 using Octokit;
@@ -79,6 +81,7 @@ public partial class MainWindow : Window
     private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
     private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
     private static readonly AchievementManager achievementManager = AchievementManager.GetInstance();
+    private static readonly OverlaySettingsManager overlaySettingsManager = OverlaySettingsManager.GetInstance();
 
     private static readonly DiscordManager discordManager = DiscordManager.GetInstance();
 
@@ -1497,7 +1500,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
         if (dataLoader.model.isInLauncherBool)
         {
-            System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+            System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", Messages.WARNING_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
             logger.Info("Detected game launcher while using configuration menu");
         }
 
@@ -2500,12 +2503,87 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
+        if (App.isFirstRun)
+        {
+            OnboardEndUser();
+        }
         if (dataLoader.loadedOutsideMezeporta)
         {
             MainWindowSnackBar.ShowAsync(Messages.WARNING_TITLE, "It is not recommended to load the overlay outside of Mezeporta", new SymbolIcon(SymbolRegular.Warning28), ControlAppearance.Caution);
         }
         databaseManager.LoadDatabaseDataIntoHashSets(SaveIconGrid, dataLoader);
         achievementManager.LoadPlayerAchievements();
+    }
+
+    private void OnboardEndUser()
+    {
+        Settings s = (Settings)Application.Current.TryFindResource("Settings");
+        var result = System.Windows.MessageBox.Show("Would you like to quickly set the settings?", Messages.INFO_TITLE, System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Information);
+
+        if (result == System.Windows.MessageBoxResult.Yes)
+        {
+            var settingsForm = new UI.Views.SettingsForm();
+            bool? settingsFormResult = settingsForm.ShowDialog();
+            if (settingsFormResult == null) return;
+            var resultSelected = string.Empty;
+            if (settingsFormResult == true)
+            {
+                // User clicked the "Apply" button and made some selections
+                // Retrieve the selected settings and perform the necessary actions
+                if (settingsForm.IsDefaultSettingsSelected)
+                {
+                    resultSelected = "Default";
+                    s.Reset();
+                } 
+                else if (settingsForm.IsMonsterHpOnlySelected)
+                {
+                    resultSelected = "HP Only";
+                    overlaySettingsManager.SetConfigurationPreset(s, ConfigurationPresetConverter.Convert("hp only"));
+                    switch (settingsForm.MonsterHPModeSelected)
+                    {
+                        default:
+                            logger.Warn("Invalid Monster HP Mode option");
+                            break;
+                        case "Automatic":
+                            s.EnableEHPNumbers = true;
+                            s.EnableMonsterEHPDisplayCorrector = true;
+                            s.MonsterEHPDisplayCorrectorDefrateMaximumThreshold = 1;
+                            s.MonsterEHPDisplayCorrectorDefrateMinimumThreshold = 0.001M;
+                            break;
+                        case "Effective HP":
+                            s.EnableEHPNumbers = true;
+                            s.EnableMonsterEHPDisplayCorrector = false;
+                            break;
+                        case "True HP":
+                            s.EnableEHPNumbers = false;
+                            break;
+                    }
+                } 
+                else if (settingsForm.IsSpeedrunSelected)
+                {
+                    resultSelected = "Speedrun";
+                    overlaySettingsManager.SetConfigurationPreset(s, ConfigurationPresetConverter.Convert("speedrun"));
+                }
+                else if (settingsForm.IsEverythingSelected)
+                {
+                    resultSelected = "All";
+                    overlaySettingsManager.SetConfigurationPreset(s, ConfigurationPresetConverter.Convert("all"));
+                }
+                else
+                {
+                    return;
+                }
+                s.Save();
+                logger.Info("Onboarded end-user. Result selected: {0}", resultSelected);
+                System.Windows.MessageBox.Show("Settings set. Happy hunting!", Messages.INFO_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            }
+            else if (settingsFormResult == false)
+            {
+                // User closed the window without making any selections
+                // Handle this scenario as needed (e.g., use default settings, display a message, etc.)
+                return;
+            }
+        }
     }
 
     private void victoryMediaElement_MediaEnded(object sender, RoutedEventArgs e)

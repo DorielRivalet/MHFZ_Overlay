@@ -10,6 +10,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.WPF;
 using MHFZ_Overlay.Core.Class;
 using MHFZ_Overlay.Core.Class.Achievements;
+using MHFZ_Overlay.Core.Class.OverlaySettings;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Constant;
@@ -48,6 +49,7 @@ using DataGrid = Wpf.Ui.Controls.DataGrid;
 using ListView = System.Windows.Controls.ListView;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
+using MHFZ_Overlay.UI.Class.Converter;
 
 namespace MHFZ_Overlay;
 
@@ -70,6 +72,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
     private static readonly AchievementManager achievementManager = AchievementManager.GetInstance();
+    private static readonly OverlaySettingsManager overlaySettingsManager = OverlaySettingsManager.GetInstance();
 
     public static Uri MonsterInfoLink
     {
@@ -3352,120 +3355,7 @@ public partial class ConfigWindow : FluentWindow
         if (string.IsNullOrEmpty(selectedOption)) return;
 
         if (s != null)
-        {
-            switch (selectedOption)
-            {
-                default:
-                    logger.Warn("Could not find preset name for settings");
-                    return;
-                case "None":
-                    return;
-                case "Speedrun":
-                    s.EnableDamageNumbers = false;
-                    s.EnableSharpness = false;
-                    s.PartThresholdShown = false;
-                    s.HitCountShown = false;
-                    s.PlayerAtkShown = false;
-                    s.MonsterAtkMultShown = false;
-                    s.MonsterDefrateShown = false;
-                    s.MonsterSizeShown = false;
-                    s.MonsterPoisonShown = false;
-                    s.MonsterParaShown = false;
-                    s.MonsterSleepShown = false;
-                    s.MonsterBlastShown = false;
-                    s.MonsterStunShown = false;
-                    s.DamagePerSecondShown = false;
-                    s.TotalHitsTakenBlockedShown = false;
-                    s.PlayerAPMGraphShown = false;
-                    s.PlayerAttackGraphShown = false;
-                    s.PlayerDPSGraphShown = false;
-                    s.PlayerHitsPerSecondGraphShown = false;
-                    s.EnableQuestPaceColor = false;
-                    s.Monster1HealthBarShown = false;
-                    s.Monster2HealthBarShown = false;
-                    s.Monster3HealthBarShown = false;
-                    s.Monster4HealthBarShown = false;
-                    s.EnableMap = false;
-                    s.PersonalBestTimePercentShown = false;
-                    s.EnablePersonalBestPaceColor = false;
-
-                    s.TimerInfoShown = true;
-                    s.EnableInputLogging = true;
-                    s.EnableQuestLogging = true;
-                    s.OverlayModeWatermarkShown = true;
-
-                    break;
-
-                case "Zen":
-                    s.EnableDamageNumbers = false;
-                    s.EnableSharpness = false;
-                    s.PartThresholdShown = false;
-                    s.HitCountShown = false;
-                    s.PlayerAtkShown = false;
-                    s.MonsterAtkMultShown = false;
-                    s.MonsterDefrateShown = false;
-                    s.MonsterSizeShown = false;
-                    s.MonsterPoisonShown = false;
-                    s.MonsterParaShown = false;
-                    s.MonsterSleepShown = false;
-                    s.MonsterBlastShown = false;
-                    s.MonsterStunShown = false;
-                    s.DamagePerSecondShown = false;
-                    s.TotalHitsTakenBlockedShown = false;
-                    s.PlayerAPMGraphShown = false;
-                    s.PlayerAttackGraphShown = false;
-                    s.PlayerDPSGraphShown = false;
-                    s.PlayerHitsPerSecondGraphShown = false;
-                    s.EnableQuestPaceColor = false;
-                    s.Monster1HealthBarShown = false;
-                    s.Monster2HealthBarShown = false;
-                    s.Monster3HealthBarShown = false;
-                    s.Monster4HealthBarShown = false;
-                    s.TimerInfoShown = false;
-                    s.EnableInputLogging = false;
-                    s.EnableMap = false;
-
-                    s.OverlayModeWatermarkShown = false;
-
-                    s.Monster1IconShown = true;
-                    break;
-
-                case "HP Only":
-                    s.EnableDamageNumbers = false;
-                    s.EnableSharpness = false;
-                    s.PartThresholdShown = false;
-                    s.HitCountShown = false;
-                    s.PlayerAtkShown = false;
-                    s.MonsterAtkMultShown = false;
-                    s.MonsterDefrateShown = false;
-                    s.MonsterSizeShown = false;
-                    s.MonsterPoisonShown = false;
-                    s.MonsterParaShown = false;
-                    s.MonsterSleepShown = false;
-                    s.MonsterBlastShown = false;
-                    s.MonsterStunShown = false;
-                    s.DamagePerSecondShown = false;
-                    s.TotalHitsTakenBlockedShown = false;
-                    s.PlayerAPMGraphShown = false;
-                    s.PlayerAttackGraphShown = false;
-                    s.PlayerDPSGraphShown = false;
-                    s.PlayerHitsPerSecondGraphShown = false;
-                    s.TimerInfoShown = false;
-                    s.EnableMap = false;
-                    s.ActionsPerMinuteShown = false;
-                    s.PersonalBestShown = false;
-
-                    s.OverlayModeWatermarkShown = false;
-
-                    s.Monster1IconShown = false;
-
-                    s.Monster1HealthBarShown = true;
-                    s.Monster2HealthBarShown = true;
-                    s.Monster3HealthBarShown = true;
-                    s.Monster4HealthBarShown = true;
-                    break;
-            }
-        }
+            overlaySettingsManager.SetConfigurationPreset(s, ConfigurationPresetConverter.Convert(selectedOption));
     }
 
     private void personalBest_Loaded(object sender, RoutedEventArgs e)

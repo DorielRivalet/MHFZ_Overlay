@@ -159,6 +159,8 @@ public partial class App : Application
         tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
     }
 
+    public static bool isFirstRun = false;
+
     /// <summary>
     /// Called when [application run].
     /// </summary>
@@ -186,7 +188,7 @@ The overlay might take some time to start due to databases. The next time you ru
 It's also recommended to change the resolution of the overlay if you are using a resolution other than the default set.
 
 Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
-
+            isFirstRun = true;
         }
     }
 
