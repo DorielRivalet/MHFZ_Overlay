@@ -1,19 +1,15 @@
 ﻿// © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using EZlion.Mapper;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.Dictionary;
 using MHFZ_Overlay.Core.Constant;
 using MHFZ_Overlay.UI.Class;
 using Newtonsoft.Json;
-using NLog.LayoutRenderers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
 using System.Threading.Tasks;
 using Wpf.Ui.Controls;
 
@@ -650,7 +646,7 @@ public class AchievementManager
             case 200:
                 completedQuests = from quest in databaseManager.allQuests
                                   join activeSkills in databaseManager.allActiveSkills on quest.RunID equals activeSkills.RunID
-                                  where (quest.QuestID == Numbers.QUEST_ID_BURNING_FREEZING_ELZELION_HISTORIC || quest.QuestID == Numbers.QUEST_ID_BURNING_FREEZING_ELZELION_TOWER) && 
+                                  where (quest.QuestID == Numbers.QUEST_ID_BURNING_FREEZING_ELZELION_HISTORIC || quest.QuestID == Numbers.QUEST_ID_BURNING_FREEZING_ELZELION_TOWER) &&
                                   ((activeSkills.ActiveSkill1ID == 473 || activeSkills.ActiveSkill1ID == 504) ||
                                   (activeSkills.ActiveSkill2ID == 473 || activeSkills.ActiveSkill2ID == 504) ||
                                   (activeSkills.ActiveSkill3ID == 473 || activeSkills.ActiveSkill3ID == 504) ||
@@ -675,29 +671,29 @@ public class AchievementManager
                 else return false;
             case 201:
                 completedQuests = from quest in databaseManager.allQuests
-                                      join playerInventory in databaseManager.allPlayerInventories on quest.RunID equals playerInventory.RunID
-                                      where quest.QuestID == Numbers.QUEST_ID_BLITZKRIEG_BOGABADORUMU &&
-                                            (playerInventory.Item1ID == 93 ||
-                                             playerInventory.Item2ID == 93 ||
-                                             playerInventory.Item3ID == 93 ||
-                                             playerInventory.Item4ID == 93 ||
-                                             playerInventory.Item5ID == 93 ||
-                                             playerInventory.Item6ID == 93 ||
-                                             playerInventory.Item7ID == 93 ||
-                                             playerInventory.Item8ID == 93 ||
-                                             playerInventory.Item9ID == 93 ||
-                                             playerInventory.Item10ID == 93 ||
-                                             playerInventory.Item11ID == 93 ||
-                                             playerInventory.Item12ID == 93 ||
-                                             playerInventory.Item13ID == 93 ||
-                                             playerInventory.Item14ID == 93 ||
-                                             playerInventory.Item15ID == 93 ||
-                                             playerInventory.Item16ID == 93 ||
-                                             playerInventory.Item17ID == 93 ||
-                                             playerInventory.Item18ID == 93 ||
-                                             playerInventory.Item19ID == 93 ||
-                                             playerInventory.Item20ID == 93)
-                                      select quest;
+                                  join playerInventory in databaseManager.allPlayerInventories on quest.RunID equals playerInventory.RunID
+                                  where quest.QuestID == Numbers.QUEST_ID_BLITZKRIEG_BOGABADORUMU &&
+                                        (playerInventory.Item1ID == 93 ||
+                                         playerInventory.Item2ID == 93 ||
+                                         playerInventory.Item3ID == 93 ||
+                                         playerInventory.Item4ID == 93 ||
+                                         playerInventory.Item5ID == 93 ||
+                                         playerInventory.Item6ID == 93 ||
+                                         playerInventory.Item7ID == 93 ||
+                                         playerInventory.Item8ID == 93 ||
+                                         playerInventory.Item9ID == 93 ||
+                                         playerInventory.Item10ID == 93 ||
+                                         playerInventory.Item11ID == 93 ||
+                                         playerInventory.Item12ID == 93 ||
+                                         playerInventory.Item13ID == 93 ||
+                                         playerInventory.Item14ID == 93 ||
+                                         playerInventory.Item15ID == 93 ||
+                                         playerInventory.Item16ID == 93 ||
+                                         playerInventory.Item17ID == 93 ||
+                                         playerInventory.Item18ID == 93 ||
+                                         playerInventory.Item19ID == 93 ||
+                                         playerInventory.Item20ID == 93)
+                                  select quest;
                 if (completedQuests != null && completedQuests.Count() >= 1) return true;
                 else return false;
             case 202:
@@ -710,9 +706,9 @@ public class AchievementManager
                 else return false;
             case 203:
                 // Set the target date to February 14th of the current year
-                DateTime targetDate = new DateTime(DateTime.UtcNow.Year, 2, 14); 
+                DateTime targetDate = new DateTime(DateTime.UtcNow.Year, 2, 14);
 
-                if (databaseManager.allQuests.Any(quest => quest.QuestID == Numbers.QUEST_ID_VEGGIE_ELDER_LOVE && quest.CreatedAt?.Date == targetDate.Date) ) return true;
+                if (databaseManager.allQuests.Any(quest => quest.QuestID == Numbers.QUEST_ID_VEGGIE_ELDER_LOVE && quest.CreatedAt?.Date == targetDate.Date)) return true;
                 else return false;
             case 204:
                 completedQuests = from quest in databaseManager.allQuests
@@ -760,7 +756,7 @@ public class AchievementManager
             case 220:
                 if (dataLoader.model.PartnerLevel() >= 999) return true;
                 else return false;
-            case 221: 
+            case 221:
                 return databaseManager.allQuestAttempts.Any(questAttempts => questAttempts.Attempts >= 1_000);
             case 222:
                 return databaseManager.allPersonalBestAttempts.Any(pbAttempts => pbAttempts.Attempts >= 100);

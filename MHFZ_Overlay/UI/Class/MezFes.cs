@@ -13,5 +13,5 @@ public class MezFes
     public string? CreatedBy { get; set; } = string.Empty;
     public long? MezFesMinigameID { get; set; }
     public long Score { get; set; } = 0;
-    
+
 }

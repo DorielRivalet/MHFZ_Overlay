@@ -4,7 +4,6 @@
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Constant;
-using NLog;
 using System;
 using System.Diagnostics;
 using System.IO;

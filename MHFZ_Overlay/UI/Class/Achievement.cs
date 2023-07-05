@@ -1,11 +1,7 @@
 ﻿using MHFZ_Overlay.Core.Class.Dictionary;
-using MHFZ_Overlay.Core.Constant;
 using MHFZ_Overlay.Core.Enum;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using Wpf.Ui.Common;
@@ -74,7 +70,7 @@ public class Achievement
             return brush;
         }
         // Default color if rank is not defined
-        return (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Base"]); 
+        return (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Base"]);
     }
 
     /// <summary>

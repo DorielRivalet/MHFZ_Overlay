@@ -3,12 +3,10 @@
 // found in the LICENSE file.
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.Discord;
-using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.Core.Constant;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Windows.Navigation;
 
 namespace MHFZ_Overlay.Core.Class.Application;
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MHFZ_Overlay.Core.Constant
+﻿namespace MHFZ_Overlay.Core.Constant
 {
     public static class Numbers
     {

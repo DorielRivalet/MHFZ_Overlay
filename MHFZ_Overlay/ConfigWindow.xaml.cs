@@ -8,12 +8,15 @@ using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.WPF;
+using MHFZ_Overlay.Core.Class;
+using MHFZ_Overlay.Core.Class.Achievements;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
 using MHFZ_Overlay.Core.Class.IO;
-using MHFZ_Overlay.Core.Class.Log;
+using MHFZ_Overlay.Core.Constant;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
-using MHFZ_Overlay.Addresses;
+using MHFZ_Overlay.UI.CustomControls;
+using Microsoft.Win32;
 using Octokit;
 using SkiaSharp;
 using System;
@@ -24,6 +27,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,32 +35,19 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Wpf.Ui.Common;
+using Wpf.Ui.Contracts;
+using Wpf.Ui.Controls;
+using Wpf.Ui.Controls.IconElements;
+using Wpf.Ui.Controls.Window;
+using Wpf.Ui.Services;
 using Application = System.Windows.Application;
-using Button = System.Windows.Controls.Button;
 using Clipboard = System.Windows.Clipboard;
 using ComboBox = System.Windows.Controls.ComboBox;
+using DataGrid = Wpf.Ui.Controls.DataGrid;
 using ListView = System.Windows.Controls.ListView;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
-using Window = System.Windows.Window;
-using MHFZ_Overlay.Core.Class;
-using Wpf.Ui.Controls;
-using MHFZ_Overlay.Core.Constant;
-using Wpf.Ui.Controls.Window;
-using DataGrid = Wpf.Ui.Controls.DataGrid;
-using MHFZ_Overlay.UI.CustomControls;
-using Wpf.Ui.Controls.IconElements;
-using Wpf.Ui.Common;
-using Wpf.Ui.Contracts;
-using Wpf.Ui.Services;
-using MHFZ_Overlay.Core.Class.Dictionary;
-using System.Windows.Markup;
-using CsvHelper.Configuration;
-using CsvHelper;
-using Microsoft.Win32;
-using SharpCompress.Common;
-using System.Reflection;
-using MHFZ_Overlay.Core.Class.Achievements;
 
 namespace MHFZ_Overlay;
 
@@ -566,7 +557,7 @@ public partial class ConfigWindow : FluentWindow
         // In your initialization or setup code
         ISnackbarService snackbarService = new SnackbarService();
         // Replace 'snackbarControl' with your actual snackbar control instance
-        snackbarService.SetSnackbarControl(ConfigWindowSnackBar); 
+        snackbarService.SetSnackbarControl(ConfigWindowSnackBar);
 
         // Stop the stopwatch
         stopwatch.Stop();
@@ -1743,7 +1734,7 @@ public partial class ConfigWindow : FluentWindow
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
-            saveFileDialog.FileName = string.Format("CalendarRuns-{0}", datePickerDate.ToString("yy/MM/dd").Replace("/","-"));
+            saveFileDialog.FileName = string.Format("CalendarRuns-{0}", datePickerDate.ToString("yy/MM/dd").Replace("/", "-"));
             if (saveFileDialog.ShowDialog() == true)
             {
                 string filePath = saveFileDialog.FileName;
@@ -1847,7 +1838,7 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (personalBestChart == null || personalBestChartGrid == null || personalBestMainGrid == null) return;
-        var fileName = $"PersonalBest-Quest_{QuestIDTextBox.Text}-{OverlayModeComboBox.Text}-{personalBestSelectedType}-{personalBestSelectedWeapon}".Trim().Replace(" ","_");
+        var fileName = $"PersonalBest-Quest_{QuestIDTextBox.Text}-{OverlayModeComboBox.Text}-{personalBestSelectedType}-{personalBestSelectedWeapon}".Trim().Replace(" ", "_");
         FileManager.SaveElementAsImageFile(personalBestMainGrid, fileName, ConfigWindowSnackBar, false);
     }
 
@@ -2012,7 +2003,7 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestsOverviewButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (DiscordEmbedWeaponPersonalBest == null || QuestIDTextBox == null) return;
-        var fileName = $"PersonalBestsOverview-Quest_{QuestIDTextBox.Text}-{DateTime.UtcNow.ToString("yy/MM/dd").Replace("/","-")}";
+        var fileName = $"PersonalBestsOverview-Quest_{QuestIDTextBox.Text}-{DateTime.UtcNow.ToString("yy/MM/dd").Replace("/", "-")}";
         FileManager.SaveElementAsImageFile(DiscordEmbedWeaponPersonalBest, fileName, ConfigWindowSnackBar, false);
     }
 
@@ -3328,7 +3319,7 @@ public partial class ConfigWindow : FluentWindow
         switch (selectedOption)
         {
             case "Inventory":
-                statsTextTextBlock.Text = string.Format("Inventory\n\n{0}",FormatInventory(databaseManager.GetPlayerInventoryDictionary(runID)));
+                statsTextTextBlock.Text = string.Format("Inventory\n\n{0}", FormatInventory(databaseManager.GetPlayerInventoryDictionary(runID)));
                 break;
             case "Ammo":
                 statsTextTextBlock.Text = string.Format("Ammo\n\n{0}", FormatInventory(databaseManager.GetAmmoDictionary(runID)));
@@ -3675,7 +3666,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (Grid)sender;
         if (obj != null)
-           weaponUsageChartGrid = obj;
+            weaponUsageChartGrid = obj;
     }
 
     private void StatsGraphsComboBox_Loaded(object sender, RoutedEventArgs e)
@@ -3685,7 +3676,7 @@ public partial class ConfigWindow : FluentWindow
         var selectedItem = comboBox.SelectedItem;
         if (selectedItem == null) return;
         // You can now use the selectedItem variable to get the data or value of the selected option
-        string? selectedOption = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim().Replace(" ","_");
+        string? selectedOption = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim().Replace(" ", "_");
         if (string.IsNullOrEmpty(selectedOption)) return;
         statsGraphsSelectedOption = selectedOption;
     }

@@ -15,7 +15,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using Xunit.Sdk;
 
 namespace MHFZ_Overlay;
 
@@ -289,7 +288,7 @@ public class DataLoader
         if (App.isClowdSquirrelUpdating)
             return;
 
-        try 
+        try
         {
             // Get the process that is running "mhf.exe"
             Process[] processes = Process.GetProcessesByName("mhf");
@@ -334,7 +333,7 @@ public class DataLoader
                 MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
-        } 
+        }
         catch (Exception ex)
         {
             LoggingManager.WriteCrashLog(ex);

@@ -1,7 +1,6 @@
 ﻿// © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.Core.Constant;

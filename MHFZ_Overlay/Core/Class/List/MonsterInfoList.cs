@@ -1,9 +1,7 @@
 ﻿// © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using MHFZ_Overlay;
 using System.Collections.Generic;
-using MHFZ_Overlay.Core.Class;
 
 namespace MHFZ_Overlay.Core.Class.Dictionary;
 

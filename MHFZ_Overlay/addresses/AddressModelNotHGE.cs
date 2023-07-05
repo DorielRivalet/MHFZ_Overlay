@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 using Memory;
-using MHFZ_Overlay;
 
 
 // Most Addresses from https://github.com/suzaku01/ 

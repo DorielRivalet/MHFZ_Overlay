@@ -1,20 +1,22 @@
 ﻿// © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using MHFZ_Overlay.Core.Class.Dictionary;
 using EZlion.Mapper;
+using MHFZ_Overlay.Core.Class.Achievements;
 using MHFZ_Overlay.Core.Class.Application;
+using MHFZ_Overlay.Core.Class.Dictionary;
 using MHFZ_Overlay.Core.Class.IO;
 using MHFZ_Overlay.Core.Class.Log;
+using MHFZ_Overlay.Core.Constant;
 using MHFZ_Overlay.UI.Class;
 using MHFZ_Overlay.UI.Class.Mapper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Octokit;
-using SharpCompress.Common;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.Common;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
@@ -22,27 +24,16 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Controls.IconElements;
 using Formatting = Newtonsoft.Json.Formatting;
 using MessageBox = System.Windows.MessageBox;
 using Quest = MHFZ_Overlay.UI.Class.Quest;
-using MHFZ_Overlay.Core.Constant;
-using System.Collections.ObjectModel;
-using Wpf.Ui.Common;
-using Wpf.Ui.Controls.IconElements;
-using System.Transactions;
-using System.Windows.Documents;
-using System.Threading.Tasks;
-using System.Data.Common;
-using System.Diagnostics.Eventing.Reader;
-using System.Collections;
-using System.Net.NetworkInformation;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using MHFZ_Overlay.Core.Class.Achievements;
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
 namespace MHFZ_Overlay.Core.Class.DataAccessLayer;
@@ -6969,7 +6960,7 @@ Disabling Quest Logging.",
                 allGachaCards = GetAllGachaCards(conn);
                 allPlayerInventories = GetAllPlayerInventories(conn);
             }
-        } 
+        }
         catch (Exception ex)
         {
             LoggingManager.WriteCrashLog(ex);
@@ -6997,45 +6988,45 @@ Disabling Quest Logging.",
                             data.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
                             data.CreatedBy = reader["CreatedBy"].ToString();
                             data.RunID = long.Parse(reader["RunID"].ToString());
-                            data.Item1ID  = long.Parse(reader["Item1ID"].ToString());
-                            data.Item1Quantity  = long.Parse(reader["Item1Quantity"].ToString());
-                            data.Item2ID  = long.Parse(reader["Item2ID"].ToString());
-                            data.Item2Quantity  = long.Parse(reader["Item2Quantity"].ToString());
-                            data.Item3ID  = long.Parse(reader["Item3ID"].ToString());
-                            data.Item3Quantity  = long.Parse(reader["Item3Quantity"].ToString());
-                            data.Item4ID  = long.Parse(reader["Item4ID"].ToString());
-                            data.Item4Quantity  = long.Parse(reader["Item4Quantity"].ToString());
-                            data.Item5ID  = long.Parse(reader["Item5ID"].ToString());
-                            data.Item5Quantity  = long.Parse(reader["Item5Quantity"].ToString());
-                            data.Item6ID  = long.Parse(reader["Item6ID"].ToString());
-                            data.Item6Quantity  = long.Parse(reader["Item6Quantity"].ToString());
-                            data.Item7ID  = long.Parse(reader["Item7ID"].ToString());
-                            data.Item7Quantity  = long.Parse(reader["Item7Quantity"].ToString());
-                            data.Item8ID  = long.Parse(reader["Item8ID"].ToString());
-                            data.Item8Quantity  = long.Parse(reader["Item8Quantity"].ToString());
-                            data.Item9ID  = long.Parse(reader["Item9ID"].ToString());
-                            data.Item9Quantity  = long.Parse(reader["Item9Quantity"].ToString());
-                            data.Item10ID  = long.Parse(reader["Item10ID"].ToString());
-                            data.Item10Quantity  = long.Parse(reader["Item10Quantity"].ToString());
-                            data.Item11ID  = long.Parse(reader["Item11ID"].ToString());
-                            data.Item11Quantity  = long.Parse(reader["Item11Quantity"].ToString());
-                            data.Item12ID  = long.Parse(reader["Item12ID"].ToString());
-                            data.Item12Quantity  = long.Parse(reader["Item12Quantity"].ToString());
-                            data.Item13ID  = long.Parse(reader["Item13ID"].ToString());
-                            data.Item13Quantity  = long.Parse(reader["Item13Quantity"].ToString());
-                            data.Item14ID  = long.Parse(reader["Item14ID"].ToString());
-                            data.Item14Quantity  = long.Parse(reader["Item14Quantity"].ToString());
-                            data.Item15ID  = long.Parse(reader["Item15ID"].ToString());
-                            data.Item15Quantity  = long.Parse(reader["Item15Quantity"].ToString());
-                            data.Item16ID  = long.Parse(reader["Item16ID"].ToString());
-                            data.Item16Quantity  = long.Parse(reader["Item16Quantity"].ToString());
-                            data.Item17ID  = long.Parse(reader["Item17ID"].ToString());
-                            data.Item17Quantity  = long.Parse(reader["Item17Quantity"].ToString());
-                            data.Item18ID  = long.Parse(reader["Item18ID"].ToString());
-                            data.Item18Quantity  = long.Parse(reader["Item18Quantity"].ToString());
-                            data.Item19ID  = long.Parse(reader["Item19ID"].ToString());
-                            data.Item19Quantity  = long.Parse(reader["Item19Quantity"].ToString());
-                            data.Item20ID  = long.Parse(reader["Item20ID"].ToString());
+                            data.Item1ID = long.Parse(reader["Item1ID"].ToString());
+                            data.Item1Quantity = long.Parse(reader["Item1Quantity"].ToString());
+                            data.Item2ID = long.Parse(reader["Item2ID"].ToString());
+                            data.Item2Quantity = long.Parse(reader["Item2Quantity"].ToString());
+                            data.Item3ID = long.Parse(reader["Item3ID"].ToString());
+                            data.Item3Quantity = long.Parse(reader["Item3Quantity"].ToString());
+                            data.Item4ID = long.Parse(reader["Item4ID"].ToString());
+                            data.Item4Quantity = long.Parse(reader["Item4Quantity"].ToString());
+                            data.Item5ID = long.Parse(reader["Item5ID"].ToString());
+                            data.Item5Quantity = long.Parse(reader["Item5Quantity"].ToString());
+                            data.Item6ID = long.Parse(reader["Item6ID"].ToString());
+                            data.Item6Quantity = long.Parse(reader["Item6Quantity"].ToString());
+                            data.Item7ID = long.Parse(reader["Item7ID"].ToString());
+                            data.Item7Quantity = long.Parse(reader["Item7Quantity"].ToString());
+                            data.Item8ID = long.Parse(reader["Item8ID"].ToString());
+                            data.Item8Quantity = long.Parse(reader["Item8Quantity"].ToString());
+                            data.Item9ID = long.Parse(reader["Item9ID"].ToString());
+                            data.Item9Quantity = long.Parse(reader["Item9Quantity"].ToString());
+                            data.Item10ID = long.Parse(reader["Item10ID"].ToString());
+                            data.Item10Quantity = long.Parse(reader["Item10Quantity"].ToString());
+                            data.Item11ID = long.Parse(reader["Item11ID"].ToString());
+                            data.Item11Quantity = long.Parse(reader["Item11Quantity"].ToString());
+                            data.Item12ID = long.Parse(reader["Item12ID"].ToString());
+                            data.Item12Quantity = long.Parse(reader["Item12Quantity"].ToString());
+                            data.Item13ID = long.Parse(reader["Item13ID"].ToString());
+                            data.Item13Quantity = long.Parse(reader["Item13Quantity"].ToString());
+                            data.Item14ID = long.Parse(reader["Item14ID"].ToString());
+                            data.Item14Quantity = long.Parse(reader["Item14Quantity"].ToString());
+                            data.Item15ID = long.Parse(reader["Item15ID"].ToString());
+                            data.Item15Quantity = long.Parse(reader["Item15Quantity"].ToString());
+                            data.Item16ID = long.Parse(reader["Item16ID"].ToString());
+                            data.Item16Quantity = long.Parse(reader["Item16Quantity"].ToString());
+                            data.Item17ID = long.Parse(reader["Item17ID"].ToString());
+                            data.Item17Quantity = long.Parse(reader["Item17Quantity"].ToString());
+                            data.Item18ID = long.Parse(reader["Item18ID"].ToString());
+                            data.Item18Quantity = long.Parse(reader["Item18Quantity"].ToString());
+                            data.Item19ID = long.Parse(reader["Item19ID"].ToString());
+                            data.Item19Quantity = long.Parse(reader["Item19Quantity"].ToString());
+                            data.Item20ID = long.Parse(reader["Item20ID"].ToString());
                             data.Item20Quantity = long.Parse(reader["Item20Quantity"].ToString());
 
                             hashSet.Add(data);
@@ -12646,7 +12637,7 @@ Disabling Quest Logging.",
                             logger.Info("Updated schema to version v0.23.0. newVersion {0}", newVersion);
                             goto case 1;
                         }
-                        case 1://v0.25.0
+                    case 1://v0.25.0
                         //adds support for recent view tracking
                         //sqlite3_exec(db, "ALTER TABLE entries ADD COLUMN touched_at TEXT;", NULL, NULL, NULL);
                         {

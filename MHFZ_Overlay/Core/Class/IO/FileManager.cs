@@ -3,9 +3,7 @@
 // found in the LICENSE file.
 using CsvHelper;
 using MHFZ_Overlay.Core.Class.Application;
-using MHFZ_Overlay.Core.Class.Log;
 using MHFZ_Overlay.Core.Constant;
-using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,13 +13,11 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.IconElements;
-using Wpf.Ui.Controls.Window;
 using Clipboard = System.Windows.Clipboard;
 using MessageBox = System.Windows.MessageBox;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
@@ -339,7 +335,7 @@ internal class FileManager
             if (destFileDirectoryName == null)
             {
                 throw new Exception($"Did not make directory for {destFileDirectoryName}");
-            }    
+            }
             Directory.CreateDirectory(destFileDirectoryName);
 
         }
@@ -510,7 +506,7 @@ internal class FileManager
             // Get the directory path where the database file is located
             string? databaseDirectoryPath = Path.GetDirectoryName(databaseFilePath);
 
-            if (!string.IsNullOrEmpty(databaseDirectoryPath)) 
+            if (!string.IsNullOrEmpty(databaseDirectoryPath))
             {
                 // Create the backups folder if it does not exist
                 string backupsFolderPath = Path.Combine(databaseDirectoryPath, BackupFolderName);

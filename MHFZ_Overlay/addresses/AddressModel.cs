@@ -1,7 +1,6 @@
 ﻿// © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using MHFZ_Overlay.Core.Class.Dictionary;
 using EZlion.Mapper;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
@@ -9,8 +8,9 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
+using MHFZ_Overlay.Core.Class.Dictionary;
 using MHFZ_Overlay.Core.Class.Discord;
-using MHFZ_Overlay.Core.Class.Log;
+using MHFZ_Overlay.Core.Constant;
 using MHFZ_Overlay.UI.Class;
 using RESTCountries.NET.Models;
 using RESTCountries.NET.Services;
@@ -27,9 +27,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Automation;
 using Application = System.Windows.Application;
-using MHFZ_Overlay;
-using MHFZ_Overlay.Core.Constant;
-using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace MHFZ_Overlay.Addresses;
 
@@ -2152,7 +2149,7 @@ TreeScope.Children, condition);
             if (s.MonsterEHPDisplayCorrectorDefrateMinimumThreshold >= s.MonsterEHPDisplayCorrectorDefrateMaximumThreshold)
                 return monsterHP;
 
-            if (monsterDefrate > s.MonsterEHPDisplayCorrectorDefrateMinimumThreshold && monsterDefrate < s.MonsterEHPDisplayCorrectorDefrateMaximumThreshold) 
+            if (monsterDefrate > s.MonsterEHPDisplayCorrectorDefrateMinimumThreshold && monsterDefrate < s.MonsterEHPDisplayCorrectorDefrateMaximumThreshold)
             {
                 previousMonsterDefrate = monsterDefrate;
                 decimal result = Convert.ToDecimal(monsterHP / previousMonsterDefrate);
@@ -2160,7 +2157,7 @@ TreeScope.Children, condition);
                     return Convert.ToInt32(result);
                 else
                     return monsterHP;
-            } 
+            }
             else
             {
                 if (previousMonsterDefrate > 0)
@@ -2196,7 +2193,7 @@ TreeScope.Children, condition);
                 }
             }
         }
-        
+
         return 0;
     }
 
@@ -2884,9 +2881,9 @@ TreeScope.Children, condition);
             }
         }
     }
-    public string Monster2HP => Configuring ? 
-        "0" : 
-        ShowMonsterEHP() ? 
+    public string Monster2HP => Configuring ?
+        "0" :
+        ShowMonsterEHP() ?
             DisplayMonsterEHP(Monster2DefMult(), Monster2HPInt()).ToString() :
             Monster2HPInt().ToString();
 
@@ -2909,9 +2906,9 @@ TreeScope.Children, condition);
             return SavedMonster2MaxHP.ToString();
         }
     }
-    public string Monster3HP => Configuring ? 
-        "0" : 
-        ShowMonsterEHP() ? 
+    public string Monster3HP => Configuring ?
+        "0" :
+        ShowMonsterEHP() ?
             DisplayMonsterEHP(1, Monster3HPInt()).ToString() :
             Monster3HPInt().ToString();
 
@@ -2927,10 +2924,10 @@ TreeScope.Children, condition);
             return SavedMonster3MaxHP.ToString();
         }
     }
-    public string Monster4HP => Configuring ? 
-        "0" : 
-        ShowMonsterEHP() ? 
-            DisplayMonsterEHP(1, Monster4HPInt()).ToString() : 
+    public string Monster4HP => Configuring ?
+        "0" :
+        ShowMonsterEHP() ?
+            DisplayMonsterEHP(1, Monster4HPInt()).ToString() :
             Monster4HPInt().ToString();
 
     public string Monster4MaxHP
@@ -6258,10 +6255,10 @@ TreeScope.Children, condition);
             var gearName = playerGear.GearName;
             var weaponName = GetWeaponNameFromType((int)playerGear.WeaponTypeID);
             long weaponID = (long)(
-                playerGear.BlademasterWeaponID == null ? 
+                playerGear.BlademasterWeaponID == null ?
                     playerGear.GunnerWeaponID == null ?
-                        0 
-                        : playerGear.GunnerWeaponID 
+                        0
+                        : playerGear.GunnerWeaponID
                     : playerGear.BlademasterWeaponID);
             var realweaponName = GetRealWeaponNameForRunID(GetWeaponClass((int)playerGear.WeaponClassID), GetWeaponNameFromType((int)playerGear.WeaponTypeID), (long)playerGear.StyleID, weaponID, playerGear.WeaponSlot1, playerGear.WeaponSlot2, playerGear.WeaponSlot3);
             var head = GetArmorHeadNameForRunID((int)playerGear.HeadID, (int)playerGear.HeadSlot1ID, (int)playerGear.HeadSlot2ID, (int)playerGear.HeadSlot3ID);

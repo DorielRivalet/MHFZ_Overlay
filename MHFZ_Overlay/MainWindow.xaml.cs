@@ -1,7 +1,6 @@
 ﻿// © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using MHFZ_Overlay.Core.Class.Dictionary;
 using EZlion.Mapper;
 using Gma.System.MouseKeyHook;
 using LiveChartsCore;
@@ -9,19 +8,26 @@ using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
+using MHFZ_Overlay.Core.Class;
+using MHFZ_Overlay.Core.Class.Achievements;
 using MHFZ_Overlay.Core.Class.Application;
 using MHFZ_Overlay.Core.Class.DataAccessLayer;
+using MHFZ_Overlay.Core.Class.Dictionary;
 using MHFZ_Overlay.Core.Class.Discord;
 using MHFZ_Overlay.Core.Class.Log;
+using MHFZ_Overlay.Core.Constant;
 using MHFZ_Overlay.UI.Class;
-using MHFZ_Overlay.Addresses;
+using MHFZ_Overlay.UI.Class.Mapper;
 using Microsoft.Extensions.DependencyModel;
 using Octokit;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,42 +39,29 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using Wpf.Ui.Common;
+using Wpf.Ui.Contracts;
+using Wpf.Ui.Controls;
+using Wpf.Ui.Controls.IconElements;
+using Wpf.Ui.Services;
 using XInputium;
+using XInputium.XInput;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
 using DataFormats = System.Windows.DataFormats;
 using DataObject = System.Windows.DataObject;
+using Direction = MHFZ_Overlay.Core.Enum.Direction;
 using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
 using Image = System.Windows.Controls.Image;
 using Label = System.Windows.Controls.Label;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
-using Point = System.Windows.Point;
-using MHFZ_Overlay.UI.CustomControls;
-using MHFZ_Overlay.Core.Class;
 using NotifyIcon = Wpf.Ui.Controls.NotifyIcon;
+using Point = System.Windows.Point;
 using Window = System.Windows.Window;
-using Wpf.Ui.Controls;
-using Wpf.Ui.Common;
-using System.Windows.Media.Imaging;
-using MHFZ_Overlay.Core.Constant;
-using Wpf.Ui.Controls.TitleBarControl;
-using Wpf.Ui.Contracts;
-using Wpf.Ui.Services;
-using System.Windows.Documents;
-using Wpf.Ui.Controls.IconElements;
-using XInputium.XInput;
-using XInputium.ModifierFunctions;
-using MHFZ_Overlay.Core.Enum;
-using LiveChartsCore.SkiaSharpView.SKCharts;
-using MHFZ_Overlay.UI.Class.Mapper;
-using Direction = MHFZ_Overlay.Core.Enum.Direction;
-using System.Configuration;
-using System.IO;
-using System.Reflection;
-using MHFZ_Overlay.Core.Class.Achievements;
 
 namespace MHFZ_Overlay;
 
@@ -172,7 +165,7 @@ public partial class MainWindow : Window
         // Open the log file using the default application
         try
         {
-            var logFilePathDirectory = Path.GetDirectoryName(logFilePath); 
+            var logFilePathDirectory = Path.GetDirectoryName(logFilePath);
             if (logFilePathDirectory == null) return;
             Process.Start(ApplicationPaths.EXPLORER_PATH, logFilePathDirectory);
         }
@@ -961,7 +954,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
 
         var defenseMultiplier = Double.Parse(dataLoader.model.DefMult);
-        if (defenseMultiplier <= 0) 
+        if (defenseMultiplier <= 0)
             defenseMultiplier = 1;
         var effectiveDamage = damage / defenseMultiplier;
 
@@ -1773,8 +1766,8 @@ The process may take some time, as the program attempts to download from GitHub 
                 dataLoader.model.PersonalBestLoaded = personalBestTextBlock.Text;
             }
 
-            if (!calculatedQuestAttempts 
-                && dataLoader.model.TimeDefInt() > dataLoader.model.TimeInt() 
+            if (!calculatedQuestAttempts
+                && dataLoader.model.TimeDefInt() > dataLoader.model.TimeInt()
                 && int.Parse(dataLoader.model.ATK) > 0
                 && dataLoader.model.TimeDefInt() - dataLoader.model.TimeInt() >= 30)
             {
@@ -2413,7 +2406,7 @@ The process may take some time, as the program attempts to download from GitHub 
                     UpdateRightStickImage(pressedInputOpacity);
                 }));
             }
-            else 
+            else
             {
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
