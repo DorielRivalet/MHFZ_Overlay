@@ -2852,9 +2852,19 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
 
                         logger.Info("Stored session time. Duration: {0}", TimeSpan.FromSeconds(sessionDuration).ToString(TimeFormats.HOURS_MINUTES_SECONDS_MILLISECONDS));
                     }
-                    catch (Exception ex)
+                    catch (SQLiteException ex)
                     {
-                        HandleError(transaction, ex);
+                        // Handle a SQL exception
+                        if (ex.ResultCode == SQLiteErrorCode.Busy)
+                        {
+                            // Database is locked, skip storing the time
+                            logger.Warn("Database is locked. Skipping storing session time.");
+                        }
+                        else
+                        {
+                            // Other SQLite exception occurred, handle the error
+                            HandleError(transaction, ex);
+                        }
                     }
                 }
             }
@@ -6121,7 +6131,7 @@ Disabling Quest Logging.",
             {
                 try
                 {
-                    using (SQLiteCommand cmd = new SQLiteCommand("SELECT PartnyaBagID, RunID, Item1ID, Item1Quantity, Item2ID, Item2Quantity, Item3ID, Item3Quantity, Item4ID, Item4Quantity, Item5ID, Item5Quantity, Item6ID, Item6Quantity, Item7ID, Item7Quantity, Item8ID, Item8Quantity, Item9ID, Item9Quantity, Item10ID, Item10Quantity, CreatedAt, CreatedBy FROM PartnyaBag WHERE RunID = @runID", conn))
+                    using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM PartnyaBag WHERE RunID = @runID", conn))
                     {
                         cmd.Parameters.AddWithValue("@runID", runID);
 
@@ -6168,7 +6178,7 @@ Disabling Quest Logging.",
             {
                 try
                 {
-                    using (SQLiteCommand cmd = new SQLiteCommand("SELECT PlayerInventoryID, RunID, Item1ID, Item1Quantity, Item2ID, Item2Quantity, Item3ID, Item3Quantity, Item4ID, Item4Quantity, Item5ID, Item5Quantity, Item6ID, Item6Quantity, Item7ID, Item7Quantity, Item8ID, Item8Quantity, Item9ID, Item9Quantity, Item10ID, Item10Quantity, Item11ID, Item11Quantity, Item12ID, Item12Quantity, Item13ID, Item13Quantity, Item14ID, Item14Quantity, Item15ID, Item15Quantity, Item16ID, Item16Quantity, Item17ID, Item17Quantity, Item18ID, Item18Quantity, Item19ID, Item19Quantity, Item20ID, Item20Quantity, CreatedAt, CreatedBy FROM PlayerInventory WHERE RunID = @runID", conn))
+                    using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM PlayerInventory WHERE RunID = @runID", conn))
                     {
                         cmd.Parameters.AddWithValue("@runID", runID);
 
@@ -6863,7 +6873,7 @@ Disabling Quest Logging.",
             {
                 try
                 {
-                    using (SQLiteCommand cmd = new SQLiteCommand("SELECT QuestHash, CreatedAt, CreatedBy, RunID, QuestID, TimeLeft, FinalTimeValue, FinalTimeDisplay, ObjectiveImage, ObjectiveTypeID, ObjectiveQuantity, StarGrade, RankName, ObjectiveName, Date, YouTubeID, AttackBuffDictionary, HitCountDictionary, HitsPerSecondDictionary, DamageDealtDictionary, DamagePerSecondDictionary, AreaChangesDictionary, CartsDictionary, Monster1HPDictionary, Monster2HPDictionary, Monster3HPDictionary, Monster4HPDictionary, HitsTakenBlockedDictionary, HitsTakenBlockedPerSecondDictionary, PlayerHPDictionary, PlayerStaminaDictionary, KeyStrokesDictionary, MouseInputDictionary, GamepadInputDictionary, ActionsPerMinuteDictionary, OverlayModeDictionary, ActualOverlayMode, PartySize FROM Quests WHERE RunID = @runID", conn))
+                    using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM Quests WHERE RunID = @runID", conn))
                     {
                         cmd.Parameters.AddWithValue("@runID", runID);
 
