@@ -961,7 +961,7 @@ The process may take some time, as the program attempts to download from GitHub 
         if (defenseMultiplier <= 0)
             defenseMultiplier = 1;
         var effectiveDamage = damage / defenseMultiplier;
-        // If the defense rate is so high the effective damage is essentially 0, show the true damage instead.
+        // If the defense rate is so high that the effective damage is essentially 0, show the true damage instead.
         if (effectiveDamage == 0) effectiveDamage = damage;
 
         switch (s.DamageNumbersMode)

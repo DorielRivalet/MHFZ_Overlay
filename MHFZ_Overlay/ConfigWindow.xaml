@@ -965,13 +965,16 @@
                                 <ComboBoxItem>Zen</ComboBoxItem>
                                 <ComboBoxItem>HP Only</ComboBoxItem>
                             </ComboBox>
-
-                            <TextBlock ToolTip="Recommended to change if your resolution is lower" Margin="5,5,5,5" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Resolution"/>
+                            <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Row="2" Grid.Column="0">
+                                <ui:SymbolIcon Margin="0,0,5,0" Symbol="Fire24" Foreground="{StaticResource Red}" FontSize="28" ToolTip="Significantly affects performance"/>
+                                <TextBlock ToolTip="Recommended to change if your resolution is lower"  Style="{StaticResource ConfigTextBox}"   Text="Resolution"/>
+                            </StackPanel>
                             <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox PlaceholderText="Enter Max Resolution Width" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox Margin="5,0,0,0" x:Name="ResolutionHeightTextBox" PlaceholderText="Enter Max Resolution Height" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
                             <StackPanel Grid.Row="3" Grid.Column="0" Margin="5,5,5,5" Orientation="Horizontal">
+                                <ui:SymbolIcon Margin="0,0,5,0" Symbol="Fire24" Foreground="{StaticResource Red}" FontSize="28" ToolTip="Significantly affects performance"/>
                                 <ui:SymbolIcon Margin="0,0,5,0" Symbol="Info28" Foreground="{StaticResource Yellow}" FontSize="28" ToolTip="Overlay Restart Required"/>
                                 <TextBlock Text="Refresh Rate"  ToolTip="Select the Refresh Rate. Lower values might improve performance at the cost of statistics accuracy (including in database). Recommended to leave at 30 for speedruns, but for streams you can set it to 1 just fine." Style="{StaticResource ConfigTextBox}" />
                             </StackPanel>
