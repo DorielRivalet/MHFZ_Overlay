@@ -252,7 +252,7 @@ If you are using an XBox controller or similar, you only need to enable the cont
 |Performance Options|✔️|❌|❌|
 |Auto-Update|✔️|❌|❌|
 |Hotkeys|✔️|✔️|✔️|
-|Auto-Hide|✔️|✔️|✔️|
+|Auto-Hide|✔️ Unfocused option|✔️|✔️|
 |Drag and Drop|✔️|✔️|❌|
 |Logging|✔️|❌|❌|
 |Logging Options|✔️|❌|❌|
@@ -262,6 +262,7 @@ If you are using an XBox controller or similar, you only need to enable the cont
 |Hub Activities|❌|❌|❌|
 |Settings Search|❌|❌|❌|
 |Settings Presets|✔️|❌|❌|
+|Settings Onboarding|✔️|❌|❌|
 |Overlay Watermark|✔️|❌|❌|
 |Website|❌|❌|❌|
 |Branding|❌ WIP|❌|❌|
@@ -343,7 +344,7 @@ As an added bonus:
 |Performance Options|✔️|✔️|
 |Auto-Update|✔️|✔️|
 |Hotkeys|✔️|✔️|
-|Auto-Hide|✔️|✔️ Unfocused option|
+|Auto-Hide|✔️ Unfocused option|✔️ Unfocused option|
 |Drag and Drop|✔️|✔️ Designer Mode|
 |Logging|✔️ File|✔️ Console|
 |Logging Options|✔️|❌|
@@ -353,6 +354,7 @@ As an added bonus:
 |Hub Activities|❌|✔️|
 |Settings Search|❌|✔️ by Section|
 |Settings Presets|✔️|Uses Widgets instead|
+|Settings Onboarding|✔️|❌|
 |Overlay Watermark|✔️|❌|
 |Website|❌|✔️|
 |Branding|❌ WIP|✔️|
