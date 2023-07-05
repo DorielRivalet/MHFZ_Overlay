@@ -3514,5 +3514,17 @@ namespace MHFZ_Overlay {
                 this["DamageNumbersMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool HideOverlayWhenUnfocusedGame {
+            get {
+                return ((bool)(this["HideOverlayWhenUnfocusedGame"]));
+            }
+            set {
+                this["HideOverlayWhenUnfocusedGame"] = value;
+            }
+        }
     }
 }

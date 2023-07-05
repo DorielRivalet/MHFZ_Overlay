@@ -875,5 +875,8 @@
     <Setting Name="DamageNumbersMode" Type="System.String" Scope="User">
       <Value Profile="(Default)">Automatic</Value>
     </Setting>
+    <Setting Name="HideOverlayWhenUnfocusedGame" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

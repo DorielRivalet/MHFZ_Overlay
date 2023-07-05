@@ -937,25 +937,26 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
-                                <StackPanel Orientation="Horizontal" Margin="5,0,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                                    <ui:Button Appearance="Primary"  Content="Settings Folder" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click">
-                                        <ui:Button.Icon>
-                                            <ui:SymbolIcon Symbol="Settings20" FontSize="20" />
-                                        </ui:Button.Icon>
-                                    </ui:Button>
-                                    <ui:Button Margin="5,0,0,0" Appearance="Primary"  Content="Logs Folder" ToolTip="Open the logs folder" Click="OpenLogsFolder_Click">
-                                        <ui:Button.Icon>
-                                            <ui:SymbolIcon Symbol="Document20" FontSize="20"/>
-                                        </ui:Button.Icon>
-                                    </ui:Button>
-                                    <ui:Button Margin="5,0,0,0" Appearance="Primary"  Content="Database Folder" ToolTip="Open the database folder" Click="OpenDatabaseFolder_Click">
-                                        <ui:Button.Icon>
-                                            <ui:SymbolIcon Symbol="Database20" FontSize="20"/>
-                                        </ui:Button.Icon>
-                                    </ui:Button>
-                                </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5,0,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                                <ui:Button Appearance="Primary"  Content="Settings Folder" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click">
+                                    <ui:Button.Icon>
+                                        <ui:SymbolIcon Symbol="Settings20" FontSize="20" />
+                                    </ui:Button.Icon>
+                                </ui:Button>
+                                <ui:Button Margin="5,0,0,0" Appearance="Primary"  Content="Logs Folder" ToolTip="Open the logs folder" Click="OpenLogsFolder_Click">
+                                    <ui:Button.Icon>
+                                        <ui:SymbolIcon Symbol="Document20" FontSize="20"/>
+                                    </ui:Button.Icon>
+                                </ui:Button>
+                                <ui:Button Margin="5,0,0,0" Appearance="Primary"  Content="Database Folder" ToolTip="Open the database folder" Click="OpenDatabaseFolder_Click">
+                                    <ui:Button.Icon>
+                                        <ui:SymbolIcon Symbol="Database20" FontSize="20"/>
+                                    </ui:Button.Icon>
+                                </ui:Button>
+                            </StackPanel>
 
                             <TextBlock Margin="5,5,5,5" ToolTip="Select a settings preset configuration" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Configuration Preset"/>
                             <ComboBox x:Name="settingsPresetComboBox" Grid.Column="1" Grid.Row="1" SelectedIndex="0" SelectionChanged="settingsPresetComboBox_SelectionChanged">
@@ -1119,11 +1120,13 @@
                             </StackPanel>
                             <TextBlock Margin="5,5,5,5" ToolTip="Show a warning message box when starting the overlay outside Mezeporta" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0"  Text="Outside Mezeporta Startup Warning"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="26" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableOutsideMezeportaLoadingWarning}"/>
-                            <StackPanel Grid.Row="27" Grid.Column="0" Margin="5,5,5,5" Orientation="Horizontal">
+                            <TextBlock Margin="5,5,5,5" ToolTip="Hide the overlay when the game or overlay is unfocused" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0"  Text="Hide Overlay when Unfocused Game"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="27" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=HideOverlayWhenUnfocusedGame}"/>
+                            <StackPanel Grid.Row="28" Grid.Column="0" Margin="5,5,5,5" Orientation="Horizontal">
                                 <ui:SymbolIcon Margin="0,0,5,0" Symbol="Info28" Foreground="{StaticResource Yellow}" FontSize="28" ToolTip="Overlay Restart Required"/>
                                 <TextBlock ToolTip="Select Logging Level. Each log entry has a level. Specifies the minimum level where that level and higher levels are included. For example, if the minimum level is Info, then Info, Warn, Error and Fatal are logged, but Debug and Trace are ignored." Style="{StaticResource ConfigTextBox}" Text="Log Level"/>
                             </StackPanel>
-                            <ComboBox x:Name="LogLevelComboBox" Grid.Column="1" Grid.Row="27" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=LogLevel}">
+                            <ComboBox x:Name="LogLevelComboBox" Grid.Column="1" Grid.Row="28" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=LogLevel}">
                                 <ComboBoxItem>Trace</ComboBoxItem>
                                 <ComboBoxItem>Debug</ComboBoxItem>
                                 <ComboBoxItem>Info</ComboBoxItem>

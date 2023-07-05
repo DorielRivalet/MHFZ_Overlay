@@ -29,6 +29,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -370,9 +371,7 @@ public partial class MainWindow : Window
         DispatcherTimer timer1Second = new();
         timer1Second.Interval = new TimeSpan(0, 0, 1);
         timer1Second.Tick += Timer1Second_Tick;
-        timer1Second.Start();
-
-        // we run the 10 seconds timer tick once in the constructor
+        // we run the 1 second timer tick once in the constructor
         try
         {
             HideMonsterInfoWhenNotInQuest();
@@ -384,6 +383,7 @@ public partial class MainWindow : Window
         {
             LoggingManager.WriteCrashLog(ex);
         }
+        timer1Second.Start();
 
         DispatcherTimer timer10Seconds = new();
         timer10Seconds.Interval = new TimeSpan(0, 0, 10);
@@ -1178,8 +1178,44 @@ The process may take some time, as the program attempts to download from GitHub 
     private void HideMonsterInfoWhenNotInQuest()
     {
         Settings s = (Settings)Application.Current.FindResource("Settings");
-        bool v = s.AlwaysShowMonsterInfo || dataLoader.model.Configuring || dataLoader.model.QuestID() != 0;
+        bool v = IsGameFocused(s) && 
+            (s.AlwaysShowMonsterInfo || dataLoader.model.Configuring || dataLoader.model.QuestID() != 0);
         SetMonsterStatsVisibility(v, s);
+    }
+
+    // Import the necessary Win32 functions
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetForegroundWindow();
+
+    private static Process currentProcess = Process.GetCurrentProcess();
+
+
+    /// <summary>
+    /// Checks if the game or overlay is focused.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if this instance is game focused; otherwise, <c>false</c>.
+    /// </value>
+    private bool IsGameFocused(Settings s)
+    {
+        if (!s.HideOverlayWhenUnfocusedGame || dataLoader.model.Configuring) return true;
+
+        // Get the active window handle
+        IntPtr activeWindowHandle = GetForegroundWindow();
+
+        // Check if the active window belongs to the current process or any process spawned from it
+        if (activeWindowHandle == currentProcess.MainWindowHandle)
+        {
+            return true;
+        }
+        else
+        {
+            // Check if the active window belongs to the game process
+            bool isGameProcessActive = (mhfProcess != null && activeWindowHandle == mhfProcess.MainWindowHandle);
+
+            if (isGameProcessActive) return true;
+            else return false;
+        }    
     }
 
     private void SetMonsterStatsVisibility(bool v, Settings s)
@@ -1208,7 +1244,8 @@ The process may take some time, as the program attempts to download from GitHub 
     private void HidePlayerInfoWhenNotInQuest()
     {
         Settings s = (Settings)Application.Current.FindResource("Settings");
-        bool v = s.AlwaysShowPlayerInfo || dataLoader.model.Configuring || dataLoader.model.QuestID() != 0;
+        bool v = IsGameFocused(s) && 
+            (s.AlwaysShowPlayerInfo || dataLoader.model.Configuring || dataLoader.model.QuestID() != 0);
         SetPlayerStatsVisibility(v, s);
     }
 
@@ -2501,6 +2538,8 @@ The process may take some time, as the program attempts to download from GitHub 
 
     #endregion
 
+    private Process? mhfProcess { get; set; }
+    
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         if (App.isFirstRun)
@@ -2513,6 +2552,11 @@ The process may take some time, as the program attempts to download from GitHub 
         }
         databaseManager.LoadDatabaseDataIntoHashSets(SaveIconGrid, dataLoader);
         achievementManager.LoadPlayerAchievements();
+
+        mhfProcess = System.Diagnostics.Process.GetProcessesByName("mhf").First();
+
+        if (mhfProcess == null)
+            LoggingManager.WriteCrashLog(new Exception("Target process not found"));
     }
 
     private void OnboardEndUser()
