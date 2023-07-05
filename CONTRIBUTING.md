@@ -3,12 +3,53 @@
 [![License](https://img.shields.io/github/license/dorielrivalet/mhfz-overlay)](https://github.com/dorielrivalet/mhfz-overlay)
 
 - [Contributing](#contributing)
+  - [Ways to contribute](#ways-to-contribute)
+  - [Contributing workflow](#contributing-workflow)
+  - [Commit convention](#commit-convention)
+  - [Git branches](#git-branches)
+  - [Get started with the overlay locally](#get-started-with-the-overlay-locally)
   - [Did you find a bug?](#did-you-find-a-bug)
   - [Do you want to request a feature?](#do-you-want-to-request-a-feature)
   - [Did you write a patch that fixes a bug?](#did-you-write-a-patch-that-fixes-a-bug)
   - [Do you intend to add a new feature yourself or change an existing one?](#do-you-intend-to-add-a-new-feature-yourself-or-change-an-existing-one)
   - [Do you want to contribute to the documentation?](#do-you-want-to-contribute-to-the-documentation)
   - [Closing notes](#closing-notes)
+
+## Ways to contribute
+
+- **Improve documentation:** fix incomplete or missing docs, bad wording, examples or explanations.
+- **Give feedback:** we are constantly working on making the overlay better, please share how you use the overlay, what features are missing and what is done good.
+- **Share the overlay:** share link to the overlay with anyone who could be interested.
+- **Contribute to codebase:** propose new feature via GitHub Issues or find an [existing one](https://github.com/dorielrivalet/mhfz-overlay/labels/help%20wanted) that you are interested in and work on it.
+- **Give us a code review:** help us identify problems with [source code](https://github.com/dorielrivalet/mhfz-overlay) or make the overlay more performant.
+
+## Contributing workflow
+
+- Decide what you want to contribute
+- If you want to implement a new feature, consider a draft pull request before fully jumping into code.
+- After finalizing your work, please follow our commit conventions.
+- Submit a PR if everything is fine.
+- Get a code review and fix all issues noticed by a maintainer.
+- PR is merged, and we're done!
+
+## Commit convention
+
+It is important to write clear commit messages to keep the git history clean.
+
+This repo uses [commitlint](https://github.com/conventional-changelog/commitlint) to make commits easier.
+
+## Git branches
+
+- **main** - This branch reflects what is being published on the main github page.
+- **release** - This is used for working on upcoming releases. After a release is tested, the changes are merged into main.
+- **backup** - This is used as a backup branch, in case main needs to be updated significantly.
+
+Feature branches can be merged into the release branch.
+
+## Get started with the overlay locally
+
+- Install [editorconfig](https://editorconfig.org/) extension for your editor.
+- Fork the [repository](https://github.com/dorielrivalet/mhfz-overlay), clone or download your fork.
 
 ## Did you find a bug?
 
