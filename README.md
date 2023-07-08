@@ -41,6 +41,7 @@
   - [How to Uninstall](#how-to-uninstall)
   - [Changelog](#changelog)
   - [Documentation](#documentation)
+  - [Contributing](#contributing)
   - [Project Development](#project-development)
   - [Code Analysis](#code-analysis)
   - [Repository Overview](#repository-overview)
@@ -334,6 +335,10 @@ This repository includes two main documentation files:
 - **`docs/README.md`**: This file is meant for developers and technical users who are contributing to the project or working on the codebase. It contains information about the software's intricacies, as well as instructions for deploying the project.
 
 We recommend consulting the appropriate documentation file based on your needs. If you have any questions or issues, feel free to [contact us](https://github.com/DorielRivalet/mhfz-overlay/issues/new/choose) for support.
+
+## Contributing
+
+[Learn about how to contribute](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CONTRIBUTING.md).
 
 ## Project Development
 
