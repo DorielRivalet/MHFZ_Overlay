@@ -1,4 +1,4 @@
-﻿<!--
+<!--
 // © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
@@ -9,7 +9,7 @@
              xmlns:local="clr-namespace:MHFZ_Overlay"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             StartupUri="MainWindow.xaml">
+             StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <local:Settings x:Key="Settings"/>
@@ -149,15 +149,15 @@
                 </Setter>
             </Style>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
-            <FontFamily x:Key="Source Code Pro">pack://application:,,,UI/Fonts/#Source Code Pro</FontFamily>
-            <FontFamily x:Key="Source Code Pro Bold">pack://application:,,,UI/Fonts/#Source Code Pro Bold</FontFamily>
-            <FontFamily x:Key="Open Sans">pack://application:,,,UI/Fonts/#Open Sans Regular</FontFamily>
-            <FontFamily x:Key="Open Sans Bold">pack://application:,,,UI/Fonts/#Open Sans Bold</FontFamily>
-            <FontFamily x:Key="Open Sans Italic">pack://application:,,,UI/Fonts/#Open Sans Italic</FontFamily>
-            <FontFamily x:Key="Monster hunter">pack://application:,,,UI/Fonts/#Monster hunter</FontFamily>
-            <FontFamily x:Key="Segoe UI Variable">pack://application:,,,UI/Fonts/#Segoe UI Variable</FontFamily>
-            <FontFamily x:Key="Segoe Fluent Icons">pack://application:,,,UI/Fonts/#Segoe Fluent Icons</FontFamily>
-            <FontFamily x:Key="MesloLGM NF">pack://application:,,,UI/Fonts/#MesloLGM NF</FontFamily>
+            <FontFamily x:Key="Source Code Pro">pack://application:,,,Assets/Fonts/#Source Code Pro</FontFamily>
+            <FontFamily x:Key="Source Code Pro Bold">pack://application:,,,Assets/Fonts/#Source Code Pro Bold</FontFamily>
+            <FontFamily x:Key="Open Sans">pack://application:,,,Assets/Fonts/#Open Sans Regular</FontFamily>
+            <FontFamily x:Key="Open Sans Bold">pack://application:,,,Assets/Fonts/#Open Sans Bold</FontFamily>
+            <FontFamily x:Key="Open Sans Italic">pack://application:,,,Assets/Fonts/#Open Sans Italic</FontFamily>
+            <FontFamily x:Key="Monster hunter">pack://application:,,,Assets/Fonts/#Monster hunter</FontFamily>
+            <FontFamily x:Key="Segoe UI Variable">pack://application:,,,Assets/Fonts/#Segoe UI Variable</FontFamily>
+            <FontFamily x:Key="Segoe Fluent Icons">pack://application:,,,Assets/Fonts/#Segoe Fluent Icons</FontFamily>
+            <FontFamily x:Key="MesloLGM NF">pack://application:,,,Assets/Fonts/#MesloLGM NF</FontFamily>
             
             <!--<ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles.xaml"/>
@@ -167,7 +167,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
-                <ResourceDictionary Source="UI/Themes/CatppuccinMocha.xaml" />
+                <ResourceDictionary Source="Assets/Themes/CatppuccinMocha.xaml" />
                 <!--<materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="#a6e3a1" SecondaryColor="#b4befe" />-->
                 <!--TODO: replace this with ui once it adds outlinedtextblock/colorpicker components-->
                 <!-- 

@@ -1,29 +1,51 @@
-﻿// © 2023 The mhfz-overlay developers.
+// © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using Memory;
-using MHFZ_Overlay.Addresses;
-using MHFZ_Overlay.Core.Class.Application;
-using MHFZ_Overlay.Core.Class.DataAccessLayer;
-using MHFZ_Overlay.Core.Class.IO;
-using MHFZ_Overlay.Core.Class.Log;
-using MHFZ_Overlay.Core.Constant;
+
+// TODO separation of concerns
+/*
+ 
+ 
+ To make the DataLoader class clearly fit into a single category in the MVVM pattern, you can refactor it by separating its responsibilities into distinct components. Here's a suggestion on how you can achieve this:
+
+Service/Model: Move the data loading and database management responsibilities to a dedicated service class, such as DataLoadService. This service will be responsible for initializing the DatabaseManager, checking external processes and illegal modifications, and interacting with memory addresses. It can expose methods or properties to retrieve game data or perform data-related operations. This will help separate data-related concerns from the other responsibilities of DataLoader.
+
+ViewModel: Extract the logic related to game state checks and warnings into a separate ViewModel class, such as GameStatusViewModel. This ViewModel can have properties and commands that represent the game state and provide warnings or error messages to the View based on that state. It can utilize the DataLoadService to fetch relevant game data.
+
+View: The MainWindow.xaml and MainWindow.xaml.cs files will remain as the View components, responsible for displaying the UI and interacting with the ViewModel.
+
+By following this approach, you achieve a clearer separation of concerns:
+
+The DataLoadService handles the data loading, database management, and memory address interactions (service/model).
+The GameStatusViewModel contains the logic for game state checks and warnings (viewmodel).
+The MainWindow acts as the user interface (view).
+This separation allows for better maintainability, testability, and adherence to the MVVM pattern. Each component has a well-defined responsibility, making it easier to understand and modify the codebase.
+ 
+ */
+
+namespace MHFZ_Overlay;
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
-
-namespace MHFZ_Overlay;
+using Memory;
+using MHFZ_Overlay.Models.Addresses;
+using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Services.DataAccessLayer;
+using MHFZ_Overlay.Services.Manager;
+using MHFZ_Overlay.ViewModels;
 
 /// <summary>
 /// Responsible for loading data into the application. It has a DatabaseManager object that is used to access and manipulate the database. It also has instances of AddressModelNotHGE and AddressModelHGE classes, which inherit from the AddressModel abstract class. Depending on the state of the game, one of these instances is used to get the hit count value (etc.) from the memory.
 /// </summary>
 public class DataLoader
 {
-    private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+    private static readonly NLog.Logger LoggerInstance = NLog.LogManager.GetCurrentClassLogger();
 
     // TODO: would like to make this a singleton but its complicated
     // this loads first before MainWindow constructor is called. meaning this runs twice.
@@ -33,9 +55,9 @@ public class DataLoader
         Stopwatch stopwatch = new Stopwatch();
         // Start the stopwatch
         stopwatch.Start();
-        logger.Trace("DataLoader constructor called. Call stack: {0}", new StackTrace().ToString());
+        LoggerInstance.Trace(CultureInfo.InvariantCulture, "DataLoader constructor called. Call stack: {0}", new StackTrace().ToString());
 
-        logger.Info($"DataLoader initialized");
+        LoggerInstance.Info(CultureInfo.InvariantCulture, $"DataLoader initialized");
 
         int PID = m.GetProcIdFromName("mhf");
         if (PID > 0)
@@ -51,18 +73,18 @@ public class DataLoader
                 // ReShade or similar programs might trigger this warning. Does these affect overlay functionality?
                 // Imulion's version does not have anything in the catch block.
                 // I'm marking this as error since overlay might interfere with custom shaders.
-                logger.Error(ex, "Could not create code cave");
+                LoggerInstance.Error(ex, "Could not create code cave");
                 System.Windows.MessageBox.Show("Could not create code cave. ReShade or similar programs might trigger this error. Also make sure you are not loading the overlay when on game launcher.", Messages.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
 
             if (!isHighGradeEdition)
             {
-                logger.Info("Running game in Non-HGE");
+                LoggerInstance.Info(CultureInfo.InvariantCulture, "Running game in Non-HGE");
                 model = new AddressModelNotHGE(m);
             }
             else
             {
-                logger.Info("Running game in HGE");
+                LoggerInstance.Info(CultureInfo.InvariantCulture, "Running game in HGE");
                 model = new AddressModelHGE(m);
             }
 
@@ -79,26 +101,27 @@ public class DataLoader
         }
         else
         {
-            logger.Fatal("Launch game first");
+            LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Launch game first");
             System.Windows.MessageBox.Show("Please launch game first", Messages.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
+
         // Stop the stopwatch
         stopwatch.Stop();
         // Get the elapsed time in milliseconds
         double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
 
         // Print the elapsed time
-        logger.Debug($"DataLoader ctor Elapsed Time: {elapsedTimeMs} ms");
+        LoggerInstance.Debug($"DataLoader ctor Elapsed Time: {elapsedTimeMs} ms");
     }
 
-    public bool loadedOutsideMezeporta = false;
+    public bool loadedOutsideMezeporta;
 
     private void CheckIfLoadedInMezeporta()
     {
         if (model.AreaID() != 200)
         {
-            logger.Warn("Loaded overlay outside Mezeporta");
+            LoggerInstance.Warn(CultureInfo.InvariantCulture, "Loaded overlay outside Mezeporta");
 
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
             if (s.EnableOutsideMezeportaLoadingWarning)
@@ -110,9 +133,9 @@ public class DataLoader
     {
         if (model.QuestID() != 0)
         {
-            logger.Fatal("Loaded overlay inside quest {0}", model.QuestID());
+            LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Loaded overlay inside quest {0}", model.QuestID());
             System.Windows.MessageBox.Show("Loaded overlay inside quest. Please load the overlay outside quests.", Messages.FATAL_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            LoggingManager.WriteCrashLog(new Exception("Loaded overlay inside quest"));
+            LoggingManager.WriteCrashLog(new ArgumentOutOfRangeException("Loaded overlay inside quest"));
         }
     }
 
@@ -129,7 +152,7 @@ public class DataLoader
             if (module == null)
             {
                 // The "mhf.exe" process was not found
-                logger.Fatal("mhf.exe not found");
+                LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
                 MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
                 return;
@@ -142,7 +165,7 @@ public class DataLoader
             if (mhfDirectory == null)
             {
                 // The "mhf.exe" process was not found
-                logger.Fatal("mhf.exe not found");
+                LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
                 MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
                 return;
@@ -175,7 +198,7 @@ public class DataLoader
         else
         {
             // The "mhf.exe" process was not found
-            logger.Fatal("mhf.exe not found");
+            LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
             MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
@@ -230,7 +253,7 @@ public class DataLoader
         {
             if (process.ProcessName == "GameOverlayUI" && !steamOverlayWarningShown)
             {
-                logger.Warn("Found Steam overlay: {0}", process.ProcessName);
+                LoggerInstance.Warn(CultureInfo.InvariantCulture, "Found Steam overlay: {0}", process.ProcessName);
                 var result = MessageBox.Show($"Having Steam Overlay open while MHF-Z Overlay is running may decrease performance. ({process.ProcessName} found)", Messages.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.OK)
                 {
@@ -246,7 +269,7 @@ public class DataLoader
             {
 
                 // processName is a substring of one of the banned process strings
-                logger.Fatal("Found banned process {0}", process.ProcessName);
+                LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Found banned process {0}", process.ProcessName);
                 MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
 
                 // Close the overlay program
@@ -264,7 +287,7 @@ public class DataLoader
         if (overlayCount > 1)
         {
             // More than one "MHFZ_Overlay" process is running
-            logger.Fatal("Found duplicate overlay");
+            LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Found duplicate overlay");
             MessageBox.Show("Close other instances of the overlay before opening a new one", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
 
             // Close the overlay program
@@ -273,7 +296,7 @@ public class DataLoader
         if (gameCount > 1)
         {
             // More than one game process is running
-            logger.Fatal("Found duplicate game");
+            LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Found duplicate game");
             MessageBox.Show("Close other instances of the game before opening a new one", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
 
             // Close the overlay program
@@ -300,7 +323,7 @@ public class DataLoader
                 if (module == null)
                 {
                     // The "mhf.exe" process was not found
-                    logger.Fatal("mhf.exe not found");
+                    LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
                     MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
                     return;
@@ -314,7 +337,7 @@ public class DataLoader
                 if (string.IsNullOrEmpty(mhfDirectory))
                 {
                     // The "mhf.exe" process was not found
-                    logger.Fatal("mhf.exe not found");
+                    LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
                     MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
                     return;
@@ -329,7 +352,7 @@ public class DataLoader
             else
             {
                 // The "mhf.exe" process was not found
-                logger.Fatal("mhf.exe not found");
+                LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
                 MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
@@ -340,7 +363,7 @@ public class DataLoader
         }
     }
 
-    public bool databaseChanged = false;
+    public bool databaseChanged;
 
 
     #region DataLoaderVariables
@@ -356,7 +379,7 @@ public class DataLoader
     /// <value>
     /// The model.
     /// </value>
-    public AddressModel model { get; } //TODO: fix null warning
+    public AddressModel model { get; } // TODO: fix null warning
 
     #endregion
 
@@ -368,27 +391,27 @@ public class DataLoader
     /// <param name="PID">The pid.</param>
     private void CreateCodeCave(int PID)
     {
-        //TODO why is this needed?
+        // TODO why is this needed?
         Process? proc = LoadMHFODLL(PID);
         if (proc == null)
         {
-            logger.Fatal("Launch game first");
+            LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Launch game first");
             System.Windows.MessageBox.Show("Please launch game first", Messages.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
             return;
         }
         long searchAddress = m.AoBScan("89 04 8D 00 C6 43 00 61 E9").Result.FirstOrDefault();
-        if (searchAddress.ToString("X8") == "00000000")
+        if (searchAddress.ToString("X8", CultureInfo.InvariantCulture) == "00000000")
         {
-            logger.Info("Creating code cave");
+            LoggerInstance.Info(CultureInfo.InvariantCulture, "Creating code cave");
 
             // Create code cave and get its address
             long baseScanAddress = m.AoBScan("0F B7 8a 24 06 00 00 0f b7 ?? ?? ?? c1 c1 e1 0b").Result.FirstOrDefault();
-            UIntPtr codecaveAddress = m.CreateCodeCave(baseScanAddress.ToString("X8"), new byte[] { 0x0F, 0xB7, 0x8A, 0x24, 0x06, 0x00, 0x00, 0x0F, 0xB7, 0x52, 0x0C, 0x88, 0x15, 0x21, 0x00, 0x0F, 0x15, 0x8B, 0xC1, 0xC1, 0xE1, 0x0B, 0x0F, 0xBF, 0xC9, 0xC1, 0xE8, 0x05, 0x09, 0xC8, 0x01, 0xD2, 0xB9, 0x8E, 0x76, 0x21, 0x25, 0x29, 0xD1, 0x66, 0x8B, 0x11, 0x66, 0xF7, 0xD2, 0x0F, 0xBF, 0xCA, 0x0F, 0xBF, 0x15, 0xC4, 0x22, 0xEA, 0x17, 0x31, 0xC8, 0x31, 0xD0, 0xB9, 0xC0, 0x5E, 0x73, 0x16, 0x0F, 0xBF, 0xD1, 0x31, 0xD0, 0x60, 0x8B, 0x0D, 0x21, 0x00, 0x0F, 0x15, 0x89, 0x04, 0x8D, 0x00, 0xC6, 0x43, 0x00, 0x61 }, 63, 0x100);
+            UIntPtr codecaveAddress = m.CreateCodeCave(baseScanAddress.ToString("X8", CultureInfo.InvariantCulture), new byte[] { 0x0F, 0xB7, 0x8A, 0x24, 0x06, 0x00, 0x00, 0x0F, 0xB7, 0x52, 0x0C, 0x88, 0x15, 0x21, 0x00, 0x0F, 0x15, 0x8B, 0xC1, 0xC1, 0xE1, 0x0B, 0x0F, 0xBF, 0xC9, 0xC1, 0xE8, 0x05, 0x09, 0xC8, 0x01, 0xD2, 0xB9, 0x8E, 0x76, 0x21, 0x25, 0x29, 0xD1, 0x66, 0x8B, 0x11, 0x66, 0xF7, 0xD2, 0x0F, 0xBF, 0xCA, 0x0F, 0xBF, 0x15, 0xC4, 0x22, 0xEA, 0x17, 0x31, 0xC8, 0x31, 0xD0, 0xB9, 0xC0, 0x5E, 0x73, 0x16, 0x0F, 0xBF, 0xD1, 0x31, 0xD0, 0x60, 0x8B, 0x0D, 0x21, 0x00, 0x0F, 0x15, 0x89, 0x04, 0x8D, 0x00, 0xC6, 0x43, 0x00, 0x61 }, 63, 0x100);
 
             // Change addresses
             UIntPtr storeValueAddress = codecaveAddress + 125;                  //address where store some value?
-            string storeValueAddressString = storeValueAddress.ToString("X8");
+            string storeValueAddressString = storeValueAddress.ToString("X8", CultureInfo.InvariantCulture);
             byte[] storeValueAddressByte = Enumerable.Range(0, storeValueAddressString.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(storeValueAddressString.Substring(x, 2), 16)).ToArray();
             Array.Reverse(storeValueAddressByte, 0, storeValueAddressByte.Length);
             byte[] by15 = { 136, 21 };
@@ -422,7 +445,7 @@ public class DataLoader
         TimeSpan timeSpan = TimeSpan.FromMilliseconds(elapsedTime);
 
         // Format the TimeSpan object as a string
-        string formattedTime = timeSpan.ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS);
+        string formattedTime = timeSpan.ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS, CultureInfo.InvariantCulture);
 
         return formattedTime;
     }
@@ -437,7 +460,7 @@ public class DataLoader
     void WriteByteFromAddress(UIntPtr codecaveAddress, Process proc, long offset1, int offset2)
     {
         long address = proc.Modules[index].BaseAddress.ToInt32() + offset1;
-        string addressString = address.ToString("X8");
+        string addressString = address.ToString("X8", CultureInfo.InvariantCulture);
         byte[] addressByte = Enumerable.Range(0, addressString.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(addressString.Substring(x, 2), 16)).ToArray();
         Array.Reverse(addressByte, 0, addressByte.Length);
         m.WriteBytes(codecaveAddress + offset2, addressByte);
@@ -450,12 +473,12 @@ public class DataLoader
     /// <returns></returns>
     Process? LoadMHFODLL(int PID)
     {
-        logger.Info("Loading MHFODLL");
+        LoggerInstance.Info(CultureInfo.InvariantCulture, "Loading MHFODLL");
         //Search and get mhfo-hd.dll module base address
         Process proccess = Process.GetProcessById(PID);
         if (proccess == null)
         {
-            logger.Warn("Process not found");
+            LoggerInstance.Warn(CultureInfo.InvariantCulture, "Process not found");
             return null;
         }
         var ModuleList = new List<string>();
@@ -479,7 +502,7 @@ public class DataLoader
             }
             else
             {
-                logger.Fatal("Could not find game dll");
+                LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Could not find game dll");
                 MessageBox.Show("Could not find game dll. Make sure you start the overlay inside Mezeporta.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }

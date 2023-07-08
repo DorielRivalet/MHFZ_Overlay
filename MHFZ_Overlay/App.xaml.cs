@@ -1,19 +1,19 @@
-﻿// © 2023 The mhfz-overlay developers.
+// © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-using MHFZ_Overlay.Core.Class.IO;
-using MHFZ_Overlay.Core.Class.Log;
-using MHFZ_Overlay.Core.Constant;
-using Squirrel;
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
+using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Services.Manager;
+using Squirrel;
 
 // TODO: all of this needs testing
 namespace MHFZ_Overlay;
@@ -24,7 +24,7 @@ namespace MHFZ_Overlay;
 public partial class App : Application
 {
     private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-    public static bool isClowdSquirrelUpdating = false;
+    public static bool isClowdSquirrelUpdating;
 
     /// <summary>
     /// The current program version. TODO: put in env var
@@ -53,21 +53,21 @@ public partial class App : Application
         var loggingRules = NLog.LogManager.Configuration.LoggingRules;
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         loggingRules[0].SetLoggingLevels(LoggingManager.GetLogLevel(s.LogLevel), NLog.LogLevel.Fatal);
-        logger.Info("Started WPF application");
-        logger.Trace("Call stack: {0}", new StackTrace().ToString());
+        logger.Info(CultureInfo.InvariantCulture, "Started WPF application");
+        logger.Trace(CultureInfo.InvariantCulture, "Call stack: {0}", new StackTrace().ToString());
         logger.Debug("OS: {0}, is64BitOS: {1}, is64BitProcess: {2}, CLR version: {3}", Environment.OSVersion, Environment.Is64BitOperatingSystem, Environment.Is64BitProcess, Environment.Version);
 
         // TODO: test if this doesnt conflict with squirrel update
         CurrentProgramVersion = $"v{GetAssemblyVersion}";
         if (CurrentProgramVersion == "v0.0.0")
         {
-            logger.Fatal("Program version not found");
+            logger.Fatal(CultureInfo.InvariantCulture, "Program version not found");
             MessageBox.Show("Program version not found", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-            LoggingManager.WriteCrashLog(new Exception("Program version not found"));
+            LoggingManager.WriteCrashLog(new ArgumentOutOfRangeException("Program version not found"));
         }
         else
         {
-            logger.Info("Found program version {0}", CurrentProgramVersion);
+            logger.Info(CultureInfo.InvariantCulture, "Found program version {0}", CurrentProgramVersion);
         }
 
         // run Squirrel first, as the app may exit after these run
@@ -80,7 +80,7 @@ public partial class App : Application
         // ... other app init code after ...
         RestoreSettings();
         Settings.Default.Reload();
-        logger.Info("Reloaded default settings");
+        logger.Info(CultureInfo.InvariantCulture, "Reloaded default settings");
         // Stop the stopwatch
         stopwatch.Stop();
         // Get the elapsed time in milliseconds
@@ -131,7 +131,7 @@ public partial class App : Application
         string destFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
         string sourceFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
         var restorationMessage = "Restored settings";
-        logger.Info("Restore our settings backup if any. Destination: {0}. Source: {1}", destFile, sourceFile);
+        logger.Info(CultureInfo.InvariantCulture, "Restore our settings backup if any. Destination: {0}. Source: {1}", destFile, sourceFile);
         FileManager.RestoreFileFromSourceToDestination(destFile, sourceFile, restorationMessage);
     }
 
@@ -142,7 +142,7 @@ public partial class App : Application
     /// <param name="tools">The tools.</param>
     private static void OnAppInstall(SemanticVersion version, IAppTools tools)
     {
-        logger.Info("Created overlay shortcut");
+        logger.Info(CultureInfo.InvariantCulture, "Created overlay shortcut");
         MessageBox.Show("【MHF-Z】Overlay is now installed. Creating a shortcut.", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
         tools.CreateShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
     }
@@ -154,12 +154,12 @@ public partial class App : Application
     /// <param name="tools">The tools.</param>
     private static void OnAppUninstall(SemanticVersion version, IAppTools tools)
     {
-        logger.Info("Removed overlay shortcut");
+        logger.Info(CultureInfo.InvariantCulture, "Removed overlay shortcut");
         MessageBox.Show("【MHF-Z】Overlay has been uninstalled. Removing shortcut.", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
         tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
     }
 
-    public static bool isFirstRun = false;
+    public static bool isFirstRun;
 
     /// <summary>
     /// Called when [application run].
@@ -173,7 +173,7 @@ public partial class App : Application
         // show a welcome message when the app is first installed
         if (firstRun)
         {
-            logger.Info("Running overlay for first time");
+            logger.Info(CultureInfo.InvariantCulture, "Running overlay for first time");
             MessageBox.Show(
 @"【MHF-Z】Overlay is now running! Thanks for installing【MHF-Z】Overlay.
 
@@ -200,7 +200,7 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
     public static async Task UpdateMyApp()
     {
         isClowdSquirrelUpdating = true;
-        var splashScreen = new SplashScreen("UI/Icons/png/loading.png");
+        var splashScreen = new SplashScreen("Assets/Icons/png/loading.png");
         splashScreen.Show(false);
         try
         {
@@ -211,14 +211,14 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
             // optionally restart the app automatically, or ask the user if/when they want to restart
             if (newVersion != null)
             {
-                logger.Info("Overlay has been updated, restarting application");
+                logger.Info(CultureInfo.InvariantCulture, "Overlay has been updated, restarting application");
                 splashScreen.Close(TimeSpan.FromSeconds(0.1));
                 MessageBox.Show("【MHF-Z】Overlay has been updated, restarting application.", "MHF-Z Overlay Update", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateManager.RestartApp();
             }
             else
             {
-                logger.Error("No updates available.");
+                logger.Error(CultureInfo.InvariantCulture, "No updates available.");
                 isClowdSquirrelUpdating = false;
                 splashScreen.Close(TimeSpan.FromSeconds(0.1));
                 MessageBox.Show("No updates available. If you want to check for updates manually, visit the GitHub repository at https://github.com/DorielRivalet/mhfz-overlay.", "MHF-Z Overlay Update", MessageBoxButton.OK, MessageBoxImage.Error);
