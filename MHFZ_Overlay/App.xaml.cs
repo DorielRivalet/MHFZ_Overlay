@@ -1,6 +1,10 @@
 // © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
+
+// TODO: all of this needs testing
+namespace MHFZ_Overlay;
+
 using System;
 using System.Configuration;
 using System.Diagnostics;
@@ -11,12 +15,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Threading;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Services.Manager;
 using Squirrel;
-
-// TODO: all of this needs testing
-namespace MHFZ_Overlay;
 
 /// <summary>
 /// Interaction logic for App.xaml
@@ -24,6 +26,7 @@ namespace MHFZ_Overlay;
 public partial class App : Application
 {
     private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
     public static bool isClowdSquirrelUpdating;
 
     /// <summary>
@@ -48,6 +51,7 @@ public partial class App : Application
     {
         // Create a Stopwatch instance
         Stopwatch stopwatch = new Stopwatch();
+
         // Start the stopwatch
         stopwatch.Start();
         var loggingRules = NLog.LogManager.Configuration.LoggingRules;
@@ -62,7 +66,7 @@ public partial class App : Application
         if (CurrentProgramVersion == "v0.0.0")
         {
             logger.Fatal(CultureInfo.InvariantCulture, "Program version not found");
-            MessageBox.Show("Program version not found", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Program version not found", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             LoggingManager.WriteCrashLog(new ArgumentOutOfRangeException("Program version not found"));
         }
         else
@@ -81,15 +85,26 @@ public partial class App : Application
         RestoreSettings();
         Settings.Default.Reload();
         logger.Info(CultureInfo.InvariantCulture, "Reloaded default settings");
+
+        DispatcherUnhandledException += App_DispatcherUnhandledException;
+
         // Stop the stopwatch
         stopwatch.Stop();
+
         // Get the elapsed time in milliseconds
         double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
 
         base.OnStartup(e);
         SetRenderingMode(s.RenderingMode);
+
         // Print the elapsed time
         logger.Debug($"App ctor Elapsed Time: {elapsedTimeMs} ms");
+    }
+
+    private static void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    {
+        // Log/inspect the inspection here
+        logger.Error(e.Exception);
     }
 
     private static void SetRenderingMode(string renderingMode)
@@ -187,7 +202,9 @@ The overlay might take some time to start due to databases. The next time you ru
 
 It's also recommended to change the resolution of the overlay if you are using a resolution other than the default set.
 
-Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxImage.Information);
+Happy Hunting!", "MHF-Z Overlay Installation",
+MessageBoxButton.OK,
+MessageBoxImage.Information);
             isFirstRun = true;
         }
     }
@@ -229,7 +246,7 @@ Happy Hunting!", "MHF-Z Overlay Installation", MessageBoxButton.OK, MessageBoxIm
             logger.Error(ex);
             isClowdSquirrelUpdating = false;
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
-            MessageBox.Show("An error has occurred with the update process, see logs.log for more information", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("An error has occurred with the update process, see logs.log for more information", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
