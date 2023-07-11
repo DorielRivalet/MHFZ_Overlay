@@ -12,7 +12,6 @@
     <ApplicationIcon>mhfzoverlayicon256.ico</ApplicationIcon>
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
 	<EnableWindowsTargeting>true</EnableWindowsTargeting>
-	<CodeAnalysisRuleSet>..\.sonarlint\dorielrivalet_mhfz_overlaycsharp.ruleset</CodeAnalysisRuleSet>
     <!-- Project is not a test project -->
     <SonarQubeTestProject>false</SonarQubeTestProject>
 	<DebugType>pdbonly</DebugType>
@@ -364,7 +363,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\.sonarlint\dorielrivalet_mhfz_overlay\CSharp\SonarLint.xml" Link="SonarLint.xml" />
     <Content Include="mhfzoverlay128.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
