@@ -45,11 +45,15 @@ public abstract class AddressModel : INotifyPropertyChanged
     public readonly Mem M;
 
     private int savedMonster1MaxHP;
+
     private int savedMonster2MaxHP;
+
     private int savedMonster3MaxHP;
+
     private int savedMonster4MaxHP;
 
     private int savedMonster1ID;
+
     private int savedMonster2ID;
 
     public AddressModel(Mem m)
@@ -84,599 +88,1078 @@ public abstract class AddressModel : INotifyPropertyChanged
     public bool ShowHitCountInfo { get; set; }
 
     public bool ShowPlayerAtkInfo { get; set; }
+
     public bool ShowPlayerHitsTakenBlockedInfo { get; set; }
+
     public bool ShowQuestID { get; set; }
+
     public bool ShowQuestAttemptsInfo { get; set; }
+
     public bool ShowPersonalBestTimePercentInfo { get; set; }
+
     public bool ShowPersonalBestAttemptsInfo { get; set; }
+
     public bool ShowMonster1HPBar { get; set; }
+
     public bool ShowMonster2HPBar { get; set; }
+
     public bool ShowMonster3HPBar { get; set; }
+
     public bool ShowMonster4HPBar { get; set; }
+
     public bool ShowSharpness { get; set; }
+
     public bool ShowSessionTimeInfo { get; set; }
+
     public bool ShowMonsterPartHP { get; set; }
+
     public bool ShowKBMLayout { get; set; }
+
     public bool ShowAPM { get; set; }
+
     public bool ShowGamepadLayout { get; set; }
+
     public bool ShowMonster1Icon { get; set; }
+
     public bool ShowFrameCounter { get; set; }
+
     public bool ShowMap { get; set; }
+
     public bool ShowDamagePerSecond { get; set; }
+
     public bool ShowOverlayModeWatermark { get; set; }
 
-
     public bool ShowSaveIcon { get; set; } = true;
+
     public bool ShowLocationTextInfo { get; set; } = true;
+
     public bool ShowQuestNameInfo { get; set; } = true;
+
     public bool ShowPlayerAttackGraph { get; set; } = true;
+
     public bool ShowPlayerDPSGraph { get; set; } = true;
+
     public bool ShowPlayerAPMGraph { get; set; } = true;
+
     public bool ShowPlayerHitsPerSecondGraph { get; set; } = true;
 
     abstract public bool IsNotRoad();
+
     abstract public int HitCountInt();
+
     abstract public int DamageDealt();
 
     //New addresses
     abstract public int AreaID();
+
     abstract public int GRankNumber();
+
     abstract public int GSR();
+
     abstract public int RoadFloor();
+
     abstract public int WeaponStyle();
+
     abstract public int QuestID();
+
     abstract public int UrukiPachinkoFish();
+
     abstract public int UrukiPachinkoMushroom();
+
     abstract public int UrukiPachinkoSeed();
+
     abstract public int UrukiPachinkoMeat();
+
     abstract public int UrukiPachinkoChain();
+
     abstract public int UrukiPachinkoScore();
+
     abstract public int UrukiPachinkoBonusScore();
+
     abstract public int NyanrendoScore();
+
     abstract public int DokkanBattleCatsScore();
+
     abstract public int DokkanBattleCatsScale();
+
     abstract public int DokkanBattleCatsShell();
+
     abstract public int DokkanBattleCatsCamp();
+
     abstract public int GuukuScoopSmall();
+
     abstract public int GuukuScoopMedium();
+
     abstract public int GuukuScoopLarge();
+
     abstract public int GuukuScoopGolden();
+
     abstract public int GuukuScoopScore();
+
     abstract public int PanicHoneyScore();
+
     abstract public int Sharpness();
+
     abstract public int CaravanPoints();
+
     abstract public int MezeportaFestivalPoints();
+
     abstract public int DivaBond();
+
     abstract public int DivaItemsGiven();
+
     abstract public int GCP();
+
     abstract public int RoadPoints();
+
     abstract public int ArmorColor();
+
     abstract public int RaviGg();
+
     abstract public int Ravig();
+
     abstract public int GZenny();
+
     abstract public int GuildFoodSkill();
+
     abstract public int GalleryEvaluationScore();
+
     abstract public int PoogiePoints();
+
     abstract public int PoogieItemUseID();
+
     abstract public int PoogieCostume();
+
     //zero-indexed
     abstract public int CaravenGemLevel();
-    abstract public int RoadMaxStagesMultiplayer();
-    abstract public int RoadTotalStagesMultiplayer();
-    abstract public int RoadTotalStagesSolo();
-    abstract public int RoadMaxStagesSolo();
-    abstract public int RoadFatalisSlain();
-    abstract public int RoadFatalisEncounters();
-    abstract public int FirstDistrictDuremudiraEncounters();
-    abstract public int FirstDistrictDuremudiraSlays();
-    abstract public int SecondDistrictDuremudiraEncounters();
-    abstract public int SecondDistrictDuremudiraSlays();
-    abstract public int DeliveryQuestPoints(); //doesn't seem to work
 
+    abstract public int RoadMaxStagesMultiplayer();
+
+    abstract public int RoadTotalStagesMultiplayer();
+
+    abstract public int RoadTotalStagesSolo();
+
+    abstract public int RoadMaxStagesSolo();
+
+    abstract public int RoadFatalisSlain();
+
+    abstract public int RoadFatalisEncounters();
+
+    abstract public int FirstDistrictDuremudiraEncounters();
+
+    abstract public int FirstDistrictDuremudiraSlays();
+
+    abstract public int SecondDistrictDuremudiraEncounters();
+
+    abstract public int SecondDistrictDuremudiraSlays();
+
+    abstract public int DeliveryQuestPoints(); //doesn't seem to work
 
     //red is 0
     abstract public int SharpnessLevel();
 
-
     abstract public int PartnerLevel();
+
     abstract public int ObjectiveType();
+
     abstract public int DivaSkillUsesLeft();
+
     abstract public int HalkFullness();
+
     abstract public int RankBand();
 
     abstract public int PartnyaRankPoints();
+
     //parts
     abstract public int Monster1Part1();
+
     abstract public int Monster1Part2();
+
     abstract public int Monster1Part3();
+
     abstract public int Monster1Part4();
+
     abstract public int Monster1Part5();
+
     abstract public int Monster1Part6();
+
     abstract public int Monster1Part7();
+
     abstract public int Monster1Part8();
+
     abstract public int Monster1Part9();
+
     abstract public int Monster1Part10();
+
     abstract public int Monster2Part1();
+
     abstract public int Monster2Part2();
+
     abstract public int Monster2Part3();
+
     abstract public int Monster2Part4();
+
     abstract public int Monster2Part5();
+
     abstract public int Monster2Part6();
+
     abstract public int Monster2Part7();
+
     abstract public int Monster2Part8();
+
     abstract public int Monster2Part9();
+
     abstract public int Monster2Part10();
 
-
-
     abstract public int TimeInt();
+
     abstract public int TimeDefInt();
 
     abstract public int WeaponRaw();
+
     abstract public int WeaponType();
 
     abstract public int LargeMonster1ID();
+
     abstract public int LargeMonster2ID();
+
     abstract public int LargeMonster3ID();
+
     abstract public int LargeMonster4ID();
 
     abstract public int Monster1HPInt();
+
     abstract public int Monster2HPInt();
+
     abstract public int Monster3HPInt();
+
     abstract public int Monster4HPInt();
 
     abstract public string Monster1AtkMult();
+
     abstract public string Monster2AtkMult();
 
     abstract public decimal Monster1DefMult();
+
     abstract public decimal Monster2DefMult();
 
     abstract public int Monster1Poison();
+
     abstract public int Monster1PoisonNeed();
+
     abstract public int Monster1Sleep();
+
     abstract public int Monster1SleepNeed();
+
     abstract public int Monster1Para();
+
     abstract public int Monster1ParaNeed();
+
     abstract public int Monster1Blast();
+
     abstract public int Monster1BlastNeed();
+
     abstract public int Monster1Stun();
+
     abstract public int Monster1StunNeed();
+
     abstract public string Monster1Size();
 
     abstract public int Monster2Poison();
+
     abstract public int Monster2PoisonNeed();
+
     abstract public int Monster2Sleep();
+
     abstract public int Monster2SleepNeed();
+
     abstract public int Monster2Para();
+
     abstract public int Monster2ParaNeed();
+
     abstract public int Monster2Blast();
+
     abstract public int Monster2BlastNeed();
+
     abstract public int Monster2Stun();
+
     abstract public int Monster2StunNeed();
+
     abstract public string Monster2Size();
+
     abstract public int Objective1ID();
+
     abstract public int Objective1Quantity();
+
     abstract public int Objective1CurrentQuantityMonster();
+
     abstract public int Objective1CurrentQuantityItem();
 
     //ravi
     abstract public int RavienteTriggeredEvent();
+
     abstract public int GreatSlayingPoints();
+
     abstract public int GreatSlayingPointsSaved();
+
     //normal and violent. berserk support
     abstract public int RavienteAreaID();
 
-
     abstract public int RoadSelectedMonster();
-
 
     // TODO Yamas and Beru
     abstract public int AlternativeMonster1HPInt();
+
     abstract public int AlternativeMonster1AtkMult();
+
     abstract public int AlternativeMonster1DefMult();
+
     abstract public int AlternativeMonster1Size();
 
     abstract public int AlternativeMonster1Poison();
+
     abstract public int AlternativeMonster1PoisonNeed();
+
     abstract public int AlternativeMonster1Sleep();
+
     abstract public int AlternativeMonster1SleepNeed();
 
     abstract public int AlternativeMonster1Para();
+
     abstract public int AlternativeMonster1ParaNeed();
+
     abstract public int AlternativeMonster1Blast();
+
     abstract public int AlternativeMonster1BlastNeed();
 
     abstract public int AlternativeMonster1Stun();
+
     abstract public int AlternativeMonster1StunNeed();
 
     abstract public int AlternativeMonster1Part1();
+
     abstract public int AlternativeMonster1Part2();
+
     abstract public int AlternativeMonster1Part3();
+
     abstract public int AlternativeMonster1Part4();
+
     abstract public int AlternativeMonster1Part5();
+
     abstract public int AlternativeMonster1Part6();
+
     abstract public int AlternativeMonster1Part7();
+
     abstract public int AlternativeMonster1Part8();
+
     abstract public int AlternativeMonster1Part9();
+
     abstract public int AlternativeMonster1Part10();
 
     abstract public int DivaSkill();
+
     abstract public int StarGrades();
 
     abstract public int CaravanSkill1();
+
     abstract public int CaravanSkill2();
+
     abstract public int CaravanSkill3();
 
     abstract public int CurrentFaints();
+
     //road and normal
     abstract public int MaxFaints();
+
     //shitens, conquests, pioneer, daily, caravan, interception
     abstract public int AlternativeMaxFaints();
 
     abstract public int CaravanScore();
 
     abstract public int CaravanMonster1ID();
+
     //unsure
     abstract public int CaravanMonster2ID();
 
     abstract public int BlademasterWeaponID();
+
     //same as melee afaik
     abstract public int GunnerWeaponID();
+
     abstract public int WeaponDeco1ID();
+
     abstract public int WeaponDeco2ID();
+
     abstract public int WeaponDeco3ID();
+
     abstract public int ArmorHeadID();
+
     abstract public int ArmorHeadDeco1ID();
+
     abstract public int ArmorHeadDeco2ID();
+
     abstract public int ArmorHeadDeco3ID();
+
     abstract public int ArmorChestID();
+
     abstract public int ArmorChestDeco1ID();
+
     abstract public int ArmorChestDeco2ID();
+
     abstract public int ArmorChestDeco3ID();
+
     abstract public int ArmorArmsID();
+
     abstract public int ArmorArmsDeco1ID();
+
     abstract public int ArmorArmsDeco2ID();
+
     abstract public int ArmorArmsDeco3ID();
+
     abstract public int ArmorWaistID();
+
     abstract public int ArmorWaistDeco1ID();
+
     abstract public int ArmorWaistDeco2ID();
+
     abstract public int ArmorWaistDeco3ID();
+
     abstract public int ArmorLegsID();
+
     abstract public int ArmorLegsDeco1ID();
+
     abstract public int ArmorLegsDeco2ID();
+
     abstract public int ArmorLegsDeco3ID();
+
     abstract public int Cuff1ID();
+
     abstract public int Cuff2ID();
+
     abstract public int TotalDefense();
+
     abstract public int PouchItem1ID();
+
     abstract public int PouchItem1Qty();
+
     abstract public int PouchItem2ID();
+
     abstract public int PouchItem2Qty();
+
     abstract public int PouchItem3ID();
+
     abstract public int PouchItem3Qty();
+
     abstract public int PouchItem4ID();
+
     abstract public int PouchItem4Qty();
+
     abstract public int PouchItem5ID();
+
     abstract public int PouchItem5Qty();
+
     abstract public int PouchItem6ID();
+
     abstract public int PouchItem6Qty();
+
     abstract public int PouchItem7ID();
+
     abstract public int PouchItem7Qty();
+
     abstract public int PouchItem8ID();
+
     abstract public int PouchItem8Qty();
+
     abstract public int PouchItem9ID();
+
     abstract public int PouchItem9Qty();
+
     abstract public int PouchItem10ID();
+
     abstract public int PouchItem10Qty();
+
     abstract public int PouchItem11ID();
+
     abstract public int PouchItem11Qty();
+
     abstract public int PouchItem12ID();
+
     abstract public int PouchItem12Qty();
+
     abstract public int PouchItem13ID();
+
     abstract public int PouchItem13Qty();
+
     abstract public int PouchItem14ID();
+
     abstract public int PouchItem14Qty();
+
     abstract public int PouchItem15ID();
+
     abstract public int PouchItem15Qty();
+
     abstract public int PouchItem16ID();
+
     abstract public int PouchItem16Qty();
+
     abstract public int PouchItem17ID();
+
     abstract public int PouchItem17Qty();
+
     abstract public int PouchItem18ID();
+
     abstract public int PouchItem18Qty();
+
     abstract public int PouchItem19ID();
+
     abstract public int PouchItem19Qty();
+
     abstract public int PouchItem20ID();
+
     abstract public int PouchItem20Qty();
+
     abstract public int AmmoPouchItem1ID();
+
     abstract public int AmmoPouchItem1Qty();
+
     abstract public int AmmoPouchItem2ID();
+
     abstract public int AmmoPouchItem2Qty();
+
     abstract public int AmmoPouchItem3ID();
+
     abstract public int AmmoPouchItem3Qty();
+
     abstract public int AmmoPouchItem4ID();
+
     abstract public int AmmoPouchItem4Qty();
+
     abstract public int AmmoPouchItem5ID();
+
     abstract public int AmmoPouchItem5Qty();
+
     abstract public int AmmoPouchItem6ID();
+
     abstract public int AmmoPouchItem6Qty();
+
     abstract public int AmmoPouchItem7ID();
+
     abstract public int AmmoPouchItem7Qty();
+
     abstract public int AmmoPouchItem8ID();
+
     abstract public int AmmoPouchItem8Qty();
+
     abstract public int AmmoPouchItem9ID();
+
     abstract public int AmmoPouchItem9Qty();
+
     abstract public int AmmoPouchItem10ID();
+
     abstract public int AmmoPouchItem10Qty();
 
     abstract public int ArmorSkill1();
+
     abstract public int ArmorSkill2();
+
     abstract public int ArmorSkill3();
+
     abstract public int ArmorSkill4();
+
     abstract public int ArmorSkill5();
+
     abstract public int ArmorSkill6();
+
     abstract public int ArmorSkill7();
+
     abstract public int ArmorSkill8();
+
     abstract public int ArmorSkill9();
+
     abstract public int ArmorSkill10();
+
     abstract public int ArmorSkill11();
+
     abstract public int ArmorSkill12();
+
     abstract public int ArmorSkill13();
+
     abstract public int ArmorSkill14();
+
     abstract public int ArmorSkill15();
+
     abstract public int ArmorSkill16();
+
     abstract public int ArmorSkill17();
+
     abstract public int ArmorSkill18();
+
     abstract public int ArmorSkill19();
 
     abstract public int BloatedWeaponAttack();
 
     abstract public int ZenithSkill1();
+
     abstract public int ZenithSkill2();
+
     abstract public int ZenithSkill3();
+
     abstract public int ZenithSkill4();
+
     abstract public int ZenithSkill5();
+
     abstract public int ZenithSkill6();
+
     abstract public int ZenithSkill7();
 
     abstract public int AutomaticSkillWeapon();
+
     abstract public int AutomaticSkillHead();
+
     abstract public int AutomaticSkillChest();
+
     abstract public int AutomaticSkillArms();
+
     abstract public int AutomaticSkillWaist();
+
     abstract public int AutomaticSkillLegs();
 
     abstract public int StyleRank1();
+
     abstract public int StyleRank2();
 
     abstract public int GRWeaponLv();
+
     abstract public int GRWeaponLvBowguns();
 
     abstract public int Sigil1Name1();
+
     abstract public int Sigil1Value1();
+
     abstract public int Sigil1Name2();
+
     abstract public int Sigil1Value2();
+
     abstract public int Sigil1Name3();
+
     abstract public int Sigil1Value3();
+
     abstract public int Sigil2Name1();
+
     abstract public int Sigil2Value1();
+
     abstract public int Sigil2Name2();
+
     abstract public int Sigil2Value2();
+
     abstract public int Sigil2Name3();
+
     abstract public int Sigil2Value3();
+
     abstract public int Sigil3Name1();
+
     abstract public int Sigil3Value1();
+
     abstract public int Sigil3Name2();
+
     abstract public int Sigil3Value2();
+
     abstract public int Sigil3Name3();
+
     abstract public int Sigil3Value3();
 
-
     abstract public int FelyneHunted();
+
     abstract public int MelynxHunted();
+
     abstract public int ShakalakaHunted();
+
     abstract public int VespoidHunted();
+
     abstract public int HornetaurHunted();
+
     abstract public int GreatThunderbugHunted();
+
     abstract public int KelbiHunted();
+
     abstract public int MosswineHunted();
+
     abstract public int AntekaHunted();
+
     abstract public int PopoHunted();
+
     abstract public int AptonothHunted();
+
     abstract public int ApcerosHunted();
+
     abstract public int BurukkuHunted();
+
     abstract public int ErupeHunted();
+
     abstract public int VelocipreyHunted();
+
     abstract public int VelocidromeHunted();
+
     abstract public int GenpreyHunted();
+
     abstract public int GendromeHunted();
+
     abstract public int IopreyHunted();
+
     abstract public int IodromeHunted();
+
     abstract public int GiapreyHunted();
+
     abstract public int YianKutKuHunted();
+
     abstract public int BlueYianKutKuHunted();
+
     abstract public int YianGarugaHunted();
+
     abstract public int GypcerosHunted();
+
     abstract public int PurpleGypcerosHunted();
+
     abstract public int HypnocHunted();
+
     abstract public int BrightHypnocHunted();
+
     abstract public int SilverHypnocHunted();
+
     abstract public int FarunokkuHunted();
+
     abstract public int ForokururuHunted();
+
     abstract public int ToridclessHunted();
+
     abstract public int RemobraHunted();
+
     abstract public int RathianHunted();
+
     abstract public int PinkRathianHunted();
+
     abstract public int GoldRathianHunted();
+
     abstract public int RathalosHunted();
+
     abstract public int AzureRathalosHunted();
+
     abstract public int SilverRathalosHunted();
+
     abstract public int KhezuHunted();
+
     abstract public int RedKhezuHunted();
+
     abstract public int BasariosHunted();
+
     abstract public int GraviosHunted();
+
     abstract public int BlackGraviosHunted();
+
     abstract public int MonoblosHunted();
+
     abstract public int WhiteMonoblosHunted();
+
     abstract public int DiablosHunted();
+
     abstract public int BlackDiablosHunted();
+
     abstract public int TigrexHunted();
+
     abstract public int EspinasHunted();
+
     abstract public int OrangeEspinasHunted();
+
     abstract public int WhiteEspinasHunted();
+
     abstract public int AkantorHunted();
+
     abstract public int BerukyurosuHunted();
+
     abstract public int DoragyurosuHunted();
+
     abstract public int PariapuriaHunted();
+
     abstract public int DyuragauaHunted();
+
     abstract public int GurenzeburuHunted();
+
     abstract public int OdibatorasuHunted();
+
     abstract public int HyujikikiHunted();
+
     abstract public int AnorupatisuHunted();
+
     abstract public int ZerureusuHunted();
+
     abstract public int MeraginasuHunted();
+
     abstract public int DiorexHunted();
+
     abstract public int PoborubarumuHunted();
+
     abstract public int VarusaburosuHunted();
+
     abstract public int GureadomosuHunted();
+
     abstract public int BariothHunted();
+
     abstract public int NargacugaHunted();
+
     abstract public int ZenaserisuHunted();
+
     abstract public int SeregiosHunted();
+
     abstract public int BogabadorumuHunted();
+
     abstract public int CephalosHunted();
+
     abstract public int CephadromeHunted();
+
     abstract public int PlesiothHunted();
+
     abstract public int GreenPlesiothHunted();
+
     abstract public int VolganosHunted();
+
     abstract public int RedVolganosHunted();
+
     abstract public int HermitaurHunted();
+
     abstract public int DaimyoHermitaurHunted();
+
     abstract public int CeanataurHunted();
+
     abstract public int ShogunCeanataurHunted();
+
     abstract public int ShenGaorenHunted();
+
     abstract public int AkuraVashimuHunted();
+
     abstract public int AkuraJebiaHunted();
+
     abstract public int TaikunZamuzaHunted();
+
     abstract public int KusubamiHunted();
+
     abstract public int BullfangoHunted();
+
     abstract public int BulldromeHunted();
+
     abstract public int CongaHunted();
+
     abstract public int CongalalaHunted();
+
     abstract public int BlangoHunted();
+
     abstract public int BlangongaHunted();
+
     abstract public int GogomoaHunted();
+
     abstract public int RajangHunted();
+
     abstract public int KamuOrugaronHunted();
+
     abstract public int NonoOrugaronHunted();
+
     abstract public int MidogaronHunted();
+
     abstract public int GougarfHunted();
+
     abstract public int VoljangHunted();
+
     abstract public int KirinHunted();
+
     abstract public int KushalaDaoraHunted();
+
     abstract public int RustedKushalaDaoraHunted();
+
     abstract public int ChameleosHunted();
+
     abstract public int LunastraHunted();
+
     abstract public int TeostraHunted();
+
     abstract public int LaoShanLungHunted();
+
     abstract public int AshenLaoShanLungHunted();
+
     abstract public int YamaTsukamiHunted();
+
     abstract public int RukodioraHunted();
+
     abstract public int RebidioraHunted();
+
     abstract public int FatalisHunted();
+
     abstract public int ShantienHunted();
+
     abstract public int DisufiroaHunted();
+
     abstract public int GarubaDaoraHunted();
+
     abstract public int InagamiHunted();
+
     abstract public int HarudomeruguHunted();
+
     abstract public int YamaKuraiHunted();
+
     abstract public int ToaTesukatoraHunted();
+
     abstract public int GuanzorumuHunted();
+
     abstract public int KeoaruboruHunted();
+
     abstract public int ShagaruMagalaHunted();
+
     abstract public int ElzelionHunted();
+
     abstract public int AmatsuHunted();
+
     abstract public int AbioruguHunted();
+
     abstract public int GiaoruguHunted();
+
     abstract public int GasurabazuraHunted();
+
     abstract public int DeviljhoHunted();
+
     abstract public int BrachydiosHunted();
+
     abstract public int UragaanHunted();
+
     abstract public int KuarusepusuHunted();
+
     abstract public int PokaraHunted();
+
     abstract public int PokaradonHunted();
+
     abstract public int BaruragaruHunted();
+
     abstract public int ZinogreHunted();
+
     abstract public int StygianZinogreHunted();
+
     abstract public int GoreMagalaHunted();
 
     abstract public int BlitzkriegBogabadorumuHunted();
+
     abstract public int SparklingZerureusuHunted();
+
     abstract public int StarvingDeviljhoHunted();
 
     abstract public int CrimsonFatalisHunted();
+
     abstract public int WhiteFatalisHunted();
+
     abstract public int CactusHunted();
-    abstract public int ArrogantDuremudiraHunted();//untested
+
+    abstract public int ArrogantDuremudiraHunted();// untested
+
     abstract public int MiRuHunted();
+
     abstract public int UnknownHunted();
+
     abstract public int GoruganosuHunted();
+
     abstract public int AruganosuHunted();
+
     abstract public int PSO2RappyHunted();
+
     abstract public int RocksHunted();
+
     abstract public int UrukiHunted();
+
     abstract public int GorgeObjectsHunted();
+
     abstract public int BlinkingNargacugaHunted();
+
     abstract public int KingShakalakaHunted();
+
     abstract public int QuestState();
 
-
     abstract public int RoadDureSkill1Name();
+
     abstract public int RoadDureSkill1Level();
+
     abstract public int RoadDureSkill2Name();
+
     abstract public int RoadDureSkill2Level();
+
     abstract public int RoadDureSkill3Name();
+
     abstract public int RoadDureSkill3Level();
+
     abstract public int RoadDureSkill4Name();
+
     abstract public int RoadDureSkill4Level();
+
     abstract public int RoadDureSkill5Name();
+
     abstract public int RoadDureSkill5Level();
+
     abstract public int RoadDureSkill6Name();
+
     abstract public int RoadDureSkill6Level();
+
     abstract public int RoadDureSkill7Name();
+
     abstract public int RoadDureSkill7Level();
+
     abstract public int RoadDureSkill8Name();
+
     abstract public int RoadDureSkill8Level();
+
     abstract public int RoadDureSkill9Name();
+
     abstract public int RoadDureSkill9Level();
+
     abstract public int RoadDureSkill10Name();
+
     abstract public int RoadDureSkill10Level();
+
     abstract public int RoadDureSkill11Name();
+
     abstract public int RoadDureSkill11Level();
+
     abstract public int RoadDureSkill12Name();
+
     abstract public int RoadDureSkill12Level();
+
     abstract public int RoadDureSkill13Name();
+
     abstract public int RoadDureSkill13Level();
+
     abstract public int RoadDureSkill14Name();
+
     abstract public int RoadDureSkill14Level();
+
     abstract public int RoadDureSkill15Name();
+
     abstract public int RoadDureSkill15Level();
+
     abstract public int RoadDureSkill16Name();
+
     abstract public int RoadDureSkill16Level();
 
     abstract public int PartySize();
+
     abstract public int PartySizeMax();
 
     abstract public uint GSRP();
+
     abstract public uint GRP();
 
     abstract public int HunterHP();
+
     abstract public int HunterStamina();
 
     abstract public int QuestItemsUsed();
+
     abstract public int AreaHitsTakenBlocked();
 
     abstract public int PartnyaBagItem1ID();
+
     abstract public int PartnyaBagItem1Qty();
 
     abstract public int PartnyaBagItem2ID();
@@ -716,8 +1199,11 @@ public abstract class AddressModel : INotifyPropertyChanged
     abstract public int PartnyaBagItem10Qty();
 
     public bool HasMonster1 => CaravanOverride() ? ShowHPBar(CaravanMonster1ID(), Monster1HPInt()) : ShowHPBar(LargeMonster1ID(), Monster1HPInt());
+
     public bool HasMonster2 => CaravanOverride() ? CaravanMonster2ID() > 0 && Monster2HPInt() != 0 && GetNotRoad() || Configuring : LargeMonster2ID() > 0 && Monster2HPInt() != 0 && GetNotRoad() || Configuring; // road check since the 2nd choice is used as the monster #1
+
     public bool HasMonster3 => ShowHPBar(LargeMonster3ID(), Monster3HPInt());
+
     public bool HasMonster4 => ShowHPBar(LargeMonster4ID(), Monster4HPInt());
 
     public static string FullCurrentProgramVersion
@@ -744,19 +1230,13 @@ public abstract class AddressModel : INotifyPropertyChanged
     public static bool ShowHitsPerSecond()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.HitsPerSecondShown)
-            return true;
-        else
-            return false;
+        return s.HitsPerSecondShown;
     }
 
     public static bool ShowTotalHitsTakenBlockedPerSecond()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.TotalHitsTakenBlockedPerSecondShown)
-            return true;
-        else
-            return false;
+        return s.TotalHitsTakenBlockedPerSecondShown;
     }
 
     public string HitCount
@@ -766,17 +1246,11 @@ public abstract class AddressModel : INotifyPropertyChanged
             var hitsPerSecond = string.Empty;
 
             if (ShowHitsPerSecond())
+            {
                 hitsPerSecond = string.Format(CultureInfo.InvariantCulture, " ({0:0.00}/s)", HitsPerSecond);
+            }
 
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}", HitCountInt(), hitsPerSecond);
-        }
-    }
-
-    public static string LoremImpsum
-    {
-        get
-        {
-            return "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor neque vitae tempus quam pellentesque. Nisl pretium fusce id velit ut tortor pretium. Sit amet massa vitae tortor. Justo donec enim diam vulputate. Mauris ultrices eros in cursus turpis massa. Rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant. Sed id semper risus in hendrerit gravida rutrum quisque. Vulputate enim nulla aliquet porttitor lacus luctus accumsan tortor posuere. In est ante in nibh. Fringilla est ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar mattis nunc sed blandit libero volutpat sed cras ornare. Ac auctor augue mauris augue neque gravida in fermentum et. Eget nunc scelerisque viverra mauris in.\r\n\r\nDapibus ultrices in iaculis nunc sed augue. Euismod quis viverra nibh cras pulvinar mattis nunc sed. Iaculis urna id volutpat lacus laoreet. Neque ornare aenean euismod elementum nisi quis eleifend quam adipiscing. Consequat nisl vel pretium lectus quam id. Lacinia at quis risus sed vulputate odio. Euismod nisi porta lorem mollis. Dui vivamus arcu felis bibendum ut. Gravida arcu ac tortor dignissim convallis aenean et tortor. Sed velit dignissim sodales ut eu sem. Sed sed risus pretium quam. Urna molestie at elementum eu facilisis sed odio morbi. Ac tortor vitae purus faucibus ornare suspendisse sed nisi. Est velit egestas dui id ornare arcu odio ut. Condimentum mattis pellentesque id nibh tortor. Volutpat maecenas volutpat blandit aliquam etiam erat. Nunc sed blandit libero volutpat sed cras. Donec massa sapien faucibus et molestie ac. Venenatis urna cursus eget nunc scelerisque viverra.\r\n\r\nFacilisis gravida neque convallis a cras semper auctor neque. Ullamcorper malesuada proin libero nunc consequat interdum varius. Et sollicitudin ac orci phasellus. Netus et malesuada fames ac turpis egestas maecenas pharetra. Vulputate sapien nec sagittis aliquam malesuada bibendum. Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec. Non odio euismod lacinia at quis. Et netus et malesuada fames. Quam viverra orci sagittis eu volutpat odio. Turpis egestas maecenas pharetra convallis posuere morbi leo urna molestie. Nulla malesuada pellentesque elit eget gravida. Iaculis at erat pellentesque adipiscing commodo elit at imperdiet dui. Ipsum consequat nisl vel pretium lectus quam id leo. Quisque non tellus orci ac auctor. Aliquet bibendum enim facilisis gravida neque. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Molestie at elementum eu facilisis sed odio. A lacus vestibulum sed arcu non odio euismod lacinia. Pretium fusce id velit ut. Adipiscing commodo elit at imperdiet.\r\n\r\nPretium lectus quam id leo. Nulla pharetra diam sit amet. Elementum integer enim neque volutpat. Amet mattis vulputate enim nulla. Leo vel orci porta non. Arcu odio ut sem nulla pharetra diam sit amet nisl. Dignissim convallis aenean et tortor at risus viverra adipiscing at. Nibh venenatis cras sed felis. Integer feugiat scelerisque varius morbi. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae. Elementum pulvinar etiam non quam lacus suspendisse faucibus. Amet nulla facilisi morbi tempus iaculis urna id volutpat. Vel fringilla est ullamcorper eget nulla. Sit amet nisl purus in mollis nunc sed id semper. Sit amet aliquam id diam. Blandit volutpat maecenas volutpat blandit. Fermentum leo vel orci porta. Imperdiet proin fermentum leo vel orci porta non pulvinar. Odio euismod lacinia at quis risus sed vulputate.\r\n\r\nDolor sed viverra ipsum nunc. In nibh mauris cursus mattis molestie. Lacus viverra vitae congue eu consequat ac felis donec. Mauris sit amet massa vitae tortor. Arcu vitae elementum curabitur vitae nunc. In hac habitasse platea dictumst. Viverra tellus in hac habitasse platea dictumst vestibulum. Vel orci porta non pulvinar. Tincidunt lobortis feugiat vivamus at. Faucibus ornare suspendisse sed nisi lacus sed. Etiam dignissim diam quis enim lobortis scelerisque. Faucibus nisl tincidunt eget nullam non nisi. Tincidunt eget nullam non nisi est sit amet facilisis. Vivamus arcu felis bibendum ut tristique et. Arcu non odio euismod lacinia. Ultrices mi tempus imperdiet nulla malesuada. Venenatis a condimentum vitae sapien pellentesque habitant. Laoreet suspendisse interdum consectetur libero id faucibus nisl.\r\n\r\nUltricies mi quis hendrerit dolor. Nisi lacus sed viverra tellus. Integer feugiat scelerisque varius morbi enim. Tristique nulla aliquet enim tortor at auctor urna nunc. Pellentesque habitant morbi tristique senectus et netus et malesuada. Id velit ut tortor pretium viverra suspendisse potenti nullam ac. Sit amet volutpat consequat mauris nunc congue nisi vitae. Pharetra diam sit amet nisl suscipit adipiscing. In hac habitasse platea dictumst vestibulum rhoncus. Gravida arcu ac tortor dignissim convallis. Vitae ultricies leo integer malesuada nunc vel. A diam sollicitudin tempor id. Eu nisl nunc mi ipsum. Facilisis volutpat est velit egestas dui id ornare.\r\n\r\nIn fermentum et sollicitudin ac orci. Non consectetur a erat nam at lectus urna duis. A diam sollicitudin tempor id eu nisl nunc. Lorem mollis aliquam ut porttitor leo a diam. Amet porttitor eget dolor morbi non arcu risus quis varius. Faucibus vitae aliquet nec ullamcorper sit. Lacinia quis vel eros donec ac odio tempor orci. Laoreet non curabitur gravida arcu. Sed euismod nisi porta lorem mollis aliquam ut porttitor leo. Amet facilisis magna etiam tempor orci eu. Eu sem integer vitae justo eget magna fermentum. Consectetur lorem donec massa sapien faucibus. Metus aliquam eleifend mi in. Tellus molestie nunc non blandit massa enim nec. Sit amet purus gravida quis blandit turpis. Odio facilisis mauris sit amet massa vitae tortor condimentum. Posuere ac ut consequat semper viverra. Ultricies tristique nulla aliquet enim tortor. Etiam tempor orci eu lobortis elementum. Maecenas accumsan lacus vel facilisis.\r\n\r\nNisl purus in mollis nunc sed id semper risus in. Sit amet est placerat in egestas erat imperdiet. Dolor magna eget est lorem. Ac felis donec et odio. Turpis egestas sed tempus urna et. Massa tempor nec feugiat nisl pretium. Magnis dis parturient montes nascetur ridiculus mus mauris vitae. In ornare quam viverra orci sagittis eu. Faucibus in ornare quam viverra orci sagittis. Porta nibh venenatis cras sed felis eget velit aliquet sagittis.";
         }
     }
 
@@ -789,10 +1263,7 @@ public abstract class AddressModel : INotifyPropertyChanged
     public static bool ShowMonsterEHP()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableEHPNumbers)
-            return true;
-        else
-            return false;
+        return s.EnableEHPNumbers;
     }
 
     /// <summary>
@@ -806,10 +1277,7 @@ public abstract class AddressModel : INotifyPropertyChanged
     public static bool IsAlwaysShowingMonsterInfo()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.AlwaysShowMonsterInfo)
-            return true;
-        else
-            return false;
+        return s.AlwaysShowMonsterInfo;
     }
 
     /// <summary>
@@ -829,9 +1297,13 @@ public abstract class AddressModel : INotifyPropertyChanged
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.OverlayStatIconShown)
+                {
                 return false;
+            }
             else
+            {
                 return true;
+            }
         }
     }
 
@@ -840,21 +1312,22 @@ public abstract class AddressModel : INotifyPropertyChanged
         get
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
-            if (s.OverlayStatIconShown)
-                return true;
-            else
-                return false;
+            return s.OverlayStatIconShown;
         }
     }
 
-    //
     public bool? roadOverride()
     {
-        //should work
+        // should work
         if (QuestID() != 23527 && QuestID() != 23628)
+        {
             return true;
+        }
         else if (QuestID() == 23527 || QuestID() == 23628)
+        {
             return false;
+        }
+
         return null;
     }
 
@@ -866,8 +1339,11 @@ public abstract class AddressModel : INotifyPropertyChanged
     public string GetQuestNameFromID(int id)
     {
         if (!DiscordManager.ShowDiscordQuestNames())
+        {
             return string.Empty;
-        string QuestValue1;
+        }
+
+        string? QuestValue1;
         EZlion.Mapper.Quest.IDName.TryGetValue(id, out QuestValue1);  //returns true
 
         return QuestValue1 + string.Empty;
@@ -889,11 +1365,14 @@ public abstract class AddressModel : INotifyPropertyChanged
         }
     }
 
-    public int PreviousHubAreaID; // TODO need to create another variable for discordManager. Ideally discordManager state only affects it.
+    // TODO need to create another variable for discordManager. Ideally discordManager state only affects it.
+    public int PreviousHubAreaID;
+
     public bool closedGame;
+
     public bool isInLauncherBool;
 
-    readonly Mem m = new();
+    readonly Mem m = new ();
 
     // TODO convert to bool and remove isInLauncherBool?
     public string isInLauncher()
@@ -901,16 +1380,19 @@ public abstract class AddressModel : INotifyPropertyChanged
         // TODO: test
         if (QuestID() != 0 ||
         AreaID() != 0 && Location.IDName.ContainsKey(AreaID()))
+        {
             return "No";
+        }
 
         var pidToSearch = m.GetProcIdFromName("mhf");
-        //Init a condition indicating that you want to search by process id.
+
+        // Init a condition indicating that you want to search by process id.
         var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
             pidToSearch);
 
         AutomationElement? element = null;
 
-        //Find the automation element matching the criteria
+        // Find the automation element matching the criteria
         // TODO: does this even fix anything?
         try
         {
@@ -923,24 +1405,35 @@ TreeScope.Children, condition);
         }
 
         if (element == null || pidToSearch == 0)
-            return "NULL";
+        {
+            return "NULL"; // TODO this looks ugly
+        }
 
-        //get the classname
+        // get the classname
         var className = element.Current.ClassName;
 
         if (className == "MHFLAUNCH")
+        {
             return "Yes";
+
+        }
         else
+        {
             return "No";
+        }
     }
 
     public string GetOverlayModeForRPC()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
         if (s.ShowDiscordRPCOverlayMode)
+        {
             return GetOverlayMode();
+        }
         else
+        {
             return string.Empty;
+        }
     }
 
     /// <summary>
@@ -952,17 +1445,29 @@ TreeScope.Children, condition);
         var s = (Settings)Application.Current.TryFindResource("Settings");
 
         if (Configuring)
+        {
             return "(Configuring) ";
+        }
         else if (closedGame)
+        {
             return "(Closed Game) ";
+        }
         else if (isInLauncherBool || isInLauncher() == "Yes") //works?
+        {
             return "(Launcher) ";
+        }
         else if (isInLauncher() == "NULL")
+        {
             return "(No game detected) ";
+        }
         else if (QuestID() == 0 && AreaID() == 0 && BlademasterWeaponID() == 0 && GunnerWeaponID() == 0)
+        {
             return "(Main Menu) ";
+        }
         else if (QuestID() == 0 && AreaID() == 200 && BlademasterWeaponID() == 0 && GunnerWeaponID() == 0)
+        {
             return "(World Select) ";
+        }
         else if (
             !(
                 QuestID() != 0
@@ -997,15 +1502,23 @@ TreeScope.Children, condition);
             || s.EnableMap
             || s.PersonalBestTimePercentShown
             || s.EnablePersonalBestPaceColor) // TODO monster 1 overview? and update README
+        {
             return string.Empty;
+        }
         else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && PartySize() == 1 && s.OverlayModeWatermarkShown)
         {
             if (DivaSkillUsesLeft() == 0 && StyleRank1() != 15 && StyleRank2() != 15)
+            {
                 return "(Time Attack) ";
+            }
             else if (StyleRank1() == 15 || StyleRank2() == 15)
+            {
                 return "(Freestyle w/ Secret Tech) ";
+            }
             else
+            {
                 return "(Freestyle No Secret Tech) ";
+            }
         }
         else
         {
@@ -1076,17 +1589,18 @@ TreeScope.Children, condition);
     {
         var b = roadOverride();
         if (b != null)
+        {
             return b.Value;
+        }
+
         return IsNotRoad();
     }
 
-    #region monster parts
-
-    //assumption: it follows ferias' monster part order top to bottom, presumably (e.g. head is at the top, so part 0 is head, and so on)
+    // assumption: it follows ferias' monster part order top to bottom, presumably (e.g. head is at the top, so part 0 is head, and so on)
     // grouping by skeleton too
 
     ///<summary>
-    ///Monster parts labels
+    /// Monster parts labels
     ///<para>int number: The part number from 1 to 10</para>
     ///<para>int monsterID: the monsterID</para>
     ///</summary>
@@ -1094,9 +1608,13 @@ TreeScope.Children, condition);
     {
         //keep in mind this has the null
         if (roadOverride() == false)
+        {
             monsterID = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
+        }
         else if (CaravanOverride())
+        {
             monsterID = CaravanMonster1ID();
+        }
 
         if (getDureName() != "None")
         {
@@ -1126,9 +1644,13 @@ TreeScope.Children, condition);
         else
         {
             if (number <= 0 && number >= 11)
+            {
                 return "None: ";
+            }
             else
+            {
                 return string.Format(CultureInfo.InvariantCulture, "{0}: ", FindPartName(number, monsterID));
+            }
         }
     }
 
@@ -1165,9 +1687,13 @@ TreeScope.Children, condition);
         else
         {
             if (slot > MonsterPart.IDName[key].Count)
+            {
                 return "None";
+            }
             else
+            {
                 return MonsterPart.IDName[key][slot];
+            }
         }
     }
 
@@ -1176,7 +1702,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster1Part1();
             return GetPartName(1, LargeMonster1ID()) + currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1188,7 +1716,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster1Part2();
             return GetPartName(2, LargeMonster1ID()) + currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1200,7 +1730,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster1Part3();
             return GetPartName(3, LargeMonster1ID()) + currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1212,7 +1744,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster1Part4();
             return GetPartName(4, LargeMonster1ID()) + currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1224,7 +1758,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster1Part5();
             return GetPartName(5, LargeMonster1ID()) + currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1236,7 +1772,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster1Part6();
             return GetPartName(6, LargeMonster1ID()) + currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1248,7 +1786,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster1Part7();
             return GetPartName(7, LargeMonster1ID()) + currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1260,7 +1800,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster1Part8();
             return GetPartName(8, LargeMonster1ID()) + currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1272,7 +1814,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster1Part9();
             return GetPartName(9, LargeMonster1ID()) + currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1284,7 +1828,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster1Part10();
             return GetPartName(10, LargeMonster1ID()) + currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1296,7 +1842,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster2Part1();
             return currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1308,7 +1856,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster2Part2();
             return currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1320,7 +1870,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster2Part3();
             return currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1332,7 +1884,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster2Part4();
             return currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1344,7 +1898,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster2Part5();
             return currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1356,7 +1912,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster2Part6();
             return currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1368,7 +1926,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster2Part7();
             return currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1380,7 +1940,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster2Part8();
             return currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1392,7 +1954,9 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster2Part9();
             return currentPartHP.ToString(CultureInfo.InvariantCulture);
@@ -1404,14 +1968,16 @@ TreeScope.Children, condition);
         get
         {
             if (QuestID() == 0)
-                return Messages.MONSTER_PART_NOT_LOADED;
+            {
+                return Messages.MonsterPartNotLoaded;
+            }
 
             var currentPartHP = Monster2Part10();
             return currentPartHP.ToString(CultureInfo.InvariantCulture);
         }
     }
 
-    #endregion
+
 
     /// <summary>
     /// Shows the sharpness percentage.
@@ -1420,10 +1986,7 @@ TreeScope.Children, condition);
     public static bool ShowSharpnessPercentage()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableSharpnessPercentage)
-            return true;
-        else
-            return false;
+        return s.EnableSharpnessPercentage;
     }
 
     /// <summary>
@@ -1433,10 +1996,7 @@ TreeScope.Children, condition);
     public static bool ShowTimeLeftPercentage()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableTimeLeftPercentage)
-            return true;
-        else
-            return false;
+        return s.EnableTimeLeftPercentage;
     }
 
     /// <summary>
@@ -1447,14 +2007,20 @@ TreeScope.Children, condition);
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
         if (s.TimerMode == "Time Left")
+        {
             return "Time Left";
+        }
         else if (s.TimerMode == "Time Elapsed")
+        {
             return "Time Elapsed";
+        }
         else
+        {
             return "Time Left";
+        }
     }
 
-    private int MaxSharpness = 0;
+    private int MaxSharpness;
 
     private string TimeLeftPercent = string.Empty;
 
@@ -1534,40 +2100,40 @@ TreeScope.Children, condition);
                     TimeLeftPercent = string.Empty;
                 }
 
-                if (time / Numbers.FRAMES_PER_SECOND / 60 < 10)
+                if (time / Numbers.FramesPerSecond / 60 < 10)
                 {
-                    if (time / Numbers.FRAMES_PER_SECOND % 60 < 10)
+                    if (time / Numbers.FramesPerSecond % 60 < 10)
                     {
-                        return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", time / Numbers.FRAMES_PER_SECOND / 60, time / Numbers.FRAMES_PER_SECOND % 60, (int)Math.Round((float)(time % Numbers.FRAMES_PER_SECOND * 100) / 3)) + TimeLeftPercent;//should work fine
+                        return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", time / Numbers.FramesPerSecond / 60, time / Numbers.FramesPerSecond % 60, (int)Math.Round((float)(time % Numbers.FramesPerSecond * 100) / 3)) + TimeLeftPercent;//should work fine
                     }
                     else
                     {
-                        return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1}.{2:000}", time / Numbers.FRAMES_PER_SECOND / 60, time / Numbers.FRAMES_PER_SECOND % 60, (int)Math.Round((float)(time % Numbers.FRAMES_PER_SECOND * 100) / 3)) + TimeLeftPercent;
+                        return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1}.{2:000}", time / Numbers.FramesPerSecond / 60, time / Numbers.FramesPerSecond % 60, (int)Math.Round((float)(time % Numbers.FramesPerSecond * 100) / 3)) + TimeLeftPercent;
                     }
                 }
                 else
                 {
-                    if (time / Numbers.FRAMES_PER_SECOND % 60 < 10)
+                    if (time / Numbers.FramesPerSecond % 60 < 10)
                     {
-                        return string.Format(CultureInfo.InvariantCulture, "{0}:{1:00}.{2:000}", time / Numbers.FRAMES_PER_SECOND / 60, time / Numbers.FRAMES_PER_SECOND % 60, (int)Math.Round((float)(time % Numbers.FRAMES_PER_SECOND * 100) / 3)) + TimeLeftPercent;
+                        return string.Format(CultureInfo.InvariantCulture, "{0}:{1:00}.{2:000}", time / Numbers.FramesPerSecond / 60, time / Numbers.FramesPerSecond % 60, (int)Math.Round((float)(time % Numbers.FramesPerSecond * 100) / 3)) + TimeLeftPercent;
                     }
                     else
                     {
-                        return string.Format(CultureInfo.InvariantCulture, "{0}:{1}.{2:000}", time / Numbers.FRAMES_PER_SECOND / 60, time / Numbers.FRAMES_PER_SECOND % 60, (int)Math.Round((float)(time % Numbers.FRAMES_PER_SECOND * 100) / 3)) + TimeLeftPercent;
+                        return string.Format(CultureInfo.InvariantCulture, "{0}:{1}.{2:000}", time / Numbers.FramesPerSecond / 60, time / Numbers.FramesPerSecond % 60, (int)Math.Round((float)(time % Numbers.FramesPerSecond * 100) / 3)) + TimeLeftPercent;
                     }
                 }
             }
             else
             {
-                return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", time / Numbers.FRAMES_PER_SECOND / 60, time / Numbers.FRAMES_PER_SECOND % 60, (int)Math.Round((float)(time % Numbers.FRAMES_PER_SECOND * 100) / 3)) + TimeLeftPercent;
+                return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", time / Numbers.FramesPerSecond / 60, time / Numbers.FramesPerSecond % 60, (int)Math.Round((float)(time % Numbers.FramesPerSecond * 100) / 3)) + TimeLeftPercent;
             }
         }
     }
 
-    //per quest
-    public int HighestAtk { get; set; } = 0;
+    // per quest
+    public int HighestAtk { get; set; }
 
-    public double HighestDPS { get; set; } = 0;
+    public double HighestDPS { get; set; }
 
     /// <summary>
     /// Shows the color of the highest atk.
@@ -1576,82 +2142,55 @@ TreeScope.Children, condition);
     public static bool ShowHighestAtkColor()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableHighestAtkColor)
-            return true;
-        else
-            return false;
+        return s.EnableHighestAtkColor;
     }
 
     public static bool ShowHighestDPSColor()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableHighestDPSColor)
-            return true;
-        else
-            return false;
+        return s.EnableHighestDPSColor;
     }
 
     public static bool ShowAverageHitsPerSecondColor()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableAverageHitsPerSecondColor)
-            return true;
-        else
-            return false;
+        return s.EnableAverageHitsPerSecondColor;
     }
 
     public static bool ShowAverageAPMColor()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableAverageActionsPerMinuteColor)
-            return true;
-        else
-            return false;
+        return s.EnableAverageActionsPerMinuteColor;
     }
 
     public static bool ShowHitsTakenBlockedColor()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableTotalHitsTakenBlockedColor)
-            return true;
-        else
-            return false;
+        return s.EnableTotalHitsTakenBlockedColor;
     }
 
     public static bool ShowQuestPaceColor()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableQuestPaceColor)
-            return true;
-        else
-            return false;
+        return s.EnableQuestPaceColor;
     }
 
     public static bool ShowPersonalBestPaceColor()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnablePersonalBestPaceColor)
-            return true;
-        else
-            return false;
+        return s.EnablePersonalBestPaceColor;
     }
 
     public static bool ShowHighestMonsterAttackMultiplierColor()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableHighestMonsterAttackMultiplierColor)
-            return true;
-        else
-            return false;
+        return s.EnableHighestMonsterAttackMultiplierColor;
     }
 
     public static bool ShowLowestMonsterDefrateColor()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableLowestMonsterDefrateColor)
-            return true;
-        else
-            return false;
+        return s.EnableLowestMonsterDefrateColor;
     }
 
     public string isHighestAtk
@@ -1729,12 +2268,16 @@ TreeScope.Children, condition);
         {
             var weaponFound = WeaponCanUseReflect.WeaponTypeID.ContainsKey(WeaponType());
             if (!weaponFound)
+            {
                 return "#f5e0dc";
+            }
 
             var hasReflect = false;
 
             if (WeaponCanUseReflect.WeaponTypeID[WeaponType()])
+            {
                 hasReflect = true;
+            }
 
             // for speedrunners to get hit by 1 small bomb at least. and 2 perfect guards to get max obscurity.
             if (!hasReflect && TotalHitsTakenBlocked <= 1 || hasReflect && TotalHitsTakenBlocked <= 3 && ShowHitsTakenBlockedColor())
@@ -1754,16 +2297,22 @@ TreeScope.Children, condition);
     {
         var weaponFound = WeaponCanUseReflect.WeaponTypeID.ContainsKey(weaponTypeID);
         if (!weaponFound)
+        {
             return 0;
+        }
 
         var averageFound = WeaponAverageHitsPerSecond.WeaponAverageHitsPerSecondID.ContainsKey(weaponTypeID);
         if (!averageFound)
+        {
             return 0;
+        }
 
         var averageMultiplier = 0.5;
 
         if (!WeaponCanUseReflect.WeaponTypeID[weaponTypeID])
+        {
             averageMultiplier = 0.4;
+        }
 
         return WeaponAverageHitsPerSecond.WeaponAverageHitsPerSecondID[weaponTypeID] * averageMultiplier;
     }
@@ -1790,9 +2339,13 @@ TreeScope.Children, condition);
             if (timePercent >= monster1HPPercent && ShowQuestPaceColor())
             {
                 if (GetTimerMode() == "Time Left")
+                {
                     QuestTimeIcon = "../Assets/Icons/png/sand_clock2_red.png";
+                }
                 else
+                {
                     QuestTimeIcon = "../Assets/Icons/png/clock_red.png";
+                }
 
                 return "#f38ba8";
 
@@ -1800,9 +2353,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTimerMode() == "Time Left")
+                {
                     QuestTimeIcon = "../Assets/Icons/png/sand_clock2.png";
+                }
                 else
+                {
                     QuestTimeIcon = "../Assets/Icons/png/clock.png";
+                }
 
                 return "#f5e0dc";
             }
@@ -1841,21 +2398,26 @@ TreeScope.Children, condition);
         }
     }
 
-    public string PersonalBestLoaded = Messages.TIMER_NOT_LOADED;
+    public string PersonalBestLoaded = Messages.TimerNotLoaded;
 
     public string PersonalBestTimePercent
     {
         get
         {
-            if (PersonalBestLoaded != Messages.TIMER_NOT_LOADED && ShowPersonalBestPaceColor())
+            if (PersonalBestLoaded != Messages.TimerNotLoaded && ShowPersonalBestPaceColor())
             {
                 const int framesPerSecond = 30;
                 var personalBestInFrames = (int)(framesPerSecond * TimeSpan.ParseExact(PersonalBestLoaded, "mm':'ss'.'fff", CultureInfo.InvariantCulture).TotalSeconds);
                 var personalBestTimeFramesElapsed = 0;
                 if (GetTimerMode() == "Time Left")
+                {
                     personalBestTimeFramesElapsed = TimeDefInt() - personalBestInFrames;
+                }
                 else
+                {
                     personalBestTimeFramesElapsed = personalBestInFrames;
+                }
+
                 var elapsedPersonalBestTimePercent = CalculatePersonalBestInFramesPercent(personalBestTimeFramesElapsed);
 
                 return string.Format(CultureInfo.InvariantCulture, "{0:0}%", elapsedPersonalBestTimePercent);
@@ -1870,12 +2432,17 @@ TreeScope.Children, condition);
     public double CalculatePersonalBestInFramesPercent(double personalBestInFramesElapsed)
     {
         if (personalBestInFramesElapsed <= 0)
+        {
             return 0;
+        }
         else
+        {
             return 100 - (TimeDefInt() - TimeInt()) / personalBestInFramesElapsed * 100.0;
+        }
     }
 
-    private double HighestAttackMult { get; set; } = 0;
+    private double HighestAttackMult { get; set; }
+
     private decimal LowestMonsterDefrate { get; set; } = 1_000;
 
     public string isHighestMonsterAttackMultiplier
@@ -1913,13 +2480,17 @@ TreeScope.Children, condition);
     }
 
     public string MonsterAttackMultiplierIcon { get; set; } = "../Assets/Icons/png/dure_attack.png";
+
     public string MonsterDefrateIcon { get; set; } = "../Assets/Icons/png/dure_defense.png";
 
     public string DPSIcon { get; set; } = "../Assets/Icons/png/burst.png";
+
     public string QuestTimeIcon { get; set; } = "../Assets/Icons/png/clock.png";
 
     public string PlayerAttackIcon { get; set; } = "../Assets/Icons/png/attack_up.png";
+
     public string PlayerHitsTakenBlockedIcon { get; set; } = "../Assets/Icons/png/defense_up.png";
+
     public string HitCountIcon { get; set; } = "../Assets/Icons/png/blue_soul.png";
 
     public string APMIcon { get; set; } = "../Assets/Icons/png/flame_ul.png";
@@ -1948,16 +2519,24 @@ TreeScope.Children, condition);
             }
 
             if (weaponRaw > HighestAtk)
+            {
                 HighestAtk = weaponRaw;
+            }
 
             if (DPS > HighestDPS)
+            {
                 HighestDPS = DPS;
+            }
 
             if (double.Parse(AtkMult, CultureInfo.InvariantCulture) > HighestAttackMult)
+            {
                 HighestAttackMult = double.Parse(AtkMult, CultureInfo.InvariantCulture);
+            }
 
             if (decimal.Parse(DefMult) < LowestMonsterDefrate && decimal.Parse(DefMult, CultureInfo.InvariantCulture) != 0)
+            {
                 LowestMonsterDefrate = decimal.Parse(DefMult, CultureInfo.InvariantCulture);
+            }
 
             return weaponRaw.ToString(CultureInfo.InvariantCulture);
         }
@@ -2166,20 +2745,28 @@ TreeScope.Children, condition);
             previousMonsterDefrate = decimal.Zero;
             return 0;
         }
+
         var s = (Settings)Application.Current.TryFindResource("Settings");
         if (s.EnableMonsterEHPDisplayCorrector)
         {
             if (s.MonsterEHPDisplayCorrectorDefrateMinimumThreshold >= s.MonsterEHPDisplayCorrectorDefrateMaximumThreshold)
+            {
                 return monsterHP;
+            }
 
             if (monsterDefrate > s.MonsterEHPDisplayCorrectorDefrateMinimumThreshold && monsterDefrate < s.MonsterEHPDisplayCorrectorDefrateMaximumThreshold)
             {
                 previousMonsterDefrate = monsterDefrate;
                 var result = Convert.ToDecimal(monsterHP / previousMonsterDefrate);
                 if (result <= int.MaxValue && result >= int.MinValue)
+                {
                     return Convert.ToInt32(result);
+
+                }
                 else
+                {
                     return monsterHP;
+                }
             }
             else
             {
@@ -2188,9 +2775,14 @@ TreeScope.Children, condition);
                     var result = Convert.ToDecimal(monsterHP / previousMonsterDefrate);
 
                     if (result <= int.MaxValue && result >= int.MinValue)
+                    {
                         return Convert.ToInt32(result);
+
+                    }
                     else
+                    {
                         return monsterHP;
+                    }
                 }
                 else
                 {
@@ -2211,6 +2803,7 @@ TreeScope.Children, condition);
                 else
                 {
                     return 0;
+
                     // Handle the case where the result is too large or too small for an int
                     // Return an appropriate value or throw an exception if necessary
                 }
@@ -2226,16 +2819,25 @@ TreeScope.Children, condition);
     public void ReloadMaxEHP()
     {
         if (savedMonster1MaxHP < Monster1HPInt())
+        {
             savedMonster1MaxHP = (int)(Monster1HPInt() / Monster1DefMult());
-        if (savedMonster2MaxHP < Monster2HPInt())
-            savedMonster2MaxHP = (int)(Monster2HPInt() / Monster2DefMult());
-        if (savedMonster3MaxHP < Monster3HPInt())
-            savedMonster3MaxHP = (int)(Monster3HPInt() / float.Parse("1", CultureInfo.InvariantCulture.NumberFormat));
-        if (savedMonster4MaxHP < Monster4HPInt())
-            savedMonster4MaxHP = (int)(Monster4HPInt() / float.Parse("1", CultureInfo.InvariantCulture.NumberFormat));
-    }
+        }
 
-    #region monster status
+        if (savedMonster2MaxHP < Monster2HPInt())
+        {
+            savedMonster2MaxHP = (int)(Monster2HPInt() / Monster2DefMult());
+        }
+
+        if (savedMonster3MaxHP < Monster3HPInt())
+        {
+            savedMonster3MaxHP = (int)(Monster3HPInt() / float.Parse("1", CultureInfo.InvariantCulture.NumberFormat));
+        }
+
+        if (savedMonster4MaxHP < Monster4HPInt())
+        {
+            savedMonster4MaxHP = (int)(Monster4HPInt() / float.Parse("1", CultureInfo.InvariantCulture.NumberFormat));
+        }
+    }
 
     /// <summary>
     /// Gets the current poison.
@@ -2245,7 +2847,10 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+            {
                 return 100;
+            }
+
             return SelectedMonster switch
             {
                 0 => Monster1Poison(),
@@ -2266,7 +2871,10 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+            {
                 return 100;
+            }
+
             return SelectedMonster switch
             {
                 0 => Monster1PoisonNeed(),
@@ -2284,7 +2892,10 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+                {
                 return 100;
+            }
+
             return SelectedMonster switch
             {
                 0 => Monster1Sleep(),
@@ -2305,7 +2916,10 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+                {
                 return 100;
+            }
+
             return SelectedMonster switch
             {
                 0 => Monster1SleepNeed(),
@@ -2323,7 +2937,10 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+                {
                 return 100;
+            }
+
             return SelectedMonster switch
             {
                 0 => Monster1Para(),
@@ -2344,7 +2961,10 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+                {
                 return 100;
+            }
+
             return SelectedMonster switch
             {
                 0 => Monster1ParaNeed(),
@@ -2362,7 +2982,10 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+                {
                 return 100;
+            }
+
             return SelectedMonster switch
             {
                 0 => Monster1Blast(),
@@ -2383,7 +3006,10 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+                {
                 return 100;
+            }
+
             return SelectedMonster switch
             {
                 0 => Monster1BlastNeed(),
@@ -2401,7 +3027,10 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+                {
                 return 100;
+            }
+
             return SelectedMonster switch
             {
                 0 => Monster1Stun(),
@@ -2422,7 +3051,10 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+                {
                 return 100;
+            }
+
             return SelectedMonster switch
             {
                 0 => Monster1StunNeed(),
@@ -2497,7 +3129,7 @@ TreeScope.Children, condition);
         };
     }
 
-    #endregion
+
 
     /// <summary>
     /// Gets the name of Duremudira.
@@ -2506,91 +3138,116 @@ TreeScope.Children, condition);
     public string getDureName()
     {
         if (QuestID() == 21731 || QuestID() == 21749)
+        {
             return "1st District Duremudira";
+        }
         else if (QuestID() == 21746 || QuestID() == 21750)
+        {
             return "2nd District Duremudira";
+        }
         else if (QuestID() == 21747 || QuestID() == 21734)
+        {
             return "3rd District Duremudira";
+        }
         else if (QuestID() == 21748)
+        {
             return "4th District Duremudira";
+        }
         else if (QuestID() == 23648 || QuestID() == 23649)
+        {
             return "Arrogant Duremudira";
-        else
-            return "None";
-    }
-
-    //quest ids
-    //ravi 62105 TODO: same ids in all phases?
-    //violent 62101 
-    //berserk
-    //berserk practice
-    // support 1 55803 
-    //extreme
-    /// <summary>
-    /// Gets the name of the ravi.
-    /// </summary>
-    /// <returns></returns>
-    public string getRaviName()
-    {
-        //quest ids:
-        //mp road: 23527
-        //solo road: 23628
-        //1st district dure: 21731
-        //2nd district dure: 21746
-        //1st district dure sky corridor: 21749
-        //2nd district dure sky corridor: 21750
-        //arrogant dure repel: 23648
-        //arrogant dure slay: 23649
-        //urgent tower: 21751
-        //4th district dure: 21748
-        //3rd district dure: 21747
-        //3rd district dure 2: 21734
-        //UNUSED sky corridor: 21730
-        //sky corridor prologue: 21729
-        //raviente 62105
-        //raviente carve 62108
-        ///violent raviente 62101
-        ///violent carve 62104
-        //berserk slay practice 55796
-        //berserk support practice 1 55802
-        //berserk support practice 2 55803
-        //berserk support practice 3 55804
-        //berserk support practice 4 55805
-        //berserk support practice 5 55806
-        //berserk practice carve 55807
-        //berserk slay  54751
-        //berserk support 1 54756
-        //berserk support 2 54757
-        //berserk support 3 54758
-        //berserk support 4 54759
-        //berserk support 5 54760
-        //berserk carve 54761
-        //extreme slay (musou table 54) 55596 
-        //extreme support 1 55602
-        //extreme support 2 55603
-        //extreme support 3 55604
-        //extreme support 4 55605
-        //extreme support 5 55606
-        //extreme carve 55607
-        if (QuestID() == 62105 || QuestID() == 62108)
-            return "Raviente";
-        else if (QuestID() == 62101 || QuestID() == 62104)
-            return "Violent Raviente";
-        else if (QuestID() == 55796 || QuestID() == 55802 || QuestID() == 55803 || QuestID() == 55804 || QuestID() == 55805 || QuestID() == 55806 || QuestID() == 55807)
-            return "Berserk Raviente Practice";
-        else if (QuestID() == 54751 || QuestID() == 54756 || QuestID() == 54757 || QuestID() == 54758 || QuestID() == 54759 || QuestID() == 54760 || QuestID() == 54761)
-            return "Berserk Raviente";
-        else if (QuestID() == 55596 || QuestID() == 55602 || QuestID() == 55603 || QuestID() == 55604 || QuestID() == 55605 || QuestID() == 55606 || QuestID() == 55607)
-            return "Extreme Raviente";
+        }
         else
         {
             return "None";
         }
     }
 
-    public string Monster1Name => getDureName() != "None" ? getDureName() : getRaviName() != "None" ? getRaviName() : getMonsterName(GetNotRoad() || RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID()); //monster 1 is used for the first display and road uses 2nd choice to store 2nd monster
+    // quest ids
+    // ravi 62105 TODO: same ids in all phases?
+    // violent 62101
+    // berserk
+    // berserk practice
+    // support 1 55803
+    // extreme
+    /// <summary>
+    /// Gets the name of the ravi.
+    /// </summary>
+    /// <returns></returns>
+    public string getRaviName()
+    {
+        // quest ids:
+        // mp road: 23527
+        // solo road: 23628
+        // 1st district dure: 21731
+        // 2nd district dure: 21746
+        // 1st district dure sky corridor: 21749
+        // 2nd district dure sky corridor: 21750
+        // arrogant dure repel: 23648
+        // arrogant dure slay: 23649
+        // urgent tower: 21751
+        // 4th district dure: 21748
+        // 3rd district dure: 21747
+        // 3rd district dure 2: 21734
+        // UNUSED sky corridor: 21730
+        // sky corridor prologue: 21729
+        // raviente 62105
+        // raviente carve 62108
+        // violent raviente 62101
+        // violent carve 62104
+        // berserk slay practice 55796
+        // berserk support practice 1 55802
+        // berserk support practice 2 55803
+        // berserk support practice 3 55804
+        // berserk support practice 4 55805
+        // berserk support practice 5 55806
+        // berserk practice carve 55807
+        // berserk slay  54751
+        // berserk support 1 54756
+        // berserk support 2 54757
+        // berserk support 3 54758
+        // berserk support 4 54759
+        // berserk support 5 54760
+        // berserk carve 54761
+        // extreme slay (musou table 54) 55596
+        // extreme support 1 55602
+        // extreme support 2 55603
+        // extreme support 3 55604
+        // extreme support 4 55605
+        // extreme support 5 55606
+        // extreme carve 55607
+        if (QuestID() == 62105 || QuestID() == 62108)
+        {
+            return "Raviente";
+        }
+        else if (QuestID() == 62101 || QuestID() == 62104)
+        {
+            return "Violent Raviente";
+        }
+        else if (QuestID() == 55796 || QuestID() == 55802 || QuestID() == 55803 || QuestID() == 55804 || QuestID() == 55805 || QuestID() == 55806 || QuestID() == 55807)
+        {
+            return "Berserk Raviente Practice";
+        }
+        else if (QuestID() == 54751 || QuestID() == 54756 || QuestID() == 54757 || QuestID() == 54758 || QuestID() == 54759 || QuestID() == 54760 || QuestID() == 54761)
+        {
+            return "Berserk Raviente";
+        }
+        else if (QuestID() == 55596 || QuestID() == 55602 || QuestID() == 55603 || QuestID() == 55604 || QuestID() == 55605 || QuestID() == 55606 || QuestID() == 55607)
+        {
+            return "Extreme Raviente";
+        }
+        else
+        {
+            return "None";
+        }
+    }
+
+    public string Monster1Name => getDureName() != "None" ? getDureName() : getRaviName() != "None" ? getRaviName() : getMonsterName(GetNotRoad() || RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID()); // monster 1 is used for the first display and road uses 2nd choice to store 2nd monster
+
     public string Monster2Name => CaravanOverride() ? getMonsterName(CaravanMonster2ID(), false) : getMonsterName(LargeMonster2ID(), false);
+
     public string Monster3Name => getMonsterName(LargeMonster3ID(), false);
+
     public string Monster4Name => getMonsterName(LargeMonster4ID(), false);
 
     /// <summary>
@@ -2706,11 +3363,11 @@ TreeScope.Children, condition);
                     case 23603:
                         return "Upper Shiten ";
                 }
-            //10m upper shiten/musou true slay
 
+            // 10m upper shiten/musou true slay
 
-            case 56://twinhead rajang / voljang and rajang
-            case 57://twinhead mi ru / white and brown espi / unknown and zeru / rajang and dorag
+            case 56:// twinhead rajang / voljang and rajang
+            case 57:// twinhead mi ru / white and brown espi / unknown and zeru / rajang and dorag
                 return "Twinhead ";
             case 64:
                 return "Zenith★1 ";
@@ -2741,8 +3398,7 @@ TreeScope.Children, condition);
     {
         get
         {
-
-            ////https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
+            // https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
             int id;
 
             if (roadOverride() == false)
@@ -2758,7 +3414,7 @@ TreeScope.Children, condition);
                 id = LargeMonster1ID();
             }
 
-            //dure
+            // dure
             if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
             {
                 return "Duremudira";
@@ -2771,22 +3427,21 @@ TreeScope.Children, condition);
             return DetermineMonsterName(id);
         }
 
-        //quest ids:
-        //mp road: 23527
-        //solo road: 23628
-        //1st district dure: 21731
-        //2nd district dure: 21746
-        //1st district dure sky corridor: 21749
-        //2nd district dure sky corridor: 21750
-        //arrogant dure repel: 23648
-        //arrogant dure slay: 23649
-        //urgent tower: 21751
-        //4th district dure: 21748
-        //3rd district dure: 21747
-        //3rd district dure 2: 21734
-        //UNUSED sky corridor: 21730
-        //sky corridor prologue: 21729
-
+        // quest ids:
+        // mp road: 23527
+        // solo road: 23628
+        // 1st district dure: 21731
+        // 2nd district dure: 21746
+        // 1st district dure sky corridor: 21749
+        // 2nd district dure sky corridor: 21750
+        // arrogant dure repel: 23648
+        // arrogant dure slay: 23649
+        // urgent tower: 21751
+        // 4th district dure: 21748
+        // 3rd district dure: 21747
+        // 3rd district dure 2: 21734
+        // UNUSED sky corridor: 21730
+        // sky corridor prologue: 21729
     }
 
     public string DetermineMonsterName(int id)
@@ -2887,6 +3542,7 @@ TreeScope.Children, condition);
         {
             return "Blitzkrieg Bogabadorumu";
         }
+
         if (id == 0)
         {
             return string.Empty;
@@ -2903,8 +3559,6 @@ TreeScope.Children, condition);
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}", GetRankName(RankBand()), monstername);
         }
     }
-
-    #region monster hp
 
     public string Monster1HP
     {
@@ -2933,18 +3587,25 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+            {
                 return "1";
+            }
+
             if (TimeDefInt() == TimeInt())
+            {
                 savedMonster1MaxHP = Monster1HPInt();
+            }
+
             if (LargeMonster1ID() > 0 && savedMonster1ID == 0)
             {
                 savedMonster1MaxHP = Monster1HPInt();
                 savedMonster1ID = LargeMonster1ID();
-
             }
-            if (savedMonster1ID > 0)
 
+            if (savedMonster1ID > 0)
+            {
                 savedMonster1ID = LargeMonster1ID();
+            }
 
             if (GetNotRoad() || RoadSelectedMonster() == 0)
             {
@@ -2956,6 +3617,7 @@ TreeScope.Children, condition);
             }
         }
     }
+
     public string Monster2HP => Configuring ?
         "0" :
         ShowMonsterEHP() ?
@@ -2967,38 +3629,54 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+            {
                 return "1";
+            }
+
             if (TimeDefInt() == TimeInt())
+            {
                 savedMonster2MaxHP = Monster2HPInt();
+            }
+
             if (RoadSelectedMonster() > 0 && savedMonster2ID == 0)
             {
                 savedMonster2MaxHP = Monster2HPInt();
                 savedMonster2ID = RoadSelectedMonster();
             }
+
             if (savedMonster2ID > 0)
+            {
                 savedMonster2ID = RoadSelectedMonster();
+            }
 
             return savedMonster2MaxHP.ToString(CultureInfo.InvariantCulture);
         }
     }
+
     public string Monster3HP => Configuring ?
         "0" :
         ShowMonsterEHP() ?
             DisplayMonsterEHP(1, Monster3HPInt()).ToString(CultureInfo.InvariantCulture) :
             Monster3HPInt().ToString(CultureInfo.InvariantCulture);
 
-
     public string Monster3MaxHP
     {
         get
         {
             if (Configuring)
+            {
                 return "1";
+            }
+
             if (TimeDefInt() == TimeInt())
+            {
                 savedMonster3MaxHP = Monster3HPInt();
+            }
+
             return savedMonster3MaxHP.ToString(CultureInfo.InvariantCulture);
         }
     }
+
     public string Monster4HP => Configuring ?
         "0" :
         ShowMonsterEHP() ?
@@ -3010,17 +3688,20 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
+            {
                 return "1";
+            }
+
             if (TimeDefInt() == TimeInt())
+            {
                 savedMonster4MaxHP = Monster4HPInt();
+            }
+
             return savedMonster4MaxHP.ToString(CultureInfo.InvariantCulture);
         }
     }
 
-    #endregion
-
-    /* 
-    Multipliers 
+    /*  Multipliers
         Sword and Shield 單手劍 片手剣 1.4x
         Dual Swords 雙劍 双剣 1.4x
         Great Sword 大劍 大剣 4.8x
@@ -3035,8 +3716,7 @@ TreeScope.Children, condition);
         Heavy Bowgun 重銃 ヘビィボウガン 1.2x
         Light Bowgun 輕弩 ライトボウガン 1.2x
         Bow 弓 弓 1.2x
-
-    IDs
+        IDs
         0    Great Sword
         1    Heavy Bowgun
         2    Hammer
@@ -3052,7 +3732,7 @@ TreeScope.Children, condition);
         12    Switch Axe F
         13    Magnet Spike
         14    Group
-     */
+    */
     /// <summary>
     /// Gets the multiplier from weapon type.
     /// </summary>
@@ -3102,8 +3782,6 @@ TreeScope.Children, condition);
         };
     }
 
-    #region monster icon
-
 
 
     /// <summary>
@@ -3119,17 +3797,27 @@ TreeScope.Children, condition);
             int id;
 
             if (roadOverride() == false)
+            {
                 id = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
+            }
             else if (CaravanOverride())
+            {
                 id = CaravanMonster1ID();
+            }
             else
+            {
                 id = LargeMonster1ID();
+            }
 
-            //dure
+            // dure
             if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
+            {
                 id = 132;
+            }
             else if (QuestID() == 23648 || QuestID() == 23649)
+            {
                 id = 167;
+            }
 
             return DetermineMonsterImage(id);
         }
@@ -3146,9 +3834,13 @@ TreeScope.Children, condition);
             {
                 var renderFound = MonsterRenderMapper.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
+                {
                     return MonsterRenderMapper.MonsterRender[monsterIcon];
+                }
                 else
-                    return "https://i.imgur.com/3pQEtzw.png";
+                {
+                    return Messages.UnknownMonsterIcon;
+                }
             }
             else
             {
@@ -3168,9 +3860,13 @@ TreeScope.Children, condition);
             {
                 var renderFound = MonsterRenderMapper.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
+                {
                     return MonsterRenderMapper.MonsterRender[monsterIcon];
+                }
                 else
-                    return "https://i.imgur.com/3pQEtzw.png";
+                {
+                    return Messages.UnknownMonsterIcon;
+                }
             }
             else
             {
@@ -3190,9 +3886,13 @@ TreeScope.Children, condition);
             {
                 var renderFound = MonsterRenderMapper.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
+                {
                     return MonsterRenderMapper.MonsterRender[monsterIcon];
+                }
                 else
-                    return "https://i.imgur.com/3pQEtzw.png";
+                {
+                    return Messages.UnknownMonsterIcon;
+                }
             }
             else
             {
@@ -3212,9 +3912,13 @@ TreeScope.Children, condition);
             {
                 var renderFound = MonsterRenderMapper.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
+                {
                     return MonsterRenderMapper.MonsterRender[monsterIcon];
+                }
                 else
-                    return "https://i.imgur.com/3pQEtzw.png";
+                {
+                    return Messages.UnknownMonsterIcon;
+                }
             }
             else
             {
@@ -3230,17 +3934,27 @@ TreeScope.Children, condition);
             int id;
 
             if (roadOverride() == false)
+            {
                 id = RoadSelectedMonster() == 0 ? LargeMonster2ID() : LargeMonster1ID();
+            }
             else if (CaravanOverride())
+            {
                 id = CaravanMonster2ID();
+            }
             else
+            {
                 id = LargeMonster2ID();
+            }
 
             //dure
             if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
+                {
                 id = 132;
+            }
             else if (QuestID() == 23648 || QuestID() == 23649)
+                {
                 id = 167;
+            }
 
             return DetermineMonsterImage(id);
         }
@@ -3254,9 +3968,13 @@ TreeScope.Children, condition);
 
             //dure
             if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
+                {
                 id = 132;
+            }
             else if (QuestID() == 23648 || QuestID() == 23649)
+                {
                 id = 167;
+            }
 
             return DetermineMonsterImage(id);
         }
@@ -3268,11 +3986,15 @@ TreeScope.Children, condition);
         {
             var id = LargeMonster4ID();
 
-            //dure
+            // dure
             if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
+                {
                 id = 132;
+            }
             else if (QuestID() == 23648 || QuestID() == 23649)
+                {
                 id = 167;
+            }
 
             return DetermineMonsterImage(id);
         }
@@ -3282,11 +4004,18 @@ TreeScope.Children, condition);
     {
         var keyFound = MonsterImageMapper.MonsterImageID.TryGetValue(id, out var link);
         if (link == null)
-            link = "https://i.imgur.com/3pQEtzw.png";
+        {
+            link = Messages.UnknownMonsterIcon;
+        }
+
         if (keyFound)
+        {
             return link;
+        }
         else
+        {
             return GetAlternateMonsterImage(id);
+        }
     }
 
     public string DetermineMonsterHPBarColor(int n)
@@ -3318,11 +4047,18 @@ TreeScope.Children, condition);
 
         var keyFound = MonsterColorMapper.MonsterColorID.TryGetValue(monsterID, out var color);
         if (color == null)
+        {
             color = barColorSetting;
+        }
+
         if (keyFound && s.EnableMonsterHPBarsAutomaticColor)
+        {
             return color;
+        }
         else
+        {
             return barColorSetting;
+        }
     }
 
     public string DetermineMonsterStrokeColor(int n)
@@ -3365,9 +4101,13 @@ TreeScope.Children, condition);
         }
 
         if (s.EnableMonsterHPBarsAutomaticColor)
+        {
             return color;
+        }
         else
+        {
             return strokeColorSetting;
+        }
     }
 
     public string Monster1HPBarColor
@@ -3446,9 +4186,13 @@ TreeScope.Children, condition);
     private static string GetGatheringMapFromID(int id) // TODO: are highlands, tidal island or painted falls icons correct?
     {
         if (id >= 470 && id < 0)
-            return "https://i.imgur.com/aAcPJGb.png";
+        {
+            return Messages.EmptyImage;
+        }
         else
+        {
             return FindGatheringMap(id);
+        }
     }
 
     private static string FindGatheringMap(int id)
@@ -3472,15 +4216,14 @@ TreeScope.Children, condition);
     {
         var gatheringMap = GatheringMapMapper.GatheringMapID.ContainsKey(key);
         if (!gatheringMap)
-            return "https://i.imgur.com/aAcPJGb.png";
+        {
+            return Messages.EmptyImage;
+        }
         else
+        {
             return GatheringMapMapper.GatheringMapID[key];
+        }
     }
-
-    #endregion
-
-    #region gear stats
-
 
     /// <summary>
     /// Gets the weapon class
@@ -3490,16 +4233,24 @@ TreeScope.Children, condition);
         if (weaponClass == null)
         {
             if (CurrentWeaponName == "Light Bowgun" || CurrentWeaponName == "Heavy Bowgun" || CurrentWeaponName == "Bow")
+            {
                 return "Gunner";
+            }
             else
+            {
                 return "Blademaster";
+            }
         }
         else
         {
             if (weaponClass == 1 || weaponClass == 5 || weaponClass == 10)
+            {
                 return "Gunner";
+            }
             else
+            {
                 return "Blademaster";
+            }
         }
     }
 
@@ -3509,10 +4260,7 @@ TreeScope.Children, condition);
     public static string GetTextFormat()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.TextFormatExport != null)
-            return s.TextFormatExport;
-        else
-            return "None";
+        return s.TextFormatExport ?? "None";
     }
 
     /// <summary>
@@ -3524,10 +4272,7 @@ TreeScope.Children, condition);
     public static string GetGender()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.GenderExport != null)
-            return s.GenderExport;
-        else
-            return "Male";
+        return s.GenderExport ?? "Male";
     }
 
 
@@ -3546,7 +4291,9 @@ TreeScope.Children, condition);
             var lv = GetWeaponNameFromType(WeaponType()).Contains("Bowgun") ? GetGRWeaponLevel(GRWeaponLvBowguns()) : GetGRWeaponLevel(GRWeaponLv());
 
             if (GetTextFormat() == "Markdown" && (lv == " Lv. 50" || lv == " Lv. 100"))
+            {
                 lv = string.Format(CultureInfo.InvariantCulture, "**{0}**", lv);
+            }
 
             var style = WeaponStyle() switch
             {
@@ -3637,73 +4384,112 @@ TreeScope.Children, condition);
 
             //. also the values have to be skipped if item slot is empty
             if (ItemName1 == null || ItemName1 == "None" || ItemName1 == "" || AmmoPouchItem1Qty() == 0)
+            {
                 ItemName1 = "Empty, ";
+            }
             else if (ItemName2 == null || ItemName2 == "None" || ItemName2 == "" || AmmoPouchItem2Qty() == 0)
+            {
                 ItemName1 += ", ";
+            }
             else
+            {
                 ItemName1 += ", ";
+            }
 
             if (ItemName2 == null || ItemName2 == "None" || ItemName2 == "" || AmmoPouchItem2Qty() == 0)
+            {
                 ItemName2 = "Empty, ";
+            }
             else if (ItemName3 == null || ItemName3 == "None" || ItemName3 == "" || AmmoPouchItem3Qty() == 0)
+            {
                 ItemName2 += ", ";
+            }
             else
+            {
                 ItemName2 += ", ";
+            }
 
             if (ItemName3 == null || ItemName3 == "None" || ItemName3 == "" || AmmoPouchItem3Qty() == 0)
+            {
                 ItemName3 = "Empty, ";
+            }
             else if (ItemName4 == null || ItemName4 == "None" || ItemName4 == "" || AmmoPouchItem4Qty() == 0)
+            {
                 ItemName3 += ", ";
+            }
             else
+            {
                 ItemName3 += ", ";
+            }
 
             if (ItemName4 == null || ItemName4 == "None" || ItemName4 == "" || AmmoPouchItem4Qty() == 0)
+            {
                 ItemName4 = "Empty, ";
+            }
             else if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || AmmoPouchItem5Qty() == 0)
+            {
                 ItemName4 += ", ";
-            else
+            }
+            else{
                 ItemName4 += ", ";
+            }
 
-            if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || AmmoPouchItem5Qty() == 0)
+            if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || AmmoPouchItem5Qty() == 0){
                 ItemName5 = "Empty, \n";
-            else if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || AmmoPouchItem6Qty() == 0)
+            }
+            else if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || AmmoPouchItem6Qty() == 0){
                 ItemName5 += string.Empty;
-            else
+            }
+            else{
                 ItemName5 += "\n";
+            }
 
-            if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || AmmoPouchItem6Qty() == 0)
+            if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || AmmoPouchItem6Qty() == 0){
                 ItemName6 = "Empty, ";
-            else if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || AmmoPouchItem7Qty() == 0)
+            }
+            else if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || AmmoPouchItem7Qty() == 0){
                 ItemName6 += ", ";
-            else
+            }
+            else{
                 ItemName6 += ", ";
+            }
 
-            if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || AmmoPouchItem7Qty() == 0)
+            if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || AmmoPouchItem7Qty() == 0){
                 ItemName7 = "Empty, ";
-            else if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || AmmoPouchItem8Qty() == 0)
+            }
+            else if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || AmmoPouchItem8Qty() == 0){
                 ItemName7 += ", ";
-            else
+            }
+            else{
                 ItemName7 += ", ";
+            }
 
-            if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || AmmoPouchItem8Qty() == 0)
+            if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || AmmoPouchItem8Qty() == 0){
                 ItemName8 = "Empty, ";
-            else if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || AmmoPouchItem9Qty() == 0)
+            }
+            else if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || AmmoPouchItem9Qty() == 0){
                 ItemName8 += ", ";
-            else
+            }
+            else{
                 ItemName8 += ", ";
+            }
 
-            if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || AmmoPouchItem9Qty() == 0)
+            if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || AmmoPouchItem9Qty() == 0){
                 ItemName9 = "Empty, ";
-            else if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0)
+            }
+            else if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0){
                 ItemName9 += ", ";
-            else
+            }
+            else{
                 ItemName9 += ", ";
+            }
 
-            if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0)
+            if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0){
                 ItemName10 = "Empty";
-
-            else
+            }
+            else{
                 ItemName10 += string.Empty;
+            }
 
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}", ItemName1, ItemName2, ItemName3, ItemName4, ItemName5, ItemName6, ItemName7, ItemName8, ItemName9, ItemName10);
         }
@@ -3751,6 +4537,7 @@ TreeScope.Children, condition);
                 {
                     itemName = "None";
                 }
+
                 itemNames[i] = itemName == null ? "None" : itemName;
             }
 
@@ -3767,6 +4554,7 @@ TreeScope.Children, condition);
                     itemPouch += ", ";
                 }
             }
+
             return itemPouch;
         }
     }
@@ -3795,10 +4583,12 @@ TreeScope.Children, condition);
                 }
             }
         }
+
         if (sb.Length == 0)
         {
             return "None";
         }
+
         return sb.ToString();
     }
 
@@ -3812,12 +4602,16 @@ TreeScope.Children, condition);
             if (SkillRoadTower.IDName.TryGetValue(id, out var value) && value != "None" && value != "")
             {
                 name += value;
-                if (i != skills.Length - 1)
+                if (i != skills.Length - 1){
                     name += ", ";
-                if (i % 5 == 4)
+                }
+
+                if (i % 5 == 4){
                     name += "\n";
+                }
             }
         }
+
         return string.IsNullOrEmpty(name) ? "None" : name;
     }
 
@@ -3833,8 +4627,9 @@ TreeScope.Children, condition);
         {
             ArmorHead.IDName.TryGetValue(ArmorHeadID(), out var piecename);
 
-            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
+            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename)){
                 piecename = string.Format(CultureInfo.InvariantCulture, "**{0}**", piecename);
+            }
 
             var address = ArmorHeadID().ToString("X4", CultureInfo.InvariantCulture).ToUpperInvariant();
             return string.Format(CultureInfo.InvariantCulture, "{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorHeadDeco1ID()), GetDecoName(ArmorHeadDeco2ID()), GetDecoName(ArmorHeadDeco3ID()));
@@ -3861,8 +4656,9 @@ TreeScope.Children, condition);
         {
             ArmorChest.IDName.TryGetValue(ArmorChestID(), out var piecename);
 
-            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
+            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename)){
                 piecename = string.Format(CultureInfo.InvariantCulture, "**{0}**", piecename);
+            }
 
             var address = ArmorChestID().ToString("X4", CultureInfo.InvariantCulture).ToUpperInvariant();
             return string.Format(CultureInfo.InvariantCulture, "{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorChestDeco1ID()), GetDecoName(ArmorChestDeco2ID()), GetDecoName(ArmorChestDeco3ID()));
@@ -3889,8 +4685,9 @@ TreeScope.Children, condition);
         {
             ArmorArms.IDName.TryGetValue(ArmorArmsID(), out var piecename);
 
-            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
+            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename)){
                 piecename = string.Format(CultureInfo.InvariantCulture, "**{0}**", piecename);
+            }
 
             var address = ArmorArmsID().ToString("X4", CultureInfo.InvariantCulture).ToUpperInvariant();
             return string.Format(CultureInfo.InvariantCulture, "{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorArmsDeco1ID()), GetDecoName(ArmorArmsDeco2ID()), GetDecoName(ArmorArmsDeco3ID()));
@@ -3917,8 +4714,9 @@ TreeScope.Children, condition);
         {
             ArmorWaist.IDName.TryGetValue(ArmorWaistID(), out var piecename);
 
-            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
+            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename)){
                 piecename = string.Format(CultureInfo.InvariantCulture, "**{0}**", piecename);
+            }
 
             var address = ArmorWaistID().ToString("X4", CultureInfo.InvariantCulture).ToUpperInvariant();
             return string.Format(CultureInfo.InvariantCulture, "{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorWaistDeco1ID()), GetDecoName(ArmorWaistDeco2ID()), GetDecoName(ArmorWaistDeco3ID()));
@@ -3945,8 +4743,9 @@ TreeScope.Children, condition);
         {
             ArmorLegs.IDName.TryGetValue(ArmorLegsID(), out var piecename);
 
-            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
+            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename)){
                 piecename = string.Format(CultureInfo.InvariantCulture, "**{0}**", piecename);
+            }
 
             var address = ArmorLegsID().ToString("X4", CultureInfo.InvariantCulture).ToUpperInvariant();
             return string.Format(CultureInfo.InvariantCulture, "{0} ({1}) | {2} | {3} | {4}", piecename, address, GetDecoName(ArmorLegsDeco1ID()), GetDecoName(ArmorLegsDeco2ID()), GetDecoName(ArmorLegsDeco3ID()));
@@ -3973,13 +4772,17 @@ TreeScope.Children, condition);
 
         var keyFound = Item.IDName.TryGetValue(id, out DecoName);
 
-        if (GetTextFormat() == "Markdown" && IsMetaItem(id) && DecoName != null && DecoName == "None" && DecoName != "" && keyFound)
+        if (GetTextFormat() == "Markdown" && IsMetaItem(id) && DecoName != null && DecoName == "None" && DecoName != "" && keyFound){
             DecoName = string.Format(CultureInfo.InvariantCulture, "**{0}**", DecoName);
+        }
 
-        if (DecoName == null || DecoName == "None" || DecoName == "")
+        if (DecoName == null || DecoName == "None" || DecoName == ""){
             DecoName = "Empty";
+        }
         else
+        {
             DecoName += string.Empty;
+        }
 
         if (DecoName == "Empty" && slot != 0)
         {
@@ -3988,9 +4791,13 @@ TreeScope.Children, condition);
 
         string address;
         if (!isForImage)
+        {
             address = " (" + id.ToString("X4", CultureInfo.InvariantCulture).ToUpperInvariant() + ")";
+        }
         else
+        {
             address = string.Empty;
+        }
 
         return string.Format(CultureInfo.InvariantCulture, "{0}{1}", DecoName, address);
     }
@@ -4015,7 +4822,9 @@ TreeScope.Children, condition);
 
         var index = (slot - 1) * 3;
         if (sigilValues[index] == 0 || sigilNames[index] == 0)
+        {
             return "Empty";
+        }
 
         var type1 = sigilTypes[index] + ": ";
         var value1 = (sigilValues[index] > 127 ? sigilValues[index] - 256 : sigilValues[index]).ToString();
@@ -4087,10 +4896,14 @@ TreeScope.Children, condition);
             var cuff2 = GetCuff2Name;
 
             if (IsMetaItem(Cuff1ID()))
+            {
                 cuff1 = string.Format(CultureInfo.InvariantCulture, "**{0}**", cuff1);
+            }
 
             if (IsMetaItem(Cuff2ID()))
+            {
                 cuff2 = string.Format(CultureInfo.InvariantCulture, "**{0}**", cuff2);
+            }
 
             return string.Format(CultureInfo.InvariantCulture, "{0} | {1}", cuff1, cuff2);
         }
@@ -4177,23 +4990,37 @@ TreeScope.Children, condition);
             if (GetTextFormat() == "Markdown")
             {
                 if (IsMaxCaravanSkill(id1))
+                {
                     caravanSkillName1 = string.Format(CultureInfo.InvariantCulture, "**{0}**", caravanSkillName1);
+                }
 
                 if (IsMaxCaravanSkill(id2))
+                {
                     caravanSkillName2 = string.Format(CultureInfo.InvariantCulture, "**{0}**", caravanSkillName2);
+                }
 
                 if (IsMaxCaravanSkill(id3))
+                {
                     caravanSkillName3 = string.Format(CultureInfo.InvariantCulture, "**{0}**", caravanSkillName3);
+                }
             }
 
             if (caravanSkillName1 == "" || caravanSkillName1 == "None")
+            {
                 return "None";
+            }
             else if (caravanSkillName2 == "" || caravanSkillName2 == "None")
+            {
                 return caravanSkillName1 + string.Empty;
+            }
             else if (caravanSkillName3 == "" || caravanSkillName3 == "None")
+            {
                 return caravanSkillName1 + ", " + caravanSkillName2;
+            }
             else
+            {
                 return caravanSkillName1 + ", " + caravanSkillName2 + ", " + caravanSkillName3;
+            }
         }
     }
 
@@ -4209,11 +5036,16 @@ TreeScope.Children, condition);
             {
                 SkillName += skillName;
                 if (i != skills.Length - 1)
+                {
                     SkillName += ", ";
-                if (i % 5 == 4)
+                }
+
+                if (i % 5 == 4){
                     SkillName += "\n";
+                }
             }
         }
+
         return string.IsNullOrEmpty(SkillName) ? "None" : SkillName;
     }
 
@@ -4302,8 +5134,9 @@ TreeScope.Children, condition);
             case 72:
             case 74:
             case 78:
-            //case 81:
-            //case 84:
+
+            // case 81:
+            // case 84:
             case 89:
             case 94:
             case 97:
@@ -4337,10 +5170,11 @@ TreeScope.Children, condition);
             case 194:
             case 199:
             case 201:
-            case 203://Gunnery?
+            case 203:// Gunnery?
             case 212:
             case 218:
-            //case 219:
+
+            // case 219:
             case 222:
             case 223:
             case 228:
@@ -4431,7 +5265,7 @@ TreeScope.Children, condition);
             case 453:
             case 456:
             case 457:
-            case 458://Red Soul
+            case 458:// Red Soul
             case 461:
             case 463:
             case 464:
@@ -4468,7 +5302,8 @@ TreeScope.Children, condition);
             case 515:
             case 516:
             case 517:
-            //case 518://dupe?
+
+            // case 518://dupe?
             case 519:
             case 520:
             case 521:
@@ -4495,7 +5330,9 @@ TreeScope.Children, condition);
     public static bool IsMaxRoadDureSkillLevel(int id, string level)
     {
         if (level == "0")
+        {
             return false;
+        }
 
         switch (id)
         {
@@ -4505,10 +5342,7 @@ TreeScope.Children, condition);
             case 2:
             case 19:
             case 20:
-                if (level == "5")
-                    return true;
-                else
-                    return false;
+                return level == "5" ? true : false;
             case 23:
             case 24:
             case 25:
@@ -4521,24 +5355,15 @@ TreeScope.Children, condition);
             case 15:
             case 18:
             case 22:
-                if (level == "3")
-                    return true;
-                else
-                    return false;
+                return level == "3" ? true : false;
             case 5:
             case 28:
             case 33:
             case 32:
-                if (level == "2")
-                    return true;
-                else
-                    return false;
+                return level == "2" ? true : false;
             case 35:
             case 30:
-                if (level == "1")
-                    return true;
-                else
-                    return false;
+                return level == "1" ? true : false;
         }
     }
 
@@ -4563,6 +5388,7 @@ TreeScope.Children, condition);
                     {
                         skillName = "**" + skillName + "**";
                     }
+
                     skills[i] = skillName;
                 }
             }
@@ -4598,14 +5424,22 @@ TreeScope.Children, condition);
                 {
                     SkillName += skillName;
                     if (i != skills.Length - 1)
+                    {
                         SkillName += ", ";
+                    }
+
                     if (i % 5 == 4)
+                    {
                         SkillName += "\n";
+                    }
                 }
             }
         }
-        if (string.IsNullOrEmpty(SkillName))
+
+        if (string.IsNullOrEmpty(SkillName)){
             return "None";
+        }
+
         return SkillName;
     }
 
@@ -4616,10 +5450,7 @@ TreeScope.Children, condition);
     public static bool GetGouBoostMode()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.GouBoostExport)
-            return true;
-        else
-            return false;
+        return s.GouBoostExport;
     }
 
     /// <summary>
@@ -4654,6 +5485,7 @@ TreeScope.Children, condition);
                 {
                     skillNames[i] = string.Format(CultureInfo.InvariantCulture, "**{0}**", skillNames[i]);
                 }
+
                 result += skillNames[i] + (i == 18 ? "" : i % 5 == 4 ? "\n" : ", ");
             }
 
@@ -4675,14 +5507,23 @@ TreeScope.Children, condition);
                 {
                     SkillName += skillName;
                     if (i != skills.Length - 1)
+                    {
                         SkillName += ", ";
+                    }
+
                     if (i % 5 == 4)
+                    {
                         SkillName += "\n";
+                    }
                 }
             }
         }
+
         if (string.IsNullOrEmpty(SkillName))
+        {
             return "None";
+        }
+
         return SkillName;
     }
 
@@ -4720,9 +5561,13 @@ TreeScope.Children, condition);
     {
         SkillArmor.IDName.TryGetValue(id, out var skillname);
         if (skillname == "" || skillname == null)
+        {
             return "None";
+        }
         else
+        {
             return skillname + string.Empty;
+        }
     }
 
     /// <summary>
@@ -4734,9 +5579,13 @@ TreeScope.Children, condition);
     {
         SkillArmor.IDName.TryGetValue(id, out var skillname);
         if (skillname == "")
+        {
             return "None";
+        }
         else
+        {
             return skillname + string.Empty;
+        }
     }
 
     /// <summary>
@@ -4868,47 +5717,82 @@ TreeScope.Children, condition);
             SkillArmor.IDName.TryGetValue(AutomaticSkillLegs(), out var SkillName6);
 
             if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
+            {
                 SkillName1 = string.Empty;
+            }
             else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
+            {
                 SkillName1 += string.Empty;
+            }
             else
+            {
                 SkillName1 += ", ";
+            }
 
             if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
+            {
                 SkillName2 = string.Empty;
+            }
             else if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
+            {
                 SkillName2 += string.Empty;
+            }
             else
+            {
                 SkillName2 += ", ";
+            }
 
             if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
+            {
                 SkillName3 = string.Empty;
+            }
             else if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
+            {
                 SkillName3 += string.Empty;
+            }
             else
+            {
                 SkillName3 += ", ";
+            }
 
             if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
+            {
                 SkillName4 = string.Empty;
+            }
             else if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
+            {
                 SkillName4 += string.Empty;
-            else
+            }
+            else{
                 SkillName4 += ", ";
+            }
 
             if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
+            {
                 SkillName5 = string.Empty;
+            }
             else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
+            {
                 SkillName5 += string.Empty;
+            }
             else
+            {
                 SkillName5 += "\n";
+            }
 
             if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
+            {
                 SkillName6 = string.Empty;
+            }
             else
+            {
                 SkillName6 += string.Empty;
+            }
 
             if (SkillName1 == "")
+            {
                 SkillName1 = "None";
+            }
 
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", SkillName1, SkillName2, SkillName3, SkillName4, SkillName5, SkillName6);
         }
@@ -4927,14 +5811,23 @@ TreeScope.Children, condition);
                 {
                     SkillName += skillName;
                     if (i != skills.Length - 1)
+                    {
                         SkillName += ", ";
+                    }
+
                     if (i % 5 == 4)
+                    {
                         SkillName += "\n";
+                    }
                 }
             }
         }
+
         if (string.IsNullOrEmpty(SkillName))
+        {
             return "None";
+        }
+
         return SkillName;
     }
 
@@ -4945,10 +5838,7 @@ TreeScope.Children, condition);
     public static string GetTotalGSRWeaponUnlocks()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.GSRUnlocksExport != null)
-            return s.GSRUnlocksExport;
-        else
-            return "11";
+        return s.GSRUnlocksExport ?? "11";
     }
 
     /// <summary>
@@ -4958,10 +5848,7 @@ TreeScope.Children, condition);
     public static bool Is11GSR999()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.Enable11GSR999)
-            return true;
-        else
-            return false;
+        return s.Enable11GSR999;
     }
 
     public string MarkdownSavedGearStats { get; set; } = string.Empty;
@@ -5020,39 +5907,60 @@ TreeScope.Children, condition);
             SkillName2 += string.Empty;
 
             if (SkillName1 == "")
+            {
                 SkillName1 = "Nothing";
+            }
 
             if (SkillName2 == "")
+            {
                 SkillName2 = "Nothing";
+            }
 
             if (!IsFixedGSRSkillValue(SkillName1))
+            {
                 SkillName1 = GetGSRBonus(SkillName1);
+            }
 
             if (!IsFixedGSRSkillValue(SkillName2))
+            {
                 SkillName2 = GetGSRBonus(SkillName2);
+            }
 
             // pls
             if (GetTextFormat() == "Markdown")
             {
                 if (IsMaxGSRSkillValue(SkillName1) && (SkillName1 != null || SkillName1 != "Nothing" || SkillName1 != ""))
+                {
                     SkillName1 = string.Format(CultureInfo.InvariantCulture, "**{0}**", SkillName1);
+                }
 
                 if (IsMaxGSRSkillValue(SkillName2) && (SkillName2 != null || SkillName2 != "Nothing" || SkillName2 != ""))
+                {
                     SkillName2 = string.Format(CultureInfo.InvariantCulture, "**{0}**", SkillName2);
+                }
             }
 
             if (SkillName1 == null || SkillName1 == "Nothing" || SkillName1 == "")
+            {
                 SkillName1 = string.Empty;
+            }
             else if (SkillName2 == null || SkillName2 == "Nothing" || SkillName2 == "")
+            {
                 SkillName1 += string.Empty;
+            }
             else
+            {
                 SkillName1 += ", ";
+            }
 
             if (SkillName2 == null || SkillName2 == "Nothing" || SkillName2 == "")
+            {
                 SkillName2 = string.Empty;
-
+            }
             else
+            {
                 SkillName2 += string.Empty;
+            }
 
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}", SkillName1, SkillName2);
         }
@@ -5071,14 +5979,22 @@ TreeScope.Children, condition);
                 {
                     SkillName += skillName;
                     if (i != skills.Length - 1)
+                    {
                         SkillName += ", ";
-                    if (i % 5 == 4)
+                    }
+
+                    if (i % 5 == 4){
                         SkillName += "\n";
+                    }
                 }
             }
         }
+
         if (string.IsNullOrEmpty(SkillName))
+        {
             return "None";
+        }
+
         return SkillName;
     }
 
@@ -5094,7 +6010,9 @@ TreeScope.Children, condition);
 
         //defense here (needs testing)
         if (IsFixedGSRSkillValue(skillName))
+        {
             return skillName;
+        }
 
         var Def = 0;
         var FireRes = 0;
@@ -5110,7 +6028,9 @@ TreeScope.Children, condition);
         var skillNameType = skillName.Substring(0, skillName.IndexOf("+", StringComparison.InvariantCulture));
 
         if (GSR() >= 10)
+        {
             Def += 1;
+        }
 
         if (GSR() >= 20)
         {
@@ -5118,7 +6038,9 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 30)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 40)
         {
@@ -5126,13 +6048,19 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 50)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 60)
+        {
             Def += 1;
+        }
 
         if (GSR() >= 70)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 80)
         {
@@ -5140,13 +6068,17 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 90)
+        {
             Def += 1;
+        }
 
-        if (GSR() >= 100)
+        if (GSR() >= 100){
             ConquestAtk += 2;
+        }
 
-        if (GSR() >= 110)
+        if (GSR() >= 110){
             Def += 1;
+        }
 
         if (GSR() >= 120)
         {
@@ -5154,7 +6086,9 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 130)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 140)
         {
@@ -5162,25 +6096,39 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 150)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 160)
+        {
             Def += 1;
+        }
 
         if (GSR() >= 170)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 180)
+        {
             AllRes += 1;
+        }
 
         if (GSR() >= 190)
+        {
             Def += 1;
+        }
 
         if (GSR() >= 200)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 210)
+        {
             Def += 1;
+        }
 
         if (GSR() >= 220)
         {
@@ -5188,7 +6136,9 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 230)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 240)
         {
@@ -5196,13 +6146,19 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 250)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 260)
+        {
             Def += 1;
+        }
 
         if (GSR() >= 270)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 280)
         {
@@ -5210,13 +6166,19 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 290)
+        {
             Def += 1;
+        }
 
         if (GSR() >= 300)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 310)
+        {
             Def += 1;
+        }
 
         if (GSR() >= 320)
         {
@@ -5224,7 +6186,9 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 330)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 340)
         {
@@ -5232,25 +6196,38 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 350)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 360)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 370)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 380)
+        {
             AllRes += 1;
+        }
 
-        if (GSR() >= 390)
+        if (GSR() >= 390){
             Def += 2;
+        }
 
         if (GSR() >= 400)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 410)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 420)
         {
@@ -5258,7 +6235,9 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 430)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 440)
         {
@@ -5266,13 +6245,18 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 450)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 460)
+        {
             Def += 2;
+        }
 
-        if (GSR() >= 470)
+        if (GSR() >= 470){
             ConquestDef += 10;
+        }
 
         if (GSR() >= 480)
         {
@@ -5280,13 +6264,19 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 490)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 500)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 510)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 520)
         {
@@ -5294,7 +6284,9 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 530)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 540)
         {
@@ -5302,47 +6294,68 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 550)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 560)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 570)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 580)
+        {
             AllRes += 1;
+        }
 
         if (GSR() >= 590)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 600)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 610)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 620)
         {
             FireRes += 2;
         }
 
-        if (GSR() >= 630)
+        if (GSR() >= 630){
             ConquestDef += 10;
+        }
 
         if (GSR() >= 640)
         {
             WaterRes += 2;
         }
 
-        if (GSR() >= 650)
+        if (GSR() >= 650){
+
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 660)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 670)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 680)
         {
@@ -5350,13 +6363,19 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 690)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 700)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 710)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 720)
         {
@@ -5364,7 +6383,9 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 730)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 740)
         {
@@ -5372,25 +6393,39 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 750)
+        {
             ConquestAtk += 2;
+        }
 
         if (GSR() >= 760)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 770)
+        {
             ConquestDef += 10;
+        }
 
         if (GSR() >= 780)
+        {
             AllRes += 1;
+        }
 
         if (GSR() >= 790)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 800)
+        {
             ConquestAtk += 4;
+        }
 
         if (GSR() >= 810)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 820)
         {
@@ -5398,7 +6433,9 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 830)
-            ConquestDef += 10;//15?
+        {
+            ConquestDef += 10;// 15?
+        }
 
         if (GSR() >= 840)
         {
@@ -5406,13 +6443,18 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 850)
+        {
             ConquestAtk += 4;
+        }
 
         if (GSR() >= 860)
+        {
             Def += 2;
+        }
 
-        if (GSR() >= 870)
+        if (GSR() >= 870){
             ConquestDef += 10;//15?
+        }
 
         if (GSR() >= 880)
         {
@@ -5420,13 +6462,18 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 890)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 900)
+        {
             ConquestAtk += 4;
+        }
 
-        if (GSR() >= 910)
+        if (GSR() >= 910){
             Def += 2;
+        }
 
         if (GSR() >= 920)
         {
@@ -5434,7 +6481,9 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 930)
-            ConquestDef += 10;//15?
+        {
+            ConquestDef += 10;// 15?
+        }
 
         if (GSR() >= 940)
         {
@@ -5442,22 +6491,35 @@ TreeScope.Children, condition);
         }
 
         if (GSR() >= 950)
+        {
             ConquestAtk += 4;
+        }
 
         if (GSR() >= 960)
+        {
             Def += 2;
+        }
 
         if (GSR() >= 970)
-            ConquestDef += 10;//15?
+        {
+            ConquestDef += 10;// 15?
+        }
 
         if (GSR() >= 980)
+        {
             AllRes += 1;
+        }
 
         if (GSR() >= 960)
+        {
+
             Def += 2;
+        }
 
         if (GSR() >= 999)
+        {
             ConquestAtk += 4;
+        }
 
         var GSRSkillMultiplier = GetTotalGSRWeaponUnlocks() switch
         {
@@ -5474,7 +6536,7 @@ TreeScope.Children, condition);
             ConquestDef = 300 + 10 * GSRSkillMultiplier;
         }
 
-        //already tested
+        // already tested
         return skillNameType switch
         {
             "Nothing" => "Nothing",
@@ -5504,7 +6566,9 @@ TreeScope.Children, condition);
             var s = (Settings)Application.Current.TryFindResource("Settings");
 
             if (!s.EnableMetadataExport)
+            {
                 return string.Empty;
+            }
 
             string guildName;
             string hunterName;
@@ -5512,14 +6576,22 @@ TreeScope.Children, condition);
             var DateAndTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
 
             if (s.GuildName.Length >= 1)
+            {
                 guildName = s.GuildName;
+            }
             else
+            {
                 guildName = "Guild Name";
+            }
 
             if (s.HunterName.Length >= 1)
+            {
                 hunterName = s.HunterName;
+            }
             else
+            {
                 hunterName = "Hunter Name";
+            }
 
             return string.Format(CultureInfo.InvariantCulture, "\n{0} | {1} | {2}", hunterName, guildName, DateAndTime);
         }
@@ -5676,10 +6748,12 @@ TreeScope.Children, condition);
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
 
-            if (s.GearDescriptionExport != null || s.GearDescriptionExport != "")
+            if (s.GearDescriptionExport != null || s.GearDescriptionExport != ""){
                 return string.Format(CultureInfo.InvariantCulture, "{0}\n", s.GearDescriptionExport);
-            else
+            }
+            else{
                 return string.Empty;
+            }
         }
     }
 
@@ -5695,55 +6769,55 @@ TreeScope.Children, condition);
         {
             default:
                 return false;
-            case 14642://hunter taloncharm
-            case 1681://maiden items
+            case 14642:// hunter taloncharm
+            case 1681:// maiden items
             case 1682:
             case 1683:
             case 1684:
             case 1481:
             case 1482:
             case 1483:
-            case 4750://perfect whetstone
-            case 8030://shiri
-            case 8026://encourage
-            case 8037://impatience charm
-            case 8031://elixir of peace
-            case 8040://gathering charm min
-            case 8042://gathering charm max
-            case 8047://health charm
-            case 8052://stamina charm
-            case 1548://starving wolf potion
-            case 4943://serious drink affinity
-            case 9719://all element drug
-            case 9715://quick mega juice
-            case 9714://quick max potion
-            case 4358://potion g2
-            case 78://farcaster
-            case 4952://halk pot
-            case 5771://halk call
-            case 1537://nearcaster
-            case 1888://power sword crystal
-            case 1553://LS spirit drink
-            case 14803://adrenaline charm
-            case 14804://starving wolf charm
-            case 91://small barrel bombs
+            case 4750:// perfect whetstone
+            case 8030:// shiri
+            case 8026:// encourage
+            case 8037:// impatience charm
+            case 8031:// elixir of peace
+            case 8040:// gathering charm min
+            case 8042:// gathering charm max
+            case 8047:// health charm
+            case 8052:// stamina charm
+            case 1548:// starving wolf potion
+            case 4943:// serious drink affinity
+            case 9719:// all element drug
+            case 9715:// quick mega juice
+            case 9714:// quick max potion
+            case 4358:// potion g2
+            case 78:// farcaster
+            case 4952:// halk pot
+            case 5771:// halk call
+            case 1537:// nearcaster
+            case 1888:// power sword crystal
+            case 1553:// LS spirit drink
+            case 14803:// adrenaline charm
+            case 14804:// starving wolf charm
+            case 91:// sm all barrel bombs
             case 92:
-            case 1782://random ball
-            case 300://poogie crackers
-            case 9717://attack medicine
-            case 34://lifepowder
-            case 4723://gook amulet
-            case 5277://gook bomb
-            case 5279://gook cracker
-            case 5711://gook whistle
-            case 5712://gook fireworks
-            case 5714://gook pickaxe
-            case 5715://gook fishing net
-            case 5716://gook bugnet
-            case 5717://gook gloves
+            case 1782:// random ball
+            case 300:// poogie crackers
+            case 9717:// attack medicine
+            case 34:// lifepowder
+            case 4723:// gook amulet
+            case 5277:// gook bomb
+            case 5279:// gook cracker
+            case 5711:// gook whistle
+            case 5712:// gook fireworks
+            case 5714:// gook pickaxe
+            case 5715:// gook fishing net
+            case 5716:// gook bugnet
+            case 5717:// gook gloves
 
-            //decos
-            //all ravi
+            // decos
+            // all ravi
             case 12724:
             case 12725:
             case 12726:
@@ -5785,7 +6859,7 @@ TreeScope.Children, condition);
             case 15078:
             case 15079:
 
-            //all true hiden
+            // all true hiden
             case 13640:
             case 13641:
             case 13642:
@@ -5854,9 +6928,13 @@ TreeScope.Children, condition);
     public static bool IsMetaGear(string piece)
     {
         if (piece.Contains("ZP") || piece.Contains("PZ") || piece.Contains("SnS・") || piece.Contains("DS・") || piece.Contains("GS・") || piece.Contains("LS・") || piece.Contains("Hammer・") || piece.Contains("HH・") || piece.Contains("Lance・") || piece.Contains("GL・") || piece.Contains("Swaxe・") || piece.Contains("Tonfa・") || piece.Contains("Magspike・") || piece.Contains("LBG・") || piece.Contains("HBG・") || piece.Contains("Bow・"))
+        {
             return true;
+        }
         else
+        {
             return false;
+        }
     }
 
     /// <summary>
@@ -5867,11 +6945,13 @@ TreeScope.Children, condition);
     public static string GetGRWeaponLevel(int level)
     {
         if (level == 0)
+        {
             return string.Empty;
-
+        }
         else
+        {
             return " Lv. " + level;
-
+        }
     }
 
     /// <summary>
@@ -5935,53 +7015,76 @@ TreeScope.Children, condition);
             // pls
             if (GetTextFormat() == "Markdown")
             {
-                if (IsMaxRoadDureSkillLevel(Skill1, SkillLevel1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill1, SkillLevel1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != "")){
                     SkillName1 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName1);
+                }
 
-                if (IsMaxRoadDureSkillLevel(Skill2, SkillLevel2) && (SkillName2 != null || SkillName2 != "None" || SkillName2 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill2, SkillLevel2) && (SkillName2 != null || SkillName2 != "None" || SkillName2 != "")){
                     SkillName2 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName2);
+                }
 
-                if (IsMaxRoadDureSkillLevel(Skill3, SkillLevel3) && (SkillName3 != null || SkillName3 != "None" || SkillName3 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill3, SkillLevel3) && (SkillName3 != null || SkillName3 != "None" || SkillName3 != "")){
                     SkillName3 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName3);
+                }
 
-                if (IsMaxRoadDureSkillLevel(Skill4, SkillLevel4) && (SkillName4 != null || SkillName4 != "None" || SkillName4 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill4, SkillLevel4) && (SkillName4 != null || SkillName4 != "None" || SkillName4 != "")){
                     SkillName4 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName4);
+                }
 
-                if (IsMaxRoadDureSkillLevel(Skill5, SkillLevel5) && (SkillName5 != null || SkillName5 != "None" || SkillName5 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill5, SkillLevel5) && (SkillName5 != null || SkillName5 != "None" || SkillName5 != "")){
                     SkillName5 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName5);
+                }
 
-                if (IsMaxRoadDureSkillLevel(Skill6, SkillLevel6) && (SkillName6 != null || SkillName6 != "None" || SkillName6 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill6, SkillLevel6) && (SkillName6 != null || SkillName6 != "None" || SkillName6 != "")){
                     SkillName6 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName6);
+                }
 
-                if (IsMaxRoadDureSkillLevel(Skill7, SkillLevel7) && (SkillName7 != null || SkillName7 != "None" || SkillName7 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill7, SkillLevel7) && (SkillName7 != null || SkillName7 != "None" || SkillName7 != "")){
                     SkillName7 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName7);
+                }
 
-                if (IsMaxRoadDureSkillLevel(Skill8, SkillLevel8) && (SkillName8 != null || SkillName8 != "None" || SkillName8 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill8, SkillLevel8) && (SkillName8 != null || SkillName8 != "None" || SkillName8 != "")){
                     SkillName8 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName8);
+                }
 
-                if (IsMaxRoadDureSkillLevel(Skill9, SkillLevel9) && (SkillName9 != null || SkillName9 != "None" || SkillName9 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill9, SkillLevel9) && (SkillName9 != null || SkillName9 != "None" || SkillName9 != "")){
                     SkillName9 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName9);
+                }
 
                 if (IsMaxRoadDureSkillLevel(Skill10, SkillLevel10) && (SkillName10 != null || SkillName10 != "None" || SkillName10 != ""))
+                {
                     SkillName10 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName10);
+                }
 
                 if (IsMaxRoadDureSkillLevel(Skill11, SkillLevel11) && (SkillName11 != null || SkillName11 != "None" || SkillName11 != ""))
+                {
                     SkillName11 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName11);
+                }
 
                 if (IsMaxRoadDureSkillLevel(Skill12, SkillLevel12) && (SkillName12 != null || SkillName12 != "None" || SkillName12 != ""))
+                {
                     SkillName12 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName12);
+                }
 
                 if (IsMaxRoadDureSkillLevel(Skill13, SkillLevel13) && (SkillName13 != null || SkillName13 != "None" || SkillName13 != ""))
+                {
                     SkillName13 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName13);
+                }
 
                 if (IsMaxRoadDureSkillLevel(Skill14, SkillLevel14) && (SkillName14 != null || SkillName14 != "None" || SkillName14 != ""))
+                {
                     SkillName14 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName14);
+                }
 
                 if (IsMaxRoadDureSkillLevel(Skill15, SkillLevel15) && (SkillName15 != null || SkillName15 != "None" || SkillName15 != ""))
+                {
                     SkillName15 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName15);
+                }
 
                 if (IsMaxRoadDureSkillLevel(Skill16, SkillLevel16) && (SkillName16 != null || SkillName16 != "None" || SkillName16 != ""))
+                {
                     SkillName16 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName16);
+                }
             }
 
             if (SkillLevel1 == "0")
@@ -5991,9 +7094,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill1, SkillLevel1))
+                {
                     SkillLevel1 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel1);
+                }
                 else
+                {
                     SkillLevel1 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel1);
+                }
             }
 
             if (SkillLevel2 == "0")
@@ -6003,9 +7110,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill2, SkillLevel2))
+                {
                     SkillLevel2 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel2);
+                }
                 else
+                {
                     SkillLevel2 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel2);
+                }
             }
 
             if (SkillLevel3 == "0")
@@ -6015,9 +7126,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill3, SkillLevel3))
+                {
                     SkillLevel3 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel3);
+                }
                 else
+                {
                     SkillLevel3 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel3);
+                }
             }
 
             if (SkillLevel4 == "0")
@@ -6026,11 +7141,12 @@ TreeScope.Children, condition);
             }
             else
             {
-                if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill4, SkillLevel4))
+                if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill4, SkillLevel4)){
                     SkillLevel4 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel4);
-                else
+                }
+                else{
                     SkillLevel4 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel4);
-
+                }
             }
 
             if (SkillLevel5 == "0")
@@ -6040,9 +7156,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill5, SkillLevel5))
+                {
                     SkillLevel5 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel5);
+                }
                 else
+                {
                     SkillLevel5 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel5);
+                }
             }
 
 
@@ -6053,9 +7173,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill6, SkillLevel6))
+                {
                     SkillLevel6 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel6);
+                }
                 else
+                {
                     SkillLevel6 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel6);
+                }
             }
 
             if (SkillLevel7 == "0")
@@ -6065,9 +7189,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill7, SkillLevel7))
+                {
                     SkillLevel7 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel7);
+                }
                 else
+                {
                     SkillLevel7 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel7);
+                }
             }
 
             if (SkillLevel8 == "0")
@@ -6077,9 +7205,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill8, SkillLevel8))
+                {
                     SkillLevel8 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel8);
+                }
                 else
+                {
                     SkillLevel8 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel8);
+                }
             }
 
             if (SkillLevel9 == "0")
@@ -6089,9 +7221,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill9, SkillLevel9))
+                {
                     SkillLevel9 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel9);
+                }
                 else
+                {
                     SkillLevel9 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel9);
+                }
             }
 
             if (SkillLevel10 == "0")
@@ -6101,9 +7237,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill10, SkillLevel10))
+                {
                     SkillLevel10 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel10);
+                }
                 else
+                {
                     SkillLevel10 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel10);
+                }
             }
 
             if (SkillLevel11 == "0")
@@ -6113,9 +7253,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill11, SkillLevel11))
+                {
                     SkillLevel11 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel11);
+                }
                 else
+                {
                     SkillLevel11 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel11);
+                }
             }
 
             if (SkillLevel12 == "0")
@@ -6125,9 +7269,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill12, SkillLevel12))
+                {
                     SkillLevel12 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel12);
+                }
                 else
+                {
                     SkillLevel12 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel12);
+                }
             }
 
             if (SkillLevel13 == "0")
@@ -6137,9 +7285,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill13, SkillLevel13))
+                {
                     SkillLevel13 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel13);
+                }
                 else
+                {
                     SkillLevel13 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel13);
+                }
             }
 
             if (SkillLevel14 == "0")
@@ -6149,9 +7301,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill14, SkillLevel14))
+                {
                     SkillLevel14 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel14);
+                }
                 else
+                {
                     SkillLevel14 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel14);
+                }
             }
 
             if (SkillLevel15 == "0")
@@ -6161,9 +7317,13 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill15, SkillLevel15))
+                {
                     SkillLevel15 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel15);
+                }
                 else
+                {
                     SkillLevel15 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel15);
+                }
             }
 
             if (SkillLevel16 == "0")
@@ -6173,122 +7333,220 @@ TreeScope.Children, condition);
             else
             {
                 if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill16, SkillLevel16))
+                {
                     SkillLevel16 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel16);
+                }
                 else
+                {
                     SkillLevel16 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel16);
+                }
             }
 
 
             //
             if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
+            {
                 SkillName1 = string.Empty;
+            }
             else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
+            {
                 SkillName1 += string.Empty;
+            }
             else
+            {
                 SkillLevel1 += ", ";
+            }
 
             if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
+            {
                 SkillName2 = string.Empty;
+            }
             else if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
+            {
                 SkillName2 += string.Empty;
+            }
             else
+            {
                 SkillLevel2 += ", ";
+            }
 
             if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
+            {
                 SkillName3 = string.Empty;
+            }
             else if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
+            {
                 SkillName3 += string.Empty;
+            }
             else
+            {
                 SkillLevel3 += ", ";
+            }
 
             if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
+            {
                 SkillName4 = string.Empty;
+            }
             else if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
+            {
                 SkillName4 += string.Empty;
+            }
             else
+            {
                 SkillLevel4 += ", ";
+            }
 
             if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
+            {
                 SkillName5 = string.Empty;
+            }
             else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
+            {
                 SkillName5 += string.Empty;
+            }
             else
+            {
                 SkillLevel5 += "\n";
+            }
 
             if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
+            {
                 SkillName6 = string.Empty;
+            }
             else if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
+            {
                 SkillName6 += string.Empty;
+            }
             else
+            {
                 SkillLevel6 += ", ";
+            }
 
             if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
+            {
                 SkillName7 = string.Empty;
+            }
             else if (SkillName8 == null || SkillName8 == "None" || SkillName8 == "")
+            {
                 SkillName7 += string.Empty;
+            }
             else
+            {
                 SkillLevel7 += ", ";
+            }
 
             if (SkillName8 == null || SkillName8 == "None" || SkillName8 == "")
+            {
                 SkillName8 = string.Empty;
+            }
             else if (SkillName9 == null || SkillName9 == "None" || SkillName9 == "")
+            {
                 SkillName8 += string.Empty;
+            }
             else
+            {
                 SkillLevel8 += ", ";
+            }
 
             if (SkillName9 == null || SkillName9 == "None" || SkillName9 == "")
+            {
                 SkillName9 = string.Empty;
+            }
             else if (SkillName10 == null || SkillName10 == "None" || SkillName10 == "")
+            {
                 SkillName9 += string.Empty;
+            }
             else
+            {
                 SkillLevel9 += ", ";
+            }
 
             if (SkillName10 == null || SkillName10 == "None" || SkillName10 == "")
+            {
                 SkillName10 = string.Empty;
+            }
             else if (SkillName11 == null || SkillName11 == "None" || SkillName11 == "")
+            {
                 SkillName10 += string.Empty;
+            }
             else
+            {
                 SkillLevel10 += "\n";
+            }
 
             if (SkillName11 == null || SkillName11 == "None" || SkillName11 == "")
+            {
                 SkillName11 = string.Empty;
+            }
             else if (SkillName12 == null || SkillName12 == "None" || SkillName12 == "")
+            {
                 SkillName11 += string.Empty;
+            }
             else
+            {
                 SkillLevel11 += ", ";
+            }
 
             if (SkillName12 == null || SkillName12 == "None" || SkillName12 == "")
+            {
                 SkillName12 = string.Empty;
+            }
             else if (SkillName13 == null || SkillName13 == "None" || SkillName13 == "")
+            {
                 SkillName12 += string.Empty;
+            }
             else
+            {
                 SkillLevel12 += ", ";
+            }
 
             if (SkillName13 == null || SkillName13 == "None" || SkillName13 == "")
+            {
                 SkillName13 = string.Empty;
+            }
             else if (SkillName14 == null || SkillName14 == "None" || SkillName14 == "")
+            {
                 SkillName13 += string.Empty;
+            }
             else
+            {
                 SkillLevel13 += ", ";
+            }
 
             if (SkillName14 == null || SkillName14 == "None" || SkillName14 == "")
+            {
                 SkillName14 = string.Empty;
+            }
             else if (SkillName15 == null || SkillName15 == "None" || SkillName15 == "")
+            {
                 SkillName14 += string.Empty;
+            }
             else
+            {
                 SkillLevel14 += ", ";
+            }
 
             if (SkillName15 == null || SkillName15 == "None" || SkillName15 == "")
+            {
                 SkillName15 = string.Empty;
+            }
             else if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
+            {
                 SkillName15 += string.Empty;
+            }
             else
+            {
                 SkillLevel15 += "\n";
+            }
 
             if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
+            {
                 SkillName16 = string.Empty;
+            }
             else
+            {
                 SkillLevel16 += string.Empty;
+            }
 
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}", SkillName1, SkillLevel1, SkillName2, SkillLevel2, SkillName3, SkillLevel3, SkillName4, SkillLevel4, SkillName5, SkillLevel5, SkillName6, SkillLevel6, SkillName7, SkillLevel7, SkillName8, SkillLevel8, SkillName9, SkillLevel9, SkillName10, SkillLevel10, SkillName11, SkillLevel11, SkillName12, SkillLevel12, SkillName13, SkillLevel13, SkillName14, SkillLevel14, SkillName15, SkillLevel15, SkillName16, SkillLevel16);
         }
@@ -6301,13 +7559,16 @@ TreeScope.Children, condition);
     {
         if (runID == null)
         {
-            //save gear to variable
+            // save gear to variable
             var showGouBoost = string.Empty;
 
             if (GetGouBoostMode())
+            {
                 showGouBoost = " (After Gou/Muscle Boost)";
-            //zp in bold for markdown
-            //fruits and speedrunner items also in bold
+            }
+
+            // zp in bold for markdown
+            // fruits and speedrunner items also in bold
             SavedGearStats = string.Format(CultureInfo.InvariantCulture, "【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", App.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture), TotalDefense().ToString(CultureInfo.InvariantCulture), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
             MarkdownSavedGearStats = string.Format(CultureInfo.InvariantCulture, "__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n\n**Road/Duremudira Skills:**\n{26}\n", App.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture), TotalDefense().ToString(CultureInfo.InvariantCulture), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
             return string.Format(CultureInfo.InvariantCulture, "【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", App.CurrentProgramVersion, GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, CurrentWeaponName, GetRealWeaponName, GetArmorHeadName, GetArmorChestName, GetArmorArmName, GetArmorWaistName, GetArmorLegName, GetCuffs, BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture), TotalDefense().ToString(CultureInfo.InvariantCulture), GetZenithSkills, GetAutomaticSkills, showGouBoost, GetArmorSkills, GetCaravanSkills, GetDivaSkillNameFromID(DivaSkill()), GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills);
@@ -6315,8 +7576,11 @@ TreeScope.Children, condition);
         else
         {
             var activeSkills = DatabaseManagerInstance.GetActiveSkills((long)runID);
-            if (string.IsNullOrEmpty(activeSkills.CreatedBy))
+
+            if (string.IsNullOrEmpty(activeSkills.CreatedBy)){
                 return "Run Not Found.\n\nReload the section.";
+            }
+
             var ammoPouch = DatabaseManagerInstance.GetAmmoPouch((long)runID);
             var automaticSkills = DatabaseManagerInstance.GetAutomaticSkills((long)runID);
             var caravanSkills = DatabaseManagerInstance.GetCaravanSkills((long)runID);
@@ -6368,7 +7632,7 @@ TreeScope.Children, condition);
             var partySize = quest.PartySize;
 
             // TODO: fix
-            //var partnyaBagItems = GetItemsForRunID(new int[] { (int)partnyaBag.Item1ID, (int)partnyaBag.Item2ID, (int)partnyaBag.Item3ID, (int)partnyaBag.Item4ID, (int)partnyaBag.Item5ID, (int)partnyaBag.Item6ID, (int)partnyaBag.Item7ID, (int)partnyaBag.Item8ID, (int)partnyaBag.Item9ID, (int)partnyaBag.Item10ID });
+            // var partnyaBagItems = GetItemsForRunID(new int[] { (int)partnyaBag.Item1ID, (int)partnyaBag.Item2ID, (int)partnyaBag.Item3ID, (int)partnyaBag.Item4ID, (int)partnyaBag.Item5ID, (int)partnyaBag.Item6ID, (int)partnyaBag.Item7ID, (int)partnyaBag.Item8ID, (int)partnyaBag.Item9ID, (int)partnyaBag.Item10ID });
 
             return string.Format(CultureInfo.InvariantCulture,
 @"{0} {1}({2}){3}
@@ -6448,7 +7712,8 @@ Party Size: {32}",
             ammo,
             poogieItem,
             roadDureSkillsList,
-            //partnyaBagItems
+
+            // partnyaBagItems
             questName,
             questObjectiveType,
             questObjectiveQuantity,
@@ -6513,21 +7778,16 @@ Party Size: {32}",
             BlangongaHunted() +
             CongalalaHunted() +
             RajangHunted() +
-
             KushalaDaoraHunted() +
             ShenGaorenHunted() +
-
             YamaTsukamiHunted() +
             ChameleosHunted() +
             RustedKushalaDaoraHunted() +
-
-
             LunastraHunted() +
             TeostraHunted() +
             ShogunCeanataurHunted() +
             BulldromeHunted() +
             WhiteFatalisHunted() +
-
             HypnocHunted() +
             VolganosHunted() +
             TigrexHunted() +
@@ -6539,7 +7799,6 @@ Party Size: {32}",
             SilverHypnocHunted() +
             AkuraVashimuHunted() +
             AkuraJebiaHunted() +
-
             BerukyurosuHunted() +
             PariapuriaHunted() +
             WhiteEspinasHunted() +
@@ -6577,7 +7836,6 @@ Party Size: {32}",
             InagamiHunted() +
             VarusaburosuHunted() +
             PoborubarumuHunted() +
-
             GureadomosuHunted() +
             HarudomeruguHunted() +
             ToridclessHunted() +
@@ -6614,7 +7872,6 @@ Party Size: {32}",
         return KelbiHunted() +
         MosswineHunted() +
         BullfangoHunted() +
-
         FelyneHunted() +
         AptonothHunted() +
         GenpreyHunted() +
@@ -6626,11 +7883,8 @@ Party Size: {32}",
         RocksHunted() +
         IopreyHunted() +
         CephalosHunted() +
-
         GiapreyHunted() +
-
         GreatThunderbugHunted() +
-
         ShakalakaHunted() +
         BlangoHunted() +
         CongaHunted() +
@@ -6638,16 +7892,13 @@ Party Size: {32}",
         HermitaurHunted() +
         AntekaHunted() +
         PopoHunted() +
-
         CeanataurHunted() +
-
         CactusHunted() +
         GorgeObjectsHunted() +
         BurukkuHunted() +
         ErupeHunted() +
         PokaraHunted() +
         UrukiHunted() +
-
         KusubamiHunted() +
         PSO2RappyHunted();
     }
@@ -6660,8 +7911,11 @@ Party Size: {32}",
     {
         var createdBy = GetFullCurrentProgramVersion();
         var createdAt = DateTime.UtcNow;
+
         if (createdBy == null)
+        {
             return "Program Version Not Found.\n\nReload the section.";
+        }
 
         var questCompendium = DatabaseManagerInstance.GetQuestCompendium();
         var gearCompendium = DatabaseManagerInstance.GetGearCompendium();
@@ -6669,7 +7923,6 @@ Party Size: {32}",
         var mezeportaFestivalCompendium = DatabaseManagerInstance.GetMezFesCompendium();
         var miscellaneousCompendium = DatabaseManagerInstance.GetMiscellaneousCompendium();
         var monsterCompendium = DatabaseManagerInstance.GetMonsterCompendium();
-
 
         var mostCompletedQuest = questCompendium.MostCompletedQuestRuns;
         var mostCompletedQuestAttempts = questCompendium.MostCompletedQuestRunsAttempted;
@@ -7004,14 +8257,12 @@ Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
         totalLargeMonstersHunted,
         totalSmallMonstersHunted,
         totalOverlaySessions,
-        TimeSpan.FromSeconds(sessionDurationHighest).ToString(TimeFormats.HOURS_MINUTES_SECONDS_MILLISECONDS, CultureInfo.InvariantCulture),
-        TimeSpan.FromSeconds(sessionDurationLowest).ToString(TimeFormats.HOURS_MINUTES_SECONDS_MILLISECONDS, CultureInfo.InvariantCulture),
-        TimeSpan.FromSeconds(sessionDurationAverage).ToString(TimeFormats.HOURS_MINUTES_SECONDS_MILLISECONDS, CultureInfo.InvariantCulture),
-        TimeSpan.FromSeconds(sessionDurationMedian).ToString(TimeFormats.HOURS_MINUTES_SECONDS_MILLISECONDS, CultureInfo.InvariantCulture)
+        TimeSpan.FromSeconds(sessionDurationHighest).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture),
+        TimeSpan.FromSeconds(sessionDurationLowest).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture),
+        TimeSpan.FromSeconds(sessionDurationAverage).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture),
+        TimeSpan.FromSeconds(sessionDurationMedian).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture)
         );
     }
-
-    #region get game info
 
     /// <summary>
     /// https://dorielrivalet.github.io/mhfz-ferias-english-project/
@@ -7519,6 +8770,7 @@ Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
                 "Reflect Up\t68\r\n" +
                 "Perfect Guard\t72\r\n" +
                 "Perfect Guard Up\t92\r\n" +
+
                 //"SnS Raw Sigil (Added to every hit of all motions)\r\n" +
                 //"Sigil Additional\t0\r\n" +
                 "Stylish Up (Cannot Crit, Impact Damage, Normal sharpness multiplier)\r\n" +
@@ -8544,7 +9796,7 @@ Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
         get
         {
             return
-@"Q: How do I unlock Tonfas/SA-F/Magnet spike? 
+@"Q: How do I unlock Tonfas/SA-F/Magnet spike?
 
 A: Tonfas and SA-F are unlocked as soon as you enter G rank, all you have to do is make one of either weapon, equip it and then speak to the Guildmaster to unlock the styles for it.
 
@@ -8817,12 +10069,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    #endregion
-
-    #endregion
-
-    #region gear image stats
-
     public string GetMetadataForImage
     {
         get
@@ -8832,7 +10078,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             var metadata = string.Empty;
 
             if (!s.EnableMetadataExport)
+            {
                 metadata = string.Empty;
+            }
             else
             {
                 string guildName;
@@ -8840,14 +10088,22 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 var DateAndTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
 
                 if (s.GuildName.Length >= 1)
+                {
                     guildName = s.GuildName;
+                }
                 else
+                {
                     guildName = "Guild Name";
+                }
 
                 if (s.HunterName.Length >= 1)
+                {
                     hunterName = s.HunterName;
+                }
                 else
+                {
                     hunterName = "Hunter Name";
+                }
 
                 metadata = " | " + hunterName + " | " + guildName + " | " + DateAndTime;
             }
@@ -9014,9 +10270,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             var className = GetWeaponClass();
 
             if (className == "Blademaster" || className == "Gunner")
+            {
                 return string.Format(CultureInfo.InvariantCulture, "{0} | {1} | {2}", GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
+            }
             else
+            {
                 return "None";
+            }
         }
     }
 
@@ -9130,7 +10390,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     }
 
-    //GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills
+    // GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills
     public string GetGuildFoodForImage
     {
         get
@@ -9155,219 +10415,380 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png";
             case 2:
                 if (RankBand() == 53)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/conquest_fatalis.png";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/fatalis.png";
+                }
             case 11:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_rathalos.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathalos.png";
+                }
             case 15:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_khezu.gif";
-                else
+                }
+                else{
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/khezu.png";
+                }
             case 17:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_gravios.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gravios.png";
+                }
             case 21:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_plesioth.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/plesioth.png";
+                }
             case 36:
                 if (RankBand() == 53)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/conquest_crimson_fatalis.png";
-                else
+                }
+                else{
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/crimson_fatalis.png";
+                }
 
             case 48:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_daimyo_hermitaur.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/daimyo_hermitaur.png";
+                }
 
             case 51:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_blangonga.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blangonga.png";
+                }
 
             case 53:
                 if (RankBand() == 56 || RankBand() == 57)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/twinhead_rajang.png";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rajang.png";
+                }
 
             case 65:
                 if (RankBand() == 32)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_teostra.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/teostra.png";
+                }
 
             case 71:
-                if (RankBand() == 53)
+                if (RankBand() == 53){
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/road_white_fatalis.png";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_fatalis.png";
+                }
 
             case 74:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_hypnoc.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hypnoc.png";
+                }
 
             case 76:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_tigrex.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/tigrex.png";
+                }
 
             case 80:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_espinas.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/espinas.png";
+                }
 
             case 83:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_akura_vashimu.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akura_vashimu.png";
+                }
 
             case 89:
                 if (RankBand() == 54)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/thirsty_pariapuria.png";
+                }
                 else if (RankBand() == 32)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_pariapuria.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pariapuria.png";
+                }
 
             case 95:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_doragyurosu.gif";
+                }
                 else if (RankBand() == 32)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_doragyurosu.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/doragyurosu.png";
+                }
 
             case 99:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_rukodiora.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rukodiora.png";
+                }
+
             case 100:
                 if (RankBand() == 70 || RankBand() == 54)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shiten_unknown.png";
+                }
                 else if (RankBand() == 46)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_unknown.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/unknown.png";
+                }
 
             case 103:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_taikun_zamuza.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/taikun_zamuza.png";
+                }
+
             case 106:
                 if (RankBand() == 32)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_odibatorasu.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/odibatorasu.png";
+                }
             case 107:
                 if (RankBand() == 54 || RankBand() == 55)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shiten_disufiroa.png";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/disufiroa.png";
+                }
 
             case 109:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_anorupatisu.gif";
-                else
+                }
+                else{
+
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/anorupatisu.png";
+                }
+
             case 110:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_hyujikiki.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hyujikiki.png";
+                }
+
             case 111:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_midogaron.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/midogaron.png";
+                }
+
             case 112:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_giaorugu.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/giaorugu.png";
+                }
+
             case 113:
                 if (RankBand() == 55)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shifting_mi_ru.png";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/mi_ru.png";
+                }
 
             case 116:
                 if (RankBand() == 53)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/conquest_shantien.png";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shantien.png";
+                }
+
             case 121:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_baruragaru.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/baruragaru.png";
+                }
 
             case 129:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_inagami.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/inagami.png";
+                }
 
             case 140:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_harudomerugu.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/harudomerugu.png";
+                }
+
             case 141:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_toridcless.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/toridcless.png";
+                }
+
             case 142:
                 if (RankBand() >= 64 && RankBand() <= 67)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_gasurabazura.gif";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gasurabazura.png";
+                }
 
             case 146:
                 if (RankBand() >= 54 && RankBand() <= 55)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/howling_zinogre.png";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zinogre.png";
+                }
 
             case 154:
                 if (RankBand() >= 54 && RankBand() <= 55)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/ruling_guanzorumu.png";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/guanzorumu.png";
+                }
+
             case 155:
                 if (RankBand() == 55)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/golden_deviljho.png";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/starving_deviljho.png";
+                }
 
             case 166:
                 if (RankBand() >= 54 && RankBand() <= 55)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burning_freezing_elzelion.png";
+                }
                 else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/elzelion.png";
+                }
         }
     }
 
-    #endregion
+
 
     public static string GetGuildCardBackground
     {
@@ -9391,101 +10812,153 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    #region graphs
+    public ObservableCollection<ObservablePoint> attackBuffCollection = new ();
 
-    public ObservableCollection<ObservablePoint> attackBuffCollection = new();
-    public ObservableCollection<ObservablePoint> damagePerSecondCollection = new();
-    public ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new();
-    public ObservableCollection<ObservablePoint> hitsPerSecondCollection = new();
+    public ObservableCollection<ObservablePoint> damagePerSecondCollection = new ();
 
-    private ObservableCollection<long> weaponUsageSwordAndShieldEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageSwordAndShieldHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageSwordAndShieldStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageSwordAndShieldExtremeStyleCollection = new();
+    public ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new ();
 
-    private ObservableCollection<long> weaponUsageDualSwordsEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageDualSwordsHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageDualSwordsStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageDualSwordsExtremeStyleCollection = new();
+    public ObservableCollection<ObservablePoint> hitsPerSecondCollection = new ();
 
-    private ObservableCollection<long> weaponUsageGreatSwordEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageGreatSwordHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageGreatSwordStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageGreatSwordExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageSwordAndShieldEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLongSwordEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageLongSwordHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageLongSwordStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageLongSwordExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageSwordAndShieldHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHammerEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageHammerHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageHammerStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageHammerExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageSwordAndShieldStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHuntingHornEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageHuntingHornHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageHuntingHornStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageHuntingHornExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageSwordAndShieldExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLanceEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageLanceHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageLanceStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageLanceExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageDualSwordsEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageGunlanceEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageGunlanceHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageGunlanceStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageGunlanceExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageDualSwordsHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageTonfaEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageTonfaHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageTonfaStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageTonfaExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageDualSwordsStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageSwitchAxeFEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageSwitchAxeFHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageSwitchAxeFStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageSwitchAxeFExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageDualSwordsExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLightBowgunEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageLightBowgunHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageLightBowgunStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageLightBowgunExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageGreatSwordEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHeavyBowgunEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageHeavyBowgunHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageHeavyBowgunStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageHeavyBowgunExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageGreatSwordHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageBowEarthStyleCollection = new();
-    private ObservableCollection<long> weaponUsageBowHeavenStyleCollection = new();
-    private ObservableCollection<long> weaponUsageBowStormStyleCollection = new();
-    private ObservableCollection<long> weaponUsageBowExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageGreatSwordStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageMagnetSpikeExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageGreatSwordExtremeStyleCollection = new ();
 
-    public ObservableCollection<long> weaponUsageEarthStyle = new();
-    public ObservableCollection<long> weaponUsageHeavenStyle = new();
-    public ObservableCollection<long> weaponUsageStormStyle = new();
-    public ObservableCollection<long> weaponUsageExtremeStyle = new();
 
-    public object attackBuffSync { get; } = new();
-    public object damagePerSecondSync { get; } = new();
-    public object actionsPerMinuteSync { get; } = new();
-    public object hitsPerSecondSync { get; } = new();
-    public object weaponUsageSync { get; set; } = new();
+    private ObservableCollection<long> weaponUsageLongSwordEarthStyleCollection = new ();
 
-    public List<ISeries> attackBuffSeries { get; set; } = new();
-    public List<ISeries> damagePerSecondSeries { get; set; } = new();
-    public List<ISeries> actionsPerMinuteSeries { get; set; } = new();
-    public List<ISeries> hitsPerSecondSeries { get; set; } = new();
+    private ObservableCollection<long> weaponUsageLongSwordHeavenStyleCollection = new ();
 
-    public List<ISeries> weaponUsageSeries { get; set; } = new();
+    private ObservableCollection<long> weaponUsageLongSwordStormStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageLongSwordExtremeStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageHammerEarthStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageHammerHeavenStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageHammerStormStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageHammerExtremeStyleCollection = new ();
+
+
+    private ObservableCollection<long> weaponUsageHuntingHornEarthStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageHuntingHornHeavenStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageHuntingHornStormStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageHuntingHornExtremeStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageLanceEarthStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageLanceHeavenStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageLanceStormStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageLanceExtremeStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageGunlanceEarthStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageGunlanceHeavenStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageGunlanceStormStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageGunlanceExtremeStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageTonfaEarthStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageTonfaHeavenStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageTonfaStormStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageTonfaExtremeStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageSwitchAxeFEarthStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageSwitchAxeFHeavenStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageSwitchAxeFStormStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageSwitchAxeFExtremeStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageLightBowgunEarthStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageLightBowgunHeavenStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageLightBowgunStormStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageLightBowgunExtremeStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageHeavyBowgunEarthStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageHeavyBowgunHeavenStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageHeavyBowgunStormStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageHeavyBowgunExtremeStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageBowEarthStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageBowHeavenStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageBowStormStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageBowExtremeStyleCollection = new ();
+
+    private ObservableCollection<long> weaponUsageMagnetSpikeExtremeStyleCollection = new ();
+
+    public ObservableCollection<long> weaponUsageEarthStyle = new ();
+
+    public ObservableCollection<long> weaponUsageHeavenStyle = new ();
+
+    public ObservableCollection<long> weaponUsageStormStyle = new ();
+
+    public ObservableCollection<long> weaponUsageExtremeStyle = new ();
+
+    public object attackBuffSync { get; } = new ();
+
+    public object damagePerSecondSync { get; } = new ();
+
+    public object actionsPerMinuteSync { get; } = new ();
+
+    public object hitsPerSecondSync { get; } = new ();
+
+    public object weaponUsageSync { get; set; } = new ();
+
+    public List<ISeries> attackBuffSeries { get; set; } = new ();
+
+    public List<ISeries> damagePerSecondSeries { get; set; } = new ();
+
+    public List<ISeries> actionsPerMinuteSeries { get; set; } = new ();
+
+    public List<ISeries> hitsPerSecondSeries { get; set; } = new ();
+
+    public List<ISeries> weaponUsageSeries { get; set; } = new ();
 
     public string GetTimeElapsed(double frames)
     {
-        var elapsedTime = TimeSpan.FromSeconds(frames / Numbers.FRAMES_PER_SECOND);
+        var elapsedTime = TimeSpan.FromSeconds(frames / Numbers.FramesPerSecond);
         var elapsedTimeString = elapsedTime.ToString("mm\\:ss", CultureInfo.InvariantCulture);
         return elapsedTimeString;
     }
@@ -9499,8 +10972,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public string GetMinutesSecondsMillisecondsFromFrames(long frames)
     {
-        var elapsedTime = TimeSpan.FromSeconds((double)frames / Numbers.FRAMES_PER_SECOND);
-        var elapsedTimeString = elapsedTime.ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS, CultureInfo.InvariantCulture);
+        var elapsedTime = TimeSpan.FromSeconds((double)frames / Numbers.FramesPerSecond);
+        var elapsedTimeString = elapsedTime.ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
         return elapsedTimeString;
     }
 
@@ -9514,12 +10987,11 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             // Now the Y axis we will display labels as currency
             // LiveCharts provides some common formatters
             // in this case we are using the currency formatter.
-            //Name= "Seconds",
-            //NameTextSize= 12,
             TextSize=12,
             Labeler = (value) => StaticGetTimeElapsed(value),
             NamePaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
             LabelsPaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
+
             // you could also build your own currency formatter
             // for example:
             // Labeler = (value) => value.ToString("C")
@@ -9581,11 +11053,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     };
 
-
-
-
-    #endregion
-
     /// <summary>
     /// Gets the objective name from identifier.
     /// </summary>
@@ -9594,7 +11061,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public string GetObjectiveNameFromID(int id, bool isLargeImageText = false)
     {
         if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        {
             return string.Empty;
+        }
+
         // TODO dictionary
         return id switch
         {
@@ -9621,16 +11091,28 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public string GetObjective1Quantity(bool isLargeImageText = false)
     {
         if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        {
             return string.Empty;
+        }
+
         if (Objective1Quantity() <= 1)
+        {
             return string.Empty;
+        }
+
         // hunt / capture / slay
         else if (ObjectiveType() == 0x1 || ObjectiveType() == 0x101 || ObjectiveType() == 0x201)
+        {
             return Objective1Quantity().ToString() + " ";
+        }
         else if (ObjectiveType() == 0x8004 || ObjectiveType() == 0x18004)
+        {
             return string.Format(CultureInfo.InvariantCulture, "({0} True HP) ", Objective1Quantity() * 100);
+        }
         else
+        {
             return Objective1Quantity().ToString() + " ";
+        }
     }
 
     /// <summary>
@@ -9640,21 +11122,32 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public string GetObjective1CurrentQuantity(bool isLargeImageText = false)
     {
         if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        {
             return string.Empty;
+        }
+
         if (ObjectiveType() == 0x0 || ObjectiveType() == 0x02 || ObjectiveType() == 0x1002)
         {
             if (Objective1Quantity() <= 1)
+            {
                 return string.Empty;
+            }
             else
+            {
                 return Objective1CurrentQuantityItem().ToString() + "/";
+            }
         }
         else
         {
             if (Objective1Quantity() <= 1)
+            {
                 return string.Empty;
+            }
             else
+            {
                 //increases when u hit a dead large monster
                 return Objective1CurrentQuantityMonster().ToString() + "/";
+            }
         }
     }
 
@@ -9666,7 +11159,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public string GetRankNameFromID(int id, bool isLargeImageText = false)
     {
         if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        {
             return string.Empty;
+        }
+
         return GetRankName(id);
     }
 
@@ -9677,30 +11173,43 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string getMonsterIcon(int id)
     {
-        //quest ids:
-        //mp road: 23527
-        //solo road: 23628
-        //1st district dure: 21731
-        //2nd district dure: 21746
-        //1st district dure sky corridor: 21749
-        //2nd district dure sky corridor: 21750
-        //arrogant dure repel: 23648
-        //arrogant dure slay: 23649
-        //urgent tower: 21751
-        //4th district dure: 21748
-        //3rd district dure: 21747
-        //3rd district dure 2: 21734
-        //UNUSED sky corridor: 21730
-        //sky corridor prologue: 21729
+        // quest ids:
+        // mp road: 23527
+        // solo road: 23628
+        // 1st district dure: 21731
+        // 2nd district dure: 21746
+        // 1st district dure sky corridor: 21749
+        // 2nd district dure sky corridor: 21750
+        // arrogant dure repel: 23648
+        // arrogant dure slay: 23649
+        // urgent tower: 21751
+        // 4th district dure: 21748
+        // 3rd district dure: 21747
+        // 3rd district dure 2: 21734
+        // UNUSED sky corridor: 21730
+        // sky corridor prologue: 21729
         if (roadOverride() == false)
+        {
             id = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
+        }
         else if (CaravanOverride())
+        {
             id = CaravanMonster1ID();
-        //Duremudira Arena
+        }
+
+        // Duremudira Arena
         if (AreaID() == 398 && (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750))
-            id = 132;//duremudira
+        {
+            id = 132;
+        }
+
+        // duremudira
         else if (AreaID() == 398 && (QuestID() == 23648 || QuestID() == 23649))
-            id = 167;//arrogant duremudira
+        {
+            id = 167;
+        }
+
+        // arrogant duremudira
 
         return DetermineMonsterImage(id);
     }
@@ -9713,12 +11222,18 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public string GetStarGrade(bool isLargeImageText = false)
     {
         if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText || CaravanOverride())
+        {
             return string.Empty;
+        }
 
         if (IsToggeableDifficulty())
+        {
             return string.Format(CultureInfo.InvariantCulture, "★{0} ", StarGrades().ToString());
+        }
         else
+        {
             return string.Empty;
+        }
     }
 
     /// <summary>
@@ -9730,14 +11245,21 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public bool IsRoad()
     {
         if (roadOverride() != null && roadOverride() == false)
+        {
             return true;
+        }
         else if (roadOverride() != null && roadOverride() == true)
+        {
             return false;
+        }
         else
+        {
             return false;
+        }
     }
 
     public int previousMezFesArea = -1;
+
     public int previousMezFesScore = 0;
 
     /// <summary>
@@ -9749,9 +11271,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public bool IsDure()
     {
         if (getDureName() != "None")
+        {
             return true;
+        }
         else
+        {
             return false;
+        }
     }
 
     /// <summary>
@@ -9811,9 +11337,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public bool IsRavi()
     {
         if (getRaviName() != "None")
+        {
             return true;
+        }
         else
+        {
             return false;
+        }
     }
 
     /// <summary>
@@ -9824,41 +11354,54 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public string GetRealMonsterName(string iconName, bool isLargeImageText = false)
     {
         if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        {
             return string.Empty;
-        //quest ids:
-        //mp road: 23527
-        //solo road: 23628
-        //1st district dure: 21731
-        //2nd district dure: 21746
-        //1st district dure sky corridor: 21749
-        //2nd district dure sky corridor: 21750
-        //arrogant dure repel: 23648
-        //arrogant dure slay: 23649
-        //urgent tower: 21751
-        //4th district dure: 21748
-        //3rd district dure: 21747
-        //3rd district dure 2: 21734
-        //UNUSED sky corridor: 21730
-        //sky corridor prologue: 21729
+        }
 
-        ////https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
+        // quest ids:
+        // mp road: 23527
+        // solo road: 23628
+        // 1st district dure: 21731
+        // 2nd district dure: 21746
+        // 1st district dure sky corridor: 21749
+        // 2nd district dure sky corridor: 21750
+        // arrogant dure repel: 23648
+        // arrogant dure slay: 23649
+        // urgent tower: 21751
+        // 4th district dure: 21748
+        // 3rd district dure: 21747
+        // 3rd district dure 2: 21734
+        // UNUSED sky corridor: 21730
+        // sky corridor prologue: 21729
+
+        // https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
 
         int id;
 
         if (roadOverride() == false)
+        {
             id = RoadSelectedMonster() == 0 ? LargeMonster1ID() : LargeMonster2ID();
+        }
         else if (CaravanOverride())
+        {
             id = CaravanMonster1ID();
+        }
         else
+        {
             id = LargeMonster1ID();
+        }
 
-        //dure
+        // dure
         if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
+        {
             return "Duremudira";
+        }
         else if (QuestID() == 23648 || QuestID() == 23649)
+        {
             return "Arrogant Duremudira";
+        }
 
-        //ravi
+        // ravi
         if (getRaviName() != "None")
         {
             switch (getRaviName())
@@ -9888,8 +11431,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetObjective1Name(int id, bool isLargeImageText = false)
     {
-        if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText){
             return string.Empty;
+        }
+
         string? objValue1;
         Item.IDName.TryGetValue(id, out objValue1);  //returns true
         return objValue1 + string.Empty;
@@ -9903,13 +11448,16 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public string GetAreaName(int id)
     {
         if (id == 0)
+        {
             return "Loading...";
+        }
+
         Location.IDName.TryGetValue(id, out var areaname);
         Location.IDName.TryGetValue(RavienteAreaID(), out var raviareaname);
 
         switch (getRaviName())
         {
-            default://or None
+            default:// or None
                 return areaname + string.Empty;
             case "Raviente":
             case "Violent Raviente":
@@ -9918,103 +11466,183 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             case "Berserk Raviente":
             case "Extreme Raviente":
                 if (QuestID() != 55796 || QuestID() != 55807 || QuestID() != 54751 || QuestID() != 54761 || QuestID() != 55596 || QuestID() != 55607)
+                {
                     return areaname + string.Empty;
+                }
                 else
+                {
                     return raviareaname + string.Empty;
+                }
         }
     }
 
-    public bool loadedItemsAtQuestStart = false;
+    public bool loadedItemsAtQuestStart;
 
-    public int PouchItem1IDAtQuestStart = 0;
-    public int PouchItem2IDAtQuestStart = 0;
-    public int PouchItem3IDAtQuestStart = 0;
-    public int PouchItem4IDAtQuestStart = 0;
-    public int PouchItem5IDAtQuestStart = 0;
-    public int PouchItem6IDAtQuestStart = 0;
-    public int PouchItem7IDAtQuestStart = 0;
-    public int PouchItem8IDAtQuestStart = 0;
-    public int PouchItem9IDAtQuestStart = 0;
-    public int PouchItem10IDAtQuestStart = 0;
-    public int PouchItem11IDAtQuestStart = 0;
-    public int PouchItem12IDAtQuestStart = 0;
-    public int PouchItem13IDAtQuestStart = 0;
-    public int PouchItem14IDAtQuestStart = 0;
-    public int PouchItem15IDAtQuestStart = 0;
-    public int PouchItem16IDAtQuestStart = 0;
-    public int PouchItem17IDAtQuestStart = 0;
-    public int PouchItem18IDAtQuestStart = 0;
-    public int PouchItem19IDAtQuestStart = 0;
-    public int PouchItem20IDAtQuestStart = 0;
-    public int PouchItem1QuantityAtQuestStart = 0;
-    public int PouchItem2QuantityAtQuestStart = 0;
-    public int PouchItem3QuantityAtQuestStart = 0;
-    public int PouchItem4QuantityAtQuestStart = 0;
-    public int PouchItem5QuantityAtQuestStart = 0;
-    public int PouchItem6QuantityAtQuestStart = 0;
-    public int PouchItem7QuantityAtQuestStart = 0;
-    public int PouchItem8QuantityAtQuestStart = 0;
-    public int PouchItem9QuantityAtQuestStart = 0;
-    public int PouchItem10QuantityAtQuestStart = 0;
-    public int PouchItem11QuantityAtQuestStart = 0;
-    public int PouchItem12QuantityAtQuestStart = 0;
-    public int PouchItem13QuantityAtQuestStart = 0;
-    public int PouchItem14QuantityAtQuestStart = 0;
-    public int PouchItem15QuantityAtQuestStart = 0;
-    public int PouchItem16QuantityAtQuestStart = 0;
-    public int PouchItem17QuantityAtQuestStart = 0;
-    public int PouchItem18QuantityAtQuestStart = 0;
-    public int PouchItem19QuantityAtQuestStart = 0;
-    public int PouchItem20QuantityAtQuestStart = 0;
+    public int PouchItem1IDAtQuestStart;
 
-    public int AmmoPouchItem1IDAtQuestStart = 0;
-    public int AmmoPouchItem2IDAtQuestStart = 0;
-    public int AmmoPouchItem3IDAtQuestStart = 0;
-    public int AmmoPouchItem4IDAtQuestStart = 0;
-    public int AmmoPouchItem5IDAtQuestStart = 0;
-    public int AmmoPouchItem6IDAtQuestStart = 0;
-    public int AmmoPouchItem7IDAtQuestStart = 0;
-    public int AmmoPouchItem8IDAtQuestStart = 0;
-    public int AmmoPouchItem9IDAtQuestStart = 0;
-    public int AmmoPouchItem10IDAtQuestStart = 0;
-    public int AmmoPouchItem1QuantityAtQuestStart = 0;
-    public int AmmoPouchItem2QuantityAtQuestStart = 0;
-    public int AmmoPouchItem3QuantityAtQuestStart = 0;
-    public int AmmoPouchItem4QuantityAtQuestStart = 0;
-    public int AmmoPouchItem5QuantityAtQuestStart = 0;
-    public int AmmoPouchItem6QuantityAtQuestStart = 0;
-    public int AmmoPouchItem7QuantityAtQuestStart = 0;
-    public int AmmoPouchItem8QuantityAtQuestStart = 0;
-    public int AmmoPouchItem9QuantityAtQuestStart = 0;
-    public int AmmoPouchItem10QuantityAtQuestStart = 0;
+    public int PouchItem2IDAtQuestStart;
 
-    public int PartnyaBagItem1IDAtQuestStart = 0;
-    public int PartnyaBagItem2IDAtQuestStart = 0;
-    public int PartnyaBagItem3IDAtQuestStart = 0;
-    public int PartnyaBagItem4IDAtQuestStart = 0;
-    public int PartnyaBagItem5IDAtQuestStart = 0;
-    public int PartnyaBagItem6IDAtQuestStart = 0;
-    public int PartnyaBagItem7IDAtQuestStart = 0;
-    public int PartnyaBagItem8IDAtQuestStart = 0;
-    public int PartnyaBagItem9IDAtQuestStart = 0;
-    public int PartnyaBagItem10IDAtQuestStart = 0;
-    public int PartnyaBagItem1QuantityAtQuestStart = 0;
-    public int PartnyaBagItem2QuantityAtQuestStart = 0;
-    public int PartnyaBagItem3QuantityAtQuestStart = 0;
-    public int PartnyaBagItem4QuantityAtQuestStart = 0;
-    public int PartnyaBagItem5QuantityAtQuestStart = 0;
-    public int PartnyaBagItem6QuantityAtQuestStart = 0;
-    public int PartnyaBagItem7QuantityAtQuestStart = 0;
-    public int PartnyaBagItem8QuantityAtQuestStart = 0;
-    public int PartnyaBagItem9QuantityAtQuestStart = 0;
-    public int PartnyaBagItem10QuantityAtQuestStart = 0;
+    public int PouchItem3IDAtQuestStart;
+
+    public int PouchItem4IDAtQuestStart;
+
+    public int PouchItem5IDAtQuestStart;
+
+    public int PouchItem6IDAtQuestStart;
+
+    public int PouchItem7IDAtQuestStart;
+
+    public int PouchItem8IDAtQuestStart;
+
+    public int PouchItem9IDAtQuestStart;
+
+    public int PouchItem10IDAtQuestStart;
+
+    public int PouchItem11IDAtQuestStart;
+
+    public int PouchItem12IDAtQuestStart;
+
+    public int PouchItem13IDAtQuestStart;
+
+    public int PouchItem14IDAtQuestStart;
+
+    public int PouchItem15IDAtQuestStart;
+
+    public int PouchItem16IDAtQuestStart;
+
+    public int PouchItem17IDAtQuestStart;
+
+    public int PouchItem18IDAtQuestStart;
+
+    public int PouchItem19IDAtQuestStart;
+
+    public int PouchItem20IDAtQuestStart;
+
+    public int PouchItem1QuantityAtQuestStart;
+
+    public int PouchItem2QuantityAtQuestStart;
+
+    public int PouchItem3QuantityAtQuestStart;
+
+    public int PouchItem4QuantityAtQuestStart;
+
+    public int PouchItem5QuantityAtQuestStart;
+
+    public int PouchItem6QuantityAtQuestStart;
+
+    public int PouchItem7QuantityAtQuestStart;
+
+    public int PouchItem8QuantityAtQuestStart;
+
+    public int PouchItem9QuantityAtQuestStart;
+
+    public int PouchItem10QuantityAtQuestStart;
+
+    public int PouchItem11QuantityAtQuestStart;
+
+    public int PouchItem12QuantityAtQuestStart;
+
+    public int PouchItem13QuantityAtQuestStart;
+
+    public int PouchItem14QuantityAtQuestStart;
+
+    public int PouchItem15QuantityAtQuestStart;
+
+    public int PouchItem16QuantityAtQuestStart;
+
+    public int PouchItem17QuantityAtQuestStart;
+
+    public int PouchItem18QuantityAtQuestStart;
+
+    public int PouchItem19QuantityAtQuestStart;
+
+    public int PouchItem20QuantityAtQuestStart;
+
+    public int AmmoPouchItem1IDAtQuestStart;
+
+    public int AmmoPouchItem2IDAtQuestStart;
+
+    public int AmmoPouchItem3IDAtQuestStart;
+
+    public int AmmoPouchItem4IDAtQuestStart;
+
+    public int AmmoPouchItem5IDAtQuestStart;
+
+    public int AmmoPouchItem6IDAtQuestStart;
+
+    public int AmmoPouchItem7IDAtQuestStart;
+
+    public int AmmoPouchItem8IDAtQuestStart;
+
+    public int AmmoPouchItem9IDAtQuestStart;
+
+    public int AmmoPouchItem10IDAtQuestStart;
+
+    public int AmmoPouchItem1QuantityAtQuestStart;
+
+    public int AmmoPouchItem2QuantityAtQuestStart;
+
+    public int AmmoPouchItem3QuantityAtQuestStart;
+
+    public int AmmoPouchItem4QuantityAtQuestStart;
+
+    public int AmmoPouchItem5QuantityAtQuestStart;
+
+    public int AmmoPouchItem6QuantityAtQuestStart;
+
+    public int AmmoPouchItem7QuantityAtQuestStart;
+
+    public int AmmoPouchItem8QuantityAtQuestStart;
+
+    public int AmmoPouchItem9QuantityAtQuestStart;
+
+    public int AmmoPouchItem10QuantityAtQuestStart;
+
+    public int PartnyaBagItem1IDAtQuestStart;
+
+    public int PartnyaBagItem2IDAtQuestStart;
+
+    public int PartnyaBagItem3IDAtQuestStart;
+
+    public int PartnyaBagItem4IDAtQuestStart;
+
+    public int PartnyaBagItem5IDAtQuestStart;
+
+    public int PartnyaBagItem6IDAtQuestStart;
+
+    public int PartnyaBagItem7IDAtQuestStart;
+
+    public int PartnyaBagItem8IDAtQuestStart;
+
+    public int PartnyaBagItem9IDAtQuestStart;
+
+    public int PartnyaBagItem10IDAtQuestStart;
+
+    public int PartnyaBagItem1QuantityAtQuestStart;
+
+    public int PartnyaBagItem2QuantityAtQuestStart;
+
+    public int PartnyaBagItem3QuantityAtQuestStart;
+
+    public int PartnyaBagItem4QuantityAtQuestStart;
+
+    public int PartnyaBagItem5QuantityAtQuestStart;
+
+    public int PartnyaBagItem6QuantityAtQuestStart;
+
+    public int PartnyaBagItem7QuantityAtQuestStart;
+
+    public int PartnyaBagItem8QuantityAtQuestStart;
+
+    public int PartnyaBagItem9QuantityAtQuestStart;
+
+    public int PartnyaBagItem10QuantityAtQuestStart;
 
     public TimeSpan TotalTimeSpent { get; set; }
 
-    public bool questCleared = false; // quest state 1
-    public bool questRewardsGiven = false; // quest state 129
+    public bool questCleared; // quest state 1
 
-    #region dictionaries for graphs and database
+    public bool questRewardsGiven; // quest state 129
 
     public bool ValidateGameFolder()
     {
@@ -10034,7 +11662,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         if (s.GameFolderPath == "" || s.GameFolderPath == null)
         {
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Game folder path not found");
-            MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", Messages.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             s.EnableQuestLogging = false;
             return false;
         }
@@ -10042,7 +11670,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         if (s.DatabaseFilePath == "" || s.DatabaseFilePath == null)
         {
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Database file path not found");
-            MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", Messages.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             s.EnableQuestLogging = false;
             return false;
         }
@@ -10065,7 +11693,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             MessageBox.Show("Some required files are missing from the game folder. Please make sure that the game folder contains the following files: "
             + string.Join(", ", findFiles) + "\n" +
             "gameFolderFiles: " + string.Join(", ", gameFolderFiles),
-            Messages.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
+            Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Missing game files");
             s.EnableQuestLogging = false;
             return false;
@@ -10074,28 +11702,31 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     // all dictionaries get a new entry every 1 second. freezes on quest state 1, resets on quest id = 0.
     // use modulo
-    //int for timeint() which is current quest time, second int for current attack buff
-    public Dictionary<int, int> attackBuffDictionary = new();
+    // int for timeint() which is current quest time, second int for current attack buff
+    public Dictionary<int, int> attackBuffDictionary = new ();
+
     // the deserealized are used for displays
     public Dictionary<int, int>? attackBuffDictionaryDeserealized;
 
     // same for this but second is current hit count
-    public Dictionary<int, int> hitCountDictionary = new();
+    public Dictionary<int, int> hitCountDictionary = new ();
+
     public Dictionary<int, int>? hitCountDictionaryDeserealized;
 
     // same but the second int is the damage dealt when hitting monster.
-    public Dictionary<int, int> damageDealtDictionary = new();
+    public Dictionary<int, int> damageDealtDictionary = new ();
+
     public Dictionary<int, int>? damageDealtDictionaryDeserealized;
 
     // then for DPS i can calculate from the above dictionary and only update the
     // DPS value every time you register a new hit (new entry in damageDealtDictionary), which means its accurate but
     // not according to the real-time, but then again, the time that passes in-game
     // is not real-time.
-    public double DPS { get; set; } = 0;
+    public double DPS { get; set; }
 
-    public double HitsPerSecond { get; set; } = 0;
+    public double HitsPerSecond { get; set; }
 
-    public double APM { get; set; } = 0;
+    public double APM { get; set; }
 
     public double TotalHitsTakenBlocked
     {
@@ -10121,13 +11752,15 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             var totalHitsTakenBlockedPerSecond = string.Empty;
 
             if (ShowTotalHitsTakenBlockedPerSecond())
+            {
                 totalHitsTakenBlockedPerSecond = string.Format(CultureInfo.InvariantCulture, " ({0:0.00}/s)", TotalHitsTakenBlockedPerSecond);
+            }
 
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}", TotalHitsTakenBlocked, totalHitsTakenBlockedPerSecond);
         }
     }
 
-    public double TotalHitsTakenBlockedPerSecond { get; set; } = 0;
+    public double TotalHitsTakenBlockedPerSecond { get; set; }
 
     public double CalculateDPS()
     {
@@ -10142,7 +11775,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         double timeElapsedIn30FPS = TimeDefInt() - TimeInt();
 
         // Calculate and return the DPS
-        return damageDealt / (timeElapsedIn30FPS / Numbers.FRAMES_PER_SECOND);
+        return damageDealt / (timeElapsedIn30FPS / Numbers.FramesPerSecond);
     }
 
     // TODO: gamepad
@@ -10159,36 +11792,48 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         double timeElapsedIn30FPS = TimeDefInt() - TimeInt();
 
         // Calculate and return the DPS
-        return TotalHitsTakenBlocked / (timeElapsedIn30FPS / Numbers.FRAMES_PER_SECOND);
+        return TotalHitsTakenBlocked / (timeElapsedIn30FPS / Numbers.FramesPerSecond);
     }
 
     public double CalculateHitsPerSecond()
     {
         if (!hitCountDictionary.Any())
+        {
             return 0;
+        }
 
-        return HitCountInt() / ((double)(TimeDefInt() - TimeInt()) / Numbers.FRAMES_PER_SECOND);
+        return HitCountInt() / ((double)(TimeDefInt() - TimeInt()) / Numbers.FramesPerSecond);
     }
 
 
     // new entry every second during quest (use this for chart?)
-    public Dictionary<int, double> damagePerSecondDictionary = new();
+    public Dictionary<int, double> damagePerSecondDictionary = new ();
+
     public Dictionary<int, double>? damagePerSecondDictionaryDeserealized;
 
-    public Dictionary<int, int> areaChangesDictionary = new();
+    public Dictionary<int, int> areaChangesDictionary = new ();
+
     public Dictionary<int, int>? areaChangesDictionaryDeserealized;
 
-    public Dictionary<int, int> cartsDictionary = new();
+    public Dictionary<int, int> cartsDictionary = new ();
+
     public Dictionary<int, int>? cartsDictionaryDeserealized;
 
     // time <monsterid, monsterhp>
-    public Dictionary<int, Dictionary<int, int>> monster1HPDictionary = new();
-    public Dictionary<int, Dictionary<int, int>> monster2HPDictionary = new();
-    public Dictionary<int, Dictionary<int, int>> monster3HPDictionary = new();
-    public Dictionary<int, Dictionary<int, int>> monster4HPDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster1HPDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, int>> monster2HPDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, int>> monster3HPDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, int>> monster4HPDictionary = new ();
+
     public Dictionary<int, Dictionary<int, int>>? monster1HPDictionaryDeserealized;
+
     public Dictionary<int, Dictionary<int, int>>? monster2HPDictionaryDeserealized;
+
     public Dictionary<int, Dictionary<int, int>>? monster3HPDictionaryDeserealized;
+
     public Dictionary<int, Dictionary<int, int>>? monster4HPDictionaryDeserealized;
 
     // time, itemid, itemquantity
@@ -10196,119 +11841,198 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     // this is a dicitonary where the first int is the quest time,
     // the second int is the item id and the third int is the item quantity of that id.
     // meaning that this is a dictionary of quest time and a list of item ids and quantities respectively.
-    public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionary = new();
+    public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionary = new ();
+
     public Dictionary<int, List<Dictionary<int, int>>>? playerInventoryDictionaryDeserealized;
 
-    public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionary = new();
+    public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionary = new ();
+
     public Dictionary<int, List<Dictionary<int, int>>>? playerAmmoPouchDictionaryDeserealized;
 
-    public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionary = new();
+    public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionary = new ();
+
     public Dictionary<int, List<Dictionary<int, int>>>? partnyaBagDictionaryDeserealized;
 
     // time, areaid, hitstakenblocked
     // can calculate total hits by area by checking areaid, or in total by all sum.
-    public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = new();
-    public Dictionary<int, Dictionary<int, int>>? hitsTakenBlockedDictionaryDeserealized = new();
+    public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = new ();
 
-    public Dictionary<int, int> playerHPDictionary = new();
-    public Dictionary<int, int>? playerHPDictionaryDeserealized = new();
+    public Dictionary<int, Dictionary<int, int>>? hitsTakenBlockedDictionaryDeserealized = new ();
 
-    public Dictionary<int, int> playerStaminaDictionary = new();
-    public Dictionary<int, int>? playerStaminaDictionaryDeserealized = new();
+    public Dictionary<int, int> playerHPDictionary = new ();
 
-    public Dictionary<int, double> hitsPerSecondDictionary = new();
-    public Dictionary<int, double>? hitsPerSecondDictionaryDeserealized = new();
+    public Dictionary<int, int>? playerHPDictionaryDeserealized = new ();
 
-    public Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = new();
-    public Dictionary<int, double>? hitsTakenBlockedPerSecondDictionaryDeserealized = new();
+    public Dictionary<int, int> playerStaminaDictionary = new ();
 
-    public Dictionary<int, string> keystrokesDictionary = new();
-    public Dictionary<int, string>? keystrokesDictionaryDeserealized = new();
+    public Dictionary<int, int>? playerStaminaDictionaryDeserealized = new ();
 
-    public Dictionary<int, string> gamepadInputDictionary = new();
-    public Dictionary<int, string>? gamepadInputDictionaryDeserealized = new();
+    public Dictionary<int, double> hitsPerSecondDictionary = new ();
 
-    public Dictionary<int, string> mouseInputDictionary = new();
-    public Dictionary<int, string>? mouseInputDictionaryDeserealized = new();
+    public Dictionary<int, double>? hitsPerSecondDictionaryDeserealized = new ();
 
-    public Dictionary<int, double> actionsPerMinuteDictionary = new();
-    public Dictionary<int, double>? actionsPerMinuteDictionaryDeserealized = new();
+    public Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = new ();
 
-    public Dictionary<int, string> overlayModeDictionary = new();
+    public Dictionary<int, double>? hitsTakenBlockedPerSecondDictionaryDeserealized = new ();
 
-    public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionary = new();
-    public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionary = new();
-    public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionary = new();
-    public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionary = new();
-    public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionary = new();
-    public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = new();
-    public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = new();
-    public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = new();
-    public Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionary = new();
-    public Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionary = new();
+    public Dictionary<int, string> keystrokesDictionary = new ();
+
+    public Dictionary<int, string>? keystrokesDictionaryDeserealized = new ();
+
+    public Dictionary<int, string> gamepadInputDictionary = new ();
+
+    public Dictionary<int, string>? gamepadInputDictionaryDeserealized = new ();
+
+    public Dictionary<int, string> mouseInputDictionary = new ();
+
+    public Dictionary<int, string>? mouseInputDictionaryDeserealized = new ();
+
+    public Dictionary<int, double> actionsPerMinuteDictionary = new ();
+
+    public Dictionary<int, double>? actionsPerMinuteDictionaryDeserealized = new ();
+
+    public Dictionary<int, string> overlayModeDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionary = new ();
+
+    public Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionary = new ();
+
     public Dictionary<int, Dictionary<int, double>>? monster1AttackMultiplierDictionaryDeserealized;
+
     public Dictionary<int, Dictionary<int, double>>? monster1DefenseRateDictionaryDeserealized;
+
     public Dictionary<int, Dictionary<int, double>>? monster1SizeMultiplierDictionaryDeserealized;
+
     public Dictionary<int, Dictionary<int, int>>? monster1PoisonThresholdDictionaryDeserealized;
+
     public Dictionary<int, Dictionary<int, int>>? monster1SleepThresholdDictionaryDeserealized;
+
     public Dictionary<int, Dictionary<int, int>>? monster1ParalysisThresholdDictionaryDeserealized;
+
     public Dictionary<int, Dictionary<int, int>>? monster1BlastThresholdDictionaryDeserealized;
+
     public Dictionary<int, Dictionary<int, int>>? monster1StunThresholdDictionaryDeserealized;
+
     public Dictionary<int, Dictionary<int, List<int>>>? monster1PartThresholdDictionaryDeserialized;
+
     public Dictionary<int, Dictionary<int, List<int>>>? monster2PartThresholdDictionaryDeserialized;
 
-    public int previousTimeInt = 0;
-    public int previousAttackBuffInt = 0;
-    public int previousHitCountInt = 0;
-    public double previousDPS = 0;
-    public int previousAreaID = 0;
-    public int previousGlobalAreaID = 0;
-    public int previousQuestID = 0;
-    public int previousCartsInt = 0;
-    public int previousMonster1HP = 0;
-    public int previousMonster2HP = 0;
-    public int previousMonster3HP = 0;
-    public int previousMonster4HP = 0;
-    public int previousTotalInventoryItems = 0;
-    public int previousTotalAmmo = 0;
-    public int previousTotalPartnyaItems = 0;
-    public int previousHitsTakenBlocked = 0;
-    public double previousTotalHitsTakenBlockedPerSecond = 0;
-    public int previousPlayerHP = 0;
-    public int previousPlayerStamina = 0;
-    public double previousHitsPerSecond = 0;
-    public double previousActionsPerMinute = 0;
+    public int previousTimeInt;
+
+    public int previousAttackBuffInt;
+
+    public int previousHitCountInt;
+
+    public double previousDPS;
+
+    public int previousAreaID;
+
+    public int previousGlobalAreaID;
+
+    public int previousQuestID;
+
+    public int previousCartsInt;
+
+    public int previousMonster1HP;
+
+    public int previousMonster2HP;
+
+    public int previousMonster3HP;
+
+    public int previousMonster4HP;
+
+    public int previousTotalInventoryItems;
+
+    public int previousTotalAmmo;
+
+    public int previousTotalPartnyaItems;
+
+
+    public int previousHitsTakenBlocked;
+
+    public double previousTotalHitsTakenBlockedPerSecond;
+
+    public int previousPlayerHP;
+
+    public int previousPlayerStamina;
+
+    public double previousHitsPerSecond;
+
+    public double previousActionsPerMinute;
+
     public string previousOverlayMode = "N/A";
 
-    public double previousMonster1AttackMultiplier = 0;
-    public double previousMonster1DefenseRate = 0;
-    public double previousMonster1SizeMultiplier = 0;
-    public int previousMonster1PoisonThreshold = 0;
-    public int previousMonster1SleepThreshold = 0;
-    public int previousMonster1ParalysisThreshold = 0;
-    public int previousMonster1BlastThreshold = 0;
-    public int previousMonster1StunThreshold = 0;
-    public int previousMonster1Part1Threshold = 0;
-    public int previousMonster1Part2Threshold = 0;
-    public int previousMonster1Part3Threshold = 0;
-    public int previousMonster1Part4Threshold = 0;
-    public int previousMonster1Part5Threshold = 0;
-    public int previousMonster1Part6Threshold = 0;
-    public int previousMonster1Part7Threshold = 0;
-    public int previousMonster1Part8Threshold = 0;
-    public int previousMonster1Part9Threshold = 0;
-    public int previousMonster1Part10Threshold = 0;
-    public int previousMonster2Part1Threshold = 0;
-    public int previousMonster2Part2Threshold = 0;
-    public int previousMonster2Part3Threshold = 0;
-    public int previousMonster2Part4Threshold = 0;
-    public int previousMonster2Part5Threshold = 0;
-    public int previousMonster2Part6Threshold = 0;
-    public int previousMonster2Part7Threshold = 0;
-    public int previousMonster2Part8Threshold = 0;
-    public int previousMonster2Part9Threshold = 0;
-    public int previousMonster2Part10Threshold = 0;
+    public double previousMonster1AttackMultiplier;
 
+    public double previousMonster1DefenseRate;
+
+    public double previousMonster1SizeMultiplier;
+
+    public int previousMonster1PoisonThreshold;
+
+    public int previousMonster1SleepThreshold;
+
+    public int previousMonster1ParalysisThreshold;
+
+    public int previousMonster1BlastThreshold;
+
+    public int previousMonster1StunThreshold;
+
+    public int previousMonster1Part1Threshold;
+
+    public int previousMonster1Part2Threshold;
+
+    public int previousMonster1Part3Threshold;
+
+    public int previousMonster1Part4Threshold;
+
+    public int previousMonster1Part5Threshold;
+
+    public int previousMonster1Part6Threshold;
+
+    public int previousMonster1Part7Threshold;
+
+    public int previousMonster1Part8Threshold;
+
+    public int previousMonster1Part9Threshold;
+
+    public int previousMonster1Part10Threshold;
+
+    public int previousMonster2Part1Threshold;
+
+    public int previousMonster2Part2Threshold;
+
+    public int previousMonster2Part3Threshold;
+
+    public int previousMonster2Part4Threshold;
+
+    public int previousMonster2Part5Threshold;
+
+    public int previousMonster2Part6Threshold;
+
+    public int previousMonster2Part7Threshold;
+
+    public int previousMonster2Part8Threshold;
+
+    public int previousMonster2Part9Threshold;
+
+    public int previousMonster2Part10Threshold;
 
     public List<Dictionary<int, int>> InsertInventoryDictionaryIntoList(string inventoryType)
     {
@@ -10330,7 +12054,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             var itemID = 0;
             var itemQty = 0;
-            Dictionary<int, int> itemIDQuantityDictionary = new();
+            Dictionary<int, int> itemIDQuantityDictionary = new ();
 
             if (inventoryType == "Pouch")
             {
@@ -10533,9 +12257,11 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public double GetCurrentQuestElapsedTimeInSeconds()
     {
         if (TimeDefInt() <= 0)
+        {
             return 0;
+        }
 
-        return (double)(TimeDefInt() - TimeInt()) / Numbers.FRAMES_PER_SECOND;
+        return (double)(TimeDefInt() - TimeInt()) / Numbers.FramesPerSecond;
     }
 
     public int previousRoadFloor = 0;
@@ -10543,10 +12269,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <summary>
     /// Inserts the quest information into dictionaries. If you want to insert a new dictionary, do the following:
     /// 1. Create a dictionary as a property of this class.
-    /// 2. Follow the code structure of the current dictionary insertions, 
+    /// 2. Follow the code structure of the current dictionary insertions,
     /// but for this particular dictionary structure if modifications are needed.
     /// 3. Go to DatabaseManager and modify the Quests table for taking into account this new property.
-    /// 4. Copy-paste the query into a new function for updating the database schema (PerformUpdateToVersion_x_y_z), for new_Quests table. 
+    /// 4. Copy-paste the query into a new function for updating the database schema (PerformUpdateToVersion_x_y_z), for new_Quests table.
     /// See also the 12 steps from SQLite linked for helping update and port data from an old table schema to a new table schema.
     /// 5. Modify InsertQuestData Quests table insertion section taking into account the new property and table schema.
     /// 6. Don't forget to add the clear() in the cleanup functions for the dictionaries.
@@ -10654,7 +12380,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1HP = Monster1HPInt();
-                Dictionary<int, int> monster1HPDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster1HPDictionaryMonsterInfo = new ();
                 monster1HPDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1HPInt());
                 monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
             }
@@ -10669,7 +12395,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster2HP = Monster2HPInt();
-                Dictionary<int, int> monster2HPDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster2HPDictionaryMonsterInfo = new ();
                 monster2HPDictionaryMonsterInfo.Add(LargeMonster2ID(), Monster2HPInt());
                 monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
             }
@@ -10684,7 +12410,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster3HP = Monster3HPInt();
-                Dictionary<int, int> monster3HPDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster3HPDictionaryMonsterInfo = new ();
                 monster3HPDictionaryMonsterInfo.Add(LargeMonster3ID(), Monster3HPInt());
                 monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
             }
@@ -10700,7 +12426,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster4HP = Monster4HPInt();
-                Dictionary<int, int> monster4HPDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster4HPDictionaryMonsterInfo = new ();
                 monster4HPDictionaryMonsterInfo.Add(LargeMonster4ID(), Monster4HPInt());
                 monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
             }
@@ -10735,12 +12461,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else if (loadedItemsAtQuestStart && !playerInventoryDictionary.Values.Any())
         {
-            List<Dictionary<int, int>> itemIDsQuantityList = new();
+            List<Dictionary<int, int>> itemIDsQuantityList = new ();
             for (var i = 1; i <= 20; i++)
             {
                 var itemID = 0;
                 var itemQty = 0;
-                Dictionary<int, int> itemIDQuantityDictionary = new();
+                Dictionary<int, int> itemIDQuantityDictionary = new ();
                 switch (i)
                 {
                     case 1:
@@ -10847,6 +12573,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         if (playerAmmoPouchDictionary.Values.Any())
         {
             var lastInsertedDictionary = playerAmmoPouchDictionary.Values.Last();
+
             // Sum the values in the list
             lastAmmoSum = lastInsertedDictionary.SelectMany(x => x.Values).Sum();
         }
@@ -10864,12 +12591,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else if (loadedItemsAtQuestStart && !playerAmmoPouchDictionary.Values.Any())
         {
-            List<Dictionary<int, int>> itemIDsQuantityList = new();
+            List<Dictionary<int, int>> itemIDsQuantityList = new ();
             for (var i = 1; i <= 20; i++)
             {
                 var itemID = 0;
                 var itemQty = 0;
-                Dictionary<int, int> itemIDQuantityDictionary = new();
+                Dictionary<int, int> itemIDQuantityDictionary = new ();
                 switch (i)
                 {
                     case 1:
@@ -10935,6 +12662,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         if (partnyaBagDictionary.Values.Any())
         {
             var lastInsertedDictionary = partnyaBagDictionary.Values.Last();
+
             // Sum the values in the list
             lastPartnyaBagSum = lastInsertedDictionary.SelectMany(x => x.Values).Sum();
         }
@@ -10952,12 +12680,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else if (loadedItemsAtQuestStart && !partnyaBagDictionary.Values.Any())
         {
-            List<Dictionary<int, int>> itemIDsQuantityList = new();
+            List<Dictionary<int, int>> itemIDsQuantityList = new ();
             for (var i = 1; i <= 20; i++)
             {
                 var itemID = 0;
                 var itemQty = 0;
-                Dictionary<int, int> itemIDQuantityDictionary = new();
+                Dictionary<int, int> itemIDQuantityDictionary = new ();
                 switch (i)
                 {
                     case 1:
@@ -11021,7 +12749,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousHitsTakenBlocked = AreaHitsTakenBlocked();
-                Dictionary<int, int> hitsAreaPairs = new();
+                Dictionary<int, int> hitsAreaPairs = new ();
                 hitsAreaPairs.Add(AreaID(), AreaHitsTakenBlocked());
                 hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
             }
@@ -11127,7 +12855,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1AttackMultiplier = Monster1AttackMultForDictionary();
-                Dictionary<int, double> monster1AttackMultiplierDictionaryMonsterInfo = new();
+                Dictionary<int, double> monster1AttackMultiplierDictionaryMonsterInfo = new ();
                 monster1AttackMultiplierDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1AttackMultForDictionary());
                 monster1AttackMultiplierDictionary.Add(TimeInt(), monster1AttackMultiplierDictionaryMonsterInfo);
             }
@@ -11142,7 +12870,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1DefenseRate = Monster1DefMultForDictionary();
-                Dictionary<int, double> monster1DefenseRateDictionaryMonsterInfo = new();
+                Dictionary<int, double> monster1DefenseRateDictionaryMonsterInfo = new ();
                 monster1DefenseRateDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1DefMultForDictionary());
                 monster1DefenseRateDictionary.Add(TimeInt(), monster1DefenseRateDictionaryMonsterInfo);
             }
@@ -11157,7 +12885,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1SizeMultiplier = Monster1SizeMultForDictionary();
-                Dictionary<int, double> monster1SizeMultiplierDictionaryMonsterInfo = new();
+                Dictionary<int, double> monster1SizeMultiplierDictionaryMonsterInfo = new ();
                 monster1SizeMultiplierDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1SizeMultForDictionary());
                 monster1SizeMultiplierDictionary.Add(TimeInt(), monster1SizeMultiplierDictionaryMonsterInfo);
             }
@@ -11172,7 +12900,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1PoisonThreshold = Monster1PoisonForDictionary();
-                Dictionary<int, int> monster1PoisonThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster1PoisonThresholdDictionaryMonsterInfo = new ();
                 monster1PoisonThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1PoisonForDictionary());
                 monster1PoisonThresholdDictionary.Add(TimeInt(), monster1PoisonThresholdDictionaryMonsterInfo);
             }
@@ -11187,7 +12915,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1SleepThreshold = Monster1SleepForDictionary();
-                Dictionary<int, int> monster1SleepThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster1SleepThresholdDictionaryMonsterInfo = new ();
                 monster1SleepThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1SleepForDictionary());
                 monster1SleepThresholdDictionary.Add(TimeInt(), monster1SleepThresholdDictionaryMonsterInfo);
             }
@@ -11202,7 +12930,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1ParalysisThreshold = Monster1ParalysisForDictionary();
-                Dictionary<int, int> monster1ParalysisThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster1ParalysisThresholdDictionaryMonsterInfo = new ();
                 monster1ParalysisThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1ParalysisForDictionary());
                 monster1ParalysisThresholdDictionary.Add(TimeInt(), monster1ParalysisThresholdDictionaryMonsterInfo);
             }
@@ -11217,7 +12945,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1BlastThreshold = Monster1BlastForDictionary();
-                Dictionary<int, int> monster1BlastThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster1BlastThresholdDictionaryMonsterInfo = new ();
                 monster1BlastThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1BlastForDictionary());
                 monster1BlastThresholdDictionary.Add(TimeInt(), monster1BlastThresholdDictionaryMonsterInfo);
             }
@@ -11232,7 +12960,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1StunThreshold = Monster1StunForDictionary();
-                Dictionary<int, int> monster1StunThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster1StunThresholdDictionaryMonsterInfo = new ();
                 monster1StunThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1StunForDictionary());
                 monster1StunThresholdDictionary.Add(TimeInt(), monster1StunThresholdDictionaryMonsterInfo);
             }
@@ -11268,7 +12996,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 previousMonster1Part8Threshold = Monster1Part8();
                 previousMonster1Part9Threshold = Monster1Part9();
                 previousMonster1Part10Threshold = Monster1Part10();
-                Dictionary<int, List<int>> monster1PartThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, List<int>> monster1PartThresholdDictionaryMonsterInfo = new ();
                 var partsList = new List<int>() {
                     Monster1Part1(),
                     Monster1Part2(),
@@ -11315,7 +13043,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 previousMonster2Part8Threshold = Monster2Part8();
                 previousMonster2Part9Threshold = Monster2Part9();
                 previousMonster2Part10Threshold = Monster2Part10();
-                Dictionary<int, List<int>> monster2PartThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, List<int>> monster2PartThresholdDictionaryMonsterInfo = new ();
                 var partsList = new List<int>() {
                     Monster2Part1(),
                     Monster2Part2(),
@@ -11520,23 +13248,22 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             // Any changes including adding, clearing, etc must be synced.
             attackBuffCollection.Clear();
         }
+
         lock (actionsPerMinuteSync)
         {
             actionsPerMinuteCollection.Clear();
         }
+
         lock (damagePerSecondSync)
         {
             damagePerSecondCollection.Clear();
         }
+
         lock (hitsPerSecondSync)
         {
             hitsPerSecondCollection.Clear();
         }
     }
-
-    #endregion
-
-    #region countries
 
     // Get all countries
     public IEnumerable<Country> Countries
@@ -11547,9 +13274,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    #endregion
-
-    #region speedrun watermark
     public string OverlayModeWatermarkText
     {
         get
@@ -11559,12 +13283,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             overlayMode = overlayMode.Replace(")", "");
             overlayMode = overlayMode.Trim();
             if (overlayMode == null || overlayMode == "")
+            {
                 overlayMode = "Standard";
+            }
 
             return overlayMode;
         }
     }
-    #endregion
 
     public string QuestIDBind
     {
@@ -11574,10 +13299,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public ObservableCollection<RecentRuns> RecentRuns { get; set; } = new();
+    public ObservableCollection<RecentRuns> RecentRuns { get; set; } = new ();
+
     // TODO: the plural/singular is inconsistent
-    public List<FastestRun> FastestRuns { get; set; } = new();
-    public List<RecentRuns> CalendarRuns { get; set; } = new();
+    public List<FastestRun> FastestRuns { get; set; } = new ();
+
+    public List<RecentRuns> CalendarRuns { get; set; } = new ();
 
     public ObservableCollection<QuestLogsOption> QuestLogsSearchOption { get; set; } = new ObservableCollection<QuestLogsOption>()
     {
@@ -11623,9 +13350,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
 
         if (hexColor.Length == 6)
+        {
             hexColor = hexColor.Insert(0, "ff");
+        }
         else
+        {
             hexColor = hexColor.Remove(0, 2).Insert(0, "ff");
+        }
 
         if (alphaChannel != null && alphaChannel != "ff")
         {
@@ -11643,9 +13374,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
 
         if (hexColor.Length == 6)
+        {
             hexColor = hexColor.Insert(0, "ff");
+        }
         else
+        {
             hexColor = hexColor.Remove(0, 2).Insert(0, "ff");
+        }
 
         if (toTransparent != null && toTransparent == true)
         {
@@ -11669,8 +13404,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    #region ehp
     public int currentMonster1MaxHP { get; set; }
+
     /// <summary>
     /// Shows the current hp percentage.
     /// </summary>
@@ -11678,10 +13413,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public static bool ShowCurrentHPPercentage()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableCurrentHPPercentage)
-            return true;
-        else
-            return false;
+        return s.EnableCurrentHPPercentage;
     }
 
     /// <summary>
@@ -11690,14 +13422,19 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetMonster1EHPPercent()
     {
-        if (currentMonster1MaxHP < int.Parse(Monster1HP, CultureInfo.InvariantCulture))
+        if (currentMonster1MaxHP < int.Parse(Monster1HP, CultureInfo.InvariantCulture)){
             currentMonster1MaxHP = int.Parse(Monster1HP, CultureInfo.InvariantCulture);
+        }
 
-        if (currentMonster1MaxHP == 0 || GetMonster1EHP() == 0) //should be OK
+        if (currentMonster1MaxHP == 0 || GetMonster1EHP() == 0) // should be OK
+        {
             currentMonster1MaxHP = 1;
+        }
 
         if (!ShowCurrentHPPercentage())
+        {
             return string.Empty;
+        }
 
         return string.Format(CultureInfo.InvariantCulture, " ({0:0}%)", (float)int.Parse(Monster1HP, CultureInfo.InvariantCulture) / currentMonster1MaxHP * 100.0);
     }
@@ -11720,8 +13457,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         return currentMonster1MaxHP;
     }
 
-    #endregion
-
     /// <summary>
     /// Gets the max faints
     /// </summary>
@@ -11740,7 +13475,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 return AlternativeMaxFaints().ToString(CultureInfo.InvariantCulture);
             case "Automatic":
                 if (roadOverride() != null && roadOverride() == false)
+                {
                     return MaxFaints().ToString(CultureInfo.InvariantCulture);
+                }
 
                 if
                 (
@@ -11838,9 +13575,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public string GetAreaIconFromID(int id) // TODO: are highlands, tidal island or painted falls icons correct?
     {
         if (id >= 470 && id < 0)
+        {
             return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+        }
         else
+        {
             return FindAreaIcon(id);
+        }
     }
 
     public static string FindAreaIcon(int id)
@@ -11864,9 +13605,13 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     {
         var areaIcon = AreaIconMapper.AreaIconID.ContainsKey(key);
         if (!areaIcon)
+        {
             return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+        }
         else
+        {
             return AreaIconMapper.AreaIconID[key];
+        }
     }
 
     /// <summary>
@@ -11896,13 +13641,21 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         SkillCaravan.IDName.TryGetValue(id3, out var caravanSkillName3);
 
         if (caravanSkillName1 == "" || caravanSkillName1 == "None")
+        {
             return "None";
+        }
         else if (caravanSkillName2 == "" || caravanSkillName2 == "None")
+        {
             return caravanSkillName1 + string.Empty;
+        }
         else if (caravanSkillName3 == "" || caravanSkillName3 == "None")
+        {
             return caravanSkillName1 + ", " + caravanSkillName2;
+        }
         else
+        {
             return caravanSkillName1 + ", " + caravanSkillName2 + ", " + caravanSkillName3;
+        }
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

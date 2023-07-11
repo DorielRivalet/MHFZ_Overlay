@@ -6,9 +6,8 @@ namespace MHFZ_Overlay.Models.Mappers;
 
 using System.Collections.Generic;
 
-
 ///<summary>
-///The monster name list
+///The monster name list. Not the full list.
 ///</summary>
 public static class MonsterNameMapper
 {
@@ -79,7 +78,6 @@ public static class MonsterNameMapper
         { 62, "Conga" },
         { 63, "Remobra" },
         { 64, "Lunastra" },
-
         { 66, "Hermitaur" },
         { 67, "Shogun Ceanataur" },
         { 68, "Bulldrome" },
@@ -103,13 +101,11 @@ public static class MonsterNameMapper
         { 86, "Cactus" },
         { 87, "Gorge Object" },
         { 88, "Gorge Rock" },
-
         { 90, "White Espinas" },
         { 91, "Kamu Orugaron" },
         { 92, "Nono Orugaron" },
         { 93, "Raviente" },
         { 94, "Dyuragaua" },
-
         { 96, "Gurenzeburu" },
         { 97, "Burukku" },
         { 98, "Erupe" },
@@ -120,14 +116,12 @@ public static class MonsterNameMapper
         { 103, "Taikun Zamuza" },
         { 104, "Abiorugu" },
         { 105, "Kuarusepusu" },
-
         { 107, "Disufiroa" },
         { 108, "Rebidiora" },
         { 109, "Anorupatisu" },
         { 110, "Hyujikiki" },
         { 111, "Midogaron" },
         { 112, "Giaorugu" },
-
         { 114, "Farunokku" },
         { 115, "Pokaradon" },
         { 116, "Shantien" },
@@ -160,7 +154,6 @@ public static class MonsterNameMapper
         { 143, "Kusubami" },
         { 144, "Yama Kurai" },
         { 145, "3rd Phase Duremudira" },
-
         { 147, "Deviljho" },
         { 148, "Brachydios" },
         { 149, "Berserk Raviente" },
@@ -168,7 +161,6 @@ public static class MonsterNameMapper
         { 151, "Barioth" },
         { 152, "Uragaan" },
         { 153, "Stygian Zinogre" },
-
         { 156, "UNK" },
         { 157, "Egyurasu" },
         { 158, "Voljang" },
@@ -179,7 +171,6 @@ public static class MonsterNameMapper
         { 163, "Blinking Nargacuga" },
         { 164, "Shagaru Magala" },
         { 165, "Amatsu" },
-
         { 167, "Arrogant Duremudira" },
         { 168, "Rocks" },
         { 169, "Seregios" },

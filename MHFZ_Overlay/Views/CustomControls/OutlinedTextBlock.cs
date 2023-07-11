@@ -409,7 +409,7 @@ public class OutlinedTextBlock : FrameworkElement
         }
 
         _FormattedText = new FormattedText(
-          Text ?? "",
+          Text ?? string.Empty,
           CultureInfo.CurrentUICulture,
           FlowDirection,
           new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),

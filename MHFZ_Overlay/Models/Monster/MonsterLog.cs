@@ -9,6 +9,14 @@ namespace MHFZ_Overlay.Models.Monster;
 /// </summary>
 public class MonsterLog
 {
+    public MonsterLog(int id, string name, string image, int hunted, bool islarge = false)
+    {
+        this.ID = id;
+        this.Name = name;
+        this.MonsterImage = image;
+        this.Hunted = hunted;
+        this.IsLarge = islarge;
+    }
 
     public string Name { get; set; }
 
@@ -19,14 +27,4 @@ public class MonsterLog
     public bool IsLarge { get; set; }
 
     public string MonsterImage { get; set; }
-
-    public MonsterLog(int id, string name, string image, int hunted, bool islarge = false)
-    {
-        ID = id;
-        Name = name;
-        MonsterImage = image;
-        Hunted = hunted;
-        IsLarge = islarge;
-    }
-
 }

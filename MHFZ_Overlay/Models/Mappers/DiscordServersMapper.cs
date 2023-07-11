@@ -6,7 +6,6 @@ namespace MHFZ_Overlay.Models.Mappers;
 
 using System.Collections.Generic;
 
-
 ///<summary>
 ///The discord servers list
 ///</summary>
@@ -20,6 +19,6 @@ public static class DiscordServersMapper
         { 759022449743495170, "Monster Hunter [Ancient_Warriors]" },
         { 973963573619486740, "MezeLounge" },
         { 288170871908990976, "Hunsterverse" },
-        { 967058504403808356, "Arca" }
+        { 967058504403808356, "Arca" },
     };
-};
+}

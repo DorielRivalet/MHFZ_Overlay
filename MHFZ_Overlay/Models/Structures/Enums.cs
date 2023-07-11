@@ -16,7 +16,7 @@ public enum GachaCardTypes : uint
     Gear,
     Character,
     Location,
-    Special
+    Special,
 }
 
 public enum RankTypes : uint
@@ -24,7 +24,7 @@ public enum RankTypes : uint
     Low_Rank,
     High_Rank,
     G_Rank,
-    Zenith_Rank
+    Zenith_Rank,
 }
 
 public enum AchievementRank
@@ -33,7 +33,7 @@ public enum AchievementRank
     Bronze,
     Silver,
     Gold,
-    Platinum
+    Platinum,
 }
 
 public enum Direction
@@ -46,7 +46,7 @@ public enum Direction
     UpLeft,
     UpRight,
     DownLeft,
-    DownRight
+    DownRight,
 }
 
 public enum Difficulty
@@ -55,5 +55,11 @@ public enum Difficulty
     Easy,
     Medium,
     Hard,
-    Extreme
+    Extreme,
+}
+
+public enum MonsterHPMode
+{
+    True,
+    Effective,
 }

@@ -9,13 +9,17 @@ public static class Numbers
     /// <summary>
     /// The frames per second in the game.
     /// </summary>
-    public const int FRAMES_PER_SECOND = 30;
-    public const int FRAMES_1_MINUTE = FRAMES_PER_SECOND * 60;
-    public const int FRAMES_1_HOUR = FRAMES_1_MINUTE * 60;
+    public const int FramesPerSecond = 30;
 
-    public const int REQUIRED_COMPLETIONS_MONSTER_SLAYER = 10;
-    public const int REQUIRED_COMPLETIONS_MONSTER_ANNIHILATOR = 25;
-    public const int REQUIRED_COMPLETIONS_MONSTER_EXTERMINATOR = 50;
+    public const int Frames1Minute = FramesPerSecond * 60;
+
+    public const int Frames1Hour = Frames1Minute * 60;
+
+    public const int RequiredCompletionsMonsterSlayer = 10;
+
+    public const int RequiredCompletionsMonsterAnnihilator = 25;
+
+    public const int RequiredCompletionsMonsterExterminator = 50;
 
     /* Quest IDs
 
@@ -91,74 +95,142 @@ public static class Numbers
 
     TODO replace the numbers in source code as necessary
      */
-    public const int QUEST_ID_Z4_AKURA_VASHIMU = 23539;
-    public const int QUEST_ID_Z4_ANORUPATISU = 23721;
-    public const int QUEST_ID_Z4_BLANGONGA = 23519;
-    public const int QUEST_ID_Z4_DAIMYO_HERMITAUR = 23479;
-    public const int QUEST_ID_Z4_DORAGYUROSU = 23662;
-    public const int QUEST_ID_Z4_ESPINAS = 23483;
-    public const int QUEST_ID_Z4_GASURABAZURA = 23671;
-    public const int QUEST_ID_Z4_GIAORUGU = 23613;
-    public const int QUEST_ID_Z4_HYPNOCATRICE = 23471;
-    public const int QUEST_ID_Z4_HYUJIKIKI = 23609;
-    public const int QUEST_ID_Z4_INAGAMI = 23647;
-    public const int QUEST_ID_Z4_KHEZU = 23475;
-    public const int QUEST_ID_Z4_MIDOGARON = 23617;
-    public const int QUEST_ID_Z4_PLESIOTH = 23625;
-    public const int QUEST_ID_Z4_RATHALOS = 23523;
-    public const int QUEST_ID_Z4_RUKODIORA = 23621;
-    public const int QUEST_ID_Z4_TIGREX = 23543;
-    public const int QUEST_ID_Z4_TORIDCLESS = 23658;
-    public const int QUEST_ID_Z4_BARURAGARU = 23716;
-    public const int QUEST_ID_Z4_BOGABADORUMU = 23708;
-    public const int QUEST_ID_Z4_GRAVIOS = 23712;
-    public const int QUEST_ID_Z4_HARUDOMERUGU = 55932;
-    public const int QUEST_ID_Z4_TAIKUN_ZAMUZA = 55926;
-    public const int QUEST_ID_LV9999_FATALIS = 23596;
-    public const int QUEST_ID_LV9999_CRIMSON_FATALIS = 23601;
-    public const int QUEST_ID_LV9999_SHANTIEN = 23588;
-    public const int QUEST_ID_LV9999_DISUFIROA = 23592;
-    public const int QUEST_ID_UPPER_SHITEN_UNKNOWN = 23605;
-    public const int QUEST_ID_UPPER_SHITEN_DISUFIROA = 23603;
-    public const int QUEST_ID_THIRSTY_PARIAPURIA = 55532;
-    public const int QUEST_ID_RULING_GUANZORUMU = 55529;
-    public const int QUEST_ID_SHIFTING_MI_RU = 55531;
-    public const int QUEST_ID_BLINKING_NARGACUGA_FOREST = 55534;
-    public const int QUEST_ID_BLINKING_NARGACUGA_HISTORIC = 55922;
-    public const int QUEST_ID_HOWLING_ZINOGRE_FOREST = 55535;
-    public const int QUEST_ID_HOWLING_ZINOGRE_HISTORIC = 55919;
-    public const int QUEST_ID_SPARKLING_ZERUREUSU = 55951;
-    public const int QUEST_ID_SPARKLING_ZERUREUSU_EVENT = 56106;
-    public const int QUEST_ID_ARROGANT_DUREMUDIRA = 23649;
-    public const int QUEST_ID_STARVING_DEVILJHO_ARENA = 55530;
-    public const int QUEST_ID_STARVING_DEVILJHO_HISTORIC = 55917;
-    public const int QUEST_ID_BLITZKRIEG_BOGABADORUMU = 55949;
-    public const int QUEST_ID_BURNING_FREEZING_ELZELION_TOWER = 55714;
-    public const int QUEST_ID_BURNING_FREEZING_ELZELION_HISTORIC = 55936;
-    public const int QUEST_ID_VEGGIE_ELDER_LOVE = 53189;
-    public const int QUEST_ID_PRODUCER_GOGOMOA_LR = 50748;
-    public const int QUEST_ID_PRODUCER_GOGOMOA_HR = 53032;
-    public const int QUEST_ID_FOUR_HEAVENLY_KING_MALE_1 = 40219;
-    public const int QUEST_ID_FOUR_HEAVENLY_KING_MALE_2 = 40220;
-    public const int QUEST_ID_FOUR_HEAVENLY_KING_FEMALE_1 = 40237;
-    public const int QUEST_ID_FOUR_HEAVENLY_KING_FEMALE_2 = 40238;
-    public const int QUEST_ID_HATSUNE_MIKU = 40230;
-    public const int QUEST_ID_PSO2 = 40239;
-    public const int QUEST_ID_MEGAMAN = 40240;
-    public const int QUEST_ID_HIGANJIMA = 40217;
-    public const int QUEST_ID_MHFQ = 53209;
-    public const int QUEST_ID_HUGE_PLESIOTH = 53028;
-    public const int QUEST_ID_SUNGLASSES_KUTKU = 53139;
-    public const int QUEST_ID_CONGALALA_CURE = 50365;
-    public const int QUEST_ID_JUNGLE_PUZZLE = 53208;
-    public const int QUEST_ID_MULTIPLAYER_ROAD = 23527;
-    public const int QUEST_ID_SECOND_DISTRICT_DUREMUDIRA = 21746;
-    public const int QUEST_ID_TWINHEAD_RAJANGS_HISTORIC = 55937;
-    public const int QUEST_ID_NUCLEAR_GYPCEROS = 63390;
-    public const int QUEST_ID_MOSSWINE_REVENGE = 50143;
-    public const int QUEST_ID_MOSSWINE_DUEL = 62793;
-    public const int QUEST_ID_MOSSWINE_LAST_STAND = 53323;
-    public const int QUEST_ID_HALLOWEEN_SPEEDSTER = 53325;
-    public const int QUEST_ID_VR = 53232;
 
+    public const int QuestIDZ4AkuraVashimu = 23539;
+
+    public const int QuestIDZ4Anorupatisu = 23721;
+
+    public const int QuestIDZ4Blangonga = 23519;
+
+    public const int QuestIDZ4DaimyoHermitaur = 23479;
+
+    public const int QuestIDZ4Doragyurosu = 23662;
+
+    public const int QuestIDZ4Espinas = 23483;
+
+    public const int QuestIDZ4Gasurabazura = 23671;
+
+    public const int QuestIDZ4Giaorugu = 23613;
+
+    public const int QuestIDZ4Hypnocatrice = 23471;
+
+    public const int QuestIDZ4Hyujikiki = 23609;
+
+    public const int QuestIDZ4Inagami = 23647;
+
+    public const int QuestIDZ4Khezu = 23475;
+
+    public const int QuestIDZ4Midogaron = 23617;
+
+    public const int QuestIDZ4Plesioth = 23625;
+
+    public const int QuestIDZ4Rathalos = 23523;
+
+    public const int QuestIDZ4Rukodiora = 23621;
+
+    public const int QuestIDZ4Tigrex = 23543;
+
+    public const int QuestIDZ4Toridcless = 23658;
+
+    public const int QuestIDZ4Baruragaru = 23716;
+
+    public const int QuestIDZ4Bogabadorumu = 23708;
+
+    public const int QuestIDZ4Gravios = 23712;
+
+    public const int QuestIDZ4Harudomerugu = 55932;
+
+    public const int QuestIDZ4TaikunZamuza = 55926;
+
+    public const int QuestIDLV9999Fatalis = 23596;
+
+    public const int QuestIDLV9999CrimsonFatalis = 23601;
+
+    public const int QuestIDLV9999Shantien = 23588;
+
+    public const int QuestIDLV9999Disufiroa = 23592;
+
+    public const int QuestIDUpperShitenUnknown = 23605;
+
+    public const int QuestIDUpperShitenDisufiroa = 23603;
+
+    public const int QuestIDThirstyPariapuria = 55532;
+
+    public const int QuestIDRulingGuanzorumu = 55529;
+
+    public const int QuestIDShiftingMiRu = 55531;
+
+    public const int QuestIDBlinkingNargacugaForest = 55534;
+
+    public const int QuestIDBlinkingNargacugaHistoric = 55922;
+
+    public const int QuestIDHowlingZinogreForest = 55535;
+
+    public const int QuestIDHowlingZinogreHistoric = 55919;
+
+    public const int QuestIDSparklingZerureusu = 55951;
+
+    public const int QuestIDSparklingZerureusuEvent = 56106;
+
+    public const int QuestIDArrogantDuremudira = 23649;
+
+    public const int QuestIDStarvingDeviljhoArena = 55530;
+
+    public const int QuestIDStarvingDeviljhoHistoric = 55917;
+
+    public const int QuestIDBlitzkriegBogabadorumu = 55949;
+
+    public const int QuestIDBurningFreezingElzelionTower = 55714;
+
+    public const int QuestIDBurningFreezingElzelionHistoric = 55936;
+
+    public const int QuestIDVeggieElderLove = 53189;
+
+    public const int QuestIDProducerGogomoaLR = 50748;
+
+    public const int QuestIDProducerGogomoaHR = 53032;
+
+    public const int QuestIDFourHeavenlyKingMale1 = 40219;
+
+    public const int QuestIDFourHeavenlyKingMale2 = 40220;
+
+    public const int QuestIDFourHeavenlyKingFemale1 = 40237;
+
+    public const int QuestIDFourHeavenlyKingFemale2 = 40238;
+
+    public const int QuestIDHatsuneMiku = 40230;
+
+    public const int QuestIDPSO2 = 40239;
+
+    public const int QuestIDMegaman = 40240;
+
+    public const int QuestIDHiganjima = 40217;
+
+    public const int QuestIDMHFQ = 53209;
+
+    public const int QuestIDHugePlesioth = 53028;
+
+    public const int QuestIDSunglassesKutKu = 53139;
+
+    public const int QuestIDCongalalaCure = 50365;
+
+    public const int QuestIDJunglePuzzle = 53208;
+
+    public const int QuestIDMultiplayerRoad = 23527;
+
+    public const int QuestIDSecondDistrictDuremudira = 21746;
+
+    public const int QuestIDTwinheadRajangsHistoric = 55937;
+
+    public const int QuestIDNuclearGypceros = 63390;
+
+    public const int QuestIDMosswineRevenge = 50143;
+
+    public const int QuestIDMosswineDuel = 62793;
+
+    public const int QuestIDMosswineLastStand = 53323;
+
+    public const int QuestIDHalloweenSpeedster = 53325;
+
+    public const int QuestIDVR = 53232;
 }

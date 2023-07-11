@@ -31,6 +31,7 @@ public class GlobalHotKey : IDisposable
         {
             throw new ArgumentException("Modifier must not be ModifierKeys.None");
         }
+
         if (aAction is null)
         {
             throw new ArgumentNullException(nameof(aAction));
@@ -38,7 +39,8 @@ public class GlobalHotKey : IDisposable
 
         var aVirtualKeyCode = (System.Windows.Forms.Keys)KeyInterop.VirtualKeyFromKey(aKey);
         currentID = currentID + 1;
-        var aRegistered = RegisterHotKey(window.Handle, currentID,
+        var aRegistered = RegisterHotKey(window.Handle,
+                                    currentID,
                                     (uint)aModifier | MOD_NOREPEAT,
                                     (uint)aVirtualKeyCode);
 
@@ -46,6 +48,7 @@ public class GlobalHotKey : IDisposable
         {
             registeredHotKeys.Add(new HotKeyWithAction(aModifier, aKey, aAction));
         }
+
         return aRegistered;
     }
 
@@ -76,8 +79,11 @@ public class GlobalHotKey : IDisposable
     }
 
     private static readonly InvisibleWindowForMessages window = new InvisibleWindowForMessages();
+
     private static int currentID;
+
     private static uint MOD_NOREPEAT = 0x4000;
+
     private static List<HotKeyWithAction> registeredHotKeys = new List<HotKeyWithAction>();
 
     private class HotKeyWithAction
@@ -85,13 +91,15 @@ public class GlobalHotKey : IDisposable
 
         public HotKeyWithAction(ModifierKeys modifier, Key key, Action action)
         {
-            Modifier = modifier;
-            Key = key;
-            Action = action;
+            this.Modifier = modifier;
+            this.Key = key;
+            this.Action = action;
         }
 
         public ModifierKeys Modifier { get; }
+
         public Key Key { get; }
+
         public Action Action { get; }
     }
 
@@ -106,7 +114,7 @@ public class GlobalHotKey : IDisposable
     {
         public InvisibleWindowForMessages()
         {
-            CreateHandle(new System.Windows.Forms.CreateParams());
+            this.CreateHandle(new System.Windows.Forms.CreateParams());
         }
 
         private static int WM_HOTKEY = 0x0312;
@@ -118,9 +126,9 @@ public class GlobalHotKey : IDisposable
             {
                 var aWPFKey = KeyInterop.KeyFromVirtualKey((int)m.LParam >> 16 & 0xFFFF);
                 var modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);
-                if (KeyPressed != null)
+                if (this.KeyPressed != null)
                 {
-                    KeyPressed(this, new HotKeyPressedEventArgs(modifier, aWPFKey));
+                    this.KeyPressed(this, new HotKeyPressedEventArgs(modifier, aWPFKey));
                 }
             }
         }
@@ -132,31 +140,26 @@ public class GlobalHotKey : IDisposable
 
             internal HotKeyPressedEventArgs(ModifierKeys modifier, Key key)
             {
-                _modifier = modifier;
-                _key = key;
+                this._modifier = modifier;
+                this._key = key;
             }
 
             public ModifierKeys Modifier
             {
-                get { return _modifier; }
+                get { return this._modifier; }
             }
 
             public Key Key
             {
-                get { return _key; }
+                get { return this._key; }
             }
         }
 
-
         public event EventHandler<HotKeyPressedEventArgs> KeyPressed;
-
-        #region IDisposable Members
 
         public void Dispose()
         {
             this.DestroyHandle();
-        }
-
-        #endregion
+        }        
     }
 }

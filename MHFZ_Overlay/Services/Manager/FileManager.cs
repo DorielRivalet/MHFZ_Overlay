@@ -52,8 +52,8 @@ internal sealed class FileManager
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
-            beginningFileName = beginningFileName != "" ? beginningFileName + "-" : string.Empty;
-            beginningText = beginningText != "" ? beginningText + "-" : string.Empty;
+            beginningFileName = beginningFileName != string.Empty ? beginningFileName + "-" : string.Empty;
+            beginningText = beginningText != string.Empty ? beginningText + "-" : string.Empty;
             saveFileDialog.FileName = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}-{3}", beginningFileName, beginningText, fileName, dateTime);
             if (saveFileDialog.ShowDialog() == true)
             {
@@ -95,6 +95,7 @@ internal sealed class FileManager
                 {
                     CopyUIElementToClipboard(gridToSave, snackbar);
                 }
+
                 gridToSave.Background = previousBackground;
                 logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
             }
@@ -129,9 +130,10 @@ internal sealed class FileManager
                 var vb = new VisualBrush(element);
                 dc.DrawRectangle(vb, null, new Rect(new Point(), new Size(width, height)));
             }
+
             bmpCopied.Render(dv);
             Clipboard.SetImage(bmpCopied);
-            snackbar.Show(Messages.INFO_TITLE, "Copied image to clipboard", new SymbolIcon(SymbolRegular.Clipboard32), ControlAppearance.Success);
+            snackbar.Show(Messages.InfoTitle, "Copied image to clipboard", new SymbolIcon(SymbolRegular.Clipboard32), ControlAppearance.Success);
         }
         catch (Exception ex)
         {
@@ -215,6 +217,7 @@ internal sealed class FileManager
                 {
                     csv.WriteRecords(Monsters);
                 }
+
                 logger.Info(CultureInfo.InvariantCulture, "Saved csv file {0}", savefile.FileName);
             }
         }
@@ -247,7 +250,7 @@ internal sealed class FileManager
                 var s = (Settings)Application.Current.TryFindResource("Settings");
 
                 // Create a dictionary to store the user settings
-                Dictionary<string, OverlaySetting> settings = new();
+                Dictionary<string, OverlaySetting> settings = new ();
 
                 // Get a list of the user settings properties sorted alphabetically by name
                 var sortedSettings = s.Properties.Cast<System.Configuration.SettingsProperty>().OrderBy(setting => setting.Name).ToList();
@@ -311,7 +314,7 @@ internal sealed class FileManager
         File.Copy(file, destination, overwrite);
         logger.Info(CultureInfo.InvariantCulture, "{0}. Original file: {1}, Destination: {2}", logMessage, file, destination);
         if (showMessageBox)
-            MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "{0}. Original file: {1}, Destination: {2}", logMessage, file, destination), Messages.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "{0}. Original file: {1}, Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     /// <summary>
@@ -329,6 +332,7 @@ internal sealed class FileManager
             logger.Info(CultureInfo.InvariantCulture, "File not found at {0}", sourceFile);
             return;
         }
+
         // Create directory as needed
         try
         {
@@ -338,6 +342,7 @@ internal sealed class FileManager
             {
                 throw new ArgumentOutOfRangeException($"Did not make directory for {destFileDirectoryName}");
             }
+
             Directory.CreateDirectory(destFileDirectoryName);
 
         }
@@ -389,6 +394,7 @@ internal sealed class FileManager
                 logger.Info(CultureInfo.InvariantCulture, "{0}{1}", logMessage, path);
                 doesExist = true;
             }
+
             return doesExist;
         }
         catch (Exception ex)
@@ -466,7 +472,7 @@ internal sealed class FileManager
             // If there are any banned files or folders, display an error message and exit the application
             var message = string.Format(CultureInfo.InvariantCulture, "The following files or folders are not allowed:\n{0}", string.Join("\n", illegalFiles));
             logger.Fatal(message);
-            MessageBox.Show(message, Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(message, Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
 
@@ -538,7 +544,7 @@ internal sealed class FileManager
         {
             // Handle the exception and show an error message to the user
             logger.Error(ex, "An error occurred while creating a database backup");
-            MessageBox.Show("An error occurred while creating a database backup: " + ex.Message, Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("An error occurred while creating a database backup: " + ex.Message, Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 

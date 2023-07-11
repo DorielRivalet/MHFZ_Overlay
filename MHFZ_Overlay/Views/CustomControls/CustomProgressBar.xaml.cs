@@ -18,10 +18,9 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
 {
     public CustomProgressBar()
     {
-        InitializeComponent();
-        DataContext = this;
+        this.InitializeComponent();
+        this.DataContext = this;
     }
-    #region UserInput
 
     /// <summary>
     /// Gets or sets the width of the row1.
@@ -31,8 +30,8 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     /// </value>
     public int Row1Width
     {
-        get { return (int)GetValue(Row1WidthProperty); }
-        set { SetValue(Row1WidthProperty, value); }
+        get { return (int)this.GetValue(Row1WidthProperty); }
+        set { this.SetValue(Row1WidthProperty, value); }
     }
 
     /// <summary>
@@ -43,8 +42,8 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     /// </value>
     public int Row2Width
     {
-        get { return (int)GetValue(Row2WidthProperty); }
-        set { SetValue(Row2WidthProperty, value); }
+        get { return (int)this.GetValue(Row2WidthProperty); }
+        set { this.SetValue(Row2WidthProperty, value); }
     }
 
     /// <summary>
@@ -55,14 +54,14 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     /// </value>
     public string Description
     {
-        get { return (string)GetValue(DescriptionProperty); }
-        set { SetValue(DescriptionProperty, value); }
+        get { return (string)this.GetValue(DescriptionProperty); }
+        set { this.SetValue(DescriptionProperty, value); }
     }
 
     public string BarType
     {
-        get { return (string)GetValue(BarTypeProperty); }
-        set { SetValue(BarTypeProperty, value); }
+        get { return (string)this.GetValue(BarTypeProperty); }
+        set { this.SetValue(BarTypeProperty, value); }
     }
 
     /// <summary>
@@ -73,8 +72,8 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     /// </value>
     public int NumCurr
     {
-        get { return (int)GetValue(NumCurrProperty); }
-        set { SetValue(NumCurrProperty, value); }
+        get { return (int)this.GetValue(NumCurrProperty); }
+        set { this.SetValue(NumCurrProperty, value); }
     }
 
     /// <summary>
@@ -85,8 +84,8 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     /// </value>
     public int NumMax
     {
-        get { return (int)GetValue(NumMaxProperty); }
-        set { SetValue(NumMaxProperty, value); }
+        get { return (int)this.GetValue(NumMaxProperty); }
+        set { this.SetValue(NumMaxProperty, value); }
     }
 
     /// <summary>
@@ -97,43 +96,48 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     /// </value>
     public Brush BarColor
     {
-        get { return (Brush)GetValue(BarColorProperty); }
-        set { SetValue(BarColorProperty, value); }
+        get { return (Brush)this.GetValue(BarColorProperty); }
+        set { this.SetValue(BarColorProperty, value); }
     }
 
     public Brush StrokeColor
     {
-        get { return (Brush)GetValue(StrokeColorProperty); }
-        set { SetValue(StrokeColorProperty, value); }
+        get { return (Brush)this.GetValue(StrokeColorProperty); }
+        set { this.SetValue(StrokeColorProperty, value); }
     }
 
     public string IconSource
     {
-        get { return (string)GetValue(IconSourceProperty); }
-        set { SetValue(IconSourceProperty, value); }
+        get { return (string)this.GetValue(IconSourceProperty); }
+        set { this.SetValue(IconSourceProperty, value); }
     }
 
-    #endregion
-
-    #region BindingRegisters
     public static readonly DependencyProperty Row1WidthProperty =
         DependencyProperty.Register("Row1Width", typeof(int), typeof(CustomProgressBar), new PropertyMetadata(1));
+
     public static readonly DependencyProperty Row2WidthProperty =
         DependencyProperty.Register("Row2Width", typeof(int), typeof(CustomProgressBar), new PropertyMetadata(1));
+
     public static readonly DependencyProperty DescriptionProperty =
-        DependencyProperty.Register("Description", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(""));
+        DependencyProperty.Register("Description", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(string.Empty));
+
     public static readonly DependencyProperty NumCurrProperty =
         DependencyProperty.Register("NumCurr", typeof(int), typeof(CustomProgressBar), new PropertyMetadata(0));
+
     public static readonly DependencyProperty NumMaxProperty =
         DependencyProperty.Register("NumMax", typeof(int), typeof(CustomProgressBar), new PropertyMetadata(0));
+
     public static readonly DependencyProperty BarColorProperty =
         DependencyProperty.Register("BarColor", typeof(Brush), typeof(CustomProgressBar), new PropertyMetadata(null));
+
     public static readonly DependencyProperty IconSourceProperty =
-        DependencyProperty.Register("IconSource", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(""));
+        DependencyProperty.Register("IconSource", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(string.Empty));
+
     public static readonly DependencyProperty StrokeColorProperty =
         DependencyProperty.Register("StrokeColor", typeof(Brush), typeof(CustomProgressBar), new PropertyMetadata(null));
+
     public static readonly DependencyProperty BarTypeProperty =
-       DependencyProperty.Register("BarType", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(""));
+       DependencyProperty.Register("BarType", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(string.Empty));
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -142,13 +146,12 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     /// </summary>
     public void ReloadData()
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
+        this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
     }
-    #endregion
+    
+    public string Width1 { get => this.Row1Width.ToString(CultureInfo.InvariantCulture) + "*"; }
 
-    #region UsedBindings
-    public string Width1 { get => Row1Width.ToString(CultureInfo.InvariantCulture) + "*"; }
-    public string Width2 { get => Row2Width.ToString(CultureInfo.InvariantCulture) + "*"; }
+    public string Width2 { get => this.Row2Width.ToString(CultureInfo.InvariantCulture) + "*"; }
 
     /// <summary>
     /// Shows the current hp percentage?
@@ -158,9 +161,13 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     {
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         if (s.EnableCurrentHPPercentage)
+        {
             return true;
+        }
         else
+        {
             return false;
+        }
     }
 
     /// <summary>
@@ -173,13 +180,13 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     {
         get
         {
-            if (NumMax < NumCurr)
+            if (this.NumMax < this.NumCurr)
             {
                 return "0";
             }
             else
             {
-                return string.Format(CultureInfo.InvariantCulture, " ({0:0}%)", (float)NumCurr / NumMax * 100.0);
+                return string.Format(CultureInfo.InvariantCulture, " ({0:0}%)", (float)this.NumCurr / this.NumMax * 100.0);
             }
         }
     }
@@ -199,10 +206,14 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     {
         get
         {
-            if (Desc == "Poison" || Desc == "Sleep" || Desc == "Para." || Desc == "Blast" || Desc == "Stun")
+            if (this.Desc == "Poison" || this.Desc == "Sleep" || this.Desc == "Para." || this.Desc == "Blast" || this.Desc == "Stun")
+            {
                 return "Left";
+            }
             else
+            {
                 return "Right";
+            }
         }
     }
 
@@ -216,37 +227,42 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     {
         get
         {
-            if (NumMax == 0)
-                return NumCurr.ToString(CultureInfo.InvariantCulture);
-
-            if (NumMax < NumCurr && Description != "Poison" && Description != "Sleep" && Description != "Para." && Description != "Blast" && Description != "Stun")
+            if (this.NumMax == 0)
             {
-                NumMax = 0;
-                NumMax += NumCurr;
+                return this.NumCurr.ToString(CultureInfo.InvariantCulture);
+            }
+
+            if (this.NumMax < this.NumCurr && this.Description != "Poison" && this.Description != "Sleep" && this.Description != "Para." && this.Description != "Blast" && this.Description != "Stun")
+            {
+                this.NumMax = 0;
+                this.NumMax += this.NumCurr;
                 if (ShowCurrentHPPercentage())
                 {
-                    CurrentHPPercent = CurrentHPPercentNumber;
+                    this.CurrentHPPercent = this.CurrentHPPercentNumber;
                 }
                 else
                 {
-                    CurrentHPPercent = string.Empty;
+                    this.CurrentHPPercent = string.Empty;
                 }
-                return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", NumCurr, NumMax) + CurrentHPPercent;
+
+                return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", this.NumCurr, this.NumMax) + this.CurrentHPPercent;
             }
 
-            if (NumCurr == 0 && Description != "Poison" && Description != "Sleep" && Description != "Para." && Description != "Blast" && Description != "Stun")
+            if (this.NumCurr == 0 && this.Description != "Poison" && this.Description != "Sleep" && this.Description != "Para." && this.Description != "Blast" && this.Description != "Stun")
             {
-                NumMax = 1;
+                this.NumMax = 1;
             }
+
             if (ShowCurrentHPPercentage())
             {
-                CurrentHPPercent = CurrentHPPercentNumber;
+                this.CurrentHPPercent = this.CurrentHPPercentNumber;
             }
             else
             {
-                CurrentHPPercent = string.Empty;
+                this.CurrentHPPercent = string.Empty;
             }
-            return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", NumCurr, NumMax) + CurrentHPPercent;
+
+            return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", this.NumCurr, this.NumMax) + this.CurrentHPPercent;
         }
     }
 
@@ -260,9 +276,12 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     {
         get
         {
-            if (NumMax == 0 || NumCurr == 0)
+            if (this.NumMax == 0 || this.NumCurr == 0)
+            {
                 return 0f;
-            return ((float)NumCurr / (float)NumMax) * 100f;
+            }
+
+            return ((float)this.NumCurr / (float)this.NumMax) * 100f;
         }
         set
         {
@@ -278,14 +297,14 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     /// </value>
     public string Desc
     {
-        get { return Description; }
-        set { Description = value; }
+        get { return this.Description; }
+        set { this.Description = value; }
     }
 
     public string Icon
     {
-        get { return IconSource; }
-        set { IconSource = value; }
+        get { return this.IconSource; }
+        set { this.IconSource = value; }
     }
 
     public string IconShown
@@ -295,9 +314,13 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
             if (s.ProgressBarIconsShown)
+                {
                 return "Visible";
+            }
             else
+            {
                 return "Hidden";
+            }
         }
     }
 
@@ -308,13 +331,13 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
             if (s.ProgressBarIconsShown)
+                {
                 return "Hidden";
+            }
             else
+            {
                 return "Visible";
+            }
         }
     }
-
-
-
-    #endregion
 }

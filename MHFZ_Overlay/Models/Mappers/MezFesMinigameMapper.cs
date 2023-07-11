@@ -22,4 +22,4 @@ public static class MezFesMinigameMapper
         { 468,"Panic Honey" },
         { 469,"Dokkan Battle Cats" },
     };
-};
+}

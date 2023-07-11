@@ -17,7 +17,9 @@ public static class BingoMonsterMapper
         // TODO make a function with input monster name and output dictionary<int, int> monsterID rankbandID
         // TODO i should use questid instead and use monster names as comments
         // Extreme difficulty is same as hard difficulty but the bingo board is twice as big.
-        {Difficulty.Easy, new List<string>{
+        {
+            Difficulty.Easy, new List<string>
+            {
             "Elzelion",
             "Zenaserisu",
             "Zinogre",
@@ -101,7 +103,9 @@ public static class BingoMonsterMapper
             "Zenith★2 Bogabadorumu",
             }
         },
-        {Difficulty.Medium, new List<string>{
+        {
+            Difficulty.Medium, new List<string>
+            {
             "Zenith★3 Espinas",
             "Zenith★3 Hypnoc",
             "Zenith★3 Khezu",
@@ -132,10 +136,12 @@ public static class BingoMonsterMapper
             "Lv9999 Fatalis",
             "Lv9999 Crimson Fatalis",
             "Lv9999 Shantien",
-            "2nd District Duremudira"
+            "2nd District Duremudira",
             }
         },
-        {Difficulty.Hard, new List<string>{
+        {
+            Difficulty.Hard, new List<string>
+            {
             "Zenith★4 Espinas",
             "Zenith★4 Hypnoc",
             "Zenith★4 Khezu",
@@ -167,7 +173,7 @@ public static class BingoMonsterMapper
             "Blitzkrieg Bogabadorumu",
             "Golden Deviljho",
             "Upper Shiten Unknown",
-            "Upper Shiten Disufiroa"
+            "Upper Shiten Disufiroa",
             }
         }
     };

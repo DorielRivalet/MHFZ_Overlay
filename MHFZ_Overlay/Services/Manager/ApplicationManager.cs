@@ -18,6 +18,7 @@ using MHFZ_Overlay.Views;
 internal sealed class ApplicationManager
 {
     private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
+
     private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
     /// <summary>
@@ -25,7 +26,7 @@ internal sealed class ApplicationManager
     /// </summary>
     public static void HandleShutdown()
     {
-        //https://stackoverflow.com/a/9050477/18859245
+        // https://stackoverflow.com/a/9050477/18859245
         databaseManager.StoreSessionTime(databaseManager.DatabaseStartTime);
         DiscordManager.DiscordRPCCleanup();
         DisposeNotifyIcon();
@@ -69,7 +70,7 @@ internal sealed class ApplicationManager
     {
         logger.Info(CultureInfo.InvariantCulture, "Closing game");
         KillProcess("mhf");
-        MessageBox.Show("The game was closed due to a fatal overlay error, please report this to the developer", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        MessageBox.Show("The game was closed due to a fatal overlay error, please report this to the developer", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
     /// <summary>

@@ -7,9 +7,8 @@ For the addresses, check the respective files.
 
 ## IDs
 
-- [Dictionaries](../Core/Class/Dictionary)
-- [Bitfields and Enumerations](../Core/Enum)
-- [Lists](../Core/Class/List)
+- [Mappers](../Mappers)
+- [Bitfields and Enumerations](../Structures)
 
 ### Sigil Skills
 

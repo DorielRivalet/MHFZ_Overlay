@@ -22,7 +22,7 @@ internal sealed class LoggingManager
     public static void WriteCrashLog(Exception ex, string logMessage = "Program crashed")
     {
         LoggerInstance.Fatal(ex, logMessage);
-        MessageBox.Show(@"Fatal error, closing overlay. See the crash log in the overlay\logs folder for more information.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        MessageBox.Show(@"Fatal error, closing overlay. See the crash log in the overlay\logs folder for more information.", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         PromptForOpeningLogs();
         ApplicationManager.HandleShutdown();
     }
@@ -37,23 +37,23 @@ internal sealed class LoggingManager
         if (!File.Exists(logFilePath))
         {
             LoggerInstance.Error(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath);
-            MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         // Show an error message to the user and ask if they want to open the log file
-        var result = MessageBox.Show("An error occurred. Do you want to open the log file?", Messages.ERROR_TITLE, MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.No);
+        var result = MessageBox.Show("An error occurred. Do you want to open the log file?", Messages.ErrorTitle, MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.No);
         if (result == MessageBoxResult.Yes)
         {
             // Open the log file using the default application
             try
             {
-                Process.Start(ApplicationPaths.NOTEPAD_PATH, logFilePath);
+                Process.Start(ApplicationPaths.NotepadPath, logFilePath);
                 LoggerInstance.Info(CultureInfo.InvariantCulture, "Opened with Notepad the file {0}", logFilePath);
             }
             catch (Exception ex)
             {
                 LoggerInstance.Error(ex, "Could not open the log file: {0}", logFilePath);
-                MessageBox.Show("Could not open the log file: " + ex.Message, Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Could not open the log file: " + ex.Message, Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

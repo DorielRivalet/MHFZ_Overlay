@@ -9,7 +9,7 @@ using MHFZ_Overlay.Models.Constant;
 
 public class FastestRun
 {
-    public string ObjectiveImage { get; set; } = Messages.MONSTER_IMAGE_NOT_LOADED;
+    public string ObjectiveImage { get; set; } = Messages.MonsterImageNotLoaded;
 
     public string QuestName { get; set; } = string.Empty;
 
@@ -17,9 +17,9 @@ public class FastestRun
 
     public long QuestID { get; set; }
 
-    public string YoutubeID { get; set; } = Messages.RICK_ROLL_ID;
+    public string YoutubeID { get; set; } = Messages.RickRollID;
 
-    public string FinalTimeDisplay { get; set; } = Messages.MAXIMUM_TIMER_PLACEHOLDER;
+    public string FinalTimeDisplay { get; set; } = Messages.MaximumTimerPlaceholder;
 
     public DateTime Date { get; set; }
 }

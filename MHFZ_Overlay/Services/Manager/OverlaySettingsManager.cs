@@ -9,9 +9,10 @@ using System.Globalization;
 
 public class OverlaySettingsManager
 {
-    private static OverlaySettingsManager? instance;
-
-    private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+    private OverlaySettingsManager()
+    {
+        logger.Info($"OverlaySettingsManager initialized");
+    }
 
     public enum ConfigurationPreset
     {
@@ -19,12 +20,7 @@ public class OverlaySettingsManager
         Speedrun,
         Zen,
         HP_Only,
-        All
-    }
-
-    private OverlaySettingsManager()
-    {
-        logger.Info($"OverlaySettingsManager initialized");
+        All,
     }
 
     public static OverlaySettingsManager GetInstance()
@@ -34,6 +30,7 @@ public class OverlaySettingsManager
             logger.Debug("Singleton not found, creating instance.");
             instance = new OverlaySettingsManager();
         }
+
         logger.Debug("Singleton found, returning instance.");
         logger.Trace(new StackTrace().ToString());
         return instance;
@@ -221,4 +218,8 @@ public class OverlaySettingsManager
                 break;
         }
     }
+
+    private static OverlaySettingsManager? instance;
+
+    private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 }

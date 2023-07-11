@@ -23,6 +23,7 @@ internal sealed class DiscordManager
             LoggerInstance.Debug("Singleton not found, creating instance.");
             instance = new DiscordManager();
         }
+
         LoggerInstance.Debug("Singleton found, returning instance.");
         LoggerInstance.Trace(new StackTrace().ToString());
         return instance;
@@ -38,14 +39,14 @@ internal sealed class DiscordManager
             return;
         }
 
-        if (ShowDiscordRPC && GetDiscordClientID != "")
+        if (ShowDiscordRPC && GetDiscordClientID != string.Empty)
         {
             SetupDiscordRPC();
 
-            //Set Presence
+            // Set Presence
             presenceTemplate.Timestamps = Timestamps.Now;
 
-            if (GetHunterName != "" && GetGuildName != "" && GetServerName != "")
+            if (GetHunterName != string.Empty && GetGuildName != string.Empty && GetServerName != string.Empty)
             {
                 presenceTemplate.Assets = new Assets()
                 {
@@ -56,7 +57,7 @@ internal sealed class DiscordManager
                 };
             }
 
-            //should work fine
+            // should work fine
             presenceTemplate.Buttons = new Button[] { };
             presenceTemplate.Buttons = new Button[]
             {
@@ -68,7 +69,7 @@ internal sealed class DiscordManager
                     Url = "https://lachee.dev/", }
             };
 
-            if (GetDiscordServerInvite != "")
+            if (GetDiscordServerInvite != string.Empty)
             {
                 presenceTemplate.Buttons = new Button[] { };
                 presenceTemplate.Buttons = new Button[]
@@ -93,7 +94,7 @@ internal sealed class DiscordManager
         }
     }
 
-    //Dispose client        
+    // Dispose client        
     /// <summary>
     /// Cleanups the Discord RPC instance.
     /// </summary>
@@ -129,20 +130,20 @@ internal sealed class DiscordManager
         }
 
         // TODO also need to handle the other fields lengths
-        if (string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", GetPartySize(dataLoader), GetQuestState(dataLoader), GetCaravanScore(dataLoader), dataLoader.model.GetOverlayModeForRPC(), dataLoader.model.GetAreaName(dataLoader.model.AreaID()), GetGameMode(dataLoader.isHighGradeEdition)).Length >= 95)
+        if (string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", this.GetPartySize(dataLoader), GetQuestState(dataLoader), this.GetCaravanScore(dataLoader), dataLoader.model.GetOverlayModeForRPC(), dataLoader.model.GetAreaName(dataLoader.model.AreaID()), GetGameMode(dataLoader.isHighGradeEdition)).Length >= 95)
         {
             presenceTemplate.Details = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", GetQuestState(dataLoader), dataLoader.model.GetOverlayModeForRPC(), dataLoader.model.GetAreaName(dataLoader.model.AreaID()));
         }
         else
         {
-            presenceTemplate.Details = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", GetPartySize(dataLoader), GetQuestState(dataLoader), GetCaravanScore(dataLoader), dataLoader.model.GetOverlayModeForRPC(), dataLoader.model.GetAreaName(dataLoader.model.AreaID()), GetGameMode(dataLoader.isHighGradeEdition));
+            presenceTemplate.Details = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", this.GetPartySize(dataLoader), GetQuestState(dataLoader), this.GetCaravanScore(dataLoader), dataLoader.model.GetOverlayModeForRPC(), dataLoader.model.GetAreaName(dataLoader.model.AreaID()), GetGameMode(dataLoader.isHighGradeEdition));
         }
 
         var stateString = string.Empty;
         var largeImageTextString = string.Empty;
         var smallImageTextString = string.Empty;
 
-        //Info
+        // Info
         if (dataLoader.model.QuestID() != 0 && dataLoader.model.TimeDefInt() != dataLoader.model.TimeInt() && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0 || (dataLoader.model.QuestID() == 21731 || dataLoader.model.QuestID() == 21746 || dataLoader.model.QuestID() == 21749 || dataLoader.model.QuestID() == 21750 || dataLoader.model.QuestID() == 23648 || dataLoader.model.QuestID() == 23649 || dataLoader.model.QuestID() == 21748 || dataLoader.model.QuestID() == 21747 || dataLoader.model.QuestID() == 21734) && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0)
         {
             switch (dataLoader.model.QuestID())
@@ -151,21 +152,21 @@ internal sealed class DiscordManager
                     stateString = string.Format(CultureInfo.InvariantCulture, "Multiplayer Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)", dataLoader.model.RoadFloor() + 1, dataLoader.model.RoadMaxStagesMultiplayer(), dataLoader.model.RoadTotalStagesMultiplayer(), dataLoader.model.RoadPoints(), dataLoader.model.RoadFatalisSlain(), dataLoader.model.RoadFatalisEncounters());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 23628://solo road
+                case 23628:// solo road
                     stateString = string.Format(CultureInfo.InvariantCulture, "Solo Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)", dataLoader.model.RoadFloor() + 1, dataLoader.model.RoadMaxStagesSolo(), dataLoader.model.RoadTotalStagesSolo(), dataLoader.model.RoadPoints(), dataLoader.model.RoadFatalisSlain(), dataLoader.model.RoadFatalisEncounters());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 21731://1st district dure
-                case 21749://sky corridor version
-                    stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", dataLoader.model.GetQuestNameFromID(dataLoader.model.QuestID()), dataLoader.model.GetObjectiveNameFromID(dataLoader.model.ObjectiveType()), "", dataLoader.model.GetObjective1Quantity(), dataLoader.model.GetRankNameFromID(dataLoader.model.RankBand()), dataLoader.model.GetRealMonsterName(dataLoader.model.CurrentMonster1Icon), dataLoader.model.FirstDistrictDuremudiraSlays(), dataLoader.model.FirstDistrictDuremudiraEncounters());
+                case 21731:// 1st district dure
+                case 21749:// sky corridor version
+                    stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", dataLoader.model.GetQuestNameFromID(dataLoader.model.QuestID()), dataLoader.model.GetObjectiveNameFromID(dataLoader.model.ObjectiveType()), string.Empty, dataLoader.model.GetObjective1Quantity(), dataLoader.model.GetRankNameFromID(dataLoader.model.RankBand()), dataLoader.model.GetRealMonsterName(dataLoader.model.CurrentMonster1Icon), dataLoader.model.FirstDistrictDuremudiraSlays(), dataLoader.model.FirstDistrictDuremudiraEncounters());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 21746://2nd district dure
-                case 21750://sky corridor version
-                    stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", dataLoader.model.GetQuestNameFromID(dataLoader.model.QuestID()), dataLoader.model.GetObjectiveNameFromID(dataLoader.model.ObjectiveType()), "", dataLoader.model.GetObjective1Quantity(), dataLoader.model.GetRankNameFromID(dataLoader.model.RankBand()), dataLoader.model.GetRealMonsterName(dataLoader.model.CurrentMonster1Icon), dataLoader.model.SecondDistrictDuremudiraSlays(), dataLoader.model.SecondDistrictDuremudiraEncounters());
+                case 21746:// 2nd district dure
+                case 21750:// sky corridor version
+                    stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", dataLoader.model.GetQuestNameFromID(dataLoader.model.QuestID()), dataLoader.model.GetObjectiveNameFromID(dataLoader.model.ObjectiveType()), string.Empty, dataLoader.model.GetObjective1Quantity(), dataLoader.model.GetRankNameFromID(dataLoader.model.RankBand()), dataLoader.model.GetRealMonsterName(dataLoader.model.CurrentMonster1Icon), dataLoader.model.SecondDistrictDuremudiraSlays(), dataLoader.model.SecondDistrictDuremudiraEncounters());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 62105://raviente quests
+                case 62105:// raviente quests
                 case 62108:
                 case 62101:
                 case 62104:
@@ -183,14 +184,14 @@ internal sealed class DiscordManager
                 case 54759:
                 case 54760:
                 case 54761:
-                case 55596://extreme
+                case 55596:// extreme
                 case 55602:
                 case 55603:
                 case 55604:
                 case 55605:
                 case 55606:
                 case 55607:
-                    stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", dataLoader.model.GetQuestNameFromID(dataLoader.model.QuestID()), dataLoader.model.GetObjectiveNameFromID(dataLoader.model.ObjectiveType()), "", dataLoader.model.GetObjective1Quantity(), dataLoader.model.GetRankNameFromID(dataLoader.model.RankBand()), dataLoader.model.GetStarGrade(), dataLoader.model.GetRealMonsterName(dataLoader.model.CurrentMonster1Icon), dataLoader.model.ATK, dataLoader.model.HighestAtk, dataLoader.model.HitCountInt());
+                    stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", dataLoader.model.GetQuestNameFromID(dataLoader.model.QuestID()), dataLoader.model.GetObjectiveNameFromID(dataLoader.model.ObjectiveType()), string.Empty, dataLoader.model.GetObjective1Quantity(), dataLoader.model.GetRankNameFromID(dataLoader.model.RankBand()), dataLoader.model.GetStarGrade(), dataLoader.model.GetRealMonsterName(dataLoader.model.CurrentMonster1Icon), dataLoader.model.ATK, dataLoader.model.HighestAtk, dataLoader.model.HitCountInt());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
 
                     break;
@@ -202,58 +203,64 @@ internal sealed class DiscordManager
                     }
                     else
                     {
-                        stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", dataLoader.model.GetQuestNameFromID(dataLoader.model.QuestID()), dataLoader.model.GetObjectiveNameFromID(dataLoader.model.ObjectiveType()), "", dataLoader.model.GetObjective1Quantity(), dataLoader.model.GetRankNameFromID(dataLoader.model.RankBand()), dataLoader.model.GetStarGrade(), dataLoader.model.GetRealMonsterName(dataLoader.model.CurrentMonster1Icon), dataLoader.model.ATK, dataLoader.model.HighestAtk, dataLoader.model.HitCountInt());
+                        stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", dataLoader.model.GetQuestNameFromID(dataLoader.model.QuestID()), dataLoader.model.GetObjectiveNameFromID(dataLoader.model.ObjectiveType()), string.Empty, dataLoader.model.GetObjective1Quantity(), dataLoader.model.GetRankNameFromID(dataLoader.model.RankBand()), dataLoader.model.GetStarGrade(), dataLoader.model.GetRealMonsterName(dataLoader.model.CurrentMonster1Icon), dataLoader.model.ATK, dataLoader.model.HighestAtk, dataLoader.model.HitCountInt());
                         presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     }
+
                     break;
             }
 
-            //Gathering/etc
+            // Gathering/etc
             if ((dataLoader.model.ObjectiveType() == 0x0 || dataLoader.model.ObjectiveType() == 0x02 || dataLoader.model.ObjectiveType() == 0x1002) && dataLoader.model.QuestID() != 23527 && dataLoader.model.QuestID() != 23628 && dataLoader.model.QuestID() != 21731 && dataLoader.model.QuestID() != 21749 && dataLoader.model.QuestID() != 21746 && dataLoader.model.QuestID() != 21750)
             {
-                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}", GetQuestInformation(dataLoader), dataLoader.model.GetAreaName(dataLoader.model.AreaID()));
+                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}", this.GetQuestInformation(dataLoader), dataLoader.model.GetAreaName(dataLoader.model.AreaID()));
                 presenceTemplate.Assets.LargeImageKey = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
                 presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
             }
-            //Tenrou Sky Corridor areas
+
+            // Tenrou Sky Corridor areas
             else if (dataLoader.model.AreaID() == 391 || dataLoader.model.AreaID() == 392 || dataLoader.model.AreaID() == 394 || dataLoader.model.AreaID() == 415 || dataLoader.model.AreaID() == 416)
             {
-                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}", GetQuestInformation(dataLoader), dataLoader.model.GetAreaName(dataLoader.model.AreaID()));
+                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}", this.GetQuestInformation(dataLoader), dataLoader.model.GetAreaName(dataLoader.model.AreaID()));
                 presenceTemplate.Assets.LargeImageKey = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
                 presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
             }
-            //Duremudira Doors
+
+            // Duremudira Doors
             else if (dataLoader.model.AreaID() == 399 || dataLoader.model.AreaID() == 414)
             {
                 presenceTemplate.Assets.LargeImageKey = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
-                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}", GetQuestInformation(dataLoader), dataLoader.model.GetAreaName(dataLoader.model.AreaID()));
+                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}", this.GetQuestInformation(dataLoader), dataLoader.model.GetAreaName(dataLoader.model.AreaID()));
                 presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
             }
-            //Duremudira Arena
+
+            // Duremudira Arena
             else if (dataLoader.model.AreaID() == 398)
             {
                 presenceTemplate.Assets.LargeImageKey = dataLoader.model.getMonsterIcon(dataLoader.model.LargeMonster1ID());
-                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}/{2}{3}", GetQuestInformation(dataLoader), dataLoader.model.GetMonster1EHP(), dataLoader.model.GetMonster1MaxEHP(), dataLoader.model.GetMonster1EHPPercent());
+                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}/{2}{3}", this.GetQuestInformation(dataLoader), dataLoader.model.GetMonster1EHP(), dataLoader.model.GetMonster1MaxEHP(), dataLoader.model.GetMonster1EHPPercent());
                 presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
             }
-            //Hunter's Road Base Camp
+
+            // Hunter's Road Base Camp
             else if (dataLoader.model.AreaID() == 459)
             {
                 presenceTemplate.Assets.LargeImageKey = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
-                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1} | Faints: {2}/{3}", GetQuestInformation(dataLoader), dataLoader.model.GetAreaName(dataLoader.model.AreaID()), dataLoader.model.CurrentFaints(), dataLoader.model.GetMaxFaints());
+                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1} | Faints: {2}/{3}", this.GetQuestInformation(dataLoader), dataLoader.model.GetAreaName(dataLoader.model.AreaID()), dataLoader.model.CurrentFaints(), dataLoader.model.GetMaxFaints());
                 presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
             }
-            //Raviente
+
+            // Raviente
             else if (dataLoader.model.AreaID() == 309 || dataLoader.model.AreaID() >= 311 && dataLoader.model.AreaID() <= 321 || dataLoader.model.AreaID() >= 417 && dataLoader.model.AreaID() <= 422 || dataLoader.model.AreaID() == 437 || dataLoader.model.AreaID() >= 440 && dataLoader.model.AreaID() <= 444)
             {
                 presenceTemplate.Assets.LargeImageKey = dataLoader.model.getMonsterIcon(dataLoader.model.LargeMonster1ID());
-                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}/{2}{3} | Faints: {4}/{5} | Points: {6} | {7}", GetQuestInformation(dataLoader), dataLoader.model.GetMonster1EHP(), dataLoader.model.GetMonster1MaxEHP(), dataLoader.model.GetMonster1EHPPercent(), dataLoader.model.CurrentFaints(), dataLoader.model.GetMaxFaints(), dataLoader.model.GreatSlayingPoints(), GetRavienteEvent(dataLoader.model.RavienteTriggeredEvent(), dataLoader));
+                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}/{2}{3} | Faints: {4}/{5} | Points: {6} | {7}", this.GetQuestInformation(dataLoader), dataLoader.model.GetMonster1EHP(), dataLoader.model.GetMonster1MaxEHP(), dataLoader.model.GetMonster1EHPPercent(), dataLoader.model.CurrentFaints(), dataLoader.model.GetMaxFaints(), dataLoader.model.GreatSlayingPoints(), GetRavienteEvent(dataLoader.model.RavienteTriggeredEvent(), dataLoader));
                 presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
             }
             else
             {
                 presenceTemplate.Assets.LargeImageKey = dataLoader.model.getMonsterIcon(dataLoader.model.LargeMonster1ID());
-                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}/{2}{3} | Faints: {4}/{5}", GetQuestInformation(dataLoader), dataLoader.model.GetMonster1EHP(), dataLoader.model.GetMonster1MaxEHP(), dataLoader.model.GetMonster1EHPPercent(), dataLoader.model.CurrentFaints(), dataLoader.model.GetMaxFaints());
+                largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}/{2}{3} | Faints: {4}/{5}", this.GetQuestInformation(dataLoader), dataLoader.model.GetMonster1EHP(), dataLoader.model.GetMonster1MaxEHP(), dataLoader.model.GetMonster1EHPPercent(), dataLoader.model.CurrentFaints(), dataLoader.model.GetMaxFaints());
                 presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
             }
         }
@@ -262,46 +269,46 @@ internal sealed class DiscordManager
 
             switch (dataLoader.model.AreaID())
             {
-                case 0: //Loading
+                case 0: // Loading
                     presenceTemplate.State = "Loading...";
                     break;
-                case 87: //Kokoto Village
-                case 131: //Dundorma areas
+                case 87: // Kokoto Village
+                case 131: // Dundorma areas
                 case 132:
                 case 133:
                 case 134:
                 case 135:
                 case 136:
-                case 200: //Mezeporta
-                case 201://Hairdresser
-                case 206://Old Town Areas
+                case 200: // Mezeporta
+                case 201:// Hairdresser
+                case 206:// Old Town Areas
                 case 207:
-                case 210://Private Bar
-                case 211://Rasta Bar
-                case 244://Code Claiming Room
-                case 282://Cities Map
-                case 340://SR Rooms
+                case 210:// Private Bar
+                case 211:// Rasta Bar
+                case 244:// Code Claiming Room
+                case 282:// Cities Map
+                case 340:// SR Rooms
                 case 341:
-                case 397://Mezeporta Dupe(non-HD)
+                case 397:// Mezeporta Dupe(non-HD)
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Diva Skill: {3} ({4} Left) | Poogie Item: {5}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkillWithNull(dataLoader.model.GuildFoodSkill()), dataLoader.model.GetDivaSkillNameFromID(dataLoader.model.DivaSkill()), dataLoader.model.DivaSkillUsesLeft(), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
                 case 173:// My House (original)
-                case 175://My House (MAX)
+                case 175:// My House (MAX)
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | Partner Lv: {1} | Armor Color: {2} | GCP: {3}", dataLoader.model.GRankNumber(), dataLoader.model.PartnerLevel(), dataLoader.model.GetArmorColor(), dataLoader.model.GCP());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 202://Guild Halls
+                case 202:// Guild Halls
                 case 203:
                 case 204:
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 205://Pugi Farm
+                case 205:// Pugi Farm
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | Poogie Points: {1} | Poogie Clothes: {2} | Poogie Item: {3}", dataLoader.model.GRankNumber(), dataLoader.model.PoogiePoints(), dataLoader.model.GetPoogieClothes(dataLoader.model.PoogieCostume()), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 256://Caravan Areas
+                case 256:// Caravan Areas
                 case 260:
                 case 261:
                 case 262:
@@ -309,58 +316,58 @@ internal sealed class DiscordManager
                     stateString = string.Format(CultureInfo.InvariantCulture, "CP: {0} | Gg: {1} | g: {2} | Gem Lv: {3} | Great Slaying Points: {4}", dataLoader.model.CaravanPoints(), dataLoader.model.RaviGg(), dataLoader.model.Ravig(), dataLoader.model.CaravenGemLevel() + 1, dataLoader.model.GreatSlayingPointsSaved());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 257://Blacksmith
+                case 257:// Blacksmith
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | GZenny: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GZenny());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 264://Gallery
+                case 264:// Gallery
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Score: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GalleryEvaluationScore());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 265://Guuku Farm
+                case 265:// Guuku Farm
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 283://Halk Area TODO partnya lv
+                case 283:// Halk Area TODO partnya lv
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | PNRP: {2} | Halk Fullness: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.PartnyaRankPoints(), dataLoader.model.HalkFullness());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 286://PvP Room
+                case 286:// PvP Room
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 379://Diva Hall
-                case 445://Guild Hall (Diva Event)
+                case 379:// Diva Hall
+                case 445:// Guild Hall (Diva Event)
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | Diva Skill: {1} ({2} Left) | Diva Bond: {3} | Items Given: {4}", dataLoader.model.GRankNumber(), dataLoader.model.GetDivaSkillNameFromID(dataLoader.model.DivaSkill()), dataLoader.model.DivaSkillUsesLeft(), dataLoader.model.DivaBond(), dataLoader.model.DivaItemsGiven());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 462://MezFez Entrance
-                case 463: //Volpkun Together
-                case 465://MezFez Minigame
+                case 462:// MezFez Entrance
+                case 463: // Volpkun Together
+                case 465:// MezFez Minigame
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | MezFes Points: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.model.GRankNumber(), dataLoader.model.MezeportaFestivalPoints(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 464://Uruki Pachinko
+                case 464:// Uruki Pachinko
                     stateString = string.Format(CultureInfo.InvariantCulture, "Score: {0} | Chain: {1} | Fish: {2} | Mushroom: {3} | Seed: {4} | Meat: {5}", dataLoader.model.UrukiPachinkoScore() + dataLoader.model.UrukiPachinkoBonusScore(), dataLoader.model.UrukiPachinkoChain(), dataLoader.model.UrukiPachinkoFish(), dataLoader.model.UrukiPachinkoMushroom(), dataLoader.model.UrukiPachinkoSeed(), dataLoader.model.UrukiPachinkoMeat());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 466://Guuku Scoop
+                case 466:// Guuku Scoop
                     stateString = string.Format(CultureInfo.InvariantCulture, "Score: {0} | Small Guuku: {1} | Medium Guuku: {2} | Large Guuku: {3} | Golden Guuku: {4}", dataLoader.model.GuukuScoopScore(), dataLoader.model.GuukuScoopSmall(), dataLoader.model.GuukuScoopMedium(), dataLoader.model.GuukuScoopLarge(), dataLoader.model.GuukuScoopGolden());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 467://Nyanrendo
+                case 467:// Nyanrendo
                     stateString = string.Format(CultureInfo.InvariantCulture, "Score: {0}", dataLoader.model.NyanrendoScore());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 468://Panic Honey
+                case 468:// Panic Honey
                     stateString = string.Format(CultureInfo.InvariantCulture, "Honey: {0}", dataLoader.model.PanicHoneyScore());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                case 469://Dokkan Battle Cats
+                case 469:// Dokkan Battle Cats
                     stateString = string.Format(CultureInfo.InvariantCulture, "Score: {0} | Scale: {1} | Shell: {2} | Camp: {3}", dataLoader.model.DokkanBattleCatsScore(), dataLoader.model.DokkanBattleCatsScale(), dataLoader.model.DokkanBattleCatsShell(), dataLoader.model.DokkanBattleCatsCamp());
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
-                default: //same as Mezeporta
+                default: // same as Mezeporta
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? stateString : stateString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
                     break;
@@ -371,67 +378,65 @@ internal sealed class DiscordManager
             presenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? largeImageTextString : largeImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
         }
 
-        //Timer
-        if (dataLoader.model.QuestID() != 0 && !inQuest && dataLoader.model.TimeDefInt() > dataLoader.model.TimeInt() && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0 || dataLoader.model.IsRoad() || dataLoader.model.IsDure())
+        // Timer
+        if (dataLoader.model.QuestID() != 0 && !this.inQuest && dataLoader.model.TimeDefInt() > dataLoader.model.TimeInt() && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0 || dataLoader.model.IsRoad() || dataLoader.model.IsDure())
         {
-            inQuest = true;
+            this.inQuest = true;
 
             if (!(dataLoader.model.IsRoad() || dataLoader.model.IsDure()))
             {
                 presenceTemplate.Timestamps = GetDiscordTimerMode() switch
                 {
-                    "Time Left" => Timestamps.FromTimeSpan(dataLoader.model.TimeDefInt() / double.Parse(Numbers.FRAMES_PER_SECOND.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)),
+                    "Time Left" => Timestamps.FromTimeSpan(dataLoader.model.TimeDefInt() / double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)),
                     "Time Elapsed" => Timestamps.Now,
-                    //dure doorway too
-                    _ => Timestamps.FromTimeSpan(dataLoader.model.TimeDefInt() / double.Parse(Numbers.FRAMES_PER_SECOND.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)),
+
+                    // dure doorway too
+                    _ => Timestamps.FromTimeSpan(dataLoader.model.TimeDefInt() / double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)),
                 };
             }
 
             if (dataLoader.model.IsRoad())
             {
-                switch (GetRoadTimerResetMode())
+                switch (this.GetRoadTimerResetMode())
                 {
                     case "Always":
-                        if (dataLoader.model.AreaID() == 458)//Hunter's Road Area 1
+                        if (dataLoader.model.AreaID() == 458)// Hunter's Road Area 1
                         {
                             break;
                         }
 
-                        else if (dataLoader.model.AreaID() == 459)//Hunter's Road Base Camp
+                        else if (dataLoader.model.AreaID() == 459)// Hunter's Road Base Camp
                         {
                             if (dataLoader.model.RoadFloor() + 1 > dataLoader.model.previousRoadFloor)
                             {
                                 // reset values
-                                inQuest = false;
-                                //// dataLoader.model.currentMonster1MaxHP = 0;
-                                // dataLoader.model.previousRoadFloor = dataLoader.model.RoadFloor() + 1;
+                                this.inQuest = false;
                                 presenceTemplate.Timestamps = GetDiscordTimerMode() switch
                                 {
-                                    "Time Left" => Timestamps.FromTimeSpan(dataLoader.model.TimeInt() / double.Parse(Numbers.FRAMES_PER_SECOND.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)),
+                                    "Time Left" => Timestamps.FromTimeSpan(dataLoader.model.TimeInt() / double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)),
                                     "Time Elapsed" => Timestamps.Now,
-                                    _ => Timestamps.FromTimeSpan(dataLoader.model.TimeInt() / double.Parse(Numbers.FRAMES_PER_SECOND.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)),
+                                    _ => Timestamps.FromTimeSpan(dataLoader.model.TimeInt() / double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)),
                                 };
                             }
+
                             break;
                         }
                         else
                         {
                             break;
                         }
+
                     case "Never":
-                        if (dataLoader.model.AreaID() == 458)//Hunter's Road Area 1
+                        if (dataLoader.model.AreaID() == 458)// Hunter's Road Area 1
                         {
                             break;
                         }
-
-                        else if (dataLoader.model.AreaID() == 459)//Hunter's Road Base Camp
+                        else if (dataLoader.model.AreaID() == 459)// Hunter's Road Base Camp
                         {
                             if (dataLoader.model.RoadFloor() + 1 > dataLoader.model.previousRoadFloor)
                             {
                                 // reset values
-                                inQuest = false;
-                                // dataLoader.model.currentMonster1MaxHP = 0;
-                                // dataLoader.model.previousRoadFloor = dataLoader.model.RoadFloor() + 1;
+                                this.inQuest = false;
 
                                 if (!StartedRoadElapsedTime)
                                 {
@@ -445,20 +450,19 @@ internal sealed class DiscordManager
                         {
                             break;
                         }
+
                     default:
-                        if (dataLoader.model.AreaID() == 458)//Hunter's Road Area 1
+                        if (dataLoader.model.AreaID() == 458)// Hunter's Road Area 1
                         {
                             break;
                         }
 
-                        else if (dataLoader.model.AreaID() == 459)//Hunter's Road Base Camp
+                        else if (dataLoader.model.AreaID() == 459)// Hunter's Road Base Camp
                         {
                             if (dataLoader.model.RoadFloor() + 1 > dataLoader.model.previousRoadFloor)
                             {
                                 // reset values
-                                inQuest = false;
-                                // dataLoader.model.currentMonster1MaxHP = 0;
-                                // dataLoader.model.previousRoadFloor = dataLoader.model.RoadFloor() + 1;
+                                this.inQuest = false;
 
                                 if (!StartedRoadElapsedTime)
                                 {
@@ -466,6 +470,7 @@ internal sealed class DiscordManager
                                     presenceTemplate.Timestamps = Timestamps.Now;
                                 }
                             }
+
                             break;
                         }
                         else
@@ -480,13 +485,13 @@ internal sealed class DiscordManager
 
                 switch (dataLoader.model.AreaID())
                 {
-                    case 398://Duremudira Arena
+                    case 398:// Duremudira Arena
 
                         if (!inDuremudiraArena)
                         {
                             inDuremudiraArena = true;
 
-                            if (dataLoader.model.QuestID() == 23649)//Arrogant Dure Slay
+                            if (dataLoader.model.QuestID() == 23649)// Arrogant Dure Slay
                             {
                                 presenceTemplate.Timestamps = GetDiscordTimerMode() switch
                                 {
@@ -506,25 +511,24 @@ internal sealed class DiscordManager
                                 };
                             }
                         }
-                        break;
 
+                        break;
                     default:
                         if (!inDuremudiraDoorway)
                         {
                             inDuremudiraDoorway = true;
                             presenceTemplate.Timestamps = Timestamps.Now;
                         }
+
                         break;
                 }
             }
         }
         // going back to Mezeporta or w/e
-        else if (dataLoader.model.QuestState() != 1 && dataLoader.model.QuestID() == 0 && inQuest && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) == 0)
+        else if (dataLoader.model.QuestState() != 1 && dataLoader.model.QuestID() == 0 && this.inQuest && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) == 0)
         {
-            //reset values
-            inQuest = false;
-            // dataLoader.model.currentMonster1MaxHP = 0;
-            // dataLoader.model.previousRoadFloor = 0;
+            // reset values
+            this.inQuest = false;
             StartedRoadElapsedTime = false;
             inDuremudiraArena = false;
             inDuremudiraDoorway = false;
@@ -532,10 +536,10 @@ internal sealed class DiscordManager
             presenceTemplate.Timestamps = Timestamps.Now;
         }
 
-        //SmallInfo
-        presenceTemplate.Assets.SmallImageKey = GetWeaponIconFromID(dataLoader.model.WeaponType(), dataLoader);
+        // SmallInfo
+        presenceTemplate.Assets.SmallImageKey = this.GetWeaponIconFromID(dataLoader.model.WeaponType(), dataLoader);
 
-        if (GetHunterName != "" && GetGuildName != "" && GetServerName != "")
+        if (GetHunterName != string.Empty && GetGuildName != string.Empty && GetServerName != string.Empty)
         {
             smallImageTextString = string.Format(CultureInfo.InvariantCulture, "{0} | {1} | {2} | GSR: {3} | {4} Style | Caravan Skills: {5}", GetHunterName, GetGuildName, GetServerName, dataLoader.model.GSR(), dataLoader.model.GetWeaponStyleFromID(dataLoader.model.WeaponStyle()), dataLoader.model.GetCaravanSkillsWithoutMarkdown(dataLoader));
             presenceTemplate.Assets.SmallImageText = smallImageTextString.Length <= MAX_DISCORD_RPC_STRING_LENGTH ? smallImageTextString : smallImageTextString.Substring(0, MAX_DISCORD_RPC_STRING_LENGTH - 3) + "...";
@@ -576,8 +580,8 @@ internal sealed class DiscordManager
     /// </value>
     private static DiscordRpcClient? discordRPCClient;
 
-    //Called when your application first starts.
-    //For example, just before your main loop, on OnEnable for unity.
+    // Called when your application first starts.
+    // For example, just before your main loop, on OnEnable for unity.
     private static void SetupDiscordRPC()
     {
         /*
@@ -587,15 +591,15 @@ internal sealed class DiscordManager
         */
         discordRPCClient = new DiscordRpcClient(GetDiscordClientID);
 
-        //Set the LoggerInstance
+        // Set the LoggerInstance
 
-        //Subscribe to events
+        // Subscribe to events
 
-        //Connect to the RPC
+        // Connect to the RPC
         discordRPCClient.Initialize();
 
-        //Set the rich presence
-        //Call this as many times as you want and anywhere in your code.
+        // Set the rich presence
+        // Call this as many times as you want and anywhere in your code.
         LoggerInstance.Info(CultureInfo.InvariantCulture, "Set up Discord RPC");
     }
 
@@ -730,7 +734,8 @@ internal sealed class DiscordManager
     {
         Details = "【MHF-Z】Overlay " + App.CurrentProgramVersion,
         State = "Loading...",
-        //check img folder
+
+        // check img folder
         Assets = new Assets()
         {
             LargeImageKey = "cattleya",
@@ -745,7 +750,7 @@ internal sealed class DiscordManager
             }
     };
 
-    //dure and road        
+    // dure and road        
     /// <summary>
     /// In the arena?
     /// </summary>
@@ -932,7 +937,9 @@ internal sealed class DiscordManager
         }
 
         if (weaponIconName != "https://i.imgur.com/9OkLYAz.png" && !colorName.Contains("White"))
+            {
             weaponIconName += "_";
+        }
 
         if (colorName.Contains("Green"))
         {
@@ -942,7 +949,6 @@ internal sealed class DiscordManager
         {
             weaponIconName += "red";
         }
-
         else if (colorName.Contains("Pink"))
         {
             weaponIconName += "pink";
@@ -1156,46 +1162,46 @@ internal sealed class DiscordManager
 
     private bool inQuest;
 
-    //quest ids:
-    //mp road: 23527
-    //solo road: 23628
-    //1st district dure: 21731
-    //2nd district dure: 21746
-    //1st district dure sky corridor: 21749
-    //2nd district dure sky corridor: 21750
-    //arrogant dure repel: 23648
-    //arrogant dure slay: 23649
-    //urgent tower: 21751
-    //4th district dure: 21748
-    //3rd district dure: 21747
-    //3rd district dure 2: 21734
-    //UNUSED sky corridor: 21730
-    //sky corridor prologue: 21729
-    //raviente 62105
-    //raviente carve 62108
+    // quest ids:
+    // mp road: 23527
+    // solo road: 23628
+    // 1st district dure: 21731
+    // 2nd district dure: 21746
+    // 1st district dure sky corridor: 21749
+    // 2nd district dure sky corridor: 21750
+    // arrogant dure repel: 23648
+    // arrogant dure slay: 23649
+    // urgent tower: 21751
+    // 4th district dure: 21748
+    // 3rd district dure: 21747
+    // 3rd district dure 2: 21734
+    // UNUSED sky corridor: 21730
+    // sky corridor prologue: 21729
+    // raviente 62105
+    // raviente carve 62108
     ///violent raviente 62101
     ///violent carve 62104
-    //berserk slay practice 55796
-    //berserk support practice 1 55802
-    //berserk support practice 2 55803
-    //berserk support practice 3 55804
-    //berserk support practice 4 55805
-    //berserk support practice 5 55806
-    //berserk practice carve 55807
-    //berserk slay  54751
-    //berserk support 1 54756
-    //berserk support 2 54757
-    //berserk support 3 54758
-    //berserk support 4 54759
-    //berserk support 5 54760
-    //berserk carve 54761
-    //extreme slay (musou table 54) 55596 
-    //extreme support 1 55602
-    //extreme support 2 55603
-    //extreme support 3 55604
-    //extreme support 4 55605
-    //extreme support 5 55606
-    //extreme carve 55607
+    // berserk slay practice 55796
+    // berserk support practice 1 55802
+    // berserk support practice 2 55803
+    // berserk support practice 3 55804
+    // berserk support practice 4 55805
+    // berserk support practice 5 55806
+    // berserk practice carve 55807
+    // berserk slay  54751
+    // berserk support 1 54756
+    // berserk support 2 54757
+    // berserk support 3 54758
+    // berserk support 4 54759
+    // berserk support 5 54760
+    // berserk carve 54761
+    // extreme slay (musou table 54) 55596 
+    // extreme support 1 55602
+    // extreme support 2 55603
+    // extreme support 3 55604
+    // extreme support 4 55605
+    // extreme support 5 55606
+    // extreme carve 55607
 
     const int MAX_DISCORD_RPC_STRING_LENGTH = 127; // or any other maximum length specified by Discord
 
@@ -1230,19 +1236,19 @@ internal sealed class DiscordManager
         {
             switch (dataLoader.model.QuestID())
             {
-                case 23648://arrogant repel
+                case 23648:// arrogant repel
                     return "Repel Arrogant Duremudira | ";
-                case 23649://arrogant slay
+                case 23649:// arrogant slay
                     return "Slay Arrogant Duremudira | ";
                 case 23527:// Hunter's Road Multiplayer
                     return string.Empty;
-                case 23628://solo road
+                case 23628:// solo road
                     return string.Empty;
-                case 21731://1st district dure
-                case 21749://sky corridor version
+                case 21731:// 1st district dure
+                case 21749:// sky corridor version
                     return "Slay 1st District Duremudira | ";
-                case 21746://2nd district dure
-                case 21750://sky corridor version
+                case 21746:// 2nd district dure
+                case 21750:// sky corridor version
                     return "Slay 2nd District Duremudira | ";
                 default:
                     if ((dataLoader.model.ObjectiveType() == 0x0 || dataLoader.model.ObjectiveType() == 0x02 || dataLoader.model.ObjectiveType() == 0x1002 || dataLoader.model.ObjectiveType() == 0x10) && dataLoader.model.QuestID() != 23527 && dataLoader.model.QuestID() != 23628 && dataLoader.model.QuestID() != 21731 && dataLoader.model.QuestID() != 21749 && dataLoader.model.QuestID() != 21746 && dataLoader.model.QuestID() != 21750)
@@ -1251,7 +1257,7 @@ internal sealed class DiscordManager
                     }
                     else
                     {
-                        return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5} | ", dataLoader.model.GetObjectiveNameFromID(dataLoader.model.ObjectiveType(), true), "", dataLoader.model.GetObjective1Quantity(true), dataLoader.model.GetRankNameFromID(dataLoader.model.RankBand(), true), dataLoader.model.GetStarGrade(true), dataLoader.model.GetRealMonsterName(dataLoader.model.CurrentMonster1Icon, true));
+                        return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5} | ", dataLoader.model.GetObjectiveNameFromID(dataLoader.model.ObjectiveType(), true), string.Empty, dataLoader.model.GetObjective1Quantity(true), dataLoader.model.GetRankNameFromID(dataLoader.model.RankBand(), true), dataLoader.model.GetStarGrade(true), dataLoader.model.GetRealMonsterName(dataLoader.model.CurrentMonster1Icon, true));
                     }
             }
         }
@@ -1273,7 +1279,7 @@ internal sealed class DiscordManager
         }
         else
         {
-            return string.Format(CultureInfo.InvariantCulture, "Party: {0}/{1} | ", dataLoader.model.PartySize(), GetPartySizeMax(dataLoader));
+            return string.Format(CultureInfo.InvariantCulture, "Party: {0}/{1} | ", dataLoader.model.PartySize(), this.GetPartySizeMax(dataLoader));
         }
     }
 

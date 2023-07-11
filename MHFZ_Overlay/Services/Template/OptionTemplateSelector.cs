@@ -20,6 +20,7 @@ public class OptionTemplateSelector : DataTemplateSelector
                 return element.FindResource(selectedOption) as DataTemplate;
             }
         }
+
         return null;
     }
 }

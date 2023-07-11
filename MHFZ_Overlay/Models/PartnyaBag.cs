@@ -21,7 +21,6 @@ public class PartnyaBag
 
     public long Item1Quantity { get; set; }
 
-
     public long Item2ID { get; set; }
 
     public long Item2Quantity { get; set; }

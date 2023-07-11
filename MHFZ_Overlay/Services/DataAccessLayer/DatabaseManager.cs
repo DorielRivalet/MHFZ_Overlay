@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 // TODO: PascalCase for functions, camelCase for private fields, ALL_CAPS for constants
-
 namespace MHFZ_Overlay.Services.DataAccessLayer;
 
 using System;
@@ -44,7 +43,19 @@ using Quest = Models.Quest;
 /// </summary>
 public class DatabaseManager
 {
-    private string? _connectionString;
+    public HashSet<Quest> AllQuests = new ();
+    public HashSet<MezFes> AllMezFes = new ();
+    public HashSet<Bingo> AllBingo = new ();
+    public HashSet<ZenithGauntlet> AllZenithGauntlets = new ();
+    public HashSet<SolsticeGauntlet> AllSolsticeGauntlets = new ();
+    public HashSet<MusouGauntlet> AllMusouGauntlets = new ();
+    public HashSet<PersonalBestAttempts> AllPersonalBestAttempts = new ();
+    public HashSet<PlayerGear> AllPlayerGear = new ();
+    public HashSet<ActiveSkills> AllActiveSkills = new ();
+    public HashSet<StyleRankSkills> AllStyleRankSkills = new ();
+    public HashSet<QuestAttempts> AllQuestAttempts = new ();
+    public HashSet<GachaCardInventory> AllGachaCards = new ();
+    public HashSet<PlayerInventory> AllPlayerInventories = new ();
 
     private static DatabaseManager? instance;
 
@@ -52,20 +63,7 @@ public class DatabaseManager
     private static readonly AchievementManager achievementManager = AchievementManager.GetInstance();
 
     private const string BackupFolderName = "backups";
-
-    public HashSet<Quest> allQuests = new();
-    public HashSet<MezFes> allMezFes = new();
-    public HashSet<Bingo> allBingo = new();
-    public HashSet<ZenithGauntlet> allZenithGauntlets = new();
-    public HashSet<SolsticeGauntlet> allSolsticeGauntlets = new();
-    public HashSet<MusouGauntlet> allMusouGauntlets = new();
-    public HashSet<PersonalBestAttempts> allPersonalBestAttempts = new();
-    public HashSet<PlayerGear> allPlayerGear = new();
-    public HashSet<ActiveSkills> allActiveSkills = new();
-    public HashSet<StyleRankSkills> allStyleRankSkills = new();
-    public HashSet<QuestAttempts> allQuestAttempts = new();
-    public HashSet<GachaCardInventory> allGachaCards = new();
-    public HashSet<PlayerInventory> allPlayerInventories = new();
+    private string? _connectionString;
 
     private DatabaseManager()
     {
@@ -81,7 +79,7 @@ public class DatabaseManager
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
             logger.Warn(CultureInfo.InvariantCulture, "Database structure needs update");
-            MessageBox.Show("Please update the database structure", Messages.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Please update the database structure", Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             s.EnableQuestLogging = false;
         }
     }
@@ -98,6 +96,7 @@ public class DatabaseManager
             // Show warning to user that they should set a custom database path to prevent data loss on update
             logger.Warn(CultureInfo.InvariantCulture, "The database file is being saved to the overlay default location");
             MessageBox.Show("Warning: The database is currently stored in the default location and will be deleted on update. Please select a custom database location to prevent data loss.", "MHFZ-Overlay Data Loss Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+
             // Use default database path
             _customDatabasePath = _connectionString;
         }
@@ -122,12 +121,11 @@ public class DatabaseManager
             logger.Debug("Singleton not found, creating instance.");
             instance = new DatabaseManager();
         }
+
         logger.Debug("Singleton found, returning instance.");
         logger.Trace(new StackTrace().ToString());
         return instance;
     }
-
-    #region program time
 
     // Calculate the total time spent using the program
     // TODO: add transaction. check if others also need transaction.
@@ -172,13 +170,8 @@ public class DatabaseManager
         return totalTimeSpent;
     }
 
+    private bool isDatabaseSetup;
 
-
-    #endregion
-
-    #region database
-
-    private bool isDatabaseSetup = false;
     private static string previousVersion = string.Empty;
 
     public bool SetupLocalDatabase(DataLoader dataLoader)
@@ -212,7 +205,7 @@ public class DatabaseManager
             catch (SQLiteException ex)
             {
                 logger.Error(ex, "Invalid database file");
-                MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Invalid database file. Delete the MHFZ_Overlay.sqlite, previousVersion.txt and reference_schema.json if present, and rerun the program.\n\n{0}", ex), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
 
@@ -259,14 +252,16 @@ public class DatabaseManager
             if (schemaChanged)
             {
                 logger.Fatal(CultureInfo.InvariantCulture, "Outdated database schema");
-                MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         }
 
         dataLoader.model.ShowSaveIcon = false;
+
         // Stop the stopwatch
         stopwatch.Stop();
+
         // Get the elapsed time in milliseconds
         var elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
 
@@ -311,7 +306,7 @@ public class DatabaseManager
     /// <param name="runID"></param>
     public void InsertPersonalBest(DataLoader dataLoader, long currentPersonalBest, long attempts, int runID)
     {
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot insert personal best. dataSource: {0}", dataSource);
             return;
@@ -340,9 +335,11 @@ public class DatabaseManager
                         {
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@Attempts", attempts);
+
                             // Execute the stored procedure
                             cmd.ExecuteNonQuery();
                         }
+
                         // Commit the transaction
                         transaction.Commit();
                     }
@@ -371,16 +368,12 @@ public class DatabaseManager
 
         var s = (Settings)Application.Current.TryFindResource("Settings");
 
-        if (!dataLoader.model.ValidateGameFolder())
+        if (!dataLoader.model.ValidateGameFolder() || !s.EnableQuestLogging || !dataLoader.model.questCleared)
+        {
             return runID;
+        }
 
-        if (!s.EnableQuestLogging)
-            return runID;
-
-        if (!dataLoader.model.questCleared)
-            return runID;
-
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot insert quest data. dataSource: {0}", dataSource);
             return runID;
@@ -404,9 +397,13 @@ public class DatabaseManager
                         cmd.CommandText = @"SELECT MAX(RunID) FROM Quests;";
                         var result = cmd.ExecuteScalar();
                         if (result != null && result.ToString() != "")
+                        {
                             runID = Convert.ToInt32(result);
+                        }
                         else
-                            runID = 1;// TODO test
+                        {
+                            runID = 1; // TODO test
+                        }
                     }
 
                     // Insert data into the Quests table
@@ -517,36 +514,44 @@ public class DatabaseManager
                         var questID = model.QuestID();
                         var timeLeft = model.TimeInt(); // Example value of the TimeLeft variable
                         var finalTimeValue = model.TimeDefInt() - model.TimeInt();
+
                         // Calculate the elapsed time of the quest
                         var finalTimeDisplay = dataLoader.GetQuestTimeCompletion();
+
                         // Convert the elapsed time to a DateTime object
                         string objectiveImage;
+
                         //Gathering/etc
                         if ((dataLoader.model.ObjectiveType() == 0x0 || dataLoader.model.ObjectiveType() == 0x02 || dataLoader.model.ObjectiveType() == 0x1002) && dataLoader.model.QuestID() != 23527 && dataLoader.model.QuestID() != 23628 && dataLoader.model.QuestID() != 21731 && dataLoader.model.QuestID() != 21749 && dataLoader.model.QuestID() != 21746 && dataLoader.model.QuestID() != 21750)
                         {
                             objectiveImage = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
                         }
+
                         //Tenrou Sky Corridor areas
                         else if (dataLoader.model.AreaID() == 391 || dataLoader.model.AreaID() == 392 || dataLoader.model.AreaID() == 394 || dataLoader.model.AreaID() == 415 || dataLoader.model.AreaID() == 416)
                         {
                             objectiveImage = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
 
                         }
+
                         //Duremudira Doors
                         else if (dataLoader.model.AreaID() == 399 || dataLoader.model.AreaID() == 414)
                         {
                             objectiveImage = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
                         }
+
                         //Duremudira Arena
                         else if (dataLoader.model.AreaID() == 398)
                         {
                             objectiveImage = dataLoader.model.getMonsterIcon(dataLoader.model.LargeMonster1ID());
                         }
+
                         //Hunter's Road Base Camp
                         else if (dataLoader.model.AreaID() == 459)
                         {
                             objectiveImage = dataLoader.model.GetAreaIconFromID(dataLoader.model.AreaID());
                         }
+
                         //Raviente
                         else if (dataLoader.model.AreaID() == 309 || dataLoader.model.AreaID() >= 311 && dataLoader.model.AreaID() <= 321 || dataLoader.model.AreaID() >= 417 && dataLoader.model.AreaID() <= 422 || dataLoader.model.AreaID() == 437 || dataLoader.model.AreaID() >= 440 && dataLoader.model.AreaID() <= 444)
                         {
@@ -561,24 +566,33 @@ public class DatabaseManager
 
                         string objectiveName;
                         if ((model.ObjectiveType() == 0x0 || model.ObjectiveType() == 0x02 || model.ObjectiveType() == 0x1002 || model.ObjectiveType() == 0x10) && model.QuestID() != 23527 && model.QuestID() != 23628 && model.QuestID() != 21731 && model.QuestID() != 21749 && model.QuestID() != 21746 && model.QuestID() != 21750)
+                        {
                             objectiveName = model.GetObjective1Name(model.Objective1ID(), true);
+                        }
                         else
+                        {
                             objectiveName = model.GetRealMonsterName(model.CurrentMonster1Icon, true);
+                        }
 
                         var rankName = model.GetRankNameFromID(model.RankBand(), true);
                         var objectiveQuantity = model.Objective1Quantity();
                         var starGrade = model.StarGrades();
 
+                        // TODO repeated?
                         if ((model.ObjectiveType() == 0x0 || model.ObjectiveType() == 0x02 || model.ObjectiveType() == 0x1002 || model.ObjectiveType() == 0x10) && model.QuestID() != 23527 && model.QuestID() != 23628 && model.QuestID() != 21731 && model.QuestID() != 21749 && model.QuestID() != 21746 && model.QuestID() != 21750)
+                        {
                             objectiveName = model.GetObjective1Name(model.Objective1ID(), true);
+                        }
                         else
+                        {
                             objectiveName = model.GetRealMonsterName(model.CurrentMonster1Icon, true);
+                        }
 
                         var date = DateTime.UtcNow;
 
                         // TODO
                         //rick roll
-                        var youtubeID = Messages.RICK_ROLL_ID;
+                        var youtubeID = Messages.RickRollID;
                         var attackBuffDictionary = dataLoader.model.attackBuffDictionary;
                         var hitCountDictionary = dataLoader.model.hitCountDictionary;
                         var hitsPerSecondDictionary = dataLoader.model.hitsPerSecondDictionary;
@@ -586,6 +600,7 @@ public class DatabaseManager
                         var damagePerSecondDictionary = dataLoader.model.damagePerSecondDictionary;
                         var areaChangesDictionary = dataLoader.model.areaChangesDictionary;
                         var cartsDictionary = dataLoader.model.cartsDictionary;
+
                         // time <monsterid, monsterhp>
                         var hitsTakenBlockedDictionary = dataLoader.model.hitsTakenBlockedDictionary;
                         var hitsTakenBlockedPerSecondDictionary = dataLoader.model.hitsTakenBlockedPerSecondDictionary;
@@ -596,19 +611,26 @@ public class DatabaseManager
                         var gamepadInputDictionary = dataLoader.model.gamepadInputDictionary;
                         var actionsPerMinuteDictionary = dataLoader.model.actionsPerMinuteDictionary;
                         var overlayModeDictionary = dataLoader.model.overlayModeDictionary;
+
                         //check if its grabbing a TimeDefInt from a previous quest
                         // TODO is this enough?
                         if (overlayModeDictionary.Count == 2 && overlayModeDictionary.Last().Value == "" ||
                             overlayModeDictionary.Count == 1 && overlayModeDictionary.First().Value == "" ||
                             overlayModeDictionary.Count > 2)
+                        {
                             actualOverlayMode = "Standard";
+                        }
                         else
                         {
                             // TODO: test
                             if (overlayModeDictionary.Count == 2 && overlayModeDictionary.First().Value == "")
+                            {
                                 actualOverlayMode = overlayModeDictionary.Last().Value;
+                            }
                             else
+                            {
                                 actualOverlayMode = overlayModeDictionary.First().Value;
+                            }
 
                             actualOverlayMode = actualOverlayMode.Replace(")", "");
                             actualOverlayMode = actualOverlayMode.Replace("(", "");
@@ -786,6 +808,7 @@ public class DatabaseManager
                                 cmd.Parameters.AddWithValue("@QuestID", questID);
                                 cmd.Parameters.AddWithValue("@WeaponTypeID", weaponType);
                                 cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+
                                 // Execute the stored procedure
                                 cmd.ExecuteNonQuery();
                                 logger.Debug("Updated PersonalBestAttempts table");
@@ -1701,8 +1724,10 @@ public class DatabaseManager
                     }
 
                     var gearName = s.GearDescriptionExport;
-                    if (gearName == "" || gearName == null)
+                    if (string.IsNullOrEmpty(gearName))
+                    {
                         gearName = "Unnamed";
+                    }
 
                     var weaponTypeID = model.WeaponType();
                     var weaponClassID = weaponTypeID;
@@ -1905,6 +1930,7 @@ public class DatabaseManager
                         cmd.Parameters.AddWithValue("@WeaponIconID", weaponIconID);
                         cmd.Parameters.AddWithValue("@WeaponClassID", weaponClassID);
                         cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+
                         if (blademasterWeaponID == null)
                         {
                             cmd.Parameters.AddWithValue("@BlademasterWeaponID", DBNull.Value);
@@ -1913,6 +1939,7 @@ public class DatabaseManager
                         {
                             cmd.Parameters.AddWithValue("@BlademasterWeaponID", blademasterWeaponID);
                         }
+
                         if (gunnerWeaponID == null)
                         {
                             cmd.Parameters.AddWithValue("@GunnerWeaponID", DBNull.Value);
@@ -1921,6 +1948,7 @@ public class DatabaseManager
                         {
                             cmd.Parameters.AddWithValue("@GunnerWeaponID", gunnerWeaponID);
                         }
+
                         cmd.Parameters.AddWithValue("@WeaponSlot1", weaponSlot1);
                         cmd.Parameters.AddWithValue("@WeaponSlot2", weaponSlot2);
                         cmd.Parameters.AddWithValue("@WeaponSlot3", weaponSlot3);
@@ -1967,13 +1995,17 @@ public class DatabaseManager
 
                         logger.Debug("Inserted into PlayerGear table");
                     }
+
                     // Commit the transaction
                     transaction.Commit();
                 }
                 catch (SQLiteException ex)
                 {
                     if (transaction != null)
+                    {
                         transaction.Rollback();
+                    }
+
                     // Handle a SQL exception
                     logger.Error(ex, "An error occurred while accessing the database");
                     MessageBox.Show(string.Format(
@@ -1995,22 +2027,28 @@ Data: {6}
 
 Message: {7}",
 ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace, JsonConvert.SerializeObject(ex.Data), ex.Message),
-                        Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (IOException ex)
                 {
                     if (transaction != null)
+                    {
                         transaction.Rollback();
+                    }
+
                     // Handle an I/O exception
                     logger.Error(ex, "An error occurred while accessing a file");
-                    MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (ArgumentException ex)
                 {
                     if (transaction != null)
+                    {
                         transaction.Rollback();
+                    }
+
                     logger.Error(ex, "ArgumentException");
-                    MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("ArgumentException " + ex.ParamName + "\n\n" + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (Exception ex)
                 {
@@ -2021,6 +2059,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             UpdateHashSets(conn);
         }
 
+        logger.Debug("Inserted quest data, returning runID {0}", runID);
         dataLoader.model.ShowSaveIcon = false;
         return runID;
     }
@@ -2047,93 +2086,119 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
 
         if (lastQuest.RunID != 0)
         {
-            var questAdded = allQuests.Add(lastQuest);
+            var questAdded = AllQuests.Add(lastQuest);
             if (!questAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last quest already found in hash set");
+            }
         }
 
         if (lastMezFes.MezFesID != 0)
         {
-            var mezfesAdded = allMezFes.Add(lastMezFes);
+            var mezfesAdded = AllMezFes.Add(lastMezFes);
             if (!mezfesAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last mezfes already found in hash set");
+            }
         }
 
         if (lastBingo.BingoID != 0)
         {
-            var bingoAdded = allBingo.Add(lastBingo);
+            var bingoAdded = AllBingo.Add(lastBingo);
             if (!bingoAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last bingo already found in hash set");
+            }
         }
 
         if (lastZenithGauntlet.ZenithGauntletID != 0)
         {
-            var zenithGauntletAdded = allZenithGauntlets.Add(lastZenithGauntlet);
+            var zenithGauntletAdded = AllZenithGauntlets.Add(lastZenithGauntlet);
             if (!zenithGauntletAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last zenith gauntlet already found in hash set");
+            }
         }
 
         if (lastSolsticeGauntlet.SolsticeGauntletID != 0)
         {
-            var solsticeGauntletAdded = allSolsticeGauntlets.Add(lastSolsticeGauntlet);
+            var solsticeGauntletAdded = AllSolsticeGauntlets.Add(lastSolsticeGauntlet);
             if (!solsticeGauntletAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last solstice gauntlet already found in hash set");
+            }
         }
 
         if (lastMusouGauntlet.MusouGauntletID != 0)
         {
-            var musouGauntletAdded = allMusouGauntlets.Add(lastMusouGauntlet);
+            var musouGauntletAdded = AllMusouGauntlets.Add(lastMusouGauntlet);
             if (!musouGauntletAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last musou gauntlet already found in hash set");
+            }
         }
 
         if (lastPersonalBestAttempt.PersonalBestAttemptsID != 0)
         {
-            var personalBestAttemptAdded = allPersonalBestAttempts.Add(lastPersonalBestAttempt);
+            var personalBestAttemptAdded = AllPersonalBestAttempts.Add(lastPersonalBestAttempt);
             if (!personalBestAttemptAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last personal best attempt already found in hash set");
+            }
         }
 
         if (lastPlayerGear.PlayerGearID != 0)
         {
-            var playerGearAdded = allPlayerGear.Add(lastPlayerGear);
+            var playerGearAdded = AllPlayerGear.Add(lastPlayerGear);
             if (!playerGearAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last player gear already found in hash set");
+            }
         }
 
         if (lastActiveSkills.ActiveSkillsID != 0)
         {
-            var activeSkillsAdded = allActiveSkills.Add(lastActiveSkills);
+            var activeSkillsAdded = AllActiveSkills.Add(lastActiveSkills);
             if (!activeSkillsAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last active skills already found in hash set");
+            }
         }
 
         if (lastStyleRankSkills.StyleRankSkillsID != 0)
         {
-            var stylerankSkillsAdded = allStyleRankSkills.Add(lastStyleRankSkills);
+            var stylerankSkillsAdded = AllStyleRankSkills.Add(lastStyleRankSkills);
             if (!stylerankSkillsAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last style rank skills already found in hash set");
+            }
         }
 
         if (lastQuestAttempts.QuestAttemptsID != 0)
         {
-            var questAttemptAdded = allQuestAttempts.Add(lastQuestAttempts);
+            var questAttemptAdded = AllQuestAttempts.Add(lastQuestAttempts);
             if (!questAttemptAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last quest attempt already found in hash set");
+            }
         }
 
         if (lastGachaCard.GachaCardInventoryID != 0)
         {
-            var gachaCardAdded = allGachaCards.Add(lastGachaCard);
+            var gachaCardAdded = AllGachaCards.Add(lastGachaCard);
             if (!gachaCardAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last gacha card already found in hash set");
+            }
         }
 
         if (lastPlayerInventory.PlayerInventoryID != 0)
         {
-            var playerInventoryAdded = allPlayerInventories.Add(lastPlayerInventory);
+            var playerInventoryAdded = AllPlayerInventories.Add(lastPlayerInventory);
             if (!playerInventoryAdded)
+            {
                 logger.Warn(CultureInfo.InvariantCulture, "Last player inventory already found in hash set");
+            }
         }
     }
 
@@ -2743,7 +2808,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
     /// <returns></returns>
     public string StoreOverlayHash()
     {
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot store overlay hash. dataSource: {0}", dataSource);
             return string.Empty;
@@ -2759,9 +2824,13 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         {
             var module = processes[0].MainModule;
             if (module == null)
+            {
                 return string.Empty;
+            }
             else
+            {
                 exePath = module.FileName;
+            }
         }
         else
         {
@@ -2769,7 +2838,9 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         }
 
         if (exePath == null)
+        {
             return string.Empty;
+        }
 
         // Calculate the SHA256 hash of the executable
         using (var sha256 = SHA256.Create())
@@ -2794,6 +2865,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                                 cmd.Parameters.AddWithValue("@hash", hashString);
                                 cmd.ExecuteNonQuery();
                             }
+
                             // Commit the transaction
                             transaction.Commit();
                         }
@@ -2810,8 +2882,6 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         return overlayHash;
     }
 
-    #region session time
-
     public DateTime DatabaseStartTime = DateTime.UtcNow;
 
     /// <summary>
@@ -2820,7 +2890,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
     /// <param name="window">The window.</param>
     public void StoreSessionTime(DateTime ProgramStart)
     {
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot store session time. dataSource: {0}", dataSource);
             return;
@@ -2850,13 +2920,15 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                             insertCommand.Parameters.AddWithValue("@startTime", ProgramStart);
                             insertCommand.Parameters.AddWithValue("@endTime", ProgramEnd);
                             insertCommand.Parameters.AddWithValue("@sessionDuration", sessionDuration);
+
                             // Execute the INSERT statement
                             insertCommand.ExecuteNonQuery();
                         }
+
                         // Commit the transaction
                         transaction.Commit();
 
-                        logger.Info(CultureInfo.InvariantCulture, "Stored session time. Duration: {0}", TimeSpan.FromSeconds(sessionDuration).ToString(TimeFormats.HOURS_MINUTES_SECONDS_MILLISECONDS, CultureInfo.InvariantCulture));
+                        logger.Info(CultureInfo.InvariantCulture, "Stored session time. Duration: {0}", TimeSpan.FromSeconds(sessionDuration).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture));
                     }
                     catch (SQLiteException ex)
                     {
@@ -2898,24 +2970,24 @@ Data: {6}
 
 Message: {7}",
 ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace, JsonConvert.SerializeObject(ex.Data), ex.Message),
-                Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
         catch (IOException ex)
         {
             // Handle an I/O exception
             logger.Error(ex, "An error occurred while accessing a file");
-            MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("An error occurred while accessing a file: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
         catch (Exception ex)
         {
             // Handle any other exception
             logger.Error(ex, "An error occurred");
-            MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
 
-    #endregion
+    
 
     private readonly List<string> _validTableNames = new List<string> {
         "RankName",
@@ -2995,7 +3067,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                                         // Initialize the schema entry for the table if it doesn't exist
                                         if (tableName != null && !schema.ContainsKey(tableName))
                                         {
-                                            schema[tableName] = new();
+                                            schema[tableName] = new ();
                                         }
                                         if (tableName != null)
                                         {
@@ -3018,7 +3090,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                                     // Initialize the schema entry for the table if it doesn't exist
                                     if (tableName != null && !schema.ContainsKey(tableName))
                                     {
-                                        schema[tableName] = new();
+                                        schema[tableName] = new ();
                                     }
                                     if (tableName != null)
                                     {
@@ -3043,7 +3115,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                                     // Initialize the schema entry for the table if it doesn't exist
                                     if (tableName != null && !schema.ContainsKey(tableName))
                                     {
-                                        schema[tableName] = new();
+                                        schema[tableName] = new ();
                                     }
                                     if (tableName != null)
                                     {
@@ -3075,6 +3147,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             // Serialize the schema dictionary to a JSON string
             var json = JsonConvert.SerializeObject(schema, Formatting.Indented);
             var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
+
             // Write the JSON string to the reference schema file
             FileManager.WriteToFile(referenceSchemaFilePath, json);
         }
@@ -3176,7 +3249,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
 Please make sure that reference_schema.json (in the current overlay directory) doesn't exist, so that the program can make a new one. 
 
 Disabling Quest Logging.",
-            Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             s.EnableQuestLogging = false;
             s.Save();
         }
@@ -3251,9 +3324,13 @@ Disabling Quest Logging.",
                         var nationality = playerInfo[5];
 
                         if (playerID == 1 && (startTime == DateTime.UnixEpoch || startTime == DateTime.MinValue))
+                        {
                             creationDate = DateTime.UtcNow.Date.ToString();
+                        }
                         else
+                        {
                             creationDate = startTime.Date.ToString();
+                        }
 
                         if (playerID == 1)
                         {
@@ -3262,6 +3339,7 @@ Disabling Quest Logging.",
                             guildName = s.GuildName;
                             discordServerID = s.DiscordServerID;
                             gender = s.GenderExport;
+
                             // TODO test
                             nationality = s.EnableNationality ? dataLoader.model.Countries.ToList()[s.PlayerNationalityIndex].Name.Common : "World";
                         }
@@ -3332,10 +3410,12 @@ Disabling Quest Logging.",
                 {
                     throw new ArgumentException("Invalid table name, id column, or value column");
                 }
+
                 if (conn == null)
                 {
                     throw new ArgumentException("Invalid connection");
                 }
+
                 if (conn.State != ConnectionState.Open)
                 {
                     throw new InvalidOperationException("Connection is not open");
@@ -3390,6 +3470,7 @@ Disabling Quest Logging.",
                 {
                     throw new ArgumentException("Invalid connection");
                 }
+
                 if (conn.State != ConnectionState.Open)
                 {
                     throw new InvalidOperationException("Connection is not open");
@@ -3490,7 +3571,7 @@ Disabling Quest Logging.",
     {
         var achievementIDList = new List<int>();
 
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get player achievements list. dataSource: {0}", dataSource);
             return achievementIDList;
@@ -3533,7 +3614,7 @@ Disabling Quest Logging.",
 
     public void StoreAchievements(List<int> achievementsID)
     {
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot reward achievement. dataSource: {0}", dataSource);
             return;
@@ -3590,7 +3671,7 @@ Disabling Quest Logging.",
     {
         logger.Debug("Storing achievement ID {0}", achievementID);
 
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot store achievement. dataSource: {0}", dataSource);
             return;
@@ -4829,7 +4910,6 @@ Disabling Quest Logging.",
                     cmd.ExecuteNonQuery();
                 }
 
-                #region gacha
                 // a mh game but like a MUD. hunt in-game to get many kinds of points for this game. hunt and tame monsters. challenge other CPU players/monsters.
 
                 sql = @"CREATE TABLE IF NOT EXISTS GachaMaterial(
@@ -5271,7 +5351,7 @@ Disabling Quest Logging.",
                     cmd.ExecuteNonQuery();
                 }
 
-                #endregion
+                
 
                 // Commit the transaction
                 transaction.Commit();
@@ -5286,15 +5366,15 @@ Disabling Quest Logging.",
     // TODO put somewhere else and test
     public string FormatTime(int framesElapsed)
     {
-        var minutes = framesElapsed / (Numbers.FRAMES_PER_SECOND * 60);
-        var seconds = framesElapsed % (Numbers.FRAMES_PER_SECOND * 60) / Numbers.FRAMES_PER_SECOND;
-        var milliseconds = framesElapsed % (Numbers.FRAMES_PER_SECOND * 60) % Numbers.FRAMES_PER_SECOND / double.Parse(Numbers.FRAMES_PER_SECOND.ToString());
+        var minutes = framesElapsed / (Numbers.FramesPerSecond * 60);
+        var seconds = framesElapsed % (Numbers.FramesPerSecond * 60) / Numbers.FramesPerSecond;
+        var milliseconds = framesElapsed % (Numbers.FramesPerSecond * 60) % Numbers.FramesPerSecond / double.Parse(Numbers.FramesPerSecond.ToString());
         return $"{minutes:D2}:{seconds:D2}.{(int)(milliseconds * 1000):D3}";
     }
 
     public string GetYoutubeLinkForRunID(long runID)
     {
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get youtube link for run ID. dataSource: {0}", dataSource);
             return string.Empty;
@@ -5340,7 +5420,7 @@ Disabling Quest Logging.",
 
     public bool UpdateYoutubeLink(object sender, RoutedEventArgs e, long runID, string youtubeLink)
     {
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot update youtube link. dataSource: {0}", dataSource);
             return false;
@@ -5390,7 +5470,7 @@ Disabling Quest Logging.",
 
     public long GetPersonalBestElapsedTimeValue(long questID, int weaponTypeID, string category)
     {
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get personal best elapsed time. dataSource: {0}", dataSource);
             return 0;
@@ -5449,8 +5529,8 @@ Disabling Quest Logging.",
 
     public string GetPersonalBest(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader)
     {
-        var personalBest = Messages.TIMER_NOT_LOADED;
-        if (dataSource == null || dataSource == "")
+        var personalBest = Messages.TimerNotLoaded;
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get personal best. dataSource: {0}", dataSource);
             return personalBest;
@@ -5503,7 +5583,7 @@ Disabling Quest Logging.",
                         }
                         else
                         {
-                            personalBest = Messages.TIMER_NOT_LOADED;
+                            personalBest = Messages.TimerNotLoaded;
                         }
                     }
                     transaction.Commit();
@@ -5520,8 +5600,8 @@ Disabling Quest Logging.",
 
     public async Task<string> GetPersonalBestAsync(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader)
     {
-        var personalBest = Messages.TIMER_NOT_LOADED;
-        if (dataSource == null || dataSource == "")
+        var personalBest = Messages.TimerNotLoaded;
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get personal best. dataSource: {0}", dataSource);
             return personalBest;
@@ -5574,7 +5654,7 @@ Disabling Quest Logging.",
                         }
                         else
                         {
-                            personalBest = Messages.TIMER_NOT_LOADED;
+                            personalBest = Messages.TimerNotLoaded;
                         }
                     }
                     transaction.Commit();
@@ -5592,8 +5672,8 @@ Disabling Quest Logging.",
 
     public Dictionary<DateTime, long> GetPersonalBestsByDate(long questID, int weaponTypeID, string category)
     {
-        Dictionary<DateTime, long> personalBests = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<DateTime, long> personalBests = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get personal bests by date. dataSource: {0}", dataSource);
             return personalBests;
@@ -5630,7 +5710,7 @@ Disabling Quest Logging.",
                         cmd.Parameters.AddWithValue("@category", category);
 
                         var reader = cmd.ExecuteReader();
-                        Dictionary<DateTime, long> personalBestTimes = new();
+                        Dictionary<DateTime, long> personalBestTimes = new ();
 
                         while (reader.Read())
                         {
@@ -5687,8 +5767,8 @@ Disabling Quest Logging.",
     // Get personal best times by attempts
     public Dictionary<long, long> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category)
     {
-        Dictionary<long, long> personalBests = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<long, long> personalBests = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get personal bests by attempts. dataSource: {0}", dataSource);
             return personalBests;
@@ -5772,7 +5852,7 @@ Disabling Quest Logging.",
     public int UpsertQuestAttempts(long questID, int weaponTypeID, string category)
     {
         var attempts = 0;
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot upsert quest attempts. dataSource: {0}", dataSource);
             return attempts;
@@ -5836,7 +5916,7 @@ Disabling Quest Logging.",
     public int UpsertPersonalBestAttempts(long questID, int weaponTypeID, string category)
     {
         var attempts = 0;
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot upsert personal best attempts. dataSource: {0}", dataSource);
             return attempts;
@@ -5900,7 +5980,7 @@ Disabling Quest Logging.",
     public async Task<int> UpsertQuestAttemptsAsync(long questID, int weaponTypeID, string category)
     {
         var attempts = 0;
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot upsert quest attempts. dataSource: {0}", dataSource);
             return attempts;
@@ -5964,7 +6044,7 @@ Disabling Quest Logging.",
     public async Task<int> UpsertPersonalBestAttemptsAsync(long questID, int weaponTypeID, string category)
     {
         var attempts = 0;
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot upsert personal best attempts. dataSource: {0}", dataSource);
             return attempts;
@@ -6029,7 +6109,7 @@ Disabling Quest Logging.",
     public long GetQuestAttempts(long questID, int weaponTypeID, string category)
     {
         long attempts = 0;
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest attempts. dataSource: {0}", dataSource);
             return attempts;
@@ -6077,7 +6157,7 @@ Disabling Quest Logging.",
     public AmmoPouch GetAmmoPouch(long runID)
     {
         var ammoPouch = new AmmoPouch();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get ammo pouch. dataSource: {0}", dataSource);
             return ammoPouch;
@@ -6125,7 +6205,7 @@ Disabling Quest Logging.",
     public PartnyaBag GetPartnyaBag(long runID)
     {
         var partnyaBag = new PartnyaBag();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get partnya bag. dataSource: {0}", dataSource);
             return partnyaBag;
@@ -6172,7 +6252,7 @@ Disabling Quest Logging.",
     public PlayerInventory GetPlayerInventory(long runID)
     {
         var playerInventory = new PlayerInventory();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get player inventory. dataSource: {0}", dataSource);
             return playerInventory;
@@ -6218,7 +6298,7 @@ Disabling Quest Logging.",
 
     private Quest GetLastQuest(SQLiteConnection conn)
     {
-        Quest quest = new();
+        Quest quest = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6287,7 +6367,7 @@ Disabling Quest Logging.",
 
     private MezFes GetLastMezFes(SQLiteConnection conn)
     {
-        MezFes last = new();
+        MezFes last = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6323,7 +6403,7 @@ Disabling Quest Logging.",
 
     private Bingo GetLastBingo(SQLiteConnection conn)
     {
-        Bingo last = new();
+        Bingo last = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6364,7 +6444,7 @@ Disabling Quest Logging.",
 
     private ZenithGauntlet GetLastZenithGauntlet(SQLiteConnection conn)
     {
-        ZenithGauntlet last = new();
+        ZenithGauntlet last = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6423,7 +6503,7 @@ Disabling Quest Logging.",
 
     private SolsticeGauntlet GetLastSolsticeGauntlet(SQLiteConnection conn)
     {
-        SolsticeGauntlet last = new();
+        SolsticeGauntlet last = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6465,7 +6545,7 @@ Disabling Quest Logging.",
 
     private MusouGauntlet GetLastMusouGauntlet(SQLiteConnection conn)
     {
-        MusouGauntlet last = new();
+        MusouGauntlet last = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6511,7 +6591,7 @@ Disabling Quest Logging.",
 
     private PersonalBestAttempts GetLastPersonalBestAttempt(SQLiteConnection conn)
     {
-        PersonalBestAttempts last = new();
+        PersonalBestAttempts last = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6547,7 +6627,7 @@ Disabling Quest Logging.",
 
     private QuestAttempts GetLastQuestAttempt(SQLiteConnection conn)
     {
-        QuestAttempts last = new();
+        QuestAttempts last = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6583,7 +6663,7 @@ Disabling Quest Logging.",
 
     private PlayerGear GetLastPlayerGear(SQLiteConnection conn)
     {
-        PlayerGear last = new();
+        PlayerGear last = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6667,7 +6747,7 @@ Disabling Quest Logging.",
 
     private ActiveSkills GetLastActiveSkills(SQLiteConnection conn)
     {
-        ActiveSkills last = new();
+        ActiveSkills last = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6721,7 +6801,7 @@ Disabling Quest Logging.",
 
     private StyleRankSkills GetLastStyleRankSkills(SQLiteConnection conn)
     {
-        StyleRankSkills last = new();
+        StyleRankSkills last = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6758,7 +6838,7 @@ Disabling Quest Logging.",
 
     private GachaCardInventory GetLastGachaCard(SQLiteConnection conn)
     {
-        GachaCardInventory last = new();
+        GachaCardInventory last = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6791,7 +6871,7 @@ Disabling Quest Logging.",
 
     private PlayerInventory GetLastPlayerInventory(SQLiteConnection conn)
     {
-        PlayerInventory last = new();
+        PlayerInventory last = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6866,8 +6946,8 @@ Disabling Quest Logging.",
 
     public Quest GetQuest(long runID)
     {
-        Quest quest = new();
-        if (dataSource == null || dataSource == "")
+        Quest quest = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest. dataSource: {0}", dataSource);
             return quest;
@@ -6952,7 +7032,7 @@ Disabling Quest Logging.",
     {
         dataLoader.model.ShowSaveIcon = true;
 
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Fatal(CultureInfo.InvariantCulture, "Cannot run LoadDatabaseDataIntoHashSets. dataSource: {0}", dataSource);
             LoggingManager.WriteCrashLog(new Exception("Cannot run LoadDatabaseDataIntoHashSets."));
@@ -6962,19 +7042,19 @@ Disabling Quest Logging.",
             using (var conn = new SQLiteConnection(dataSource))
             {
                 conn.Open();
-                allQuests = GetAllQuests(conn);
-                allMezFes = GetAllMezFes(conn);
-                allBingo = GetAllBingo(conn);
-                allZenithGauntlets = GetAllZenithGauntlets(conn);
-                allSolsticeGauntlets = GetAllSolsticeGauntlets(conn);
-                allMusouGauntlets = GetAllMusouGauntlets(conn);
-                allPersonalBestAttempts = GetAllPersonalBestAttempts(conn);
-                allPlayerGear = GetAllPlayerGear(conn);
-                allActiveSkills = GetAllActiveSkills(conn);
-                allStyleRankSkills = GetAllStyleRankSkills(conn);
-                allQuestAttempts = GetAllQuestAttempts(conn);
-                allGachaCards = GetAllGachaCards(conn);
-                allPlayerInventories = GetAllPlayerInventories(conn);
+                AllQuests = GetAllQuests(conn);
+                AllMezFes = GetAllMezFes(conn);
+                AllBingo = GetAllBingo(conn);
+                AllZenithGauntlets = GetAllZenithGauntlets(conn);
+                AllSolsticeGauntlets = GetAllSolsticeGauntlets(conn);
+                AllMusouGauntlets = GetAllMusouGauntlets(conn);
+                AllPersonalBestAttempts = GetAllPersonalBestAttempts(conn);
+                AllPlayerGear = GetAllPlayerGear(conn);
+                AllActiveSkills = GetAllActiveSkills(conn);
+                AllStyleRankSkills = GetAllStyleRankSkills(conn);
+                AllQuestAttempts = GetAllQuestAttempts(conn);
+                AllGachaCards = GetAllGachaCards(conn);
+                AllPlayerInventories = GetAllPlayerInventories(conn);
             }
         }
         catch (Exception ex)
@@ -6988,7 +7068,7 @@ Disabling Quest Logging.",
 
     private HashSet<PlayerInventory> GetAllPlayerInventories(SQLiteConnection conn)
     {
-        HashSet<PlayerInventory> hashSet = new();
+        HashSet<PlayerInventory> hashSet = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6999,7 +7079,7 @@ Disabling Quest Logging.",
                     {
                         while (reader.Read())
                         {
-                            PlayerInventory data = new();
+                            PlayerInventory data = new ();
                             data.PlayerInventoryID = long.Parse(reader["PlayerInventoryID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
                             data.CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
                             data.CreatedBy = reader["CreatedBy"].ToString();
@@ -7061,7 +7141,7 @@ Disabling Quest Logging.",
 
     private HashSet<GachaCardInventory> GetAllGachaCards(SQLiteConnection conn)
     {
-        HashSet<GachaCardInventory> hashSet = new();
+        HashSet<GachaCardInventory> hashSet = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7072,7 +7152,7 @@ Disabling Quest Logging.",
                     {
                         while (reader.Read())
                         {
-                            GachaCardInventory data = new();
+                            GachaCardInventory data = new ();
 
                             data.GachaCardInventoryID = long.Parse(reader["GachaCardInventoryID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
                             data.GachaCardID = long.Parse(reader["GachaCardID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
@@ -7093,7 +7173,7 @@ Disabling Quest Logging.",
 
     private HashSet<QuestAttempts> GetAllQuestAttempts(SQLiteConnection conn)
     {
-        HashSet<QuestAttempts> hashSet = new();
+        HashSet<QuestAttempts> hashSet = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7104,7 +7184,7 @@ Disabling Quest Logging.",
                     {
                         while (reader.Read())
                         {
-                            QuestAttempts data = new();
+                            QuestAttempts data = new ();
 
                             data.QuestAttemptsID = long.Parse(reader["QuestAttemptsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
                             data.QuestID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
@@ -7128,7 +7208,7 @@ Disabling Quest Logging.",
 
     private HashSet<PlayerGear> GetAllPlayerGear(SQLiteConnection conn)
     {
-        HashSet<PlayerGear> hashSet = new();
+        HashSet<PlayerGear> hashSet = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7139,7 +7219,7 @@ Disabling Quest Logging.",
                     {
                         while (reader.Read())
                         {
-                            PlayerGear data = new();
+                            PlayerGear data = new ();
 
                             data.PlayerGearHash = reader["PlayerGearHash"]?.ToString() ?? "0";
                             data.CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
@@ -7217,7 +7297,7 @@ Disabling Quest Logging.",
 
     private HashSet<ActiveSkills> GetAllActiveSkills(SQLiteConnection conn)
     {
-        HashSet<ActiveSkills> hashSet = new();
+        HashSet<ActiveSkills> hashSet = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7228,7 +7308,7 @@ Disabling Quest Logging.",
                     {
                         while (reader.Read())
                         {
-                            ActiveSkills data = new();
+                            ActiveSkills data = new ();
 
                             data.ActiveSkillsID = long.Parse(reader["ActiveSkillsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
                             data.CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
@@ -7270,7 +7350,7 @@ Disabling Quest Logging.",
 
     private HashSet<StyleRankSkills> GetAllStyleRankSkills(SQLiteConnection conn)
     {
-        HashSet<StyleRankSkills> hashSet = new();
+        HashSet<StyleRankSkills> hashSet = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7281,7 +7361,7 @@ Disabling Quest Logging.",
                     {
                         while (reader.Read())
                         {
-                            StyleRankSkills data = new();
+                            StyleRankSkills data = new ();
 
                             data.StyleRankSkillsID = long.Parse(reader["StyleRankSkillsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
                             data.CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
@@ -7306,7 +7386,7 @@ Disabling Quest Logging.",
 
     private HashSet<PersonalBestAttempts> GetAllPersonalBestAttempts(SQLiteConnection conn)
     {
-        HashSet<PersonalBestAttempts> hashSet = new();
+        HashSet<PersonalBestAttempts> hashSet = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7317,7 +7397,7 @@ Disabling Quest Logging.",
                     {
                         while (reader.Read())
                         {
-                            PersonalBestAttempts data = new();
+                            PersonalBestAttempts data = new ();
 
                             data.PersonalBestAttemptsID = long.Parse(reader["PersonalBestAttemptsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
                             data.QuestID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
@@ -7341,7 +7421,7 @@ Disabling Quest Logging.",
 
     private HashSet<MusouGauntlet> GetAllMusouGauntlets(SQLiteConnection conn)
     {
-        HashSet<MusouGauntlet> hashSet = new();
+        HashSet<MusouGauntlet> hashSet = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7352,7 +7432,7 @@ Disabling Quest Logging.",
                     {
                         while (reader.Read())
                         {
-                            MusouGauntlet data = new();
+                            MusouGauntlet data = new ();
                             data.MusouGauntletID = long.Parse(reader["MusouGauntletID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
                             data.WeaponType = reader["WeaponType"]?.ToString() ?? "0";
                             data.Category = reader["Category"]?.ToString() ?? "0";
@@ -7385,7 +7465,7 @@ Disabling Quest Logging.",
 
     private HashSet<SolsticeGauntlet> GetAllSolsticeGauntlets(SQLiteConnection conn)
     {
-        HashSet<SolsticeGauntlet> hashSet = new();
+        HashSet<SolsticeGauntlet> hashSet = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7396,7 +7476,7 @@ Disabling Quest Logging.",
                     {
                         while (reader.Read())
                         {
-                            SolsticeGauntlet data = new();
+                            SolsticeGauntlet data = new ();
                             data.SolsticeGauntletID = long.Parse(reader["SolsticeGauntletID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
                             data.WeaponType = reader["WeaponType"]?.ToString() ?? "0";
                             data.Category = reader["Category"]?.ToString() ?? "0";
@@ -7425,7 +7505,7 @@ Disabling Quest Logging.",
 
     private HashSet<ZenithGauntlet> GetAllZenithGauntlets(SQLiteConnection conn)
     {
-        HashSet<ZenithGauntlet> hashSet = new();
+        HashSet<ZenithGauntlet> hashSet = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7436,7 +7516,7 @@ Disabling Quest Logging.",
                     {
                         while (reader.Read())
                         {
-                            ZenithGauntlet data = new();
+                            ZenithGauntlet data = new ();
 
                             data.ZenithGauntletID = long.Parse(reader["ZenithGauntletID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
                             data.WeaponType = reader["WeaponType"]?.ToString() ?? "0";
@@ -7483,7 +7563,7 @@ Disabling Quest Logging.",
 
     private HashSet<Bingo> GetAllBingo(SQLiteConnection conn)
     {
-        HashSet<Bingo> hashSet = new();
+        HashSet<Bingo> hashSet = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7494,7 +7574,7 @@ Disabling Quest Logging.",
                     {
                         while (reader.Read())
                         {
-                            Bingo data = new();
+                            Bingo data = new ();
 
                             data.BingoID = long.Parse(reader["BingoID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
                             data.CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
@@ -7523,7 +7603,7 @@ Disabling Quest Logging.",
 
     private HashSet<MezFes> GetAllMezFes(SQLiteConnection conn)
     {
-        HashSet<MezFes> hashSet = new();
+        HashSet<MezFes> hashSet = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7534,7 +7614,7 @@ Disabling Quest Logging.",
                     {
                         while (reader.Read())
                         {
-                            MezFes data = new();
+                            MezFes data = new ();
 
                             data.MezFesID = long.Parse(reader["MezFesID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
                             data.CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
@@ -7558,7 +7638,7 @@ Disabling Quest Logging.",
 
     private HashSet<Quest> GetAllQuests(SQLiteConnection conn)
     {
-        HashSet<Quest> quests = new();
+        HashSet<Quest> quests = new ();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7630,7 +7710,7 @@ Disabling Quest Logging.",
     public RoadDureSkills GetRoadDureSkills(long runID)
     {
         var roadDureSkills = new RoadDureSkills();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get road/dure skills. dataSource: {0}", dataSource);
             return roadDureSkills;
@@ -7677,7 +7757,7 @@ Disabling Quest Logging.",
     public StyleRankSkills GetStyleRankSkills(long runID)
     {
         var styleRankSkills = new StyleRankSkills();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get style rank skills. dataSource: {0}", dataSource);
             return styleRankSkills;
@@ -7721,7 +7801,7 @@ Disabling Quest Logging.",
     public AutomaticSkills GetAutomaticSkills(long runID)
     {
         var automaticSkills = new AutomaticSkills();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get automatic skills. dataSource: {0}", dataSource);
             return automaticSkills;
@@ -7767,7 +7847,7 @@ Disabling Quest Logging.",
     public ZenithSkills GetZenithSkills(long runID)
     {
         var zenithSkills = new ZenithSkills();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get zenith skills. dataSource: {0}", dataSource);
             return zenithSkills;
@@ -7813,7 +7893,7 @@ Disabling Quest Logging.",
     public CaravanSkills GetCaravanSkills(long runID)
     {
         var caravanSkills = new CaravanSkills();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get caravan skills. dataSource: {0}", dataSource);
             return caravanSkills;
@@ -7858,8 +7938,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetAttackBuffDictionary(long runID)
     {
-        Dictionary<int, int> attackBuffDictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, int> attackBuffDictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get attack buff dictionary. dataSource: {0}", dataSource);
             return attackBuffDictionary;
@@ -7898,8 +7978,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetHitCountDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, int> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get hit count dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -7938,8 +8018,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, double> GetHitsPerSecondDictionary(long runID)
     {
-        Dictionary<int, double> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, double> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get hits per second dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -7978,8 +8058,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetDamageDealtDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, int> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get damage dealt dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8018,8 +8098,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, double> GetDamagePerSecondDictionary(long runID)
     {
-        Dictionary<int, double> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, double> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get damage per second dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8058,8 +8138,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetAreaChangesDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, int> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get area changes dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8098,8 +8178,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetCartsDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, int> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get carts dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8138,8 +8218,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1HPDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 HP dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8178,8 +8258,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster2HPDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 2 HP dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8218,8 +8298,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster3HPDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 3 HP dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8258,8 +8338,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster4HPDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 4 HP dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8298,8 +8378,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, double>> GetMonster1AttackMultiplierDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, double>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, Dictionary<int, double>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 attack multiplier dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8338,8 +8418,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, double>> GetMonster1DefenseRateDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, double>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, Dictionary<int, double>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 defense rate dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8379,7 +8459,7 @@ Disabling Quest Logging.",
     public Dictionary<int, Dictionary<int, int>> GetMonster1PoisonThresholdDictionary(long runID)
     {
         var dictionary = new Dictionary<int, Dictionary<int, int>>();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 poison threshold dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8418,8 +8498,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1SleepThresholdDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 sleep threshold dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8458,8 +8538,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1ParalysisThresholdDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 paralysis threshold dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8498,8 +8578,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1BlastThresholdDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 blast threshold dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8538,8 +8618,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1StunThresholdDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 stun threshold dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8578,8 +8658,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, List<Dictionary<int, int>>> GetPlayerInventoryDictionary(long runID)
     {
-        Dictionary<int, List<Dictionary<int, int>>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, List<Dictionary<int, int>>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get player inventory dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8618,8 +8698,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, List<Dictionary<int, int>>> GetAmmoDictionary(long runID)
     {
-        Dictionary<int, List<Dictionary<int, int>>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, List<Dictionary<int, int>>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get ammo dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8658,8 +8738,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, List<Dictionary<int, int>>> GetPartnyaBagDictionary(long runID)
     {
-        Dictionary<int, List<Dictionary<int, int>>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, List<Dictionary<int, int>>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get partnya bag dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8698,8 +8778,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, Dictionary<int, int>> GetHitsTakenBlockedDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get hits taken/blocked dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8738,8 +8818,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, double> GetHitsTakenBlockedPerSecondDictionary(long runID)
     {
-        Dictionary<int, double> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, double> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get hits taken/blocked per second dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8778,8 +8858,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetPlayerHPDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, int> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get player HP dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8818,8 +8898,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetPlayerStaminaDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, int> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get player stamina dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8858,8 +8938,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, string> GetKeystrokesDictionary(long runID)
     {
-        Dictionary<int, string> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, string> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get keystrokes dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8898,8 +8978,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, string> GetMouseInputDictionary(long runID)
     {
-        Dictionary<int, string> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, string> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get mouse input dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8938,8 +9018,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, string> GetGamepadInputDictionary(long runID)
     {
-        Dictionary<int, string> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, string> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get gamepad input dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -8978,8 +9058,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, double> GetActionsPerMinuteDictionary(long runID)
     {
-        Dictionary<int, double> dictionary = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, double> dictionary = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get actions per minute dictionary. dataSource: {0}", dataSource);
             return dictionary;
@@ -9018,8 +9098,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonCategory()
     {
-        Dictionary<string, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common category. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -9066,7 +9146,7 @@ Disabling Quest Logging.",
     public ActiveSkills GetActiveSkills(long runID)
     {
         var activeSkills = new ActiveSkills();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get active skills. dataSource: {0}", dataSource);
             return activeSkills;
@@ -9111,7 +9191,7 @@ Disabling Quest Logging.",
     public PlayerGear GetPlayerGear(long runID)
     {
         var gearUsed = new PlayerGear();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get player gear. dataSource: {0}", dataSource);
             return gearUsed;
@@ -9218,7 +9298,7 @@ Disabling Quest Logging.",
     public List<FastestRun> GetFastestRuns(ConfigWindow configWindow, string weaponName = "All Weapons")
     {
         var fastestRuns = new List<FastestRun>();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get fastest runs. dataSource: {0}", dataSource);
             return fastestRuns;
@@ -9340,7 +9420,7 @@ Disabling Quest Logging.",
     public ObservableCollection<RecentRuns> GetRecentRuns()
     {
         var recentRuns = new ObservableCollection<RecentRuns>();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get recent runs. dataSource: {0}", dataSource);
             return recentRuns;
@@ -9411,7 +9491,7 @@ Disabling Quest Logging.",
     public List<RecentRuns> GetCalendarRuns(DateTime? selectedDate)
     {
         var recentRuns = new List<RecentRuns>();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get calendar runs. dataSource: {0}", dataSource);
             return recentRuns;
@@ -9486,7 +9566,7 @@ Disabling Quest Logging.",
     public List<WeaponUsageMapper> CalculateTotalWeaponUsage(ConfigWindow configWindow, DataLoader dataLoader, bool isByQuestID = false)
     {
         var weaponUsageData = new List<WeaponUsageMapper>();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot calculate total weapon usage. dataSource: {0}", dataSource);
             return weaponUsageData;
@@ -9538,7 +9618,7 @@ Disabling Quest Logging.",
                         {
                             if (!reader.HasRows)
                             {
-                                //MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Runs not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                //MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Runs not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString()), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                                 return weaponUsageData;
                             }
                             else
@@ -9583,7 +9663,7 @@ Disabling Quest Logging.",
 
     public void QuestIDButton_Click(object sender, RoutedEventArgs e, ConfigWindow configWindow)
     {
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot process quest ID button click. dataSource: {0}", dataSource);
             return;
@@ -9629,7 +9709,7 @@ Disabling Quest Logging.",
                             if (!reader.HasRows)
                             {
                                 var message = string.Format(CultureInfo.InvariantCulture, "Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString());
-                                configWindow.ConfigWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, message, new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+                                configWindow.ConfigWindowSnackBar.ShowAsync(Messages.ErrorTitle, message, new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
                                 return;
                             }
                             else
@@ -9673,7 +9753,7 @@ Disabling Quest Logging.",
                             if (!reader.HasRows)
                             {
                                 var message = string.Format(CultureInfo.InvariantCulture, "Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString());
-                                configWindow.ConfigWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, message, new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+                                configWindow.ConfigWindowSnackBar.ShowAsync(Messages.ErrorTitle, message, new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
                                 return;
                             }
                             while (reader.Read())
@@ -9769,8 +9849,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetMostQuestCompletions()
     {
-        Dictionary<int, int> questCompletions = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, int> questCompletions = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most quest completions. dataSource: {0}", dataSource);
             return questCompletions;
@@ -9817,7 +9897,7 @@ Disabling Quest Logging.",
     public string GetQuestCompletions(long questID, string actualOverlayMode, int weaponTypeID)
     {
         var questCompletions = "0";
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest completions. dataSource: {0}", dataSource);
             return questCompletions;
@@ -9868,7 +9948,7 @@ Disabling Quest Logging.",
     public async Task<string> GetQuestCompletionsAsync(long questID, string actualOverlayMode, int weaponTypeID)
     {
         var questCompletions = "0";
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest completions. dataSource: {0}", dataSource);
             return questCompletions;
@@ -9920,8 +10000,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonObjectiveTypes()
     {
-        Dictionary<string, int> objectiveCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> objectiveCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common objective types. dataSource: {0}", dataSource);
             return objectiveCounts;
@@ -9968,8 +10048,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetMostCommonStarGrades()
     {
-        Dictionary<int, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common star grades. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -10015,8 +10095,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonHeadPieces()
     {
-        Dictionary<string, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common head pieces. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -10063,8 +10143,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonChestPieces()
     {
-        Dictionary<string, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common chest pieces. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -10111,8 +10191,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonArmsPieces()
     {
-        Dictionary<string, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common arms pieces. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -10159,8 +10239,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonWaistPieces()
     {
-        Dictionary<string, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common waist pieces. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -10207,8 +10287,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonLegsPieces()
     {
-        Dictionary<string, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common legs pieces. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -10255,8 +10335,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonDivaSkill()
     {
-        Dictionary<string, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common diva skill. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -10303,8 +10383,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonGuildFood()
     {
-        Dictionary<string, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common guild food. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -10351,8 +10431,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonRankBands()
     {
-        Dictionary<string, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common rank bands. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -10398,8 +10478,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonObjectives()
     {
-        Dictionary<string, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common objectives. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -10445,8 +10525,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonSetNames()
     {
-        Dictionary<string, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common set names. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -10492,8 +10572,8 @@ Disabling Quest Logging.",
 
     public Dictionary<DateTime, int> GetQuestsCompletedByDate()
     {
-        Dictionary<DateTime, int> questsCompletedByDate = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<DateTime, int> questsCompletedByDate = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get quests completed by date. dataSource: {0}", dataSource);
             return questsCompletedByDate;
@@ -10539,8 +10619,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonWeaponNames()
     {
-        Dictionary<string, int> weaponCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> weaponCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common weapon names. dataSource: {0}", dataSource);
             return weaponCounts;
@@ -10600,8 +10680,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonStyleRankSkills()
     {
-        Dictionary<string, int> skillCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> skillCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common style rank skills. dataSource: {0}", dataSource);
             return skillCounts;
@@ -10663,8 +10743,8 @@ Disabling Quest Logging.",
 
     public Dictionary<string, int> GetMostCommonCaravanSkills()
     {
-        Dictionary<string, int> skillCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<string, int> skillCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common caravan skills. dataSource: {0}", dataSource);
             return skillCounts;
@@ -10734,8 +10814,8 @@ Disabling Quest Logging.",
 
     public Dictionary<int, int> GetMostCommonPartySize()
     {
-        Dictionary<int, int> fieldCounts = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, int> fieldCounts = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common party size. dataSource: {0}", dataSource);
             return fieldCounts;
@@ -10785,8 +10865,8 @@ Disabling Quest Logging.",
     /// <returns></returns>
     public Dictionary<int, int> GetTotalTimeSpentInQuests()
     {
-        Dictionary<int, int> questTimeSpent = new();
-        if (dataSource == null || dataSource == "")
+        Dictionary<int, int> questTimeSpent = new ();
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get total time spent in quests. dataSource: {0}", dataSource);
             return questTimeSpent;
@@ -10838,7 +10918,7 @@ Disabling Quest Logging.",
             return;
         }
 
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot insert MezFes minigame score. dataSource: {0}", dataSource);
             return;
@@ -10893,7 +10973,7 @@ Disabling Quest Logging.",
     {
         long totalTimeElapsed = 0;
 
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get total frames elapsed in quests. dataSource: {0}", dataSource);
             return totalTimeElapsed;
@@ -10931,7 +11011,6 @@ Disabling Quest Logging.",
     }
 
     // TODO: i still need to reorganize all regions. ideally i put in separate classes/files. maybe a DatabaseHelper class?
-    #region database functions
 
     /// <summary>
     /// Helper function to calculate the median of a list of integers
@@ -11607,7 +11686,7 @@ Disabling Quest Logging.",
     /// <returns></returns>
     private long GetMostCommonDecorationID(SQLiteConnection conn)
     {
-        Dictionary<long, long> decorationCounts = new();
+        Dictionary<long, long> decorationCounts = new ();
 
         var query = @"
                         SELECT HeadSlot1ID, HeadSlot2ID, HeadSlot3ID, 
@@ -11676,7 +11755,7 @@ Disabling Quest Logging.",
                         FROM ActiveSkills
                         ";
 
-        Dictionary<long, long> skillCounts = new();
+        Dictionary<long, long> skillCounts = new ();
 
         using (var cmd = new SQLiteCommand(query, conn))
         {
@@ -12092,14 +12171,10 @@ Disabling Quest Logging.",
         return soloQuests * 100.0 / totalQuests;
     }
 
-    #endregion
-
-    #region compendium
-
     public QuestCompendium GetQuestCompendium()
     {
         var questCompendium = new QuestCompendium();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest compendium. dataSource: {0}", dataSource);
             return questCompendium;
@@ -12186,7 +12261,7 @@ Disabling Quest Logging.",
                     questCompendium.TotalCartsInQuest = finalCartValues.Sum();
 
                     // Initialize dictionary to hold the total carts for each quest ID
-                    Dictionary<int, int> questTotalCarts = new();
+                    Dictionary<int, int> questTotalCarts = new ();
 
                     // Query to get carts dictionary for all quests with non-empty carts dictionary
                     query = @"SELECT QuestId, CartsDictionary FROM Quests WHERE CartsDictionary IS NOT NULL AND CartsDictionary != '{}'";
@@ -12327,7 +12402,7 @@ Disabling Quest Logging.",
     public GearCompendium GetGearCompendium()
     {
         var gearCompendium = new GearCompendium();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get gear compendium. dataSource: {0}", dataSource);
             return gearCompendium;
@@ -12366,7 +12441,7 @@ Disabling Quest Logging.",
     public PerformanceCompendium GetPerformanceCompendium()
     {
         var performanceCompendium = new PerformanceCompendium();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get performance compendium. dataSource: {0}", dataSource);
             return performanceCompendium;
@@ -12437,7 +12512,7 @@ Disabling Quest Logging.",
     public MezFesCompendium GetMezFesCompendium()
     {
         var mezFesCompendium = new MezFesCompendium();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get MezFes compendium. dataSource: {0}", dataSource);
             return mezFesCompendium;
@@ -12489,7 +12564,7 @@ Disabling Quest Logging.",
     public MonsterCompendium GetMonsterCompendium()
     {
         var monsterCompendium = new MonsterCompendium();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster compendium. dataSource: {0}", dataSource);
             return monsterCompendium;
@@ -12524,7 +12599,7 @@ Disabling Quest Logging.",
     public MiscellaneousCompendium GetMiscellaneousCompendium()
     {
         var miscellaneousCompendium = new MiscellaneousCompendium();
-        if (dataSource == null || dataSource == "")
+        if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot get miscellaneous compendium. dataSource: {0}", dataSource);
             return miscellaneousCompendium;
@@ -12552,10 +12627,6 @@ Disabling Quest Logging.",
         }
         return miscellaneousCompendium;
     }
-
-    #endregion
-
-    #region migrations
 
     private int GetUserVersion(SQLiteConnection connection)
     {
@@ -12789,7 +12860,7 @@ Updating the database structure may take some time, it will transport all of you
                     else
                     {
                         logger.Fatal(CultureInfo.InvariantCulture, "Outdated database schema");
-                        MessageBox.Show("Cannot use the overlay with an outdated database schema", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Cannot use the overlay with an outdated database schema", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                         ApplicationManager.HandleShutdown();
                     }
                 }
@@ -12819,7 +12890,7 @@ Updating the database structure may take some time, it will transport all of you
         {
             // The "mhf.exe" process was not found
             logger.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
-            MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
 
@@ -12828,12 +12899,12 @@ Updating the database structure may take some time, it will transport all of you
         FileManager.DeleteFile(referenceSchemaFilePath);
         // later on it creates it
         // see this comment: Check if the reference schema file exists
-        //MessageBox.Show("The current version and the previous version aren't the same, however no update was found", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        //MessageBox.Show("The current version and the previous version aren't the same, however no update was found", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         //logger.Fatal(CultureInfo.InvariantCulture, "The current version and the previous version aren't the same, however no update was found");
         //ApplicationManager.HandleShutdown(MainWindow._notifyIcon);
         logger.Info(CultureInfo.InvariantCulture, "Database update process finished");
         dataLoader.model.ShowSaveIcon = false;
-        MessageBox.Show("Database update process finished", Messages.INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+        MessageBox.Show("Database update process finished", Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     // TODO: this is repeating code. also not sure if the data types handling is correct
@@ -13244,7 +13315,7 @@ Updating the database structure may take some time, it will transport all of you
             if (foreignKeysViolations != "")
             {
                 logger.Fatal(CultureInfo.InvariantCulture, "Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
-                MessageBox.Show("Foreign keys violations detected, closing program.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Foreign keys violations detected, closing program.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
             else
@@ -13440,7 +13511,7 @@ Updating the database structure may take some time, it will transport all of you
             if (foreignKeysViolations != "")
             {
                 logger.Fatal(CultureInfo.InvariantCulture, "Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
-                MessageBox.Show("Foreign keys violations detected, closing program.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Foreign keys violations detected, closing program.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
             else
@@ -13474,9 +13545,9 @@ Updating the database structure may take some time, it will transport all of you
             var rememberFormat = new SQLiteCommand("SELECT type, sql FROM sqlite_schema WHERE tbl_name=@tableName;", connection);
             rememberFormat.Parameters.AddWithValue("@tableName", tableName);
             var reader = rememberFormat.ExecuteReader();
-            List<string> indexSqls = new();
-            List<string> triggerSqls = new();
-            List<string> viewSqls = new();
+            List<string> indexSqls = new ();
+            List<string> triggerSqls = new ();
+            List<string> viewSqls = new ();
             while (reader.Read())
             {
                 var type = reader.GetString(0);
@@ -13565,8 +13636,8 @@ Updating the database structure may take some time, it will transport all of you
             // Check if any views refer to table X in a way that is affected by the schema change
             var findViews = new SQLiteCommand("SELECT name, sql FROM sqlite_master WHERE type='view' AND sql LIKE '% " + tableName + " %';", connection);
             var viewReader = findViews.ExecuteReader();
-            List<string> viewNames = new();
-            List<string> viewSqlsModified = new();
+            List<string> viewNames = new ();
+            List<string> viewSqlsModified = new ();
             while (viewReader.Read())
             {
                 viewNames.Add(viewReader.GetString(0));
@@ -13676,7 +13747,7 @@ Updating the database structure may take some time, it will transport all of you
         catch (Exception ex)
         {
             logger.Fatal(CultureInfo.InvariantCulture, "Could not toggle foreign key constraints", ex);
-            MessageBox.Show("Could not toggle foreign key constraints", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Could not toggle foreign key constraints", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
     }
@@ -13695,7 +13766,7 @@ Updating the database structure may take some time, it will transport all of you
         catch (Exception ex)
         {
             logger.Fatal(CultureInfo.InvariantCulture, "Could not toggle foreign key constraints", ex);
-            MessageBox.Show("Could not toggle foreign key constraints", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Could not toggle foreign key constraints", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
     }
@@ -13962,7 +14033,7 @@ Updating the database structure may take some time, it will transport all of you
         }
     }
 
-    #endregion
+    
 
     /// <summary>
     /// Throws an exception.
@@ -13990,7 +14061,7 @@ Updating the database structure may take some time, it will transport all of you
         }
     }
 
-    #endregion
+    
 }
 /// <TODO>
 /// * add checker for triggers and indexes changes

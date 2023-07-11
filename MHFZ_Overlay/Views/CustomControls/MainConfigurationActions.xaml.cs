@@ -13,40 +13,44 @@ using System.Windows.Controls;
 /// </summary>
 public partial class MainConfigurationActions : UserControl
 {
-    public event RoutedEventHandler? ConfigureButtonClicked;
-    public event RoutedEventHandler? DefaultButtonClicked;
-    public event RoutedEventHandler? SaveButtonClicked;
-
     public MainConfigurationActions()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
+
+    public event RoutedEventHandler? ConfigureButtonClicked;
+
+    public event RoutedEventHandler? DefaultButtonClicked;
+
+    public event RoutedEventHandler? SaveButtonClicked;
 
     protected virtual void OnConfigureButtonClicked(RoutedEventArgs e)
     {
-        ConfigureButtonClicked?.Invoke(this, e);
+        this.ConfigureButtonClicked?.Invoke(this, e);
     }
+
     private void ConfigureButton_Click(object sender, RoutedEventArgs e)
     {
-        OnConfigureButtonClicked(e);
+        this.OnConfigureButtonClicked(e);
     }
 
     protected virtual void OnDefaultButtonClicked(RoutedEventArgs e)
     {
-        DefaultButtonClicked?.Invoke(this, e);
+        this.DefaultButtonClicked?.Invoke(this, e);
     }
+
     private void DefaultButton_Click(object sender, RoutedEventArgs e)
     {
-        OnDefaultButtonClicked(e);
+        this.OnDefaultButtonClicked(e);
     }
 
     protected virtual void OnSaveButtonClicked(RoutedEventArgs e)
     {
-        SaveButtonClicked?.Invoke(this, e);
-    }
-    private void SaveButton_Click(object sender, RoutedEventArgs e)
-    {
-        OnSaveButtonClicked(e);
+        this.SaveButtonClicked?.Invoke(this, e);
     }
 
+    private void SaveButton_Click(object sender, RoutedEventArgs e)
+    {
+        this.OnSaveButtonClicked(e);
+    }
 }

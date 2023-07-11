@@ -5,7 +5,6 @@ namespace MHFZ_Overlay.Services.Converter;
 
 using static MHFZ_Overlay.Services.Manager.OverlaySettingsManager;
 
-
 public static class ConfigurationPresetConverter
 {
     public static ConfigurationPreset Convert(string input)

@@ -19,9 +19,9 @@ public class RangeValidationRule : ValidationRule
 
         if (int.TryParse((string)value, out inputValue))
         {
-            if (inputValue < Minimum || inputValue > Maximum)
+            if (inputValue < this.Minimum || inputValue > this.Maximum)
             {
-                return new ValidationResult(false, $"Value must be between {Minimum} and {Maximum}");
+                return new ValidationResult(false, $"Value must be between {this.Minimum} and {this.Maximum}");
             }
             else
             {

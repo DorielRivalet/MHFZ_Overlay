@@ -19,7 +19,7 @@ public static class JoystickImageMapper
         { Direction.Down, "Assets/Icons/png/gamepad_joystick_down.png" },
         { Direction.DownLeft, "Assets/Icons/png/gamepad_joystick_downleft.png" },
         { Direction.Left, "Assets/Icons/png/gamepad_joystick_left.png" },
-        { Direction.UpLeft, "Assets/Icons/png/gamepad_joystick_upleft.png" }
+        { Direction.UpLeft, "Assets/Icons/png/gamepad_joystick_upleft.png" },
     };
 
     public static string GetImage(Direction direction)

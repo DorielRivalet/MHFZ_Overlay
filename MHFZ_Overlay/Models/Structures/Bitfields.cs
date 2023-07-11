@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 /*
-[Flags]: Indicates that an enum is intended to be used as a bit field, 
-where each value represents a single bit. Any enum can be used as flags, it does not require 
-the attribute. What the Flags attribute does is changing the default ToString behavior. 
+[Flags]: Indicates that an enum is intended to be used as a bit field,
+where each value represents a single bit. Any enum can be used as flags, it does not require
+the attribute. What the Flags attribute does is changing the default ToString behavior.
 Without the Flags attribute, any enum whose value doesn't match a specified member exactly would
 make ToString return its numeric value. Whereas if you use the Flags attribute,
 you get a comma separated list of the flags that are set, which can be desirable.
@@ -15,15 +15,15 @@ you get a comma separated list of the flags that are set, which can be desirable
 [DataContract], [DataMember]: Used for serializing an enum to a specific format,
 such as JSON or XML.
 
-[Description]: This attribute can be used to provide a string that describes the enum value. 
+[Description]: This attribute can be used to provide a string that describes the enum value.
 It can be useful when generating documentation or when displaying the enum values 
 in a user interface.
 
-[DefaultValue]: This attribute can be used to specify the default value for an enum. 
+[DefaultValue]: This attribute can be used to specify the default value for an enum.
 It can be useful when you want to initialize a variable with the default value of the enum.
 
-[XmlEnum]: This attribute can be used to specify the XML name for an enum value. 
-It can be useful when serializing or deserializing an enum to or from XML. 
+[XmlEnum]: This attribute can be used to specify the XML name for an enum value.
+It can be useful when serializing or deserializing an enum to or from XML.
 
 [JsonConverter]: used to specify a custom converter for JSON serialization and deserialization,
 and it works independently of the [Flags] attribute.
@@ -69,7 +69,7 @@ public enum WeaponSpecialProperty1 : uint
     Gacha_Evolution = 32,
     G_Rank = 64,
     UNK = 128,
-    Raviente = Supremacy | UNK // bitwise operators are pog
+    Raviente = Supremacy | UNK, // bitwise operators are pog
 }
 
 /// <summary>
@@ -98,7 +98,7 @@ public enum WeaponSpecialProperty2 : uint
     UNK1 = 8192,
     UNK2 = 16384,
     UNK3 = 32768,
-    Zenith_Finesse = G_Finesse | Zenith // TODO untested
+    Zenith_Finesse = G_Finesse | Zenith, // TODO untested
 }
 
 /// <summary>
@@ -142,12 +142,12 @@ public enum BowgunShots : uint
     Tranq_Shot = 268435456,
     Paint_Shot = 536870912,
     Demon_Shot = 1073741824,
-    Armor_Shot = 2147483648
+    Armor_Shot = 2147483648,
 }
 
 /// <summary>
-/// Impact shots are typically limited to Raviente only and Blast to Gou trees. 
-/// Both can arbitrarily be added to any bows. 
+/// Impact shots are typically limited to Raviente only and Blast to Gou trees.
+/// Both can arbitrarily be added to any bows.
 /// For Poison/Sleep/Paralysis +1 or +2 select the base coating on top row too.
 /// </summary>
 [Flags]
@@ -171,7 +171,7 @@ public enum BowCoatings : uint
     ParalysisPLUS2 = 4096,
     SleepPLUS2 = 8192,
     NULL2 = 16384,
-    NULL3 = 32768
+    NULL3 = 32768,
 }
 
 /// <summary>
@@ -191,5 +191,5 @@ public enum QuestState : uint
     UNK5 = 32,
     UNK6 = 64,
     UNK7 = 128,
-    Quest_Clear = Achieved_Main_Objective | UNK7
+    Quest_Clear = Achieved_Main_Objective | UNK7,
 }

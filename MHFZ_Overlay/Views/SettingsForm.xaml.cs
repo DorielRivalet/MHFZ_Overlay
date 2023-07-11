@@ -15,7 +15,7 @@ public partial class SettingsForm : FluentWindow
 {
     public SettingsForm()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 
     public bool IsDefaultSettingsSelected { get; private set; }
@@ -30,41 +30,36 @@ public partial class SettingsForm : FluentWindow
 
     private void ApplyButton_Click(object sender, RoutedEventArgs e)
     {
-
         // Get the selected radio button and handle the user's selection
-        if (DefaultSettingsRadioButton.IsChecked == true)
+        if (this.DefaultSettingsRadioButton.IsChecked == true)
         {
-
             // Handle default settings selection
-            IsDefaultSettingsSelected = true;
+            this.IsDefaultSettingsSelected = true;
         }
-        else if (MonsterHPRadioButton.IsChecked == true)
+        else if (this.MonsterHPRadioButton.IsChecked == true)
         {
-
             // Handle monster HP only selection
-            IsMonsterHpOnlySelected = true;
+            this.IsMonsterHpOnlySelected = true;
 
             // Get the selected ComboBox option
-            var selectedComboBoxItem = MonsterHPComboBox.SelectedItem as ComboBoxItem;
+            var selectedComboBoxItem = this.MonsterHPComboBox.SelectedItem as ComboBoxItem;
             if (selectedComboBoxItem != null)
             {
                 var selectedOption = selectedComboBoxItem.Content.ToString();
 
                 // Handle the selected ComboBox option
-                MonsterHPModeSelected = selectedOption;
+                this.MonsterHPModeSelected = selectedOption;
             }
         }
-        else if (SpeedrunModeRadioButton.IsChecked == true)
+        else if (this.SpeedrunModeRadioButton.IsChecked == true)
         {
-
             // Handle speedrun mode selection
-            IsSpeedrunSelected = true;
+            this.IsSpeedrunSelected = true;
         }
-        else if (EnableAllFeaturesRadioButton.IsChecked == true)
+        else if (this.EnableAllFeaturesRadioButton.IsChecked == true)
         {
-
             // Handle enabling all features selection
-            IsEverythingSelected = true;
+            this.IsEverythingSelected = true;
         }
         else
         {
@@ -73,6 +68,6 @@ public partial class SettingsForm : FluentWindow
 
         // Close the settings form
         this.DialogResult = true;
-        Close();
+        this.Close();
     }
 }

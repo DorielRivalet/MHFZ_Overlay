@@ -19,7 +19,7 @@ public static class DPadImageMapper
         { Direction.Down, "Assets/Icons/png/gamepad_dpad_down.png" },
         { Direction.DownLeft, "Assets/Icons/png/gamepad_dpad_downleft.png" },
         { Direction.Left, "Assets/Icons/png/gamepad_dpad_left.png" },
-        { Direction.UpLeft, "Assets/Icons/png/gamepad_dpad_upleft.png" }
+        { Direction.UpLeft, "Assets/Icons/png/gamepad_dpad_upleft.png" },
     };
 
     public static string GetImage(Direction direction)

@@ -64,6 +64,7 @@ public class PlayerInventory
     public long Item12ID { get; set; }
 
     public long Item12Quantity { get; set; }
+
     public long Item13ID { get; set; }
 
     public long Item13Quantity { get; set; }

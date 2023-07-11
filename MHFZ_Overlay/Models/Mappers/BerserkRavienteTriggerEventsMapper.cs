@@ -6,7 +6,6 @@ namespace MHFZ_Overlay.Models.Mappers;
 
 using System.Collections.Generic;
 
-
 /// <summary>
 /// The Berserk Raviente Practice Trigger Events list
 /// </summary>
@@ -25,7 +24,7 @@ public static class BerserkRavientePracticeTriggerEvents
         {8, "Sedation 5" },
         {9, "Sedation 6" },
     };
-};
+}
 
 /// <summary>
 /// The Berserk Raviente Trigger Events list
@@ -49,4 +48,4 @@ public static class BerserkRavienteTriggerEvents
         {12, "Destruction 7" },
         {13, "Slay Done" }
     };
-};
+}

@@ -6,7 +6,6 @@ namespace MHFZ_Overlay.Models.Mappers;
 
 using System.Collections.Generic;
 
-
 ///<summary>
 ///The monster ID list
 ///is the same as monsternamedictionary seemingly. could use this for something else.
@@ -193,4 +192,4 @@ public static class MonsterMapper
         { 175, "PSO2 Rappy" },
         { 176, "King Shakalaka" },
     };
-};
+}

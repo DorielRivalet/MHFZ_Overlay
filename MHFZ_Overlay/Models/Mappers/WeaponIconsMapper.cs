@@ -13,7 +13,6 @@ public static class WeaponIcons
 {
     public static IReadOnlyDictionary<int, string> WeaponIconID { get; } = new Dictionary<int, string>
     {
-
         { 0, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/gs.png" },
         { 1, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/hbg.png" },
         { 2, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/hammer.png" },
@@ -29,5 +28,4 @@ public static class WeaponIcons
         { 12, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/saf.png" },
         { 13, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/ms.png" },
     };
-
-};
+}

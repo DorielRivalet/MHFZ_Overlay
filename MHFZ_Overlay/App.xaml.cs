@@ -104,7 +104,7 @@ public partial class App : Application
     private static void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
         // Log/inspect the inspection here
-        logger.Error(e.Exception);
+        logger.Error("Unhandled exception", e.Exception);
     }
 
     private static void SetRenderingMode(string renderingMode)
@@ -185,6 +185,7 @@ public partial class App : Application
     private static void OnAppRun(SemanticVersion version, IAppTools tools, bool firstRun)
     {
         tools.SetProcessAppUserModelId();
+
         // show a welcome message when the app is first installed
         if (firstRun)
         {

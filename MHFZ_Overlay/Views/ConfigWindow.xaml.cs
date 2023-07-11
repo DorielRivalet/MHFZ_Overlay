@@ -280,7 +280,9 @@ public partial class ConfigWindow : FluentWindow
 
         // Check if no need to replace because its the same version already
         if (link.Contains(ReplaceSettingsLink))
+            {
             return link;
+        }
 
         string separator = "mons/";
         string info = link.Split(separator)[1];
@@ -663,6 +665,7 @@ public partial class ConfigWindow : FluentWindow
     {
         // Create a Stopwatch instance
         Stopwatch stopwatch = new Stopwatch();
+
         // Start the stopwatch
         stopwatch.Start();
 
@@ -682,8 +685,7 @@ public partial class ConfigWindow : FluentWindow
         string background8 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/8.png";
         string background9 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/9.png";
 
-
-        //https://stackoverflow.com/questions/30839173/change-background-image-in-wpf-using-c-sharp
+        // https://stackoverflow.com/questions/30839173/change-background-image-in-wpf-using-c-sharp
         GeneralContent.Background = new ImageBrush(new BitmapImage(new Uri(background1)));
         HunterNotesContent.Background = new ImageBrush(new BitmapImage(new Uri(background2)));
         MonsterHPContent.Background = new ImageBrush(new BitmapImage(new Uri(background3)));
@@ -707,9 +709,8 @@ public partial class ConfigWindow : FluentWindow
         FilterBox.ItemsSource = new string[] { "All", "Large Monster", "Small Monster" };
         HuntLogDataGrid.Items.Filter = MonsterFilterAll;
 
-        //// See: https://stackoverflow.com/questions/22285866/why-relaycommand
-        //// Or use MVVM Light to obtain RelayCommand.
-
+        // See: https://stackoverflow.com/questions/22285866/why-relaycommand
+        // Or use MVVM Light to obtain RelayCommand.
         List<string> MonsterNameList = new List<string>();
 
         for (int i = 0; i < monsterInfos.Count; i++)
@@ -727,11 +728,13 @@ public partial class ConfigWindow : FluentWindow
 
         // In your initialization or setup code
         ISnackbarService snackbarService = new SnackbarService();
+
         // Replace 'snackbarControl' with your actual snackbar control instance
         snackbarService.SetSnackbarControl(ConfigWindowSnackBar);
 
         // Stop the stopwatch
         stopwatch.Stop();
+
         // Get the elapsed time in milliseconds
         double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
 
@@ -739,7 +742,7 @@ public partial class ConfigWindow : FluentWindow
         logger.Debug($"ConfigWindow ctor Elapsed Time: {elapsedTimeMs} ms");
     }
 
-    private List<WeaponUsageMapper> weaponUsageData = new();
+    private List<WeaponUsageMapper> weaponUsageData = new ();
 
     private void SetWeaponUsageChart(CartesianChart weaponUsageChart)
     {
@@ -789,10 +792,8 @@ public partial class ConfigWindow : FluentWindow
             DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsMapper.CatppuccinMochaColors["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
-            //Stroke = null,
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 }
-            //DataLabels = true
         });
 
         MainWindow.dataLoader.model.weaponUsageSeries.Add(new StackedColumnSeries<long>
@@ -802,10 +803,8 @@ public partial class ConfigWindow : FluentWindow
             DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsMapper.CatppuccinMochaColors["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
-            //Stroke = null,
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 }
-            //DataLabels = true
         });
 
         MainWindow.dataLoader.model.weaponUsageSeries.Add(new StackedColumnSeries<long>
@@ -815,10 +814,8 @@ public partial class ConfigWindow : FluentWindow
             DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsMapper.CatppuccinMochaColors["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
-            //Stroke = null,
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 }
-            //DataLabels = true
         });
 
         MainWindow.dataLoader.model.weaponUsageSeries.Add(new StackedColumnSeries<long>
@@ -828,10 +825,8 @@ public partial class ConfigWindow : FluentWindow
             DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsMapper.CatppuccinMochaColors["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
-            //Stroke = null,
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 }
-            //DataLabels = true
         });
 
         weaponUsageChart.Series = MainWindow.dataLoader.model.weaponUsageSeries;
@@ -844,7 +839,6 @@ public partial class ConfigWindow : FluentWindow
                     ShowSeparatorLines=true,
                     IsVisible=false,
                     LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsMapper.CatppuccinMochaColors["Text"]))),
-                    //Labels = new string[] { "SnS", "DS", "GS", "LS", "HA", "HH", "LA", "GL", "TO", "SAF", "MS", "LBG", "HBG", "BW" }
                 }
         };
         weaponUsageChart.YAxes = new List<Axis>
@@ -885,7 +879,6 @@ public partial class ConfigWindow : FluentWindow
         return !FilterObj.IsLarge;
     }
 
-
     public Predicate<object> GetFilter()
     {
         switch (FilterBox.SelectedItem as string)
@@ -910,7 +903,6 @@ public partial class ConfigWindow : FluentWindow
         {
             e.Handled = true;
         }
-
     }
 
     /// <summary>
@@ -998,7 +990,7 @@ public partial class ConfigWindow : FluentWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void DefaultButton_Click(object sender, RoutedEventArgs e)
     {
-        var result = MessageBox.Show("Resetting settings, are you sure?", Messages.INFO_TITLE, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+        var result = MessageBox.Show("Resetting settings, are you sure?", Messages.InfoTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
         if (result == MessageBoxResult.Yes)
         {
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
@@ -1032,8 +1024,11 @@ public partial class ConfigWindow : FluentWindow
                 return;
             }
         }
+
         if (e.Text.Length > 1 && e.Text[0] == '0')
+        {
             e.Handled = true;
+        }
     }
 
     private void ValidateDecimalNumber(object sender, TextCompositionEventArgs e)
@@ -1061,10 +1056,10 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
-    //https://stackoverflow.com/questions/1051989/regex-for-alphanumeric-but-at-least-one-letter
-    //^(?=.*[a-zA-Z].*)([a-zA-Z0-9]{6,12})$
-    //([a-zA-Z0-9_\s]+)
-    //[^a-zA-Z_0-9]
+    // https://stackoverflow.com/questions/1051989/regex-for-alphanumeric-but-at-least-one-letter
+    // ^(?=.*[a-zA-Z].*)([a-zA-Z0-9]{6,12})$
+    // ([a-zA-Z0-9_\s]+)
+    // [^a-zA-Z_0-9]
 
     /// <summary>
     /// Validates the name.
@@ -1076,10 +1071,10 @@ public partial class ConfigWindow : FluentWindow
         // Create a Regex
 
         // Get all matches  
-        //https://stackoverflow.com/questions/1046740/how-can-i-validate-a-string-to-only-allow-alphanumeric-characters-in-it
+        // https://stackoverflow.com/questions/1046740/how-can-i-validate-a-string-to-only-allow-alphanumeric-characters-in-it
         if (!(e.Text.All(char.IsLetterOrDigit)))
         {
-            //just letters and digits.
+            // just letters and digits.
             e.Handled = true;
         }
     }
@@ -1091,7 +1086,6 @@ public partial class ConfigWindow : FluentWindow
     /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
     private void lnkImg_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
     {
-
         Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
         e.Handled = true;
     }
@@ -1103,10 +1097,7 @@ public partial class ConfigWindow : FluentWindow
     public static string GetTextFormatMode()
     {
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.TextFormatExport != null)
-            return s.TextFormatExport;
-        else
-            return "None";
+        return s.TextFormatExport ?? "None";
     }
 
     /// <summary>
@@ -1119,9 +1110,13 @@ public partial class ConfigWindow : FluentWindow
         string textToSave = GearStats.Text;
 
         if (GetTextFormatMode() == "Code Block")
+        {
             textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
+        }
         else if (GetTextFormatMode() == "Markdown")
+        {
             textToSave = MainWindow.dataLoader.model.MarkdownSavedGearStats;
+        }
 
         FileManager.SaveTextFile(textToSave, "GearStats");
     }
@@ -1136,9 +1131,13 @@ public partial class ConfigWindow : FluentWindow
         string textToSave = GearStats.Text;
 
         if (GetTextFormatMode() == "Code Block")
+        {
             textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
+        }
         else if (GetTextFormatMode() == "Markdown")
+        {
             textToSave = MainWindow.dataLoader.model.MarkdownSavedGearStats;
+        }
         else if (GetTextFormatMode() == "Image")
         {
             var previousBackground = GearTextGrid.Background;
@@ -1148,9 +1147,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        //https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
+        // https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
         Clipboard.SetText(textToSave);
-        ConfigWindowSnackBar.Show(Messages.INFO_TITLE, "Copied text to clipboard", new SymbolIcon(SymbolRegular.Clipboard32), ControlAppearance.Success);
+        ConfigWindowSnackBar.Show(Messages.InfoTitle, "Copied text to clipboard", new SymbolIcon(SymbolRegular.Clipboard32), ControlAppearance.Success);
     }
 
     private void BtnImageFile_Click(object sender, RoutedEventArgs e)
@@ -1158,8 +1157,6 @@ public partial class ConfigWindow : FluentWindow
         var fileName = "HunterSet";
         FileManager.SaveElementAsImageFile(GearImageGrid, fileName, ConfigWindowSnackBar);
     }
-
-
 
     private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -1171,7 +1168,6 @@ public partial class ConfigWindow : FluentWindow
     {
         FileManager.SaveMonsterLogRecordsAsCSVFile(Monsters);
     }
-
 
     private void Config_Closed(object sender, EventArgs e)
     {
@@ -1191,11 +1187,13 @@ public partial class ConfigWindow : FluentWindow
     private void ChangeMonsterInfo()
     {
         if (webViewMonsterInfo == null)
+        {
             return;
+        }
 
-        Dictionary<string, string> MonsterFeriasOptionDictionary = new();
-        Dictionary<string, string> MonsterWikiOptionDictionary = new();
-        Dictionary<string, string> MonsterVideoLinkOptionDictionary = new();
+        Dictionary<string, string> MonsterFeriasOptionDictionary = new ();
+        Dictionary<string, string> MonsterWikiOptionDictionary = new ();
+        Dictionary<string, string> MonsterVideoLinkOptionDictionary = new ();
 
         for (int i = 0; i < monsterInfos.Count; i++)
         {
@@ -1208,35 +1206,42 @@ public partial class ConfigWindow : FluentWindow
             MonsterFeriasOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].FeriasLink);
         }
 
-        //see this
-        //string selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
+        // see this
+        // string selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
         string? selectedName = MonsterNameComboBox.SelectedItem.ToString();
         if (string.IsNullOrEmpty(selectedName))
+        {
             selectedName = string.Empty;
+        }
+
         string selectedMatchup = $"{((ComboBoxItem)WeaponMatchupComboBox.SelectedItem).Content} {selectedName}";
 
         if (!MonsterFeriasOptionDictionary.TryGetValue(selectedName, out string? val1) || !MonsterWikiOptionDictionary.TryGetValue(selectedName, out string? val2))
+        {
             return;
+        }
 
         if (webViewMonsterInfo.CoreWebView2 == null)
+        {
             return;
+        }
 
         switch (MonsterInfoViewOptionComboBox.SelectedIndex)
         {
             default:
                 return;
-            case 0://ferias
-                //https://stackoverflow.com/questions/1265812/howto-define-the-auto-width-of-the-wpf-gridview-column-in-code
-                DockPanelMonsterInfo.Width = Double.NaN;//Auto
-                DockPanelMonsterInfo.Height = Double.NaN;//Auto
+            case 0:// ferias
+                // https://stackoverflow.com/questions/1265812/howto-define-the-auto-width-of-the-wpf-gridview-column-in-code
+                DockPanelMonsterInfo.Width = Double.NaN;// Auto
+                DockPanelMonsterInfo.Height = Double.NaN;// Auto
                 webViewMonsterInfo.CoreWebView2.Navigate(MonsterFeriasOptionDictionary[MonsterNameComboBox.SelectedItem.ToString() + ""]);
                 return;
-            case 1://wiki
-                DockPanelMonsterInfo.Width = Double.NaN;//Auto
-                DockPanelMonsterInfo.Height = Double.NaN;//Auto
+            case 1:// wiki
+                DockPanelMonsterInfo.Width = Double.NaN;// Auto
+                DockPanelMonsterInfo.Height = Double.NaN;// Auto
                 webViewMonsterInfo.CoreWebView2.Navigate(MonsterWikiOptionDictionary[MonsterNameComboBox.SelectedItem.ToString() + ""]);
                 return;
-            case 2://youtube
+            case 2:// youtube
                 if (MonsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out string? videoval) && MonsterVideoLinkOptionDictionary[selectedMatchup] != "")
                 {
                     DockPanelMonsterInfo.Width = 854;
@@ -1256,6 +1261,7 @@ public partial class ConfigWindow : FluentWindow
                         System.Diagnostics.Process.Start(sInfo);
                     }
                 }
+
                 return;
         }
     }
@@ -1280,16 +1286,17 @@ public partial class ConfigWindow : FluentWindow
         ChangeMonsterInfo();
     }
 
-    #region repository stats
-
     GitHubClient client = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
 
+    // TODO optimize
     private async Task GetRepoStats()
     {
         var info = client.GetLastApiInfo();
 
         if (info != null)
+        {
             OctokitInfo.Text = string.Format(CultureInfo.InvariantCulture, "Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
+        }
 
         var issuesForOctokit = await client.Issue.GetAllForRepository("DorielRivalet", "MHFZ_Overlay");
 
@@ -1302,21 +1309,25 @@ public partial class ConfigWindow : FluentWindow
         info = client.GetLastApiInfo();
 
         if (info != null)
+        {
             OctokitInfo.Text = string.Format(CultureInfo.InvariantCulture, "Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
+        }
 
         info = client.GetLastApiInfo();
 
         if (info != null)
+        {
             OctokitInfo.Text = string.Format(CultureInfo.InvariantCulture, "Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Reset Time: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
-
+        }
     }
-
-    #endregion
 
     private void Fumo_MediaEnded(object sender, RoutedEventArgs e)
     {
         if (myFumo == null)
+            {
             return;
+        }
+
         myFumo.Position = new TimeSpan(0, 0, 1);
         myFumo.Play();
     }
@@ -1324,7 +1335,10 @@ public partial class ConfigWindow : FluentWindow
     private void Krill_MediaEnded(object sender, RoutedEventArgs e)
     {
         if (myKrill == null)
+            {
             return;
+        }
+
         myKrill.Position = new TimeSpan(0, 0, 1);
         myKrill.Play();
     }
@@ -1332,7 +1346,10 @@ public partial class ConfigWindow : FluentWindow
     private void Stars_MediaEnded(object sender, RoutedEventArgs e)
     {
         if (myAnime == null)
+            {
             return;
+        }
+
         myAnime.Position = new TimeSpan(0, 0, 1);
         myAnime.Play();
     }
@@ -1340,7 +1357,10 @@ public partial class ConfigWindow : FluentWindow
     private void Watcher_MediaEnded(object sender, RoutedEventArgs e)
     {
         if (myWatcher == null)
+            {
             return;
+        }
+
         myWatcher.Position = new TimeSpan(0, 0, 1);
         myWatcher.Play();
     }
@@ -1366,17 +1386,19 @@ public partial class ConfigWindow : FluentWindow
             if (!Directory.Exists(settingsFileDirectoryName))
             {
                 logger.Error(CultureInfo.InvariantCulture, "Could not open settings folder");
-                ConfigWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+                ConfigWindowSnackBar.ShowAsync(Messages.ErrorTitle, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
                 return;
             }
+
             string settingsFolder = settingsFileDirectoryName;
+
             // Open file manager at the specified folder
-            Process.Start(ApplicationPaths.EXPLORER_PATH, settingsFolder);
+            Process.Start(ApplicationPaths.ExplorerPath, settingsFolder);
         }
         catch (Exception ex)
         {
             logger.Error(ex);
-            ConfigWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+            ConfigWindowSnackBar.ShowAsync(Messages.ErrorTitle, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
         }
     }
 
@@ -1386,13 +1408,16 @@ public partial class ConfigWindow : FluentWindow
         {
             var directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (directoryName == null)
+                {
                 return;
+            }
+
             var logFilePath = Path.Combine(directoryName, "logs", "logs.log");
 
             if (!File.Exists(logFilePath))
             {
                 logger.Error(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath);
-                System.Windows.MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             // Open the log file using the default application
@@ -1400,8 +1425,11 @@ public partial class ConfigWindow : FluentWindow
             {
                 var logFilePathDirectory = Path.GetDirectoryName(logFilePath);
                 if (logFilePathDirectory == null)
+                    {
                     return;
-                Process.Start(ApplicationPaths.EXPLORER_PATH, logFilePathDirectory);
+                }
+
+                Process.Start(ApplicationPaths.ExplorerPath, logFilePathDirectory);
             }
             catch (Exception ex)
             {
@@ -1421,18 +1449,20 @@ public partial class ConfigWindow : FluentWindow
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             var directoryName = Path.GetDirectoryName(s.DatabaseFilePath);
             if (directoryName == null)
+                {
                 return;
+            }
 
             if (!File.Exists(s.DatabaseFilePath))
             {
                 logger.Error(CultureInfo.InvariantCulture, "Could not find the database file: {0}", s.DatabaseFilePath);
-                System.Windows.MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the database file: {0}", s.DatabaseFilePath), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the database file: {0}", s.DatabaseFilePath), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             // Open the log file using the default application
             try
             {
-                Process.Start(ApplicationPaths.EXPLORER_PATH, directoryName);
+                Process.Start(ApplicationPaths.ExplorerPath, directoryName);
             }
             catch (Exception ex)
             {
@@ -1448,7 +1478,9 @@ public partial class ConfigWindow : FluentWindow
     private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
     {
         if (MainWindow == null)
+            {
             return;
+        }
 
         MainWindow.dataLoader.model.ValidateGameFolder();
 
@@ -1472,54 +1504,52 @@ public partial class ConfigWindow : FluentWindow
 
     private void SetDefaultInfoInQuestIDWeaponSection()
     {
+        SwordAndShieldBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        SwordAndShieldRunIDTextBlock.Text = Messages.RunNotFound;
 
-        SwordAndShieldBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        SwordAndShieldRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        GreatSwordBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        GreatSwordRunIDTextBlock.Text = Messages.RunNotFound;
 
-        GreatSwordBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        GreatSwordRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        DualSwordsBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        DualSwordsRunIDTextBlock.Text = Messages.RunNotFound;
 
-        DualSwordsBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        DualSwordsRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        LongSwordBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        LongSwordRunIDTextBlock.Text = Messages.RunNotFound;
 
-        LongSwordBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        LongSwordRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        LanceBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        LanceRunIDTextBlock.Text = Messages.RunNotFound;
 
-        LanceBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        LanceRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        GunlanceBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        GunlanceRunIDTextBlock.Text = Messages.RunNotFound;
 
-        GunlanceBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        GunlanceRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        HammerBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        HammerRunIDTextBlock.Text = Messages.RunNotFound;
 
-        HammerBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        HammerRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        HuntingHornBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        HuntingHornRunIDTextBlock.Text = Messages.RunNotFound;
 
-        HuntingHornBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        HuntingHornRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        TonfaBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        TonfaRunIDTextBlock.Text = Messages.RunNotFound;
 
-        TonfaBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        TonfaRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        SwitchAxeFBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        SwitchAxeFRunIDTextBlock.Text = Messages.RunNotFound;
 
-        SwitchAxeFBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        SwitchAxeFRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        MagnetSpikeBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        MagnetSpikeRunIDTextBlock.Text = Messages.RunNotFound;
 
-        MagnetSpikeBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        MagnetSpikeRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        LightBowgunBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        LightBowgunRunIDTextBlock.Text = Messages.RunNotFound;
 
-        LightBowgunBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        LightBowgunRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        HeavyBowgunBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        HeavyBowgunRunIDTextBlock.Text = Messages.RunNotFound;
 
-        HeavyBowgunBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        HeavyBowgunRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
-
-        BowBestTimeTextBlock.Text = Messages.TIMER_NOT_LOADED;
-        BowRunIDTextBlock.Text = Messages.RUN_NOT_FOUND;
+        BowBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        BowRunIDTextBlock.Text = Messages.RunNotFound;
 
         SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri("https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png"));
-        SelectedQuestNameTextBlock.Text = Messages.QUEST_NOT_FOUND;
-        SelectedQuestObjectiveTextBlock.Text = Messages.INVALID_QUEST;
-        CurrentTimeTextBlock.Text = Messages.NOT_A_NUMBER;
-
+        SelectedQuestNameTextBlock.Text = Messages.QuestNotFound;
+        SelectedQuestObjectiveTextBlock.Text = Messages.InvalidQuest;
+        CurrentTimeTextBlock.Text = Messages.NotANumber;
     }
 
     private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1536,7 +1566,9 @@ public partial class ConfigWindow : FluentWindow
     {
         // Confirm parent and childName are valid. 
         if (parent == null)
+            {
             return null;
+        }
 
         T? foundChild = null;
 
@@ -1544,6 +1576,7 @@ public partial class ConfigWindow : FluentWindow
         for (int i = 0; i < childrenCount; i++)
         {
             var child = VisualTreeHelper.GetChild(parent, i);
+
             // If the child is not of the request child type child
             T? childType = child as T;
             if (childType == null)
@@ -1553,11 +1586,14 @@ public partial class ConfigWindow : FluentWindow
 
                 // If the child is found, break so we do not overwrite the found child. 
                 if (foundChild != null)
+                    {
                     break;
+                }
             }
             else if (!string.IsNullOrEmpty(childName))
             {
                 var frameworkElement = child as FrameworkElement;
+
                 // If the child's name is set for search
                 if (frameworkElement != null && frameworkElement.Name == childName)
                 {
@@ -1573,6 +1609,7 @@ public partial class ConfigWindow : FluentWindow
                 break;
             }
         }
+
         return foundChild;
     }
 
@@ -1580,7 +1617,9 @@ public partial class ConfigWindow : FluentWindow
     {
         ComboBox comboBox = (ComboBox)sender;
         if (weaponUsageChart == null)
+            {
             return;
+        }
 
         MainWindow.dataLoader.model.weaponUsageEarthStyle.Clear();
         MainWindow.dataLoader.model.weaponUsageHeavenStyle.Clear();
@@ -1673,7 +1712,6 @@ public partial class ConfigWindow : FluentWindow
     private DataGrid? calendarDataGrid;
     private Grid? personalBestChartGrid;
     private Grid? weaponUsageChartGrid;
-    private ComboBox? statsGraphsComboBox;
     private Grid? statsGraphsGrid;
     private TextBlock? personalBestDescriptionTextBlock;
     private TextBlock? top20RunsDescriptionTextblock;
@@ -1683,77 +1721,23 @@ public partial class ConfigWindow : FluentWindow
     private Grid? statsGraphsMainGrid;
     private Grid? statsTextMainGrid;
 
-
-
-    // TODO: it works. i need to put this somewhere else
-    private async Task ShowSequentialSnackbars()
-    {
-        // TODO: test the colors for achievements
-
-        //var symbolIcon = new SymbolIcon(SymbolRegular.ErrorCircle24);
-        //BrushConverter brushConverter = new BrushConverter();
-        //symbolIcon.Foreground = (Brush)brushConverter.ConvertFromString(CatppuccinMochaColorsDictionary.CatppuccinMochaColors["Green"]);
-
-        // Show the first snackbar
-        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 1", "Message 1", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Dark);
-
-        // Handle completion of the first snackbar
-        await Task.Delay(TimeSpan.FromSeconds(2)); // Delay for a certain duration
-        MainWindow.MainWindowSnackBar.Hide(); // Hide the first snackbar
-
-        // Show the second snackbar
-        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 2", "Message 2", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Light);
-
-        // Handle completion of the second snackbar
-        await Task.Delay(TimeSpan.FromSeconds(2)); // Delay for a certain duration
-        MainWindow.MainWindowSnackBar.Hide(); // Hide the second snackbar
-
-        // Show the third snackbar
-        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 3", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Primary);
-
-        // Handle completion of the third snackbar
-        await Task.Delay(TimeSpan.FromSeconds(2)); // Delay for a certain duration
-        MainWindow.MainWindowSnackBar.Hide(); // Hide the third snackbar
-
-        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 4", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Secondary);
-        await Task.Delay(TimeSpan.FromSeconds(2));
-        MainWindow.MainWindowSnackBar.Hide();
-
-        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 5", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Success);
-        await Task.Delay(TimeSpan.FromSeconds(2));
-        MainWindow.MainWindowSnackBar.Hide();
-
-        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 6", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Caution);
-        await Task.Delay(TimeSpan.FromSeconds(2));
-        MainWindow.MainWindowSnackBar.Hide();
-
-        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 7", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Danger);
-        await Task.Delay(TimeSpan.FromSeconds(2));
-        MainWindow.MainWindowSnackBar.Hide();
-
-        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 8", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Transparent);
-        await Task.Delay(TimeSpan.FromSeconds(2));
-        MainWindow.MainWindowSnackBar.Hide();
-
-        await MainWindow.MainWindowSnackBar.ShowAsync("Important message 9", "Message 3", new SymbolIcon(SymbolRegular.Accessibility24), ControlAppearance.Info);
-        await Task.Delay(TimeSpan.FromSeconds(2));
-        MainWindow.MainWindowSnackBar.Hide();
-    }
-
     private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
     {
         // Get the quest ID and new YouTube link from the textboxes
         long runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
         if (youtubeLinkTextBox == null)
+            {
             return;
+        }
+
         string youtubeLink = youtubeLinkTextBox.Text.Trim();
         if (databaseManager.UpdateYoutubeLink(sender, e, runID, youtubeLink))
         {
-            ConfigWindowSnackBar.ShowAsync(Messages.INFO_TITLE, string.Format(CultureInfo.InvariantCulture, "Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink), new SymbolIcon(SymbolRegular.Video32), ControlAppearance.Success);
+            ConfigWindowSnackBar.ShowAsync(Messages.InfoTitle, string.Format(CultureInfo.InvariantCulture, "Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink), new SymbolIcon(SymbolRegular.Video32), ControlAppearance.Success);
         }
         else
         {
-            ConfigWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, string.Format(CultureInfo.InvariantCulture, "Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), new SymbolIcon(SymbolRegular.Video32), ControlAppearance.Danger);
+            ConfigWindowSnackBar.ShowAsync(Messages.ErrorTitle, string.Format(CultureInfo.InvariantCulture, "Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), new SymbolIcon(SymbolRegular.Video32), ControlAppearance.Danger);
         }
     }
 
@@ -1771,7 +1755,7 @@ public partial class ConfigWindow : FluentWindow
         }
         else
         {
-            MessageBox.Show("Run not found", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Run not found", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
@@ -1782,11 +1766,6 @@ public partial class ConfigWindow : FluentWindow
 
     private void MostRecentRuns_ListViewLoaded(object sender, RoutedEventArgs e)
     {
-        //mostRecentRunsListView = (ListView)sender;
-        //MainWindow.dataLoader.model.RecentRuns = databaseManager.GetRecentRuns();
-        //mostRecentRunsListView.ItemsSource = MainWindow.dataLoader.model.RecentRuns;
-        //mostRecentRunsListView.DataContext = MainWindow.dataLoader.model.RecentRuns;
-        //mostRecentRunsListView.Items.Refresh();
         mostRecentRunsListView = (ListView)sender;
         MainWindow.dataLoader.model.RecentRuns = databaseManager.GetRecentRuns();
         mostRecentRunsListView.ItemsSource = MainWindow.dataLoader.model.RecentRuns;
@@ -1811,28 +1790,43 @@ public partial class ConfigWindow : FluentWindow
     }
 
     private string top20RunsSelectedWeapon = string.Empty;
+
     private string statsGraphsSelectedOption = string.Empty;
+
     private string statsTextSelectedOption = string.Empty;
 
     private void weaponListTop20RunsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        //top20RunsListView = (ListView)sender;
+        // top20RunsListView = (ListView)sender;
         if (top20RunsDataGrid == null)
+            {
             return;
+        }
+
         var comboBox = sender as ComboBox;
         if (comboBox == null)
+            {
             return;
+        }
+
         var selectedItem = comboBox.SelectedItem;
         if (selectedItem == null)
+            {
             return;
+        }
+
         // You can now use the selectedItem variable to get the data or value of the selected option
         string? selectedWeapon = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "");
         if (string.IsNullOrEmpty(selectedWeapon))
+            {
             return;
+        }
+
         top20RunsSelectedWeapon = selectedWeapon;
         MainWindow.dataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this, selectedWeapon);
         top20RunsDataGrid.ItemsSource = MainWindow.dataLoader.model.FastestRuns;
         top20RunsDataGrid.Items.Refresh();
+
         if (top20RunsDescriptionTextblock != null)
         {
             top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
@@ -1843,7 +1837,9 @@ public partial class ConfigWindow : FluentWindow
     {
         var textBlock = sender as TextBlock;
         if (textBlock == null)
+            {
             return;
+        }
 
         long runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
         textBlock.Text = MainWindow.dataLoader.model.GenerateGearStats(runID);
@@ -1853,7 +1849,10 @@ public partial class ConfigWindow : FluentWindow
     private void QuestLogGearBtnSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (questLogGearStatsTextBlock == null)
+            {
             return;
+        }
+
         string textToSave = questLogGearStatsTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
         var fileName = "Set";
@@ -1865,7 +1864,10 @@ public partial class ConfigWindow : FluentWindow
     private void QuestLogGearBtnCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (questLogGearStatsTextBlock == null)
+            {
             return;
+        }
+
         var previousBackground = questLogGearStatsTextBlock.Background;
         questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(questLogGearStatsTextBlock, ConfigWindowSnackBar);
@@ -1876,7 +1878,10 @@ public partial class ConfigWindow : FluentWindow
     {
         var textBlock = sender as TextBlock;
         if (textBlock == null)
+            {
             return;
+        }
+
         textBlock.Text = MainWindow.dataLoader.model.GenerateCompendium(MainWindow.dataLoader);
         compendiumTextBlock = textBlock;
     }
@@ -1884,7 +1889,10 @@ public partial class ConfigWindow : FluentWindow
     private void CompendiumBtnSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (compendiumTextBlock == null)
+            {
             return;
+        }
+
         string textToSave = compendiumTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
 
@@ -1894,7 +1902,10 @@ public partial class ConfigWindow : FluentWindow
     private void CompendiumBtnCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (compendiumInformationStackPanel == null)
+            {
             return;
+        }
+
         var previousBackground = compendiumInformationStackPanel.Background;
         compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel, ConfigWindowSnackBar);
@@ -1908,7 +1919,10 @@ public partial class ConfigWindow : FluentWindow
         {
             var data = MainWindow.dataLoader.model.CalendarRuns;
             if (data == null)
+                {
                 return;
+            }
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
             saveFileDialog.Title = "Save Calendar Runs as CSV";
@@ -2013,7 +2027,10 @@ public partial class ConfigWindow : FluentWindow
     private void CalendarButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (calendarDataGrid == null)
+            {
             return;
+        }
+
         var previousBackground = calendarDataGrid.Background;
         calendarDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(calendarDataGrid, ConfigWindowSnackBar);
@@ -2023,7 +2040,10 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (personalBestChart == null || personalBestChartGrid == null || personalBestMainGrid == null)
+            {
             return;
+        }
+
         var fileName = $"PersonalBest-Quest_{QuestIDTextBox.Text}-{OverlayModeComboBox.Text}-{personalBestSelectedType}-{personalBestSelectedWeapon}".Trim().Replace(" ", "_");
         FileManager.SaveElementAsImageFile(personalBestMainGrid, fileName, ConfigWindowSnackBar, false);
     }
@@ -2031,7 +2051,10 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (personalBestChartGrid == null || personalBestMainGrid == null)
+            {
             return;
+        }
+
         var previousBackground = personalBestMainGrid.Background;
         personalBestMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(personalBestMainGrid, ConfigWindowSnackBar);
@@ -2044,7 +2067,10 @@ public partial class ConfigWindow : FluentWindow
         {
             var data = MainWindow.dataLoader.model.FastestRuns;
             if (data == null)
+                {
                 return;
+            }
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
             saveFileDialog.Title = "Save Fastest Runs as CSV";
@@ -2066,13 +2092,15 @@ public partial class ConfigWindow : FluentWindow
         {
             logger.Error(ex, "Could not save text file");
         }
-
     }
 
     private void Top20ButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (top20RunsDataGrid == null || top20MainGrid == null)
+            {
             return;
+        }
+
         var previousBackground = top20MainGrid.Background;
         top20MainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(top20MainGrid, ConfigWindowSnackBar);
@@ -2082,12 +2110,18 @@ public partial class ConfigWindow : FluentWindow
     private void WeaponStatsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (weaponUsageChartGrid == null || weaponUsageChart == null || weaponUsageData == null || weaponStatsMainGrid == null)
+            {
             return;
+        }
+
         try
         {
             var data = MainWindow.dataLoader.model.CalendarRuns;
             if (data == null)
+                {
                 return;
+            }
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
             saveFileDialog.Title = "Save Weapon Stats as CSV";
@@ -2114,7 +2148,10 @@ public partial class ConfigWindow : FluentWindow
     private void WeaponStatsButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (weaponUsageChartGrid == null || weaponStatsMainGrid == null)
+            {
             return;
+        }
+
         var previousBackground = weaponStatsMainGrid.Background;
         weaponStatsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(weaponStatsMainGrid, ConfigWindowSnackBar);
@@ -2127,7 +2164,10 @@ public partial class ConfigWindow : FluentWindow
         {
             var data = MainWindow.dataLoader.model.RecentRuns;
             if (data == null)
+                {
                 return;
+            }
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
             saveFileDialog.Title = "Save Recent Runs as CSV";
@@ -2154,7 +2194,10 @@ public partial class ConfigWindow : FluentWindow
     private void MostRecentButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (mostRecentRunsDataGrid == null)
+            {
             return;
+        }
+
         var previousBackground = mostRecentRunsDataGrid.Background;
         mostRecentRunsDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(mostRecentRunsDataGrid, ConfigWindowSnackBar);
@@ -2164,7 +2207,10 @@ public partial class ConfigWindow : FluentWindow
     private void StatsGraphsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (statsGraphsGrid == null || statsGraphsMainGrid == null)
+            {
             return;
+        }
+
         var fileName = $"StatsGraphs-{statsGraphsSelectedOption}";
         FileManager.SaveElementAsImageFile(statsGraphsMainGrid, fileName, ConfigWindowSnackBar, false);
     }
@@ -2172,7 +2218,10 @@ public partial class ConfigWindow : FluentWindow
     private void StatsGraphsButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (statsGraphsGrid == null || statsGraphsMainGrid == null)
+            {
             return;
+        }
+
         var previousBackground = statsGraphsMainGrid.Background;
         statsGraphsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(statsGraphsMainGrid, ConfigWindowSnackBar);
@@ -2182,7 +2231,10 @@ public partial class ConfigWindow : FluentWindow
     private void StatsTextButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (statsTextTextBlock == null || statsTextMainGrid == null)
+            {
             return;
+        }
+
         string textToSave = statsTextTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
         FileManager.SaveTextFile(textToSave, $"StatsText-Run_{RunIDTextBox.Text}-{statsTextSelectedOption}");
@@ -2191,7 +2243,10 @@ public partial class ConfigWindow : FluentWindow
     private void StatsTextButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (statsTextTextBlock == null || statsTextMainGrid == null)
+            {
             return;
+        }
+
         var previousBackground = statsTextTextBlock.Background;
         statsTextTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(statsTextTextBlock, ConfigWindowSnackBar);
@@ -2201,7 +2256,10 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestsOverviewButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (DiscordEmbedWeaponPersonalBest == null || QuestIDTextBox == null)
+            {
             return;
+        }
+
         var fileName = $"PersonalBestsOverview-Quest_{QuestIDTextBox.Text}-{DateTime.UtcNow.ToString("yy/MM/dd", CultureInfo.InvariantCulture).Replace("/", "-")}";
         FileManager.SaveElementAsImageFile(DiscordEmbedWeaponPersonalBest, fileName, ConfigWindowSnackBar, false);
     }
@@ -2209,7 +2267,10 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestsOverviewButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (DiscordEmbedWeaponPersonalBest == null)
+            {
             return;
+        }
+
         var previousBackground = DiscordEmbedWeaponPersonalBest.Background;
         DiscordEmbedWeaponPersonalBest.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         FileManager.CopyUIElementToClipboard(DiscordEmbedWeaponPersonalBest, ConfigWindowSnackBar);
@@ -2217,11 +2278,15 @@ public partial class ConfigWindow : FluentWindow
     }
 
     private ISeries[]? Series { get; set; }
+
     private Axis[]? XAxes { get; set; }
+
     private Axis[]? YAxes { get; set; }
 
     private ISeries[]? PersonalBestSeries { get; set; }
+
     private Axis[]? PersonalBestXAxes { get; set; }
+
     private Axis[]? PersonalBestYAxes { get; set; }
 
     private void SetColumnSeriesForDictionaryIntInt(Dictionary<int, int> data)
@@ -2235,6 +2300,7 @@ public partial class ConfigWindow : FluentWindow
                 Name = entry.Key.ToString(CultureInfo.InvariantCulture),
                 Values = new double[] { entry.Value }
             };
+
             i++;
         }
         XAxes = new Axis[]
@@ -2262,6 +2328,7 @@ public partial class ConfigWindow : FluentWindow
                 Name = entry.Key.ToString(),
                 Values = new double[] { entry.Value }
             };
+
             i++;
         }
         XAxes = new Axis[]
@@ -2289,6 +2356,7 @@ public partial class ConfigWindow : FluentWindow
                 Name = entry.Key.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
                 Values = new double[] { entry.Value }
             };
+
             i++;
         }
         XAxes = new Axis[]
@@ -2307,39 +2375,47 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> GetElapsedTime(Dictionary<int, int> timeAttackDict)
     {
-        Dictionary<int, int> elapsedTimeDict = new();
+        Dictionary<int, int> elapsedTimeDict = new ();
         if (timeAttackDict == null || !timeAttackDict.Any())
+            {
             return elapsedTimeDict;
+        }
 
         int initialTime = timeAttackDict.First().Key;
         foreach (var entry in timeAttackDict)
         {
             elapsedTimeDict[initialTime - entry.Key] = entry.Value;
         }
+
         return elapsedTimeDict;
     }
 
     private Dictionary<int, double> GetElapsedTimeForDictionaryIntDouble(Dictionary<int, double> timeAttackDict)
     {
-        Dictionary<int, double> elapsedTimeDict = new();
+        Dictionary<int, double> elapsedTimeDict = new ();
         if (timeAttackDict == null || !timeAttackDict.Any())
+            {
             return elapsedTimeDict;
+        }
 
         int initialTime = timeAttackDict.First().Key;
         foreach (var entry in timeAttackDict)
         {
             elapsedTimeDict[initialTime - entry.Key] = entry.Value;
         }
+
         return elapsedTimeDict;
     }
 
     private void SetLineSeriesForDictionaryIntInt(Dictionary<int, int> data)
     {
         if (graphChart == null)
+            {
             return;
+        }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> collection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> collection = new ();
 
         Dictionary<int, int> newData = GetElapsedTime(data);
 
@@ -2388,10 +2464,12 @@ public partial class ConfigWindow : FluentWindow
     private void SetLineSeriesForDictionaryIntDouble(Dictionary<int, double> data)
     {
         if (graphChart == null)
+            {
             return;
+        }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> collection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> collection = new ();
 
         Dictionary<int, double> newData = GetElapsedTimeForDictionaryIntDouble(data);
 
@@ -2440,10 +2518,12 @@ public partial class ConfigWindow : FluentWindow
     private void SetStepLineSeriesForPersonalBestByAttempts(Dictionary<long, long> data)
     {
         if (personalBestChart == null)
+            {
             return;
+        }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> collection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> collection = new ();
 
         foreach (var entry in data)
         {
@@ -2466,7 +2546,6 @@ public partial class ConfigWindow : FluentWindow
             {
                 MinStep = 1,
                 TextSize = 12,
-                //Labeler = (value) => MainWindow.dataLoader.model.GetTimeElapsed(value),
                 NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
             }
@@ -2494,11 +2573,13 @@ public partial class ConfigWindow : FluentWindow
     private void SetStepLineSeriesForPersonalBestByDate(Dictionary<DateTime, long> data)
     {
         if (personalBestChart == null)
+            {
             return;
+        }
 
-        List<ISeries> series = new();
+        List<ISeries> series = new ();
 
-        ObservableCollection<DateTimePoint> collection = new();
+        ObservableCollection<DateTimePoint> collection = new ();
 
         DateTime? prevDate = null;
         long? prevTime = null;
@@ -2577,10 +2658,12 @@ public partial class ConfigWindow : FluentWindow
     private void SetHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> data)
     {
         if (graphChart == null)
+            {
             return;
+        }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> collection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> collection = new ();
 
         Dictionary<int, int> hitsTakenBlocked = CalculateHitsTakenBlocked(data);
 
@@ -2631,11 +2714,13 @@ public partial class ConfigWindow : FluentWindow
     public void SetPlayerHealthStamina(Dictionary<int, int> hp, Dictionary<int, int> stamina)
     {
         if (graphChart == null)
+            {
             return;
+        }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> healthCollection = new();
-        ObservableCollection<ObservablePoint> staminaCollection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> healthCollection = new ();
+        ObservableCollection<ObservablePoint> staminaCollection = new ();
 
         Dictionary<int, int> newHP = GetElapsedTime(hp);
         Dictionary<int, int> newStamina = GetElapsedTime(stamina);
@@ -2703,9 +2788,12 @@ public partial class ConfigWindow : FluentWindow
     public void SetMonsterAttackMultiplier(Dictionary<int, double> attack)
     {
         if (graphChart == null)
+            {
             return;
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> attackCollection = new();
+        }
+
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> attackCollection = new ();
 
         Dictionary<int, double> newAttack = GetElapsedTimeForDictionaryIntDouble(attack);
 
@@ -2753,10 +2841,12 @@ public partial class ConfigWindow : FluentWindow
     public void SetMonsterDefenseRate(Dictionary<int, double> defense)
     {
         if (graphChart == null)
+            {
             return;
+        }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> defenseCollection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> defenseCollection = new ();
 
         Dictionary<int, double> newDefense = GetElapsedTimeForDictionaryIntDouble(defense);
 
@@ -2804,14 +2894,16 @@ public partial class ConfigWindow : FluentWindow
     private void SetMonsterStatusAilmentsThresholds(Dictionary<int, int> poison, Dictionary<int, int> sleep, Dictionary<int, int> para, Dictionary<int, int> blast, Dictionary<int, int> stun)
     {
         if (graphChart == null)
+            {
             return;
+        }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> poisonCollection = new();
-        ObservableCollection<ObservablePoint> sleepCollection = new();
-        ObservableCollection<ObservablePoint> paraCollection = new();
-        ObservableCollection<ObservablePoint> blastCollection = new();
-        ObservableCollection<ObservablePoint> stunCollection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> poisonCollection = new ();
+        ObservableCollection<ObservablePoint> sleepCollection = new ();
+        ObservableCollection<ObservablePoint> paraCollection = new ();
+        ObservableCollection<ObservablePoint> blastCollection = new ();
+        ObservableCollection<ObservablePoint> stunCollection = new ();
 
         Dictionary<int, int> newPoison = GetElapsedTime(poison);
         Dictionary<int, int> newSleep = GetElapsedTime(sleep);
@@ -2935,9 +3027,8 @@ public partial class ConfigWindow : FluentWindow
                 Name = questDuration.Key.ToString(CultureInfo.InvariantCulture),
                 DataLabelsPosition = DataLabelsPosition.Middle,
                 DataLabelsSize = 6,
-                //DataLabelsPadding = 2,
-                TooltipLabelFormatter = value => questDuration.Key.ToString(CultureInfo.InvariantCulture) + " " + TimeSpan.FromSeconds(value.PrimaryValue / Double.Parse(Numbers.FRAMES_PER_SECOND.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture),
-                DataLabelsFormatter = value => TimeSpan.FromSeconds(value.PrimaryValue / Double.Parse(Numbers.FRAMES_PER_SECOND.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture)
+                TooltipLabelFormatter = value => questDuration.Key.ToString(CultureInfo.InvariantCulture) + " " + TimeSpan.FromSeconds(value.PrimaryValue / Double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture),
+                DataLabelsFormatter = value => TimeSpan.FromSeconds(value.PrimaryValue / Double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture)
             });
         }
 
@@ -2946,7 +3037,7 @@ public partial class ConfigWindow : FluentWindow
         {
             new Axis
             {
-                Labeler = (value) => TimeSpan.FromSeconds(value / Double.Parse(Numbers.FRAMES_PER_SECOND.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture),
+                Labeler = (value) => TimeSpan.FromSeconds(value / Double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture),
                 LabelsRotation = 0,
                 NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
@@ -2975,7 +3066,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> hitsTakenBlocked)
     {
-        Dictionary<int, int> dictionary = new();
+        Dictionary<int, int> dictionary = new ();
 
         int i = 1;
         foreach (var entry in hitsTakenBlocked)
@@ -2991,12 +3082,13 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> CalculateMonsterHP(Dictionary<int, Dictionary<int, int>> monsterHP)
     {
-        Dictionary<int, int> dictionary = new();
+        Dictionary<int, int> dictionary = new ();
 
         int i = 1;
         foreach (var entry in monsterHP)
         {
             int time = int.Parse(entry.Key.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+
             // get the value of the inner dictionary
             int hp = entry.Value.Values.First();
             dictionary.Add(time, hp);
@@ -3008,12 +3100,13 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, double> CalculateMonsterMultiplier(Dictionary<int, Dictionary<int, double>> monsterDictionary)
     {
-        Dictionary<int, double> dictionary = new();
+        Dictionary<int, double> dictionary = new ();
 
         int i = 1;
         foreach (var entry in monsterDictionary)
         {
             int time = int.Parse(entry.Key.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+
             // get the value of the inner dictionary
             double mult = entry.Value.Values.First();
             dictionary.Add(time, mult);
@@ -3025,12 +3118,13 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> CalculateMonsterStatusAilmentThresholds(Dictionary<int, Dictionary<int, int>> monsterDictionary)
     {
-        Dictionary<int, int> dictionary = new();
+        Dictionary<int, int> dictionary = new ();
 
         int i = 1;
         foreach (var entry in monsterDictionary)
         {
             int time = int.Parse(entry.Key.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+
             // get the value of the inner dictionary
             int threshold = entry.Value.Values.First();
             dictionary.Add(time, threshold);
@@ -3043,13 +3137,15 @@ public partial class ConfigWindow : FluentWindow
     private void SetMonsterHP(Dictionary<int, int> monster1, Dictionary<int, int> monster2, Dictionary<int, int> monster3, Dictionary<int, int> monster4)
     {
         if (graphChart == null)
+            {
             return;
+        }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> monster1Collection = new();
-        ObservableCollection<ObservablePoint> monster2Collection = new();
-        ObservableCollection<ObservablePoint> monster3Collection = new();
-        ObservableCollection<ObservablePoint> monster4Collection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> monster1Collection = new ();
+        ObservableCollection<ObservablePoint> monster2Collection = new ();
+        ObservableCollection<ObservablePoint> monster3Collection = new ();
+        ObservableCollection<ObservablePoint> monster4Collection = new ();
 
         Dictionary<int, int> newMonster1 = GetElapsedTime(monster1);
         Dictionary<int, int> newMonster2 = GetElapsedTime(monster2);
@@ -3164,10 +3260,12 @@ public partial class ConfigWindow : FluentWindow
     private void SetPolarLineSeriesForHunterPerformance(PerformanceCompendium performanceCompendium)
     {
         if (hunterPerformanceChart == null)
+            {
             return;
+        }
 
-        List<ISeries> series = new();
-        ObservableCollection<double> performanceCollection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<double> performanceCollection = new ();
 
         performanceCollection.Add(performanceCompendium.TrueRawMedian / performanceCompendium.HighestTrueRaw);
         performanceCollection.Add(performanceCompendium.SingleHitDamageMedian / performanceCompendium.HighestSingleHitDamage);
@@ -3185,33 +3283,9 @@ public partial class ConfigWindow : FluentWindow
             GeometryFill = null,
             GeometryStroke = null,
             TooltipLabelFormatter = value => string.Format(CultureInfo.InvariantCulture, "{0}: {1:0.##}%", GetHunterPerformanceValueType(value.SecondaryValue), value.PrimaryValue * 100),
-            //DataLabelsFormatter = value => TimeSpan.FromSeconds(value.PrimaryValue / 30.0).ToString(@"hh\:mm\:ss"),
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
         });
-
-        //XAxes = new Axis[]
-        //{
-        //    new Axis
-        //    {
-        //        TextSize=12,
-        //        Labeler = (value) => MainWindow.dataLoader.model.GetTimeElapsed(value),
-        //        NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-        //        LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-        //    }
-        //};
-
-        //YAxes = new Axis[]
-        //{
-        //    new Axis
-        //    {
-        //        NameTextSize= 12,
-        //        TextSize=12,
-        //        NamePadding= new LiveChartsCore.Drawing.Padding(0),
-        //        NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-        //        LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-        //    }
-        //};
 
         PolarAxis[] RadiusAxes = new PolarAxis[]
         {
@@ -3248,12 +3322,16 @@ public partial class ConfigWindow : FluentWindow
         var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
         if (selectedItem == null)
+            {
             return;
+        }
 
         string? selectedOption = selectedItem.Content.ToString();
 
         if (graphChart == null || selectedOption == null || string.IsNullOrEmpty(selectedOption))
+            {
             return;
+        }
 
         Series = null;
         XAxes = new Axis[]
@@ -3401,7 +3479,9 @@ public partial class ConfigWindow : FluentWindow
         statsGraphsSelectedOption = selectedOption.Trim().Replace(" ", "_");
 
         if (Series == null)
+            {
             return;
+        }
 
         graphChart.Series = Series;
         graphChart.XAxes = XAxes;
@@ -3420,30 +3500,36 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, List<Dictionary<int, int>>> GetElapsedTimeForInventories(Dictionary<int, List<Dictionary<int, int>>> dictionary)
     {
-        Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new();
+        Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new ();
         if (dictionary == null || !dictionary.Any())
+            {
             return elapsedTimeDict;
+        }
 
         int initialTime = dictionary.First().Key;
         foreach (var entry in dictionary)
         {
             elapsedTimeDict[initialTime - entry.Key] = entry.Value;
         }
+
         return elapsedTimeDict;
     }
 
     private Dictionary<int, int> GetElapsedTimeForDictionaryIntInt(Dictionary<int, int> dictionary)
     {
-        Dictionary<int, int> elapsedTimeDict = new();
+        Dictionary<int, int> elapsedTimeDict = new ();
 
         if (dictionary == null || !dictionary.Any())
+            {
             return elapsedTimeDict;
+        }
 
         int initialTime = dictionary.First().Key;
         foreach (var entry in dictionary)
         {
             elapsedTimeDict[initialTime - entry.Key] = entry.Value;
         }
+
         return elapsedTimeDict;
     }
 
@@ -3456,7 +3542,7 @@ public partial class ConfigWindow : FluentWindow
         foreach (var entry in inventory)
         {
             int time = entry.Key;
-            string timeString = TimeSpan.FromSeconds((double)time / Numbers.FRAMES_PER_SECOND).ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS, CultureInfo.InvariantCulture);
+            string timeString = TimeSpan.FromSeconds((double)time / Numbers.FramesPerSecond).ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
             var items = entry.Value;
             int count = 0;
             sb.AppendLine(timeString + " ");
@@ -3470,6 +3556,7 @@ public partial class ConfigWindow : FluentWindow
                         sb.Append(itemName + " x" + itemData.Value + ", ");
                         count++;
                     }
+
                     if (count == 5)
                     {
                         sb.AppendLine();
@@ -3492,7 +3579,7 @@ public partial class ConfigWindow : FluentWindow
         foreach (var entry in areas)
         {
             int time = entry.Key;
-            string timeString = TimeSpan.FromSeconds((double)time / Numbers.FRAMES_PER_SECOND).ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS, CultureInfo.InvariantCulture);
+            string timeString = TimeSpan.FromSeconds((double)time / Numbers.FramesPerSecond).ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
             var area = entry.Value;
             sb.AppendLine(timeString + " ");
 
@@ -3509,7 +3596,10 @@ public partial class ConfigWindow : FluentWindow
         // implement code to get item name based on itemID
         Item.IDName.TryGetValue(itemID, out string? value);
         if (value == null)
+            {
             return string.Empty;
+        }
+
         return value;
     }
 
@@ -3520,12 +3610,16 @@ public partial class ConfigWindow : FluentWindow
         var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
         if (selectedItem == null || statsTextTextBlock == null)
+            {
             return;
+        }
 
         string? selectedOption = selectedItem.Content.ToString();
 
         if (statsTextTextBlock == null || selectedOption == null || string.IsNullOrEmpty(selectedOption))
+            {
             return;
+        }
 
         statsTextTextBlock.Text = string.Empty;
 
@@ -3561,15 +3655,21 @@ public partial class ConfigWindow : FluentWindow
         var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
         if (selectedItem == null)
+            {
             return;
+        }
 
         string? selectedOption = selectedItem.Content.ToString();
 
         if (string.IsNullOrEmpty(selectedOption))
+            {
             return;
+        }
 
         if (s != null)
+            {
             overlaySettingsManager.SetConfigurationPreset(s, ConfigurationPresetConverter.Convert(selectedOption));
+        }
     }
 
     private void personalBest_Loaded(object sender, RoutedEventArgs e)
@@ -3580,46 +3680,67 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (personalBestChart == null)
+            {
             return;
+        }
 
         var comboBox = sender as ComboBox;
         if (comboBox == null)
+            {
             return;
+        }
 
         var selectedItem = comboBox.SelectedItem;
 
         if (selectedItem == null)
+            {
             return;
+        }
 
         string? selectedType = selectedItem.ToString();
         if (string.IsNullOrEmpty(selectedType))
+            {
             return;
+        }
+
         personalBestSelectedType = selectedType.Replace("System.Windows.Controls.ComboBoxItem: ", "");
     }
 
     private void PersonalBestWeaponComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (personalBestChart == null)
+            {
             return;
+        }
 
         var comboBox = sender as ComboBox;
         if (comboBox == null)
+            {
             return;
+        }
+
         var selectedItem = comboBox.SelectedItem;
 
         if (selectedItem == null)
+            {
             return;
+        }
 
         string? selectedWeapon = selectedItem.ToString();
         if (string.IsNullOrEmpty(selectedWeapon))
+            {
             return;
+        }
+
         personalBestSelectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ", "");
     }
 
     private void PersonalBestRefreshButton_Click(object sender, RoutedEventArgs e)
     {
         if (personalBestChart == null || personalBestSelectedWeapon == "" || personalBestSelectedType == "")
+            {
             return;
+        }
 
         PersonalBestSeries = null;
         PersonalBestXAxes = new Axis[]
@@ -3683,17 +3804,24 @@ public partial class ConfigWindow : FluentWindow
     private void CalendarDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
         if (calendarDataGrid == null || sender == null)
+            {
             return;
+        }
 
         DatePicker? datePicker = sender as DatePicker;
 
         if (datePicker == null)
+            {
             return;
+        }
 
         var selectedDate = datePicker.SelectedDate;
 
         if (selectedDate == null)
+            {
             return;
+        }
+
         datePickerDate = (DateTime)selectedDate;
         MainWindow.dataLoader.model.CalendarRuns = databaseManager.GetCalendarRuns(selectedDate);
         calendarDataGrid.ItemsSource = MainWindow.dataLoader.model.CalendarRuns;
@@ -3772,28 +3900,41 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (Grid)sender;
         if (obj != null)
+            {
             personalBestChartGrid = obj;
+        }
     }
 
     private void WeaponUsageChartGrid_Loaded(object sender, RoutedEventArgs e)
     {
         var obj = (Grid)sender;
         if (obj != null)
+            {
             weaponUsageChartGrid = obj;
+        }
     }
 
     private void StatsGraphsComboBox_Loaded(object sender, RoutedEventArgs e)
     {
         var comboBox = (ComboBox)sender;
         if (comboBox == null)
+            {
             return;
+        }
+
         var selectedItem = comboBox.SelectedItem;
         if (selectedItem == null)
+            {
             return;
+        }
+
         // You can now use the selectedItem variable to get the data or value of the selected option
         string? selectedOption = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim().Replace(" ", "_");
         if (string.IsNullOrEmpty(selectedOption))
+            {
             return;
+        }
+
         statsGraphsSelectedOption = selectedOption;
     }
 
@@ -3801,14 +3942,23 @@ public partial class ConfigWindow : FluentWindow
     {
         var comboBox = (ComboBox)sender;
         if (comboBox == null)
+            {
             return;
+        }
+
         var selectedItem = comboBox.SelectedItem;
         if (selectedItem == null)
+            {
             return;
+        }
+
         // You can now use the selectedItem variable to get the data or value of the selected option
         string? selectedOption = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim().Replace(" ", "_");
         if (string.IsNullOrEmpty(selectedOption))
+            {
             return;
+        }
+
         statsTextSelectedOption = selectedOption;
     }
 
@@ -3816,56 +3966,72 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (Grid)sender;
         if (obj != null)
+            {
             statsGraphsGrid = obj;
+        }
     }
 
     private void PersonalBestDescriptionTextBlock_Loaded(object sender, RoutedEventArgs e)
     {
         var obj = (TextBlock)sender;
         if (obj != null)
+            {
             personalBestDescriptionTextBlock = obj;
+        }
     }
 
     private void Top20RunsDescriptionTextBlock_Loaded(object sender, RoutedEventArgs e)
     {
         var obj = (TextBlock)sender;
         if (obj != null)
+            {
             top20RunsDescriptionTextblock = obj;
+        }
     }
 
     private void PersonalBestMainGridLoaded(object sender, RoutedEventArgs e)
     {
         var obj = (Grid)sender;
         if (obj != null)
+            {
             personalBestMainGrid = obj;
+        }
     }
 
     private void Top20MainGridLoaded(object sender, RoutedEventArgs e)
     {
         var obj = (Grid)sender;
         if (obj != null)
+            {
             top20MainGrid = obj;
+        }
     }
 
     private void WeaponStatsMainGrid_Loaded(object sender, RoutedEventArgs e)
     {
         var obj = (Grid)sender;
         if (obj != null)
+            {
             weaponStatsMainGrid = obj;
+        }
     }
 
     private void StatsGraphsMainGrid_Loaded(object sender, RoutedEventArgs e)
     {
         var obj = (Grid)sender;
         if (obj != null)
+            {
             statsGraphsMainGrid = obj;
+        }
     }
 
     private void StatsTextMainGrid_Loaded(object sender, RoutedEventArgs e)
     {
         var obj = (Grid)sender;
         if (obj != null)
+            {
             statsTextMainGrid = obj;
+        }
     }
 
     private async void FumoImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

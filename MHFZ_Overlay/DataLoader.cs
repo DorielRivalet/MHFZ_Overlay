@@ -6,20 +6,34 @@
 /*
  
  
- To make the DataLoader class clearly fit into a single category in the MVVM pattern, you can refactor it by separating its responsibilities into distinct components. Here's a suggestion on how you can achieve this:
+ To make the DataLoader class clearly fit into a single category in the MVVM pattern,
+you can refactor it by separating its responsibilities into distinct components.
+Here's a suggestion on how you can achieve this:
 
-Service/Model: Move the data loading and database management responsibilities to a dedicated service class, such as DataLoadService. This service will be responsible for initializing the DatabaseManager, checking external processes and illegal modifications, and interacting with memory addresses. It can expose methods or properties to retrieve game data or perform data-related operations. This will help separate data-related concerns from the other responsibilities of DataLoader.
+Service/Model: Move the data loading and database management responsibilities to
+a dedicated service class, such as DataLoadService.
+This service will be responsible for initializing the DatabaseManager,
+checking external processes and illegal modifications, and interacting with memory addresses.
+It can expose methods or properties to retrieve game data or perform data-related operations.
+This will help separate data-related concerns from the other responsibilities of DataLoader.
 
-ViewModel: Extract the logic related to game state checks and warnings into a separate ViewModel class, such as GameStatusViewModel. This ViewModel can have properties and commands that represent the game state and provide warnings or error messages to the View based on that state. It can utilize the DataLoadService to fetch relevant game data.
+ViewModel: Extract the logic related to game state checks and warnings into a separate ViewModel class,
+such as GameStatusViewModel. This ViewModel can have properties and commands
+that represent the game state and provide warnings or error messages to the View based on that state.
+It can utilize the DataLoadService to fetch relevant game data.
 
-View: The MainWindow.xaml and MainWindow.xaml.cs files will remain as the View components, responsible for displaying the UI and interacting with the ViewModel.
+View: The MainWindow.xaml and MainWindow.xaml.cs files will remain as the View components,
+responsible for displaying the UI and interacting with the ViewModel.
 
 By following this approach, you achieve a clearer separation of concerns:
 
-The DataLoadService handles the data loading, database management, and memory address interactions (service/model).
+The DataLoadService handles the data loading, database management,
+and memory address interactions (service/model).
 The GameStatusViewModel contains the logic for game state checks and warnings (viewmodel).
 The MainWindow acts as the user interface (view).
-This separation allows for better maintainability, testability, and adherence to the MVVM pattern. Each component has a well-defined responsibility, making it easier to understand and modify the codebase.
+This separation allows for better maintainability, testability, and adherence to the MVVM pattern.
+Each component has a well-defined responsibility,
+making it easier to understand and modify the codebase.
  
  */
 
@@ -74,7 +88,7 @@ public class DataLoader
                 // Imulion's version does not have anything in the catch block.
                 // I'm marking this as error since overlay might interfere with custom shaders.
                 LoggerInstance.Error(ex, "Could not create code cave");
-                System.Windows.MessageBox.Show("Could not create code cave. ReShade or similar programs might trigger this error. Also make sure you are not loading the overlay when on game launcher.", Messages.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Could not create code cave. ReShade or similar programs might trigger this error. Also make sure you are not loading the overlay when on game launcher.", Messages.ErrorTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
 
             if (!isHighGradeEdition)
@@ -102,7 +116,7 @@ public class DataLoader
         else
         {
             LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Launch game first");
-            System.Windows.MessageBox.Show("Please launch game first", Messages.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            System.Windows.MessageBox.Show("Please launch game first", Messages.ErrorTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
 
@@ -134,7 +148,7 @@ public class DataLoader
         if (model.QuestID() != 0)
         {
             LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Loaded overlay inside quest {0}", model.QuestID());
-            System.Windows.MessageBox.Show("Loaded overlay inside quest. Please load the overlay outside quests.", Messages.FATAL_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            System.Windows.MessageBox.Show("Loaded overlay inside quest. Please load the overlay outside quests.", Messages.FatalTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             LoggingManager.WriteCrashLog(new ArgumentOutOfRangeException("Loaded overlay inside quest"));
         }
     }
@@ -153,12 +167,14 @@ public class DataLoader
             {
                 // The "mhf.exe" process was not found
                 LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
-                MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
                 return;
             }
+
             // Get the location of the first "mhf.exe" process
             string? mhfPath = module.FileName;
+
             // Get the directory that contains "mhf.exe"
             string? mhfDirectory = Path.GetDirectoryName(mhfPath);
 
@@ -166,10 +182,11 @@ public class DataLoader
             {
                 // The "mhf.exe" process was not found
                 LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
-                MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
                 return;
             }
+
             // Save the directory to the program's settings
             // (Assuming you have a "settings" object that can store strings)
             s.GameFolderPath = mhfDirectory;
@@ -199,7 +216,7 @@ public class DataLoader
         {
             // The "mhf.exe" process was not found
             LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
-            MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
         }
     }
@@ -254,31 +271,36 @@ public class DataLoader
             if (process.ProcessName == "GameOverlayUI" && !steamOverlayWarningShown)
             {
                 LoggerInstance.Warn(CultureInfo.InvariantCulture, "Found Steam overlay: {0}", process.ProcessName);
-                var result = MessageBox.Show($"Having Steam Overlay open while MHF-Z Overlay is running may decrease performance. ({process.ProcessName} found)", Messages.WARNING_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
+                var result = MessageBox.Show($"Having Steam Overlay open while MHF-Z Overlay is running may decrease performance. ({process.ProcessName} found)", Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.OK)
                 {
                     steamOverlayWarningShown = true;
                 }
+
                 continue;
             }
+
             if (allowedProcesses.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
             {
                 continue;
             }
+
             if (bannedProcesses.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
             {
 
                 // processName is a substring of one of the banned process strings
                 LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Found banned process {0}", process.ProcessName);
-                MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
 
                 // Close the overlay program
                 ApplicationManager.HandleShutdown();
             }
+
             if (process.ProcessName == "MHFZ_Overlay")
             {
                 overlayCount++;
             }
+
             if (process.ProcessName == "mhf")
             {
                 gameCount++;
@@ -288,16 +310,17 @@ public class DataLoader
         {
             // More than one "MHFZ_Overlay" process is running
             LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Found duplicate overlay");
-            MessageBox.Show("Close other instances of the overlay before opening a new one", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Close other instances of the overlay before opening a new one", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
 
             // Close the overlay program
             ApplicationManager.HandleShutdown();
         }
+
         if (gameCount > 1)
         {
             // More than one game process is running
             LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Found duplicate game");
-            MessageBox.Show("Close other instances of the game before opening a new one", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Close other instances of the game before opening a new one", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
 
             // Close the overlay program
             ApplicationManager.HandleShutdown();
@@ -309,7 +332,9 @@ public class DataLoader
     public void CheckForIllegalModifications()
     {
         if (App.isClowdSquirrelUpdating)
+        {
             return;
+        }
 
         try
         {
@@ -324,13 +349,14 @@ public class DataLoader
                 {
                     // The "mhf.exe" process was not found
                     LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
-                    MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
                     return;
                 }
 
                 // Get the location of the first "mhf.exe" process
                 string? mhfPath = module.FileName;
+
                 // Get the directory that contains "mhf.exe"
                 string? mhfDirectory = Path.GetDirectoryName(mhfPath);
 
@@ -338,7 +364,7 @@ public class DataLoader
                 {
                     // The "mhf.exe" process was not found
                     LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
-                    MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                     ApplicationManager.HandleShutdown();
                     return;
                 }
@@ -353,7 +379,7 @@ public class DataLoader
             {
                 // The "mhf.exe" process was not found
                 LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
-                MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         }
@@ -365,14 +391,13 @@ public class DataLoader
 
     public bool databaseChanged;
 
-
-    #region DataLoaderVariables
     //needed for getting data
-    readonly Mem m = new();
+    readonly Mem m = new ();
 
     public bool isHighGradeEdition { get; set; }
 
     int index;
+
     /// <summary>
     /// Gets the model.
     /// </summary>
@@ -380,8 +405,6 @@ public class DataLoader
     /// The model.
     /// </value>
     public AddressModel model { get; } // TODO: fix null warning
-
-    #endregion
 
     private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
 
@@ -396,10 +419,11 @@ public class DataLoader
         if (proc == null)
         {
             LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Launch game first");
-            System.Windows.MessageBox.Show("Please launch game first", Messages.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            System.Windows.MessageBox.Show("Please launch game first", Messages.ErrorTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             ApplicationManager.HandleShutdown();
             return;
         }
+
         long searchAddress = m.AoBScan("89 04 8D 00 C6 43 00 61 E9").Result.FirstOrDefault();
         if (searchAddress.ToString("X8", CultureInfo.InvariantCulture) == "00000000")
         {
@@ -432,8 +456,8 @@ public class DataLoader
 
     public string GetQuestTimeCompletion()
     {
-        double totalQuestDuration = (double)model.TimeDefInt() / Numbers.FRAMES_PER_SECOND; // Total duration of the quest in seconds
-        double timeRemainingInQuest = (double)model.TimeInt() / Numbers.FRAMES_PER_SECOND; // Time left in the quest in seconds
+        double totalQuestDuration = (double)model.TimeDefInt() / Numbers.FramesPerSecond; // Total duration of the quest in seconds
+        double timeRemainingInQuest = (double)model.TimeInt() / Numbers.FramesPerSecond; // Time left in the quest in seconds
 
         // Calculate the elapsed time by subtracting the time left from the total duration
         double elapsedTime = totalQuestDuration - timeRemainingInQuest;
@@ -445,7 +469,7 @@ public class DataLoader
         TimeSpan timeSpan = TimeSpan.FromMilliseconds(elapsedTime);
 
         // Format the TimeSpan object as a string
-        string formattedTime = timeSpan.ToString(TimeFormats.MINUTES_SECONDS_MILLISECONDS, CultureInfo.InvariantCulture);
+        string formattedTime = timeSpan.ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
 
         return formattedTime;
     }
@@ -474,6 +498,7 @@ public class DataLoader
     Process? LoadMHFODLL(int PID)
     {
         LoggerInstance.Info(CultureInfo.InvariantCulture, "Loading MHFODLL");
+
         //Search and get mhfo-hd.dll module base address
         Process proccess = Process.GetProcessById(PID);
         if (proccess == null)
@@ -481,13 +506,17 @@ public class DataLoader
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Process not found");
             return null;
         }
+
         var ModuleList = new List<string>();
         foreach (ProcessModule md in proccess.Modules)
         {
             string? moduleName = md.ModuleName;
             if (moduleName != null)
+            {
                 ModuleList.Add(moduleName);
+            }
         }
+
         index = ModuleList.IndexOf("mhfo-hd.dll");
         if (index > 0)
         {
@@ -503,10 +532,11 @@ public class DataLoader
             else
             {
                 LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Could not find game dll");
-                MessageBox.Show("Could not find game dll. Make sure you start the overlay inside Mezeporta.", Messages.FATAL_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Could not find game dll. Make sure you start the overlay inside Mezeporta.", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 ApplicationManager.HandleShutdown();
             }
         }
+
         return proccess;
     }
 }

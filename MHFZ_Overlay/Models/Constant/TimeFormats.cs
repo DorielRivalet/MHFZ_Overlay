@@ -9,7 +9,7 @@ namespace MHFZ_Overlay.Models.Constant;
 /// </summary>
 public static class TimeFormats
 {
-    public const string HOURS_MINUTES_SECONDS_MILLISECONDS = @"hh\:mm\:ss\.fff";
+    public const string HoursMinutesSecondsMilliseconds = @"hh\:mm\:ss\.fff";
 
-    public const string MINUTES_SECONDS_MILLISECONDS = @"mm\:ss\.fff";
+    public const string MinutesSecondsMilliseconds = @"mm\:ss\.fff";
 }

@@ -86,48 +86,48 @@ public partial class MainWindow : Window
 
     private static readonly DiscordManager DiscordManagerInstance = DiscordManager.GetInstance();
 
-    private readonly Mem m = new();
+    private readonly Mem m = new ();
 
     public static NotifyIcon? _mainWindowNotifyIcon { get; set; }
 
     private void CreateSystemTrayIcon()
     {
-        _mainWindowNotifyIcon = MainWindowNotifyIcon;
+        _mainWindowNotifyIcon = this.MainWindowNotifyIcon;
     }
 
     private void _notifyIcon_Click(object sender, RoutedEventArgs e)
     {
-        OpenConfigButton_Key();
+        this.OpenConfigButton_Key();
     }
 
     private void OptionSettings_Click(object sender, RoutedEventArgs e)
     {
-        OpenConfigButton_Key();
+        this.OpenConfigButton_Key();
     }
 
     private void OptionHelp_Click(object sender, RoutedEventArgs e)
     {
-        OpenLink("https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md");
+        OpenLink("https:// github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md");
     }
 
     private void OptionDocumentation_Click(object sender, RoutedEventArgs e)
     {
-        OpenLink("https://github.com/DorielRivalet/mhfz-overlay/tree/main/docs");
+        OpenLink("https:// github.com/DorielRivalet/mhfz-overlay/tree/main/docs");
     }
 
     private void OptionReportBug_Click(object sender, RoutedEventArgs e)
     {
-        OpenLink("https://github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=bug&projects=&template=BUG-REPORT.yml&title=%5BBUG%5D+-+title");
+        OpenLink("https:// github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=bug&projects=&template=BUG-REPORT.yml&title=%5BBUG%5D+-+title");
     }
 
     private void OptionRequestFeature_Click(object sender, RoutedEventArgs e)
     {
-        OpenLink("https://github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=question%2Cenhancement&projects=&template=FEATURE-REQUEST.yml&title=%5BREQUEST%5D+-+title");
+        OpenLink("https:// github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=question%2Cenhancement&projects=&template=FEATURE-REQUEST.yml&title=%5BREQUEST%5D+-+title");
     }
 
     private void OptionSendFeedback_Click(object sender, RoutedEventArgs e)
     {
-        OpenLink("https://forms.gle/hrAVWMcYS5HEo1v7A");
+        OpenLink("https:// forms.gle/hrAVWMcYS5HEo1v7A");
     }
 
     private void OptionSettingsFolder_Click(object sender, RoutedEventArgs e)
@@ -139,17 +139,19 @@ public partial class MainWindow : Window
             if (!Directory.Exists(settingsFileDirectoryName))
             {
                 LoggerInstance.Error(CultureInfo.InvariantCulture, "Could not open settings folder");
-                MainWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+                this.MainWindowSnackBar.ShowAsync(Messages.ErrorTitle, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
                 return;
             }
+
             string settingsFolder = settingsFileDirectoryName;
+
             // Open file manager at the specified folder
-            Process.Start(ApplicationPaths.EXPLORER_PATH, settingsFolder);
+            Process.Start(ApplicationPaths.ExplorerPath, settingsFolder);
         }
         catch (Exception ex)
         {
             LoggerInstance.Error(ex);
-            MainWindowSnackBar.ShowAsync(Messages.ERROR_TITLE, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+            this.MainWindowSnackBar.ShowAsync(Messages.ErrorTitle, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
         }
     }
 
@@ -157,13 +159,16 @@ public partial class MainWindow : Window
     {
         var directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         if (directoryName == null)
+        {
             return;
+        }
+
         var logFilePath = Path.Combine(directoryName, "logs", "logs.log");
 
         if (!File.Exists(logFilePath))
         {
             LoggerInstance.Error(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath);
-            System.Windows.MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            System.Windows.MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         // Open the log file using the default application
@@ -171,8 +176,11 @@ public partial class MainWindow : Window
         {
             var logFilePathDirectory = Path.GetDirectoryName(logFilePath);
             if (logFilePathDirectory == null)
+            {
                 return;
-            Process.Start(ApplicationPaths.EXPLORER_PATH, logFilePathDirectory);
+            }
+
+            Process.Start(ApplicationPaths.ExplorerPath, logFilePathDirectory);
         }
         catch (Exception ex)
         {
@@ -185,18 +193,20 @@ public partial class MainWindow : Window
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         var directoryName = Path.GetDirectoryName(s.DatabaseFilePath);
         if (directoryName == null)
+            {
             return;
+        }
 
         if (!File.Exists(s.DatabaseFilePath))
         {
             LoggerInstance.Error(CultureInfo.InvariantCulture, "Could not find the database file: {0}", s.DatabaseFilePath);
-            System.Windows.MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the database file: {0}", s.DatabaseFilePath), Messages.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            System.Windows.MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the database file: {0}", s.DatabaseFilePath), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         // Open the log file using the default application
         try
         {
-            Process.Start(ApplicationPaths.EXPLORER_PATH, directoryName);
+            Process.Start(ApplicationPaths.ExplorerPath, directoryName);
         }
         catch (Exception ex)
         {
@@ -206,24 +216,24 @@ public partial class MainWindow : Window
 
     private void OptionRestart_Click(object sender, RoutedEventArgs e)
     {
-        ReloadButton_Key();
+        this.ReloadButton_Key();
     }
 
     private void OptionExit_Click(object sender, RoutedEventArgs e)
     {
-        CloseButton_Key();
+        this.CloseButton_Key();
     }
 
     private void OptionAbout_Click(object sender, RoutedEventArgs e)
     {
-        OpenLink("https://github.com/DorielRivalet/mhfz-overlay");
+        OpenLink("https:// github.com/DorielRivalet/mhfz-overlay");
     }
 
     private int originalStyle;
 
-    //https://stackoverflow.com/questions/2798245/click-through-in-c-sharp-form
-    //https://stackoverflow.com/questions/686132/opening-a-form-in-c-sharp-without-focus/10727337#10727337
-    //https://social.msdn.microsoft.com/Forums/en-us/a5e3cbbb-fd07-4343-9b60-6903cdfeca76/click-through-window-with-image-wpf-issues-httransparent-isnt-working?forum=csharplanguage        
+    // https:// stackoverflow.com/questions/2798245/click-through-in-c-sharp-form
+    // https:// stackoverflow.com/questions/686132/opening-a-form-in-c-sharp-without-focus/10727337#10727337
+    // https:// social.msdn.microsoft.com/Forums/en-us/a5e3cbbb-fd07-4343-9b60-6903cdfeca76/click-through-window-with-image-wpf-issues-httransparent-isnt-working?forum=csharplanguage        
     /// <summary>
     /// Raises the <see cref="E:System.Windows.Window.SourceInitialized" /> event.
     /// </summary>
@@ -232,18 +242,21 @@ public partial class MainWindow : Window
     {
         // Get this window's handle         
         IntPtr hwnd = new WindowInteropHelper(this).Handle;
+
         // Change the extended window style to include WS_EX_TRANSPARENT         
         int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-        if (originalStyle == 0)
+
+        if (this.originalStyle == 0)
         {
-            originalStyle = extendedStyle;
+            this.originalStyle = extendedStyle;
         }
+
         SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
         base.OnSourceInitialized(e);
     }
 
-
     public const int WS_EX_TRANSPARENT = 0x00000020;
+
     public const int GWL_EXSTYLE = (-20);
 
     [DllImport("user32.dll")]
@@ -257,17 +270,19 @@ public partial class MainWindow : Window
     public DateTime ProgramEnd;
 
     // Declare a dictionary to map keys to images
-    private readonly Dictionary<Keys, Image> _keyImages = new();
+    private readonly Dictionary<Keys, Image> _keyImages = new ();
 
-    private readonly Dictionary<MouseButtons, Image> _mouseImages = new();
+    private readonly Dictionary<MouseButtons, Image> _mouseImages = new ();
 
     // TODO
     private readonly XGamepad gamepad;
-    private readonly Dictionary<XInputButton, Image> _gamepadImages = new();
-    private readonly Dictionary<XInputium.Trigger, Image> _gamepadTriggersImages = new();
-    private readonly Dictionary<Joystick, Image> _gamepadJoystickImages = new();
 
-    //Main entry point?        
+    private readonly Dictionary<XInputButton, Image> _gamepadImages = new ();
+
+    private readonly Dictionary<XInputium.Trigger, Image> _gamepadTriggersImages = new ();
+
+    private readonly Dictionary<Joystick, Image> _gamepadJoystickImages = new ();
+
     /// <summary>
     /// Initializes a new instance of the <see cref="MainWindow"/> class.
     /// </summary>
@@ -275,35 +290,37 @@ public partial class MainWindow : Window
     {
         // Create a Stopwatch instance
         Stopwatch stopwatch = new Stopwatch();
+
         // Start the stopwatch
         stopwatch.Start();
 
         var splashScreen = new SplashScreen("Assets/Icons/png/loading.png");
 
         splashScreen.Show(false);
-        dataLoader = new DataLoader();
-        InitializeComponent();
+        this.dataLoader = new DataLoader();
+        this.InitializeComponent();
 
         LoggerInstance.Info(CultureInfo.InvariantCulture, $"MainWindow initialized");
         LoggerInstance.Trace(new StackTrace().ToString());
 
-        Left = 0;
-        Top = 0;
-        Topmost = true;
-        DispatcherTimer timer = new();
+        this.Left = 0;
+        this.Top = 0;
+        this.Topmost = true;
+        DispatcherTimer timer = new ();
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         timer.Interval = new TimeSpan(0, 0, 0, 0, 1_000 / s.RefreshRate);
-        //memory leak?
-        timer.Tick += Timer_Tick;
+
+        // memory leak?
+        timer.Tick += this.Timer_Tick;
         timer.Start();
-        DataContext = dataLoader.model;
-        GlobalHotKey.RegisterHotKey("Shift + F1", () => OpenConfigButton_Key());
-        GlobalHotKey.RegisterHotKey("Shift + F5", () => ReloadButton_Key());
-        GlobalHotKey.RegisterHotKey("Shift + F6", () => CloseButton_Key());
+        DataContext = this.dataLoader.model;
+        GlobalHotKey.RegisterHotKey("Shift + F1", () => this.OpenConfigButton_Key());
+        GlobalHotKey.RegisterHotKey("Shift + F5", () => this.ReloadButton_Key());
+        GlobalHotKey.RegisterHotKey("Shift + F6", () => this.CloseButton_Key());
 
         DiscordManager.InitializeDiscordRPC();
-        CheckGameState();
-        _ = LoadOctoKit();
+        this.CheckGameState();
+        _ = this.LoadOctoKit();
 
         LiveCharts.Configure(config =>
         config
@@ -319,53 +336,52 @@ public partial class MainWindow : Window
             // OPTIONAL
             .AddLightTheme());
 
-
         // When the program starts
-        ProgramStart = DateTime.UtcNow;
+        this.ProgramStart = DateTime.UtcNow;
 
         // Calculate the total time spent and update the TotalTimeSpent property
-        dataLoader.model.TotalTimeSpent = DatabaseManagerInstance.CalculateTotalTimeSpent();
+        this.dataLoader.model.TotalTimeSpent = DatabaseManagerInstance.CalculateTotalTimeSpent();
 
-        MapPlayerInputImages();
-        Subscribe();
+        this.MapPlayerInputImages();
+        this.Subscribe();
+
         // TODO unsubscribe
-
         // TODO gamepad
-        gamepad = new();
-        gamepad.ButtonPressed += Gamepad_ButtonPressed;
-        gamepad.LeftJoystickMove += Gamepad_LeftJoystickMove;
-        gamepad.RightJoystickMove += Gamepad_RightJoystickMove;
-        gamepad.LeftTrigger.ToDigitalButton(triggerActivationThreshold).Pressed += Gamepad_LeftTriggerPressed;
-        gamepad.RightTrigger.ToDigitalButton(triggerActivationThreshold).Pressed += Gamepad_RightTriggerPressed;
-        gamepad.ButtonReleased += Gamepad_ButtonReleased;
-        gamepad.LeftTrigger.ToDigitalButton(triggerActivationThreshold).Released += Gamepad_LeftTriggerReleased;
-        gamepad.RightTrigger.ToDigitalButton(triggerActivationThreshold).Released += Gamepad_RightTriggerReleased;
+        this.gamepad = new ();
+        this.gamepad.ButtonPressed += this.Gamepad_ButtonPressed;
+        this.gamepad.LeftJoystickMove += this.Gamepad_LeftJoystickMove;
+        this.gamepad.RightJoystickMove += this.Gamepad_RightJoystickMove;
+        this.gamepad.LeftTrigger.ToDigitalButton(this.triggerActivationThreshold).Pressed += this.Gamepad_LeftTriggerPressed;
+        this.gamepad.RightTrigger.ToDigitalButton(this.triggerActivationThreshold).Pressed += this.Gamepad_RightTriggerPressed;
+        this.gamepad.ButtonReleased += this.Gamepad_ButtonReleased;
+        this.gamepad.LeftTrigger.ToDigitalButton(this.triggerActivationThreshold).Released += this.Gamepad_LeftTriggerReleased;
+        this.gamepad.RightTrigger.ToDigitalButton(this.triggerActivationThreshold).Released += this.Gamepad_RightTriggerReleased;
 
-        DispatcherTimer timer1Frame = new();
-        timer1Frame.Interval = new TimeSpan(0, 0, 0, 0, 1_000 / Numbers.FRAMES_PER_SECOND);
-        timer1Frame.Tick += Timer1Frame_Tick;
+        DispatcherTimer timer1Frame = new ();
+        timer1Frame.Interval = new TimeSpan(0, 0, 0, 0, 1_000 / Numbers.FramesPerSecond);
+        timer1Frame.Tick += this.Timer1Frame_Tick;
         timer1Frame.Start();
 
-        SetGraphSeries();
-        GetDependencies();
+        this.SetGraphSeries();
+        this.GetDependencies();
 
         // The rendering tier corresponds to the high-order word of the Tier property.
         int renderingTier = (RenderCapability.Tier >> 16);
 
         LoggerInstance.Info(CultureInfo.InvariantCulture, "Found rendering tier {0}", renderingTier);
 
-        CreateSystemTrayIcon();
+        this.CreateSystemTrayIcon();
 
-        DispatcherTimer timer1Second = new();
+        DispatcherTimer timer1Second = new ();
         timer1Second.Interval = new TimeSpan(0, 0, 1);
-        timer1Second.Tick += Timer1Second_Tick;
+        timer1Second.Tick += this.Timer1Second_Tick;
         // we run the 1 second timer tick once in the constructor
         try
         {
-            HideMonsterInfoWhenNotInQuest();
-            HidePlayerInfoWhenNotInQuest();
-            dataLoader.CheckForExternalProcesses();
-            dataLoader.CheckForIllegalModifications();
+            this.HideMonsterInfoWhenNotInQuest();
+            this.HidePlayerInfoWhenNotInQuest();
+            this.dataLoader.CheckForExternalProcesses();
+            this.dataLoader.CheckForIllegalModifications();
         }
         catch (Exception ex)
         {
@@ -373,23 +389,26 @@ public partial class MainWindow : Window
         }
         timer1Second.Start();
 
-        DispatcherTimer timer10Seconds = new();
+        DispatcherTimer timer10Seconds = new ();
         timer10Seconds.Interval = new TimeSpan(0, 0, 10);
-        timer10Seconds.Tick += Timer10Seconds_Tick;
+        timer10Seconds.Tick += this.Timer10Seconds_Tick;
         timer10Seconds.Start();
 
-        dataLoader.model.ShowSaveIcon = false;
+        this.dataLoader.model.ShowSaveIcon = false;
 
         LoggerInstance.Info(CultureInfo.InvariantCulture, "Loaded MHF-Z Overlay {0}", App.CurrentProgramVersion);
 
         // In your initialization or setup code
         ISnackbarService snackbarService = new SnackbarService();
+
         // Replace 'snackbarControl' with your actual snackbar control instance
-        snackbarService.SetSnackbarControl(MainWindowSnackBar);
+        snackbarService.SetSnackbarControl(this.MainWindowSnackBar);
 
         splashScreen.Close(TimeSpan.FromSeconds(0.1));
+
         // Stop the stopwatch
         stopwatch.Stop();
+
         // Get the elapsed time in milliseconds
         double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
 
@@ -402,7 +421,10 @@ public partial class MainWindow : Window
         // Get the dependency context for the current application
         var context = DependencyContext.Default;
         if (context == null)
+            {
             return;
+        }
+
         // Build a string with information about all the dependencies
         var sb = new StringBuilder();
         var runtimeTarget = RuntimeInformation.FrameworkDescription;
@@ -430,44 +452,44 @@ public partial class MainWindow : Window
     private void SetGraphSeries()
     {
         // TODO graphs
-        //https://stackoverflow.com/questions/74719777/livecharts2-binding-continuously-changing-data-to-graph
-        //inspired by HunterPie
+        // https:// stackoverflow.com/questions/74719777/livecharts2-binding-continuously-changing-data-to-graph
+        // inspired by HunterPie
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-        dataLoader.model.attackBuffSeries.Add(new LineSeries<ObservablePoint>
+        this.dataLoader.model.attackBuffSeries.Add(new LineSeries<ObservablePoint>
         {
-            Values = dataLoader.model.attackBuffCollection,
+            Values = this.dataLoader.model.attackBuffCollection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "7f")), new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Stroke = new SolidColorPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "7f")), new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
         });
 
-        dataLoader.model.damagePerSecondSeries.Add(new LineSeries<ObservablePoint>
+        this.dataLoader.model.damagePerSecondSeries.Add(new LineSeries<ObservablePoint>
         {
-            Values = dataLoader.model.damagePerSecondCollection,
+            Values = this.dataLoader.model.damagePerSecondCollection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "7f")), new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Stroke = new SolidColorPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "7f")), new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
         });
 
-        dataLoader.model.actionsPerMinuteSeries.Add(new LineSeries<ObservablePoint>
+        this.dataLoader.model.actionsPerMinuteSeries.Add(new LineSeries<ObservablePoint>
         {
-            Values = dataLoader.model.actionsPerMinuteCollection,
+            Values = this.dataLoader.model.actionsPerMinuteCollection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "7f")), new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Stroke = new SolidColorPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "7f")), new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
         });
 
-        dataLoader.model.hitsPerSecondSeries.Add(new LineSeries<ObservablePoint>
+        this.dataLoader.model.hitsPerSecondSeries.Add(new LineSeries<ObservablePoint>
         {
-            Values = dataLoader.model.hitsPerSecondCollection,
+            Values = this.dataLoader.model.hitsPerSecondCollection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Stroke = new SolidColorPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
         });
     }
 
@@ -502,7 +524,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
     // TODO: refactor to somewhere else
     /// <summary>
-    /// Opens the link. https://stackoverflow.com/a/60221582/18859245
+    /// Opens the link. https:// stackoverflow.com/a/60221582/18859245
     /// </summary>
     /// <param name="destinationurl">The destinationurl.</param>
     private static void OpenLink(string destinationurl)
@@ -521,17 +543,17 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         int PID = m.GetProcIdFromName("mhf");
 
-        //https://stackoverflow.com/questions/12372534/how-to-get-a-process-window-class-name-from-c
+        // https:// stackoverflow.com/questions/12372534/how-to-get-a-process-window-class-name-from-c
         int pidToSearch = PID;
-        //Init a condition indicating that you want to search by process id.
+        // Init a condition indicating that you want to search by process id.
         var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
             pidToSearch);
-        //Find the automation element matching the criteria
+        // Find the automation element matching the criteria
         // TODO what is this?
         AutomationElement element = AutomationElement.RootElement.FindFirst(
             TreeScope.Children, condition);
 
-        //get the classname
+        // get the classname
         if (element != null)
         {
             var className = element.Current.ClassName;
@@ -539,34 +561,35 @@ The process may take some time, as the program attempts to download from GitHub 
             if (className == "MHFLAUNCH")
             {
                 LoggerInstance.Error(CultureInfo.InvariantCulture, "Detected game launcher");
-                System.Windows.MessageBox.Show("Detected launcher, please start the overlay when fully loading into Mezeporta. Closing overlay.", Messages.ERROR_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                dataLoader.model.isInLauncherBool = true;
+                System.Windows.MessageBox.Show("Detected launcher, please start the overlay when fully loading into Mezeporta. Closing overlay.", Messages.ErrorTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                this.dataLoader.model.isInLauncherBool = true;
                 ApplicationManager.HandleShutdown();
             }
             else
             {
-                dataLoader.model.isInLauncherBool = false;
+                this.dataLoader.model.isInLauncherBool = false;
             }
 
-            //https://stackoverflow.com/questions/51148/how-do-i-find-out-if-a-process-is-already-running-using-c
-            //https://stackoverflow.com/questions/12273825/c-sharp-process-start-how-do-i-know-if-the-process-ended
+            // https:// stackoverflow.com/questions/51148/how-do-i-find-out-if-a-process-is-already-running-using-c
+            // https:// stackoverflow.com/questions/12273825/c-sharp-process-start-how-do-i-know-if-the-process-ended
             Process mhfProcess = Process.GetProcessById(pidToSearch);
 
             mhfProcess.EnableRaisingEvents = true;
             mhfProcess.Exited += (sender, e) =>
             {
 
-                dataLoader.model.closedGame = true;
+                this.dataLoader.model.closedGame = true;
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 LoggerInstance.Info(CultureInfo.InvariantCulture, "Detected closed game");
-                System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please start the overlay when fully loading into Mezeporta.", Messages.INFO_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
-                //https://stackoverflow.com/a/9050477/18859245
+                System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please start the overlay when fully loading into Mezeporta.", Messages.InfoTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                // https:// stackoverflow.com/a/9050477/18859245
                 ApplicationManager.HandleShutdown();
             };
         }
     }
 
     private bool showedNullError = false;
+
     private bool showedGameFolderWarning = false;
 
     // TODO: optimization
@@ -574,7 +597,7 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         try
         {
-            dataLoader.model.ReloadData();
+            this.dataLoader.model.ReloadData();
             Monster1HPBar.ReloadData();
             Monster2HPBar.ReloadData();
             Monster3HPBar.ReloadData();
@@ -592,14 +615,14 @@ The process may take some time, as the program attempts to download from GitHub 
             // this is also for database logging
             CheckMezFesScore();
 
-            if (dataLoader.model.isInLauncher() == "NULL" && !showedNullError)
+            if (this.dataLoader.model.isInLauncher() == "NULL" && !showedNullError)
             {
                 showedNullError = true;
             }
 
             if (!showedGameFolderWarning)
             {
-                dataLoader.model.ValidateGameFolder();
+                this.dataLoader.model.ValidateGameFolder();
                 showedGameFolderWarning = true;
             }
 
@@ -654,11 +677,17 @@ The process may take some time, as the program attempts to download from GitHub 
             {
                 gamepad.Device = XInputDevice.GetFirstConnectedDevice();
                 if (_gamepadImages.Count > 0)
+                {
                     _gamepadImages.Clear();
+                }
                 if (_gamepadTriggersImages.Count > 0)
+                {
                     _gamepadTriggersImages.Clear();
+                }
                 if (_gamepadJoystickImages.Count > 0)
+                    {
                     _gamepadJoystickImages.Clear();
+                }
                 if (gamepad.IsConnected)
                 {
                     LoggerInstance.Debug("Gamepad reconnected");
@@ -674,14 +703,14 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void CheckIfQuestChanged()
     {
-        if (dataLoader.model.previousQuestID != dataLoader.model.QuestID() && dataLoader.model.QuestID() != 0)
+        if (this.dataLoader.model.previousQuestID != this.dataLoader.model.QuestID() && this.dataLoader.model.QuestID() != 0)
         {
-            dataLoader.model.previousQuestID = dataLoader.model.QuestID();
+            this.dataLoader.model.previousQuestID = this.dataLoader.model.QuestID();
             ShowQuestName();
         }
-        else if (dataLoader.model.QuestID() == 0 && dataLoader.model.previousQuestID != 0)
+        else if (this.dataLoader.model.QuestID() == 0 && this.dataLoader.model.previousQuestID != 0)
         {
-            dataLoader.model.previousQuestID = dataLoader.model.QuestID();
+            this.dataLoader.model.previousQuestID = this.dataLoader.model.QuestID();
         }
     }
 
@@ -690,11 +719,15 @@ The process may take some time, as the program attempts to download from GitHub 
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
         if (s == null || !s.QuestNameShown)
+            {
             return;
+        }
 
-        EZlion.Mapper.Quest.IDName.TryGetValue(dataLoader.model.previousQuestID, out string? previousQuestID);
+        EZlion.Mapper.Quest.IDName.TryGetValue(this.dataLoader.model.previousQuestID, out string? previousQuestID);
         if (previousQuestID == null)
+            {
             return;
+        }
         questNameTextBlock.Text = previousQuestID;
         Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         Brush peachBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x87));
@@ -755,15 +788,15 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private bool IsInHubAreaID(DataLoader dataLoader)
     {
-        switch (dataLoader.model.AreaID())
+        switch (this.dataLoader.model.AreaID())
         {
             default:
                 return false;
-            case 200://Mezeporta
-            case 210://Private Bar
-            case 260://Pallone Caravan
-            case 282://Cities Map
-            case 202://Guild Halls
+            case 200:// Mezeporta
+            case 210:// Private Bar
+            case 260:// Pallone Caravan
+            case 282:// Cities Map
+            case 202:// Guild Halls
             case 203:
             case 204:
                 return true;
@@ -772,14 +805,14 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void CheckIfLocationChanged()
     {
-        if (IsInHubAreaID(dataLoader) && dataLoader.model.QuestID() == 0)
+        if (IsInHubAreaID(dataLoader) && this.dataLoader.model.QuestID() == 0)
         {
-            dataLoader.model.PreviousHubAreaID = dataLoader.model.AreaID();
+            this.dataLoader.model.PreviousHubAreaID = this.dataLoader.model.AreaID();
         }
 
-        if (dataLoader.model.previousGlobalAreaID != dataLoader.model.AreaID() && dataLoader.model.AreaID() != 0)
+        if (this.dataLoader.model.previousGlobalAreaID != this.dataLoader.model.AreaID() && this.dataLoader.model.AreaID() != 0)
         {
-            dataLoader.model.previousGlobalAreaID = dataLoader.model.AreaID();
+            this.dataLoader.model.previousGlobalAreaID = this.dataLoader.model.AreaID();
             ShowLocationName();
         }
     }
@@ -793,7 +826,7 @@ The process may take some time, as the program attempts to download from GitHub 
             return;
         }
 
-        Location.IDName.TryGetValue(dataLoader.model.previousGlobalAreaID, out string? previousGlobalAreaID);
+        Location.IDName.TryGetValue(this.dataLoader.model.previousGlobalAreaID, out string? previousGlobalAreaID);
         if (previousGlobalAreaID == null)
         {
             return;
@@ -806,8 +839,11 @@ The process may take some time, as the program attempts to download from GitHub 
     }
 
     int curNum;
+
     int prevNum;
+
     bool isFirstAttack;
+
     public bool IsDragConfigure { get; set; }
 
     /// <summary>
@@ -815,11 +851,13 @@ The process may take some time, as the program attempts to download from GitHub 
     /// </summary>
     private void CreateDamageNumber()
     {
-        if (dataLoader.model.QuestID() == 0)
+        if (this.dataLoader.model.QuestID() == 0)
+            {
             return;
+        }
 
         int damage = 0;
-        if (dataLoader.model.HitCountInt() == 0)
+        if (this.dataLoader.model.HitCountInt() == 0)
         {
             curNum = 0;
             prevNum = 0;
@@ -827,7 +865,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
         else
         {
-            damage = dataLoader.model.DamageDealt();
+            damage = this.dataLoader.model.DamageDealt();
         }
 
         if (prevNum != damage)
@@ -837,11 +875,11 @@ The process may take some time, as the program attempts to download from GitHub 
             {
                 isFirstAttack = false;
                 CreateDamageNumberLabel(damage);
-                if (!dataLoader.model.damageDealtDictionary.ContainsKey(dataLoader.model.TimeInt()))
+                if (!this.dataLoader.model.damageDealtDictionary.ContainsKey(this.dataLoader.model.TimeInt()))
                 {
                     try
                     {
-                        dataLoader.model.damageDealtDictionary.Add(dataLoader.model.TimeInt(), damage);
+                        this.dataLoader.model.damageDealtDictionary.Add(this.dataLoader.model.TimeInt(), damage);
                     }
                     catch (Exception ex)
                     {
@@ -854,11 +892,11 @@ The process may take some time, as the program attempts to download from GitHub 
                 // TODO
                 curNum += 1_000;
                 CreateDamageNumberLabel(curNum);
-                if (!dataLoader.model.damageDealtDictionary.ContainsKey(dataLoader.model.TimeInt()))
+                if (!this.dataLoader.model.damageDealtDictionary.ContainsKey(this.dataLoader.model.TimeInt()))
                 {
                     try
                     {
-                        dataLoader.model.damageDealtDictionary.Add(dataLoader.model.TimeInt(), curNum);
+                        this.dataLoader.model.damageDealtDictionary.Add(this.dataLoader.model.TimeInt(), curNum);
 
                     }
                     catch (Exception ex)
@@ -872,11 +910,11 @@ The process may take some time, as the program attempts to download from GitHub 
                 if (curNum != damage)
                 {
                     CreateDamageNumberLabel(curNum);
-                    if (!dataLoader.model.damageDealtDictionary.ContainsKey(dataLoader.model.TimeInt()))
+                    if (!this.dataLoader.model.damageDealtDictionary.ContainsKey(this.dataLoader.model.TimeInt()))
                     {
                         try
                         {
-                            dataLoader.model.damageDealtDictionary.Add(dataLoader.model.TimeInt(), curNum);
+                            this.dataLoader.model.damageDealtDictionary.Add(this.dataLoader.model.TimeInt(), curNum);
                         }
                         catch
                         (Exception ex)
@@ -898,7 +936,9 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         if (s.EnableDamageNumbersMulticolor)
+            {
             return true;
+        }
         else
             return false;
     }
@@ -911,7 +951,7 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-        Random random = new();
+        Random random = new ();
         double x = random.Next(450);
         double y = random.Next(254);
         Point newPoint = DamageNumbers.TranslatePoint(new Point(x, y), DamageNumbers);
@@ -926,8 +966,8 @@ The process may take some time, as the program attempts to download from GitHub 
         damageOutlinedTextBlock.StrokeThickness = 4;
         damageOutlinedTextBlock.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
 
-        //does not alter actual number displayed, only the text style
-        double damageModifier = damage / (dataLoader.model.CurrentWeaponMultiplier / 2);
+        // does not alter actual number displayed, only the text style
+        double damageModifier = damage / (this.dataLoader.model.CurrentWeaponMultiplier / 2);
         string exclamations = string.Empty;
 
         switch (damageModifier)
@@ -973,13 +1013,18 @@ The process may take some time, as the program attempts to download from GitHub 
                 break;
         }
 
-        var defenseMultiplier = Double.Parse(dataLoader.model.DefMult, CultureInfo.InvariantCulture);
+        var defenseMultiplier = Double.Parse(this.dataLoader.model.DefMult, CultureInfo.InvariantCulture);
         if (defenseMultiplier <= 0)
+            {
             defenseMultiplier = 1;
+        }
+
         var effectiveDamage = damage / defenseMultiplier;
         // If the defense rate is so high that the effective damage is essentially 0, show the true damage instead.
         if (effectiveDamage == 0)
+            {
             effectiveDamage = damage;
+        }
 
         switch (s.DamageNumbersMode)
         {
@@ -1006,7 +1051,7 @@ The process may take some time, as the program attempts to download from GitHub 
         // TODO add check for effects
         if (!ShowDamageNumbersMulticolor())
         {
-            //https://stackoverflow.com/questions/14601759/convert-color-to-byte-value
+            // https:// stackoverflow.com/questions/14601759/convert-color-to-byte-value
             System.Drawing.Color color = ColorTranslator.FromHtml(s.DamageNumbersColor);
             damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
         }
@@ -1014,7 +1059,7 @@ The process may take some time, as the program attempts to download from GitHub 
         damageOutlinedTextBlock.SetValue(Canvas.TopProperty, newPoint.Y);
         damageOutlinedTextBlock.SetValue(Canvas.LeftProperty, newPoint.X);
 
-        DamageNumbers.Children.Add(damageOutlinedTextBlock);
+        this.DamageNumbers.Children.Add(damageOutlinedTextBlock);
 
         if (!s.EnableDamageNumbersFlash && !s.EnableDamageNumbersSize)
         {
@@ -1057,8 +1102,6 @@ The process may take some time, as the program attempts to download from GitHub 
                 From = whiteBrush,
                 To = redBrush,
                 Duration = TimeSpan.FromSeconds(0.05),
-                //AutoReverse = true,
-                //RepeatBehavior = new RepeatBehavior(2),
             };
             Storyboard.SetTarget(flashWhiteStrokeAnimation, damageOutlinedTextBlock);
             Storyboard.SetTargetProperty(flashWhiteStrokeAnimation, new PropertyPath(OutlinedTextBlock.StrokeProperty));
@@ -1068,8 +1111,6 @@ The process may take some time, as the program attempts to download from GitHub 
                 From = whiteBrush,
                 To = redBrush,
                 Duration = TimeSpan.FromSeconds(0.05),
-                //AutoReverse = true,
-                //RepeatBehavior = new RepeatBehavior(2),
             };
             Storyboard.SetTarget(flashWhiteFillAnimation, damageOutlinedTextBlock);
             Storyboard.SetTargetProperty(flashWhiteFillAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
@@ -1077,7 +1118,9 @@ The process may take some time, as the program attempts to download from GitHub 
             fadeInIncreaseSizeFlashColorStoryboard.Children.Add(fadeInAnimation);
 
             if (s.EnableDamageNumbersSize)
+                {
                 fadeInIncreaseSizeFlashColorStoryboard.Children.Add(sizeIncreaseAnimation);
+            }
 
             if (s.EnableDamageNumbersFlash)
             {
@@ -1101,11 +1144,8 @@ The process may take some time, as the program attempts to download from GitHub 
             BrushAnimation showColorStrokeAnimation = new BrushAnimation
             {
                 From = redBrush,
-                //To = (Color)converter.ConvertFromString(damageOutlinedTextBlock.Stroke.ToString()),
                 To = blackBrush,
                 Duration = TimeSpan.FromSeconds(0.05),
-                //AutoReverse = true,
-                //RepeatBehavior = new RepeatBehavior(2),
             };
             Storyboard.SetTarget(showColorStrokeAnimation, damageOutlinedTextBlock);
             Storyboard.SetTargetProperty(showColorStrokeAnimation, new PropertyPath(OutlinedTextBlock.StrokeProperty));
@@ -1115,21 +1155,20 @@ The process may take some time, as the program attempts to download from GitHub 
                 From = redBrush,
                 To = originalFillBrush,
                 Duration = TimeSpan.FromSeconds(0.05),
-                //AutoReverse = true,
-                //RepeatBehavior = new RepeatBehavior(2),
             };
             Storyboard.SetTarget(showColorFillAnimation, damageOutlinedTextBlock);
             Storyboard.SetTargetProperty(showColorFillAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
 
             if (s.EnableDamageNumbersSize)
+                {
                 decreaseSizeShowColorStoryboard.Children.Add(sizeDecreaseAnimation);
+            }
 
             if (s.EnableDamageNumbersFlash)
             {
                 decreaseSizeShowColorStoryboard.Children.Add(showColorStrokeAnimation);
                 decreaseSizeShowColorStoryboard.Children.Add(showColorFillAnimation);
             }
-
 
             Storyboard fadeOutStoryboard = new Storyboard();
 
@@ -1176,15 +1215,16 @@ The process may take some time, as the program attempts to download from GitHub 
     /// <param name="tb">The tb.</param>
     private void RemoveDamageNumberLabel(OutlinedTextBlock tb)
     {
-        DispatcherTimer timer = new();
+        DispatcherTimer timer = new ();
         timer.Interval = new TimeSpan(0, 0, 0, 0, 1_000);
-        //memory leak?
+
+        // memory leak?
         timer.Tick += (o, e) => { DamageNumbers.Children.Remove(tb); };
         timer.Start();
     }
 
-    //does this sometimes bug?
-    //the UI flashes at least once when loading into quest        
+    // does this sometimes bug?
+    // the UI flashes at least once when loading into quest        
     /// <summary>
     /// Hides the monster information when not in quest.
     /// </summary>
@@ -1192,7 +1232,7 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         Settings s = (Settings)Application.Current.FindResource("Settings");
         bool v = IsGameFocused(s) &&
-            (s.AlwaysShowMonsterInfo || dataLoader.model.Configuring || dataLoader.model.QuestID() != 0);
+            (s.AlwaysShowMonsterInfo || this.dataLoader.model.Configuring || this.dataLoader.model.QuestID() != 0);
         SetMonsterStatsVisibility(v, s);
     }
 
@@ -1202,7 +1242,6 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private static Process currentProcess = Process.GetCurrentProcess();
 
-
     /// <summary>
     /// Checks if the game or overlay is focused.
     /// </summary>
@@ -1211,8 +1250,10 @@ The process may take some time, as the program attempts to download from GitHub 
     /// </value>
     private bool IsGameFocused(Settings s)
     {
-        if (!s.HideOverlayWhenUnfocusedGame || dataLoader.model.Configuring)
+        if (!s.HideOverlayWhenUnfocusedGame || this.dataLoader.model.Configuring)
+            {
             return true;
+        }
 
         // Get the active window handle
         IntPtr activeWindowHandle = GetForegroundWindow();
@@ -1228,7 +1269,9 @@ The process may take some time, as the program attempts to download from GitHub 
             bool isGameProcessActive = (mhfProcess != null && activeWindowHandle == mhfProcess.MainWindowHandle);
 
             if (isGameProcessActive)
+                {
                 return true;
+            }
             else
                 return false;
         }
@@ -1236,22 +1279,22 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void SetMonsterStatsVisibility(bool v, Settings s)
     {
-        dataLoader.model.ShowMonsterAtkMult = v && s.MonsterAtkMultShown;
-        dataLoader.model.ShowMonsterDefrate = v && s.MonsterDefrateShown;
-        dataLoader.model.ShowMonsterSize = v && s.MonsterSizeShown;
-        dataLoader.model.ShowMonsterPoison = v && s.MonsterPoisonShown;
-        dataLoader.model.ShowMonsterSleep = v && s.MonsterSleepShown;
-        dataLoader.model.ShowMonsterPara = v && s.MonsterParaShown;
-        dataLoader.model.ShowMonsterBlast = v && s.MonsterBlastShown;
-        dataLoader.model.ShowMonsterStun = v && s.MonsterStunShown;
+        this.dataLoader.model.ShowMonsterAtkMult = v && s.MonsterAtkMultShown;
+        this.dataLoader.model.ShowMonsterDefrate = v && s.MonsterDefrateShown;
+        this.dataLoader.model.ShowMonsterSize = v && s.MonsterSizeShown;
+        this.dataLoader.model.ShowMonsterPoison = v && s.MonsterPoisonShown;
+        this.dataLoader.model.ShowMonsterSleep = v && s.MonsterSleepShown;
+        this.dataLoader.model.ShowMonsterPara = v && s.MonsterParaShown;
+        this.dataLoader.model.ShowMonsterBlast = v && s.MonsterBlastShown;
+        this.dataLoader.model.ShowMonsterStun = v && s.MonsterStunShown;
 
-        dataLoader.model.ShowMonster1HPBar = v && s.Monster1HealthBarShown;
-        dataLoader.model.ShowMonster2HPBar = v && s.Monster2HealthBarShown;
-        dataLoader.model.ShowMonster3HPBar = v && s.Monster3HealthBarShown;
-        dataLoader.model.ShowMonster4HPBar = v && s.Monster4HealthBarShown;
+        this.dataLoader.model.ShowMonster1HPBar = v && s.Monster1HealthBarShown;
+        this.dataLoader.model.ShowMonster2HPBar = v && s.Monster2HealthBarShown;
+        this.dataLoader.model.ShowMonster3HPBar = v && s.Monster3HealthBarShown;
+        this.dataLoader.model.ShowMonster4HPBar = v && s.Monster4HealthBarShown;
 
-        dataLoader.model.ShowMonsterPartHP = v && s.PartThresholdShown;
-        dataLoader.model.ShowMonster1Icon = v && s.Monster1IconShown;
+        this.dataLoader.model.ShowMonsterPartHP = v && s.PartThresholdShown;
+        this.dataLoader.model.ShowMonster1Icon = v && s.Monster1IconShown;
     }
 
     /// <summary>
@@ -1261,39 +1304,39 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         Settings s = (Settings)Application.Current.FindResource("Settings");
         bool v = IsGameFocused(s) &&
-            (s.AlwaysShowPlayerInfo || dataLoader.model.Configuring || dataLoader.model.QuestID() != 0);
+            (s.AlwaysShowPlayerInfo || this.dataLoader.model.Configuring || this.dataLoader.model.QuestID() != 0);
         SetPlayerStatsVisibility(v, s);
     }
 
     private void SetPlayerStatsVisibility(bool v, Settings s)
     {
-        //DL.m.?.Visibility = v && s.?.IsChecked
-        dataLoader.model.ShowTimerInfo = v && s.TimerInfoShown;
-        dataLoader.model.ShowHitCountInfo = v && s.HitCountShown;
-        dataLoader.model.ShowPlayerAtkInfo = v && s.PlayerAtkShown;
-        dataLoader.model.ShowPlayerHitsTakenBlockedInfo = v && s.TotalHitsTakenBlockedShown;
-        dataLoader.model.ShowSharpness = v && s.EnableSharpness;
-        dataLoader.model.ShowSessionTimeInfo = v && s.SessionTimeShown;
+        // DL.m.?.Visibility = v && s.?.IsChecked
+        this.dataLoader.model.ShowTimerInfo = v && s.TimerInfoShown;
+        this.dataLoader.model.ShowHitCountInfo = v && s.HitCountShown;
+        this.dataLoader.model.ShowPlayerAtkInfo = v && s.PlayerAtkShown;
+        this.dataLoader.model.ShowPlayerHitsTakenBlockedInfo = v && s.TotalHitsTakenBlockedShown;
+        this.dataLoader.model.ShowSharpness = v && s.EnableSharpness;
+        this.dataLoader.model.ShowSessionTimeInfo = v && s.SessionTimeShown;
 
-        dataLoader.model.ShowMap = v && s.EnableMap;
-        dataLoader.model.ShowFrameCounter = v && s.FrameCounterShown;
-        dataLoader.model.ShowPlayerAttackGraph = v && s.PlayerAttackGraphShown;
-        dataLoader.model.ShowPlayerDPSGraph = v && s.PlayerDPSGraphShown;
-        dataLoader.model.ShowPlayerAPMGraph = v && s.PlayerAPMGraphShown;
-        dataLoader.model.ShowPlayerHitsPerSecondGraph = v && s.PlayerHitsPerSecondGraphShown;
+        this.dataLoader.model.ShowMap = v && s.EnableMap;
+        this.dataLoader.model.ShowFrameCounter = v && s.FrameCounterShown;
+        this.dataLoader.model.ShowPlayerAttackGraph = v && s.PlayerAttackGraphShown;
+        this.dataLoader.model.ShowPlayerDPSGraph = v && s.PlayerDPSGraphShown;
+        this.dataLoader.model.ShowPlayerAPMGraph = v && s.PlayerAPMGraphShown;
+        this.dataLoader.model.ShowPlayerHitsPerSecondGraph = v && s.PlayerHitsPerSecondGraphShown;
 
-        dataLoader.model.ShowDamagePerSecond = v && s.DamagePerSecondShown;
+        this.dataLoader.model.ShowDamagePerSecond = v && s.DamagePerSecondShown;
 
-        dataLoader.model.ShowKBMLayout = v && s.KBMLayoutShown;
-        dataLoader.model.ShowGamepadLayout = v && s.GamepadShown;
-        dataLoader.model.ShowAPM = v && s.ActionsPerMinuteShown;
-        dataLoader.model.ShowOverlayModeWatermark = v && s.OverlayModeWatermarkShown;
-        dataLoader.model.ShowQuestID = v && s.QuestIDShown;
+        this.dataLoader.model.ShowKBMLayout = v && s.KBMLayoutShown;
+        this.dataLoader.model.ShowGamepadLayout = v && s.GamepadShown;
+        this.dataLoader.model.ShowAPM = v && s.ActionsPerMinuteShown;
+        this.dataLoader.model.ShowOverlayModeWatermark = v && s.OverlayModeWatermarkShown;
+        this.dataLoader.model.ShowQuestID = v && s.QuestIDShown;
 
-        dataLoader.model.ShowPersonalBestInfo = v && s.PersonalBestShown;
-        dataLoader.model.ShowQuestAttemptsInfo = v && s.QuestAttemptsShown;
-        dataLoader.model.ShowPersonalBestTimePercentInfo = v && s.PersonalBestTimePercentShown;
-        dataLoader.model.ShowPersonalBestAttemptsInfo = v && s.PersonalBestAttemptsShown;
+        this.dataLoader.model.ShowPersonalBestInfo = v && s.PersonalBestShown;
+        this.dataLoader.model.ShowQuestAttemptsInfo = v && s.QuestAttemptsShown;
+        this.dataLoader.model.ShowPersonalBestTimePercentInfo = v && s.PersonalBestTimePercentShown;
+        this.dataLoader.model.ShowPersonalBestAttemptsInfo = v && s.PersonalBestAttemptsShown;
     }
 
     private double? XOffset;
@@ -1305,10 +1348,16 @@ The process may take some time, as the program attempts to download from GitHub 
     private void MainGrid_DragOver(object sender, DragEventArgs e)
     {
         if (MovingObject == null)
+            {
             return;
+        }
+
         Point pos = e.GetPosition(this);
         if (XOffset == null || YOffset == null)
+            {
             return;
+        }
+
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         switch (MovingObject.Name)
         {
@@ -1375,7 +1424,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 s.MapX = (double)(pos.X - XOffset);
                 s.MapY = (double)(pos.Y - YOffset);
                 break;
-            //case "OverlayModeWatermark":
+            // case "OverlayModeWatermark":
             //    s.OverlayModeWatermarkX = (double)(pos.X - XOffset);
             //    s.OverlayModeWatermarkY = (double)(pos.Y - YOffset);
             //    break;
@@ -1477,7 +1526,10 @@ The process may take some time, as the program attempts to download from GitHub 
     private static void DoDragDrop(FrameworkElement? item)
     {
         if (item == null)
+            {
             return;
+        }
+
         DragDrop.DoDragDrop(item, new DataObject(DataFormats.Xaml, item), DragDropEffects.Move);
     }
 
@@ -1489,7 +1541,10 @@ The process may take some time, as the program attempts to download from GitHub 
     private void MainGrid_Drop(object sender, DragEventArgs e)
     {
         if (MovingObject != null)
+            {
             MovingObject.IsHitTestVisible = true;
+        }
+
         MovingObject = null;
     }
 
@@ -1501,7 +1556,10 @@ The process may take some time, as the program attempts to download from GitHub 
     private void ElementMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (!IsDragConfigure)
+            {
             return;
+        }
+
         MovingObject = (FrameworkElement)sender;
         Point pos = e.GetPosition(this);
         XOffset = pos.X - Canvas.GetLeft(MovingObject);
@@ -1519,9 +1577,12 @@ The process may take some time, as the program attempts to download from GitHub 
     private void OpenConfigButton_Click(object sender, RoutedEventArgs e)
     {
         if (configWindow == null || !configWindow.IsLoaded)
+            {
             configWindow = new(this);
+        }
+
         configWindow.Show();
-        dataLoader.model.Configuring = true;
+        this.dataLoader.model.Configuring = true;
     }
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -1529,7 +1590,7 @@ The process may take some time, as the program attempts to download from GitHub 
         ApplicationManager.HandleShutdown();
     }
 
-    //https://stackoverflow.com/questions/4773632/how-do-i-restart-a-wpf-application
+    // https:// stackoverflow.com/questions/4773632/how-do-i-restart-a-wpf-application
     private void ReloadButton_Key()
     {
         ApplicationManager.HandleRestart();
@@ -1538,20 +1599,25 @@ The process may take some time, as the program attempts to download from GitHub 
     private void OpenConfigButton_Key()
     {
         if (IsDragConfigure)
+            {
             return;
+        }
 
-        if (dataLoader.model.isInLauncherBool)
+        if (this.dataLoader.model.isInLauncherBool)
         {
-            System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", Messages.WARNING_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+            System.Windows.MessageBox.Show("Using the configuration menu outside of the game might cause slow performance", Messages.WarningTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
             LoggerInstance.Info(CultureInfo.InvariantCulture, "Detected game launcher while using configuration menu");
         }
 
         if (configWindow == null || !configWindow.IsLoaded)
+            {
             configWindow = new(this);
+        }
+
         try
         {
             configWindow.Show();// TODO: memory error?
-            dataLoader.model.Configuring = true;
+            this.dataLoader.model.Configuring = true;
         }
         catch (Exception ex)
         {
@@ -1586,7 +1652,10 @@ The process may take some time, as the program attempts to download from GitHub 
         ExitDragAndDrop.Visibility = Visibility.Visible;
         MainGrid.Background = (Brush?)new BrushConverter().ConvertFrom("#01000000");
         if (configWindow != null)
+            {
             configWindow.Visibility = Visibility.Hidden;
+        }
+
         ToggleClickThrough();
         ToggleOverlayBorders();
     }
@@ -1597,7 +1666,9 @@ The process may take some time, as the program attempts to download from GitHub 
         var thickness = new System.Windows.Thickness(0);
 
         if (IsDragConfigure)
+            {
             thickness = new System.Windows.Thickness(2);
+        }
 
         ActionsPerMinuteInfoBorder.BorderThickness = thickness;
         DamagePerSecondInfoBorder.BorderThickness = thickness;
@@ -1663,6 +1734,7 @@ The process may take some time, as the program attempts to download from GitHub 
             SetWindowLong(hwnd, GWL_EXSTYLE, originalStyle);
 
         }
+
         ClickThrough = !ClickThrough;
     }
 
@@ -1672,7 +1744,10 @@ The process may take some time, as the program attempts to download from GitHub 
         ExitDragAndDrop.Visibility = Visibility.Hidden;
         MainGrid.Background = (Brush?)new BrushConverter().ConvertFrom("#00FFFFFF");
         if (configWindow != null)
+            {
             configWindow.Visibility = Visibility.Visible;
+        }
+
         ToggleClickThrough();
         ToggleOverlayBorders();
     }
@@ -1681,6 +1756,7 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         DisableDragAndDrop();
     }
+
     private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
     {
         DisableDragAndDrop();
@@ -1693,14 +1769,16 @@ The process may take some time, as the program attempts to download from GitHub 
     private async Task UpdateQuestAttempts()
     {
         string category = OverlayModeWatermarkTextBlock.Text;
-        int weaponType = dataLoader.model.WeaponType();
-        long questID = dataLoader.model.QuestID();
+        int weaponType = this.dataLoader.model.WeaponType();
+        long questID = this.dataLoader.model.QuestID();
 
         int attempts = await DatabaseManagerInstance.UpsertQuestAttemptsAsync(questID, weaponType, category);
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         string completions = string.Empty;
         if (s.EnableQuestCompletionsCounter)
+            {
             completions = await DatabaseManagerInstance.GetQuestCompletionsAsync(questID, category, weaponType) + "/";
+        }
 
         questAttemptsTextBlock.Text = $"{completions}{attempts}";
     }
@@ -1708,8 +1786,8 @@ The process may take some time, as the program attempts to download from GitHub 
     private async Task UpdatePersonalBestAttempts()
     {
         string category = OverlayModeWatermarkTextBlock.Text;
-        int weaponType = dataLoader.model.WeaponType();
-        long questID = dataLoader.model.QuestID();
+        int weaponType = this.dataLoader.model.WeaponType();
+        long questID = this.dataLoader.model.QuestID();
 
         int attempts = await DatabaseManagerInstance.UpsertPersonalBestAttemptsAsync(questID, weaponType, category);
         personalBestAttemptsTextBlock.Text = attempts.ToString(CultureInfo.InvariantCulture);
@@ -1727,19 +1805,19 @@ The process may take some time, as the program attempts to download from GitHub 
         switch (areaID)
         {
             case 464: // Uruki Pachinko
-                score = dataLoader.model.UrukiPachinkoScore() + dataLoader.model.UrukiPachinkoBonusScore();
+                score = this.dataLoader.model.UrukiPachinkoScore() + this.dataLoader.model.UrukiPachinkoBonusScore();
                 break;
             case 467: // Nyanrendo
-                score = dataLoader.model.NyanrendoScore();
+                score = this.dataLoader.model.NyanrendoScore();
                 break;
             case 469: // Dokkan Battle Cats
-                score = dataLoader.model.DokkanBattleCatsScore();
+                score = this.dataLoader.model.DokkanBattleCatsScore();
                 break;
             case 466: // Guuku Scoop
-                score = dataLoader.model.GuukuScoopScore();
+                score = this.dataLoader.model.GuukuScoopScore();
                 break;
             case 468: // Panic Honey
-                score = dataLoader.model.PanicHoneyScore();
+                score = this.dataLoader.model.PanicHoneyScore();
                 break;
         }
         return score;
@@ -1753,39 +1831,41 @@ The process may take some time, as the program attempts to download from GitHub 
     /// </summary>
     private void CheckMezFesScore()
     {
-        if (dataLoader.model.QuestID() != 0 || !(dataLoader.model.AreaID() == 462 || MezFesMinigameMapper.ID.ContainsKey(dataLoader.model.AreaID())))
+        if (this.dataLoader.model.QuestID() != 0 || !(this.dataLoader.model.AreaID() == 462 || MezFesMinigameMapper.ID.ContainsKey(this.dataLoader.model.AreaID())))
+            {
             return;
+        }
 
-        int areaID = dataLoader.model.AreaID();
+        int areaID = this.dataLoader.model.AreaID();
 
         // Check if player is in a minigame area
         if (MezFesMinigameMapper.ID.ContainsKey(areaID))
         {
             // Check if the player has entered a new minigame area
-            if (areaID != dataLoader.model.previousMezFesArea)
+            if (areaID != this.dataLoader.model.previousMezFesArea)
             {
-                dataLoader.model.previousMezFesArea = areaID;
-                dataLoader.model.previousMezFesScore = 0;
+                this.dataLoader.model.previousMezFesArea = areaID;
+                this.dataLoader.model.previousMezFesScore = 0;
             }
 
             // Read player score from corresponding memory address based on current area ID
             int score = GetMezFesMinigameScore(areaID);
 
             // Update current score with new score if it's greater and doesn't surpass the UI limit
-            if (score > dataLoader.model.previousMezFesScore && score <= 999999)
+            if (score > this.dataLoader.model.previousMezFesScore && score <= 999999)
             {
-                dataLoader.model.previousMezFesScore = score;
+                this.dataLoader.model.previousMezFesScore = score;
             }
         }
         // Check if the player has exited a minigame area and the score is 0
-        else if (dataLoader.model.previousMezFesArea != -1 && areaID == 462)
+        else if (this.dataLoader.model.previousMezFesArea != -1 && areaID == 462)
         {
             // Save current score and minigame area ID to database
-            DatabaseManagerInstance.InsertMezFesMinigameScore(dataLoader, dataLoader.model.previousMezFesArea, dataLoader.model.previousMezFesScore);
+            DatabaseManagerInstance.InsertMezFesMinigameScore(dataLoader, this.dataLoader.model.previousMezFesArea, this.dataLoader.model.previousMezFesScore);
 
             // Reset previousMezFesArea and previousMezFesScore
-            dataLoader.model.previousMezFesArea = -1;
-            dataLoader.model.previousMezFesScore = 0;
+            this.dataLoader.model.previousMezFesArea = -1;
+            this.dataLoader.model.previousMezFesScore = 0;
         }
     }
 
@@ -1795,27 +1875,27 @@ The process may take some time, as the program attempts to download from GitHub 
         Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
         // Check if in quest and timer is NOT frozen
-        if (dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt())
+        if (this.dataLoader.model.QuestID() != 0 && this.dataLoader.model.TimeInt() != this.dataLoader.model.TimeDefInt() && this.dataLoader.model.QuestState() == 0 && this.dataLoader.model.previousTimeInt != this.dataLoader.model.TimeInt())
         {
-            dataLoader.model.previousTimeInt = dataLoader.model.TimeInt();
-            dataLoader.model.TotalHitsTakenBlockedPerSecond = dataLoader.model.CalculateTotalHitsTakenBlockedPerSecond();
-            dataLoader.model.HitsPerSecond = dataLoader.model.CalculateHitsPerSecond();
-            dataLoader.model.DPS = dataLoader.model.CalculateDPS();
-            dataLoader.model.APM = dataLoader.model.CalculateAPM();
-            dataLoader.model.InsertQuestInfoIntoDictionaries();
+            this.dataLoader.model.previousTimeInt = this.dataLoader.model.TimeInt();
+            this.dataLoader.model.TotalHitsTakenBlockedPerSecond = this.dataLoader.model.CalculateTotalHitsTakenBlockedPerSecond();
+            this.dataLoader.model.HitsPerSecond = this.dataLoader.model.CalculateHitsPerSecond();
+            this.dataLoader.model.DPS = this.dataLoader.model.CalculateDPS();
+            this.dataLoader.model.APM = this.dataLoader.model.CalculateAPM();
+            this.dataLoader.model.InsertQuestInfoIntoDictionaries();
 
             // TODO: test on dure/etc
-            if (!calculatedPersonalBest && dataLoader.model.TimeDefInt() > dataLoader.model.TimeInt() && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0)
+            if (!calculatedPersonalBest && this.dataLoader.model.TimeDefInt() > this.dataLoader.model.TimeInt() && int.Parse(this.dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0)
             {
                 calculatedPersonalBest = true;
-                personalBestTextBlock.Text = await DatabaseManagerInstance.GetPersonalBestAsync(dataLoader.model.QuestID(), dataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text, dataLoader.model.QuestTimeMode, dataLoader);
-                dataLoader.model.PersonalBestLoaded = personalBestTextBlock.Text;
+                personalBestTextBlock.Text = await DatabaseManagerInstance.GetPersonalBestAsync(this.dataLoader.model.QuestID(), this.dataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text, this.dataLoader.model.QuestTimeMode, dataLoader);
+                this.dataLoader.model.PersonalBestLoaded = personalBestTextBlock.Text;
             }
 
             if (!calculatedQuestAttempts
-                && dataLoader.model.TimeDefInt() > dataLoader.model.TimeInt()
-                && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0
-                && dataLoader.model.TimeDefInt() - dataLoader.model.TimeInt() >= 30)
+                && this.dataLoader.model.TimeDefInt() > this.dataLoader.model.TimeInt()
+                && int.Parse(this.dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0
+                && this.dataLoader.model.TimeDefInt() - this.dataLoader.model.TimeInt() >= 30)
             {
                 calculatedQuestAttempts = true;
                 await UpdateQuestAttempts();
@@ -1823,134 +1903,138 @@ The process may take some time, as the program attempts to download from GitHub 
             }
         }
 
-        if ((dataLoader.model.QuestState() == 0 && dataLoader.model.QuestID() == 0))
+        if ((this.dataLoader.model.QuestState() == 0 && this.dataLoader.model.QuestID() == 0))
         {
-            dataLoader.model.questCleared = false;
-            dataLoader.model.questRewardsGiven = false;
-            dataLoader.model.clearQuestInfoDictionaries();
-            dataLoader.model.clearGraphCollections();
-            dataLoader.model.resetQuestInfoVariables();
-            dataLoader.model.previousRoadFloor = 0;
-            personalBestTextBlock.Text = Messages.TIMER_NOT_LOADED;
+            this.dataLoader.model.questCleared = false;
+            this.dataLoader.model.questRewardsGiven = false;
+            this.dataLoader.model.clearQuestInfoDictionaries();
+            this.dataLoader.model.clearGraphCollections();
+            this.dataLoader.model.resetQuestInfoVariables();
+            this.dataLoader.model.previousRoadFloor = 0;
+            personalBestTextBlock.Text = Messages.TimerNotLoaded;
             calculatedPersonalBest = false;
             calculatedQuestAttempts = false;
             return;
         }
-        else if (!dataLoader.model.loadedItemsAtQuestStart && dataLoader.model.QuestState() == 0 && dataLoader.model.QuestID() != 0)
+        else if (!this.dataLoader.model.loadedItemsAtQuestStart && this.dataLoader.model.QuestState() == 0 && this.dataLoader.model.QuestID() != 0)
         {
-            dataLoader.model.loadedItemsAtQuestStart = true;
-            dataLoader.model.PouchItem1IDAtQuestStart = dataLoader.model.PouchItem1ID();
-            dataLoader.model.PouchItem2IDAtQuestStart = dataLoader.model.PouchItem2ID();
-            dataLoader.model.PouchItem3IDAtQuestStart = dataLoader.model.PouchItem3ID();
-            dataLoader.model.PouchItem4IDAtQuestStart = dataLoader.model.PouchItem4ID();
-            dataLoader.model.PouchItem5IDAtQuestStart = dataLoader.model.PouchItem5ID();
-            dataLoader.model.PouchItem6IDAtQuestStart = dataLoader.model.PouchItem6ID();
-            dataLoader.model.PouchItem7IDAtQuestStart = dataLoader.model.PouchItem7ID();
-            dataLoader.model.PouchItem8IDAtQuestStart = dataLoader.model.PouchItem8ID();
-            dataLoader.model.PouchItem9IDAtQuestStart = dataLoader.model.PouchItem9ID();
-            dataLoader.model.PouchItem10IDAtQuestStart = dataLoader.model.PouchItem10ID();
-            dataLoader.model.PouchItem11IDAtQuestStart = dataLoader.model.PouchItem11ID();
-            dataLoader.model.PouchItem12IDAtQuestStart = dataLoader.model.PouchItem12ID();
-            dataLoader.model.PouchItem13IDAtQuestStart = dataLoader.model.PouchItem13ID();
-            dataLoader.model.PouchItem14IDAtQuestStart = dataLoader.model.PouchItem14ID();
-            dataLoader.model.PouchItem15IDAtQuestStart = dataLoader.model.PouchItem15ID();
-            dataLoader.model.PouchItem16IDAtQuestStart = dataLoader.model.PouchItem16ID();
-            dataLoader.model.PouchItem17IDAtQuestStart = dataLoader.model.PouchItem17ID();
-            dataLoader.model.PouchItem18IDAtQuestStart = dataLoader.model.PouchItem18ID();
-            dataLoader.model.PouchItem19IDAtQuestStart = dataLoader.model.PouchItem19ID();
-            dataLoader.model.PouchItem20IDAtQuestStart = dataLoader.model.PouchItem20ID();
-            dataLoader.model.PouchItem1QuantityAtQuestStart = dataLoader.model.PouchItem1Qty();
-            dataLoader.model.PouchItem2QuantityAtQuestStart = dataLoader.model.PouchItem2Qty();
-            dataLoader.model.PouchItem3QuantityAtQuestStart = dataLoader.model.PouchItem3Qty();
-            dataLoader.model.PouchItem4QuantityAtQuestStart = dataLoader.model.PouchItem4Qty();
-            dataLoader.model.PouchItem5QuantityAtQuestStart = dataLoader.model.PouchItem5Qty();
-            dataLoader.model.PouchItem6QuantityAtQuestStart = dataLoader.model.PouchItem6Qty();
-            dataLoader.model.PouchItem7QuantityAtQuestStart = dataLoader.model.PouchItem7Qty();
-            dataLoader.model.PouchItem8QuantityAtQuestStart = dataLoader.model.PouchItem8Qty();
-            dataLoader.model.PouchItem9QuantityAtQuestStart = dataLoader.model.PouchItem9Qty();
-            dataLoader.model.PouchItem10QuantityAtQuestStart = dataLoader.model.PouchItem10Qty();
-            dataLoader.model.PouchItem11QuantityAtQuestStart = dataLoader.model.PouchItem11Qty();
-            dataLoader.model.PouchItem12QuantityAtQuestStart = dataLoader.model.PouchItem12Qty();
-            dataLoader.model.PouchItem13QuantityAtQuestStart = dataLoader.model.PouchItem13Qty();
-            dataLoader.model.PouchItem14QuantityAtQuestStart = dataLoader.model.PouchItem14Qty();
-            dataLoader.model.PouchItem15QuantityAtQuestStart = dataLoader.model.PouchItem15Qty();
-            dataLoader.model.PouchItem16QuantityAtQuestStart = dataLoader.model.PouchItem16Qty();
-            dataLoader.model.PouchItem17QuantityAtQuestStart = dataLoader.model.PouchItem17Qty();
-            dataLoader.model.PouchItem18QuantityAtQuestStart = dataLoader.model.PouchItem18Qty();
-            dataLoader.model.PouchItem19QuantityAtQuestStart = dataLoader.model.PouchItem19Qty();
-            dataLoader.model.PouchItem20QuantityAtQuestStart = dataLoader.model.PouchItem20Qty();
+            this.dataLoader.model.loadedItemsAtQuestStart = true;
+            this.dataLoader.model.PouchItem1IDAtQuestStart = this.dataLoader.model.PouchItem1ID();
+            this.dataLoader.model.PouchItem2IDAtQuestStart = this.dataLoader.model.PouchItem2ID();
+            this.dataLoader.model.PouchItem3IDAtQuestStart = this.dataLoader.model.PouchItem3ID();
+            this.dataLoader.model.PouchItem4IDAtQuestStart = this.dataLoader.model.PouchItem4ID();
+            this.dataLoader.model.PouchItem5IDAtQuestStart = this.dataLoader.model.PouchItem5ID();
+            this.dataLoader.model.PouchItem6IDAtQuestStart = this.dataLoader.model.PouchItem6ID();
+            this.dataLoader.model.PouchItem7IDAtQuestStart = this.dataLoader.model.PouchItem7ID();
+            this.dataLoader.model.PouchItem8IDAtQuestStart = this.dataLoader.model.PouchItem8ID();
+            this.dataLoader.model.PouchItem9IDAtQuestStart = this.dataLoader.model.PouchItem9ID();
+            this.dataLoader.model.PouchItem10IDAtQuestStart = this.dataLoader.model.PouchItem10ID();
+            this.dataLoader.model.PouchItem11IDAtQuestStart = this.dataLoader.model.PouchItem11ID();
+            this.dataLoader.model.PouchItem12IDAtQuestStart = this.dataLoader.model.PouchItem12ID();
+            this.dataLoader.model.PouchItem13IDAtQuestStart = this.dataLoader.model.PouchItem13ID();
+            this.dataLoader.model.PouchItem14IDAtQuestStart = this.dataLoader.model.PouchItem14ID();
+            this.dataLoader.model.PouchItem15IDAtQuestStart = this.dataLoader.model.PouchItem15ID();
+            this.dataLoader.model.PouchItem16IDAtQuestStart = this.dataLoader.model.PouchItem16ID();
+            this.dataLoader.model.PouchItem17IDAtQuestStart = this.dataLoader.model.PouchItem17ID();
+            this.dataLoader.model.PouchItem18IDAtQuestStart = this.dataLoader.model.PouchItem18ID();
+            this.dataLoader.model.PouchItem19IDAtQuestStart = this.dataLoader.model.PouchItem19ID();
+            this.dataLoader.model.PouchItem20IDAtQuestStart = this.dataLoader.model.PouchItem20ID();
+            this.dataLoader.model.PouchItem1QuantityAtQuestStart = this.dataLoader.model.PouchItem1Qty();
+            this.dataLoader.model.PouchItem2QuantityAtQuestStart = this.dataLoader.model.PouchItem2Qty();
+            this.dataLoader.model.PouchItem3QuantityAtQuestStart = this.dataLoader.model.PouchItem3Qty();
+            this.dataLoader.model.PouchItem4QuantityAtQuestStart = this.dataLoader.model.PouchItem4Qty();
+            this.dataLoader.model.PouchItem5QuantityAtQuestStart = this.dataLoader.model.PouchItem5Qty();
+            this.dataLoader.model.PouchItem6QuantityAtQuestStart = this.dataLoader.model.PouchItem6Qty();
+            this.dataLoader.model.PouchItem7QuantityAtQuestStart = this.dataLoader.model.PouchItem7Qty();
+            this.dataLoader.model.PouchItem8QuantityAtQuestStart = this.dataLoader.model.PouchItem8Qty();
+            this.dataLoader.model.PouchItem9QuantityAtQuestStart = this.dataLoader.model.PouchItem9Qty();
+            this.dataLoader.model.PouchItem10QuantityAtQuestStart = this.dataLoader.model.PouchItem10Qty();
+            this.dataLoader.model.PouchItem11QuantityAtQuestStart = this.dataLoader.model.PouchItem11Qty();
+            this.dataLoader.model.PouchItem12QuantityAtQuestStart = this.dataLoader.model.PouchItem12Qty();
+            this.dataLoader.model.PouchItem13QuantityAtQuestStart = this.dataLoader.model.PouchItem13Qty();
+            this.dataLoader.model.PouchItem14QuantityAtQuestStart = this.dataLoader.model.PouchItem14Qty();
+            this.dataLoader.model.PouchItem15QuantityAtQuestStart = this.dataLoader.model.PouchItem15Qty();
+            this.dataLoader.model.PouchItem16QuantityAtQuestStart = this.dataLoader.model.PouchItem16Qty();
+            this.dataLoader.model.PouchItem17QuantityAtQuestStart = this.dataLoader.model.PouchItem17Qty();
+            this.dataLoader.model.PouchItem18QuantityAtQuestStart = this.dataLoader.model.PouchItem18Qty();
+            this.dataLoader.model.PouchItem19QuantityAtQuestStart = this.dataLoader.model.PouchItem19Qty();
+            this.dataLoader.model.PouchItem20QuantityAtQuestStart = this.dataLoader.model.PouchItem20Qty();
 
-            dataLoader.model.AmmoPouchItem1IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
-            dataLoader.model.AmmoPouchItem2IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
-            dataLoader.model.AmmoPouchItem3IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
-            dataLoader.model.AmmoPouchItem4IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
-            dataLoader.model.AmmoPouchItem5IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
-            dataLoader.model.AmmoPouchItem6IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
-            dataLoader.model.AmmoPouchItem7IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
-            dataLoader.model.AmmoPouchItem8IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
-            dataLoader.model.AmmoPouchItem9IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
-            dataLoader.model.AmmoPouchItem10IDAtQuestStart = dataLoader.model.AmmoPouchItem1ID();
-            dataLoader.model.AmmoPouchItem1QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
-            dataLoader.model.AmmoPouchItem2QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
-            dataLoader.model.AmmoPouchItem3QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
-            dataLoader.model.AmmoPouchItem4QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
-            dataLoader.model.AmmoPouchItem5QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
-            dataLoader.model.AmmoPouchItem6QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
-            dataLoader.model.AmmoPouchItem7QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
-            dataLoader.model.AmmoPouchItem8QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
-            dataLoader.model.AmmoPouchItem9QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
-            dataLoader.model.AmmoPouchItem10QuantityAtQuestStart = dataLoader.model.AmmoPouchItem1Qty();
+            this.dataLoader.model.AmmoPouchItem1IDAtQuestStart = this.dataLoader.model.AmmoPouchItem1ID();
+            this.dataLoader.model.AmmoPouchItem2IDAtQuestStart = this.dataLoader.model.AmmoPouchItem1ID();
+            this.dataLoader.model.AmmoPouchItem3IDAtQuestStart = this.dataLoader.model.AmmoPouchItem1ID();
+            this.dataLoader.model.AmmoPouchItem4IDAtQuestStart = this.dataLoader.model.AmmoPouchItem1ID();
+            this.dataLoader.model.AmmoPouchItem5IDAtQuestStart = this.dataLoader.model.AmmoPouchItem1ID();
+            this.dataLoader.model.AmmoPouchItem6IDAtQuestStart = this.dataLoader.model.AmmoPouchItem1ID();
+            this.dataLoader.model.AmmoPouchItem7IDAtQuestStart = this.dataLoader.model.AmmoPouchItem1ID();
+            this.dataLoader.model.AmmoPouchItem8IDAtQuestStart = this.dataLoader.model.AmmoPouchItem1ID();
+            this.dataLoader.model.AmmoPouchItem9IDAtQuestStart = this.dataLoader.model.AmmoPouchItem1ID();
+            this.dataLoader.model.AmmoPouchItem10IDAtQuestStart = this.dataLoader.model.AmmoPouchItem1ID();
+            this.dataLoader.model.AmmoPouchItem1QuantityAtQuestStart = this.dataLoader.model.AmmoPouchItem1Qty();
+            this.dataLoader.model.AmmoPouchItem2QuantityAtQuestStart = this.dataLoader.model.AmmoPouchItem1Qty();
+            this.dataLoader.model.AmmoPouchItem3QuantityAtQuestStart = this.dataLoader.model.AmmoPouchItem1Qty();
+            this.dataLoader.model.AmmoPouchItem4QuantityAtQuestStart = this.dataLoader.model.AmmoPouchItem1Qty();
+            this.dataLoader.model.AmmoPouchItem5QuantityAtQuestStart = this.dataLoader.model.AmmoPouchItem1Qty();
+            this.dataLoader.model.AmmoPouchItem6QuantityAtQuestStart = this.dataLoader.model.AmmoPouchItem1Qty();
+            this.dataLoader.model.AmmoPouchItem7QuantityAtQuestStart = this.dataLoader.model.AmmoPouchItem1Qty();
+            this.dataLoader.model.AmmoPouchItem8QuantityAtQuestStart = this.dataLoader.model.AmmoPouchItem1Qty();
+            this.dataLoader.model.AmmoPouchItem9QuantityAtQuestStart = this.dataLoader.model.AmmoPouchItem1Qty();
+            this.dataLoader.model.AmmoPouchItem10QuantityAtQuestStart = this.dataLoader.model.AmmoPouchItem1Qty();
 
-            dataLoader.model.PartnyaBagItem1IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
-            dataLoader.model.PartnyaBagItem2IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
-            dataLoader.model.PartnyaBagItem3IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
-            dataLoader.model.PartnyaBagItem4IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
-            dataLoader.model.PartnyaBagItem5IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
-            dataLoader.model.PartnyaBagItem6IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
-            dataLoader.model.PartnyaBagItem7IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
-            dataLoader.model.PartnyaBagItem8IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
-            dataLoader.model.PartnyaBagItem9IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
-            dataLoader.model.PartnyaBagItem10IDAtQuestStart = dataLoader.model.PartnyaBagItem1ID();
-            dataLoader.model.PartnyaBagItem1QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
-            dataLoader.model.PartnyaBagItem2QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
-            dataLoader.model.PartnyaBagItem3QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
-            dataLoader.model.PartnyaBagItem4QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
-            dataLoader.model.PartnyaBagItem5QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
-            dataLoader.model.PartnyaBagItem6QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
-            dataLoader.model.PartnyaBagItem7QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
-            dataLoader.model.PartnyaBagItem8QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
-            dataLoader.model.PartnyaBagItem9QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
-            dataLoader.model.PartnyaBagItem10QuantityAtQuestStart = dataLoader.model.PartnyaBagItem1Qty();
+            this.dataLoader.model.PartnyaBagItem1IDAtQuestStart = this.dataLoader.model.PartnyaBagItem1ID();
+            this.dataLoader.model.PartnyaBagItem2IDAtQuestStart = this.dataLoader.model.PartnyaBagItem1ID();
+            this.dataLoader.model.PartnyaBagItem3IDAtQuestStart = this.dataLoader.model.PartnyaBagItem1ID();
+            this.dataLoader.model.PartnyaBagItem4IDAtQuestStart = this.dataLoader.model.PartnyaBagItem1ID();
+            this.dataLoader.model.PartnyaBagItem5IDAtQuestStart = this.dataLoader.model.PartnyaBagItem1ID();
+            this.dataLoader.model.PartnyaBagItem6IDAtQuestStart = this.dataLoader.model.PartnyaBagItem1ID();
+            this.dataLoader.model.PartnyaBagItem7IDAtQuestStart = this.dataLoader.model.PartnyaBagItem1ID();
+            this.dataLoader.model.PartnyaBagItem8IDAtQuestStart = this.dataLoader.model.PartnyaBagItem1ID();
+            this.dataLoader.model.PartnyaBagItem9IDAtQuestStart = this.dataLoader.model.PartnyaBagItem1ID();
+            this.dataLoader.model.PartnyaBagItem10IDAtQuestStart = this.dataLoader.model.PartnyaBagItem1ID();
+            this.dataLoader.model.PartnyaBagItem1QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
+            this.dataLoader.model.PartnyaBagItem2QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
+            this.dataLoader.model.PartnyaBagItem3QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
+            this.dataLoader.model.PartnyaBagItem4QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
+            this.dataLoader.model.PartnyaBagItem5QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
+            this.dataLoader.model.PartnyaBagItem6QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
+            this.dataLoader.model.PartnyaBagItem7QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
+            this.dataLoader.model.PartnyaBagItem8QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
+            this.dataLoader.model.PartnyaBagItem9QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
+            this.dataLoader.model.PartnyaBagItem10QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
 
         }
 
-        if (dataLoader.model.QuestState() == 0)
+        if (this.dataLoader.model.QuestState() == 0)
+            {
             return;
+        }
 
         // check if quest clear 
-        if (dataLoader.model.QuestState() == 1 && !dataLoader.model.questCleared)
+        if (this.dataLoader.model.QuestState() == 1 && !this.dataLoader.model.questCleared)
         {
             // TODO test on dure/road/etc
             // If this code is ever reached, it is not known if the cause is from the overlay interacting with the server,
             // the server itself, or just the overlay itself.
             // The overlay does NOT write to memory addresses.
-            if (dataLoader.model.TimeDefInt() - dataLoader.model.TimeInt() == 0)
+            if (this.dataLoader.model.TimeDefInt() - this.dataLoader.model.TimeInt() == 0)
             {
-                LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Illegal quest completion time [ID {0}]", dataLoader.model.QuestID());
+                LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Illegal quest completion time [ID {0}]", this.dataLoader.model.QuestID());
                 ApplicationManager.HandleGameShutdown();
-                LoggingManager.WriteCrashLog(new ArgumentOutOfRangeException($"Illegal quest completion time [ID {dataLoader.model.QuestID()}]"));
+                LoggingManager.WriteCrashLog(new ArgumentOutOfRangeException($"Illegal quest completion time [ID {this.dataLoader.model.QuestID()}]"));
             }
 
-            dataLoader.model.questCleared = true;
-            dataLoader.model.loadedItemsAtQuestStart = false;
+            this.dataLoader.model.questCleared = true;
+            this.dataLoader.model.loadedItemsAtQuestStart = false;
             if (s.EnableQuestLogging)
-                DatabaseManagerInstance.InsertQuestData(dataLoader, (int)DatabaseManagerInstance.GetQuestAttempts((long)dataLoader.model.QuestID(), dataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text));
+                {
+                DatabaseManagerInstance.InsertQuestData(dataLoader, (int)DatabaseManagerInstance.GetQuestAttempts((long)this.dataLoader.model.QuestID(), this.dataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text));
+            }
         }
 
         // check if rewards given
-        if (dataLoader.model.QuestState() == 129 && !dataLoader.model.questRewardsGiven)
+        if (this.dataLoader.model.QuestState() == 129 && !this.dataLoader.model.questRewardsGiven)
         {
-            dataLoader.model.questRewardsGiven = true;
+            this.dataLoader.model.questRewardsGiven = true;
             // TODO: add logging check requirement in case the user needs the hash sets.
             // We await since we are dealing with database
             await AchievementManagerInstance.CheckForAchievementsAsync(MainWindowSnackBar, dataLoader, DatabaseManagerInstance, s);
@@ -1968,15 +2052,15 @@ The process may take some time, as the program attempts to download from GitHub 
         // Note: for the application hook, use the Hook.AppEvents() instead
         m_GlobalHook = Hook.GlobalEvents();
 
-        m_GlobalHook.MouseDownExt += GlobalHookMouseDownExt;
-        m_GlobalHook.MouseUpExt += GlobalHookMouseUpExt;
-        m_GlobalHook.KeyPress += GlobalHookKeyPress;
-        m_GlobalHook.KeyDown += GlobalHookKeyDown;
-        m_GlobalHook.KeyUp += GlobalHookKeyUp;
+        m_GlobalHook.MouseDownExt += this.GlobalHookMouseDownExt;
+        m_GlobalHook.MouseUpExt += this.GlobalHookMouseUpExt;
+        m_GlobalHook.KeyPress += this.GlobalHookKeyPress;
+        m_GlobalHook.KeyDown += this.GlobalHookKeyDown;
+        m_GlobalHook.KeyUp += this.GlobalHookKeyUp;
 
         // Register the event handler for button presses
         // TODO: do i really need this kind of interface?
-        //m_GlobalHook.KeyDown += HandleHorizontalInput;
+        // m_GlobalHook.KeyDown += HandleHorizontalInput;
 
     }
 
@@ -1991,11 +2075,11 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !dataLoader.model.mouseInputDictionary.ContainsKey(dataLoader.model.TimeInt()) && dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt() && image.Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !this.dataLoader.model.mouseInputDictionary.ContainsKey(this.dataLoader.model.TimeInt()) && this.dataLoader.model.QuestID() != 0 && this.dataLoader.model.TimeInt() != this.dataLoader.model.TimeDefInt() && this.dataLoader.model.QuestState() == 0 && this.dataLoader.model.previousTimeInt != this.dataLoader.model.TimeInt() && image.Opacity == unpressedInputOpacity)
             {
                 try
                 {
-                    dataLoader.model.mouseInputDictionary.Add(dataLoader.model.TimeInt(), e.Button.ToString());
+                    this.dataLoader.model.mouseInputDictionary.Add(this.dataLoader.model.TimeInt(), e.Button.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -2032,9 +2116,9 @@ The process may take some time, as the program attempts to download from GitHub 
         m_GlobalHook.KeyDown -= GlobalHookKeyDown;
         m_GlobalHook.KeyUp -= GlobalHookKeyUp;
 
-        //m_GlobalHook.KeyDown -= HandleHorizontalInput;
+        // m_GlobalHook.KeyDown -= HandleHorizontalInput;
 
-        //It is recommened to dispose it
+        // It is recommened to dispose it
         m_GlobalHook.Dispose();
     }
 
@@ -2044,11 +2128,11 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !dataLoader.model.keystrokesDictionary.ContainsKey(dataLoader.model.TimeInt()) && dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt() && image.Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !this.dataLoader.model.keystrokesDictionary.ContainsKey(this.dataLoader.model.TimeInt()) && this.dataLoader.model.QuestID() != 0 && this.dataLoader.model.TimeInt() != this.dataLoader.model.TimeDefInt() && this.dataLoader.model.QuestState() == 0 && this.dataLoader.model.previousTimeInt != this.dataLoader.model.TimeInt() && image.Opacity == unpressedInputOpacity)
             {
                 try
                 {
-                    dataLoader.model.keystrokesDictionary.Add(dataLoader.model.TimeInt(), e.KeyCode.ToString());
+                    this.dataLoader.model.keystrokesDictionary.Add(this.dataLoader.model.TimeInt(), e.KeyCode.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -2136,8 +2220,11 @@ The process may take some time, as the program attempts to download from GitHub 
     }
 
     double pressedInputOpacity = 0.5;
+
     double unpressedInputOpacity = 0.2;
+
     float triggerActivationThreshold = 0.5f;
+
     float joystickThreshold = 0.5f;
 
     private void Gamepad_RightTriggerReleased(object? sender, EventArgs e)
@@ -2200,11 +2287,11 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !dataLoader.model.gamepadInputDictionary.ContainsKey(dataLoader.model.TimeInt()) && dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt() && image.Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !this.dataLoader.model.gamepadInputDictionary.ContainsKey(this.dataLoader.model.TimeInt()) && this.dataLoader.model.QuestID() != 0 && this.dataLoader.model.TimeInt() != this.dataLoader.model.TimeDefInt() && this.dataLoader.model.QuestState() == 0 && this.dataLoader.model.previousTimeInt != this.dataLoader.model.TimeInt() && image.Opacity == unpressedInputOpacity)
             {
                 try
                 {
-                    dataLoader.model.gamepadInputDictionary.Add(dataLoader.model.TimeInt(), gamepad.RightTrigger.ToString());
+                    this.dataLoader.model.gamepadInputDictionary.Add(this.dataLoader.model.TimeInt(), gamepad.RightTrigger.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -2225,11 +2312,11 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !dataLoader.model.gamepadInputDictionary.ContainsKey(dataLoader.model.TimeInt()) && dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt() && image.Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !this.dataLoader.model.gamepadInputDictionary.ContainsKey(this.dataLoader.model.TimeInt()) && this.dataLoader.model.QuestID() != 0 && this.dataLoader.model.TimeInt() != this.dataLoader.model.TimeDefInt() && this.dataLoader.model.QuestState() == 0 && this.dataLoader.model.previousTimeInt != this.dataLoader.model.TimeInt() && image.Opacity == unpressedInputOpacity)
             {
                 try
                 {
-                    dataLoader.model.gamepadInputDictionary.Add(dataLoader.model.TimeInt(), gamepad.LeftTrigger.ToString());
+                    this.dataLoader.model.gamepadInputDictionary.Add(this.dataLoader.model.TimeInt(), gamepad.LeftTrigger.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -2392,11 +2479,11 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-        if (s.EnableInputLogging && !dataLoader.model.gamepadInputDictionary.ContainsKey(dataLoader.model.TimeInt()) && dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt() && DPad.Opacity == unpressedInputOpacity)
+        if (s.EnableInputLogging && !this.dataLoader.model.gamepadInputDictionary.ContainsKey(this.dataLoader.model.TimeInt()) && this.dataLoader.model.QuestID() != 0 && this.dataLoader.model.TimeInt() != this.dataLoader.model.TimeDefInt() && this.dataLoader.model.QuestState() == 0 && this.dataLoader.model.previousTimeInt != this.dataLoader.model.TimeInt() && DPad.Opacity == unpressedInputOpacity)
         {
             try
             {
-                dataLoader.model.gamepadInputDictionary.Add(dataLoader.model.TimeInt(), button.ToString());
+                this.dataLoader.model.gamepadInputDictionary.Add(this.dataLoader.model.TimeInt(), button.ToString());
             }
             catch (Exception ex)
             {
@@ -2422,11 +2509,11 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !dataLoader.model.gamepadInputDictionary.ContainsKey(dataLoader.model.TimeInt()) && dataLoader.model.QuestID() != 0 && dataLoader.model.TimeInt() != dataLoader.model.TimeDefInt() && dataLoader.model.QuestState() == 0 && dataLoader.model.previousTimeInt != dataLoader.model.TimeInt() && image.Opacity == unpressedInputOpacity)
+            if (s.EnableInputLogging && !this.dataLoader.model.gamepadInputDictionary.ContainsKey(this.dataLoader.model.TimeInt()) && this.dataLoader.model.QuestID() != 0 && this.dataLoader.model.TimeInt() != this.dataLoader.model.TimeDefInt() && this.dataLoader.model.QuestState() == 0 && this.dataLoader.model.previousTimeInt != this.dataLoader.model.TimeInt() && image.Opacity == unpressedInputOpacity)
             {
                 try
                 {
-                    dataLoader.model.gamepadInputDictionary.Add(dataLoader.model.TimeInt(), e.Button.ToString());
+                    this.dataLoader.model.gamepadInputDictionary.Add(this.dataLoader.model.TimeInt(), e.Button.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -2545,7 +2632,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
         if (dataLoader.loadedOutsideMezeporta)
         {
-            MainWindowSnackBar.ShowAsync(Messages.WARNING_TITLE, "It is not recommended to load the overlay outside of Mezeporta", new SymbolIcon(SymbolRegular.Warning28), ControlAppearance.Caution);
+            MainWindowSnackBar.ShowAsync(Messages.WarningTitle, "It is not recommended to load the overlay outside of Mezeporta", new SymbolIcon(SymbolRegular.Warning28), ControlAppearance.Caution);
         }
         DatabaseManagerInstance.LoadDatabaseDataIntoHashSets(SaveIconGrid, dataLoader);
         AchievementManagerInstance.LoadPlayerAchievements();
@@ -2553,20 +2640,24 @@ The process may take some time, as the program attempts to download from GitHub 
         mhfProcess = System.Diagnostics.Process.GetProcessesByName("mhf").First();
 
         if (mhfProcess == null)
+            {
             LoggingManager.WriteCrashLog(new ArgumentOutOfRangeException("Target process not found"));
+        }
     }
 
     private void OnboardEndUser()
     {
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        var result = System.Windows.MessageBox.Show("Would you like to quickly set the settings?", Messages.INFO_TITLE, System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Information);
+        var result = System.Windows.MessageBox.Show("Would you like to quickly set the settings?", Messages.InfoTitle, System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Information);
 
         if (result == System.Windows.MessageBoxResult.Yes)
         {
             var settingsForm = new Views.SettingsForm();
             bool? settingsFormResult = settingsForm.ShowDialog();
             if (settingsFormResult == null)
+                {
                 return;
+            }
             var resultSelected = string.Empty;
             if (settingsFormResult == true)
             {
@@ -2617,7 +2708,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 }
                 s.Save();
                 LoggerInstance.Info(CultureInfo.InvariantCulture, "Onboarded end-user. Result selected: {0}", resultSelected);
-                System.Windows.MessageBox.Show("Settings set. Happy hunting!", Messages.INFO_TITLE, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                System.Windows.MessageBox.Show("Settings set. Happy hunting!", Messages.InfoTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
             }
             else if (settingsFormResult == false)
             {
@@ -2639,7 +2730,9 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         MediaElement mediaElement = (MediaElement)sender;
         if (mediaElement != null)
+            {
             victoryMediaSound = mediaElement;
+        }
     }
 }
 /// <TODO>

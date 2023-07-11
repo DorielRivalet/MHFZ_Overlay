@@ -12,6 +12,13 @@ using System.Collections.Generic;
 /// </summary>
 public class MonsterInfo
 {
+    public MonsterInfo(string name, string feriaslink, Dictionary<string, string> matchups, string wikilink)
+    {
+        this.Name = name;
+        this.FeriasLink = feriaslink;
+        this.WeaponMatchups = matchups;
+        this.WikiLink = wikilink;
+    }
 
     public string Name { get; set; }
 
@@ -20,12 +27,4 @@ public class MonsterInfo
     public string WikiLink { get; set; }
 
     public string FeriasLink { get; set; }
-
-    public MonsterInfo(string name, string feriaslink, Dictionary<string, string> matchups, string wikilink)
-    {
-        Name = name;
-        FeriasLink = feriaslink;
-        WeaponMatchups = matchups;
-        WikiLink = wikilink;
-    }
 }
