@@ -20,6 +20,12 @@
   - [What files and folders are affected by the overlay?](#what-files-and-folders-are-affected-by-the-overlay)
   - [How do I set up my controller/gamepad for the overlay program?](#how-do-i-set-up-my-controllergamepad-for-the-overlay-program)
   - [How does this overlay compare to other Monster Hunter overlays?](#how-does-this-overlay-compare-to-other-monster-hunter-overlays)
+  - [What does Effective HP and True HP mean?](#what-does-effective-hp-and-true-hp-mean)
+  - [How did the overlay come to be?](#how-did-the-overlay-come-to-be)
+  - [Does X feature of the overlay slow down my computer?](#does-x-feature-of-the-overlay-slow-down-my-computer)
+  - [Is the overlay malware?](#is-the-overlay-malware)
+  - [What is the database used for?](#what-is-the-database-used-for)
+  - [Does the overlay affect the game?](#does-the-overlay-affect-the-game)
   - [My question isn't answered here, how can I contact the developers?](#my-question-isnt-answered-here-how-can-i-contact-the-developers)
 
 ## How to Enable Discord Rich Presence?
@@ -377,6 +383,67 @@ As an added bonus:
 |Last Commit|![img](https://img.shields.io/github/last-commit/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/last-commit/hunterpie/hunterpie)|
 |Lines of Code|74405|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/hunterpie/hunterpie)|
 |Comments|4187|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/hunterpie/hunterpie?category=comments)|
+
+## What does Effective HP and True HP mean?
+
+- Effective HP is True HP taking into account the monster's defense rate. Burning Freezing Elzelion has 1,000,000 EHP because his True HP is 30,000 and his defense rate is 0,03.
+
+```text
+Effective HP = True HP / Defense rate
+1,000,000 = 30,000 / 0,03
+```
+
+- True HP is the HP of the monster without taking into account the monster's defense rate.
+
+## How did the overlay come to be?
+
+In early 2022, a few accessible MHF-Z private servers were created, renewing some interest on the game for many people. With this renewed interest, a bunch of people started to create new tools for the game. One of those tools were an overlay, created by suzaku01. Later on, that overlay inspired the creation of another overlay, created by Imulion. Around September 2022, Doriel Rivalet forked Imulion's overlay and began working on it.
+
+Some of Doriel's hobbies involve things such as programming and speedrunning. Originally, the overlay was created to help Doriel track many kinds of statistics during a run, along with delving into C# and .NET for the first time. This is Doriel's first project with the programming language. Doriel used to do quest runs with LiveSplit, and consult all kinds of MHF-Z information in many different places. The overlay was intended to help replace LiveSplit along with consolidating the community's knowledge in an easy to access project. Doriel believes that a community's knowledge shouldn't be limited to any particular application, be it Discord, Google Sheets, or even the overlay itself. With such purposes in mind, the overlay was decided to be Free Libre Open Source Software (FLOSS).
+
+If you want to know more about the overlay's goals, read [this documentation](./docs/philosophy.md).
+
+## Does X feature of the overlay slow down my computer?
+
+The impact of specific features of the overlay on computer performance may vary depending on various factors, such as the complexity of the feature, the hardware specifications of your computer, and other applications running concurrently. However, the MHFZ_Overlay project strives to maintain optimal performance and minimize any negative impact on computer performance.
+
+[This document](./docs/performance.md) emphasizes the project's commitment to performance optimization and provides details about the performance testing methodology and optimization strategies employed. By following these practices, the developers aim to create a software solution that is both responsive and efficient.
+
+Additionally, the project sets benchmarks for different performance metrics, such as startup time, responsiveness, memory usage, and rendering performance. These benchmarks serve as targets to ensure that the overlay operates within acceptable performance limits.
+
+To assess the impact of a specific feature on computer performance, it is recommended to consider the performance scenarios described in the document. These scenarios represent typical usage patterns and critical functionalities of the application, and they provide insights into the performance characteristics of the overlay.
+
+If you have concerns about a particular feature and its potential impact on your computer's performance, it's advisable to monitor the performance metrics related to that feature. This can be done by observing metrics such as CPU utilization, memory usage, and responsiveness during the usage of the feature. Additionally, referring to the performance results mentioned in the document, particularly for the relevant version, may provide further insights into the overlay's performance behavior.
+
+Overall, while the MHFZ_Overlay project strives to optimize performance and minimize any negative impact, it's important to consider the specific hardware and software environment when assessing the potential impact of a particular feature on computer performance.
+
+The performance of features such as the database and websites were measured with a profiler tool and are not known to be the actual culprits of the performance bottlenecks, if there are any.
+
+See in more detail the performance of the overlay in [the documentation](./docs/performance.md).
+
+For the system requirements, see [here](./README.md#system-requirements)
+
+## Is the overlay malware?
+
+The MHFZ_Overlay software is not malware. It is an open-source project with the aim of providing education, utility, and inclusivity to those interested in Monster Hunter Frontier Z. The software is developed following best practices in software development, incorporates UX design, and is released under the MIT license.
+
+The project promotes transparency and encourages contributions from the developer community. It is provided as Free Libre Open Source Software (FLOSS), meaning it is free, open, and can be modified and distributed by anyone. The source code is available for inspection, modification, and sharing.
+
+It's important to note that the software does not claim ownership of any Capcom Intellectual Property used in the game, and proper credits are provided in the README.md and within the software itself.
+
+If you have any concerns or doubts about the software, we recommend [verifying the source and legitimacy of the software before installation](#how-to-check-the-downloaded-file-hashes). The MHFZ_Overlay project is committed to transparency and minimizing inconvenience for end-users. Feel free to refer to [this provided document](./docs/philosophy.md) for a detailed overview of the project's philosophy and goals.
+
+## What is the database used for?
+
+The overlay uses a SQLite database file for storing you past quest runs information, among other things, so that you can view graphs and statistics of your past runs. SQLite is known for being lightweight and performant, and the source code of the overlay implements various techniques to take advantage of such. See the other questions related to files and the database for more information.
+
+To see in more detail the performance of the overlay's database, see [the documentation](./docs/performance.md).
+
+For the system requirements, see [here](./README.md#system-requirements)
+
+## Does the overlay affect the game?
+
+No. The overlay does read memory addresses, but it never writes (i.e. modifies values) to them. It is more likely that the local files of the game or the server files are affecting the game, both of which are unrelated to the overlay.
 
 ## My question isn't answered here, how can I contact the developers?
 

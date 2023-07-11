@@ -23,6 +23,7 @@
     - [Recommended](#recommended)
   - [Installation](#installation)
     - [DISCLAIMER](#disclaimer)
+    - [Misconceptions](#misconceptions)
   - [Hotkeys](#hotkeys)
     - [Quick Troubleshooting](#quick-troubleshooting)
   - [Features](#features)
@@ -95,6 +96,10 @@ If you record and/or stream with the overlay, the recommended RAM is 16 GB and t
 
 **It's recommended to start the overlay when you are done loading into Mezeporta.**
 
+[View CHANGELOG.md](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md).
+
+[View Release Statistics](https://somsubhra.github.io/github-release-stats/?username=DorielRivalet&repository=mhfz-overlay&page=1&per_page=30).
+
 ### DISCLAIMER
 
 If you obtained the mhfz-overlay software from any source other than GitHub releases, please be aware that there are no guarantees that the program has the same code as the version in this repository, nor that it was created by the same individual(s), or that it represents the latest version.
@@ -103,9 +108,13 @@ We strongly recommend that you verify the authenticity and integrity of the soft
 
 [How to check the downloaded file hashes](https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md#how-to-check-the-downloaded-file-hashes).
 
-[View CHANGELOG.md](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md).
+### Misconceptions
 
-[View Release Statistics](https://somsubhra.github.io/github-release-stats/?username=DorielRivalet&repository=mhfz-overlay&page=1&per_page=30).
+1. [Is the overlay malware?](./FAQ.md#is-the-overlay-malware)
+2. [Does X overlay feature slow down my computer?](./FAQ.md#does-x-feature-of-the-overlay-slow-down-my-computer)
+3. [Does the overlay affect the game?](./FAQ.md#does-the-overlay-affect-the-game)
+4. [Does this monster really have 30,000 HP?](./FAQ.md#what-does-effective-hp-and-true-hp-mean)
+5. [Does the database slow down my computer?](./FAQ.md#what-is-the-database-used-for)
 
 ## Hotkeys
 
