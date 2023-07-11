@@ -106,6 +106,7 @@ public class GlobalHotKey : IDisposable
     // Registers a hot key with Windows.
     [DllImport("user32.dll")]
     private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
     // Unregisters the hot key with Windows.
     [DllImport("user32.dll")]
     private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
@@ -118,6 +119,7 @@ public class GlobalHotKey : IDisposable
         }
 
         private static int WM_HOTKEY = 0x0312;
+
         protected override void WndProc(ref System.Windows.Forms.Message m)
         {
             base.WndProc(ref m);
@@ -160,6 +162,6 @@ public class GlobalHotKey : IDisposable
         public void Dispose()
         {
             this.DestroyHandle();
-        }        
+        }
     }
 }

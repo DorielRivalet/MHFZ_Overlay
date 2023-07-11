@@ -714,6 +714,7 @@ public class AddressModelNotHGE : AddressModel
     public override int MelynxHunted() => M.Read2Byte("mhfo.dll+6103A3A");
 
     public override int ShakalakaHunted() => M.Read2Byte("mhfo.dll+6103A7E") + 0;
+
     public override int VespoidHunted() => M.Read2Byte("mhfo.dll+6103A32");
 
     public override int HornetaurHunted() => M.Read2Byte("mhfo.dll+6103A3C");
@@ -831,6 +832,7 @@ public class AddressModelNotHGE : AddressModel
     public override int AnorupatisuHunted() => M.Read2Byte("mhfo.dll+6103AE6");
 
     public override int ZerureusuHunted() => M.Read2Byte("mhfo.dll+6103B00") + 0;
+
     public override int MeraginasuHunted() => M.Read2Byte("mhfo.dll+6103B08");
 
     public override int DiorexHunted() => M.Read2Byte("mhfo.dll+6103B0A");
@@ -845,6 +847,7 @@ public class AddressModelNotHGE : AddressModel
 
     //musous are separate???
     public override int NargacugaHunted() => M.Read2Byte("mhfo.dll+6103B4A") + 0;
+
     public override int ZenaserisuHunted() => M.Read2Byte("mhfo.dll+6103B4E");
 
     public override int SeregiosHunted() => M.Read2Byte("mhfo.dll+6103B5E");

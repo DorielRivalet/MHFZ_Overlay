@@ -76,11 +76,14 @@ public class BrushAnimation : AnimationTimeline
     public Brush From
     {
         get { return (Brush)GetValue(FromProperty); }
+
         set { SetValue(FromProperty, value); }
     }
+
     public Brush To
     {
         get { return (Brush)GetValue(ToProperty); }
+
         set { SetValue(ToProperty, value); }
     }
 

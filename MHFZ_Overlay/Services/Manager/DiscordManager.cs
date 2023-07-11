@@ -444,6 +444,7 @@ internal sealed class DiscordManager
                                     presenceTemplate.Timestamps = Timestamps.Now;
                                 }
                             }
+
                             break;
                         }
                         else
@@ -524,6 +525,7 @@ internal sealed class DiscordManager
                 }
             }
         }
+
         // going back to Mezeporta or w/e
         else if (dataLoader.model.QuestState() != 1 && dataLoader.model.QuestID() == 0 && this.inQuest && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) == 0)
         {
@@ -937,7 +939,7 @@ internal sealed class DiscordManager
         }
 
         if (weaponIconName != "https://i.imgur.com/9OkLYAz.png" && !colorName.Contains("White"))
-            {
+        {
             weaponIconName += "_";
         }
 
@@ -1202,7 +1204,6 @@ internal sealed class DiscordManager
     // extreme support 4 55605
     // extreme support 5 55606
     // extreme carve 55607
-
     const int MAX_DISCORD_RPC_STRING_LENGTH = 127; // or any other maximum length specified by Discord
 
     /// <summary>

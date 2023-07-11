@@ -95,183 +95,183 @@ public partial class ConfigWindow : FluentWindow
     // TODO put this in a read-only dictionary thing
     private MonsterLog[] Monsters = new MonsterLog[]
     {
-      new MonsterLog(0, "None","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/none.png",0),
-      new MonsterLog(1, "Rathian","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathian.png",0,true),
-      new MonsterLog(2, "Fatalis","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/fatalis.png",0,true),
-      new MonsterLog(3, "Kelbi","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kelbi.png",0),
-      new MonsterLog(4, "Mosswine","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/mosswine.png",0),
-      new MonsterLog(5, "Bullfango","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/bullfango.png",0),
-      new MonsterLog(6, "Yian Kut-Ku","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yian_kut-ku.png",0,true),
-      new MonsterLog(7, "Lao-Shan Lung","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/lao-shan_lung.png",0,true),
-      new MonsterLog(8, "Cephadrome","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/cephadrome.png",0,true),
-      new MonsterLog(9, "Felyne","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/felyne.png",0),
-      new MonsterLog(10, "Veggie Elder","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(11, "Rathalos","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathalos.png",0,true),
-      new MonsterLog(12, "Aptonoth","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/aptonoth.png",0),
-      new MonsterLog(13, "Genprey","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/genprey.png",0),
-      new MonsterLog(14, "Diablos","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/diablos.png",0,true),
-      new MonsterLog(15, "Khezu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/khezu.png",0,true),
-      new MonsterLog(16, "Velociprey","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/velociprey.png",0),
-      new MonsterLog(17, "Gravios","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gravios.png",0,true),
-      new MonsterLog(18, "Felyne?","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/felyne.png",0),
-      new MonsterLog(19, "Vespoid","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/vespoid.png",0),
-      new MonsterLog(20, "Gypceros","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gypceros.png",0,true),
-      new MonsterLog(21, "Plesioth","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/plesioth.png",0,true),
-      new MonsterLog(22, "Basarios","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/basarios.png",0,true),
-      new MonsterLog(23, "Melynx","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/melynx.png",0),
-      new MonsterLog(24, "Hornetaur","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hornetaur.png",0),
-      new MonsterLog(25, "Apceros","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/apceros.png",0),
-      new MonsterLog(26, "Monoblos","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/monoblos.png",0,true),
-      new MonsterLog(27, "Velocidrome","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/velocidrome.png",0,true),
-      new MonsterLog(28, "Gendrome","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gendrome.png",0,true),
-      new MonsterLog(29, "Rocks","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(30, "Ioprey","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/ioprey.png",0),
-      new MonsterLog(31, "Iodrome","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/iodrome.png",0,true),
-      new MonsterLog(32, "Pugis","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(33, "Kirin","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kirin.png",0,true),
-      new MonsterLog(34, "Cephalos","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/cephalos.png",0),
-      new MonsterLog(35, "Giaprey / Giadrome","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/giaprey.png",0),
-      new MonsterLog(36, "Crimson Fatalis","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/crimson_fatalis.png",0,true),
-      new MonsterLog(37, "Pink Rathian","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pink_rathian.png",0,true),
-      new MonsterLog(38, "Blue Yian Kut-Ku","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blue_yian_kut-ku.png",0,true),
-      new MonsterLog(39, "Purple Gypceros","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/purple_gypceros.png",0,true),
-      new MonsterLog(40, "Yian Garuga","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yian_garuga.png",0,true),
-      new MonsterLog(41, "Silver Rathalos","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/silver_rathalos.png",0,true),
-      new MonsterLog(42, "Gold Rathian","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gold_rathian.png",0,true),
-      new MonsterLog(43, "Black Diablos","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/black_diablos.png",0,true),
-      new MonsterLog(44, "White Monoblos","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_monoblos.png",0,true),
-      new MonsterLog(45, "Red Khezu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/red_khezu.png",0,true),
-      new MonsterLog(46, "Green Plesioth","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/green_plesioth.png",0,true),
-      new MonsterLog(47, "Black Gravios","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/black_gravios.png",0,true),
-      new MonsterLog(48, "Daimyo Hermitaur","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/daimyo_hermitaur.png",0,true),
-      new MonsterLog(49, "Azure Rathalos","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/azure_rathalos.png",0,true),
-      new MonsterLog(50, "Ashen Lao-Shan Lung","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/ashen_lao-shan_lung.png",0,true),
-      new MonsterLog(51, "Blangonga","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blangonga.png",0,true),
-      new MonsterLog(52, "Congalala","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/congalala.png",0,true),
-      new MonsterLog(53, "Rajang","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rajang.png",0,true),
-      new MonsterLog(54, "Kushala Daora","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kushala_daora.png",0,true),
-      new MonsterLog(55, "Shen Gaoren","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shen_gaoren.png",0,true),
-      new MonsterLog(56, "Great Thunderbug","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/great_thunderbug.png",0),
-      new MonsterLog(57, "Shakalaka","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shakalaka.png",0),
-      new MonsterLog(58, "Yama Tsukami","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yama_tsukami.png",0,true),
-      new MonsterLog(59, "Chameleos","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/chameleos.png",0,true),
-      new MonsterLog(60, "Rusted Kushala Daora","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rusted_kushala_daora.png",0,true),
-      new MonsterLog(61, "Blango","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blango.png",0),
-      new MonsterLog(62, "Conga","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/conga.png",0),
-      new MonsterLog(63, "Remobra","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/remobra.png",0),
-      new MonsterLog(64, "Lunastra","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/lunastra.png",0,true),
-      new MonsterLog(65, "Teostra","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/teostra.png",0,true),
-      new MonsterLog(66, "Hermitaur","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hermitaur.png",0),
-      new MonsterLog(67, "Shogun Ceanataur","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shogun_ceanataur.png",0,true),
-      new MonsterLog(68, "Bulldrome","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/bulldrome.png",0,true),
-      new MonsterLog(69, "Anteka","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/anteka.png",0),
-      new MonsterLog(70, "Popo","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/popo.png",0),
-      new MonsterLog(71, "White Fatalis","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_fatalis.png",0,true),
-      new MonsterLog(72, "Yama Tsukami","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yama_tsukami.png",0,true),
-      new MonsterLog(73, "Ceanataur","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/ceanataur.png",0),
-      new MonsterLog(74, "Hypnocatrice","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hypnoc.png",0,true),
-      new MonsterLog(75, "Lavasioth","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/lavasioth.png",0,true),
-      new MonsterLog(76, "Tigrex","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/tigrex.png",0,true),
-      new MonsterLog(77, "Akantor","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akantor.png",0,true),
-      new MonsterLog(78, "Bright Hypnoc","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/bright_hypnoc.png",0,true),
-      new MonsterLog(79, "Red Lavasioth","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/red_lavasioth.png",0,true),
-      new MonsterLog(80, "Espinas","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/espinas.png",0,true),
-      new MonsterLog(81, "Orange Espinas","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/orange_espinas.png",0,true),
-      new MonsterLog(82, "Silver Hypnoc","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/silver_hypnoc.png",0,true),
-      new MonsterLog(83, "Akura Vashimu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akura_vashimu.png",0,true),
-      new MonsterLog(84, "Akura Jebia","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akura_jebia.png",0,true),
-      new MonsterLog(85, "Berukyurosu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/berukyurosu.png",0,true),
-      new MonsterLog(86, "Cactus","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/cactus.png",0),
-      new MonsterLog(87, "Gorge Objects","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(88, "Gorge Rocks","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(89, "Pariapuria","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pariapuria.png",0,true),
-      new MonsterLog(90, "White Espinas","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_espinas.png",0,true),
-      new MonsterLog(91, "Kamu Orugaron","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kamu_orugaron.png",0,true),
-      new MonsterLog(92, "Nono Orugaron","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/nono_orugaron.png",0,true),
-      new MonsterLog(93, "Raviente","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/raviente.png",0,true),
-      new MonsterLog(94, "Dyuragaua","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/dyuragaua.png",0,true),
-      new MonsterLog(95, "Doragyurosu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/doragyurosu.png",0,true),
-      new MonsterLog(96, "Gurenzeburu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gurenzeburu.png",0,true),
-      new MonsterLog(97, "Burukku","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burukku.png",0),
-      new MonsterLog(98, "Erupe","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/erupe.png",0),
-      new MonsterLog(99, "Rukodiora","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rukodiora.png",0,true),
-      new MonsterLog(100, "UNKNOWN","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/unknown.png",0,true),
-      new MonsterLog(101, "Gogomoa","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gogomoa.png",0,true),
-      new MonsterLog(102, "Kokomoa","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gogomoa.png",0),
-      new MonsterLog(103, "Taikun Zamuza","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/taikun_zamuza.png",0,true),
-      new MonsterLog(104, "Abiorugu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/abiorugu.png",0,true),
-      new MonsterLog(105, "Kuarusepusu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kuarusepusu.png",0,true),
-      new MonsterLog(106, "Odibatorasu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/odibatorasu.png",0,true),
-      new MonsterLog(107, "Disufiroa","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/disufiroa.png",0,true),
-      new MonsterLog(108, "Rebidiora","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rebidiora.png",0,true),
-      new MonsterLog(109, "Anorupatisu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/anorupatisu.png",0,true),
-      new MonsterLog(110, "Hyujikiki","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hyujikiki.png",0,true),
-      new MonsterLog(111, "Midogaron","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/midogaron.png",0,true),
-      new MonsterLog(112, "Giaorugu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/giaorugu.png",0,true),
-      new MonsterLog(113, "Mi Ru","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/mi_ru.png",0,true),
-      new MonsterLog(114, "Farunokku","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/farunokku.png",0,true),
-      new MonsterLog(115, "Pokaradon","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pokaradon.png",0,true),
-      new MonsterLog(116, "Shantien","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shantien.png",0,true),
-      new MonsterLog(117, "Pokara","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pokara.png",0),
-      new MonsterLog(118, "Dummy","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(119, "Goruganosu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/goruganosu.png",0,true),
-      new MonsterLog(120, "Aruganosu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/aruganosu.png",0,true),
-      new MonsterLog(121, "Baruragaru","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/baruragaru.png",0,true),
-      new MonsterLog(122, "Zerureusu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zerureusu.png",0,true),
-      new MonsterLog(123, "Gougarf","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gougarf.png",0,true),
-      new MonsterLog(124, "Uruki","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/uruki.png",0),
-      new MonsterLog(125, "Forokururu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/forokururu.png",0,true),
-      new MonsterLog(126, "Meraginasu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/meraginasu.png",0,true),
-      new MonsterLog(127, "Diorex","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/diorex.png",0,true),
-      new MonsterLog(128, "Garuba Daora","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/garuba_daora.png",0,true),
-      new MonsterLog(129, "Inagami","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/inagami.png",0,true),
-      new MonsterLog(130, "Varusaburosu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/varusaburosu.png",0,true),
-      new MonsterLog(131, "Poborubarumu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/poborubarumu.png",0,true),
-      new MonsterLog(132, "1st District Duremudira","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/duremudira.png",0,true),
-      new MonsterLog(133, "UNK","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(134, "Felyne","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/felyne.png",0),
-      new MonsterLog(135, "Blue NPC","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(136, "UNK","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(137, "Cactus","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/cactus.png",0),
-      new MonsterLog(138, "Veggie Elders","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(139, "Gureadomosu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gureadomosu.png",0,true),
-      new MonsterLog(140, "Harudomerugu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/harudomerugu.png",0,true),
-      new MonsterLog(141, "Toridcless","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/toridcless.png",0,true),
-      new MonsterLog(142, "Gasurabazura","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gasurabazura.png",0,true),
-      new MonsterLog(143, "Kusubami","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kusubami.png",0),
-      new MonsterLog(144, "Yama Kurai","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yama_kurai.png",0,true),
-      new MonsterLog(145, "2nd District Duremudira","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/duremudira.png",0,true),
-      new MonsterLog(146, "Zinogre","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zinogre.png",0,true),
-      new MonsterLog(147, "Deviljho","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/deviljho.png",0,true),
-      new MonsterLog(148, "Brachydios","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/brachydios.png",0,true),
-      new MonsterLog(149, "Berserk Raviente","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/berserk_raviente.png",0,true),
-      new MonsterLog(150, "Toa Tesukatora","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/toa_tesukatora.png",0,true),
-      new MonsterLog(151, "Barioth","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/barioth.png",0,true),
-      new MonsterLog(152, "Uragaan","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/uragaan.png",0,true),
-      new MonsterLog(153, "Stygian Zinogre","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/stygian_zinogre.png",0,true),
-      new MonsterLog(154, "Guanzorumu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/guanzorumu.png",0,true),
-      new MonsterLog(155, "Starving Deviljho","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/starving_deviljho.png",0,true),
-      new MonsterLog(156, "UNK","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(157, "Egyurasu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(158, "Voljang","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/voljang.png",0,true),
-      new MonsterLog(159, "Nargacuga","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/nargacuga.png",0,true),
-      new MonsterLog(160, "Keoaruboru","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/keoaruboru.png",0,true),
-      new MonsterLog(161, "Zenaserisu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenaserisu.png",0,true),
-      new MonsterLog(162, "Gore Magala","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gore_magala.png",0,true),
-      new MonsterLog(163, "Blinking Nargacuga","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blinking_nargacuga.png",0,true),
-      new MonsterLog(164, "Shagaru Magala","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shagaru_magala.png",0,true),
-      new MonsterLog(165, "Amatsu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/amatsu.png",0,true),
-      new MonsterLog(166, "Elzelion","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/elzelion.png",0,true),
-      new MonsterLog(167, "Arrogant Duremudira","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/arrogant_duremudira.png",0,true),
-      new MonsterLog(168, "Rocks","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(169, "Seregios","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/seregios.png",0,true),
-      new MonsterLog(170, "Bogabadorumu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_bogabadorumu.gif",0,true),
-      new MonsterLog(171, "Unknown Blue Barrel","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png",0),
-      new MonsterLog(172, "Blitzkrieg Bogabadorumu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blitzkrieg_bogabadorumu.png",0,true),
-      new MonsterLog(173, "Costumed Uruki","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/uruki.png",0),
-      new MonsterLog(174, "Sparkling Zerureusu","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/sparkling_zerureusu.png",0,true),
-      new MonsterLog(175, "PSO2 Rappy","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pso2_rappy.png",0),
-      new MonsterLog(176, "King Shakalaka","https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/king_shakalaka.png",0,true)
+      new MonsterLog(0, "None", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/none.png", 0),
+      new MonsterLog(1, "Rathian", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathian.png", 0, true),
+      new MonsterLog(2, "Fatalis", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/fatalis.png", 0, true),
+      new MonsterLog(3, "Kelbi", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kelbi.png", 0),
+      new MonsterLog(4, "Mosswine", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/mosswine.png", 0),
+      new MonsterLog(5, "Bullfango", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/bullfango.png", 0),
+      new MonsterLog(6, "Yian Kut-Ku", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yian_kut-ku.png", 0, true),
+      new MonsterLog(7, "Lao-Shan Lung", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/lao-shan_lung.png", 0, true),
+      new MonsterLog(8, "Cephadrome", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/cephadrome.png", 0, true),
+      new MonsterLog(9, "Felyne", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/felyne.png", 0),
+      new MonsterLog(10, "Veggie Elder", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(11, "Rathalos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathalos.png", 0, true),
+      new MonsterLog(12, "Aptonoth", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/aptonoth.png", 0),
+      new MonsterLog(13, "Genprey", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/genprey.png", 0),
+      new MonsterLog(14, "Diablos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/diablos.png", 0, true),
+      new MonsterLog(15, "Khezu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/khezu.png", 0, true),
+      new MonsterLog(16, "Velociprey", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/velociprey.png", 0),
+      new MonsterLog(17, "Gravios", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gravios.png", 0, true),
+      new MonsterLog(18, "Felyne?", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/felyne.png", 0),
+      new MonsterLog(19, "Vespoid", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/vespoid.png", 0),
+      new MonsterLog(20, "Gypceros", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gypceros.png", 0, true),
+      new MonsterLog(21, "Plesioth", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/plesioth.png", 0, true),
+      new MonsterLog(22, "Basarios", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/basarios.png", 0, true),
+      new MonsterLog(23, "Melynx", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/melynx.png", 0),
+      new MonsterLog(24, "Hornetaur", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hornetaur.png", 0),
+      new MonsterLog(25, "Apceros", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/apceros.png", 0),
+      new MonsterLog(26, "Monoblos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/monoblos.png", 0, true),
+      new MonsterLog(27, "Velocidrome", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/velocidrome.png", 0, true),
+      new MonsterLog(28, "Gendrome", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gendrome.png", 0, true),
+      new MonsterLog(29, "Rocks", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(30, "Ioprey", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/ioprey.png", 0),
+      new MonsterLog(31, "Iodrome", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/iodrome.png", 0, true),
+      new MonsterLog(32, "Pugis", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(33, "Kirin", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kirin.png", 0, true),
+      new MonsterLog(34, "Cephalos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/cephalos.png", 0),
+      new MonsterLog(35, "Giaprey / Giadrome", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/giaprey.png", 0),
+      new MonsterLog(36, "Crimson Fatalis", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/crimson_fatalis.png", 0, true),
+      new MonsterLog(37, "Pink Rathian", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pink_rathian.png", 0, true),
+      new MonsterLog(38, "Blue Yian Kut-Ku", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blue_yian_kut-ku.png", 0, true),
+      new MonsterLog(39, "Purple Gypceros", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/purple_gypceros.png", 0, true),
+      new MonsterLog(40, "Yian Garuga", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yian_garuga.png", 0, true),
+      new MonsterLog(41, "Silver Rathalos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/silver_rathalos.png", 0, true),
+      new MonsterLog(42, "Gold Rathian", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gold_rathian.png", 0, true),
+      new MonsterLog(43, "Black Diablos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/black_diablos.png", 0, true),
+      new MonsterLog(44, "White Monoblos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_monoblos.png", 0, true),
+      new MonsterLog(45, "Red Khezu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/red_khezu.png", 0, true),
+      new MonsterLog(46, "Green Plesioth", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/green_plesioth.png", 0, true),
+      new MonsterLog(47, "Black Gravios", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/black_gravios.png", 0, true),
+      new MonsterLog(48, "Daimyo Hermitaur", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/daimyo_hermitaur.png", 0, true),
+      new MonsterLog(49, "Azure Rathalos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/azure_rathalos.png", 0, true),
+      new MonsterLog(50, "Ashen Lao-Shan Lung", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/ashen_lao-shan_lung.png", 0, true),
+      new MonsterLog(51, "Blangonga", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blangonga.png", 0, true),
+      new MonsterLog(52, "Congalala", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/congalala.png", 0, true),
+      new MonsterLog(53, "Rajang", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rajang.png", 0, true),
+      new MonsterLog(54, "Kushala Daora", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kushala_daora.png", 0, true),
+      new MonsterLog(55, "Shen Gaoren", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shen_gaoren.png", 0, true),
+      new MonsterLog(56, "Great Thunderbug", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/great_thunderbug.png", 0),
+      new MonsterLog(57, "Shakalaka", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shakalaka.png", 0),
+      new MonsterLog(58, "Yama Tsukami", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yama_tsukami.png", 0, true),
+      new MonsterLog(59, "Chameleos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/chameleos.png", 0, true),
+      new MonsterLog(60, "Rusted Kushala Daora", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rusted_kushala_daora.png", 0, true),
+      new MonsterLog(61, "Blango", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blango.png", 0),
+      new MonsterLog(62, "Conga", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/conga.png", 0),
+      new MonsterLog(63, "Remobra", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/remobra.png", 0),
+      new MonsterLog(64, "Lunastra", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/lunastra.png", 0, true),
+      new MonsterLog(65, "Teostra", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/teostra.png", 0, true),
+      new MonsterLog(66, "Hermitaur", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hermitaur.png", 0),
+      new MonsterLog(67, "Shogun Ceanataur", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shogun_ceanataur.png", 0, true),
+      new MonsterLog(68, "Bulldrome", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/bulldrome.png", 0, true),
+      new MonsterLog(69, "Anteka", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/anteka.png", 0),
+      new MonsterLog(70, "Popo", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/popo.png", 0),
+      new MonsterLog(71, "White Fatalis", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_fatalis.png", 0, true),
+      new MonsterLog(72, "Yama Tsukami", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yama_tsukami.png", 0, true),
+      new MonsterLog(73, "Ceanataur", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/ceanataur.png", 0),
+      new MonsterLog(74, "Hypnocatrice", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hypnoc.png", 0, true),
+      new MonsterLog(75, "Lavasioth", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/lavasioth.png", 0, true),
+      new MonsterLog(76, "Tigrex", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/tigrex.png", 0, true),
+      new MonsterLog(77, "Akantor", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akantor.png", 0, true),
+      new MonsterLog(78, "Bright Hypnoc", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/bright_hypnoc.png", 0, true),
+      new MonsterLog(79, "Red Lavasioth", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/red_lavasioth.png", 0, true),
+      new MonsterLog(80, "Espinas", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/espinas.png", 0, true),
+      new MonsterLog(81, "Orange Espinas", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/orange_espinas.png", 0, true),
+      new MonsterLog(82, "Silver Hypnoc", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/silver_hypnoc.png", 0, true),
+      new MonsterLog(83, "Akura Vashimu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akura_vashimu.png", 0, true),
+      new MonsterLog(84, "Akura Jebia", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akura_jebia.png", 0, true),
+      new MonsterLog(85, "Berukyurosu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/berukyurosu.png", 0, true),
+      new MonsterLog(86, "Cactus", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/cactus.png", 0),
+      new MonsterLog(87, "Gorge Objects", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(88, "Gorge Rocks", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(89, "Pariapuria", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pariapuria.png", 0, true),
+      new MonsterLog(90, "White Espinas", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_espinas.png", 0, true),
+      new MonsterLog(91, "Kamu Orugaron", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kamu_orugaron.png", 0, true),
+      new MonsterLog(92, "Nono Orugaron", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/nono_orugaron.png", 0, true),
+      new MonsterLog(93, "Raviente", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/raviente.png", 0, true),
+      new MonsterLog(94, "Dyuragaua", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/dyuragaua.png", 0, true),
+      new MonsterLog(95, "Doragyurosu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/doragyurosu.png", 0, true),
+      new MonsterLog(96, "Gurenzeburu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gurenzeburu.png", 0, true),
+      new MonsterLog(97, "Burukku", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burukku.png", 0),
+      new MonsterLog(98, "Erupe", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/erupe.png", 0),
+      new MonsterLog(99, "Rukodiora", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rukodiora.png", 0, true),
+      new MonsterLog(100, "UNKNOWN", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/unknown.png", 0, true),
+      new MonsterLog(101, "Gogomoa", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gogomoa.png", 0, true),
+      new MonsterLog(102, "Kokomoa", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gogomoa.png", 0),
+      new MonsterLog(103, "Taikun Zamuza", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/taikun_zamuza.png", 0, true),
+      new MonsterLog(104, "Abiorugu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/abiorugu.png", 0, true),
+      new MonsterLog(105, "Kuarusepusu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kuarusepusu.png", 0, true),
+      new MonsterLog(106, "Odibatorasu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/odibatorasu.png", 0, true),
+      new MonsterLog(107, "Disufiroa", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/disufiroa.png", 0, true),
+      new MonsterLog(108, "Rebidiora", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rebidiora.png", 0, true),
+      new MonsterLog(109, "Anorupatisu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/anorupatisu.png", 0, true),
+      new MonsterLog(110, "Hyujikiki", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hyujikiki.png", 0, true),
+      new MonsterLog(111, "Midogaron", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/midogaron.png", 0, true),
+      new MonsterLog(112, "Giaorugu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/giaorugu.png", 0, true),
+      new MonsterLog(113, "Mi Ru", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/mi_ru.png", 0, true),
+      new MonsterLog(114, "Farunokku", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/farunokku.png", 0, true),
+      new MonsterLog(115, "Pokaradon", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pokaradon.png", 0, true),
+      new MonsterLog(116, "Shantien", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shantien.png", 0, true),
+      new MonsterLog(117, "Pokara", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pokara.png", 0),
+      new MonsterLog(118, "Dummy", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(119, "Goruganosu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/goruganosu.png", 0, true),
+      new MonsterLog(120, "Aruganosu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/aruganosu.png", 0, true),
+      new MonsterLog(121, "Baruragaru", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/baruragaru.png", 0, true),
+      new MonsterLog(122, "Zerureusu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zerureusu.png", 0, true),
+      new MonsterLog(123, "Gougarf", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gougarf.png", 0, true),
+      new MonsterLog(124, "Uruki", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/uruki.png", 0),
+      new MonsterLog(125, "Forokururu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/forokururu.png", 0, true),
+      new MonsterLog(126, "Meraginasu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/meraginasu.png", 0, true),
+      new MonsterLog(127, "Diorex", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/diorex.png", 0, true),
+      new MonsterLog(128, "Garuba Daora", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/garuba_daora.png", 0, true),
+      new MonsterLog(129, "Inagami", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/inagami.png", 0, true),
+      new MonsterLog(130, "Varusaburosu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/varusaburosu.png", 0, true),
+      new MonsterLog(131, "Poborubarumu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/poborubarumu.png", 0, true),
+      new MonsterLog(132, "1st District Duremudira", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/duremudira.png", 0, true),
+      new MonsterLog(133, "UNK", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(134, "Felyne", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/felyne.png", 0),
+      new MonsterLog(135, "Blue NPC", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(136, "UNK", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(137, "Cactus", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/cactus.png", 0),
+      new MonsterLog(138, "Veggie Elders", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(139, "Gureadomosu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gureadomosu.png", 0, true),
+      new MonsterLog(140, "Harudomerugu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/harudomerugu.png", 0, true),
+      new MonsterLog(141, "Toridcless", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/toridcless.png", 0, true),
+      new MonsterLog(142, "Gasurabazura", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gasurabazura.png", 0, true),
+      new MonsterLog(143, "Kusubami", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kusubami.png", 0),
+      new MonsterLog(144, "Yama Kurai", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yama_kurai.png", 0, true),
+      new MonsterLog(145, "2nd District Duremudira", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/duremudira.png", 0, true),
+      new MonsterLog(146, "Zinogre", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zinogre.png", 0, true),
+      new MonsterLog(147, "Deviljho", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/deviljho.png", 0, true),
+      new MonsterLog(148, "Brachydios", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/brachydios.png", 0, true),
+      new MonsterLog(149, "Berserk Raviente", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/berserk_raviente.png", 0, true),
+      new MonsterLog(150, "Toa Tesukatora", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/toa_tesukatora.png", 0, true),
+      new MonsterLog(151, "Barioth", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/barioth.png", 0, true),
+      new MonsterLog(152, "Uragaan", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/uragaan.png", 0, true),
+      new MonsterLog(153, "Stygian Zinogre", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/stygian_zinogre.png", 0, true),
+      new MonsterLog(154, "Guanzorumu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/guanzorumu.png", 0, true),
+      new MonsterLog(155, "Starving Deviljho", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/starving_deviljho.png", 0, true),
+      new MonsterLog(156, "UNK", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(157, "Egyurasu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(158, "Voljang", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/voljang.png", 0, true),
+      new MonsterLog(159, "Nargacuga", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/nargacuga.png", 0, true),
+      new MonsterLog(160, "Keoaruboru", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/keoaruboru.png", 0, true),
+      new MonsterLog(161, "Zenaserisu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenaserisu.png", 0, true),
+      new MonsterLog(162, "Gore Magala", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gore_magala.png", 0, true),
+      new MonsterLog(163, "Blinking Nargacuga", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blinking_nargacuga.png", 0, true),
+      new MonsterLog(164, "Shagaru Magala", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shagaru_magala.png", 0, true),
+      new MonsterLog(165, "Amatsu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/amatsu.png", 0, true),
+      new MonsterLog(166, "Elzelion", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/elzelion.png", 0, true),
+      new MonsterLog(167, "Arrogant Duremudira", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/arrogant_duremudira.png", 0, true),
+      new MonsterLog(168, "Rocks", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(169, "Seregios", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/seregios.png", 0, true),
+      new MonsterLog(170, "Bogabadorumu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_bogabadorumu.gif", 0, true),
+      new MonsterLog(171, "Unknown Blue Barrel", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
+      new MonsterLog(172, "Blitzkrieg Bogabadorumu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blitzkrieg_bogabadorumu.png", 0, true),
+      new MonsterLog(173, "Costumed Uruki", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/uruki.png", 0),
+      new MonsterLog(174, "Sparkling Zerureusu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/sparkling_zerureusu.png", 0, true),
+      new MonsterLog(175, "PSO2 Rappy", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pso2_rappy.png", 0),
+      new MonsterLog(176, "King Shakalaka", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/king_shakalaka.png", 0, true),
     };
 
     public static string ReplaceMonsterInfoFeriasVersion(string link)
@@ -280,7 +280,7 @@ public partial class ConfigWindow : FluentWindow
 
         // Check if no need to replace because its the same version already
         if (link.Contains(ReplaceSettingsLink))
-            {
+        {
             return link;
         }
 
@@ -742,7 +742,7 @@ public partial class ConfigWindow : FluentWindow
         logger.Debug($"ConfigWindow ctor Elapsed Time: {elapsedTimeMs} ms");
     }
 
-    private List<WeaponUsageMapper> weaponUsageData = new ();
+    private List<WeaponUsageMapper> weaponUsageData = new();
 
     private void SetWeaponUsageChart(CartesianChart weaponUsageChart)
     {
@@ -1191,9 +1191,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        Dictionary<string, string> MonsterFeriasOptionDictionary = new ();
-        Dictionary<string, string> MonsterWikiOptionDictionary = new ();
-        Dictionary<string, string> MonsterVideoLinkOptionDictionary = new ();
+        Dictionary<string, string> MonsterFeriasOptionDictionary = new();
+        Dictionary<string, string> MonsterWikiOptionDictionary = new();
+        Dictionary<string, string> MonsterVideoLinkOptionDictionary = new();
 
         for (int i = 0; i < monsterInfos.Count; i++)
         {
@@ -1324,7 +1324,7 @@ public partial class ConfigWindow : FluentWindow
     private void Fumo_MediaEnded(object sender, RoutedEventArgs e)
     {
         if (myFumo == null)
-            {
+        {
             return;
         }
 
@@ -1335,7 +1335,7 @@ public partial class ConfigWindow : FluentWindow
     private void Krill_MediaEnded(object sender, RoutedEventArgs e)
     {
         if (myKrill == null)
-            {
+        {
             return;
         }
 
@@ -1346,7 +1346,7 @@ public partial class ConfigWindow : FluentWindow
     private void Stars_MediaEnded(object sender, RoutedEventArgs e)
     {
         if (myAnime == null)
-            {
+        {
             return;
         }
 
@@ -1357,7 +1357,7 @@ public partial class ConfigWindow : FluentWindow
     private void Watcher_MediaEnded(object sender, RoutedEventArgs e)
     {
         if (myWatcher == null)
-            {
+        {
             return;
         }
 
@@ -1408,7 +1408,7 @@ public partial class ConfigWindow : FluentWindow
         {
             var directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (directoryName == null)
-                {
+            {
                 return;
             }
 
@@ -1425,7 +1425,7 @@ public partial class ConfigWindow : FluentWindow
             {
                 var logFilePathDirectory = Path.GetDirectoryName(logFilePath);
                 if (logFilePathDirectory == null)
-                    {
+                {
                     return;
                 }
 
@@ -1449,7 +1449,7 @@ public partial class ConfigWindow : FluentWindow
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
             var directoryName = Path.GetDirectoryName(s.DatabaseFilePath);
             if (directoryName == null)
-                {
+            {
                 return;
             }
 
@@ -1478,7 +1478,7 @@ public partial class ConfigWindow : FluentWindow
     private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
     {
         if (MainWindow == null)
-            {
+        {
             return;
         }
 
@@ -1566,7 +1566,7 @@ public partial class ConfigWindow : FluentWindow
     {
         // Confirm parent and childName are valid. 
         if (parent == null)
-            {
+        {
             return null;
         }
 
@@ -1586,7 +1586,7 @@ public partial class ConfigWindow : FluentWindow
 
                 // If the child is found, break so we do not overwrite the found child. 
                 if (foundChild != null)
-                    {
+                {
                     break;
                 }
             }
@@ -1617,7 +1617,7 @@ public partial class ConfigWindow : FluentWindow
     {
         ComboBox comboBox = (ComboBox)sender;
         if (weaponUsageChart == null)
-            {
+        {
             return;
         }
 
@@ -1726,7 +1726,7 @@ public partial class ConfigWindow : FluentWindow
         // Get the quest ID and new YouTube link from the textboxes
         long runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
         if (youtubeLinkTextBox == null)
-            {
+        {
             return;
         }
 
@@ -1799,26 +1799,26 @@ public partial class ConfigWindow : FluentWindow
     {
         // top20RunsListView = (ListView)sender;
         if (top20RunsDataGrid == null)
-            {
+        {
             return;
         }
 
         var comboBox = sender as ComboBox;
         if (comboBox == null)
-            {
+        {
             return;
         }
 
         var selectedItem = comboBox.SelectedItem;
         if (selectedItem == null)
-            {
+        {
             return;
         }
 
         // You can now use the selectedItem variable to get the data or value of the selected option
         string? selectedWeapon = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "");
         if (string.IsNullOrEmpty(selectedWeapon))
-            {
+        {
             return;
         }
 
@@ -1837,7 +1837,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var textBlock = sender as TextBlock;
         if (textBlock == null)
-            {
+        {
             return;
         }
 
@@ -1849,7 +1849,7 @@ public partial class ConfigWindow : FluentWindow
     private void QuestLogGearBtnSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (questLogGearStatsTextBlock == null)
-            {
+        {
             return;
         }
 
@@ -1864,7 +1864,7 @@ public partial class ConfigWindow : FluentWindow
     private void QuestLogGearBtnCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (questLogGearStatsTextBlock == null)
-            {
+        {
             return;
         }
 
@@ -1878,7 +1878,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var textBlock = sender as TextBlock;
         if (textBlock == null)
-            {
+        {
             return;
         }
 
@@ -1889,7 +1889,7 @@ public partial class ConfigWindow : FluentWindow
     private void CompendiumBtnSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (compendiumTextBlock == null)
-            {
+        {
             return;
         }
 
@@ -1902,7 +1902,7 @@ public partial class ConfigWindow : FluentWindow
     private void CompendiumBtnCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (compendiumInformationStackPanel == null)
-            {
+        {
             return;
         }
 
@@ -1919,7 +1919,7 @@ public partial class ConfigWindow : FluentWindow
         {
             var data = MainWindow.dataLoader.model.CalendarRuns;
             if (data == null)
-                {
+            {
                 return;
             }
 
@@ -2027,7 +2027,7 @@ public partial class ConfigWindow : FluentWindow
     private void CalendarButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (calendarDataGrid == null)
-            {
+        {
             return;
         }
 
@@ -2040,7 +2040,7 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (personalBestChart == null || personalBestChartGrid == null || personalBestMainGrid == null)
-            {
+        {
             return;
         }
 
@@ -2051,7 +2051,7 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (personalBestChartGrid == null || personalBestMainGrid == null)
-            {
+        {
             return;
         }
 
@@ -2067,7 +2067,7 @@ public partial class ConfigWindow : FluentWindow
         {
             var data = MainWindow.dataLoader.model.FastestRuns;
             if (data == null)
-                {
+            {
                 return;
             }
 
@@ -2097,7 +2097,7 @@ public partial class ConfigWindow : FluentWindow
     private void Top20ButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (top20RunsDataGrid == null || top20MainGrid == null)
-            {
+        {
             return;
         }
 
@@ -2110,7 +2110,7 @@ public partial class ConfigWindow : FluentWindow
     private void WeaponStatsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (weaponUsageChartGrid == null || weaponUsageChart == null || weaponUsageData == null || weaponStatsMainGrid == null)
-            {
+        {
             return;
         }
 
@@ -2118,7 +2118,7 @@ public partial class ConfigWindow : FluentWindow
         {
             var data = MainWindow.dataLoader.model.CalendarRuns;
             if (data == null)
-                {
+            {
                 return;
             }
 
@@ -2148,7 +2148,7 @@ public partial class ConfigWindow : FluentWindow
     private void WeaponStatsButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (weaponUsageChartGrid == null || weaponStatsMainGrid == null)
-            {
+        {
             return;
         }
 
@@ -2164,7 +2164,7 @@ public partial class ConfigWindow : FluentWindow
         {
             var data = MainWindow.dataLoader.model.RecentRuns;
             if (data == null)
-                {
+            {
                 return;
             }
 
@@ -2194,7 +2194,7 @@ public partial class ConfigWindow : FluentWindow
     private void MostRecentButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (mostRecentRunsDataGrid == null)
-            {
+        {
             return;
         }
 
@@ -2207,7 +2207,7 @@ public partial class ConfigWindow : FluentWindow
     private void StatsGraphsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (statsGraphsGrid == null || statsGraphsMainGrid == null)
-            {
+        {
             return;
         }
 
@@ -2218,7 +2218,7 @@ public partial class ConfigWindow : FluentWindow
     private void StatsGraphsButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (statsGraphsGrid == null || statsGraphsMainGrid == null)
-            {
+        {
             return;
         }
 
@@ -2231,7 +2231,7 @@ public partial class ConfigWindow : FluentWindow
     private void StatsTextButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (statsTextTextBlock == null || statsTextMainGrid == null)
-            {
+        {
             return;
         }
 
@@ -2243,7 +2243,7 @@ public partial class ConfigWindow : FluentWindow
     private void StatsTextButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (statsTextTextBlock == null || statsTextMainGrid == null)
-            {
+        {
             return;
         }
 
@@ -2256,7 +2256,7 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestsOverviewButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         if (DiscordEmbedWeaponPersonalBest == null || QuestIDTextBox == null)
-            {
+        {
             return;
         }
 
@@ -2267,7 +2267,7 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestsOverviewButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
         if (DiscordEmbedWeaponPersonalBest == null)
-            {
+        {
             return;
         }
 
@@ -2303,6 +2303,7 @@ public partial class ConfigWindow : FluentWindow
 
             i++;
         }
+
         XAxes = new Axis[]
         {
             new Axis
@@ -2331,6 +2332,7 @@ public partial class ConfigWindow : FluentWindow
 
             i++;
         }
+
         XAxes = new Axis[]
         {
             new Axis
@@ -2359,6 +2361,7 @@ public partial class ConfigWindow : FluentWindow
 
             i++;
         }
+
         XAxes = new Axis[]
         {
     new Axis
@@ -2375,9 +2378,9 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> GetElapsedTime(Dictionary<int, int> timeAttackDict)
     {
-        Dictionary<int, int> elapsedTimeDict = new ();
+        Dictionary<int, int> elapsedTimeDict = new();
         if (timeAttackDict == null || !timeAttackDict.Any())
-            {
+        {
             return elapsedTimeDict;
         }
 
@@ -2392,9 +2395,9 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, double> GetElapsedTimeForDictionaryIntDouble(Dictionary<int, double> timeAttackDict)
     {
-        Dictionary<int, double> elapsedTimeDict = new ();
+        Dictionary<int, double> elapsedTimeDict = new();
         if (timeAttackDict == null || !timeAttackDict.Any())
-            {
+        {
             return elapsedTimeDict;
         }
 
@@ -2410,12 +2413,12 @@ public partial class ConfigWindow : FluentWindow
     private void SetLineSeriesForDictionaryIntInt(Dictionary<int, int> data)
     {
         if (graphChart == null)
-            {
+        {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
 
         Dictionary<int, int> newData = GetElapsedTime(data);
 
@@ -2464,12 +2467,12 @@ public partial class ConfigWindow : FluentWindow
     private void SetLineSeriesForDictionaryIntDouble(Dictionary<int, double> data)
     {
         if (graphChart == null)
-            {
+        {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
 
         Dictionary<int, double> newData = GetElapsedTimeForDictionaryIntDouble(data);
 
@@ -2518,12 +2521,12 @@ public partial class ConfigWindow : FluentWindow
     private void SetStepLineSeriesForPersonalBestByAttempts(Dictionary<long, long> data)
     {
         if (personalBestChart == null)
-            {
+        {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
 
         foreach (var entry in data)
         {
@@ -2573,13 +2576,13 @@ public partial class ConfigWindow : FluentWindow
     private void SetStepLineSeriesForPersonalBestByDate(Dictionary<DateTime, long> data)
     {
         if (personalBestChart == null)
-            {
+        {
             return;
         }
 
-        List<ISeries> series = new ();
+        List<ISeries> series = new();
 
-        ObservableCollection<DateTimePoint> collection = new ();
+        ObservableCollection<DateTimePoint> collection = new();
 
         DateTime? prevDate = null;
         long? prevTime = null;
@@ -2658,12 +2661,12 @@ public partial class ConfigWindow : FluentWindow
     private void SetHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> data)
     {
         if (graphChart == null)
-            {
+        {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
 
         Dictionary<int, int> hitsTakenBlocked = CalculateHitsTakenBlocked(data);
 
@@ -2714,13 +2717,13 @@ public partial class ConfigWindow : FluentWindow
     public void SetPlayerHealthStamina(Dictionary<int, int> hp, Dictionary<int, int> stamina)
     {
         if (graphChart == null)
-            {
+        {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> healthCollection = new ();
-        ObservableCollection<ObservablePoint> staminaCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> healthCollection = new();
+        ObservableCollection<ObservablePoint> staminaCollection = new();
 
         Dictionary<int, int> newHP = GetElapsedTime(hp);
         Dictionary<int, int> newStamina = GetElapsedTime(stamina);
@@ -2788,12 +2791,12 @@ public partial class ConfigWindow : FluentWindow
     public void SetMonsterAttackMultiplier(Dictionary<int, double> attack)
     {
         if (graphChart == null)
-            {
+        {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> attackCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> attackCollection = new();
 
         Dictionary<int, double> newAttack = GetElapsedTimeForDictionaryIntDouble(attack);
 
@@ -2841,12 +2844,12 @@ public partial class ConfigWindow : FluentWindow
     public void SetMonsterDefenseRate(Dictionary<int, double> defense)
     {
         if (graphChart == null)
-            {
+        {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> defenseCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> defenseCollection = new();
 
         Dictionary<int, double> newDefense = GetElapsedTimeForDictionaryIntDouble(defense);
 
@@ -2894,16 +2897,16 @@ public partial class ConfigWindow : FluentWindow
     private void SetMonsterStatusAilmentsThresholds(Dictionary<int, int> poison, Dictionary<int, int> sleep, Dictionary<int, int> para, Dictionary<int, int> blast, Dictionary<int, int> stun)
     {
         if (graphChart == null)
-            {
+        {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> poisonCollection = new ();
-        ObservableCollection<ObservablePoint> sleepCollection = new ();
-        ObservableCollection<ObservablePoint> paraCollection = new ();
-        ObservableCollection<ObservablePoint> blastCollection = new ();
-        ObservableCollection<ObservablePoint> stunCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> poisonCollection = new();
+        ObservableCollection<ObservablePoint> sleepCollection = new();
+        ObservableCollection<ObservablePoint> paraCollection = new();
+        ObservableCollection<ObservablePoint> blastCollection = new();
+        ObservableCollection<ObservablePoint> stunCollection = new();
 
         Dictionary<int, int> newPoison = GetElapsedTime(poison);
         Dictionary<int, int> newSleep = GetElapsedTime(sleep);
@@ -3066,7 +3069,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> hitsTakenBlocked)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
 
         int i = 1;
         foreach (var entry in hitsTakenBlocked)
@@ -3082,7 +3085,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> CalculateMonsterHP(Dictionary<int, Dictionary<int, int>> monsterHP)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
 
         int i = 1;
         foreach (var entry in monsterHP)
@@ -3100,7 +3103,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, double> CalculateMonsterMultiplier(Dictionary<int, Dictionary<int, double>> monsterDictionary)
     {
-        Dictionary<int, double> dictionary = new ();
+        Dictionary<int, double> dictionary = new();
 
         int i = 1;
         foreach (var entry in monsterDictionary)
@@ -3118,7 +3121,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> CalculateMonsterStatusAilmentThresholds(Dictionary<int, Dictionary<int, int>> monsterDictionary)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
 
         int i = 1;
         foreach (var entry in monsterDictionary)
@@ -3137,15 +3140,15 @@ public partial class ConfigWindow : FluentWindow
     private void SetMonsterHP(Dictionary<int, int> monster1, Dictionary<int, int> monster2, Dictionary<int, int> monster3, Dictionary<int, int> monster4)
     {
         if (graphChart == null)
-            {
+        {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> monster1Collection = new ();
-        ObservableCollection<ObservablePoint> monster2Collection = new ();
-        ObservableCollection<ObservablePoint> monster3Collection = new ();
-        ObservableCollection<ObservablePoint> monster4Collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> monster1Collection = new();
+        ObservableCollection<ObservablePoint> monster2Collection = new();
+        ObservableCollection<ObservablePoint> monster3Collection = new();
+        ObservableCollection<ObservablePoint> monster4Collection = new();
 
         Dictionary<int, int> newMonster1 = GetElapsedTime(monster1);
         Dictionary<int, int> newMonster2 = GetElapsedTime(monster2);
@@ -3260,12 +3263,12 @@ public partial class ConfigWindow : FluentWindow
     private void SetPolarLineSeriesForHunterPerformance(PerformanceCompendium performanceCompendium)
     {
         if (hunterPerformanceChart == null)
-            {
+        {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<double> performanceCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<double> performanceCollection = new();
 
         performanceCollection.Add(performanceCompendium.TrueRawMedian / performanceCompendium.HighestTrueRaw);
         performanceCollection.Add(performanceCompendium.SingleHitDamageMedian / performanceCompendium.HighestSingleHitDamage);
@@ -3322,14 +3325,14 @@ public partial class ConfigWindow : FluentWindow
         var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
         if (selectedItem == null)
-            {
+        {
             return;
         }
 
         string? selectedOption = selectedItem.Content.ToString();
 
         if (graphChart == null || selectedOption == null || string.IsNullOrEmpty(selectedOption))
-            {
+        {
             return;
         }
 
@@ -3479,7 +3482,7 @@ public partial class ConfigWindow : FluentWindow
         statsGraphsSelectedOption = selectedOption.Trim().Replace(" ", "_");
 
         if (Series == null)
-            {
+        {
             return;
         }
 
@@ -3500,9 +3503,9 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, List<Dictionary<int, int>>> GetElapsedTimeForInventories(Dictionary<int, List<Dictionary<int, int>>> dictionary)
     {
-        Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new ();
+        Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new();
         if (dictionary == null || !dictionary.Any())
-            {
+        {
             return elapsedTimeDict;
         }
 
@@ -3517,10 +3520,10 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> GetElapsedTimeForDictionaryIntInt(Dictionary<int, int> dictionary)
     {
-        Dictionary<int, int> elapsedTimeDict = new ();
+        Dictionary<int, int> elapsedTimeDict = new();
 
         if (dictionary == null || !dictionary.Any())
-            {
+        {
             return elapsedTimeDict;
         }
 
@@ -3564,9 +3567,11 @@ public partial class ConfigWindow : FluentWindow
                     }
                 }
             }
+
             sb.AppendLine();
             sb.AppendLine();
         }
+
         return sb.ToString();
     }
 
@@ -3588,6 +3593,7 @@ public partial class ConfigWindow : FluentWindow
             sb.AppendLine();
             sb.AppendLine();
         }
+
         return sb.ToString();
     }
 
@@ -3596,7 +3602,7 @@ public partial class ConfigWindow : FluentWindow
         // implement code to get item name based on itemID
         Item.IDName.TryGetValue(itemID, out string? value);
         if (value == null)
-            {
+        {
             return string.Empty;
         }
 
@@ -3610,14 +3616,14 @@ public partial class ConfigWindow : FluentWindow
         var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
         if (selectedItem == null || statsTextTextBlock == null)
-            {
+        {
             return;
         }
 
         string? selectedOption = selectedItem.Content.ToString();
 
         if (statsTextTextBlock == null || selectedOption == null || string.IsNullOrEmpty(selectedOption))
-            {
+        {
             return;
         }
 
@@ -3655,19 +3661,19 @@ public partial class ConfigWindow : FluentWindow
         var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
         if (selectedItem == null)
-            {
+        {
             return;
         }
 
         string? selectedOption = selectedItem.Content.ToString();
 
         if (string.IsNullOrEmpty(selectedOption))
-            {
+        {
             return;
         }
 
         if (s != null)
-            {
+        {
             overlaySettingsManager.SetConfigurationPreset(s, ConfigurationPresetConverter.Convert(selectedOption));
         }
     }
@@ -3680,26 +3686,26 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (personalBestChart == null)
-            {
+        {
             return;
         }
 
         var comboBox = sender as ComboBox;
         if (comboBox == null)
-            {
+        {
             return;
         }
 
         var selectedItem = comboBox.SelectedItem;
 
         if (selectedItem == null)
-            {
+        {
             return;
         }
 
         string? selectedType = selectedItem.ToString();
         if (string.IsNullOrEmpty(selectedType))
-            {
+        {
             return;
         }
 
@@ -3709,26 +3715,26 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestWeaponComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (personalBestChart == null)
-            {
+        {
             return;
         }
 
         var comboBox = sender as ComboBox;
         if (comboBox == null)
-            {
+        {
             return;
         }
 
         var selectedItem = comboBox.SelectedItem;
 
         if (selectedItem == null)
-            {
+        {
             return;
         }
 
         string? selectedWeapon = selectedItem.ToString();
         if (string.IsNullOrEmpty(selectedWeapon))
-            {
+        {
             return;
         }
 
@@ -3738,7 +3744,7 @@ public partial class ConfigWindow : FluentWindow
     private void PersonalBestRefreshButton_Click(object sender, RoutedEventArgs e)
     {
         if (personalBestChart == null || personalBestSelectedWeapon == "" || personalBestSelectedType == "")
-            {
+        {
             return;
         }
 
@@ -3804,21 +3810,21 @@ public partial class ConfigWindow : FluentWindow
     private void CalendarDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
         if (calendarDataGrid == null || sender == null)
-            {
+        {
             return;
         }
 
         DatePicker? datePicker = sender as DatePicker;
 
         if (datePicker == null)
-            {
+        {
             return;
         }
 
         var selectedDate = datePicker.SelectedDate;
 
         if (selectedDate == null)
-            {
+        {
             return;
         }
 
@@ -3900,7 +3906,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (Grid)sender;
         if (obj != null)
-            {
+        {
             personalBestChartGrid = obj;
         }
     }
@@ -3909,7 +3915,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (Grid)sender;
         if (obj != null)
-            {
+        {
             weaponUsageChartGrid = obj;
         }
     }
@@ -3918,20 +3924,20 @@ public partial class ConfigWindow : FluentWindow
     {
         var comboBox = (ComboBox)sender;
         if (comboBox == null)
-            {
+        {
             return;
         }
 
         var selectedItem = comboBox.SelectedItem;
         if (selectedItem == null)
-            {
+        {
             return;
         }
 
         // You can now use the selectedItem variable to get the data or value of the selected option
         string? selectedOption = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim().Replace(" ", "_");
         if (string.IsNullOrEmpty(selectedOption))
-            {
+        {
             return;
         }
 
@@ -3942,20 +3948,20 @@ public partial class ConfigWindow : FluentWindow
     {
         var comboBox = (ComboBox)sender;
         if (comboBox == null)
-            {
+        {
             return;
         }
 
         var selectedItem = comboBox.SelectedItem;
         if (selectedItem == null)
-            {
+        {
             return;
         }
 
         // You can now use the selectedItem variable to get the data or value of the selected option
         string? selectedOption = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim().Replace(" ", "_");
         if (string.IsNullOrEmpty(selectedOption))
-            {
+        {
             return;
         }
 
@@ -3966,7 +3972,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (Grid)sender;
         if (obj != null)
-            {
+        {
             statsGraphsGrid = obj;
         }
     }
@@ -3975,7 +3981,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (TextBlock)sender;
         if (obj != null)
-            {
+        {
             personalBestDescriptionTextBlock = obj;
         }
     }
@@ -3984,7 +3990,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (TextBlock)sender;
         if (obj != null)
-            {
+        {
             top20RunsDescriptionTextblock = obj;
         }
     }
@@ -3993,7 +3999,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (Grid)sender;
         if (obj != null)
-            {
+        {
             personalBestMainGrid = obj;
         }
     }
@@ -4002,7 +4008,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (Grid)sender;
         if (obj != null)
-            {
+        {
             top20MainGrid = obj;
         }
     }
@@ -4011,7 +4017,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (Grid)sender;
         if (obj != null)
-            {
+        {
             weaponStatsMainGrid = obj;
         }
     }
@@ -4020,7 +4026,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (Grid)sender;
         if (obj != null)
-            {
+        {
             statsGraphsMainGrid = obj;
         }
     }
@@ -4029,7 +4035,7 @@ public partial class ConfigWindow : FluentWindow
     {
         var obj = (Grid)sender;
         if (obj != null)
-            {
+        {
             statsTextMainGrid = obj;
         }
     }
@@ -4038,8 +4044,8 @@ public partial class ConfigWindow : FluentWindow
     {
         await achievementManager.RewardAchievement(225, ConfigWindowSnackBar);
     }
-
 }
+
 /* LoadConfig on startup
  * Load Config on window open to have extra copy
  * On Save -> Window close -> tell program to use new copy instead of current -> Save Config File

@@ -13,6 +13,7 @@ public static class ApplicationPaths
     /// The Notepad path
     /// </summary>
     public const string NotepadPath = @"C:\Windows\System32\notepad.exe";
+
     /// <summary>
     /// The File Explorer path
     /// </summary>

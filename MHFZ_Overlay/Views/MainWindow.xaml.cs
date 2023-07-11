@@ -86,7 +86,7 @@ public partial class MainWindow : Window
 
     private static readonly DiscordManager DiscordManagerInstance = DiscordManager.GetInstance();
 
-    private readonly Mem m = new ();
+    private readonly Mem m = new();
 
     public static NotifyIcon? _mainWindowNotifyIcon { get; set; }
 
@@ -107,27 +107,27 @@ public partial class MainWindow : Window
 
     private void OptionHelp_Click(object sender, RoutedEventArgs e)
     {
-        OpenLink("https:// github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md");
+        OpenLink("https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md");
     }
 
     private void OptionDocumentation_Click(object sender, RoutedEventArgs e)
     {
-        OpenLink("https:// github.com/DorielRivalet/mhfz-overlay/tree/main/docs");
+        OpenLink("https://github.com/DorielRivalet/mhfz-overlay/tree/main/docs");
     }
 
     private void OptionReportBug_Click(object sender, RoutedEventArgs e)
     {
-        OpenLink("https:// github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=bug&projects=&template=BUG-REPORT.yml&title=%5BBUG%5D+-+title");
+        OpenLink("https://github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=bug&projects=&template=BUG-REPORT.yml&title=%5BBUG%5D+-+title");
     }
 
     private void OptionRequestFeature_Click(object sender, RoutedEventArgs e)
     {
-        OpenLink("https:// github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=question%2Cenhancement&projects=&template=FEATURE-REQUEST.yml&title=%5BREQUEST%5D+-+title");
+        OpenLink("https://github.com/DorielRivalet/mhfz-overlay/issues/new?assignees=DorielRivalet&labels=question%2Cenhancement&projects=&template=FEATURE-REQUEST.yml&title=%5BREQUEST%5D+-+title");
     }
 
     private void OptionSendFeedback_Click(object sender, RoutedEventArgs e)
     {
-        OpenLink("https:// forms.gle/hrAVWMcYS5HEo1v7A");
+        OpenLink("https://forms.gle/hrAVWMcYS5HEo1v7A");
     }
 
     private void OptionSettingsFolder_Click(object sender, RoutedEventArgs e)
@@ -193,7 +193,7 @@ public partial class MainWindow : Window
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         var directoryName = Path.GetDirectoryName(s.DatabaseFilePath);
         if (directoryName == null)
-            {
+        {
             return;
         }
 
@@ -226,14 +226,14 @@ public partial class MainWindow : Window
 
     private void OptionAbout_Click(object sender, RoutedEventArgs e)
     {
-        OpenLink("https:// github.com/DorielRivalet/mhfz-overlay");
+        OpenLink("https://github.com/DorielRivalet/mhfz-overlay");
     }
 
     private int originalStyle;
 
-    // https:// stackoverflow.com/questions/2798245/click-through-in-c-sharp-form
-    // https:// stackoverflow.com/questions/686132/opening-a-form-in-c-sharp-without-focus/10727337#10727337
-    // https:// social.msdn.microsoft.com/Forums/en-us/a5e3cbbb-fd07-4343-9b60-6903cdfeca76/click-through-window-with-image-wpf-issues-httransparent-isnt-working?forum=csharplanguage        
+    // https://stackoverflow.com/questions/2798245/click-through-in-c-sharp-form
+    // https://stackoverflow.com/questions/686132/opening-a-form-in-c-sharp-without-focus/10727337#10727337
+    // https://social.msdn.microsoft.com/Forums/en-us/a5e3cbbb-fd07-4343-9b60-6903cdfeca76/click-through-window-with-image-wpf-issues-httransparent-isnt-working?forum=csharplanguage        
     /// <summary>
     /// Raises the <see cref="E:System.Windows.Window.SourceInitialized" /> event.
     /// </summary>
@@ -270,18 +270,18 @@ public partial class MainWindow : Window
     public DateTime ProgramEnd;
 
     // Declare a dictionary to map keys to images
-    private readonly Dictionary<Keys, Image> _keyImages = new ();
+    private readonly Dictionary<Keys, Image> _keyImages = new();
 
-    private readonly Dictionary<MouseButtons, Image> _mouseImages = new ();
+    private readonly Dictionary<MouseButtons, Image> _mouseImages = new();
 
     // TODO
     private readonly XGamepad gamepad;
 
-    private readonly Dictionary<XInputButton, Image> _gamepadImages = new ();
+    private readonly Dictionary<XInputButton, Image> _gamepadImages = new();
 
-    private readonly Dictionary<XInputium.Trigger, Image> _gamepadTriggersImages = new ();
+    private readonly Dictionary<XInputium.Trigger, Image> _gamepadTriggersImages = new();
 
-    private readonly Dictionary<Joystick, Image> _gamepadJoystickImages = new ();
+    private readonly Dictionary<Joystick, Image> _gamepadJoystickImages = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -306,7 +306,7 @@ public partial class MainWindow : Window
         this.Left = 0;
         this.Top = 0;
         this.Topmost = true;
-        DispatcherTimer timer = new ();
+        DispatcherTimer timer = new();
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         timer.Interval = new TimeSpan(0, 0, 0, 0, 1_000 / s.RefreshRate);
 
@@ -324,7 +324,8 @@ public partial class MainWindow : Window
 
         LiveCharts.Configure(config =>
         config
-            // registers SkiaSharp as the library backend
+
+        // registers SkiaSharp as the library backend
             // REQUIRED unless you build your own
             .AddSkiaSharp()
 
@@ -347,7 +348,7 @@ public partial class MainWindow : Window
 
         // TODO unsubscribe
         // TODO gamepad
-        this.gamepad = new ();
+        this.gamepad = new();
         this.gamepad.ButtonPressed += this.Gamepad_ButtonPressed;
         this.gamepad.LeftJoystickMove += this.Gamepad_LeftJoystickMove;
         this.gamepad.RightJoystickMove += this.Gamepad_RightJoystickMove;
@@ -357,7 +358,7 @@ public partial class MainWindow : Window
         this.gamepad.LeftTrigger.ToDigitalButton(this.triggerActivationThreshold).Released += this.Gamepad_LeftTriggerReleased;
         this.gamepad.RightTrigger.ToDigitalButton(this.triggerActivationThreshold).Released += this.Gamepad_RightTriggerReleased;
 
-        DispatcherTimer timer1Frame = new ();
+        DispatcherTimer timer1Frame = new();
         timer1Frame.Interval = new TimeSpan(0, 0, 0, 0, 1_000 / Numbers.FramesPerSecond);
         timer1Frame.Tick += this.Timer1Frame_Tick;
         timer1Frame.Start();
@@ -372,9 +373,10 @@ public partial class MainWindow : Window
 
         this.CreateSystemTrayIcon();
 
-        DispatcherTimer timer1Second = new ();
+        DispatcherTimer timer1Second = new();
         timer1Second.Interval = new TimeSpan(0, 0, 1);
         timer1Second.Tick += this.Timer1Second_Tick;
+
         // we run the 1 second timer tick once in the constructor
         try
         {
@@ -387,9 +389,10 @@ public partial class MainWindow : Window
         {
             LoggingManager.WriteCrashLog(ex);
         }
+
         timer1Second.Start();
 
-        DispatcherTimer timer10Seconds = new ();
+        DispatcherTimer timer10Seconds = new();
         timer10Seconds.Interval = new TimeSpan(0, 0, 10);
         timer10Seconds.Tick += this.Timer10Seconds_Tick;
         timer10Seconds.Start();
@@ -421,7 +424,7 @@ public partial class MainWindow : Window
         // Get the dependency context for the current application
         var context = DependencyContext.Default;
         if (context == null)
-            {
+        {
             return;
         }
 
@@ -452,7 +455,7 @@ public partial class MainWindow : Window
     private void SetGraphSeries()
     {
         // TODO graphs
-        // https:// stackoverflow.com/questions/74719777/livecharts2-binding-continuously-changing-data-to-graph
+        // https://stackoverflow.com/questions/74719777/livecharts2-binding-continuously-changing-data-to-graph
         // inspired by HunterPie
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
@@ -524,7 +527,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
     // TODO: refactor to somewhere else
     /// <summary>
-    /// Opens the link. https:// stackoverflow.com/a/60221582/18859245
+    /// Opens the link. https://stackoverflow.com/a/60221582/18859245
     /// </summary>
     /// <param name="destinationurl">The destinationurl.</param>
     private static void OpenLink(string destinationurl)
@@ -543,11 +546,13 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         int PID = m.GetProcIdFromName("mhf");
 
-        // https:// stackoverflow.com/questions/12372534/how-to-get-a-process-window-class-name-from-c
+        // https://stackoverflow.com/questions/12372534/how-to-get-a-process-window-class-name-from-c
         int pidToSearch = PID;
+
         // Init a condition indicating that you want to search by process id.
         var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
             pidToSearch);
+
         // Find the automation element matching the criteria
         // TODO what is this?
         AutomationElement element = AutomationElement.RootElement.FindFirst(
@@ -570,8 +575,8 @@ The process may take some time, as the program attempts to download from GitHub 
                 this.dataLoader.model.isInLauncherBool = false;
             }
 
-            // https:// stackoverflow.com/questions/51148/how-do-i-find-out-if-a-process-is-already-running-using-c
-            // https:// stackoverflow.com/questions/12273825/c-sharp-process-start-how-do-i-know-if-the-process-ended
+            // https://stackoverflow.com/questions/51148/how-do-i-find-out-if-a-process-is-already-running-using-c
+            // https://stackoverflow.com/questions/12273825/c-sharp-process-start-how-do-i-know-if-the-process-ended
             Process mhfProcess = Process.GetProcessById(pidToSearch);
 
             mhfProcess.EnableRaisingEvents = true;
@@ -582,7 +587,8 @@ The process may take some time, as the program attempts to download from GitHub 
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 LoggerInstance.Info(CultureInfo.InvariantCulture, "Detected closed game");
                 System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please start the overlay when fully loading into Mezeporta.", Messages.InfoTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
-                // https:// stackoverflow.com/a/9050477/18859245
+
+                // https://stackoverflow.com/a/9050477/18859245
                 ApplicationManager.HandleShutdown();
             };
         }
@@ -630,6 +636,7 @@ The process may take some time, as the program attempts to download from GitHub 
         catch (Exception ex)
         {
             LoggingManager.WriteCrashLog(ex);
+
             // the flushing is done automatically according to the docs
         }
     }
@@ -680,14 +687,17 @@ The process may take some time, as the program attempts to download from GitHub 
                 {
                     _gamepadImages.Clear();
                 }
+
                 if (_gamepadTriggersImages.Count > 0)
                 {
                     _gamepadTriggersImages.Clear();
                 }
+
                 if (_gamepadJoystickImages.Count > 0)
-                    {
+                {
                     _gamepadJoystickImages.Clear();
                 }
+
                 if (gamepad.IsConnected)
                 {
                     LoggerInstance.Debug("Gamepad reconnected");
@@ -719,15 +729,16 @@ The process may take some time, as the program attempts to download from GitHub 
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
         if (s == null || !s.QuestNameShown)
-            {
+        {
             return;
         }
 
         EZlion.Mapper.Quest.IDName.TryGetValue(this.dataLoader.model.previousQuestID, out string? previousQuestID);
         if (previousQuestID == null)
-            {
+        {
             return;
         }
+
         questNameTextBlock.Text = previousQuestID;
         Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         Brush peachBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x87));
@@ -852,7 +863,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private void CreateDamageNumber()
     {
         if (this.dataLoader.model.QuestID() == 0)
-            {
+        {
             return;
         }
 
@@ -935,12 +946,7 @@ The process may take some time, as the program attempts to download from GitHub 
     public static bool ShowDamageNumbersMulticolor()
     {
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        if (s.EnableDamageNumbersMulticolor)
-            {
-            return true;
-        }
-        else
-            return false;
+        return s.EnableDamageNumbersMulticolor;
     }
 
     /// <summary>
@@ -951,7 +957,7 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-        Random random = new ();
+        Random random = new();
         double x = random.Next(450);
         double y = random.Next(254);
         Point newPoint = DamageNumbers.TranslatePoint(new Point(x, y), DamageNumbers);
@@ -1015,14 +1021,15 @@ The process may take some time, as the program attempts to download from GitHub 
 
         var defenseMultiplier = Double.Parse(this.dataLoader.model.DefMult, CultureInfo.InvariantCulture);
         if (defenseMultiplier <= 0)
-            {
+        {
             defenseMultiplier = 1;
         }
 
         var effectiveDamage = damage / defenseMultiplier;
+
         // If the defense rate is so high that the effective damage is essentially 0, show the true damage instead.
         if (effectiveDamage == 0)
-            {
+        {
             effectiveDamage = damage;
         }
 
@@ -1035,6 +1042,7 @@ The process may take some time, as the program attempts to download from GitHub 
                     damageOutlinedTextBlock.Text += exclamations;
                     break;
                 }
+
                 damageOutlinedTextBlock.Text = effectiveDamage.ToString("F0", CultureInfo.InvariantCulture);
                 damageOutlinedTextBlock.Text += exclamations;
                 break;
@@ -1051,7 +1059,7 @@ The process may take some time, as the program attempts to download from GitHub 
         // TODO add check for effects
         if (!ShowDamageNumbersMulticolor())
         {
-            // https:// stackoverflow.com/questions/14601759/convert-color-to-byte-value
+            // https://stackoverflow.com/questions/14601759/convert-color-to-byte-value
             System.Drawing.Color color = ColorTranslator.FromHtml(s.DamageNumbersColor);
             damageOutlinedTextBlock.Fill = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
         }
@@ -1118,7 +1126,7 @@ The process may take some time, as the program attempts to download from GitHub 
             fadeInIncreaseSizeFlashColorStoryboard.Children.Add(fadeInAnimation);
 
             if (s.EnableDamageNumbersSize)
-                {
+            {
                 fadeInIncreaseSizeFlashColorStoryboard.Children.Add(sizeIncreaseAnimation);
             }
 
@@ -1160,7 +1168,7 @@ The process may take some time, as the program attempts to download from GitHub 
             Storyboard.SetTargetProperty(showColorFillAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
 
             if (s.EnableDamageNumbersSize)
-                {
+            {
                 decreaseSizeShowColorStoryboard.Children.Add(sizeDecreaseAnimation);
             }
 
@@ -1215,7 +1223,7 @@ The process may take some time, as the program attempts to download from GitHub 
     /// <param name="tb">The tb.</param>
     private void RemoveDamageNumberLabel(OutlinedTextBlock tb)
     {
-        DispatcherTimer timer = new ();
+        DispatcherTimer timer = new();
         timer.Interval = new TimeSpan(0, 0, 0, 0, 1_000);
 
         // memory leak?
@@ -1251,7 +1259,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private bool IsGameFocused(Settings s)
     {
         if (!s.HideOverlayWhenUnfocusedGame || this.dataLoader.model.Configuring)
-            {
+        {
             return true;
         }
 
@@ -1267,13 +1275,7 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             // Check if the active window belongs to the game process
             bool isGameProcessActive = (mhfProcess != null && activeWindowHandle == mhfProcess.MainWindowHandle);
-
-            if (isGameProcessActive)
-                {
-                return true;
-            }
-            else
-                return false;
+            return isGameProcessActive;
         }
     }
 
@@ -1348,13 +1350,13 @@ The process may take some time, as the program attempts to download from GitHub 
     private void MainGrid_DragOver(object sender, DragEventArgs e)
     {
         if (MovingObject == null)
-            {
+        {
             return;
         }
 
         Point pos = e.GetPosition(this);
         if (XOffset == null || YOffset == null)
-            {
+        {
             return;
         }
 
@@ -1424,7 +1426,8 @@ The process may take some time, as the program attempts to download from GitHub 
                 s.MapX = (double)(pos.X - XOffset);
                 s.MapY = (double)(pos.Y - YOffset);
                 break;
-            // case "OverlayModeWatermark":
+
+                // case "OverlayModeWatermark":
             //    s.OverlayModeWatermarkX = (double)(pos.X - XOffset);
             //    s.OverlayModeWatermarkY = (double)(pos.Y - YOffset);
             //    break;
@@ -1526,7 +1529,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private static void DoDragDrop(FrameworkElement? item)
     {
         if (item == null)
-            {
+        {
             return;
         }
 
@@ -1541,7 +1544,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private void MainGrid_Drop(object sender, DragEventArgs e)
     {
         if (MovingObject != null)
-            {
+        {
             MovingObject.IsHitTestVisible = true;
         }
 
@@ -1556,7 +1559,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private void ElementMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (!IsDragConfigure)
-            {
+        {
             return;
         }
 
@@ -1577,7 +1580,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private void OpenConfigButton_Click(object sender, RoutedEventArgs e)
     {
         if (configWindow == null || !configWindow.IsLoaded)
-            {
+        {
             configWindow = new(this);
         }
 
@@ -1590,7 +1593,7 @@ The process may take some time, as the program attempts to download from GitHub 
         ApplicationManager.HandleShutdown();
     }
 
-    // https:// stackoverflow.com/questions/4773632/how-do-i-restart-a-wpf-application
+    // https://stackoverflow.com/questions/4773632/how-do-i-restart-a-wpf-application
     private void ReloadButton_Key()
     {
         ApplicationManager.HandleRestart();
@@ -1599,7 +1602,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private void OpenConfigButton_Key()
     {
         if (IsDragConfigure)
-            {
+        {
             return;
         }
 
@@ -1610,7 +1613,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
 
         if (configWindow == null || !configWindow.IsLoaded)
-            {
+        {
             configWindow = new(this);
         }
 
@@ -1652,7 +1655,7 @@ The process may take some time, as the program attempts to download from GitHub 
         ExitDragAndDrop.Visibility = Visibility.Visible;
         MainGrid.Background = (Brush?)new BrushConverter().ConvertFrom("#01000000");
         if (configWindow != null)
-            {
+        {
             configWindow.Visibility = Visibility.Hidden;
         }
 
@@ -1666,7 +1669,7 @@ The process may take some time, as the program attempts to download from GitHub 
         var thickness = new System.Windows.Thickness(0);
 
         if (IsDragConfigure)
-            {
+        {
             thickness = new System.Windows.Thickness(2);
         }
 
@@ -1717,8 +1720,10 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             IsHitTestVisible = false;
             Focusable = false;
+
             // Get this window's handle         
             IntPtr hwnd = new WindowInteropHelper(this).Handle;
+
             // Change the extended window style to include WS_EX_TRANSPARENT         
             int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
             SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
@@ -1728,8 +1733,10 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             IsHitTestVisible = true;
             Focusable = true;
+
             // Get this window's handle         
             IntPtr hwnd = new WindowInteropHelper(this).Handle;
+
             // Change the extended window style to include WS_EX_TRANSPARENT         
             SetWindowLong(hwnd, GWL_EXSTYLE, originalStyle);
 
@@ -1744,7 +1751,7 @@ The process may take some time, as the program attempts to download from GitHub 
         ExitDragAndDrop.Visibility = Visibility.Hidden;
         MainGrid.Background = (Brush?)new BrushConverter().ConvertFrom("#00FFFFFF");
         if (configWindow != null)
-            {
+        {
             configWindow.Visibility = Visibility.Visible;
         }
 
@@ -1776,7 +1783,7 @@ The process may take some time, as the program attempts to download from GitHub 
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         string completions = string.Empty;
         if (s.EnableQuestCompletionsCounter)
-            {
+        {
             completions = await DatabaseManagerInstance.GetQuestCompletionsAsync(questID, category, weaponType) + "/";
         }
 
@@ -1820,6 +1827,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 score = this.dataLoader.model.PanicHoneyScore();
                 break;
         }
+
         return score;
     }
 
@@ -1832,7 +1840,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private void CheckMezFesScore()
     {
         if (this.dataLoader.model.QuestID() != 0 || !(this.dataLoader.model.AreaID() == 462 || MezFesMinigameMapper.ID.ContainsKey(this.dataLoader.model.AreaID())))
-            {
+        {
             return;
         }
 
@@ -1857,6 +1865,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 this.dataLoader.model.previousMezFesScore = score;
             }
         }
+
         // Check if the player has exited a minigame area and the score is 0
         else if (this.dataLoader.model.previousMezFesArea != -1 && areaID == 462)
         {
@@ -2005,7 +2014,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
 
         if (this.dataLoader.model.QuestState() == 0)
-            {
+        {
             return;
         }
 
@@ -2020,13 +2029,13 @@ The process may take some time, as the program attempts to download from GitHub 
             {
                 LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Illegal quest completion time [ID {0}]", this.dataLoader.model.QuestID());
                 ApplicationManager.HandleGameShutdown();
-                LoggingManager.WriteCrashLog(new ArgumentOutOfRangeException($"Illegal quest completion time [ID {this.dataLoader.model.QuestID()}]"));
+                LoggingManager.WriteCrashLog(new Exception($"Illegal quest completion time [ID {this.dataLoader.model.QuestID()}]"));
             }
 
             this.dataLoader.model.questCleared = true;
             this.dataLoader.model.loadedItemsAtQuestStart = false;
             if (s.EnableQuestLogging)
-                {
+            {
                 DatabaseManagerInstance.InsertQuestData(dataLoader, (int)DatabaseManagerInstance.GetQuestAttempts((long)this.dataLoader.model.QuestID(), this.dataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text));
             }
         }
@@ -2035,6 +2044,7 @@ The process may take some time, as the program attempts to download from GitHub 
         if (this.dataLoader.model.QuestState() == 129 && !this.dataLoader.model.questRewardsGiven)
         {
             this.dataLoader.model.questRewardsGiven = true;
+
             // TODO: add logging check requirement in case the user needs the hash sets.
             // We await since we are dealing with database
             await AchievementManagerInstance.CheckForAchievementsAsync(MainWindowSnackBar, dataLoader, DatabaseManagerInstance, s);
@@ -2092,6 +2102,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 image.Opacity = pressedInputOpacity;
             }));
         }
+
         // uncommenting the following line will suppress the middle mouse button click
         // if (e.Buttons == MouseButtons.Middle) { e.Handled = true; }
     }
@@ -2630,18 +2641,20 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             OnboardEndUser();
         }
+
         if (dataLoader.loadedOutsideMezeporta)
         {
             MainWindowSnackBar.ShowAsync(Messages.WarningTitle, "It is not recommended to load the overlay outside of Mezeporta", new SymbolIcon(SymbolRegular.Warning28), ControlAppearance.Caution);
         }
+
         DatabaseManagerInstance.LoadDatabaseDataIntoHashSets(SaveIconGrid, dataLoader);
         AchievementManagerInstance.LoadPlayerAchievements();
 
         mhfProcess = System.Diagnostics.Process.GetProcessesByName("mhf").First();
 
         if (mhfProcess == null)
-            {
-            LoggingManager.WriteCrashLog(new ArgumentOutOfRangeException("Target process not found"));
+        {
+            LoggingManager.WriteCrashLog(new Exception("Target process not found"));
         }
     }
 
@@ -2655,9 +2668,10 @@ The process may take some time, as the program attempts to download from GitHub 
             var settingsForm = new Views.SettingsForm();
             bool? settingsFormResult = settingsForm.ShowDialog();
             if (settingsFormResult == null)
-                {
+            {
                 return;
             }
+
             var resultSelected = string.Empty;
             if (settingsFormResult == true)
             {
@@ -2706,6 +2720,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 {
                     return;
                 }
+
                 s.Save();
                 LoggerInstance.Info(CultureInfo.InvariantCulture, "Onboarded end-user. Result selected: {0}", resultSelected);
                 System.Windows.MessageBox.Show("Settings set. Happy hunting!", Messages.InfoTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
@@ -2730,11 +2745,12 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         MediaElement mediaElement = (MediaElement)sender;
         if (mediaElement != null)
-            {
+        {
             victoryMediaSound = mediaElement;
         }
     }
 }
+
 /// <TODO>
 /// [] Not Done
 /// [X] Done

@@ -22,7 +22,7 @@ public class OutlinedTextBlock : FrameworkElement
     /// </summary>
     private void UpdatePen()
     {
-        _Pen = new Pen(Stroke, StrokeThickness)
+        this._Pen = new Pen(this.Stroke, this.StrokeThickness)
         {
             DashCap = PenLineCap.Round,
             EndLineCap = PenLineCap.Round,
@@ -30,7 +30,7 @@ public class OutlinedTextBlock : FrameworkElement
             StartLineCap = PenLineCap.Round
         };
 
-        InvalidateVisual();
+        this.InvalidateVisual();
     }
 
     /// <summary>
@@ -157,8 +157,8 @@ public class OutlinedTextBlock : FrameworkElement
     /// </value>
     public Brush Fill
     {
-        get { return (Brush)GetValue(FillProperty); }
-        set { SetValue(FillProperty, value); }
+        get { return (Brush)this.GetValue(FillProperty); }
+        set { this.SetValue(FillProperty, value); }
     }
 
     /// <summary>
@@ -169,15 +169,15 @@ public class OutlinedTextBlock : FrameworkElement
     /// </value>
     public FontFamily FontFamily
     {
-        get { return (FontFamily)GetValue(FontFamilyProperty); }
-        set { SetValue(FontFamilyProperty, value); }
+        get { return (FontFamily)this.GetValue(FontFamilyProperty); }
+        set { this.SetValue(FontFamilyProperty, value); }
     }
 
     [TypeConverter(typeof(FontSizeConverter))]
     public double FontSize
     {
-        get { return (double)GetValue(FontSizeProperty); }
-        set { SetValue(FontSizeProperty, value); }
+        get { return (double)this.GetValue(FontSizeProperty); }
+        set { this.SetValue(FontSizeProperty, value); }
     }
 
     /// <summary>
@@ -188,8 +188,8 @@ public class OutlinedTextBlock : FrameworkElement
     /// </value>
     public FontStretch FontStretch
     {
-        get { return (FontStretch)GetValue(FontStretchProperty); }
-        set { SetValue(FontStretchProperty, value); }
+        get { return (FontStretch)this.GetValue(FontStretchProperty); }
+        set { this.SetValue(FontStretchProperty, value); }
     }
 
     /// <summary>
@@ -200,8 +200,8 @@ public class OutlinedTextBlock : FrameworkElement
     /// </value>
     public FontStyle FontStyle
     {
-        get { return (FontStyle)GetValue(FontStyleProperty); }
-        set { SetValue(FontStyleProperty, value); }
+        get { return (FontStyle)this.GetValue(FontStyleProperty); }
+        set { this.SetValue(FontStyleProperty, value); }
     }
 
     /// <summary>
@@ -212,8 +212,8 @@ public class OutlinedTextBlock : FrameworkElement
     /// </value>
     public FontWeight FontWeight
     {
-        get { return (FontWeight)GetValue(FontWeightProperty); }
-        set { SetValue(FontWeightProperty, value); }
+        get { return (FontWeight)this.GetValue(FontWeightProperty); }
+        set { this.SetValue(FontWeightProperty, value); }
     }
 
     /// <summary>
@@ -224,8 +224,8 @@ public class OutlinedTextBlock : FrameworkElement
     /// </value>
     public Brush Stroke
     {
-        get { return (Brush)GetValue(StrokeProperty); }
-        set { SetValue(StrokeProperty, value); }
+        get { return (Brush)this.GetValue(StrokeProperty); }
+        set { this.SetValue(StrokeProperty, value); }
     }
 
     /// <summary>
@@ -236,8 +236,8 @@ public class OutlinedTextBlock : FrameworkElement
     /// </value>
     public double StrokeThickness
     {
-        get { return (double)GetValue(StrokeThicknessProperty); }
-        set { SetValue(StrokeThicknessProperty, value); }
+        get { return (double)this.GetValue(StrokeThicknessProperty); }
+        set { this.SetValue(StrokeThicknessProperty, value); }
     }
 
     /// <summary>
@@ -248,8 +248,8 @@ public class OutlinedTextBlock : FrameworkElement
     /// </value>
     public string Text
     {
-        get { return (string)GetValue(TextProperty); }
-        set { SetValue(TextProperty, value); }
+        get { return (string)this.GetValue(TextProperty); }
+        set { this.SetValue(TextProperty, value); }
     }
 
     /// <summary>
@@ -260,8 +260,8 @@ public class OutlinedTextBlock : FrameworkElement
     /// </value>
     public TextAlignment TextAlignment
     {
-        get { return (TextAlignment)GetValue(TextAlignmentProperty); }
-        set { SetValue(TextAlignmentProperty, value); }
+        get { return (TextAlignment)this.GetValue(TextAlignmentProperty); }
+        set { this.SetValue(TextAlignmentProperty, value); }
     }
 
     /// <summary>
@@ -272,8 +272,8 @@ public class OutlinedTextBlock : FrameworkElement
     /// </value>
     public TextDecorationCollection TextDecorations
     {
-        get { return (TextDecorationCollection)GetValue(TextDecorationsProperty); }
-        set { SetValue(TextDecorationsProperty, value); }
+        get { return (TextDecorationCollection)this.GetValue(TextDecorationsProperty); }
+        set { this.SetValue(TextDecorationsProperty, value); }
     }
 
     /// <summary>
@@ -284,8 +284,8 @@ public class OutlinedTextBlock : FrameworkElement
     /// </value>
     public TextTrimming TextTrimming
     {
-        get { return (TextTrimming)GetValue(TextTrimmingProperty); }
-        set { SetValue(TextTrimmingProperty, value); }
+        get { return (TextTrimming)this.GetValue(TextTrimmingProperty); }
+        set { this.SetValue(TextTrimmingProperty, value); }
     }
 
     /// <summary>
@@ -296,8 +296,8 @@ public class OutlinedTextBlock : FrameworkElement
     /// </value>
     public TextWrapping TextWrapping
     {
-        get { return (TextWrapping)GetValue(TextWrappingProperty); }
-        set { SetValue(TextWrappingProperty, value); }
+        get { return (TextWrapping)this.GetValue(TextWrappingProperty); }
+        set { this.SetValue(TextWrappingProperty, value); }
     }
 
     /// <summary>
@@ -305,20 +305,21 @@ public class OutlinedTextBlock : FrameworkElement
     /// </summary>
     public OutlinedTextBlock()
     {
-        UpdatePen();
-        TextDecorations = new TextDecorationCollection();
+        this.UpdatePen();
+        this.TextDecorations = new TextDecorationCollection();
     }
 
     /// <summary>
     /// When overridden in a derived class, participates in rendering operations that are directed by the layout system. The rendering instructions for this element are not used directly when this method is invoked, and are instead preserved for later asynchronous use by layout and drawing.
     /// </summary>
     /// <param name="drawingContext">The drawing instructions for a specific element. This context is provided to the layout system.</param>
+    [Obsolete]
     protected override void OnRender(DrawingContext drawingContext)
     {
-        EnsureGeometry();
+        this.EnsureGeometry();
 
-        drawingContext.DrawGeometry(null, _Pen, _TextGeometry);
-        drawingContext.DrawGeometry(Fill, null, _TextGeometry);
+        drawingContext.DrawGeometry(null, this._Pen, this._TextGeometry);
+        drawingContext.DrawGeometry(this.Fill, null, this._TextGeometry);
     }
 
     /// <summary>
@@ -328,9 +329,10 @@ public class OutlinedTextBlock : FrameworkElement
     /// <returns>
     /// The size that this element determines it needs during layout, based on its calculations of child element sizes.
     /// </returns>
+    [Obsolete]
     protected override Size MeasureOverride(Size availableSize)
     {
-        EnsureFormattedText();
+        this.EnsureFormattedText();
 
         // constrain the formatted text according to the available size
 
@@ -339,11 +341,11 @@ public class OutlinedTextBlock : FrameworkElement
 
         // the Math.Min call is important - without this constraint (which seems arbitrary, but is the maximum allowable text width), things blow up when availableSize is infinite in both directions
         // the Math.Max call is to ensure we don't hit zero, which will cause MaxTextHeight to throw
-        _FormattedText.MaxTextWidth = Math.Min(3579139, w);
-        _FormattedText.MaxTextHeight = Math.Max(0.0001d, h);
+        this._FormattedText.MaxTextWidth = Math.Min(3579139, w);
+        this._FormattedText.MaxTextHeight = Math.Max(0.0001d, h);
 
         // return the desired size
-        return new Size(Math.Ceiling(_FormattedText.Width), Math.Ceiling(_FormattedText.Height));
+        return new Size(Math.Ceiling(this._FormattedText.Width), Math.Ceiling(this._FormattedText.Height));
     }
 
     /// <summary>
@@ -353,16 +355,17 @@ public class OutlinedTextBlock : FrameworkElement
     /// <returns>
     /// The actual size used.
     /// </returns>
+    [Obsolete]
     protected override Size ArrangeOverride(Size finalSize)
     {
-        EnsureFormattedText();
+        this.EnsureFormattedText();
 
         // update the formatted text with the final size
-        _FormattedText.MaxTextWidth = finalSize.Width;
-        _FormattedText.MaxTextHeight = Math.Max(0.0001d, finalSize.Height);
+        this._FormattedText.MaxTextWidth = finalSize.Width;
+        this._FormattedText.MaxTextHeight = Math.Max(0.0001d, finalSize.Height);
 
         // need to re-generate the geometry now that the dimensions have changed
-        _TextGeometry = null;
+        this._TextGeometry = null;
 
         return finalSize;
     }
@@ -401,22 +404,23 @@ public class OutlinedTextBlock : FrameworkElement
     /// <summary>
     /// Ensures the formatted text.
     /// </summary>
+    [Obsolete]
     private void EnsureFormattedText()
     {
-        if (_FormattedText != null)
+        if (this._FormattedText != null)
         {
             return;
         }
 
-        _FormattedText = new FormattedText(
-          Text ?? string.Empty,
+        this._FormattedText = new FormattedText(
+          this.Text ?? string.Empty,
           CultureInfo.CurrentUICulture,
-          FlowDirection,
-          new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
-          FontSize,
+          this.FlowDirection,
+          new Typeface(this.FontFamily, this.FontStyle, this.FontWeight, this.FontStretch),
+          this.FontSize,
           Brushes.Black);
 
-        UpdateFormattedText();
+        this.UpdateFormattedText();
     }
 
     /// <summary>
@@ -424,34 +428,35 @@ public class OutlinedTextBlock : FrameworkElement
     /// </summary>
     private void UpdateFormattedText()
     {
-        if (_FormattedText == null)
+        if (this._FormattedText == null)
         {
             return;
         }
 
-        _FormattedText.MaxLineCount = TextWrapping == TextWrapping.NoWrap ? 1 : int.MaxValue;
-        _FormattedText.TextAlignment = TextAlignment;
-        _FormattedText.Trimming = TextTrimming;
+        this._FormattedText.MaxLineCount = this.TextWrapping == TextWrapping.NoWrap ? 1 : int.MaxValue;
+        _FormattedText.TextAlignment = this.TextAlignment;
+        this._FormattedText.Trimming = this.TextTrimming;
 
-        _FormattedText.SetFontSize(FontSize);
-        _FormattedText.SetFontStyle(FontStyle);
-        _FormattedText.SetFontWeight(FontWeight);
-        _FormattedText.SetFontFamily(FontFamily);
-        _FormattedText.SetFontStretch(FontStretch);
-        _FormattedText.SetTextDecorations(TextDecorations);
+        this._FormattedText.SetFontSize(this.FontSize);
+        this._FormattedText.SetFontStyle(this.FontStyle);
+        this._FormattedText.SetFontWeight(this.FontWeight);
+        this._FormattedText.SetFontFamily(this.FontFamily);
+        this._FormattedText.SetFontStretch(this.FontStretch);
+        this._FormattedText.SetTextDecorations(this.TextDecorations);
     }
 
     /// <summary>
     /// Ensures the geometry.
     /// </summary>
+    [Obsolete]
     private void EnsureGeometry()
     {
-        if (_TextGeometry != null)
+        if (this._TextGeometry != null)
         {
             return;
         }
 
-        EnsureFormattedText();
-        _TextGeometry = _FormattedText.BuildGeometry(new Point(0, 0));
+        this.EnsureFormattedText();
+        this._TextGeometry = this._FormattedText.BuildGeometry(new Point(0, 0));
     }
 }

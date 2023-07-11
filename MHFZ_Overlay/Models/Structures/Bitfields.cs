@@ -42,7 +42,7 @@ string printValidity(Status status){
 }
 */
 
-namespace MHFZ_Overlay.Models.Structures;
+namespace MHFZOverlay.Models.Structures;
 
 using System;
 using System.ComponentModel;
@@ -64,10 +64,10 @@ public enum WeaponSpecialProperty1 : uint
     Supremacy = 4,
     [Description("HC")]
     Hardcore = 8,
-    Random_Gou = 16,
+    RandomGou = 16,
     [Description("Raviente weapons with a different element")]
-    Gacha_Evolution = 32,
-    G_Rank = 64,
+    GachaEvolution = 32,
+    GRank = 64,
     UNK = 128,
     Raviente = Supremacy | UNK, // bitwise operators are pog
 }
@@ -81,24 +81,24 @@ public enum WeaponSpecialProperty2 : uint
 {
     [DefaultValue(None)]
     None = 0,
-    Master_Mark = 1,
-    Heavenly_Storm = 2,
+    MasterMark = 1,
+    HeavenlyStorm = 2,
     Supremacy = 4,
-    G_Rank = 8,
-    G_Supremacy = 16,
+    GRank = 8,
+    GSupremacy = 16,
     Burst = 32,
-    G_Finesse = 64,
+    GFinesse = 64,
     Tower = 128,
     Hardcore = 256,
     Exotic = 512,
-    G_Evolution = 1024,
+    GEvolution = 1024,
     [Description("From Diva event")]
     Prayer = 2048,
     Zenith = 4096,
     UNK1 = 8192,
     UNK2 = 16384,
     UNK3 = 32768,
-    Zenith_Finesse = G_Finesse | Zenith, // TODO untested
+    ZenithFinesse = GFinesse | Zenith, // TODO untested
 }
 
 /// <summary>
@@ -126,23 +126,23 @@ public enum BowgunShots : uint
     Cluster1 = 4096,
     Cluster2 = 8192,
     Cluster3 = 16384,
-    Flame_Shot = 32768,
-    Water_Shot = 65536,
-    Thunder_Shot = 131072,
-    Freeze_Shot = 262144,
-    Dragon_Shot = 524288,
-    Recovery_Shot1 = 1048576,
-    Recovery_Shot2 = 2097152,
-    Poison_Shot1 = 4194304,
-    Poison_Shot2 = 8388608,
-    Paralysis_Shot1 = 16777216,
-    Paralysis_Shot2 = 33554432,
-    Sleep_Shot1 = 67108864,
-    Sleep_Shot2 = 134217728,
-    Tranq_Shot = 268435456,
-    Paint_Shot = 536870912,
-    Demon_Shot = 1073741824,
-    Armor_Shot = 2147483648,
+    FlameShot = 32768,
+    WaterShot = 65536,
+    ThunderShot = 131072,
+    FreezeShot = 262144,
+    DragonShot = 524288,
+    RecoveryShot1 = 1048576,
+    RecoveryShot2 = 2097152,
+    PoisonShot1 = 4194304,
+    PoisonShot2 = 8388608,
+    ParalysisShot1 = 16777216,
+    ParalysisShot2 = 33554432,
+    SleepShot1 = 67108864,
+    SleepShot2 = 134217728,
+    TranqShot = 268435456,
+    PaintShot = 536870912,
+    DemonShot = 1073741824,
+    ArmorShot = 2147483648,
 }
 
 /// <summary>
@@ -183,7 +183,7 @@ public enum QuestState : uint
 {
     [DefaultValue(None)]
     None = 0,
-    Achieved_Main_Objective = 1,
+    AchievedMainObjective = 1,
     UNK1 = 2,
     UNK2 = 4,
     UNK3 = 8,
@@ -191,5 +191,5 @@ public enum QuestState : uint
     UNK5 = 32,
     UNK6 = 64,
     UNK7 = 128,
-    Quest_Clear = Achieved_Main_Objective | UNK7,
+    QuestClear = AchievedMainObjective | UNK7,
 }

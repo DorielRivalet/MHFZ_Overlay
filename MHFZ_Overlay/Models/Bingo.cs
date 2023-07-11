@@ -29,5 +29,5 @@ public class Bingo
 
     public string TotalTimeElapsed { get; set; } = string.Empty;
 
-    public long Score { get; set; } = 0;
+    public long Score { get; set; }
 }

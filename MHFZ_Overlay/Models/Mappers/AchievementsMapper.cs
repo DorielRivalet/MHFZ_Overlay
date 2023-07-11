@@ -24,7 +24,7 @@ public static class AchievementsMapper
     {
         {
             0, new Achievement()
-			{
+            {
                 CompletionDate = DateTime.UnixEpoch,
                 Title = "Akura Vashimu Slain",
                 Description = string.Empty,
@@ -37,7 +37,7 @@ public static class AchievementsMapper
         },
         {
             1, new Achievement()
-			{
+            {
                 CompletionDate = DateTime.UnixEpoch,
                 Title = "Akura Vashimu Slayer",
                 Description = string.Empty,
@@ -50,7 +50,7 @@ public static class AchievementsMapper
         },
         {
             2, new Achievement()
-			{
+            {
                 CompletionDate = DateTime.UnixEpoch,
                 Title = "Akura Vashimu Annihilator",
                 Description = string.Empty,
@@ -63,7 +63,7 @@ public static class AchievementsMapper
         },
         {
             3, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Akura Vashimu Exterminator",
             Description = string.Empty,
@@ -76,7 +76,7 @@ public static class AchievementsMapper
         },
         {
             4, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Akura Vashimu's Nightmare",
             Description = string.Empty,
@@ -89,7 +89,7 @@ public static class AchievementsMapper
         },
         {
             5, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Anorupatisu Slain",
             Description = string.Empty,
@@ -102,7 +102,7 @@ public static class AchievementsMapper
         },
         {
             6, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Anorupatisu Slayer",
             Description = string.Empty,
@@ -115,7 +115,7 @@ public static class AchievementsMapper
         },
         {
             7, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Anorupatisu Annihilator",
             Description = string.Empty,
@@ -128,7 +128,7 @@ public static class AchievementsMapper
         },
         {
             8, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Anorupatisu Exterminator",
             Description = string.Empty,
@@ -141,7 +141,7 @@ public static class AchievementsMapper
         },
         {
             9, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Anorupatisu's Nightmare",
             Description = string.Empty,
@@ -154,7 +154,7 @@ public static class AchievementsMapper
         },
         {
             10, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Blangonga Slain",
             Description = string.Empty,
@@ -167,7 +167,7 @@ public static class AchievementsMapper
         },
         {
             11, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Blangonga Slayer",
             Description = string.Empty,
@@ -180,7 +180,7 @@ public static class AchievementsMapper
         },
         {
             12, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Blangonga Annihilator",
             Description = string.Empty,
@@ -193,7 +193,7 @@ public static class AchievementsMapper
         },
         {
             13, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Blangonga Exterminator",
             Description = string.Empty,
@@ -206,7 +206,7 @@ public static class AchievementsMapper
         },
         {
             14, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Blangonga's Nightmare",
             Description = string.Empty,
@@ -219,7 +219,7 @@ public static class AchievementsMapper
         },
         {
             15, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Daimyo Hermitaur Slain",
             Description = string.Empty,
@@ -232,7 +232,7 @@ public static class AchievementsMapper
         },
         {
             16, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Daimyo Hermitaur Slayer",
             Description = string.Empty,
@@ -245,7 +245,7 @@ public static class AchievementsMapper
         },
         {
             17, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Daimyo Hermitaur Annihilator",
             Description = string.Empty,
@@ -258,7 +258,7 @@ public static class AchievementsMapper
         },
         {
             18, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Daimyo Hermitaur Exterminator",
             Description = string.Empty,
@@ -271,7 +271,7 @@ public static class AchievementsMapper
         },
         {
             19, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Daimyo Hermitaur's Nightmare",
             Description = string.Empty,
@@ -284,7 +284,7 @@ public static class AchievementsMapper
         },
         {
             20, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Doragyurosu Slain",
             Description = string.Empty,
@@ -297,7 +297,7 @@ public static class AchievementsMapper
         },
         {
             21, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Doragyurosu Slayer",
             Description = string.Empty,
@@ -310,7 +310,7 @@ public static class AchievementsMapper
         },
         {
             22, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Doragyurosu Annihilator",
             Description = string.Empty,
@@ -323,7 +323,7 @@ public static class AchievementsMapper
         },
         {
             23, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Doragyurosu Exterminator",
             Description = string.Empty,
@@ -336,7 +336,7 @@ public static class AchievementsMapper
         },
         {
             24, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Doragyurosu's Nightmare",
             Description = string.Empty,
@@ -349,7 +349,7 @@ public static class AchievementsMapper
         },
         {
             25, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Espinas Slain",
             Description = string.Empty,
@@ -362,7 +362,7 @@ public static class AchievementsMapper
         },
         {
             26, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Espinas Slayer",
             Description = string.Empty,
@@ -375,7 +375,7 @@ public static class AchievementsMapper
         },
         {
             27, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Espinas Annihilator",
             Description = string.Empty,
@@ -388,7 +388,7 @@ public static class AchievementsMapper
         },
         {
             28, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Espinas Exterminator",
             Description = string.Empty,
@@ -401,7 +401,7 @@ public static class AchievementsMapper
         },
         {
             29, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Espinas' Nightmare",
             Description = string.Empty,
@@ -414,7 +414,7 @@ public static class AchievementsMapper
         },
         {
             30, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gasurabazura Slain",
             Description = string.Empty,
@@ -427,7 +427,7 @@ public static class AchievementsMapper
         },
         {
             31, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gasurabazura Slayer",
             Description = string.Empty,
@@ -440,7 +440,7 @@ public static class AchievementsMapper
         },
         {
             32, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gasurabazura Annihilator",
             Description = string.Empty,
@@ -454,7 +454,7 @@ public static class AchievementsMapper
         },
         {
             33, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gasurabazura Exterminator",
             Description = string.Empty,
@@ -468,7 +468,7 @@ public static class AchievementsMapper
         },
         {
             34, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gasurabazura's Nightmare",
             Description = string.Empty,
@@ -482,7 +482,7 @@ public static class AchievementsMapper
         },
         {
             35, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Giaorugu Slain",
             Description = string.Empty,
@@ -496,7 +496,7 @@ public static class AchievementsMapper
         },
         {
             36, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Giaorugu Slayer",
             Description = string.Empty,
@@ -510,7 +510,7 @@ public static class AchievementsMapper
         },
         {
             37, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Giaorugu Annihilator",
             Description = string.Empty,
@@ -524,7 +524,7 @@ public static class AchievementsMapper
         },
         {
             38, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Giaorugu Exterminator",
             Description = string.Empty,
@@ -538,7 +538,7 @@ public static class AchievementsMapper
         },
         {
             39, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Giaorugu's Nightmare",
             Description = string.Empty,
@@ -552,7 +552,7 @@ public static class AchievementsMapper
         },
         {
             40, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hypnocatrice Slain",
             Description = string.Empty,
@@ -566,7 +566,7 @@ public static class AchievementsMapper
         },
         {
             41, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hypnocatrice Slayer",
             Description = string.Empty,
@@ -580,7 +580,7 @@ public static class AchievementsMapper
         },
         {
             42, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hypnocatrice Annihilator",
             Description = string.Empty,
@@ -594,7 +594,7 @@ public static class AchievementsMapper
         },
         {
             43, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hypnocatrice Exterminator",
             Description = string.Empty,
@@ -608,7 +608,7 @@ public static class AchievementsMapper
         },
         {
             44, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hypnocatrice's Nightmare",
             Description = string.Empty,
@@ -622,7 +622,7 @@ public static class AchievementsMapper
         },
         {
             45, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hyujikiki Slain",
             Description = string.Empty,
@@ -636,7 +636,7 @@ public static class AchievementsMapper
         },
         {
             46, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hyujikiki Slayer",
             Description = string.Empty,
@@ -650,7 +650,7 @@ public static class AchievementsMapper
         },
         {
             47, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hyujikiki Annihilator",
             Description = string.Empty,
@@ -664,7 +664,7 @@ public static class AchievementsMapper
         },
         {
             48, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hyujikiki Exterminator",
             Description = string.Empty,
@@ -678,7 +678,7 @@ public static class AchievementsMapper
         },
         {
             49, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hyujikiki's Nightmare",
             Description = string.Empty,
@@ -692,7 +692,7 @@ public static class AchievementsMapper
         },
         {
             50, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Inagami Slain",
             Description = string.Empty,
@@ -706,7 +706,7 @@ public static class AchievementsMapper
         },
         {
             51, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Inagami Slayer",
             Description = string.Empty,
@@ -720,7 +720,7 @@ public static class AchievementsMapper
         },
         {
             52, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Inagami Annihilator",
             Description = string.Empty,
@@ -734,7 +734,7 @@ public static class AchievementsMapper
         },
         {
             53, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Inagami Exterminator",
             Description = string.Empty,
@@ -748,7 +748,7 @@ public static class AchievementsMapper
         },
         {
             54, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Inagami's Nightmare",
             Description = string.Empty,
@@ -762,7 +762,7 @@ public static class AchievementsMapper
         },
         {
             55, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Khezu Slain",
             Description = string.Empty,
@@ -776,7 +776,7 @@ public static class AchievementsMapper
         },
         {
             56, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Khezu Slayer",
             Description = string.Empty,
@@ -790,7 +790,7 @@ public static class AchievementsMapper
         },
         {
             57, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Khezu Annihilator",
             Description = string.Empty,
@@ -804,7 +804,7 @@ public static class AchievementsMapper
         },
         {
             58, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Khezu Exterminator",
             Description = string.Empty,
@@ -818,7 +818,7 @@ public static class AchievementsMapper
         },
         {
             59, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Khezu's Nightmare",
             Description = string.Empty,
@@ -832,7 +832,7 @@ public static class AchievementsMapper
         },
         {
             60, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Midogaron Slain",
             Description = string.Empty,
@@ -846,7 +846,7 @@ public static class AchievementsMapper
         },
         {
             61, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Midogaron Slayer",
             Description = string.Empty,
@@ -860,7 +860,7 @@ public static class AchievementsMapper
         },
         {
             62, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Midogaron Annihilator",
             Description = string.Empty,
@@ -874,7 +874,7 @@ public static class AchievementsMapper
         },
         {
             63, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Midogaron Exterminator",
             Description = string.Empty,
@@ -888,7 +888,7 @@ public static class AchievementsMapper
         },
         {
             64, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Midogaron's Nightmare",
             Description = string.Empty,
@@ -902,7 +902,7 @@ public static class AchievementsMapper
         },
         {
             65, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Plesioth Slain",
             Description = string.Empty,
@@ -916,7 +916,7 @@ public static class AchievementsMapper
         },
         {
             66, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Plesioth Slayer",
             Description = string.Empty,
@@ -930,7 +930,7 @@ public static class AchievementsMapper
         },
         {
             67, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Plesioth Annihilator",
             Description = string.Empty,
@@ -944,7 +944,7 @@ public static class AchievementsMapper
         },
         {
             68, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Plesioth Exterminator",
             Description = string.Empty,
@@ -958,7 +958,7 @@ public static class AchievementsMapper
         },
         {
             69, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Plesioth's Nightmare",
             Description = string.Empty,
@@ -972,7 +972,7 @@ public static class AchievementsMapper
         },
         {
             70, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rathalos Slain",
             Description = string.Empty,
@@ -986,7 +986,7 @@ public static class AchievementsMapper
         },
         {
             71, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rathalos Slayer",
             Description = string.Empty,
@@ -1000,7 +1000,7 @@ public static class AchievementsMapper
         },
         {
             72, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rathalos Annihilator",
             Description = string.Empty,
@@ -1014,7 +1014,7 @@ public static class AchievementsMapper
         },
         {
             73, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rathalos Exterminator",
             Description = string.Empty,
@@ -1028,7 +1028,7 @@ public static class AchievementsMapper
         },
         {
             74, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rathalos' Nightmare",
             Description = string.Empty,
@@ -1042,7 +1042,7 @@ public static class AchievementsMapper
         },
         {
             75, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rukodiora Slain",
             Description = string.Empty,
@@ -1056,7 +1056,7 @@ public static class AchievementsMapper
         },
         {
             76, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rukodiora Slayer",
             Description = string.Empty,
@@ -1070,7 +1070,7 @@ public static class AchievementsMapper
         },
         {
             77, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rukodiora Annihilator",
             Description = string.Empty,
@@ -1084,7 +1084,7 @@ public static class AchievementsMapper
         },
         {
             78, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rukodiora Exterminator",
             Description = string.Empty,
@@ -1098,7 +1098,7 @@ public static class AchievementsMapper
         },
         {
             79, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rukodiora's Nightmare",
             Description = string.Empty,
@@ -1112,7 +1112,7 @@ public static class AchievementsMapper
         },
         {
             80, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Tigrex Slain",
             Description = string.Empty,
@@ -1126,7 +1126,7 @@ public static class AchievementsMapper
         },
         {
             81, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Tigrex Slayer",
             Description = string.Empty,
@@ -1140,7 +1140,7 @@ public static class AchievementsMapper
         },
         {
             82, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Tigrex Annihilator",
             Description = string.Empty,
@@ -1154,7 +1154,7 @@ public static class AchievementsMapper
         },
         {
             83, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Tigrex Exterminator",
             Description = string.Empty,
@@ -1168,7 +1168,7 @@ public static class AchievementsMapper
         },
         {
             84, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Tigrex's Nightmare",
             Description = string.Empty,
@@ -1182,7 +1182,7 @@ public static class AchievementsMapper
         },
         {
             85, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Toridcless Slain",
             Description = string.Empty,
@@ -1196,7 +1196,7 @@ public static class AchievementsMapper
         },
         {
             86, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Toridcless Slayer",
             Description = string.Empty,
@@ -1210,7 +1210,7 @@ public static class AchievementsMapper
         },
         {
             87, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Toridcless Annihilator",
             Description = string.Empty,
@@ -1224,7 +1224,7 @@ public static class AchievementsMapper
         },
         {
             88, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Toridcless Exterminator",
             Description = string.Empty,
@@ -1238,7 +1238,7 @@ public static class AchievementsMapper
         },
         {
             89, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Toridcless' Nightmare",
             Description = string.Empty,
@@ -1252,7 +1252,7 @@ public static class AchievementsMapper
         },
         {
             90, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Baruragaru Slain",
             Description = string.Empty,
@@ -1266,7 +1266,7 @@ public static class AchievementsMapper
         },
         {
             91, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Baruragaru Slayer",
             Description = string.Empty,
@@ -1280,7 +1280,7 @@ public static class AchievementsMapper
         },
         {
             92, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Baruragaru Annihilator",
             Description = string.Empty,
@@ -1294,7 +1294,7 @@ public static class AchievementsMapper
         },
         {
             93, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Baruragaru Exterminator",
             Description = string.Empty,
@@ -1308,7 +1308,7 @@ public static class AchievementsMapper
         },
         {
             94, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Baruragaru's Nightmare",
             Description = string.Empty,
@@ -1322,7 +1322,7 @@ public static class AchievementsMapper
         },
         {
             95, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bogabadorumu Slain",
             Description = string.Empty,
@@ -1336,7 +1336,7 @@ public static class AchievementsMapper
         },
         {
             96, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bogabadorumu Slayer",
             Description = string.Empty,
@@ -1350,7 +1350,7 @@ public static class AchievementsMapper
         },
         {
             97, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bogabadorumu Annihilator",
             Description = string.Empty,
@@ -1364,7 +1364,7 @@ public static class AchievementsMapper
         },
         {
             98, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bogabadorumu Exterminator",
             Description = string.Empty,
@@ -1378,7 +1378,7 @@ public static class AchievementsMapper
         },
         {
             99, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bogabadorumu's Nightmare",
             Description = string.Empty,
@@ -1392,7 +1392,7 @@ public static class AchievementsMapper
         },
         {
             100, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gravios Slain",
             Description = string.Empty,
@@ -1406,7 +1406,7 @@ public static class AchievementsMapper
         },
         {
             101, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gravios Slayer",
             Description = string.Empty,
@@ -1420,7 +1420,7 @@ public static class AchievementsMapper
         },
         {
             102, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gravios Annihilator",
             Description = string.Empty,
@@ -1434,7 +1434,7 @@ public static class AchievementsMapper
         },
         {
             103, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gravios Exterminator",
             Description = string.Empty,
@@ -1448,7 +1448,7 @@ public static class AchievementsMapper
         },
         {
             104, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gravios' Nightmare",
             Description = string.Empty,
@@ -1462,7 +1462,7 @@ public static class AchievementsMapper
         },
         {
             105, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Harudomerugu Slain",
             Description = string.Empty,
@@ -1476,7 +1476,7 @@ public static class AchievementsMapper
         },
         {
             106, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Harudomerugu Slayer",
             Description = string.Empty,
@@ -1490,7 +1490,7 @@ public static class AchievementsMapper
         },
         {
             107, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Harudomerugu Annihilator",
             Description = string.Empty,
@@ -1504,7 +1504,7 @@ public static class AchievementsMapper
         },
         {
             108, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Harudomerugu Exterminator",
             Description = string.Empty,
@@ -1518,7 +1518,7 @@ public static class AchievementsMapper
         },
         {
             109, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Harudomerugu's Nightmare",
             Description = string.Empty,
@@ -1532,7 +1532,7 @@ public static class AchievementsMapper
         },
         {
             110, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Taikun Zamuza Slain",
             Description = string.Empty,
@@ -1546,7 +1546,7 @@ public static class AchievementsMapper
         },
         {
             111, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Taikun Zamuza Slayer",
             Description = string.Empty,
@@ -1560,7 +1560,7 @@ public static class AchievementsMapper
         },
         {
             112, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Taikun Zamuza Annihilator",
             Description = string.Empty,
@@ -1574,7 +1574,7 @@ public static class AchievementsMapper
         },
         {
             113, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Taikun Zamuza Exterminator",
             Description = string.Empty,
@@ -1588,7 +1588,7 @@ public static class AchievementsMapper
         },
         {
             114, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Taikun Zamuza's Nightmare",
             Description = string.Empty,
@@ -1602,7 +1602,7 @@ public static class AchievementsMapper
         },
         {
             115, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Fatalis Slain",
             Description = string.Empty,
@@ -1616,7 +1616,7 @@ public static class AchievementsMapper
         },
         {
             116, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Fatalis Slayer",
             Description = string.Empty,
@@ -1630,7 +1630,7 @@ public static class AchievementsMapper
         },
         {
             117, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Fatalis Annihilator",
             Description = string.Empty,
@@ -1644,7 +1644,7 @@ public static class AchievementsMapper
         },
         {
             118, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Fatalis Exterminator",
             Description = string.Empty,
@@ -1658,7 +1658,7 @@ public static class AchievementsMapper
         },
         {
             119, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Fatalis' Nightmare",
             Description = string.Empty,
@@ -1672,7 +1672,7 @@ public static class AchievementsMapper
         },
         {
             120, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Crimson Fatalis Slain",
             Description = string.Empty,
@@ -1686,7 +1686,7 @@ public static class AchievementsMapper
         },
         {
             121, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Crimson Fatalis Slayer",
             Description = string.Empty,
@@ -1700,7 +1700,7 @@ public static class AchievementsMapper
         },
         {
             122, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Crimson Fatalis Annihilator",
             Description = string.Empty,
@@ -1714,7 +1714,7 @@ public static class AchievementsMapper
         },
         {
             123, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Crimson Fatalis Exterminator",
             Description = string.Empty,
@@ -1728,7 +1728,7 @@ public static class AchievementsMapper
         },
         {
             124, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Crimson Fatalis' Nightmare",
             Description = string.Empty,
@@ -1742,7 +1742,7 @@ public static class AchievementsMapper
         },
         {
             125, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Shantien Slain",
             Description = string.Empty,
@@ -1756,7 +1756,7 @@ public static class AchievementsMapper
         },
         {
             126, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Shantien Slayer",
             Description = string.Empty,
@@ -1770,7 +1770,7 @@ public static class AchievementsMapper
         },
         {
             127, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Shantien Annihilator",
             Description = string.Empty,
@@ -1784,7 +1784,7 @@ public static class AchievementsMapper
         },
         {
             128, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Shantien Exterminator",
             Description = string.Empty,
@@ -1798,7 +1798,7 @@ public static class AchievementsMapper
         },
         {
             129, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Shantien's Nightmare",
             Description = string.Empty,
@@ -1812,7 +1812,7 @@ public static class AchievementsMapper
         },
         {
             130, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Disufiroa Slain",
             Description = string.Empty,
@@ -1826,7 +1826,7 @@ public static class AchievementsMapper
         },
         {
             131, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Disufiroa Slayer",
             Description = string.Empty,
@@ -1840,7 +1840,7 @@ public static class AchievementsMapper
         },
         {
             132, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Disufiroa Annihilator",
             Description = string.Empty,
@@ -1854,7 +1854,7 @@ public static class AchievementsMapper
         },
         {
             133, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Disufiroa Exterminator",
             Description = string.Empty,
@@ -1868,7 +1868,7 @@ public static class AchievementsMapper
         },
         {
             134, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Disufiroa's Nightmare",
             Description = string.Empty,
@@ -1882,7 +1882,7 @@ public static class AchievementsMapper
         },
         {
             135, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "UNKNOWN Slain",
             Description = string.Empty,
@@ -1896,7 +1896,7 @@ public static class AchievementsMapper
         },
         {
             136, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "UNKNOWN Slayer",
             Description = string.Empty,
@@ -1910,7 +1910,7 @@ public static class AchievementsMapper
         },
         {
             137, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "UNKNOWN Annihilator",
             Description = string.Empty,
@@ -1924,7 +1924,7 @@ public static class AchievementsMapper
         },
         {
             138, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "UNKNOWN Exterminator",
             Description = string.Empty,
@@ -1938,7 +1938,7 @@ public static class AchievementsMapper
         },
         {
             139, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "UNKNOWN's Nightmare",
             Description = string.Empty,
@@ -1952,7 +1952,7 @@ public static class AchievementsMapper
         },
         {
             140, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "At World's End",
             Description = string.Empty,
@@ -1966,7 +1966,7 @@ public static class AchievementsMapper
         },
         {
             141, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Apocalyptic Red Moon",
             Description = string.Empty,
@@ -1980,7 +1980,7 @@ public static class AchievementsMapper
         },
         {
             142, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Disufiroa's Last Stand",
             Description = string.Empty,
@@ -1994,7 +1994,7 @@ public static class AchievementsMapper
         },
         {
             143, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Blood Moon Emperor",
             Description = string.Empty,
@@ -2008,7 +2008,7 @@ public static class AchievementsMapper
         },
         {
             144, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Eclipse Conqueror",
             Description = string.Empty,
@@ -2022,7 +2022,7 @@ public static class AchievementsMapper
         },
         {
             145, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Pariapuria Slain",
             Description = string.Empty,
@@ -2036,7 +2036,7 @@ public static class AchievementsMapper
         },
         {
             146, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Pariapuria Slayer",
             Description = string.Empty,
@@ -2050,7 +2050,7 @@ public static class AchievementsMapper
         },
         {
             147, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Pariapuria Annihilator",
             Description = string.Empty,
@@ -2064,7 +2064,7 @@ public static class AchievementsMapper
         },
         {
             148, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Pariapuria Exterminator",
             Description = string.Empty,
@@ -2078,7 +2078,7 @@ public static class AchievementsMapper
         },
         {
             149, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Pariapuria's Nightmare",
             Description = string.Empty,
@@ -2092,7 +2092,7 @@ public static class AchievementsMapper
         },
         {
             150, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Guanzorumu Slain",
             Description = string.Empty,
@@ -2106,7 +2106,7 @@ public static class AchievementsMapper
         },
         {
             151, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Guanzorumu Slayer",
             Description = string.Empty,
@@ -2120,7 +2120,7 @@ public static class AchievementsMapper
         },
         {
             152, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Guanzorumu Annihilator",
             Description = string.Empty,
@@ -2134,7 +2134,7 @@ public static class AchievementsMapper
         },
         {
             153, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Guanzorumu Exterminator",
             Description = string.Empty,
@@ -2148,7 +2148,7 @@ public static class AchievementsMapper
         },
         {
             154, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Guanzorumu's Nightmare",
             Description = string.Empty,
@@ -2162,7 +2162,7 @@ public static class AchievementsMapper
         },
         {
             155, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Mi Ru Slain",
             Description = string.Empty,
@@ -2176,7 +2176,7 @@ public static class AchievementsMapper
         },
         {
             156, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Mi Ru Slayer",
             Description = string.Empty,
@@ -2190,7 +2190,7 @@ public static class AchievementsMapper
         },
         {
             157, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Mi Ru Annihilator",
             Description = string.Empty,
@@ -2204,7 +2204,7 @@ public static class AchievementsMapper
         },
         {
             158, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Mi Ru Exterminator",
             Description = string.Empty,
@@ -2218,7 +2218,7 @@ public static class AchievementsMapper
         },
         {
             159, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Mi Ru's Nightmare",
             Description = string.Empty,
@@ -2232,7 +2232,7 @@ public static class AchievementsMapper
         },
         {
             160, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Nargacuga Slain",
             Description = string.Empty,
@@ -2246,7 +2246,7 @@ public static class AchievementsMapper
         },
         {
             161, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Nargacuga Slayer",
             Description = string.Empty,
@@ -2260,7 +2260,7 @@ public static class AchievementsMapper
         },
         {
             162, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Nargacuga Annihilator",
             Description = string.Empty,
@@ -2274,7 +2274,7 @@ public static class AchievementsMapper
         },
         {
             163, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Nargacuga Exterminator",
             Description = string.Empty,
@@ -2288,7 +2288,7 @@ public static class AchievementsMapper
         },
         {
             164, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Nargacuga's Nightmare",
             Description = string.Empty,
@@ -2302,7 +2302,7 @@ public static class AchievementsMapper
         },
         {
             165, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zinogre Slain",
             Description = string.Empty,
@@ -2316,7 +2316,7 @@ public static class AchievementsMapper
         },
         {
             166, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zinogre Slayer",
             Description = string.Empty,
@@ -2330,7 +2330,7 @@ public static class AchievementsMapper
         },
         {
             167, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zinogre Annihilator",
             Description = string.Empty,
@@ -2344,7 +2344,7 @@ public static class AchievementsMapper
         },
         {
             168, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zinogre Exterminator",
             Description = string.Empty,
@@ -2358,7 +2358,7 @@ public static class AchievementsMapper
         },
         {
             169, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zinogre's Nightmare",
             Description = string.Empty,
@@ -2372,7 +2372,7 @@ public static class AchievementsMapper
         },
         {
             170, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Deviljho Slain",
             Description = string.Empty,
@@ -2386,7 +2386,7 @@ public static class AchievementsMapper
         },
         {
             171, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Deviljho Slayer",
             Description = string.Empty,
@@ -2400,7 +2400,7 @@ public static class AchievementsMapper
         },
         {
             172, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Deviljho Annihilator",
             Description = string.Empty,
@@ -2414,7 +2414,7 @@ public static class AchievementsMapper
         },
         {
             173, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Deviljho Exterminator",
             Description = string.Empty,
@@ -2428,7 +2428,7 @@ public static class AchievementsMapper
         },
         {
             174, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Deviljho's Nightmare",
             Description = string.Empty,
@@ -2442,7 +2442,7 @@ public static class AchievementsMapper
         },
         {
             175, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zerureusu Slain",
             Description = string.Empty,
@@ -2456,7 +2456,7 @@ public static class AchievementsMapper
         },
         {
             176, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zerureusu Slayer",
             Description = string.Empty,
@@ -2470,7 +2470,7 @@ public static class AchievementsMapper
         },
         {
             177, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zerureusu Annihilator",
             Description = string.Empty,
@@ -2484,7 +2484,7 @@ public static class AchievementsMapper
         },
         {
             178, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zerureusu Exterminator",
             Description = string.Empty,
@@ -2498,7 +2498,7 @@ public static class AchievementsMapper
         },
         {
             179, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zerureusu's Nightmare",
             Description = string.Empty,
@@ -2512,7 +2512,7 @@ public static class AchievementsMapper
         },
         {
             180, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Duremudira Slain",
             Description = string.Empty,
@@ -2526,7 +2526,7 @@ public static class AchievementsMapper
         },
         {
             181, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Duremudira Slayer",
             Description = string.Empty,
@@ -2540,7 +2540,7 @@ public static class AchievementsMapper
         },
         {
             182, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Duremudira Annihilator",
             Description = string.Empty,
@@ -2554,7 +2554,7 @@ public static class AchievementsMapper
         },
         {
             183, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Duremudira Exterminator",
             Description = string.Empty,
@@ -2568,7 +2568,7 @@ public static class AchievementsMapper
         },
         {
             184, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Duremudira's Nightmare",
             Description = string.Empty,
@@ -2582,7 +2582,7 @@ public static class AchievementsMapper
         },
         {
             185, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bombardier",
             Description = string.Empty,
@@ -2596,7 +2596,7 @@ public static class AchievementsMapper
         },
         {
             186, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Blitzkrieg",
             Description = string.Empty,
@@ -2610,7 +2610,7 @@ public static class AchievementsMapper
         },
         {
             187, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Boggy",
             Description = string.Empty,
@@ -2624,7 +2624,7 @@ public static class AchievementsMapper
         },
         {
             188, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Boggers",
             Description = string.Empty,
@@ -2638,7 +2638,7 @@ public static class AchievementsMapper
         },
         {
             189, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Explosion!",
             Description = string.Empty,
@@ -2652,7 +2652,7 @@ public static class AchievementsMapper
         },
         {
             190, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Elzelion Slain",
             Description = string.Empty,
@@ -2666,7 +2666,7 @@ public static class AchievementsMapper
         },
         {
             191, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Elzelion Slayer",
             Description = string.Empty,
@@ -2680,7 +2680,7 @@ public static class AchievementsMapper
         },
         {
             192, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Elzelion Annihilator",
             Description = string.Empty,
@@ -2694,7 +2694,7 @@ public static class AchievementsMapper
         },
         {
             193, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Elzelion Exterminator",
             Description = string.Empty,
@@ -2708,7 +2708,7 @@ public static class AchievementsMapper
         },
         {
             194, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Elzelion's Nightmare",
             Description = string.Empty,
@@ -2722,7 +2722,7 @@ public static class AchievementsMapper
         },
         {
             195, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Seriously Thirsty",
             Description = string.Empty,
@@ -2736,7 +2736,7 @@ public static class AchievementsMapper
         },
         {
             196, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Back to the Past",
             Description = string.Empty,
@@ -2750,7 +2750,7 @@ public static class AchievementsMapper
         },
         {
             197, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Shifty",
             Description = string.Empty,
@@ -2764,7 +2764,7 @@ public static class AchievementsMapper
         },
         {
             198, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Ultra Instinct",
             Description = string.Empty,
@@ -2778,7 +2778,7 @@ public static class AchievementsMapper
         },
         {
             199, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "A lonely and starving wolf",
             Description = string.Empty,
@@ -2792,7 +2792,7 @@ public static class AchievementsMapper
         },
         {
             200, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Majestic Lord of Ice and Fire",
             Description = string.Empty,
@@ -2806,7 +2806,7 @@ public static class AchievementsMapper
         },
         {
             201, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bombardment",
             Description = string.Empty,
@@ -2820,7 +2820,7 @@ public static class AchievementsMapper
         },
         {
             202, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Oblivion Negated",
             Description = string.Empty,
@@ -2834,7 +2834,7 @@ public static class AchievementsMapper
         },
         {
             203, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Lovely Vegetables",
             Description = string.Empty,
@@ -2848,7 +2848,7 @@ public static class AchievementsMapper
         },
         {
             204, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Ultimate Gunlance Duel",
             Description = string.Empty,
@@ -2862,7 +2862,7 @@ public static class AchievementsMapper
         },
         {
             205, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Emperor of Fire",
             Description = string.Empty,
@@ -2876,7 +2876,7 @@ public static class AchievementsMapper
         },
         {
             206, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Dancing Gopher",
             Description = string.Empty,
@@ -2890,7 +2890,7 @@ public static class AchievementsMapper
         },
         {
             207, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Singing Rappy",
             Description = string.Empty,
@@ -2904,7 +2904,7 @@ public static class AchievementsMapper
         },
         {
             208, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gears of Destiny",
             Description = string.Empty,
@@ -2918,7 +2918,7 @@ public static class AchievementsMapper
         },
         {
             209, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Higanjima",
             Description = string.Empty,
@@ -2932,7 +2932,7 @@ public static class AchievementsMapper
         },
         {
             210, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Plesioth Transformation",
             Description = string.Empty,
@@ -2946,7 +2946,7 @@ public static class AchievementsMapper
         },
         {
             211, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Oh noes! My sunglasses!",
             Description = string.Empty,
@@ -2960,7 +2960,7 @@ public static class AchievementsMapper
         },
         {
             212, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Quiz Time!",
             Description = string.Empty,
@@ -2974,7 +2974,7 @@ public static class AchievementsMapper
         },
         {
             213, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Smell No Evil",
             Description = string.Empty,
@@ -2988,7 +2988,7 @@ public static class AchievementsMapper
         },
         {
             214, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zenny Galore",
             Description = string.Empty,
@@ -3002,7 +3002,7 @@ public static class AchievementsMapper
         },
         {
             215, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Diva's Friend",
             Description = string.Empty,
@@ -3016,7 +3016,7 @@ public static class AchievementsMapper
         },
         {
             216, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "#1",
             Description = string.Empty,
@@ -3030,7 +3030,7 @@ public static class AchievementsMapper
         },
         {
             217, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Caravaneer",
             Description = string.Empty,
@@ -3044,7 +3044,7 @@ public static class AchievementsMapper
         },
         {
             218, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Road Champion",
             Description = string.Empty,
@@ -3058,7 +3058,7 @@ public static class AchievementsMapper
         },
         {
             219, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rengoku",
             Description = string.Empty,
@@ -3072,7 +3072,7 @@ public static class AchievementsMapper
         },
         {
             220, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Expert Companion",
             Description = string.Empty,
@@ -3086,7 +3086,7 @@ public static class AchievementsMapper
         },
         {
             221, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Solid Determination",
             Description = string.Empty,
@@ -3100,7 +3100,7 @@ public static class AchievementsMapper
         },
         {
             222, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Compensation",
             Description = string.Empty,
@@ -3114,7 +3114,7 @@ public static class AchievementsMapper
         },
         {
             223, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Chilling Monster Count",
             Description = string.Empty,
@@ -3128,7 +3128,7 @@ public static class AchievementsMapper
         },
         {
             224, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Emperor's Final Roar",
             Description = string.Empty,
@@ -3142,7 +3142,7 @@ public static class AchievementsMapper
         },
         {
             225, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Fumo",
             Description = string.Empty,
@@ -3156,7 +3156,7 @@ public static class AchievementsMapper
         },
         {
             226, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Monkey Bomb",
             Description = string.Empty,
@@ -3170,7 +3170,7 @@ public static class AchievementsMapper
         },
         {
             227, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Akura Vashimu's Nemesis",
             Description = string.Empty,
@@ -3184,7 +3184,7 @@ public static class AchievementsMapper
         },
         {
             228, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Anorupatisu's Nemesis",
             Description = string.Empty,
@@ -3198,7 +3198,7 @@ public static class AchievementsMapper
         },
         {
             229, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Blangonga's Nemesis",
             Description = string.Empty,
@@ -3212,7 +3212,7 @@ public static class AchievementsMapper
         },
         {
             230, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Daimyo Hermitaur's Nemesis",
             Description = string.Empty,
@@ -3226,7 +3226,7 @@ public static class AchievementsMapper
         },
         {
             231, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Doragyurosu's Nemesis",
             Description = string.Empty,
@@ -3240,7 +3240,7 @@ public static class AchievementsMapper
         },
         {
             232, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Espinas' Nemesis",
             Description = string.Empty,
@@ -3254,7 +3254,7 @@ public static class AchievementsMapper
         },
         {
             233, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gasurabazura's Nemesis",
             Description = string.Empty,
@@ -3268,7 +3268,7 @@ public static class AchievementsMapper
         },
         {
             234, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Giaorugu's Nemesis",
             Description = string.Empty,
@@ -3282,7 +3282,7 @@ public static class AchievementsMapper
         },
         {
             235, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hypnocatrice's Nemesis",
             Description = string.Empty,
@@ -3296,7 +3296,7 @@ public static class AchievementsMapper
         },
         {
             236, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hyujikiki's Nemesis",
             Description = string.Empty,
@@ -3310,7 +3310,7 @@ public static class AchievementsMapper
         },
         {
             237, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Inagami's Nemesis",
             Description = string.Empty,
@@ -3324,7 +3324,7 @@ public static class AchievementsMapper
         },
         {
             238, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Khezu's Nemesis",
             Description = string.Empty,
@@ -3338,7 +3338,7 @@ public static class AchievementsMapper
         },
         {
             239, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Midogaron's Nemesis",
             Description = string.Empty,
@@ -3352,7 +3352,7 @@ public static class AchievementsMapper
         },
         {
             240, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Plesioth's Nemesis",
             Description = string.Empty,
@@ -3366,7 +3366,7 @@ public static class AchievementsMapper
         },
         {
             241, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rathalos' Nemesis",
             Description = string.Empty,
@@ -3380,7 +3380,7 @@ public static class AchievementsMapper
         },
         {
             242, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rukodiora's Nemesis",
             Description = string.Empty,
@@ -3394,7 +3394,7 @@ public static class AchievementsMapper
         },
         {
             243, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Tigrex's Nemesis",
             Description = string.Empty,
@@ -3408,7 +3408,7 @@ public static class AchievementsMapper
         },
         {
             244, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Toridcless' Nemesis",
             Description = string.Empty,
@@ -3422,7 +3422,7 @@ public static class AchievementsMapper
         },
         {
             245, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Baruragaru's Nemesis",
             Description = string.Empty,
@@ -3436,7 +3436,7 @@ public static class AchievementsMapper
         },
         {
             246, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bogabadorumu's Nemesis",
             Description = string.Empty,
@@ -3450,7 +3450,7 @@ public static class AchievementsMapper
         },
         {
             247, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gravios' Nemesis",
             Description = string.Empty,
@@ -3464,7 +3464,7 @@ public static class AchievementsMapper
         },
         {
             248, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Harudomerugu's Nemesis",
             Description = string.Empty,
@@ -3478,7 +3478,7 @@ public static class AchievementsMapper
         },
         {
             249, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Taikun Zamuza's Nemesis",
             Description = string.Empty,
@@ -3492,7 +3492,7 @@ public static class AchievementsMapper
         },
         {
             250, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Fatalis' Nemesis",
             Description = string.Empty,
@@ -3506,7 +3506,7 @@ public static class AchievementsMapper
         },
         {
             251, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Crimson Fatalis' Nemesis",
             Description = string.Empty,
@@ -3520,7 +3520,7 @@ public static class AchievementsMapper
         },
         {
             252, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Shantien's Nemesis",
             Description = string.Empty,
@@ -3534,7 +3534,7 @@ public static class AchievementsMapper
         },
         {
             253, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Disufiroa's Nemesis",
             Description = string.Empty,
@@ -3548,7 +3548,7 @@ public static class AchievementsMapper
         },
         {
             254, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Akura Vashimu's Archenemy",
             Description = string.Empty,
@@ -3562,7 +3562,7 @@ public static class AchievementsMapper
         },
         {
             255, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Anorupatisu's Archenemy",
             Description = string.Empty,
@@ -3576,7 +3576,7 @@ public static class AchievementsMapper
         },
         {
             256, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Blangonga's Archenemy",
             Description = string.Empty,
@@ -3590,7 +3590,7 @@ public static class AchievementsMapper
         },
         {
             257, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Daimyo Hermitaur's Archenemy",
             Description = string.Empty,
@@ -3604,7 +3604,7 @@ public static class AchievementsMapper
         },
         {
             258, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Doragyurosu's Archenemy",
             Description = string.Empty,
@@ -3618,7 +3618,7 @@ public static class AchievementsMapper
         },
         {
             259, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Espinas' Archenemy",
             Description = string.Empty,
@@ -3632,7 +3632,7 @@ public static class AchievementsMapper
         },
         {
             260, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gasurabazura's Archenemy",
             Description = string.Empty,
@@ -3646,7 +3646,7 @@ public static class AchievementsMapper
         },
         {
             261, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Giaorugu's Archenemy",
             Description = string.Empty,
@@ -3660,7 +3660,7 @@ public static class AchievementsMapper
         },
         {
             262, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hypnocatrice's Archenemy",
             Description = string.Empty,
@@ -3674,7 +3674,7 @@ public static class AchievementsMapper
         },
         {
             263, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hyujikiki's Archenemy",
             Description = string.Empty,
@@ -3688,7 +3688,7 @@ public static class AchievementsMapper
         },
         {
             264, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Inagami's Archenemy",
             Description = string.Empty,
@@ -3702,7 +3702,7 @@ public static class AchievementsMapper
         },
         {
             265, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Khezu's Archenemy",
             Description = string.Empty,
@@ -3716,7 +3716,7 @@ public static class AchievementsMapper
         },
         {
             266, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Midogaron's Archenemy",
             Description = string.Empty,
@@ -3730,7 +3730,7 @@ public static class AchievementsMapper
         },
         {
             267, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Plesioth's Archenemy",
             Description = string.Empty,
@@ -3744,7 +3744,7 @@ public static class AchievementsMapper
         },
         {
             268, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rathalos' Archenemy",
             Description = string.Empty,
@@ -3758,7 +3758,7 @@ public static class AchievementsMapper
         },
         {
             269, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rukodiora's Archenemy",
             Description = string.Empty,
@@ -3772,7 +3772,7 @@ public static class AchievementsMapper
         },
         {
             270, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Tigrex's Archenemy",
             Description = string.Empty,
@@ -3786,7 +3786,7 @@ public static class AchievementsMapper
         },
         {
             271, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Toridcless's Archenemy",
             Description = string.Empty,
@@ -3800,7 +3800,7 @@ public static class AchievementsMapper
         },
         {
             272, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Baruragaru's Archenemy",
             Description = string.Empty,
@@ -3814,7 +3814,7 @@ public static class AchievementsMapper
         },
         {
             273, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bogabadorumu's Archenemy",
             Description = string.Empty,
@@ -3828,7 +3828,7 @@ public static class AchievementsMapper
         },
         {
             274, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gravios's Archenemy",
             Description = string.Empty,
@@ -3842,7 +3842,7 @@ public static class AchievementsMapper
         },
         {
             275, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Harudomerugu's Archenemy",
             Description = string.Empty,
@@ -3856,7 +3856,7 @@ public static class AchievementsMapper
         },
         {
             276, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Taikun Zamuza's Archenemy",
             Description = string.Empty,
@@ -3870,7 +3870,7 @@ public static class AchievementsMapper
         },
         {
             277, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Fatalis' Archenemy",
             Description = string.Empty,
@@ -3884,7 +3884,7 @@ public static class AchievementsMapper
         },
         {
             278, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Crimson Fatalis' Archenemy",
             Description = string.Empty,
@@ -3898,7 +3898,7 @@ public static class AchievementsMapper
         },
         {
             279, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Shantien's Archenemy",
             Description = string.Empty,
@@ -3912,7 +3912,7 @@ public static class AchievementsMapper
         },
         {
             280, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Disufiroa's Archenemy",
             Description = string.Empty,
@@ -3926,7 +3926,7 @@ public static class AchievementsMapper
         },
         {
             281, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Akura Vashimu's Bane",
             Description = string.Empty,
@@ -3940,7 +3940,7 @@ public static class AchievementsMapper
         },
         {
             282, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Anorupatisu's Bane",
             Description = string.Empty,
@@ -3954,7 +3954,7 @@ public static class AchievementsMapper
         },
         {
             283, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Blangonga's Bane",
             Description = string.Empty,
@@ -3968,7 +3968,7 @@ public static class AchievementsMapper
         },
         {
             284, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Daimyo Hermitaur's Bane",
             Description = string.Empty,
@@ -3982,7 +3982,7 @@ public static class AchievementsMapper
         },
         {
             285, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Doragyurosu's Bane",
             Description = string.Empty,
@@ -3996,7 +3996,7 @@ public static class AchievementsMapper
         },
         {
             286, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Espinas' Bane",
             Description = string.Empty,
@@ -4010,7 +4010,7 @@ public static class AchievementsMapper
         },
         {
             287, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gasurabazura's Bane",
             Description = string.Empty,
@@ -4024,7 +4024,7 @@ public static class AchievementsMapper
         },
         {
             288, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Giaorugu's Bane",
             Description = string.Empty,
@@ -4038,7 +4038,7 @@ public static class AchievementsMapper
         },
         {
             289, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hypnocatrice's Bane",
             Description = string.Empty,
@@ -4052,7 +4052,7 @@ public static class AchievementsMapper
         },
         {
             290, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Hyujikiki's Bane",
             Description = string.Empty,
@@ -4066,7 +4066,7 @@ public static class AchievementsMapper
         },
         {
             291, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Inagami's Bane",
             Description = string.Empty,
@@ -4080,7 +4080,7 @@ public static class AchievementsMapper
         },
         {
             292, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Khezu's Bane",
             Description = string.Empty,
@@ -4094,7 +4094,7 @@ public static class AchievementsMapper
         },
         {
             293, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Midogaron's Bane",
             Description = string.Empty,
@@ -4108,7 +4108,7 @@ public static class AchievementsMapper
         },
         {
             294, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Plesioth's Bane",
             Description = string.Empty,
@@ -4122,7 +4122,7 @@ public static class AchievementsMapper
         },
         {
             295, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rathalos' Bane",
             Description = string.Empty,
@@ -4136,7 +4136,7 @@ public static class AchievementsMapper
         },
         {
             296, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Rukodiora's Bane",
             Description = string.Empty,
@@ -4150,7 +4150,7 @@ public static class AchievementsMapper
         },
         {
             297, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Tigrex's Bane",
             Description = string.Empty,
@@ -4164,7 +4164,7 @@ public static class AchievementsMapper
         },
         {
             298, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Toridcless' Bane",
             Description = string.Empty,
@@ -4178,7 +4178,7 @@ public static class AchievementsMapper
         },
         {
             299, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Baruragaru' Bane",
             Description = string.Empty,
@@ -4192,7 +4192,7 @@ public static class AchievementsMapper
         },
         {
             300, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bogabadorumu's Bane",
             Description = string.Empty,
@@ -4206,7 +4206,7 @@ public static class AchievementsMapper
         },
         {
             301, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gravios' Bane",
             Description = string.Empty,
@@ -4220,7 +4220,7 @@ public static class AchievementsMapper
         },
         {
             302, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Harudomerugu's Bane",
             Description = string.Empty,
@@ -4234,7 +4234,7 @@ public static class AchievementsMapper
         },
         {
             303, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Taikun Zamuza's Bane",
             Description = string.Empty,
@@ -4248,7 +4248,7 @@ public static class AchievementsMapper
         },
         {
             304, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Fatalis' Bane",
             Description = string.Empty,
@@ -4262,7 +4262,7 @@ public static class AchievementsMapper
         },
         {
             305, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Crimson Fatalis' Bane",
             Description = string.Empty,
@@ -4276,7 +4276,7 @@ public static class AchievementsMapper
         },
         {
             306, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Shantien's Bane",
             Description = string.Empty,
@@ -4290,7 +4290,7 @@ public static class AchievementsMapper
         },
         {
             307, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Disufiroa's Bane",
             Description = string.Empty,
@@ -4304,7 +4304,7 @@ public static class AchievementsMapper
         },
         {
             308, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Pariapuria's Bane",
             Description = string.Empty,
@@ -4318,7 +4318,7 @@ public static class AchievementsMapper
         },
         {
             309, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Mi Ru's Bane",
             Description = string.Empty,
@@ -4332,7 +4332,7 @@ public static class AchievementsMapper
         },
         {
             310, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Guanzorumu's Bane",
             Description = string.Empty,
@@ -4346,7 +4346,7 @@ public static class AchievementsMapper
         },
         {
             311, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Nargacuga's Bane",
             Description = string.Empty,
@@ -4360,7 +4360,7 @@ public static class AchievementsMapper
         },
         {
             312, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zinogre's Bane",
             Description = string.Empty,
@@ -4374,7 +4374,7 @@ public static class AchievementsMapper
         },
         {
             313, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zerureusu's Bane",
             Description = string.Empty,
@@ -4388,7 +4388,7 @@ public static class AchievementsMapper
         },
         {
             314, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Deviljho's Bane",
             Description = string.Empty,
@@ -4402,7 +4402,7 @@ public static class AchievementsMapper
         },
         {
             315, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Duremudira's Bane",
             Description = string.Empty,
@@ -4416,7 +4416,7 @@ public static class AchievementsMapper
         },
         {
             316, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Come on Big Guy!",
             Description = string.Empty,
@@ -4430,7 +4430,7 @@ public static class AchievementsMapper
         },
         {
             317, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Elzelion's Bane",
             Description = string.Empty,
@@ -4444,7 +4444,7 @@ public static class AchievementsMapper
         },
         {
             318, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "UNKNOWN's Bane",
             Description = string.Empty,
@@ -4458,7 +4458,7 @@ public static class AchievementsMapper
         },
         {
             319, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bloodthirsty Moon",
             Description = string.Empty,
@@ -4472,7 +4472,7 @@ public static class AchievementsMapper
         },
         {
             320, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Well, that was easy!",
             Description = string.Empty,
@@ -4486,7 +4486,7 @@ public static class AchievementsMapper
         },
         {
             321, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Ramping Up The Difficulty",
             Description = string.Empty,
@@ -4500,7 +4500,7 @@ public static class AchievementsMapper
         },
         {
             322, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bingo!",
             Description = string.Empty,
@@ -4514,7 +4514,7 @@ public static class AchievementsMapper
         },
         {
             323, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "B I N G O",
             Description = string.Empty,
@@ -4528,7 +4528,7 @@ public static class AchievementsMapper
         },
         {
             324, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Shiny!",
             Description = string.Empty,
@@ -4542,7 +4542,7 @@ public static class AchievementsMapper
         },
         {
             325, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Getting the hang of it",
             Description = string.Empty,
@@ -4556,7 +4556,7 @@ public static class AchievementsMapper
         },
         {
             326, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gacha Collector",
             Description = string.Empty,
@@ -4570,7 +4570,7 @@ public static class AchievementsMapper
         },
         {
             327, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gacha Overlord",
             Description = string.Empty,
@@ -4584,7 +4584,7 @@ public static class AchievementsMapper
         },
         {
             328, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "This is just the beginning",
             Description = string.Empty,
@@ -4598,7 +4598,7 @@ public static class AchievementsMapper
         },
         {
             329, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Pinnacle of Hunting",
             Description = string.Empty,
@@ -4612,7 +4612,7 @@ public static class AchievementsMapper
         },
         {
             330, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Zenith Exterminator",
             Description = string.Empty,
@@ -4626,7 +4626,7 @@ public static class AchievementsMapper
         },
         {
             331, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Speedster",
             Description = string.Empty,
@@ -4640,7 +4640,7 @@ public static class AchievementsMapper
         },
         {
             332, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Conqueror",
             Description = string.Empty,
@@ -4654,7 +4654,7 @@ public static class AchievementsMapper
         },
         {
             333, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Supreme Conqueror",
             Description = string.Empty,
@@ -4668,7 +4668,7 @@ public static class AchievementsMapper
         },
         {
             334, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Solstice Conqueror",
             Description = string.Empty,
@@ -4682,7 +4682,7 @@ public static class AchievementsMapper
         },
         {
             335, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Marathon Runner",
             Description = string.Empty,
@@ -4696,7 +4696,7 @@ public static class AchievementsMapper
         },
         {
             336, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Unstoppable",
             Description = string.Empty,
@@ -4710,7 +4710,7 @@ public static class AchievementsMapper
         },
         {
             337, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Peerless",
             Description = string.Empty,
@@ -4724,7 +4724,7 @@ public static class AchievementsMapper
         },
         {
             338, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Musou",
             Description = string.Empty,
@@ -4738,7 +4738,7 @@ public static class AchievementsMapper
         },
         {
             339, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Speedrunner",
             Description = string.Empty,
@@ -4752,7 +4752,7 @@ public static class AchievementsMapper
         },
         {
             340, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "We Gamin' Bois",
             Description = string.Empty,
@@ -4766,7 +4766,7 @@ public static class AchievementsMapper
         },
         {
             341, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "No Distractions",
             Description = string.Empty,
@@ -4780,7 +4780,7 @@ public static class AchievementsMapper
         },
         {
             342, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Speed",
             Description = string.Empty,
@@ -4794,7 +4794,7 @@ public static class AchievementsMapper
         },
         {
             343, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Yummy",
             Description = string.Empty,
@@ -4808,7 +4808,7 @@ public static class AchievementsMapper
         },
         {
             344, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "More Skills!",
             Description = string.Empty,
@@ -4822,7 +4822,7 @@ public static class AchievementsMapper
         },
         {
             345, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "The Best Gallery",
             Description = string.Empty,
@@ -4836,7 +4836,7 @@ public static class AchievementsMapper
         },
         {
             346, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Monster Hunter",
             Description = string.Empty,
@@ -4850,7 +4850,7 @@ public static class AchievementsMapper
         },
         {
             347, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Dedicated",
             Description = string.Empty,
@@ -4864,7 +4864,7 @@ public static class AchievementsMapper
         },
         {
             348, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "20% more damage for 99% more effort",
             Description = string.Empty,
@@ -4877,7 +4877,7 @@ public static class AchievementsMapper
         },
         {
             349, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Mosswine's Revenge",
             Description = string.Empty,
@@ -4890,7 +4890,7 @@ public static class AchievementsMapper
         },
         {
             350, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Jungle Puzzle",
             Description = string.Empty,
@@ -4903,7 +4903,7 @@ public static class AchievementsMapper
         },
         {
             351, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Poogie's Best Friend",
             Description = string.Empty,
@@ -4916,7 +4916,7 @@ public static class AchievementsMapper
         },
         {
             352, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gypceros' Judgment",
             Description = string.Empty,
@@ -4929,7 +4929,7 @@ public static class AchievementsMapper
         },
         {
             353, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Mosswine's Rage",
             Description = string.Empty,
@@ -4942,7 +4942,7 @@ public static class AchievementsMapper
         },
         {
             354, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Mosswine's Last Stand",
             Description = string.Empty,
@@ -4955,7 +4955,7 @@ public static class AchievementsMapper
         },
         {
             355, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Winter General",
             Description = string.Empty,
@@ -4968,7 +4968,7 @@ public static class AchievementsMapper
         },
         {
             356, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "The Perfect Bingo",
             Description = string.Empty,
@@ -4981,7 +4981,7 @@ public static class AchievementsMapper
         },
         {
             357, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bingo Beginner",
             Description = string.Empty,
@@ -4994,7 +4994,7 @@ public static class AchievementsMapper
         },
         {
             358, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bingo Enthusiast",
             Description = string.Empty,
@@ -5007,7 +5007,7 @@ public static class AchievementsMapper
         },
         {
             359, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bingo Expert",
             Description = string.Empty,
@@ -5020,7 +5020,7 @@ public static class AchievementsMapper
         },
         {
             360, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Bingo Maniac",
             Description = string.Empty,
@@ -5033,7 +5033,7 @@ public static class AchievementsMapper
         },
         {
             361, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gacha Beginner",
             Description = string.Empty,
@@ -5046,7 +5046,7 @@ public static class AchievementsMapper
         },
         {
             362, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gacha Enthusiast",
             Description = string.Empty,
@@ -5059,7 +5059,7 @@ public static class AchievementsMapper
         },
         {
             363, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gacha Expert",
             Description = string.Empty,
@@ -5072,7 +5072,7 @@ public static class AchievementsMapper
         },
         {
             364, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gacha Maniac",
             Description = string.Empty,
@@ -5085,7 +5085,7 @@ public static class AchievementsMapper
         },
         {
             365, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gacha God",
             Description = string.Empty,
@@ -5098,7 +5098,7 @@ public static class AchievementsMapper
         },
         {
             366, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "B O N U S",
             Description = string.Empty,
@@ -5111,7 +5111,7 @@ public static class AchievementsMapper
         },
         {
             367, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Shimmering Coins",
             Description = string.Empty,
@@ -5124,7 +5124,7 @@ public static class AchievementsMapper
         },
         {
             368, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "The First Generation",
             Description = string.Empty,
@@ -5137,7 +5137,7 @@ public static class AchievementsMapper
         },
         {
             369, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "The Second Generation",
             Description = string.Empty,
@@ -5150,7 +5150,7 @@ public static class AchievementsMapper
         },
         {
             370, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "The Third Generation",
             Description = string.Empty,
@@ -5163,7 +5163,7 @@ public static class AchievementsMapper
         },
         {
             371, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "The Fourth Generation",
             Description = string.Empty,
@@ -5176,7 +5176,7 @@ public static class AchievementsMapper
         },
         {
             372, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "The Fifth Generation",
             Description = string.Empty,
@@ -5189,7 +5189,7 @@ public static class AchievementsMapper
         },
         {
             373, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "The Spinoffs",
             Description = string.Empty,
@@ -5202,7 +5202,7 @@ public static class AchievementsMapper
         },
         {
             374, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Online",
             Description = string.Empty,
@@ -5215,7 +5215,7 @@ public static class AchievementsMapper
         },
         {
             375, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "In search of a new frontier",
             Description = string.Empty,
@@ -5228,7 +5228,7 @@ public static class AchievementsMapper
         },
         {
             376, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "PRI",
             Description = string.Empty,
@@ -5241,7 +5241,7 @@ public static class AchievementsMapper
         },
         {
             377, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "DUO",
             Description = string.Empty,
@@ -5254,7 +5254,7 @@ public static class AchievementsMapper
         },
         {
             378, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "TRI",
             Description = string.Empty,
@@ -5267,7 +5267,7 @@ public static class AchievementsMapper
         },
         {
             379, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "TET",
             Description = string.Empty,
@@ -5280,7 +5280,7 @@ public static class AchievementsMapper
         },
         {
             380, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "PEN",
             Description = string.Empty,
@@ -5293,7 +5293,7 @@ public static class AchievementsMapper
         },
         {
             381, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "HEX",
             Description = string.Empty,
@@ -5306,7 +5306,7 @@ public static class AchievementsMapper
         },
         {
             382, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "HEP",
             Description = string.Empty,
@@ -5319,7 +5319,7 @@ public static class AchievementsMapper
         },
         {
             383, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "OCT",
             Description = string.Empty,
@@ -5332,7 +5332,7 @@ public static class AchievementsMapper
         },
         {
             384, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "NON",
             Description = string.Empty,
@@ -5345,7 +5345,7 @@ public static class AchievementsMapper
         },
         {
             385, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "DEC",
             Description = string.Empty,
@@ -5358,7 +5358,7 @@ public static class AchievementsMapper
         },
         {
             386, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "UND",
             Description = string.Empty,
@@ -5371,7 +5371,7 @@ public static class AchievementsMapper
         },
         {
             387, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "DOD",
             Description = string.Empty,
@@ -5384,7 +5384,7 @@ public static class AchievementsMapper
         },
         {
             388, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "One star to rule them all",
             Description = string.Empty,
@@ -5397,7 +5397,7 @@ public static class AchievementsMapper
         },
         {
             389, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Two stars make a supernova",
             Description = string.Empty,
@@ -5410,7 +5410,7 @@ public static class AchievementsMapper
         },
         {
             390, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Alpha Centauri",
             Description = string.Empty,
@@ -5423,7 +5423,7 @@ public static class AchievementsMapper
         },
         {
             391, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Cosmic Tesseract",
             Description = string.Empty,
@@ -5436,7 +5436,7 @@ public static class AchievementsMapper
         },
         {
             392, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "A 5-Star collection",
             Description = string.Empty,
@@ -5449,7 +5449,7 @@ public static class AchievementsMapper
         },
         {
             393, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gacha Hexagram",
             Description = string.Empty,
@@ -5462,7 +5462,7 @@ public static class AchievementsMapper
         },
         {
             394, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "777",
             Description = string.Empty,
@@ -5475,7 +5475,7 @@ public static class AchievementsMapper
         },
         {
             395, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gacha Octagram",
             Description = string.Empty,
@@ -5488,7 +5488,7 @@ public static class AchievementsMapper
         },
         {
             396, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gacha Enneagram",
             Description = string.Empty,
@@ -5501,7 +5501,7 @@ public static class AchievementsMapper
         },
         {
             397, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Ten",
             Description = string.Empty,
@@ -5514,7 +5514,7 @@ public static class AchievementsMapper
         },
         {
             398, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gacha up to eleven",
             Description = string.Empty,
@@ -5527,7 +5527,7 @@ public static class AchievementsMapper
         },
         {
             399, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "12",
             Description = string.Empty,
@@ -5540,7 +5540,7 @@ public static class AchievementsMapper
         },
         {
             400, new Achievement()
-			{
+            {
             CompletionDate = DateTime.UnixEpoch,
             Title = "Gacha Bonus",
             Description = string.Empty,

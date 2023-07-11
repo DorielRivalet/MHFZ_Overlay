@@ -19,7 +19,7 @@ public class OverlaySettingsManager
         None,
         Speedrun,
         Zen,
-        HP_Only,
+        HPOnly,
         All,
     }
 
@@ -120,7 +120,7 @@ public class OverlaySettingsManager
                 s.Monster1IconShown = true;
                 break;
 
-            case ConfigurationPreset.HP_Only:
+            case ConfigurationPreset.HPOnly:
                 s.EnableDamageNumbers = false;
                 s.EnableSharpness = false;
                 s.PartThresholdShown = false;

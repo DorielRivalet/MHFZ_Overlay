@@ -72,6 +72,7 @@ public class AchievementManager
         if (!obtainedAchievements.Contains(achievementID))
         {
             obtainedAchievements.Add(achievementID);
+
             // Store the achievement in the SQLite PlayerAchievements table
             DatabaseManagerInstance.StoreAchievement(achievementID);
             await achievement.Show(snackbar);
@@ -86,7 +87,7 @@ public class AchievementManager
     private static readonly DatabaseManager DatabaseManagerInstance = DatabaseManager.GetInstance();
     private static readonly NLog.Logger LoggerInstance = NLog.LogManager.GetCurrentClassLogger();
     private static AchievementManager? instance;
-    private HashSet<int> obtainedAchievements = new ();
+    private HashSet<int> obtainedAchievements = new();
 
     private AchievementManager()
     {
@@ -117,13 +118,12 @@ public class AchievementManager
         // Implement your logic here to check the conditions for obtaining the achievement
         // Return true if the conditions are met, false otherwise
         // You can access the properties of the achievement object to perform the checks
-
         switch (achievementID)
         {
             default:
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
 
             case 0:
                 return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu);
@@ -1531,7 +1531,7 @@ public class AchievementManager
                                   activeSkills.ActiveSkill19ID == 473 || activeSkills.ActiveSkill19ID == 504)
                                   select quest;
                 if (completedQuests != null && completedQuests.Any())
-                    {
+                {
                     return true;
                 }
                 else
@@ -1565,7 +1565,7 @@ public class AchievementManager
                                          playerInventory.Item20ID == 93)
                                   select quest;
                 if (completedQuests != null && completedQuests.Any())
-                    {
+                {
                     return true;
                 }
                 else
@@ -1580,7 +1580,7 @@ public class AchievementManager
                                         (styleRankSkills.StyleRankSkill1ID == 14 || styleRankSkills.StyleRankSkill2ID == 14)
                                   select quest;
                 if (completedQuests != null && completedQuests.Any())
-                    {
+                {
                     return true;
                 }
                 else
@@ -1608,7 +1608,7 @@ public class AchievementManager
                                   playerGear.WeaponTypeID == 9
                                   select quest;
                 if (completedQuests != null && completedQuests.Any())
-                    {
+                {
                     return true;
                 }
                 else
@@ -1646,7 +1646,7 @@ public class AchievementManager
 
             case 215: // TODO test
                 if (dataLoader.model.DivaBond() >= 999)
-                    {
+                {
                     return true;
                 }
                 else
@@ -1655,13 +1655,13 @@ public class AchievementManager
                 }
 
             case 216:// TODO Obtain S Rank in all single-player MezFes minigames
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
 
             case 217:
                 if (dataLoader.model.CaravanPoints() >= 9_999_999)
-                    {
+                {
                     return true;
                 }
                 else
@@ -1671,7 +1671,7 @@ public class AchievementManager
 
             case 218:
                 if (dataLoader.model.RoadMaxStagesMultiplayer() >= 50)
-                    {
+                {
                     return true;
                 }
                 else
@@ -1681,7 +1681,7 @@ public class AchievementManager
 
             case 219:
                 if (dataLoader.model.RoadMaxStagesMultiplayer() >= 100)
-                    {
+                {
                     return true;
                 }
                 else
@@ -1691,7 +1691,7 @@ public class AchievementManager
 
             case 220:
                 if (dataLoader.model.PartnerLevel() >= 999)
-                    {
+                {
                     return true;
                 }
                 else
@@ -1705,7 +1705,7 @@ public class AchievementManager
                 return DatabaseManagerInstance.AllPersonalBestAttempts.Any(pbAttempts => pbAttempts.Attempts >= 100);
             case 223:
                 if (dataLoader.model.SecondDistrictDuremudiraSlays() >= 100)
-                    {
+                {
                     return true;
                 }
                 else
@@ -1715,7 +1715,7 @@ public class AchievementManager
 
             case 224:
                 if (dataLoader.model.RoadFatalisSlain() >= 100)
-                    {
+                {
                     return true;
                 }
                 else
@@ -1724,9 +1724,9 @@ public class AchievementManager
                 }
 
             case 225:// fumo
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
 
             case 226:
                 return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDTwinheadRajangsHistoric);
@@ -1926,7 +1926,7 @@ public class AchievementManager
                 return DatabaseManagerInstance.AllBingo.Any(bingo => bingo.Difficulty == Difficulty.Extreme);
             case 324:
                 if (DatabaseManagerInstance.AllGachaCards.Count >= 1)
-                    {
+                {
                     return true;
                 }
                 else
@@ -1936,7 +1936,7 @@ public class AchievementManager
 
             case 325:
                 if (DatabaseManagerInstance.AllGachaCards.Count >= 100)
-                    {
+                {
                     return true;
                 }
                 else
@@ -1946,7 +1946,7 @@ public class AchievementManager
 
             case 326:
                 if (DatabaseManagerInstance.AllGachaCards.Count >= 1000)
-                    {
+                {
                     return true;
                 }
                 else
@@ -1955,13 +1955,13 @@ public class AchievementManager
                 }
 
             case 327: // TODO obtain all gacha cards
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
 
             case 328:
                 if (DatabaseManagerInstance.AllZenithGauntlets.Count >= 1)
-                    {
+                {
                     return true;
                 }
                 else
@@ -1971,7 +1971,7 @@ public class AchievementManager
 
             case 329:
                 if (DatabaseManagerInstance.AllZenithGauntlets.Count >= 10)
-                    {
+                {
                     return true;
                 }
                 else
@@ -1981,7 +1981,7 @@ public class AchievementManager
 
             case 330:
                 if (DatabaseManagerInstance.AllZenithGauntlets.Count >= 25)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2006,7 +2006,7 @@ public class AchievementManager
                 });
             case 332:
                 if (DatabaseManagerInstance.AllSolsticeGauntlets.Count >= 1)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2016,7 +2016,7 @@ public class AchievementManager
 
             case 333:
                 if (DatabaseManagerInstance.AllSolsticeGauntlets.Count >= 10)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2026,7 +2026,7 @@ public class AchievementManager
 
             case 334:
                 if (DatabaseManagerInstance.AllSolsticeGauntlets.Count >= 25)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2051,7 +2051,7 @@ public class AchievementManager
                 });
             case 336:
                 if (DatabaseManagerInstance.AllMusouGauntlets.Count >= 1)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2061,7 +2061,7 @@ public class AchievementManager
 
             case 337:
                 if (DatabaseManagerInstance.AllMusouGauntlets.Count >= 10)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2071,7 +2071,7 @@ public class AchievementManager
 
             case 338:
                 if (DatabaseManagerInstance.AllMusouGauntlets.Count >= 25)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2081,7 +2081,7 @@ public class AchievementManager
 
             case 339:
                 if (DatabaseManagerInstance.AllMusouGauntlets.Count == 0)
-                    {
+                {
                     return false;
                 }
 
@@ -2098,7 +2098,7 @@ public class AchievementManager
                 return s.EnableRichPresence;
             case 341:
                 if (dataLoader.model.GetOverlayMode().Contains("Zen"))
-                    {
+                {
                     return true;
                 }
                 else
@@ -2108,7 +2108,7 @@ public class AchievementManager
 
             case 342:
                 if (dataLoader.model.GetOverlayMode().Contains("Freestyle"))
-                    {
+                {
                     return true;
                 }
                 else
@@ -2118,7 +2118,7 @@ public class AchievementManager
 
             case 343:
                 if (DatabaseManagerInstance.AllPlayerGear.Count(playerGear => playerGear.GuildFoodID != 0) >= 50)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2128,7 +2128,7 @@ public class AchievementManager
 
             case 344:
                 if (DatabaseManagerInstance.AllPlayerGear.Count(playerGear => playerGear.DivaSkillID != 0) >= 50)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2137,13 +2137,13 @@ public class AchievementManager
                 }
 
             case 345:// TODO gallery
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
 
             case 346:
                 if (dataLoader.model.CalculateTotalLargeMonstersHunted() >= 1000)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2153,7 +2153,7 @@ public class AchievementManager
 
             case 347:
                 if (DatabaseManagerInstance.GetTotalQuestTimeElapsed() >= Numbers.Frames1Hour * 100)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2170,7 +2170,7 @@ public class AchievementManager
                      || gunnerWeaponName != null && (gunnerWeaponName.Contains("\"Shine\"") || gunnerWeaponName.Contains("\"Clear\"") || gunnerWeaponName.Contains("\"Flash\"") || gunnerWeaponName.Contains("\"Glory\""))
                     )
                 )
-                    {
+                {
                     return true;
                 }
                 else
@@ -2184,7 +2184,7 @@ public class AchievementManager
                 return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDJunglePuzzle);
             case 351:
                 if (DatabaseManagerInstance.AllPlayerGear.Count(playerGear => playerGear.PoogieItemID != 0) >= 100)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2201,13 +2201,13 @@ public class AchievementManager
             case 355:
                 return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHalloweenSpeedster);
             case 356:// TODO 1000 bingo points in 1 go
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
 
             case 357:
                 if (DatabaseManagerInstance.AllBingo.Count >= 1)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2217,7 +2217,7 @@ public class AchievementManager
 
             case 358:
                 if (DatabaseManagerInstance.AllBingo.Count >= 10)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2227,7 +2227,7 @@ public class AchievementManager
 
             case 359:
                 if (DatabaseManagerInstance.AllBingo.Count >= 25)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2237,7 +2237,7 @@ public class AchievementManager
 
             case 360:
                 if (DatabaseManagerInstance.AllBingo.Count >= 50)
-                    {
+                {
                     return true;
                 }
                 else
@@ -2285,9 +2285,9 @@ public class AchievementManager
             case 398:
             case 399:
             case 400:
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
         }
     }
 
@@ -2295,7 +2295,6 @@ public class AchievementManager
     {
         // Update the player achievements table in the database with the newly obtained achievements
         // Use the provided database update logic or similar approach
-
         foreach (var achievementID in achievementsID)
         {
             obtainedAchievements.Add(achievementID);

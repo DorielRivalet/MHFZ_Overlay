@@ -148,7 +148,7 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     {
         this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
     }
-    
+
     public string Width1 { get => this.Row1Width.ToString(CultureInfo.InvariantCulture) + "*"; }
 
     public string Width2 { get => this.Row2Width.ToString(CultureInfo.InvariantCulture) + "*"; }
@@ -314,7 +314,7 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
             if (s.ProgressBarIconsShown)
-                {
+            {
                 return "Visible";
             }
             else
@@ -331,7 +331,7 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
             Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
             if (s.ProgressBarIconsShown)
-                {
+            {
                 return "Hidden";
             }
             else

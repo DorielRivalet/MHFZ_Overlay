@@ -1297,7 +1297,7 @@ public abstract class AddressModel : INotifyPropertyChanged
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.OverlayStatIconShown)
-                {
+            {
                 return false;
             }
             else
@@ -1372,7 +1372,7 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public bool isInLauncherBool;
 
-    readonly Mem m = new ();
+    readonly Mem m = new();
 
     // TODO convert to bool and remove isInLauncherBool?
     public string isInLauncher()
@@ -2892,7 +2892,7 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
-                {
+            {
                 return 100;
             }
 
@@ -2916,7 +2916,7 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
-                {
+            {
                 return 100;
             }
 
@@ -2937,7 +2937,7 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
-                {
+            {
                 return 100;
             }
 
@@ -2961,7 +2961,7 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
-                {
+            {
                 return 100;
             }
 
@@ -2982,7 +2982,7 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
-                {
+            {
                 return 100;
             }
 
@@ -3006,7 +3006,7 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
-                {
+            {
                 return 100;
             }
 
@@ -3027,7 +3027,7 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
-                {
+            {
                 return 100;
             }
 
@@ -3051,7 +3051,7 @@ TreeScope.Children, condition);
         get
         {
             if (Configuring)
-                {
+            {
                 return 100;
             }
 
@@ -3948,11 +3948,11 @@ TreeScope.Children, condition);
 
             //dure
             if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
-                {
+            {
                 id = 132;
             }
             else if (QuestID() == 23648 || QuestID() == 23649)
-                {
+            {
                 id = 167;
             }
 
@@ -3968,11 +3968,11 @@ TreeScope.Children, condition);
 
             //dure
             if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
-                {
+            {
                 id = 132;
             }
             else if (QuestID() == 23648 || QuestID() == 23649)
-                {
+            {
                 id = 167;
             }
 
@@ -3988,11 +3988,11 @@ TreeScope.Children, condition);
 
             // dure
             if (QuestID() == 21731 || QuestID() == 21746 || QuestID() == 21749 || QuestID() == 21750)
-                {
+            {
                 id = 132;
             }
             else if (QuestID() == 23648 || QuestID() == 23649)
-                {
+            {
                 id = 167;
             }
 
@@ -4430,64 +4430,82 @@ TreeScope.Children, condition);
             {
                 ItemName4 += ", ";
             }
-            else{
+            else
+            {
                 ItemName4 += ", ";
             }
 
-            if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || AmmoPouchItem5Qty() == 0){
+            if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || AmmoPouchItem5Qty() == 0)
+            {
                 ItemName5 = "Empty, \n";
             }
-            else if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || AmmoPouchItem6Qty() == 0){
+            else if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || AmmoPouchItem6Qty() == 0)
+            {
                 ItemName5 += string.Empty;
             }
-            else{
+            else
+            {
                 ItemName5 += "\n";
             }
 
-            if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || AmmoPouchItem6Qty() == 0){
+            if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || AmmoPouchItem6Qty() == 0)
+            {
                 ItemName6 = "Empty, ";
             }
-            else if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || AmmoPouchItem7Qty() == 0){
+            else if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || AmmoPouchItem7Qty() == 0)
+            {
                 ItemName6 += ", ";
             }
-            else{
+            else
+            {
                 ItemName6 += ", ";
             }
 
-            if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || AmmoPouchItem7Qty() == 0){
+            if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || AmmoPouchItem7Qty() == 0)
+            {
                 ItemName7 = "Empty, ";
             }
-            else if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || AmmoPouchItem8Qty() == 0){
+            else if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || AmmoPouchItem8Qty() == 0)
+            {
                 ItemName7 += ", ";
             }
-            else{
+            else
+            {
                 ItemName7 += ", ";
             }
 
-            if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || AmmoPouchItem8Qty() == 0){
+            if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || AmmoPouchItem8Qty() == 0)
+            {
                 ItemName8 = "Empty, ";
             }
-            else if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || AmmoPouchItem9Qty() == 0){
+            else if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || AmmoPouchItem9Qty() == 0)
+            {
                 ItemName8 += ", ";
             }
-            else{
+            else
+            {
                 ItemName8 += ", ";
             }
 
-            if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || AmmoPouchItem9Qty() == 0){
+            if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || AmmoPouchItem9Qty() == 0)
+            {
                 ItemName9 = "Empty, ";
             }
-            else if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0){
+            else if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0)
+            {
                 ItemName9 += ", ";
             }
-            else{
+            else
+            {
                 ItemName9 += ", ";
             }
 
-            if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0){
+            if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0)
+            {
                 ItemName10 = "Empty";
             }
-            else{
+            else
+            {
                 ItemName10 += string.Empty;
             }
 
@@ -4602,11 +4620,13 @@ TreeScope.Children, condition);
             if (SkillRoadTower.IDName.TryGetValue(id, out var value) && value != "None" && value != "")
             {
                 name += value;
-                if (i != skills.Length - 1){
+                if (i != skills.Length - 1)
+                {
                     name += ", ";
                 }
 
-                if (i % 5 == 4){
+                if (i % 5 == 4)
+                {
                     name += "\n";
                 }
             }
@@ -4627,7 +4647,8 @@ TreeScope.Children, condition);
         {
             ArmorHead.IDName.TryGetValue(ArmorHeadID(), out var piecename);
 
-            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename)){
+            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
+            {
                 piecename = string.Format(CultureInfo.InvariantCulture, "**{0}**", piecename);
             }
 
@@ -4656,7 +4677,8 @@ TreeScope.Children, condition);
         {
             ArmorChest.IDName.TryGetValue(ArmorChestID(), out var piecename);
 
-            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename)){
+            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
+            {
                 piecename = string.Format(CultureInfo.InvariantCulture, "**{0}**", piecename);
             }
 
@@ -4685,7 +4707,8 @@ TreeScope.Children, condition);
         {
             ArmorArms.IDName.TryGetValue(ArmorArmsID(), out var piecename);
 
-            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename)){
+            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
+            {
                 piecename = string.Format(CultureInfo.InvariantCulture, "**{0}**", piecename);
             }
 
@@ -4714,7 +4737,8 @@ TreeScope.Children, condition);
         {
             ArmorWaist.IDName.TryGetValue(ArmorWaistID(), out var piecename);
 
-            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename)){
+            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
+            {
                 piecename = string.Format(CultureInfo.InvariantCulture, "**{0}**", piecename);
             }
 
@@ -4743,7 +4767,8 @@ TreeScope.Children, condition);
         {
             ArmorLegs.IDName.TryGetValue(ArmorLegsID(), out var piecename);
 
-            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename)){
+            if (GetTextFormat() == "Markdown" && piecename != null && IsMetaGear(piecename))
+            {
                 piecename = string.Format(CultureInfo.InvariantCulture, "**{0}**", piecename);
             }
 
@@ -4772,11 +4797,13 @@ TreeScope.Children, condition);
 
         var keyFound = Item.IDName.TryGetValue(id, out DecoName);
 
-        if (GetTextFormat() == "Markdown" && IsMetaItem(id) && DecoName != null && DecoName == "None" && DecoName != "" && keyFound){
+        if (GetTextFormat() == "Markdown" && IsMetaItem(id) && DecoName != null && DecoName == "None" && DecoName != "" && keyFound)
+        {
             DecoName = string.Format(CultureInfo.InvariantCulture, "**{0}**", DecoName);
         }
 
-        if (DecoName == null || DecoName == "None" || DecoName == ""){
+        if (DecoName == null || DecoName == "None" || DecoName == "")
+        {
             DecoName = "Empty";
         }
         else
@@ -5040,7 +5067,8 @@ TreeScope.Children, condition);
                     SkillName += ", ";
                 }
 
-                if (i % 5 == 4){
+                if (i % 5 == 4)
+                {
                     SkillName += "\n";
                 }
             }
@@ -5436,7 +5464,8 @@ TreeScope.Children, condition);
             }
         }
 
-        if (string.IsNullOrEmpty(SkillName)){
+        if (string.IsNullOrEmpty(SkillName))
+        {
             return "None";
         }
 
@@ -5763,7 +5792,8 @@ TreeScope.Children, condition);
             {
                 SkillName4 += string.Empty;
             }
-            else{
+            else
+            {
                 SkillName4 += ", ";
             }
 
@@ -5983,7 +6013,8 @@ TreeScope.Children, condition);
                         SkillName += ", ";
                     }
 
-                    if (i % 5 == 4){
+                    if (i % 5 == 4)
+                    {
                         SkillName += "\n";
                     }
                 }
@@ -6072,11 +6103,13 @@ TreeScope.Children, condition);
             Def += 1;
         }
 
-        if (GSR() >= 100){
+        if (GSR() >= 100)
+        {
             ConquestAtk += 2;
         }
 
-        if (GSR() >= 110){
+        if (GSR() >= 110)
+        {
             Def += 1;
         }
 
@@ -6215,7 +6248,8 @@ TreeScope.Children, condition);
             AllRes += 1;
         }
 
-        if (GSR() >= 390){
+        if (GSR() >= 390)
+        {
             Def += 2;
         }
 
@@ -6254,7 +6288,8 @@ TreeScope.Children, condition);
             Def += 2;
         }
 
-        if (GSR() >= 470){
+        if (GSR() >= 470)
+        {
             ConquestDef += 10;
         }
 
@@ -6333,7 +6368,8 @@ TreeScope.Children, condition);
             FireRes += 2;
         }
 
-        if (GSR() >= 630){
+        if (GSR() >= 630)
+        {
             ConquestDef += 10;
         }
 
@@ -6342,7 +6378,8 @@ TreeScope.Children, condition);
             WaterRes += 2;
         }
 
-        if (GSR() >= 650){
+        if (GSR() >= 650)
+        {
 
             ConquestAtk += 2;
         }
@@ -6452,7 +6489,8 @@ TreeScope.Children, condition);
             Def += 2;
         }
 
-        if (GSR() >= 870){
+        if (GSR() >= 870)
+        {
             ConquestDef += 10;//15?
         }
 
@@ -6471,7 +6509,8 @@ TreeScope.Children, condition);
             ConquestAtk += 4;
         }
 
-        if (GSR() >= 910){
+        if (GSR() >= 910)
+        {
             Def += 2;
         }
 
@@ -6748,10 +6787,12 @@ TreeScope.Children, condition);
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
 
-            if (s.GearDescriptionExport != null || s.GearDescriptionExport != ""){
+            if (s.GearDescriptionExport != null || s.GearDescriptionExport != "")
+            {
                 return string.Format(CultureInfo.InvariantCulture, "{0}\n", s.GearDescriptionExport);
             }
-            else{
+            else
+            {
                 return string.Empty;
             }
         }
@@ -7015,39 +7056,48 @@ TreeScope.Children, condition);
             // pls
             if (GetTextFormat() == "Markdown")
             {
-                if (IsMaxRoadDureSkillLevel(Skill1, SkillLevel1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != "")){
+                if (IsMaxRoadDureSkillLevel(Skill1, SkillLevel1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
+                {
                     SkillName1 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName1);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill2, SkillLevel2) && (SkillName2 != null || SkillName2 != "None" || SkillName2 != "")){
+                if (IsMaxRoadDureSkillLevel(Skill2, SkillLevel2) && (SkillName2 != null || SkillName2 != "None" || SkillName2 != ""))
+                {
                     SkillName2 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName2);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill3, SkillLevel3) && (SkillName3 != null || SkillName3 != "None" || SkillName3 != "")){
+                if (IsMaxRoadDureSkillLevel(Skill3, SkillLevel3) && (SkillName3 != null || SkillName3 != "None" || SkillName3 != ""))
+                {
                     SkillName3 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName3);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill4, SkillLevel4) && (SkillName4 != null || SkillName4 != "None" || SkillName4 != "")){
+                if (IsMaxRoadDureSkillLevel(Skill4, SkillLevel4) && (SkillName4 != null || SkillName4 != "None" || SkillName4 != ""))
+                {
                     SkillName4 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName4);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill5, SkillLevel5) && (SkillName5 != null || SkillName5 != "None" || SkillName5 != "")){
+                if (IsMaxRoadDureSkillLevel(Skill5, SkillLevel5) && (SkillName5 != null || SkillName5 != "None" || SkillName5 != ""))
+                {
                     SkillName5 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName5);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill6, SkillLevel6) && (SkillName6 != null || SkillName6 != "None" || SkillName6 != "")){
+                if (IsMaxRoadDureSkillLevel(Skill6, SkillLevel6) && (SkillName6 != null || SkillName6 != "None" || SkillName6 != ""))
+                {
                     SkillName6 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName6);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill7, SkillLevel7) && (SkillName7 != null || SkillName7 != "None" || SkillName7 != "")){
+                if (IsMaxRoadDureSkillLevel(Skill7, SkillLevel7) && (SkillName7 != null || SkillName7 != "None" || SkillName7 != ""))
+                {
                     SkillName7 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName7);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill8, SkillLevel8) && (SkillName8 != null || SkillName8 != "None" || SkillName8 != "")){
+                if (IsMaxRoadDureSkillLevel(Skill8, SkillLevel8) && (SkillName8 != null || SkillName8 != "None" || SkillName8 != ""))
+                {
                     SkillName8 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName8);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill9, SkillLevel9) && (SkillName9 != null || SkillName9 != "None" || SkillName9 != "")){
+                if (IsMaxRoadDureSkillLevel(Skill9, SkillLevel9) && (SkillName9 != null || SkillName9 != "None" || SkillName9 != ""))
+                {
                     SkillName9 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName9);
                 }
 
@@ -7141,10 +7191,12 @@ TreeScope.Children, condition);
             }
             else
             {
-                if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill4, SkillLevel4)){
+                if (GetTextFormat() == "Markdown" && IsMaxRoadDureSkillLevel(Skill4, SkillLevel4))
+                {
                     SkillLevel4 = string.Format(CultureInfo.InvariantCulture, "**LV{0}**", SkillLevel4);
                 }
-                else{
+                else
+                {
                     SkillLevel4 = string.Format(CultureInfo.InvariantCulture, " LV{0}", SkillLevel4);
                 }
             }
@@ -7577,7 +7629,8 @@ TreeScope.Children, condition);
         {
             var activeSkills = DatabaseManagerInstance.GetActiveSkills((long)runID);
 
-            if (string.IsNullOrEmpty(activeSkills.CreatedBy)){
+            if (string.IsNullOrEmpty(activeSkills.CreatedBy))
+            {
                 return "Run Not Found.\n\nReload the section.";
             }
 
@@ -10436,7 +10489,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_khezu.gif";
                 }
-                else{
+                else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/khezu.png";
                 }
             case 17:
@@ -10462,7 +10516,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/conquest_crimson_fatalis.png";
                 }
-                else{
+                else
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/crimson_fatalis.png";
                 }
 
@@ -10507,7 +10562,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
 
             case 71:
-                if (RankBand() == 53){
+                if (RankBand() == 53)
+                {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/road_white_fatalis.png";
                 }
                 else
@@ -10641,7 +10697,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_anorupatisu.gif";
                 }
-                else{
+                else
+                {
 
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/anorupatisu.png";
                 }
@@ -10812,149 +10869,149 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public ObservableCollection<ObservablePoint> attackBuffCollection = new ();
+    public ObservableCollection<ObservablePoint> attackBuffCollection = new();
 
-    public ObservableCollection<ObservablePoint> damagePerSecondCollection = new ();
+    public ObservableCollection<ObservablePoint> damagePerSecondCollection = new();
 
-    public ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new ();
+    public ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new();
 
-    public ObservableCollection<ObservablePoint> hitsPerSecondCollection = new ();
+    public ObservableCollection<ObservablePoint> hitsPerSecondCollection = new();
 
-    private ObservableCollection<long> weaponUsageSwordAndShieldEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageSwordAndShieldEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageSwordAndShieldHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageSwordAndShieldHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageSwordAndShieldStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageSwordAndShieldStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageSwordAndShieldExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageSwordAndShieldExtremeStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageDualSwordsEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageDualSwordsEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageDualSwordsHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageDualSwordsHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageDualSwordsStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageDualSwordsStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageDualSwordsExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageDualSwordsExtremeStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageGreatSwordEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageGreatSwordEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageGreatSwordHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageGreatSwordHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageGreatSwordStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageGreatSwordStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageGreatSwordExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageGreatSwordExtremeStyleCollection = new();
 
 
-    private ObservableCollection<long> weaponUsageLongSwordEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageLongSwordEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageLongSwordHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageLongSwordHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageLongSwordStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageLongSwordStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageLongSwordExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageLongSwordExtremeStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageHammerEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageHammerEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageHammerHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageHammerHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageHammerStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageHammerStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageHammerExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageHammerExtremeStyleCollection = new();
 
 
-    private ObservableCollection<long> weaponUsageHuntingHornEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageHuntingHornEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageHuntingHornHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageHuntingHornHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageHuntingHornStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageHuntingHornStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageHuntingHornExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageHuntingHornExtremeStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageLanceEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageLanceEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageLanceHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageLanceHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageLanceStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageLanceStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageLanceExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageLanceExtremeStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageGunlanceEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageGunlanceEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageGunlanceHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageGunlanceHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageGunlanceStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageGunlanceStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageGunlanceExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageGunlanceExtremeStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageTonfaEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageTonfaEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageTonfaHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageTonfaHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageTonfaStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageTonfaStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageTonfaExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageTonfaExtremeStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageSwitchAxeFEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageSwitchAxeFEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageSwitchAxeFHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageSwitchAxeFHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageSwitchAxeFStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageSwitchAxeFStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageSwitchAxeFExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageSwitchAxeFExtremeStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageLightBowgunEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageLightBowgunEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageLightBowgunHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageLightBowgunHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageLightBowgunStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageLightBowgunStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageLightBowgunExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageLightBowgunExtremeStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageHeavyBowgunEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageHeavyBowgunEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageHeavyBowgunHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageHeavyBowgunHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageHeavyBowgunStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageHeavyBowgunStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageHeavyBowgunExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageHeavyBowgunExtremeStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageBowEarthStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageBowEarthStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageBowHeavenStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageBowHeavenStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageBowStormStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageBowStormStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageBowExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageBowExtremeStyleCollection = new();
 
-    private ObservableCollection<long> weaponUsageMagnetSpikeExtremeStyleCollection = new ();
+    private ObservableCollection<long> weaponUsageMagnetSpikeExtremeStyleCollection = new();
 
-    public ObservableCollection<long> weaponUsageEarthStyle = new ();
+    public ObservableCollection<long> weaponUsageEarthStyle = new();
 
-    public ObservableCollection<long> weaponUsageHeavenStyle = new ();
+    public ObservableCollection<long> weaponUsageHeavenStyle = new();
 
-    public ObservableCollection<long> weaponUsageStormStyle = new ();
+    public ObservableCollection<long> weaponUsageStormStyle = new();
 
-    public ObservableCollection<long> weaponUsageExtremeStyle = new ();
+    public ObservableCollection<long> weaponUsageExtremeStyle = new();
 
-    public object attackBuffSync { get; } = new ();
+    public object attackBuffSync { get; } = new();
 
-    public object damagePerSecondSync { get; } = new ();
+    public object damagePerSecondSync { get; } = new();
 
-    public object actionsPerMinuteSync { get; } = new ();
+    public object actionsPerMinuteSync { get; } = new();
 
-    public object hitsPerSecondSync { get; } = new ();
+    public object hitsPerSecondSync { get; } = new();
 
-    public object weaponUsageSync { get; set; } = new ();
+    public object weaponUsageSync { get; set; } = new();
 
-    public List<ISeries> attackBuffSeries { get; set; } = new ();
+    public List<ISeries> attackBuffSeries { get; set; } = new();
 
-    public List<ISeries> damagePerSecondSeries { get; set; } = new ();
+    public List<ISeries> damagePerSecondSeries { get; set; } = new();
 
-    public List<ISeries> actionsPerMinuteSeries { get; set; } = new ();
+    public List<ISeries> actionsPerMinuteSeries { get; set; } = new();
 
-    public List<ISeries> hitsPerSecondSeries { get; set; } = new ();
+    public List<ISeries> hitsPerSecondSeries { get; set; } = new();
 
-    public List<ISeries> weaponUsageSeries { get; set; } = new ();
+    public List<ISeries> weaponUsageSeries { get; set; } = new();
 
     public string GetTimeElapsed(double frames)
     {
@@ -11431,7 +11488,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetObjective1Name(int id, bool isLargeImageText = false)
     {
-        if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText){
+        if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        {
             return string.Empty;
         }
 
@@ -11703,18 +11761,18 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     // all dictionaries get a new entry every 1 second. freezes on quest state 1, resets on quest id = 0.
     // use modulo
     // int for timeint() which is current quest time, second int for current attack buff
-    public Dictionary<int, int> attackBuffDictionary = new ();
+    public Dictionary<int, int> attackBuffDictionary = new();
 
     // the deserealized are used for displays
     public Dictionary<int, int>? attackBuffDictionaryDeserealized;
 
     // same for this but second is current hit count
-    public Dictionary<int, int> hitCountDictionary = new ();
+    public Dictionary<int, int> hitCountDictionary = new();
 
     public Dictionary<int, int>? hitCountDictionaryDeserealized;
 
     // same but the second int is the damage dealt when hitting monster.
-    public Dictionary<int, int> damageDealtDictionary = new ();
+    public Dictionary<int, int> damageDealtDictionary = new();
 
     public Dictionary<int, int>? damageDealtDictionaryDeserealized;
 
@@ -11807,26 +11865,26 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
 
     // new entry every second during quest (use this for chart?)
-    public Dictionary<int, double> damagePerSecondDictionary = new ();
+    public Dictionary<int, double> damagePerSecondDictionary = new();
 
     public Dictionary<int, double>? damagePerSecondDictionaryDeserealized;
 
-    public Dictionary<int, int> areaChangesDictionary = new ();
+    public Dictionary<int, int> areaChangesDictionary = new();
 
     public Dictionary<int, int>? areaChangesDictionaryDeserealized;
 
-    public Dictionary<int, int> cartsDictionary = new ();
+    public Dictionary<int, int> cartsDictionary = new();
 
     public Dictionary<int, int>? cartsDictionaryDeserealized;
 
     // time <monsterid, monsterhp>
-    public Dictionary<int, Dictionary<int, int>> monster1HPDictionary = new ();
+    public Dictionary<int, Dictionary<int, int>> monster1HPDictionary = new();
 
-    public Dictionary<int, Dictionary<int, int>> monster2HPDictionary = new ();
+    public Dictionary<int, Dictionary<int, int>> monster2HPDictionary = new();
 
-    public Dictionary<int, Dictionary<int, int>> monster3HPDictionary = new ();
+    public Dictionary<int, Dictionary<int, int>> monster3HPDictionary = new();
 
-    public Dictionary<int, Dictionary<int, int>> monster4HPDictionary = new ();
+    public Dictionary<int, Dictionary<int, int>> monster4HPDictionary = new();
 
     public Dictionary<int, Dictionary<int, int>>? monster1HPDictionaryDeserealized;
 
@@ -11841,77 +11899,77 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     // this is a dicitonary where the first int is the quest time,
     // the second int is the item id and the third int is the item quantity of that id.
     // meaning that this is a dictionary of quest time and a list of item ids and quantities respectively.
-    public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionary = new ();
+    public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionary = new();
 
     public Dictionary<int, List<Dictionary<int, int>>>? playerInventoryDictionaryDeserealized;
 
-    public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionary = new ();
+    public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionary = new();
 
     public Dictionary<int, List<Dictionary<int, int>>>? playerAmmoPouchDictionaryDeserealized;
 
-    public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionary = new ();
+    public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionary = new();
 
     public Dictionary<int, List<Dictionary<int, int>>>? partnyaBagDictionaryDeserealized;
 
     // time, areaid, hitstakenblocked
     // can calculate total hits by area by checking areaid, or in total by all sum.
-    public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = new ();
+    public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = new();
 
-    public Dictionary<int, Dictionary<int, int>>? hitsTakenBlockedDictionaryDeserealized = new ();
+    public Dictionary<int, Dictionary<int, int>>? hitsTakenBlockedDictionaryDeserealized = new();
 
-    public Dictionary<int, int> playerHPDictionary = new ();
+    public Dictionary<int, int> playerHPDictionary = new();
 
-    public Dictionary<int, int>? playerHPDictionaryDeserealized = new ();
+    public Dictionary<int, int>? playerHPDictionaryDeserealized = new();
 
-    public Dictionary<int, int> playerStaminaDictionary = new ();
+    public Dictionary<int, int> playerStaminaDictionary = new();
 
-    public Dictionary<int, int>? playerStaminaDictionaryDeserealized = new ();
+    public Dictionary<int, int>? playerStaminaDictionaryDeserealized = new();
 
-    public Dictionary<int, double> hitsPerSecondDictionary = new ();
+    public Dictionary<int, double> hitsPerSecondDictionary = new();
 
-    public Dictionary<int, double>? hitsPerSecondDictionaryDeserealized = new ();
+    public Dictionary<int, double>? hitsPerSecondDictionaryDeserealized = new();
 
-    public Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = new ();
+    public Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = new();
 
-    public Dictionary<int, double>? hitsTakenBlockedPerSecondDictionaryDeserealized = new ();
+    public Dictionary<int, double>? hitsTakenBlockedPerSecondDictionaryDeserealized = new();
 
-    public Dictionary<int, string> keystrokesDictionary = new ();
+    public Dictionary<int, string> keystrokesDictionary = new();
 
-    public Dictionary<int, string>? keystrokesDictionaryDeserealized = new ();
+    public Dictionary<int, string>? keystrokesDictionaryDeserealized = new();
 
-    public Dictionary<int, string> gamepadInputDictionary = new ();
+    public Dictionary<int, string> gamepadInputDictionary = new();
 
-    public Dictionary<int, string>? gamepadInputDictionaryDeserealized = new ();
+    public Dictionary<int, string>? gamepadInputDictionaryDeserealized = new();
 
-    public Dictionary<int, string> mouseInputDictionary = new ();
+    public Dictionary<int, string> mouseInputDictionary = new();
 
-    public Dictionary<int, string>? mouseInputDictionaryDeserealized = new ();
+    public Dictionary<int, string>? mouseInputDictionaryDeserealized = new();
 
-    public Dictionary<int, double> actionsPerMinuteDictionary = new ();
+    public Dictionary<int, double> actionsPerMinuteDictionary = new();
 
-    public Dictionary<int, double>? actionsPerMinuteDictionaryDeserealized = new ();
+    public Dictionary<int, double>? actionsPerMinuteDictionaryDeserealized = new();
 
-    public Dictionary<int, string> overlayModeDictionary = new ();
+    public Dictionary<int, string> overlayModeDictionary = new();
 
-    public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionary = new ();
+    public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionary = new();
 
-    public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionary = new ();
+    public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionary = new();
 
-    public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionary = new ();
+    public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionary = new();
 
-    public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionary = new ();
+    public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionary = new();
 
-    public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionary = new ();
+    public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionary = new();
 
-    public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = new ();
+    public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = new();
 
-    public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = new ();
+    public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = new();
 
-    public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = new ();
+    public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = new();
 
-    public Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionary = new ();
+    public Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionary = new();
 
-    public Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionary = new ();
+    public Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionary = new();
 
     public Dictionary<int, Dictionary<int, double>>? monster1AttackMultiplierDictionaryDeserealized;
 
@@ -12054,7 +12112,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             var itemID = 0;
             var itemQty = 0;
-            Dictionary<int, int> itemIDQuantityDictionary = new ();
+            Dictionary<int, int> itemIDQuantityDictionary = new();
 
             if (inventoryType == "Pouch")
             {
@@ -12380,7 +12438,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1HP = Monster1HPInt();
-                Dictionary<int, int> monster1HPDictionaryMonsterInfo = new ();
+                Dictionary<int, int> monster1HPDictionaryMonsterInfo = new();
                 monster1HPDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1HPInt());
                 monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
             }
@@ -12395,7 +12453,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster2HP = Monster2HPInt();
-                Dictionary<int, int> monster2HPDictionaryMonsterInfo = new ();
+                Dictionary<int, int> monster2HPDictionaryMonsterInfo = new();
                 monster2HPDictionaryMonsterInfo.Add(LargeMonster2ID(), Monster2HPInt());
                 monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
             }
@@ -12410,7 +12468,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster3HP = Monster3HPInt();
-                Dictionary<int, int> monster3HPDictionaryMonsterInfo = new ();
+                Dictionary<int, int> monster3HPDictionaryMonsterInfo = new();
                 monster3HPDictionaryMonsterInfo.Add(LargeMonster3ID(), Monster3HPInt());
                 monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
             }
@@ -12426,7 +12484,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster4HP = Monster4HPInt();
-                Dictionary<int, int> monster4HPDictionaryMonsterInfo = new ();
+                Dictionary<int, int> monster4HPDictionaryMonsterInfo = new();
                 monster4HPDictionaryMonsterInfo.Add(LargeMonster4ID(), Monster4HPInt());
                 monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
             }
@@ -12461,12 +12519,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else if (loadedItemsAtQuestStart && !playerInventoryDictionary.Values.Any())
         {
-            List<Dictionary<int, int>> itemIDsQuantityList = new ();
+            List<Dictionary<int, int>> itemIDsQuantityList = new();
             for (var i = 1; i <= 20; i++)
             {
                 var itemID = 0;
                 var itemQty = 0;
-                Dictionary<int, int> itemIDQuantityDictionary = new ();
+                Dictionary<int, int> itemIDQuantityDictionary = new();
                 switch (i)
                 {
                     case 1:
@@ -12591,12 +12649,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else if (loadedItemsAtQuestStart && !playerAmmoPouchDictionary.Values.Any())
         {
-            List<Dictionary<int, int>> itemIDsQuantityList = new ();
+            List<Dictionary<int, int>> itemIDsQuantityList = new();
             for (var i = 1; i <= 20; i++)
             {
                 var itemID = 0;
                 var itemQty = 0;
-                Dictionary<int, int> itemIDQuantityDictionary = new ();
+                Dictionary<int, int> itemIDQuantityDictionary = new();
                 switch (i)
                 {
                     case 1:
@@ -12680,12 +12738,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else if (loadedItemsAtQuestStart && !partnyaBagDictionary.Values.Any())
         {
-            List<Dictionary<int, int>> itemIDsQuantityList = new ();
+            List<Dictionary<int, int>> itemIDsQuantityList = new();
             for (var i = 1; i <= 20; i++)
             {
                 var itemID = 0;
                 var itemQty = 0;
-                Dictionary<int, int> itemIDQuantityDictionary = new ();
+                Dictionary<int, int> itemIDQuantityDictionary = new();
                 switch (i)
                 {
                     case 1:
@@ -12749,7 +12807,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousHitsTakenBlocked = AreaHitsTakenBlocked();
-                Dictionary<int, int> hitsAreaPairs = new ();
+                Dictionary<int, int> hitsAreaPairs = new();
                 hitsAreaPairs.Add(AreaID(), AreaHitsTakenBlocked());
                 hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
             }
@@ -12855,7 +12913,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1AttackMultiplier = Monster1AttackMultForDictionary();
-                Dictionary<int, double> monster1AttackMultiplierDictionaryMonsterInfo = new ();
+                Dictionary<int, double> monster1AttackMultiplierDictionaryMonsterInfo = new();
                 monster1AttackMultiplierDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1AttackMultForDictionary());
                 monster1AttackMultiplierDictionary.Add(TimeInt(), monster1AttackMultiplierDictionaryMonsterInfo);
             }
@@ -12870,7 +12928,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1DefenseRate = Monster1DefMultForDictionary();
-                Dictionary<int, double> monster1DefenseRateDictionaryMonsterInfo = new ();
+                Dictionary<int, double> monster1DefenseRateDictionaryMonsterInfo = new();
                 monster1DefenseRateDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1DefMultForDictionary());
                 monster1DefenseRateDictionary.Add(TimeInt(), monster1DefenseRateDictionaryMonsterInfo);
             }
@@ -12885,7 +12943,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1SizeMultiplier = Monster1SizeMultForDictionary();
-                Dictionary<int, double> monster1SizeMultiplierDictionaryMonsterInfo = new ();
+                Dictionary<int, double> monster1SizeMultiplierDictionaryMonsterInfo = new();
                 monster1SizeMultiplierDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1SizeMultForDictionary());
                 monster1SizeMultiplierDictionary.Add(TimeInt(), monster1SizeMultiplierDictionaryMonsterInfo);
             }
@@ -12900,7 +12958,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1PoisonThreshold = Monster1PoisonForDictionary();
-                Dictionary<int, int> monster1PoisonThresholdDictionaryMonsterInfo = new ();
+                Dictionary<int, int> monster1PoisonThresholdDictionaryMonsterInfo = new();
                 monster1PoisonThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1PoisonForDictionary());
                 monster1PoisonThresholdDictionary.Add(TimeInt(), monster1PoisonThresholdDictionaryMonsterInfo);
             }
@@ -12915,7 +12973,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1SleepThreshold = Monster1SleepForDictionary();
-                Dictionary<int, int> monster1SleepThresholdDictionaryMonsterInfo = new ();
+                Dictionary<int, int> monster1SleepThresholdDictionaryMonsterInfo = new();
                 monster1SleepThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1SleepForDictionary());
                 monster1SleepThresholdDictionary.Add(TimeInt(), monster1SleepThresholdDictionaryMonsterInfo);
             }
@@ -12930,7 +12988,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1ParalysisThreshold = Monster1ParalysisForDictionary();
-                Dictionary<int, int> monster1ParalysisThresholdDictionaryMonsterInfo = new ();
+                Dictionary<int, int> monster1ParalysisThresholdDictionaryMonsterInfo = new();
                 monster1ParalysisThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1ParalysisForDictionary());
                 monster1ParalysisThresholdDictionary.Add(TimeInt(), monster1ParalysisThresholdDictionaryMonsterInfo);
             }
@@ -12945,7 +13003,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1BlastThreshold = Monster1BlastForDictionary();
-                Dictionary<int, int> monster1BlastThresholdDictionaryMonsterInfo = new ();
+                Dictionary<int, int> monster1BlastThresholdDictionaryMonsterInfo = new();
                 monster1BlastThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1BlastForDictionary());
                 monster1BlastThresholdDictionary.Add(TimeInt(), monster1BlastThresholdDictionaryMonsterInfo);
             }
@@ -12960,7 +13018,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1StunThreshold = Monster1StunForDictionary();
-                Dictionary<int, int> monster1StunThresholdDictionaryMonsterInfo = new ();
+                Dictionary<int, int> monster1StunThresholdDictionaryMonsterInfo = new();
                 monster1StunThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1StunForDictionary());
                 monster1StunThresholdDictionary.Add(TimeInt(), monster1StunThresholdDictionaryMonsterInfo);
             }
@@ -12996,7 +13054,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 previousMonster1Part8Threshold = Monster1Part8();
                 previousMonster1Part9Threshold = Monster1Part9();
                 previousMonster1Part10Threshold = Monster1Part10();
-                Dictionary<int, List<int>> monster1PartThresholdDictionaryMonsterInfo = new ();
+                Dictionary<int, List<int>> monster1PartThresholdDictionaryMonsterInfo = new();
                 var partsList = new List<int>() {
                     Monster1Part1(),
                     Monster1Part2(),
@@ -13043,7 +13101,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 previousMonster2Part8Threshold = Monster2Part8();
                 previousMonster2Part9Threshold = Monster2Part9();
                 previousMonster2Part10Threshold = Monster2Part10();
-                Dictionary<int, List<int>> monster2PartThresholdDictionaryMonsterInfo = new ();
+                Dictionary<int, List<int>> monster2PartThresholdDictionaryMonsterInfo = new();
                 var partsList = new List<int>() {
                     Monster2Part1(),
                     Monster2Part2(),
@@ -13299,12 +13357,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public ObservableCollection<RecentRuns> RecentRuns { get; set; } = new ();
+    public ObservableCollection<RecentRuns> RecentRuns { get; set; } = new();
 
     // TODO: the plural/singular is inconsistent
-    public List<FastestRun> FastestRuns { get; set; } = new ();
+    public List<FastestRun> FastestRuns { get; set; } = new();
 
-    public List<RecentRuns> CalendarRuns { get; set; } = new ();
+    public List<RecentRuns> CalendarRuns { get; set; } = new();
 
     public ObservableCollection<QuestLogsOption> QuestLogsSearchOption { get; set; } = new ObservableCollection<QuestLogsOption>()
     {
@@ -13422,7 +13480,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetMonster1EHPPercent()
     {
-        if (currentMonster1MaxHP < int.Parse(Monster1HP, CultureInfo.InvariantCulture)){
+        if (currentMonster1MaxHP < int.Parse(Monster1HP, CultureInfo.InvariantCulture))
+        {
             currentMonster1MaxHP = int.Parse(Monster1HP, CultureInfo.InvariantCulture);
         }
 

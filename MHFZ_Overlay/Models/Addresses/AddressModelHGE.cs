@@ -570,7 +570,6 @@ internal sealed class AddressModelHGE : AddressModel
     public override int CurrentFaints() => M.ReadByte("mhfo-hd.dll+DC6C35B");
 
     //public override int MaxFaints() => M.ReadByte("mhfo-hd.dll+C4C8FE8");
-
     public override int MaxFaints() => M.ReadByte("mhfo-hd.dll+2B20C0C");
 
     public override int AlternativeMaxFaints() => M.ReadByte("mhfo-hd.dll+2AFA814");
@@ -1182,7 +1181,6 @@ internal sealed class AddressModelHGE : AddressModel
     public override int PSO2RappyHunted() => M.Read2Byte("mhfo-hd.dll+ED3E30A");
 
     public override int KingShakalakaHunted() => M.Read2Byte("mhfo-hd.dll+ED3E30C");
-//
 
     public override int QuestState() => M.ReadByte("mhfo-hd.dll+ED52892");
 

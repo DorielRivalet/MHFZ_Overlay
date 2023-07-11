@@ -147,7 +147,6 @@ public class Achievement
     public string Hint { get; set; } = string.Empty;
 
     // Additional properties or methods related to achievements can be added here
-
     private static readonly Dictionary<AchievementRank, string> RankColors = new Dictionary<AchievementRank, string>
     {
         { AchievementRank.None, CatppuccinMochaColorsMapper.CatppuccinMochaColors["Base"] },        // Black

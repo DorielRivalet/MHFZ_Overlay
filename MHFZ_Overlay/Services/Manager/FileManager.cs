@@ -250,7 +250,7 @@ internal sealed class FileManager
                 var s = (Settings)Application.Current.TryFindResource("Settings");
 
                 // Create a dictionary to store the user settings
-                Dictionary<string, OverlaySetting> settings = new ();
+                Dictionary<string, OverlaySetting> settings = new();
 
                 // Get a list of the user settings properties sorted alphabetically by name
                 var sortedSettings = s.Properties.Cast<System.Configuration.SettingsProperty>().OrderBy(setting => setting.Name).ToList();
@@ -340,7 +340,7 @@ internal sealed class FileManager
             var destFileDirectoryName = Path.GetDirectoryName(destFile);
             if (destFileDirectoryName == null)
             {
-                throw new ArgumentOutOfRangeException($"Did not make directory for {destFileDirectoryName}");
+                throw new Exception($"Did not make directory for {destFileDirectoryName}");
             }
 
             Directory.CreateDirectory(destFileDirectoryName);
@@ -531,13 +531,14 @@ internal sealed class FileManager
                 var backupFilePath = Path.Combine(backupsFolderPath, backupFileName);
 
                 logger.Info(CultureInfo.InvariantCulture, "Making database backup. Database file path: {0}. Backup file path: {1}", databaseFilePath, backupFilePath);
+
                 // Create a backup of the database file
                 File.Copy(databaseFilePath, backupFilePath, true);
             }
             else
             {
                 logger.Error($"Database directory path not found: {databaseDirectoryPath}");
-                throw new ArgumentOutOfRangeException($"Database directory path not found: {databaseDirectoryPath}");
+                throw new Exception($"Database directory path not found: {databaseDirectoryPath}");
             }
         }
         catch (Exception ex)
@@ -557,6 +558,7 @@ internal sealed class FileManager
         try
         {
             var doesFileExist = CheckIfFileExists(path, string.Format(CultureInfo.InvariantCulture, "Checking if path exists for deletion: {0}", path));
+
             // Check if the file exists
             if (doesFileExist)
             {

@@ -29,6 +29,7 @@
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	<PackageIcon>mhfzoverlay128.png</PackageIcon>
 	<Description>A simple, customizable overlay with Discord Rich Presence integration for Monster Hunter Frontier Z on Windows</Description>
+	<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

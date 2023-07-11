@@ -11,7 +11,6 @@ using System.Windows.Data;
 /// Create a Value Converter to disable the Up & Down Arrow buttons of the scrollbar
 /// when the Thumb reaches the minimum & maximum position on the scroll track.
 /// </summary>
-
 public class ScrollLimitConverter : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)

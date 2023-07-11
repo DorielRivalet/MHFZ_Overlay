@@ -21,7 +21,7 @@ public static class ConfigurationPresetConverter
             case "zen":
                 return ConfigurationPreset.Zen;
             case "hp only":
-                return ConfigurationPreset.HP_Only;
+                return ConfigurationPreset.HPOnly;
             case "all":
                 return ConfigurationPreset.All;
             default:

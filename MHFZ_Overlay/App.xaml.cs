@@ -67,7 +67,7 @@ public partial class App : Application
         {
             logger.Fatal(CultureInfo.InvariantCulture, "Program version not found");
             MessageBox.Show("Program version not found", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-            LoggingManager.WriteCrashLog(new ArgumentOutOfRangeException("Program version not found"));
+            LoggingManager.WriteCrashLog(new Exception("Program version not found"));
         }
         else
         {
